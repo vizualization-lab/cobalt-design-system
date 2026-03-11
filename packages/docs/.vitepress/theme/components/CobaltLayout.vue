@@ -150,14 +150,14 @@ function toggleTheme() {
   --co-blue-100: #dbeafe;
   --co-electric: #4f8fff;
   --co-glow: #6ba1ff;
-  --co-shimmer: rgba(99, 155, 255, 0.08);
-  --co-text-primary: #e8edf5;
-  --co-text-secondary: #8899b4;
-  --co-text-muted: #5a6d8a;
-  --co-border: rgba(99, 155, 255, 0.1);
-  --co-border-strong: rgba(99, 155, 255, 0.18);
-  --co-surface: rgba(15, 29, 50, 0.6);
-  --co-surface-raised: rgba(21, 34, 56, 0.8);
+  --co-shimmer: rgba(99, 155, 255, 0.06);
+  --co-text-primary: #dce4f0;
+  --co-text-secondary: #7a8da8;
+  --co-text-muted: #4e6382;
+  --co-border: rgba(99, 155, 255, 0.08);
+  --co-border-strong: rgba(99, 155, 255, 0.14);
+  --co-surface: rgba(15, 29, 50, 0.4);
+  --co-surface-raised: rgba(21, 34, 56, 0.6);
 
   /* Semantic colors for themed alpha values */
   --co-topbar-bg: linear-gradient(180deg, rgba(10, 22, 40, 0.95) 0%, rgba(10, 22, 40, 0.85) 100%);
@@ -171,11 +171,11 @@ function toggleTheme() {
   --co-blue-alpha-25: rgba(37, 99, 235, 0.25);
   --co-blue-alpha-40: rgba(37, 99, 235, 0.4);
   --co-blue-alpha-50: rgba(37, 99, 235, 0.5);
-  --co-code-bg: rgba(37, 99, 235, 0.1);
-  --co-code-border: rgba(37, 99, 235, 0.12);
-  --co-code-color: var(--co-blue-300);
-  --co-inline-link: var(--co-blue-400);
-  --co-h3-color: var(--co-blue-300);
+  --co-code-bg: rgba(37, 99, 235, 0.08);
+  --co-code-border: rgba(37, 99, 235, 0.1);
+  --co-code-color: #7eb3f0;
+  --co-inline-link: #7eb3f0;
+  --co-h3-color: #7eb3f0;
   --co-selection-bg: rgba(37, 99, 235, 0.3);
   --co-selection-color: white;
   --co-grain-opacity: 0.035;
@@ -204,43 +204,43 @@ function toggleTheme() {
 
 /* ── Light Mode ──────────────────────────────────────────────── */
 [data-theme='light'] {
-  --co-midnight: #f8fafd;
-  --co-deep: #f1f5fb;
-  --co-navy: #e8eef6;
-  --co-slate: #dce4f0;
-  --co-steel: #c5d1e3;
-  --co-shimmer: rgba(37, 99, 235, 0.06);
-  --co-text-primary: #0f1d32;
-  --co-text-secondary: #3d5274;
-  --co-text-muted: #6b82a6;
-  --co-border: rgba(37, 99, 235, 0.1);
-  --co-border-strong: rgba(37, 99, 235, 0.16);
-  --co-surface: rgba(226, 234, 248, 0.6);
-  --co-surface-raised: rgba(240, 245, 253, 0.9);
+  --co-midnight: #f7f9fc;
+  --co-deep: #edf2f9;
+  --co-navy: #e2e9f3;
+  --co-slate: #d0dae9;
+  --co-steel: #b8c6da;
+  --co-shimmer: rgba(37, 99, 235, 0.07);
+  --co-text-primary: #0c1525;
+  --co-text-secondary: #2d3f5a;
+  --co-text-muted: #546b8c;
+  --co-border: rgba(30, 58, 138, 0.13);
+  --co-border-strong: rgba(30, 58, 138, 0.22);
+  --co-surface: rgba(215, 226, 243, 0.55);
+  --co-surface-raised: rgba(232, 240, 252, 0.85);
   --co-topbar-bg: linear-gradient(
     180deg,
-    rgba(248, 250, 253, 0.95) 0%,
-    rgba(248, 250, 253, 0.88) 100%
+    rgba(247, 249, 252, 0.97) 0%,
+    rgba(247, 249, 252, 0.9) 100%
   );
   --co-sidebar-bg: linear-gradient(
     180deg,
-    rgba(241, 245, 251, 0.85) 0%,
-    rgba(248, 250, 253, 0.7) 100%
+    rgba(237, 242, 249, 0.9) 0%,
+    rgba(242, 246, 252, 0.75) 100%
   );
-  --co-blue-alpha-8: rgba(37, 99, 235, 0.06);
-  --co-blue-alpha-10: rgba(37, 99, 235, 0.08);
-  --co-blue-alpha-12: rgba(37, 99, 235, 0.08);
-  --co-blue-alpha-15: rgba(37, 99, 235, 0.1);
-  --co-blue-alpha-18: rgba(37, 99, 235, 0.12);
-  --co-blue-alpha-20: rgba(37, 99, 235, 0.14);
-  --co-blue-alpha-25: rgba(37, 99, 235, 0.18);
-  --co-blue-alpha-40: rgba(37, 99, 235, 0.3);
-  --co-blue-alpha-50: rgba(37, 99, 235, 0.4);
-  --co-code-bg: rgba(37, 99, 235, 0.07);
-  --co-code-border: rgba(37, 99, 235, 0.1);
-  --co-code-color: var(--co-blue-700);
-  --co-inline-link: var(--co-blue-600);
-  --co-h3-color: var(--co-blue-700);
+  --co-blue-alpha-8: rgba(37, 99, 235, 0.07);
+  --co-blue-alpha-10: rgba(37, 99, 235, 0.1);
+  --co-blue-alpha-12: rgba(37, 99, 235, 0.1);
+  --co-blue-alpha-15: rgba(37, 99, 235, 0.12);
+  --co-blue-alpha-18: rgba(37, 99, 235, 0.14);
+  --co-blue-alpha-20: rgba(37, 99, 235, 0.16);
+  --co-blue-alpha-25: rgba(37, 99, 235, 0.2);
+  --co-blue-alpha-40: rgba(37, 99, 235, 0.35);
+  --co-blue-alpha-50: rgba(37, 99, 235, 0.45);
+  --co-code-bg: rgba(37, 99, 235, 0.08);
+  --co-code-border: rgba(37, 99, 235, 0.13);
+  --co-code-color: var(--co-blue-900);
+  --co-inline-link: var(--co-blue-700);
+  --co-h3-color: var(--co-blue-900);
   --co-selection-bg: rgba(37, 99, 235, 0.2);
   --co-selection-color: #0f1d32;
   --co-grain-opacity: 0.02;
