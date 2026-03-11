@@ -140,7 +140,8 @@ function App() {
 
 ```vue
 <script setup>
-import '@cobalt/components/button';
+import { ref } from 'vue';
+import { CbButton } from '@cobalt/vue';
 
 const loading = ref(false);
 
@@ -153,17 +154,17 @@ async function handleClick() {
 
 <template>
   <!-- Basic -->
-  <cb-button variant="primary" @click="handleClick"> Save changes </cb-button>
+  <CbButton variant="primary" @click="handleClick"> Save changes </CbButton>
 
   <!-- With loading state -->
-  <cb-button :loading="loading">Submitting…</cb-button>
+  <CbButton :loading="loading">Submitting…</CbButton>
 
   <!-- Danger variant -->
-  <cb-button variant="danger" @cb-focus="onFocus"> Delete account </cb-button>
+  <CbButton variant="danger" @cb-focus="onFocus"> Delete account </CbButton>
 
   <!-- Sizes -->
-  <cb-button size="sm">Small</cb-button>
-  <cb-button size="lg">Large</cb-button>
+  <CbButton size="sm">Small</CbButton>
+  <CbButton size="lg">Large</CbButton>
 </template>
 ```
 
@@ -172,12 +173,12 @@ async function handleClick() {
 <template #angular>
 
 ```typescript
-// app.module.ts — register custom elements schema
-import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
-import '@cobalt/components/button';
+// app.module.ts — import CobaltButtonModule
+import { NgModule } from '@angular/core';
+import { CobaltButtonModule } from '@cobalt/angular';
 
 @NgModule({
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  imports: [CobaltButtonModule],
   // ...
 })
 export class AppModule {}
@@ -190,10 +191,10 @@ export class AppModule {}
 <cb-button variant="primary" (click)="handleClick()"> Save changes </cb-button>
 
 <!-- Bound properties -->
-<cb-button [attr.loading]="isLoading || null"> Submitting… </cb-button>
+<cb-button [variant]="variant" [loading]="isLoading"> Submitting… </cb-button>
 
-<!-- Danger variant -->
-<cb-button variant="danger" (cb-focus)="onFocus($event)"> Delete account </cb-button>
+<!-- Danger variant with events -->
+<cb-button variant="danger" (cbFocus)="onFocus($event)"> Delete account </cb-button>
 
 <!-- Sizes -->
 <cb-button size="sm">Small</cb-button>
