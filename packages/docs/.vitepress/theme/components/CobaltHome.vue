@@ -301,12 +301,7 @@ const features = [
   transform: translateX(-50%);
   width: 600px;
   height: 400px;
-  background: radial-gradient(
-    ellipse at center,
-    rgba(37, 99, 235, 0.12) 0%,
-    rgba(37, 99, 235, 0.04) 40%,
-    transparent 70%
-  );
+  background: var(--co-hero-glow);
   pointer-events: none;
 }
 
@@ -345,9 +340,9 @@ const features = [
   gap: 8px;
   font-size: 0.78rem;
   font-weight: 500;
-  color: var(--co-blue-300);
-  background: rgba(37, 99, 235, 0.08);
-  border: 1px solid rgba(37, 99, 235, 0.15);
+  color: var(--co-code-color);
+  background: var(--co-blue-alpha-8);
+  border: 1px solid var(--co-blue-alpha-15);
   padding: 5px 14px;
   border-radius: 20px;
   margin-bottom: 28px;
@@ -391,9 +386,9 @@ const features = [
 .title-accent {
   background: linear-gradient(
     135deg,
-    var(--co-blue-300) 0%,
+    var(--co-code-color) 0%,
     var(--co-blue-500) 50%,
-    var(--co-blue-300) 100%
+    var(--co-code-color) 100%
   );
   background-clip: text;
   -webkit-background-clip: text;
@@ -427,16 +422,16 @@ const features = [
   text-decoration: none;
   transition: all var(--co-duration) var(--co-ease);
   box-shadow:
-    0 0 0 1px rgba(37, 99, 235, 0.5),
-    0 4px 16px -4px rgba(37, 99, 235, 0.4);
+    0 0 0 1px var(--co-blue-alpha-50),
+    0 4px 16px -4px var(--co-blue-alpha-40);
 }
 
 .action-primary:hover {
   background: var(--co-blue-500);
   transform: translateY(-1px);
   box-shadow:
-    0 0 0 1px rgba(37, 99, 235, 0.6),
-    0 8px 24px -4px rgba(37, 99, 235, 0.4);
+    0 0 0 1px var(--co-blue-alpha-50),
+    0 8px 24px -4px var(--co-blue-alpha-40);
 }
 
 .action-secondary {
@@ -511,10 +506,10 @@ const features = [
 }
 
 .feature-card:hover {
-  border-color: rgba(37, 99, 235, 0.25);
+  border-color: var(--co-blue-alpha-25);
   background: var(--co-surface-raised);
   transform: translateY(-2px);
-  box-shadow: 0 8px 32px -8px rgba(37, 99, 235, 0.15);
+  box-shadow: 0 8px 32px -8px var(--co-blue-alpha-15);
 }
 
 .feature-icon {
@@ -524,15 +519,15 @@ const features = [
   align-items: center;
   justify-content: center;
   border-radius: 11px;
-  background: rgba(37, 99, 235, 0.1);
+  background: var(--co-blue-alpha-10);
   color: var(--co-blue-400);
   margin-bottom: 18px;
   transition: all var(--co-duration) var(--co-ease);
 }
 
 .feature-card:hover .feature-icon {
-  background: rgba(37, 99, 235, 0.15);
-  box-shadow: 0 0 20px -4px rgba(37, 99, 235, 0.25);
+  background: var(--co-blue-alpha-15);
+  box-shadow: 0 0 20px -4px var(--co-blue-alpha-25);
 }
 
 .feature-title {

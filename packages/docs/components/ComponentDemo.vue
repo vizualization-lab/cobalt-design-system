@@ -55,7 +55,7 @@ const codeSnippet = computed(() => {
 
 .cb-demo-controls {
   padding: 12px 20px;
-  background: rgba(15, 29, 50, 0.5);
+  background: var(--co-surface, rgba(15, 29, 50, 0.5));
   border-bottom: 1px solid var(--co-border, rgba(99, 155, 255, 0.1));
   display: flex;
   gap: 16px;
@@ -109,7 +109,7 @@ const codeSnippet = computed(() => {
 }
 
 .cb-demo-code summary:hover {
-  color: var(--co-blue-400, #60a5fa);
+  color: var(--co-inline-link, #60a5fa);
 }
 
 .cb-demo-code pre {

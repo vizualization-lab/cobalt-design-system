@@ -1,10 +1,28 @@
 <script setup lang="ts">
 import { useData, useRoute } from 'vitepress';
+import { ref, onMounted, watch } from 'vue';
 import CobaltSidebar from './CobaltSidebar.vue';
 import CobaltHome from './CobaltHome.vue';
 
 const { frontmatter } = useData();
 const route = useRoute();
+
+const isDark = ref(true);
+
+onMounted(() => {
+  const saved = localStorage.getItem('cobalt-theme');
+  if (saved === 'light') {
+    isDark.value = false;
+    document.documentElement.setAttribute('data-theme', 'light');
+  }
+});
+
+function toggleTheme() {
+  isDark.value = !isDark.value;
+  const theme = isDark.value ? 'dark' : 'light';
+  document.documentElement.setAttribute('data-theme', theme);
+  localStorage.setItem('cobalt-theme', theme);
+}
 </script>
 
 <template>
@@ -42,6 +60,48 @@ const route = useRoute();
         <span class="brand-tag">Design System</span>
       </div>
       <nav class="topbar-nav">
+        <button
+          class="topbar-toggle"
+          @click="toggleTheme"
+          :aria-label="isDark ? 'Switch to light mode' : 'Switch to dark mode'"
+        >
+          <!-- Sun icon (shown in dark mode) -->
+          <svg
+            v-if="isDark"
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <circle cx="12" cy="12" r="5" />
+            <line x1="12" y1="1" x2="12" y2="3" />
+            <line x1="12" y1="21" x2="12" y2="23" />
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+            <line x1="1" y1="12" x2="3" y2="12" />
+            <line x1="21" y1="12" x2="23" y2="12" />
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+          </svg>
+          <!-- Moon icon (shown in light mode) -->
+          <svg
+            v-else
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" />
+          </svg>
+        </button>
         <a href="https://github.com" class="topbar-link" target="_blank" rel="noopener">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
             <path
@@ -74,7 +134,7 @@ const route = useRoute();
 
 /* ── Reset & Globals ──────────────────────────────────────────── */
 :root {
-  /* Cobalt palette */
+  /* Cobalt palette — Dark (default) */
   --co-midnight: #0a1628;
   --co-deep: #0f1d32;
   --co-navy: #152238;
@@ -99,6 +159,36 @@ const route = useRoute();
   --co-surface: rgba(15, 29, 50, 0.6);
   --co-surface-raised: rgba(21, 34, 56, 0.8);
 
+  /* Semantic colors for themed alpha values */
+  --co-topbar-bg: linear-gradient(180deg, rgba(10, 22, 40, 0.95) 0%, rgba(10, 22, 40, 0.85) 100%);
+  --co-sidebar-bg: linear-gradient(180deg, rgba(10, 22, 40, 0.7) 0%, rgba(10, 22, 40, 0.5) 100%);
+  --co-blue-alpha-8: rgba(37, 99, 235, 0.08);
+  --co-blue-alpha-10: rgba(37, 99, 235, 0.1);
+  --co-blue-alpha-12: rgba(37, 99, 235, 0.12);
+  --co-blue-alpha-15: rgba(37, 99, 235, 0.15);
+  --co-blue-alpha-18: rgba(37, 99, 235, 0.18);
+  --co-blue-alpha-20: rgba(37, 99, 235, 0.2);
+  --co-blue-alpha-25: rgba(37, 99, 235, 0.25);
+  --co-blue-alpha-40: rgba(37, 99, 235, 0.4);
+  --co-blue-alpha-50: rgba(37, 99, 235, 0.5);
+  --co-code-bg: rgba(37, 99, 235, 0.1);
+  --co-code-border: rgba(37, 99, 235, 0.12);
+  --co-code-color: var(--co-blue-300);
+  --co-inline-link: var(--co-blue-400);
+  --co-h3-color: var(--co-blue-300);
+  --co-selection-bg: rgba(37, 99, 235, 0.3);
+  --co-selection-color: white;
+  --co-grain-opacity: 0.035;
+  --co-icon-glow: drop-shadow(0 0 8px rgba(37, 99, 235, 0.3));
+  --co-hero-glow: radial-gradient(
+    ellipse at center,
+    rgba(37, 99, 235, 0.12) 0%,
+    rgba(37, 99, 235, 0.04) 40%,
+    transparent 70%
+  );
+  --co-scrollbar-thumb: var(--co-steel);
+  --co-scrollbar-hover: var(--co-blue-600);
+
   /* Typography */
   --co-font-body: 'DM Sans', system-ui, sans-serif;
   --co-font-mono: 'JetBrains Mono', 'Fira Code', monospace;
@@ -110,6 +200,59 @@ const route = useRoute();
   /* Transitions */
   --co-ease: cubic-bezier(0.2, 0, 0, 1);
   --co-duration: 200ms;
+}
+
+/* ── Light Mode ──────────────────────────────────────────────── */
+[data-theme='light'] {
+  --co-midnight: #f8fafd;
+  --co-deep: #f1f5fb;
+  --co-navy: #e8eef6;
+  --co-slate: #dce4f0;
+  --co-steel: #c5d1e3;
+  --co-shimmer: rgba(37, 99, 235, 0.06);
+  --co-text-primary: #0f1d32;
+  --co-text-secondary: #3d5274;
+  --co-text-muted: #6b82a6;
+  --co-border: rgba(37, 99, 235, 0.1);
+  --co-border-strong: rgba(37, 99, 235, 0.16);
+  --co-surface: rgba(226, 234, 248, 0.6);
+  --co-surface-raised: rgba(240, 245, 253, 0.9);
+  --co-topbar-bg: linear-gradient(
+    180deg,
+    rgba(248, 250, 253, 0.95) 0%,
+    rgba(248, 250, 253, 0.88) 100%
+  );
+  --co-sidebar-bg: linear-gradient(
+    180deg,
+    rgba(241, 245, 251, 0.85) 0%,
+    rgba(248, 250, 253, 0.7) 100%
+  );
+  --co-blue-alpha-8: rgba(37, 99, 235, 0.06);
+  --co-blue-alpha-10: rgba(37, 99, 235, 0.08);
+  --co-blue-alpha-12: rgba(37, 99, 235, 0.08);
+  --co-blue-alpha-15: rgba(37, 99, 235, 0.1);
+  --co-blue-alpha-18: rgba(37, 99, 235, 0.12);
+  --co-blue-alpha-20: rgba(37, 99, 235, 0.14);
+  --co-blue-alpha-25: rgba(37, 99, 235, 0.18);
+  --co-blue-alpha-40: rgba(37, 99, 235, 0.3);
+  --co-blue-alpha-50: rgba(37, 99, 235, 0.4);
+  --co-code-bg: rgba(37, 99, 235, 0.07);
+  --co-code-border: rgba(37, 99, 235, 0.1);
+  --co-code-color: var(--co-blue-700);
+  --co-inline-link: var(--co-blue-600);
+  --co-h3-color: var(--co-blue-700);
+  --co-selection-bg: rgba(37, 99, 235, 0.2);
+  --co-selection-color: #0f1d32;
+  --co-grain-opacity: 0.02;
+  --co-icon-glow: drop-shadow(0 0 6px rgba(37, 99, 235, 0.15));
+  --co-hero-glow: radial-gradient(
+    ellipse at center,
+    rgba(37, 99, 235, 0.08) 0%,
+    rgba(37, 99, 235, 0.02) 40%,
+    transparent 70%
+  );
+  --co-scrollbar-thumb: var(--co-slate);
+  --co-scrollbar-hover: var(--co-blue-500);
 }
 
 *,
@@ -142,7 +285,7 @@ body {
   inset: 0;
   z-index: 0;
   pointer-events: none;
-  opacity: 0.035;
+  opacity: var(--co-grain-opacity);
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   background-size: 200px 200px;
 }
@@ -159,7 +302,7 @@ body {
   align-items: center;
   justify-content: space-between;
   padding: 0 24px;
-  background: linear-gradient(180deg, rgba(10, 22, 40, 0.95) 0%, rgba(10, 22, 40, 0.85) 100%);
+  background: var(--co-topbar-bg);
   backdrop-filter: blur(16px) saturate(1.4);
   border-bottom: 1px solid var(--co-border);
 }
@@ -172,7 +315,7 @@ body {
 
 .brand-icon {
   display: flex;
-  filter: drop-shadow(0 0 8px rgba(37, 99, 235, 0.3));
+  filter: var(--co-icon-glow);
 }
 
 .brand-name {
@@ -208,6 +351,25 @@ body {
 }
 
 .topbar-link:hover {
+  color: var(--co-text-primary);
+  background: var(--co-shimmer);
+}
+
+.topbar-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  border: none;
+  background: none;
+  color: var(--co-text-secondary);
+  cursor: pointer;
+  transition: all var(--co-duration) var(--co-ease);
+}
+
+.topbar-toggle:hover {
   color: var(--co-text-primary);
   background: var(--co-shimmer);
 }
@@ -286,7 +448,7 @@ body {
   font-size: 1.1rem;
   font-weight: 600;
   letter-spacing: -0.01em;
-  color: var(--co-blue-300);
+  color: var(--co-h3-color);
   margin-top: 36px;
   margin-bottom: 12px;
 }
@@ -299,24 +461,24 @@ body {
 }
 
 .cobalt-article a {
-  color: var(--co-blue-400);
+  color: var(--co-inline-link);
   text-decoration: none;
   border-bottom: 1px solid transparent;
   transition: border-color var(--co-duration) var(--co-ease);
 }
 
 .cobalt-article a:hover {
-  border-bottom-color: var(--co-blue-400);
+  border-bottom-color: var(--co-inline-link);
 }
 
 .cobalt-article code {
   font-family: var(--co-font-mono);
   font-size: 0.85em;
-  background: rgba(37, 99, 235, 0.1);
-  color: var(--co-blue-300);
+  background: var(--co-code-bg);
+  color: var(--co-code-color);
   padding: 2px 7px;
   border-radius: 5px;
-  border: 1px solid rgba(37, 99, 235, 0.12);
+  border: 1px solid var(--co-code-border);
 }
 
 .cobalt-article pre {
@@ -436,7 +598,7 @@ body {
 
 /* Override VitePress defaults that leak through */
 .vp-doc a {
-  color: var(--co-blue-400) !important;
+  color: var(--co-inline-link) !important;
   text-decoration: none !important;
 }
 
@@ -475,11 +637,11 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--co-steel);
+  background: var(--co-scrollbar-thumb);
   border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--co-blue-600);
+  background: var(--co-scrollbar-hover);
 }
 </style>

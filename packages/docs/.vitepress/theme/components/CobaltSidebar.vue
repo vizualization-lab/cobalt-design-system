@@ -190,7 +190,7 @@ function isGroupActive(group: NavGroup): boolean {
   z-index: 50;
   display: flex;
   flex-direction: column;
-  background: linear-gradient(180deg, rgba(10, 22, 40, 0.7) 0%, rgba(10, 22, 40, 0.5) 100%);
+  background: var(--co-sidebar-bg);
   border-right: 1px solid var(--co-border);
   overflow-y: auto;
   overflow-x: hidden;
@@ -246,7 +246,7 @@ function isGroupActive(group: NavGroup): boolean {
 }
 
 .group-header.is-active {
-  color: var(--co-blue-300);
+  color: var(--co-code-color);
 }
 
 .group-icon {
@@ -263,12 +263,12 @@ function isGroupActive(group: NavGroup): boolean {
 }
 
 .group-header:hover .group-icon {
-  background: rgba(37, 99, 235, 0.15);
+  background: var(--co-blue-alpha-15);
 }
 
 .group-header.is-active .group-icon {
-  background: rgba(37, 99, 235, 0.18);
-  color: var(--co-blue-300);
+  background: var(--co-blue-alpha-18);
+  color: var(--co-code-color);
 }
 
 .group-label {
@@ -340,10 +340,10 @@ function isGroupActive(group: NavGroup): boolean {
 }
 
 .nav-item.is-active .nav-item-indicator {
-  background: rgba(37, 99, 235, 0.15);
+  background: var(--co-blue-alpha-15);
   box-shadow:
-    inset 0 0 0 1px rgba(37, 99, 235, 0.2),
-    0 0 16px -4px rgba(37, 99, 235, 0.2);
+    inset 0 0 0 1px var(--co-blue-alpha-20),
+    0 0 16px -4px var(--co-blue-alpha-20);
 }
 
 .nav-item-dot {
@@ -359,7 +359,7 @@ function isGroupActive(group: NavGroup): boolean {
 .nav-item.is-active .nav-item-dot {
   background: var(--co-blue-400);
   opacity: 1;
-  box-shadow: 0 0 8px rgba(37, 99, 235, 0.5);
+  box-shadow: 0 0 8px var(--co-blue-alpha-50);
 }
 
 .nav-item:hover .nav-item-dot {
@@ -367,7 +367,7 @@ function isGroupActive(group: NavGroup): boolean {
 }
 
 .nav-item.is-active {
-  color: var(--co-blue-300);
+  color: var(--co-code-color);
   font-weight: 500;
 }
 
@@ -400,9 +400,9 @@ function isGroupActive(group: NavGroup): boolean {
   text-transform: uppercase;
   letter-spacing: 0.08em;
   color: var(--co-blue-400);
-  background: rgba(37, 99, 235, 0.12);
+  background: var(--co-blue-alpha-12);
   padding: 2px 7px;
   border-radius: 4px;
-  border: 1px solid rgba(37, 99, 235, 0.15);
+  border: 1px solid var(--co-blue-alpha-15);
 }
 </style>
