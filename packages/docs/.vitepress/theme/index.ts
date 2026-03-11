@@ -2,6 +2,7 @@ import type { Theme } from 'vitepress';
 import CobaltLayout from './components/CobaltLayout.vue';
 import ComponentDemo from '../../components/ComponentDemo.vue';
 import CodeTabs from '../../components/CodeTabs.vue';
+import ColorSwatch from '../../components/ColorSwatch.vue';
 
 // Shoelace base theme (required for sl-* component styles)
 import '@shoelace-style/shoelace/dist/themes/light.css';
@@ -18,6 +19,7 @@ export default {
   enhanceApp({ app }) {
     app.component('ComponentDemo', ComponentDemo);
     app.component('CodeTabs', CodeTabs);
+    app.component('ColorSwatch', ColorSwatch);
 
     // Register Cobalt web components (client-side only)
     if (typeof window !== 'undefined') {

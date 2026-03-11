@@ -6,19 +6,19 @@ The Cobalt color system is organized into **primitive palettes** and **semantic 
 
 Each primitive scale runs from `50` (lightest) to `950` (darkest).
 
-| Scale | Blue      | Gray      | Green     | Red       | Amber     |
-| ----- | --------- | --------- | --------- | --------- | --------- |
-| 50    | `#eff6ff` | `#f9fafb` | `#f0fdf4` | `#fef2f2` | `#fffbeb` |
-| 100   | `#dbeafe` | `#f3f4f6` | `#dcfce7` | `#fee2e2` | `#fef3c7` |
-| 200   | `#bfdbfe` | `#e5e7eb` | `#bbf7d0` | `#fecaca` | `#fde68a` |
-| 300   | `#93c5fd` | `#d1d5db` | `#86efac` | `#fca5a5` | `#fcd34d` |
-| 400   | `#60a5fa` | `#9ca3af` | `#4ade80` | `#f87171` | `#fbbf24` |
-| 500   | `#3b82f6` | `#6b7280` | `#22c55e` | `#ef4444` | `#f59e0b` |
-| 600   | `#2563eb` | `#4b5563` | `#16a34a` | `#dc2626` | `#d97706` |
-| 700   | `#1d4ed8` | `#374151` | `#15803d` | `#b91c1c` | `#b45309` |
-| 800   | `#1e40af` | `#1f2937` | `#166534` | `#991b1b` | `#92400e` |
-| 900   | `#1e3a8a` | `#111827` | `#14532d` | `#7f1d1d` | `#78350f` |
-| 950   | `#172554` | `#030712` | `#052e16` | `#450a0a` | `#451a03` |
+<ColorSwatch :colors="[
+  { scale: '50',  blue: '#eff6ff', gray: '#f9fafb', green: '#f0fdf4', red: '#fef2f2', amber: '#fffbeb' },
+  { scale: '100', blue: '#dbeafe', gray: '#f3f4f6', green: '#dcfce7', red: '#fee2e2', amber: '#fef3c7' },
+  { scale: '200', blue: '#bfdbfe', gray: '#e5e7eb', green: '#bbf7d0', red: '#fecaca', amber: '#fde68a' },
+  { scale: '300', blue: '#93c5fd', gray: '#d1d5db', green: '#86efac', red: '#fca5a5', amber: '#fcd34d' },
+  { scale: '400', blue: '#60a5fa', gray: '#9ca3af', green: '#4ade80', red: '#f87171', amber: '#fbbf24' },
+  { scale: '500', blue: '#3b82f6', gray: '#6b7280', green: '#22c55e', red: '#ef4444', amber: '#f59e0b' },
+  { scale: '600', blue: '#2563eb', gray: '#4b5563', green: '#16a34a', red: '#dc2626', amber: '#d97706' },
+  { scale: '700', blue: '#1d4ed8', gray: '#374151', green: '#15803d', red: '#b91c1c', amber: '#b45309' },
+  { scale: '800', blue: '#1e40af', gray: '#1f2937', green: '#166534', red: '#991b1b', amber: '#92400e' },
+  { scale: '900', blue: '#1e3a8a', gray: '#111827', green: '#14532d', red: '#7f1d1d', amber: '#78350f' },
+  { scale: '950', blue: '#172554', gray: '#030712', green: '#052e16', red: '#450a0a', amber: '#451a03' },
+]" />
 
 ## Semantic tokens
 
