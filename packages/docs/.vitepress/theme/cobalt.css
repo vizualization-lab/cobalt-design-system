@@ -1,0 +1,52 @@
+/* ── Cobalt Base — Override VitePress defaults ──────────────── */
+
+/* Suppress VitePress's default layout entirely */
+.VPNav,
+.VPSidebar,
+.VPNavBar,
+.VPLocalNav,
+.VPContent,
+.VPFooter,
+.VPDoc .aside {
+  display: none !important;
+}
+
+/* Remove VitePress body styling */
+:root {
+  --vp-c-bg: var(--co-midnight) !important;
+  --vp-c-bg-alt: var(--co-deep) !important;
+  --vp-c-bg-soft: var(--co-surface) !important;
+  --vp-c-text-1: var(--co-text-primary) !important;
+  --vp-c-text-2: var(--co-text-secondary) !important;
+  --vp-c-text-3: var(--co-text-muted) !important;
+  --vp-c-divider: var(--co-border) !important;
+  --vp-c-brand-1: var(--co-blue-600) !important;
+  --vp-font-family-base: var(--co-font-body) !important;
+  --vp-font-family-mono: var(--co-font-mono) !important;
+}
+
+/* Kill the default VitePress container width for doc pages */
+.VPDoc .container {
+  max-width: none !important;
+}
+
+.VPDoc {
+  padding: 0 !important;
+}
+
+.VPDoc .content-container {
+  max-width: none !important;
+  padding: 0 !important;
+}
+
+/* Ensure code blocks use our font */
+code,
+pre code {
+  font-family: var(--co-font-mono) !important;
+}
+
+/* Selection color */
+::selection {
+  background: rgba(37, 99, 235, 0.3);
+  color: white;
+}
