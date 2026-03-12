@@ -21,8 +21,33 @@
   --vp-c-text-3: var(--co-text-muted) !important;
   --vp-c-divider: var(--co-border) !important;
   --vp-c-brand-1: var(--co-blue-600) !important;
+  --vp-c-brand-soft: var(--co-blue-alpha-10) !important;
+  --vp-c-default-soft: var(--co-surface) !important;
+  --vp-c-neutral-inverse: #fff;
   --vp-font-family-base: var(--co-font-body) !important;
   --vp-font-family-mono: var(--co-font-mono) !important;
+
+  /* Local search modal */
+  --vp-backdrop-bg-color: rgba(0, 0, 0, 0.6);
+  --vp-local-search-bg: var(--co-deep);
+  --vp-local-search-result-bg: var(--co-surface);
+  --vp-local-search-result-border: var(--co-border);
+  --vp-local-search-result-selected-bg: var(--co-surface-raised);
+  --vp-local-search-result-selected-border: var(--co-blue-600);
+  --vp-local-search-highlight-bg: var(--co-blue-600);
+  --vp-local-search-highlight-text: #fff;
+}
+
+[data-theme='light'] {
+  --vp-c-neutral-inverse: #fff;
+  --vp-backdrop-bg-color: rgba(0, 0, 0, 0.4);
+  --vp-local-search-bg: #fff;
+  --vp-local-search-result-bg: var(--co-surface);
+  --vp-local-search-result-border: var(--co-border);
+  --vp-local-search-result-selected-bg: var(--co-surface-raised);
+  --vp-local-search-result-selected-border: var(--co-blue-600);
+  --vp-local-search-highlight-bg: var(--co-blue-600);
+  --vp-local-search-highlight-text: #fff;
 }
 
 /* Kill the default VitePress container width for doc pages */
@@ -49,4 +74,104 @@ pre code {
 ::selection {
   background: var(--co-selection-bg);
   color: var(--co-selection-color);
+}
+
+/* ── Local Search Modal ────────────────────────────────────── */
+.VPLocalSearchBox[data-v-f2e37689] {
+  z-index: 200 !important;
+}
+
+/* Fallback: target by class if scoped hash changes across versions */
+.VPLocalSearchBox {
+  z-index: 200 !important;
+}
+
+.VPLocalSearchBox .shell {
+  background: var(--vp-local-search-bg) !important;
+  border: 1px solid var(--co-border-strong) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.3) !important;
+}
+
+.VPLocalSearchBox .backdrop {
+  background: var(--vp-backdrop-bg-color) !important;
+  backdrop-filter: blur(4px);
+}
+
+.VPLocalSearchBox .search-bar {
+  border: 1px solid var(--co-border-strong) !important;
+  border-radius: 8px !important;
+  background: var(--co-surface) !important;
+  padding: 4px 8px !important;
+  gap: 4px;
+}
+
+.VPLocalSearchBox .search-bar:focus-within {
+  border-color: var(--co-blue-600) !important;
+}
+
+.VPLocalSearchBox .search-actions {
+  flex-shrink: 0;
+  gap: 2px;
+}
+
+.VPLocalSearchBox .search-actions button {
+  padding: 6px;
+  border: none !important;
+  border-radius: 6px;
+  background: transparent !important;
+  color: var(--co-text-muted);
+  opacity: 0.7;
+  transition: all var(--co-duration, 200ms) ease;
+}
+
+.VPLocalSearchBox .search-actions button:not([disabled]):hover,
+.VPLocalSearchBox .search-actions button.detailed-list {
+  background: var(--co-blue-alpha-10, rgba(37, 99, 235, 0.1)) !important;
+  color: var(--co-blue-600) !important;
+  opacity: 1;
+}
+
+.VPLocalSearchBox .search-actions button:disabled {
+  opacity: 0.3;
+}
+
+.VPLocalSearchBox .search-input {
+  color: var(--co-text-primary) !important;
+  font-family: var(--co-font-body) !important;
+}
+
+.VPLocalSearchBox .search-input::placeholder {
+  color: var(--co-text-muted) !important;
+}
+
+.VPLocalSearchBox .result {
+  border-radius: 8px !important;
+  background: var(--vp-local-search-result-bg) !important;
+}
+
+.VPLocalSearchBox .result.selected {
+  background: var(--vp-local-search-result-selected-bg) !important;
+}
+
+.VPLocalSearchBox .search-keyboard-shortcuts {
+  color: var(--co-text-muted) !important;
+}
+
+.VPLocalSearchBox .search-keyboard-shortcuts kbd {
+  background: var(--co-surface) !important;
+  border-color: var(--co-border) !important;
+  color: var(--co-text-secondary) !important;
+}
+
+.VPLocalSearchBox .no-results {
+  color: var(--co-text-muted) !important;
+}
+
+.VPLocalSearchBox .title {
+  color: var(--co-text-primary) !important;
+}
+
+.VPLocalSearchBox .excerpt {
+  color: var(--co-text-secondary) !important;
 }

@@ -3,6 +3,7 @@ import { useData, useRoute } from 'vitepress';
 import { ref, onMounted, watch, onUnmounted } from 'vue';
 import CobaltSidebar from './CobaltSidebar.vue';
 import CobaltHome from './CobaltHome.vue';
+import VPNavBarSearch from 'vitepress/dist/client/theme-default/components/VPNavBarSearch.vue';
 
 const { frontmatter } = useData();
 const route = useRoute();
@@ -99,6 +100,7 @@ function toggleSidebar() {
         <span class="brand-tag">Design System</span>
       </div>
       <nav class="topbar-nav">
+        <VPNavBarSearch />
         <button
           class="topbar-toggle"
           @click="toggleTheme"
@@ -379,6 +381,43 @@ body {
   color: var(--co-text-muted);
   padding-left: 10px;
   border-left: 1px solid var(--co-border-strong);
+}
+
+/* ── Search ─────────────────────────────────────────────────── */
+.topbar-nav :deep(.VPNavBarSearch) {
+  display: flex;
+  align-items: center;
+  flex-grow: 0;
+  padding: 0;
+}
+
+.topbar-nav :deep(.DocSearch-Button) {
+  background: var(--co-surface) !important;
+  border: 1px solid var(--co-border) !important;
+  border-radius: 10px !important;
+  color: var(--co-text-secondary);
+  height: 36px;
+  width: auto;
+}
+
+.topbar-nav :deep(.DocSearch-Button:hover) {
+  border-color: var(--co-border-strong) !important;
+  background: var(--co-surface-raised) !important;
+}
+
+.topbar-nav :deep(.DocSearch-Search-Icon) {
+  color: var(--co-text-muted) !important;
+}
+
+.topbar-nav :deep(.DocSearch-Button-Placeholder) {
+  color: var(--co-text-muted) !important;
+  font-family: var(--co-font-body) !important;
+}
+
+.topbar-nav :deep(.DocSearch-Button-Key) {
+  border-color: var(--co-border) !important;
+  color: var(--co-text-muted) !important;
+  font-family: var(--co-font-body) !important;
 }
 
 .topbar-nav {

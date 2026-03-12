@@ -18,6 +18,9 @@ export default defineConfig({
     ],
   ],
   themeConfig: {
+    search: {
+      provider: 'local',
+    },
     nav: [
       { text: 'Get Started', link: '/getting-started/' },
       { text: 'Foundations', link: '/foundations/' },
@@ -99,7 +102,13 @@ export default defineConfig({
   },
   vite: {
     optimizeDeps: {
-      include: ['lit', '@shoelace-style/shoelace', '@cobalt/components'],
+      include: [
+        'lit',
+        '@shoelace-style/shoelace',
+        '@cobalt/components',
+        '@phosphor-icons/vue',
+        '@phosphor-icons/core',
+      ],
     },
   },
 });
