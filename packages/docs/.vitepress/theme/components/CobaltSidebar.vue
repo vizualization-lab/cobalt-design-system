@@ -104,9 +104,13 @@ const navigation: NavGroup[] = [
   },
 ];
 
-// Track open groups
+// Track open groups — auto-open groups that contain the active page
 const openGroups = ref<Set<string>>(
-  new Set(navigation.filter((g) => g.defaultOpen).map((g) => g.label)),
+  new Set(
+    navigation
+      .filter((g) => g.defaultOpen || g.items.some((item) => isActive(item.link)))
+      .map((g) => g.label),
+  ),
 );
 
 function toggleGroup(label: string) {
@@ -122,7 +126,7 @@ function toggleGroup(label: string) {
 function isActive(link: string | undefined): boolean {
   if (!link) return false;
   const currentPath = route.path.replace(/\.html$/, '').replace(/\/$/, '') || '/';
-  const targetPath = link.replace(/\/$/, '') || '/';
+  const targetPath = withBase(link).replace(/\/$/, '') || '/';
   return currentPath === targetPath;
 }
 
