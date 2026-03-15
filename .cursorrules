@@ -1,0 +1,72 @@
+# Cobalt Design System
+
+You are working in the Cobalt Design System — a Lit + Shoelace web component library with React, Vue, and Angular wrappers. Monorepo managed with pnpm workspaces.
+
+## Packages
+
+- `@cobalt/components` — Lit web components (packages/components/)
+- `@cobalt/tokens` — Design tokens via Style Dictionary (packages/tokens/)
+- `@cobalt/react` — React wrappers (packages/react/)
+- `@cobalt/vue` — Vue wrappers (packages/vue/)
+- `@cobalt/angular` — Angular wrappers (packages/angular/)
+- `@cobalt/icons` — Icon set (packages/icons/)
+- `@cobalt/docs` — VitePress docs site (packages/docs/)
+
+## Component Patterns
+
+Components register `<co-*>` custom elements. Import per-component entry points:
+
+```js
+import '@cobalt/components/co-button';  // Good
+// import '@cobalt/components';          // Bad — registers everything
+```
+
+### Framework usage:
+
+- **Web Component:** `<co-button variant="primary">Save</co-button>`
+- **React:** `import { Button } from '@cobalt/react'` → `<Button variant="primary">Save</Button>`
+- **Vue:** `import { CoButton } from '@cobalt/vue'` → `<CoButton variant="primary">Save</CoButton>`
+- **Angular:** `import { CobaltButtonModule } from '@cobalt/angular'` → `<co-button variant="primary">Save</co-button>`
+
+## co-button
+
+Variants: `primary`, `secondary`, `danger`, `ghost`. Sizes: `sm`, `md`, `lg`.
+Props: `variant`, `size`, `disabled`, `loading`, `type`, `href`, `target`.
+Events: `co-focus`, `co-blur`. Slots: default, `prefix`, `suffix`.
+
+## Design Tokens
+
+CSS custom properties with `--co-` prefix. Import `@cobalt/tokens/css/tokens.css`.
+
+```css
+background: var(--co-color-primary-600);
+padding: var(--co-spacing-4);
+border-radius: var(--co-radius-md);
+box-shadow: var(--co-shadow-md);
+font-family: var(--co-font-family-sans);
+```
+
+Always use semantic tokens over hard-coded values or primitives.
+Categories: color, spacing, radius, shadow, font, z-index, transition, breakpoint.
+
+## File Naming (kebab-case)
+
+- `co-{name}.ts` — component source
+- `co-{name}.styles.ts` — component styles
+- `co-{name}.test.ts` — unit tests
+- `co-{name}.a11y.test.ts` — accessibility tests
+
+## Conventions
+
+- Custom events: `co-` prefix (e.g., `co-change`, `co-focus`)
+- CSS custom properties: `--co-{component}-{property}-{variant}-{state}`
+- TypeScript: strict mode, prefer `interface`, avoid `any`
+- Properties: `reflect: true` when affecting styling/a11y
+- Commits: Conventional Commits — `feat(co-button): add ghost variant`
+- Tests: unit + a11y tests, 90% coverage, use @open-wc/testing + axe-core
+
+## Reference Files
+
+- Component APIs: `packages/components/custom-elements.json`
+- All tokens: `packages/tokens/dist/tokens.json`
+- Coding standards: `packages/docs/contributing/coding-standards.md`
