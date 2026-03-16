@@ -24,7 +24,7 @@
     "generate-styles:watch": "node scripts/generate-styles.js --watch",
     "generate-styles:check": "node scripts/generate-styles.js --check",
     "build": "npm run generate-styles && tsc -p tsconfig.test.json && npm run analyze",
-    "analyze": "cem analyze --litelement",
+    "analyze": "cem analyze --litelement --globs 'src/**/*.ts'",
     "test": "wtr",
     "test:watch": "wtr --watch",
     "clean": "rm -rf dist"

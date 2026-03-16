@@ -76,13 +76,18 @@ pnpm add @cobalt/angular
 ```
 
 ```typescript
-// app.module.ts
-import { CobaltButtonModule } from '@cobalt/angular';
+// app.component.ts
+import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { CoButtonDirective } from '@cobalt/angular';
 
-@NgModule({
-  imports: [CobaltButtonModule],
+@Component({
+  selector: 'app-root',
+  standalone: true,
+  imports: [CoButtonDirective],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  templateUrl: './app.component.html',
 })
-export class AppModule {}
+export class AppComponent {}
 ```
 
 ```html

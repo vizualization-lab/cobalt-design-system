@@ -173,15 +173,28 @@ async function handleClick() {
 <template #angular>
 
 ```typescript
-// app.module.ts — import CobaltButtonModule
-import { NgModule } from '@angular/core';
-import { CobaltButtonModule } from '@cobalt/angular';
+// app.component.ts — standalone component with CoButtonDirective
+import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { CoButtonDirective } from '@cobalt/angular';
 
-@NgModule({
-  imports: [CobaltButtonModule],
-  // ...
+@Component({
+  selector: 'app-root',
+  standalone: true,
+  imports: [CoButtonDirective],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  templateUrl: './app.component.html',
 })
-export class AppModule {}
+export class AppComponent {
+  variant = 'primary';
+  isLoading = false;
+
+  handleClick() {
+    /* ... */
+  }
+  onFocus(event: CustomEvent) {
+    /* ... */
+  }
+}
 ```
 
 ```html

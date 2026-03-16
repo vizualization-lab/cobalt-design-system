@@ -3,12 +3,10 @@ import {
   ElementRef,
   EventEmitter,
   Input,
-  NgModule,
   Output,
   type OnInit,
   type OnChanges,
   type SimpleChanges,
-  CUSTOM_ELEMENTS_SCHEMA,
 } from '@angular/core';
 import type { ButtonVariant, ButtonSize } from '@cobalt/components/button';
 import '@cobalt/components/button';
@@ -26,6 +24,7 @@ import '@cobalt/components/button';
 @Directive({
   // eslint-disable-next-line @angular-eslint/directive-selector
   selector: 'co-button',
+  standalone: true,
 })
 export class CoButtonDirective implements OnInit, OnChanges {
   @Input() variant: ButtonVariant = 'primary';
@@ -70,10 +69,3 @@ export class CoButtonDirective implements OnInit, OnChanges {
     if (this.target !== undefined) el.target = this.target;
   }
 }
-
-@NgModule({
-  declarations: [CoButtonDirective],
-  exports: [CoButtonDirective],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
-})
-export class CobaltButtonModule {}

@@ -41,10 +41,15 @@ function toExportName(cssFilename) {
 function generateTs(cssContent, exportName) {
   // Escape backticks and ${} in CSS content
   const escaped = cssContent.replace(/\\/g, '\\\\').replace(/`/g, '\\`').replace(/\$\{/g, '\\${');
+  // Indent each CSS line by 2 spaces inside the template literal (prettier expects this)
+  const indented = escaped
+    .split('\n')
+    .map((line) => (line.trim() === '' ? '' : '  ' + line))
+    .join('\n');
   return `${HEADER}import { css } from 'lit';
 
 export const ${exportName} = css\`
-${escaped}\`;
+${indented}\`;
 `;
 }
 

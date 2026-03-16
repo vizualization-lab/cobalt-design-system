@@ -135,8 +135,16 @@ import { CoButton } from '@cobalt/vue';
 ### Angular (`@cobalt/angular`)
 
 ```typescript
-import { CobaltButtonModule } from '@cobalt/angular';
-@NgModule({ imports: [CobaltButtonModule] })
+import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { CoButtonDirective } from '@cobalt/angular';
+
+@Component({
+  standalone: true,
+  imports: [CoButtonDirective],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  // ...
+})
+export class AppComponent {}
 ```
 
 ```html
