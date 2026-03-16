@@ -1,9 +1,15 @@
 import { executeServerCommand } from '@web/test-runner-commands';
 
+export interface A11yRuleResult {
+  id: string;
+  tags: string[];
+}
+
 export interface A11yViolationDetail {
   impact: string;
   id: string;
   description: string;
+  tags: string[];
   nodes: string[];
 }
 
@@ -15,7 +21,7 @@ export interface A11yAuditResult {
   violations: number;
   incomplete: number;
   violationDetails: A11yViolationDetail[];
-  passedRules: string[];
+  passedRules: A11yRuleResult[];
 }
 
 export interface A11yAuditOptions {
@@ -48,14 +54,24 @@ export async function runA11yAudit(
     violations: results.violations.length,
     incomplete: results.incomplete.length,
     violationDetails: results.violations.map(
-      (v: { impact: string; id: string; description: string; nodes: { html: string }[] }) => ({
+      (v: {
+        impact: string;
+        id: string;
+        description: string;
+        tags: string[];
+        nodes: { html: string }[];
+      }) => ({
         impact: v.impact,
         id: v.id,
         description: v.description,
+        tags: v.tags,
         nodes: v.nodes.map((n: { html: string }) => n.html),
       }),
     ),
-    passedRules: results.passes.map((p: { id: string }) => p.id),
+    passedRules: results.passes.map((p: { id: string; tags: string[] }) => ({
+      id: p.id,
+      tags: p.tags,
+    })),
   };
 
   // Send result to the server via WTR executeServerCommand

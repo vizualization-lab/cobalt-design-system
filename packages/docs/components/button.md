@@ -207,7 +207,9 @@ export class AppModule {}
 
 ## Accessibility
 
+<ClientOnly>
 <A11yReport component="co-button" />
+</ClientOnly>
 
 ### Keyboard interaction
 

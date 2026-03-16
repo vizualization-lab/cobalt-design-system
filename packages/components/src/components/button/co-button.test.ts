@@ -107,6 +107,8 @@ describe('co-button', () => {
     expect(anchor!.getAttribute('href')).to.equal('https://example.com');
   });
 
+  // WCAG 2.1 AA: automated via axe-core
+  // Manual checks: keyboard (2.1.1), focus visible (2.4.7), target size (2.5.5)
   describe('accessibility', () => {
     it('is accessible in default state', async () => {
       const el = await fixture(html`<co-button>Click me</co-button>`);
