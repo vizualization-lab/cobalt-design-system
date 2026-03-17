@@ -4,6 +4,7 @@ import { ref, onMounted, watch, onUnmounted } from 'vue';
 import CobaltSidebar from './CobaltSidebar.vue';
 import CobaltHome from './CobaltHome.vue';
 import CobaltPrevNext from './CobaltPrevNext.vue';
+import CobaltToc from './CobaltToc.vue';
 import VPNavBarSearch from 'vitepress/dist/client/theme-default/components/VPNavBarSearch.vue';
 
 const { frontmatter } = useData();
@@ -175,6 +176,7 @@ function toggleSidebar() {
           <Content />
           <CobaltPrevNext />
         </article>
+        <CobaltToc v-if="frontmatter.layout !== 'home'" />
       </main>
     </div>
   </div>
