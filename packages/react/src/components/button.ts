@@ -1,10 +1,10 @@
 import React from 'react';
 import { createComponent } from '@lit/react';
-import { CoButton } from '@cobalt/components/button';
+import { CoButton as CoButtonElement } from '@cobalt/components/button';
 
 export const CoButton = createComponent({
   tagName: 'co-button',
-  elementClass: CoButton,
+  elementClass: CoButtonElement,
   react: React,
   events: {
     onCoFocus: 'co-focus',
