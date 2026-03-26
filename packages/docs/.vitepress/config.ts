@@ -55,7 +55,10 @@ export default defineConfig({
       },
       {
         text: 'Components',
-        items: [{ text: 'Button', link: '/components/button' }],
+        items: [
+          { text: 'Button', link: '/components/button' },
+          { text: 'Icon', link: '/components/icon' },
+        ],
       },
       {
         text: 'Patterns',
@@ -101,13 +104,7 @@ export default defineConfig({
   },
   vite: {
     optimizeDeps: {
-      include: [
-        'lit',
-        '@lion/ui/button.js',
-        '@cobalt/components',
-        '@phosphor-icons/vue',
-        '@phosphor-icons/core',
-      ],
+      include: ['lit', '@lion/ui/button.js', '@cobalt/components', '@cobalt/icons'],
     },
   },
 });

@@ -1,165 +1,46 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted, nextTick, watch } from 'vue';
-import { icons as phosphorIcons } from '@phosphor-icons/core';
+import { iconNames, getIcon } from '@cobalt/icons';
+import type { IconStyle } from '@cobalt/icons';
 
-type Weight = 'thin' | 'light' | 'regular' | 'bold' | 'fill' | 'duotone';
-
-interface IconEntry {
-  name: string;
-  pascal_name: string;
-  categories: string[];
-  tags: string[];
-}
-
-const weights: Weight[] = ['thin', 'light', 'regular', 'bold', 'fill', 'duotone'];
+const styles: IconStyle[] = ['filled', 'outlined', 'round', 'sharp', 'two-tone'];
 const pngSizes = [16, 20, 24, 32, 48, 96, 192];
 
 const searchQuery = ref('');
-const selectedWeight = ref<Weight>('regular');
-const selectedIcon = ref<IconEntry | null>(null);
+const selectedStyle = ref<IconStyle>('outlined');
+const selectedIcon = ref<string | null>(null);
 const visibleCount = ref(120);
 const sentinelRef = ref<HTMLElement | null>(null);
 const detailRef = ref<HTMLElement | null>(null);
 const pngSize = ref(32);
+const activeSnippetTab = ref(0);
 
-// SVG cache: weight -> name -> svg string
-const svgCache = new Map<string, Map<string, string>>();
-
-const allIcons: IconEntry[] = phosphorIcons
-  .map((icon: any) => ({
-    name: icon.name,
-    pascal_name: icon.pascal_name,
-    categories: icon.categories || [],
-    tags: icon.tags || [],
-  }))
-  .sort((a: IconEntry, b: IconEntry) => a.name.localeCompare(b.name));
+const snippetTabs = ['Web Component', 'React', 'Vue', 'Angular'];
 
 const filteredIcons = computed(() => {
   const q = searchQuery.value.toLowerCase().trim();
-  if (!q) return allIcons;
+  if (!q) return iconNames;
   const terms = q.split(/\s+/);
-  return allIcons.filter((icon) => {
-    const haystack = [icon.name, ...icon.categories, ...icon.tags].join(' ').toLowerCase();
-    return terms.every((term) => haystack.includes(term));
+  return iconNames.filter((name) => {
+    return terms.every((term) => name.includes(term));
   });
 });
 
 const visibleIcons = computed(() => filteredIcons.value.slice(0, visibleCount.value));
 const totalCount = computed(() => filteredIcons.value.length);
 
-function getSvgSuffix(weight: Weight): string {
-  return weight === 'regular' ? '' : `-${weight}`;
+function getSvgForGrid(name: string): string {
+  const content = getIcon(name, selectedStyle.value);
+  if (!content) return '';
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">${content}</svg>`;
 }
 
-// Glob all SVG files from @phosphor-icons/core at build time
-const svgModules: Record<Weight, Record<string, () => Promise<string>>> = {
-  thin: import.meta.glob('../node_modules/@phosphor-icons/core/assets/thin/*.svg', {
-    query: '?raw',
-    import: 'default',
-  }) as any,
-  light: import.meta.glob('../node_modules/@phosphor-icons/core/assets/light/*.svg', {
-    query: '?raw',
-    import: 'default',
-  }) as any,
-  regular: import.meta.glob('../node_modules/@phosphor-icons/core/assets/regular/*.svg', {
-    query: '?raw',
-    import: 'default',
-  }) as any,
-  bold: import.meta.glob('../node_modules/@phosphor-icons/core/assets/bold/*.svg', {
-    query: '?raw',
-    import: 'default',
-  }) as any,
-  fill: import.meta.glob('../node_modules/@phosphor-icons/core/assets/fill/*.svg', {
-    query: '?raw',
-    import: 'default',
-  }) as any,
-  duotone: import.meta.glob('../node_modules/@phosphor-icons/core/assets/duotone/*.svg', {
-    query: '?raw',
-    import: 'default',
-  }) as any,
-};
-
-async function loadSvg(name: string, weight: Weight): Promise<string> {
-  const cacheKey = weight;
-  if (!svgCache.has(cacheKey)) svgCache.set(cacheKey, new Map());
-  const weightCache = svgCache.get(cacheKey)!;
-  if (weightCache.has(name)) return weightCache.get(name)!;
-
-  const suffix = getSvgSuffix(weight);
-  const modules = svgModules[weight];
-  // Find the matching key (path may vary based on resolution)
-  const fileName = `${name}${suffix}.svg`;
-  const matchingKey = Object.keys(modules).find((k) => k.endsWith(`/${fileName}`));
-
-  if (matchingKey) {
-    const svg = await modules[matchingKey]();
-    weightCache.set(name, svg);
-    return svg;
-  }
-  return '';
+function getRenderedSvg(style: IconStyle, size: number): string {
+  if (!selectedIcon.value) return '';
+  const content = getIcon(selectedIcon.value, style);
+  if (!content) return '';
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 24 24" fill="currentColor">${content}</svg>`;
 }
-
-// Preload visible SVGs for current weight
-const svgMap = ref<Map<string, string>>(new Map());
-
-async function preloadVisible() {
-  const icons = visibleIcons.value;
-  const weight = selectedWeight.value;
-  const newMap = new Map<string, string>();
-
-  // Copy existing cached entries
-  for (const icon of icons) {
-    const cached = svgCache.get(weight)?.get(icon.name);
-    if (cached) newMap.set(icon.name, cached);
-  }
-  svgMap.value = new Map(newMap);
-
-  // Load missing ones
-  const missing = icons.filter((i) => !newMap.has(i.name));
-  if (missing.length === 0) return;
-
-  const batchSize = 30;
-  for (let i = 0; i < missing.length; i += batchSize) {
-    const batch = missing.slice(i, i + batchSize);
-    const results = await Promise.all(
-      batch.map(async (icon) => {
-        const svg = await loadSvg(icon.name, weight);
-        return [icon.name, svg] as [string, string];
-      }),
-    );
-    for (const [name, svg] of results) {
-      newMap.set(name, svg);
-    }
-    svgMap.value = new Map(newMap);
-  }
-}
-
-watch(
-  [visibleIcons, selectedWeight],
-  () => {
-    preloadVisible();
-  },
-  { immediate: true },
-);
-
-// Detail panel SVGs for all weights
-const detailSvgs = ref<Map<Weight, string>>(new Map());
-
-async function loadDetailSvgs(name: string) {
-  const map = new Map<Weight, string>();
-  await Promise.all(
-    weights.map(async (w) => {
-      const svg = await loadSvg(name, w);
-      map.set(w, svg);
-    }),
-  );
-  detailSvgs.value = map;
-}
-
-watch(selectedIcon, (icon) => {
-  if (icon) loadDetailSvgs(icon.name);
-  else detailSvgs.value = new Map();
-});
 
 // Infinite scroll
 let observer: IntersectionObserver | null = null;
@@ -185,12 +66,12 @@ watch(sentinelRef, (el) => {
 });
 
 // Reset visible count on filter change
-watch([searchQuery, selectedWeight], () => {
+watch([searchQuery, selectedStyle], () => {
   visibleCount.value = 120;
 });
 
-function selectIcon(icon: IconEntry) {
-  selectedIcon.value = icon;
+function selectIcon(name: string) {
+  selectedIcon.value = name;
   nextTick(() => {
     if (detailRef.value && window.innerWidth < 768) {
       detailRef.value.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -202,16 +83,11 @@ function closeDetail() {
   selectedIcon.value = null;
 }
 
-function getRenderedSvg(weight: Weight, size: number): string {
-  const raw = detailSvgs.value.get(weight);
-  if (!raw) return '';
-  // Replace viewBox dimensions but set width/height
-  return raw.replace(/<svg/, `<svg width="${size}" height="${size}"`).replace(/\n/g, '');
-}
+const copyLabel = ref('Copy SVG');
 
 async function copySvg() {
   if (!selectedIcon.value) return;
-  const svg = getRenderedSvg(selectedWeight.value, 24);
+  const svg = getRenderedSvg(selectedStyle.value, 24);
   if (svg) {
     await navigator.clipboard.writeText(svg);
     copyLabel.value = 'Copied!';
@@ -219,16 +95,14 @@ async function copySvg() {
   }
 }
 
-const copyLabel = ref('Copy SVG');
-
 async function downloadPng() {
   if (!selectedIcon.value) return;
   const size = pngSize.value;
-  const svg = getRenderedSvg(selectedWeight.value, size);
+  const svg = getRenderedSvg(selectedStyle.value, size);
   if (!svg) return;
 
   const canvas = document.createElement('canvas');
-  const scale = 2; // 2x for retina
+  const scale = 2;
   canvas.width = size * scale;
   canvas.height = size * scale;
   const ctx = canvas.getContext('2d')!;
@@ -243,19 +117,42 @@ async function downloadPng() {
     URL.revokeObjectURL(url);
 
     const link = document.createElement('a');
-    link.download = `${selectedIcon.value!.name}-${selectedWeight.value}-${size}px.png`;
+    link.download = `${selectedIcon.value!}-${selectedStyle.value}-${size}px.png`;
     link.href = canvas.toDataURL('image/png');
     link.click();
   };
   img.src = url;
 }
 
-function vueSnippet(icon: IconEntry): string {
-  return `<Ph${icon.pascal_name} :size="24" weight="${selectedWeight.value}" />`;
+function webComponentSnippet(name: string): string {
+  return `<co-icon name="${name}" variant="${selectedStyle.value}"></co-icon>`;
 }
 
-function reactSnippet(icon: IconEntry): string {
-  return `<${icon.pascal_name} size={24} weight="${selectedWeight.value}" />`;
+function reactSnippet(name: string): string {
+  return `<CoIcon name="${name}" variant="${selectedStyle.value}" />`;
+}
+
+function vueSnippet(name: string): string {
+  return `<CoIcon name="${name}" variant="${selectedStyle.value}" />`;
+}
+
+function angularSnippet(name: string): string {
+  return `<co-icon name="${name}" variant="${selectedStyle.value}"></co-icon>`;
+}
+
+function getSnippet(name: string, tabIndex: number): string {
+  switch (tabIndex) {
+    case 0:
+      return webComponentSnippet(name);
+    case 1:
+      return reactSnippet(name);
+    case 2:
+      return vueSnippet(name);
+    case 3:
+      return angularSnippet(name);
+    default:
+      return '';
+  }
 }
 </script>
 
@@ -264,29 +161,29 @@ function reactSnippet(icon: IconEntry): string {
     <!-- Toolbar -->
     <div class="gallery-toolbar">
       <div class="search-wrap">
-        <svg class="search-icon" width="16" height="16" viewBox="0 0 256 256" fill="currentColor">
+        <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
           <path
-            d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z"
+            d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"
           />
         </svg>
         <input
           v-model="searchQuery"
           type="text"
           class="search-input"
-          placeholder="Search 1,512 icons…"
+          placeholder="Search icons…"
           aria-label="Search icons"
         />
-        <span class="search-count">{{ totalCount }} of {{ allIcons.length }}</span>
+        <span class="search-count">{{ totalCount }} of {{ iconNames.length }}</span>
       </div>
       <div class="weight-selector">
         <button
-          v-for="w in weights"
-          :key="w"
+          v-for="s in styles"
+          :key="s"
           class="weight-btn"
-          :class="{ active: selectedWeight === w }"
-          @click="selectedWeight = w"
+          :class="{ active: selectedStyle === s }"
+          @click="selectedStyle = s"
         >
-          {{ w }}
+          {{ s }}
         </button>
       </div>
     </div>
@@ -297,15 +194,15 @@ function reactSnippet(icon: IconEntry): string {
       <div class="icon-grid-wrap">
         <div class="icon-grid">
           <button
-            v-for="icon in visibleIcons"
-            :key="icon.name"
+            v-for="name in visibleIcons"
+            :key="name"
             class="icon-cell"
-            :class="{ selected: selectedIcon?.name === icon.name }"
-            :title="icon.name"
-            @click="selectIcon(icon)"
+            :class="{ selected: selectedIcon === name }"
+            :title="name"
+            @click="selectIcon(name)"
           >
-            <span class="icon-svg" v-html="svgMap.get(icon.name) || ''" />
-            <span class="icon-label">{{ icon.name }}</span>
+            <span class="icon-svg" v-html="getSvgForGrid(name)" />
+            <span class="icon-label">{{ name }}</span>
           </button>
         </div>
         <div ref="sentinelRef" class="sentinel" />
@@ -319,11 +216,11 @@ function reactSnippet(icon: IconEntry): string {
       <Transition name="detail">
         <div v-if="selectedIcon" ref="detailRef" class="detail-panel">
           <div class="detail-header">
-            <h3 class="detail-title">{{ selectedIcon.name }}</h3>
+            <h3 class="detail-title">{{ selectedIcon }}</h3>
             <button class="detail-close" aria-label="Close" @click="closeDetail">
-              <svg width="20" height="20" viewBox="0 0 256 256" fill="currentColor">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
                 <path
-                  d="M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z"
+                  d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
                 />
               </svg>
             </button>
@@ -339,31 +236,25 @@ function reactSnippet(icon: IconEntry): string {
                 class="size-preview"
                 :title="`${s}px`"
               >
-                <span v-html="getRenderedSvg(selectedWeight, s)" />
+                <span v-html="getRenderedSvg(selectedStyle, s)" />
                 <span class="size-label">{{ s }}</span>
               </span>
             </div>
           </div>
 
-          <!-- Weight comparison -->
+          <!-- Style comparison -->
           <div class="detail-section">
-            <div class="detail-label">Weights</div>
+            <div class="detail-label">Styles</div>
             <div class="detail-weights">
               <button
-                v-for="w in weights"
-                :key="w"
+                v-for="s in styles"
+                :key="s"
                 class="weight-preview"
-                :class="{ active: selectedWeight === w }"
-                @click="selectedWeight = w"
+                :class="{ active: selectedStyle === s }"
+                @click="selectedStyle = s"
               >
-                <span
-                  v-html="
-                    detailSvgs
-                      .get(w)
-                      ?.replace('<svg', '<svg width=&quot;32&quot; height=&quot;32&quot;') || ''
-                  "
-                />
-                <span class="weight-label">{{ w }}</span>
+                <span v-html="getRenderedSvg(s, 32)" />
+                <span class="weight-label">{{ s }}</span>
               </button>
             </div>
           </div>
@@ -373,9 +264,9 @@ function reactSnippet(icon: IconEntry): string {
             <div class="detail-label">Export</div>
             <div class="detail-actions">
               <button class="action-btn" @click="copySvg">
-                <svg width="16" height="16" viewBox="0 0 256 256" fill="currentColor">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
                   <path
-                    d="M216,32H88a8,8,0,0,0-8,8V80H40a8,8,0,0,0-8,8V216a8,8,0,0,0,8,8H168a8,8,0,0,0,8-8V176h40a8,8,0,0,0,8-8V40A8,8,0,0,0,216,32ZM160,208H48V96H160Zm48-48H176V88a8,8,0,0,0-8-8H96V48H208Z"
+                    d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"
                   />
                 </svg>
                 {{ copyLabel }}
@@ -385,10 +276,8 @@ function reactSnippet(icon: IconEntry): string {
                   <option v-for="s in pngSizes" :key="s" :value="s">{{ s }}px</option>
                 </select>
                 <button class="action-btn" @click="downloadPng">
-                  <svg width="16" height="16" viewBox="0 0 256 256" fill="currentColor">
-                    <path
-                      d="M224,152v56a16,16,0,0,1-16,16H48a16,16,0,0,1-16-16V152a8,8,0,0,1,16,0v56H208V152a8,8,0,0,1,16,0Zm-101.66,5.66a8,8,0,0,0,11.32,0l40-40a8,8,0,0,0-11.32-11.32L136,132.69V40a8,8,0,0,0-16,0v92.69L93.66,106.34a8,8,0,0,0-11.32,11.32Z"
-                    />
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z" />
                   </svg>
                   Download PNG
                 </button>
@@ -400,35 +289,20 @@ function reactSnippet(icon: IconEntry): string {
           <div class="detail-section">
             <div class="detail-label">Code</div>
             <div class="code-snippets">
-              <div class="snippet">
-                <div class="snippet-lang">Vue</div>
-                <code class="snippet-code">{{ vueSnippet(selectedIcon) }}</code>
+              <div class="snippet-tabs">
+                <button
+                  v-for="(tab, i) in snippetTabs"
+                  :key="tab"
+                  class="snippet-tab"
+                  :class="{ active: activeSnippetTab === i }"
+                  @click="activeSnippetTab = i"
+                >
+                  {{ tab }}
+                </button>
               </div>
               <div class="snippet">
-                <div class="snippet-lang">React</div>
-                <code class="snippet-code">{{ reactSnippet(selectedIcon) }}</code>
+                <code class="snippet-code">{{ getSnippet(selectedIcon, activeSnippetTab) }}</code>
               </div>
-            </div>
-          </div>
-
-          <!-- Categories & tags -->
-          <div
-            v-if="selectedIcon.categories.length || selectedIcon.tags.length"
-            class="detail-section"
-          >
-            <div class="detail-label">Tags</div>
-            <div class="detail-tags">
-              <span
-                v-for="tag in [
-                  ...selectedIcon.categories,
-                  ...selectedIcon.tags.filter((t) => t !== '*new*'),
-                ]"
-                :key="tag"
-                class="tag"
-                @click="searchQuery = tag"
-              >
-                {{ tag }}
-              </span>
             </div>
           </div>
         </div>
@@ -710,7 +584,7 @@ function reactSnippet(icon: IconEntry): string {
   color: var(--gallery-text-muted);
 }
 
-/* Weight comparison */
+/* Style comparison */
 .detail-weights {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -802,26 +676,43 @@ function reactSnippet(icon: IconEntry): string {
 
 /* Code snippets */
 .code-snippets {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.snippet {
   border: 1px solid var(--gallery-border);
   border-radius: 8px;
   overflow: hidden;
 }
 
-.snippet-lang {
-  padding: 4px 10px;
+.snippet-tabs {
+  display: flex;
+  border-bottom: 1px solid var(--gallery-border);
+  background: var(--vp-c-bg-soft, rgba(0, 0, 0, 0.06));
+}
+
+.snippet-tab {
+  flex: 1;
+  padding: 5px 6px;
+  border: none;
+  background: transparent;
+  color: var(--gallery-text-muted);
   font-size: 0.65rem;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: var(--gallery-text-muted);
-  background: var(--vp-c-bg-soft, rgba(0, 0, 0, 0.06));
-  border-bottom: 1px solid var(--gallery-border);
+  letter-spacing: 0.03em;
+  cursor: pointer;
+  transition: all 0.12s;
+  white-space: nowrap;
+}
+
+.snippet-tab:hover {
+  color: var(--gallery-text);
+}
+
+.snippet-tab.active {
+  color: var(--gallery-accent);
+  box-shadow: inset 0 -2px 0 var(--gallery-accent);
+}
+
+.snippet {
+  overflow: hidden;
 }
 
 .snippet-code {
@@ -835,28 +726,6 @@ function reactSnippet(icon: IconEntry): string {
   white-space: pre;
   background: none;
   border: none;
-}
-
-/* Tags */
-.detail-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 4px;
-}
-
-.tag {
-  padding: 2px 8px;
-  border-radius: 999px;
-  background: var(--gallery-accent-soft);
-  color: var(--gallery-text-secondary);
-  font-size: 0.7rem;
-  cursor: pointer;
-  transition: all 0.12s;
-}
-
-.tag:hover {
-  background: var(--gallery-accent);
-  color: #fff;
 }
 
 /* Transitions */

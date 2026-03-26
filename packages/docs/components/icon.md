@@ -1,0 +1,252 @@
+# Icon
+
+The `co-icon` component renders Material Design Icons as inline SVGs. It supports 5 style variants, 4 sizes, and built-in accessibility for both decorative and informative use cases.
+
+## Interactive Demo
+
+<ComponentDemo
+  tag="co-icon"
+  :defaults="{ name: 'home', variant: 'outlined', size: 'md' }"
+  :options="{ variant: ['filled', 'outlined', 'round', 'sharp', 'two-tone'], size: ['xs', 'sm', 'md', 'lg'] }"
+  :textInputs="['name', 'label']"
+/>
+
+## Variants (Styles)
+
+<ClientOnly>
+<div style="display: flex; gap: 16px; align-items: center; margin: 16px 0 24px;">
+  <co-icon name="home" variant="filled" size="lg"></co-icon>
+  <co-icon name="home" variant="outlined" size="lg"></co-icon>
+  <co-icon name="home" variant="round" size="lg"></co-icon>
+  <co-icon name="home" variant="sharp" size="lg"></co-icon>
+  <co-icon name="home" variant="two-tone" size="lg"></co-icon>
+</div>
+</ClientOnly>
+
+| Variant    | Description                                 |
+| ---------- | ------------------------------------------- |
+| `filled`   | Solid filled icons — active/selected states |
+| `outlined` | Default. Outlined icons for general UI use  |
+| `round`    | Rounded corners for a softer appearance     |
+| `sharp`    | Sharp corners for a more geometric look     |
+| `two-tone` | Two-tone fill for added visual depth        |
+
+## Sizes
+
+<ClientOnly>
+<div style="display: flex; gap: 16px; align-items: center; margin: 16px 0 24px;">
+  <co-icon name="star" size="xs"></co-icon>
+  <co-icon name="star" size="sm"></co-icon>
+  <co-icon name="star" size="md"></co-icon>
+  <co-icon name="star" size="lg"></co-icon>
+</div>
+</ClientOnly>
+
+| Size | Token          | Pixels | Typical use                        |
+| ---- | -------------- | ------ | ---------------------------------- |
+| `xs` | `--co-icon-xs` | 16 px  | Inline indicators, badges, tags    |
+| `sm` | `--co-icon-sm` | 20 px  | Inside buttons, form controls      |
+| `md` | `--co-icon-md` | 24 px  | Standalone icons, navigation items |
+| `lg` | `--co-icon-lg` | 32 px  | Empty states, feature highlights   |
+
+## Usage
+
+<CodeTabs :tabs="['Web Component', 'React', 'Vue', 'Angular']">
+
+<template #web-component>
+
+```html
+<!-- Import once in your app -->
+<script type="module">
+  import '@cobalt/components/icon';
+</script>
+
+<!-- Basic usage -->
+<co-icon name="arrow-forward" variant="outlined"></co-icon>
+
+<!-- Different sizes -->
+<co-icon name="check" size="xs"></co-icon>
+<co-icon name="check" size="sm"></co-icon>
+<co-icon name="check" size="md"></co-icon>
+<co-icon name="check" size="lg"></co-icon>
+
+<!-- Informative icon with accessible label -->
+<co-icon name="warning" label="Warning"></co-icon>
+
+<!-- Inside a button -->
+<co-button variant="primary">
+  <co-icon slot="prefix" name="save" size="sm"></co-icon>
+  Save changes
+</co-button>
+```
+
+</template>
+
+<template #react>
+
+```tsx
+import { CoIcon } from '@cobalt/react';
+import { CoButton } from '@cobalt/react';
+
+function App() {
+  return (
+    <>
+      {/* Basic */}
+      <CoIcon name="arrow-forward" variant="outlined" />
+
+      {/* Different sizes */}
+      <CoIcon name="check" size="xs" />
+      <CoIcon name="check" size="lg" />
+
+      {/* Informative */}
+      <CoIcon name="warning" label="Warning" />
+
+      {/* Inside a button */}
+      <CoButton variant="primary">
+        <CoIcon slot="prefix" name="save" size="sm" />
+        Save changes
+      </CoButton>
+    </>
+  );
+}
+```
+
+</template>
+
+<template #vue>
+
+```vue
+<script setup>
+import { CoIcon, CoButton } from '@cobalt/vue';
+</script>
+
+<template>
+  <!-- Basic -->
+  <CoIcon name="arrow-forward" variant="outlined" />
+
+  <!-- Different sizes -->
+  <CoIcon name="check" size="xs" />
+  <CoIcon name="check" size="lg" />
+
+  <!-- Informative -->
+  <CoIcon name="warning" label="Warning" />
+
+  <!-- Inside a button -->
+  <CoButton variant="primary">
+    <CoIcon slot="prefix" name="save" size="sm" />
+    Save changes
+  </CoButton>
+</template>
+```
+
+</template>
+
+<template #angular>
+
+```typescript
+// app.component.ts
+import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { CoIconDirective } from '@cobalt/angular';
+import { CoButtonDirective } from '@cobalt/angular';
+
+@Component({
+  selector: 'app-root',
+  standalone: true,
+  imports: [CoIconDirective, CoButtonDirective],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  templateUrl: './app.component.html',
+})
+export class AppComponent {}
+```
+
+```html
+<!-- app.component.html -->
+
+<!-- Basic -->
+<co-icon name="arrow-forward" variant="outlined"></co-icon>
+
+<!-- Different sizes -->
+<co-icon name="check" size="xs"></co-icon>
+<co-icon name="check" size="lg"></co-icon>
+
+<!-- Informative -->
+<co-icon name="warning" label="Warning"></co-icon>
+
+<!-- Inside a button -->
+<co-button variant="primary">
+  <co-icon slot="prefix" name="save" size="sm"></co-icon>
+  Save changes
+</co-button>
+```
+
+</template>
+
+</CodeTabs>
+
+## Best Practices
+
+### When to use
+
+- **Navigation items** — icons next to text labels to aid scanning
+- **Button prefixes/suffixes** — action cues alongside button text
+- **Status indicators** — success, warning, error states with labels
+- **Empty states** — large decorative icons to illustrate the situation
+
+### When NOT to use
+
+- **Icon-only buttons without labels** — always set `label` or use `aria-label` on the parent
+- **Excessive icon use** — too many icons create visual noise; use sparingly
+- **Custom graphics** — for illustrations or logos, use `<img>` or inline SVG directly
+
+### Content guidelines
+
+- Use `outlined` variant as the default for consistency
+- Use `filled` for active/selected states to provide visual feedback
+- Stick to one size per context — don't mix `xs` and `md` in the same row
+- Always provide a `label` for icon-only controls
+
+## API
+
+### Properties
+
+| Property  | Type                                                         | Default      | Description                                    |
+| --------- | ------------------------------------------------------------ | ------------ | ---------------------------------------------- |
+| `name`    | `string`                                                     | `''`         | Icon name in kebab-case (e.g. `arrow-forward`) |
+| `variant` | `'filled' \| 'outlined' \| 'round' \| 'sharp' \| 'two-tone'` | `'outlined'` | Icon style variant                             |
+| `size`    | `'xs' \| 'sm' \| 'md' \| 'lg'`                               | `'md'`       | Icon size                                      |
+| `label`   | `string \| undefined`                                        | `undefined`  | Accessible label — makes the icon informative  |
+
+### CSS Parts
+
+| Part  | Description           |
+| ----- | --------------------- |
+| `svg` | The inner SVG element |
+
+## Accessibility
+
+### Decorative icons
+
+By default, `co-icon` sets `aria-hidden="true"` and `role="presentation"`. Use this when the icon is next to visible text:
+
+```html
+<co-button>
+  <co-icon slot="prefix" name="delete"></co-icon>
+  Delete
+</co-button>
+```
+
+### Informative icons
+
+When the icon conveys meaning on its own, set the `label` property:
+
+```html
+<co-icon name="warning" label="Warning: unsaved changes"></co-icon>
+```
+
+This sets `role="img"` and `aria-label` on the SVG, making it accessible to screen readers.
+
+| Scenario                   | Approach                                  |
+| -------------------------- | ----------------------------------------- |
+| Icon next to visible label | No `label` needed (decorative by default) |
+| Icon-only button           | Set `aria-label` on the button            |
+| Icon conveying status      | Set `label` on `co-icon`                  |

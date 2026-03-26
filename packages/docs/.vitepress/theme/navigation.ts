@@ -49,7 +49,10 @@ export const navigation: NavGroup[] = [
     label: 'Components',
     icon: 'components',
     defaultOpen: true,
-    items: [{ text: 'Button', link: '/components/button' }],
+    items: [
+      { text: 'Button', link: '/components/button' },
+      { text: 'Icon', link: '/components/icon' },
+    ],
   },
   {
     label: 'Patterns',

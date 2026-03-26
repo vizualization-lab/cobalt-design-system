@@ -264,9 +264,11 @@ watch(state, () => renderKey.value++, { deep: true });
 
 .demo-preview--dark {
   background-color: #0f1d32;
+  color: #e8eef6;
 }
 
 .demo-preview--light {
   background-color: #ffffff;
+  color: #1a2332;
 }
 </style>

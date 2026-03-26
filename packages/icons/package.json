@@ -1,15 +1,25 @@
 {
   "name": "@cobalt/icons",
   "version": "0.0.1",
-  "description": "Icons for the Cobalt Design System",
+  "description": "Material Design Icons registry for the Cobalt Design System",
   "type": "module",
   "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "files": [
     "dist"
   ],
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
   "scripts": {
-    "build": "echo 'placeholder'",
+    "build": "node scripts/build-registry.js",
     "clean": "rm -rf dist"
+  },
+  "dependencies": {
+    "@material-design-icons/svg": "^0.14.13"
   },
   "license": "MIT"
 }

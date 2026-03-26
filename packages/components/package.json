@@ -17,6 +17,10 @@
     "./button": {
       "import": "./dist/components/button/co-button.js",
       "types": "./dist/components/button/co-button.d.ts"
+    },
+    "./icon": {
+      "import": "./dist/components/icon/co-icon.js",
+      "types": "./dist/components/icon/co-icon.d.ts"
     }
   },
   "scripts": {
@@ -30,6 +34,7 @@
     "clean": "rm -rf dist"
   },
   "dependencies": {
+    "@cobalt/icons": "workspace:*",
     "@cobalt/tokens": "workspace:*",
     "@lion/ui": "^0.15.0",
     "lit": "^3.2.0"

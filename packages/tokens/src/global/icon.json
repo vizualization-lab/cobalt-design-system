@@ -1,0 +1,26 @@
+{
+  "co": {
+    "icon": {
+      "xs": {
+        "value": "16px",
+        "type": "sizing",
+        "description": "Extra small icon size — inline indicators, badges, tags"
+      },
+      "sm": {
+        "value": "20px",
+        "type": "sizing",
+        "description": "Small icon size — buttons, form controls"
+      },
+      "md": {
+        "value": "24px",
+        "type": "sizing",
+        "description": "Medium icon size — standalone icons, navigation"
+      },
+      "lg": {
+        "value": "32px",
+        "type": "sizing",
+        "description": "Large icon size — empty states, feature highlights"
+      }
+    }
+  }
+}

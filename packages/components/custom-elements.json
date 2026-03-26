@@ -14,6 +14,14 @@
             "name": "CoButton",
             "module": "./components/button/co-button.js"
           }
+        },
+        {
+          "kind": "js",
+          "name": "CoIcon",
+          "declaration": {
+            "name": "CoIcon",
+            "module": "./components/icon/co-icon.js"
+          }
         }
       ]
     },
@@ -402,6 +410,150 @@
           "declaration": {
             "name": "CoButton",
             "module": "src/components/button/co-button.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/icon/co-icon.styles.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "cobaltIconStyles",
+          "default": "css` /* ── Base ── */ :host { display: inline-flex; align-items: center; justify-content: center; vertical-align: middle; line-height: 0; flex-shrink: 0; color: inherit; } svg { display: block; width: 100%; height: 100%; fill: currentColor; } /* ── Sizes ── */ :host, :host([size='md']) { width: var(--co-icon-md, 24px); height: var(--co-icon-md, 24px); } :host([size='xs']) { width: var(--co-icon-xs, 16px); height: var(--co-icon-xs, 16px); } :host([size='sm']) { width: var(--co-icon-sm, 20px); height: var(--co-icon-sm, 20px); } :host([size='lg']) { width: var(--co-icon-lg, 32px); height: var(--co-icon-lg, 32px); } `"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "cobaltIconStyles",
+          "declaration": {
+            "name": "cobaltIconStyles",
+            "module": "src/components/icon/co-icon.styles.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/icon/co-icon.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "CoIcon",
+          "cssParts": [
+            {
+              "description": "The inner SVG element",
+              "name": "svg"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "name",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "The icon name in kebab-case (e.g. \"arrow-forward\").",
+              "attribute": "name",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "variant",
+              "type": {
+                "text": "IconVariant"
+              },
+              "default": "'outlined'",
+              "description": "The icon style variant.",
+              "attribute": "variant",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "size",
+              "type": {
+                "text": "IconSize"
+              },
+              "default": "'md'",
+              "description": "The icon size.",
+              "attribute": "size",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "label",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "Accessible label. When set, the icon is treated as informative (role=\"img\").",
+              "attribute": "label"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "name",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "The icon name in kebab-case (e.g. \"arrow-forward\").",
+              "fieldName": "name"
+            },
+            {
+              "name": "variant",
+              "type": {
+                "text": "IconVariant"
+              },
+              "default": "'outlined'",
+              "description": "The icon style variant.",
+              "fieldName": "variant"
+            },
+            {
+              "name": "size",
+              "type": {
+                "text": "IconSize"
+              },
+              "default": "'md'",
+              "description": "The icon size.",
+              "fieldName": "size"
+            },
+            {
+              "name": "label",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "Accessible label. When set, the icon is treated as informative (role=\"img\").",
+              "fieldName": "label"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "co-icon",
+          "customElement": true,
+          "summary": "Renders a Material Design icon from the"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "CoIcon",
+          "declaration": {
+            "name": "CoIcon",
+            "module": "src/components/icon/co-icon.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "co-icon",
+          "declaration": {
+            "name": "CoIcon",
+            "module": "src/components/icon/co-icon.ts"
           }
         }
       ]

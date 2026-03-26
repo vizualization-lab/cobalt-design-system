@@ -1,10 +1,10 @@
 # Iconography
 
-Cobalt uses the [Phosphor](https://phosphoricons.com/) icon set — 1,512 icons across 6 weight variants (thin, light, regular, bold, fill, duotone). Icons are delivered as inline SVGs using `currentColor`, giving you full control over color, size, and animation via CSS.
+Cobalt uses [Material Design Icons](https://fonts.google.com/icons) — 2,100+ icons across 5 style variants (filled, outlined, round, sharp, two-tone). Icons are rendered via the `<co-icon>` web component, which uses inline SVGs with `currentColor` for full control over color, size, and animation via CSS.
 
 ## Icon Gallery
 
-Browse, search, and export any icon. Click an icon to see all weights, copy SVG, or download PNG.
+Browse, search, and export any icon. Click an icon to see all styles, copy SVG, or download PNG.
 
 <ClientOnly>
   <IconGallery />
@@ -21,54 +21,54 @@ All icons are designed on a 24 px grid but scale cleanly to the four supported s
 | `--co-icon-md` | 24 px | Standalone icons, navigation items    |
 | `--co-icon-lg` | 32 px | Empty states, feature highlights      |
 
-## Usage with Vue
+## Usage with the `co-icon` Component
 
-```vue
-<script setup>
-import { PhArrowRight, PhCheck } from '@phosphor-icons/vue';
+The recommended way to use icons is through the `<co-icon>` component, which handles SVG rendering, sizing, and accessibility automatically.
+
+### Web Component
+
+```html
+<script type="module">
+  import '@cobalt/components/icon';
 </script>
 
-<template>
-  <PhArrowRight :size="24" weight="regular" />
-  <PhCheck :size="16" weight="bold" />
-</template>
+<co-icon name="arrow-forward" variant="outlined"></co-icon>
+<co-icon name="check" variant="filled" size="sm"></co-icon>
 ```
 
-## Usage with React
+### React
 
 ```tsx
-import { ArrowRight, Check } from '@phosphor-icons/react';
+import { CoIcon } from '@cobalt/react';
 
 function Example() {
   return (
     <>
-      <ArrowRight size={24} weight="regular" />
-      <Check size={16} weight="bold" />
+      <CoIcon name="arrow-forward" variant="outlined" />
+      <CoIcon name="check" variant="filled" size="sm" />
     </>
   );
 }
 ```
 
-## Usage in HTML
+### Vue
 
-When not using a framework package, embed SVGs directly:
+```vue
+<script setup>
+import { CoIcon } from '@cobalt/vue';
+</script>
+
+<template>
+  <CoIcon name="arrow-forward" variant="outlined" />
+  <CoIcon name="check" variant="filled" size="sm" />
+</template>
+```
+
+### Angular
 
 ```html
-<button class="co-button co-button--primary">
-  <svg
-    class="co-icon"
-    width="20"
-    height="20"
-    viewBox="0 0 256 256"
-    fill="currentColor"
-    aria-hidden="true"
-  >
-    <path
-      d="M221.66,133.66l-72,72a8,8,0,0,1-11.32-11.32L196.69,136H40a8,8,0,0,1,0-16H196.69L138.34,61.66a8,8,0,0,1,11.32-11.32l72,72A8,8,0,0,1,221.66,133.66Z"
-    />
-  </svg>
-  Continue
-</button>
+<co-icon name="arrow-forward" variant="outlined"></co-icon>
+<co-icon name="check" variant="filled" size="sm"></co-icon>
 ```
 
 ## Styling with CSS
@@ -76,23 +76,13 @@ When not using a framework package, embed SVGs directly:
 Icons inherit `currentColor` by default, so they match the surrounding text color automatically:
 
 ```css
-.co-icon {
-  width: var(--co-icon-md);
-  height: var(--co-icon-md);
-  flex-shrink: 0;
-  fill: currentColor;
+/* Icon inherits color from parent */
+.nav-item {
+  color: var(--co-color-foreground-default);
 }
 
-.co-button .co-icon {
-  width: var(--co-icon-sm);
-  height: var(--co-icon-sm);
-}
-```
-
-To override color independently of text:
-
-```css
-.co-status-icon--success {
+/* Override color independently */
+.status-icon--success {
   color: var(--co-color-success-600);
 }
 ```
@@ -103,41 +93,48 @@ Icons fall into two categories — **decorative** and **informative** — and ea
 
 ### Decorative icons
 
-Decorative icons sit next to visible text that already conveys the meaning. Hide them from assistive technology:
+Decorative icons sit next to visible text that already conveys the meaning. The `co-icon` component hides them from assistive technology by default (`aria-hidden="true"`):
 
 ```html
-<button>
-  <svg aria-hidden="true"><!-- icon --></svg>
+<co-button>
+  <co-icon slot="prefix" name="delete"></co-icon>
   Delete
-</button>
+</co-button>
 ```
 
 ### Informative icons
 
-Informative icons are the only way the meaning is communicated (e.g., an icon-only button). They need a text alternative:
+Informative icons are the only way the meaning is communicated (e.g., a status indicator). Set the `label` property to make them accessible:
 
 ```html
-<button aria-label="Close dialog">
-  <svg aria-hidden="true"><!-- close icon --></svg>
-</button>
+<co-icon name="warning" label="Warning: unsaved changes"></co-icon>
 ```
 
-| Scenario                   | Attribute                          | Example                   |
-| -------------------------- | ---------------------------------- | ------------------------- |
-| Icon next to visible label | `aria-hidden="true"` on SVG        | Button with text + icon   |
-| Icon-only button           | `aria-label` on button             | Close button with X icon  |
-| Icon conveying status      | `role="img"` + `aria-label` on SVG | Warning icon without text |
+For icon-only buttons, set `aria-label` on the button rather than the icon:
+
+```html
+<co-button aria-label="Close dialog">
+  <co-icon name="close"></co-icon>
+</co-button>
+```
+
+| Scenario                   | Approach                            | Example                   |
+| -------------------------- | ----------------------------------- | ------------------------- |
+| Icon next to visible label | Default (decorative, `aria-hidden`) | Button with text + icon   |
+| Icon-only button           | `aria-label` on the button          | Close button with X icon  |
+| Icon conveying status      | `label` prop on `co-icon`           | Warning icon without text |
 
 > **Tip:** Always test icon-only controls with a screen reader. If the announced label doesn't make sense without seeing the icon, you need a better `aria-label`.
 
 ## Best Practices
 
 1. **Use a single size per context.** Don't mix 16 px and 20 px icons in the same button.
-2. **Match weight to context.** Use `regular` for most UI, `bold` for emphasis, `fill` for active/selected states, and `light`/`thin` for decorative uses.
+2. **Match style to context.** Use `outlined` for most UI, `filled` for active/selected states, and `round` for a softer feel.
 3. **Avoid icon overload.** If a row of actions has more than four icon-only buttons, add visible labels.
 4. **Align icons optically.** Some icons (e.g., play triangles) may need 1-2 px nudges to look visually centered.
 
 ## Related
 
+- [Icon Component](../components/icon.md) — full API reference and framework usage
 - [Accessibility](./accessibility.md) — ARIA patterns and screen reader support
 - [Colors](./colors.md) — icon color tokens
