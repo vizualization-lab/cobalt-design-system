@@ -54,6 +54,14 @@ npm install @cobalt/vue
 npm install @cobalt/angular
 ```
 
+Then import the design tokens stylesheet in your app's global CSS (e.g., `styles.css`):
+
+```css
+@import '@cobalt/tokens/css';
+```
+
+This provides all `--co-*` CSS custom properties that components need for colors, spacing, typography, and more. Without this import, components will render without visual styles.
+
 If your organization uses a private registry, configure it first:
 
 ```bash
@@ -165,6 +173,13 @@ export class AppComponent {}
 ```
 
 > **Why `CUSTOM_ELEMENTS_SCHEMA`?** Angular needs this schema to allow `<co-*>` tags in templates. Add it to any standalone component that uses Cobalt elements.
+
+Make sure your global `styles.css` imports the design tokens — Angular does not automatically process CSS imports from component libraries:
+
+```css
+/* styles.css */
+@import '@cobalt/tokens/css';
+```
 
 ## Importing Components
 
