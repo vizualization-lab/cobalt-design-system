@@ -16,12 +16,18 @@
     "./css": "./dist/css/tokens.css",
     "./css/base": "./dist/css/base.css",
     "./css/dark": "./dist/css/tokens-dark.css",
+    "./css/fonts": "./dist/css/fonts.css",
     "./scss": "./dist/scss/_tokens.scss",
     "./json": "./dist/tokens.json"
   },
   "scripts": {
     "build": "node config.js",
     "clean": "rm -rf dist"
+  },
+  "dependencies": {
+    "@fontsource-variable/inter": "^5.2.8",
+    "@fontsource-variable/jetbrains-mono": "^5.2.8",
+    "@fontsource-variable/noto-sans": "^5.2.10"
   },
   "devDependencies": {
     "style-dictionary": "^4.0.0"

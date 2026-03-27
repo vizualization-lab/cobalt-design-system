@@ -39,6 +39,7 @@ Tokens live in `packages/tokens/` and are built to multiple formats:
 | ---------------------- | ------------------------------- | ----------------------------------------- |
 | CSS custom properties  | `dist/css/tokens.css`           | `@cobalt/tokens/css/tokens.css`           |
 | Base element styles    | `dist/css/base.css`             | `@cobalt/tokens/css/base`                 |
+| Self-hosted fonts      | `dist/css/fonts.css`            | `@cobalt/tokens/css/fonts`                |
 | Dark theme overrides   | `dist/css/tokens-dark.css`      | `@cobalt/tokens/css/tokens-dark.css`      |
 | Shoelace mapping       | `dist/css/shoelace-mapping.css` | `@cobalt/tokens/css/shoelace-mapping.css` |
 | SCSS variables         | `dist/scss/_tokens.scss`        | `@cobalt/tokens/scss/_tokens.scss`        |
@@ -203,6 +204,7 @@ Import `@cobalt/tokens/css/base` and add `data-co-base` to scope base typography
 
 ```js
 import '@cobalt/tokens/css';
+import '@cobalt/tokens/css/fonts';
 import '@cobalt/tokens/css/base';
 ```
 

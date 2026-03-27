@@ -104,6 +104,10 @@ async function build() {
   console.log('Copying base element styles...');
   copyFileSync(join(__dirname, 'src/base.css'), join(__dirname, 'dist/css/base.css'));
 
+  // Copy font-face stylesheet
+  console.log('Copying font-face stylesheet...');
+  copyFileSync(join(__dirname, 'src/fonts.css'), join(__dirname, 'dist/css/fonts.css'));
+
   // Generate TypeScript declarations
   console.log('Generating TypeScript declarations...');
   const jsContent = readFileSync(join(__dirname, 'dist/js/tokens.js'), 'utf-8');

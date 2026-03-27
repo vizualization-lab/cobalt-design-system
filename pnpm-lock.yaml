@@ -127,15 +127,6 @@ importers:
       '@cobalt/tokens':
         specifier: workspace:*
         version: link:../tokens
-      '@fontsource-variable/inter':
-        specifier: ^5.2.8
-        version: 5.2.8
-      '@fontsource-variable/jetbrains-mono':
-        specifier: ^5.2.8
-        version: 5.2.8
-      '@fontsource-variable/noto-sans':
-        specifier: ^5.2.10
-        version: 5.2.10
       vitepress:
         specifier: ^1.5.0
         version: 1.6.4(@algolia/client-search@5.49.2)(@types/node@25.4.0)(@types/react@18.3.28)(change-case@5.4.4)(postcss@8.5.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(search-insights@2.17.3)(typescript@5.6.3)
@@ -181,6 +172,16 @@ importers:
         version: 3.2.4(@types/node@25.4.0)(jsdom@25.0.1)
 
   packages/tokens:
+    dependencies:
+      '@fontsource-variable/inter':
+        specifier: ^5.2.8
+        version: 5.2.8
+      '@fontsource-variable/jetbrains-mono':
+        specifier: ^5.2.8
+        version: 5.2.8
+      '@fontsource-variable/noto-sans':
+        specifier: ^5.2.10
+        version: 5.2.10
     devDependencies:
       style-dictionary:
         specifier: ^4.0.0

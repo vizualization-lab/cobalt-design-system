@@ -183,9 +183,7 @@ function toggleSidebar() {
 </template>
 
 <style>
-@import '@fontsource-variable/inter';
-@import '@fontsource-variable/noto-sans';
-@import '@fontsource-variable/jetbrains-mono';
+@import '@cobalt/tokens/css/fonts';
 
 /* ── Reset & Globals ──────────────────────────────────────────── */
 :root {

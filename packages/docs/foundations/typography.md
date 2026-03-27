@@ -9,16 +9,10 @@ Typography in Cobalt is built on a purposeful set of font families, a harmonious
 | `--co-font-sans` | `'Inter', 'Noto Sans', ui-sans-serif, system-ui, -apple-system, sans-serif` | Body text, UI labels, headings |
 | `--co-font-mono` | `'JetBrains Mono', ui-monospace, 'Cascadia Code', monospace`                | Code blocks, technical values  |
 
-Install the recommended web fonts via your package manager:
-
-```bash
-npm install @fontsource-variable/inter @fontsource-variable/noto-sans @fontsource-variable/jetbrains-mono
-```
+Import the self-hosted fonts from `@cobalt/tokens` — no additional packages needed:
 
 ```css
-@import '@fontsource-variable/inter';
-@import '@fontsource-variable/noto-sans';
-@import '@fontsource-variable/jetbrains-mono';
+@import '@cobalt/tokens/css/fonts';
 ```
 
 > **Tip:** Inter is the primary UI font. Noto Sans is included as a fallback for extended character sets (CJK, Cyrillic, Greek, math symbols, etc.). If neither loads, the token stack falls back to the operating system's default sans-serif font.
