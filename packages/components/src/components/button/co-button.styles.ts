@@ -6,6 +6,7 @@ export const cobaltButtonStyles = css`
   :host {
     display: inline-block;
     box-sizing: border-box;
+    padding: 0;
     font-family: var(--co-font-family-sans);
     font-size: var(--co-font-size-md);
     font-weight: var(--co-font-weight-medium);
