@@ -833,6 +833,13 @@ div[class*='language-'] > button.copy.copied::before {
 
 /* ── Responsive ──────────────────────────────────────────────── */
 
+/* When TOC is visible, reserve space so centered content doesn't overlap it */
+@media (min-width: 1281px) {
+  .cobalt-main {
+    padding-right: 268px;
+  }
+}
+
 /* Tablet: narrower content padding */
 @media (max-width: 1024px) {
   .cobalt-content {
