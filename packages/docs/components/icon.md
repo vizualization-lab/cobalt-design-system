@@ -229,6 +229,10 @@ export class AppComponent {}
 
 ## Accessibility
 
+<ClientOnly>
+<A11yReport component="co-icon" />
+</ClientOnly>
+
 ### Decorative icons
 
 By default, `co-icon` sets `aria-hidden="true"` and `role="presentation"`. Use this when the icon is next to visible text:

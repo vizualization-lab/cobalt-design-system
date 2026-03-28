@@ -128,6 +128,7 @@ describe('co-icon', () => {
     });
   });
 
+  // WCAG 2.1 AA: automated via axe-core
   describe('accessibility', () => {
     it('is accessible as decorative icon', async () => {
       const el = await fixture(html`<co-icon name="home"></co-icon>`);
@@ -137,6 +138,33 @@ describe('co-icon', () => {
     it('is accessible as informative icon', async () => {
       const el = await fixture(html`<co-icon name="home" label="Home page"></co-icon>`);
       await runA11yAudit(el, { component: 'co-icon', state: 'informative' });
+    });
+
+    it('is accessible with fill', async () => {
+      const el = await fixture(html`<co-icon name="home" fill></co-icon>`);
+      await runA11yAudit(el, { component: 'co-icon', state: 'fill' });
+    });
+
+    it('is accessible with fill and label', async () => {
+      const el = await fixture(html`<co-icon name="home" fill label="Home page"></co-icon>`);
+      await runA11yAudit(el, { component: 'co-icon', state: 'fill-informative' });
+    });
+
+    it('is accessible at all sizes', async () => {
+      for (const size of ['xs', 'sm', 'md', 'lg'] as const) {
+        const el = await fixture(html`<co-icon name="home" size=${size}></co-icon>`);
+        await runA11yAudit(el, { component: 'co-icon', state: `size-${size}` });
+      }
+    });
+
+    it('is accessible as custom decorative icon', async () => {
+      const el = await fixture(html`<co-icon name="co-placeholder"></co-icon>`);
+      await runA11yAudit(el, { component: 'co-icon', state: 'custom-decorative' });
+    });
+
+    it('is accessible as custom informative icon', async () => {
+      const el = await fixture(html`<co-icon name="co-placeholder" label="Placeholder"></co-icon>`);
+      await runA11yAudit(el, { component: 'co-icon', state: 'custom-informative' });
     });
   });
 });

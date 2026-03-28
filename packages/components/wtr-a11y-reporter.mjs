@@ -36,6 +36,31 @@ const COMPONENT_CHECKS = {
       description: 'Touch target is at least 44×44 CSS pixels',
     },
   ],
+  'co-icon': [
+    {
+      criterion: '1.1.1',
+      title: 'Non-text Content',
+      description:
+        'Informative icons must have a label; decorative icons must be hidden from assistive technology',
+    },
+    {
+      criterion: '1.4.11',
+      title: 'Non-text Contrast',
+      description: 'Icon must have at least 3:1 contrast ratio against its background',
+    },
+    {
+      criterion: '2.5.5',
+      title: 'Target Size',
+      description:
+        'When used as an interactive target (e.g., icon-only button), touch target is at least 44×44 CSS pixels',
+    },
+    {
+      criterion: '4.1.2',
+      title: 'Name, Role, Value',
+      description:
+        'Informative icons expose role="img" and aria-label; decorative icons expose aria-hidden="true"',
+    },
+  ],
 };
 
 /**
