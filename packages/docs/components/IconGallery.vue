@@ -3,11 +3,12 @@ import { ref, computed, onMounted, onUnmounted, watch } from 'vue';
 import { iconNames, getIcon } from '@cobalt/icons';
 import type { IconStyle } from '@cobalt/icons';
 
-const styles: IconStyle[] = ['filled', 'outlined', 'round', 'sharp', 'two-tone'];
+const styles: IconStyle[] = ['outlined', 'rounded'];
 const pngSizes = [16, 20, 24, 32, 48, 96, 192];
 
 const searchQuery = ref('');
 const selectedStyle = ref<IconStyle>('outlined');
+const fillToggle = ref(false);
 const selectedIcon = ref<string | null>(null);
 const visibleCount = ref(120);
 const sentinelRef = ref<HTMLElement | null>(null);
@@ -30,16 +31,16 @@ const visibleIcons = computed(() => filteredIcons.value.slice(0, visibleCount.va
 const totalCount = computed(() => filteredIcons.value.length);
 
 function getSvgForGrid(name: string): string {
-  const content = getIcon(name, selectedStyle.value);
+  const content = getIcon(name, selectedStyle.value, fillToggle.value);
   if (!content) return '';
-  return `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">${content}</svg>`;
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 -960 960 960" fill="currentColor">${content}</svg>`;
 }
 
-function getRenderedSvg(style: IconStyle, size: number): string {
+function getRenderedSvg(style: IconStyle, size: number, fill?: boolean): string {
   if (!selectedIcon.value) return '';
-  const content = getIcon(selectedIcon.value, style);
+  const content = getIcon(selectedIcon.value, style, fill ?? fillToggle.value);
   if (!content) return '';
-  return `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 24 24" fill="currentColor">${content}</svg>`;
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 -960 960 960" fill="currentColor">${content}</svg>`;
 }
 
 // Infinite scroll
@@ -77,7 +78,7 @@ watch(sentinelRef, (el) => {
 });
 
 // Reset visible count on filter change
-watch([searchQuery, selectedStyle], () => {
+watch([searchQuery, selectedStyle, fillToggle], () => {
   visibleCount.value = 120;
 });
 
@@ -97,7 +98,7 @@ const copyLabel = ref('Copy SVG');
 
 async function copySvg() {
   if (!selectedIcon.value) return;
-  const svg = getRenderedSvg(selectedStyle.value, 24);
+  const svg = getRenderedSvg(selectedStyle.value, 24, fillToggle.value);
   if (svg) {
     await navigator.clipboard.writeText(svg);
     copyLabel.value = 'Copied!';
@@ -108,7 +109,7 @@ async function copySvg() {
 async function downloadPng() {
   if (!selectedIcon.value) return;
   const size = pngSize.value;
-  const svg = getRenderedSvg(selectedStyle.value, size);
+  const svg = getRenderedSvg(selectedStyle.value, size, fillToggle.value);
   if (!svg) return;
 
   const canvas = document.createElement('canvas');
@@ -127,7 +128,8 @@ async function downloadPng() {
     URL.revokeObjectURL(url);
 
     const link = document.createElement('a');
-    link.download = `${selectedIcon.value!}-${selectedStyle.value}-${size}px.png`;
+    const fillSuffix = fillToggle.value ? '-fill' : '';
+    link.download = `${selectedIcon.value!}-${selectedStyle.value}${fillSuffix}-${size}px.png`;
     link.href = canvas.toDataURL('image/png');
     link.click();
   };
@@ -135,19 +137,23 @@ async function downloadPng() {
 }
 
 function webComponentSnippet(name: string): string {
-  return `<co-icon name="${name}" variant="${selectedStyle.value}"></co-icon>`;
+  const fillAttr = fillToggle.value ? ' fill' : '';
+  return `<co-icon name="${name}" variant="${selectedStyle.value}"${fillAttr}></co-icon>`;
 }
 
 function reactSnippet(name: string): string {
-  return `<CoIcon name="${name}" variant="${selectedStyle.value}" />`;
+  const fillProp = fillToggle.value ? ' fill' : '';
+  return `<CoIcon name="${name}" variant="${selectedStyle.value}"${fillProp} />`;
 }
 
 function vueSnippet(name: string): string {
-  return `<CoIcon name="${name}" variant="${selectedStyle.value}" />`;
+  const fillProp = fillToggle.value ? ' fill' : '';
+  return `<CoIcon name="${name}" variant="${selectedStyle.value}"${fillProp} />`;
 }
 
 function angularSnippet(name: string): string {
-  return `<co-icon name="${name}" variant="${selectedStyle.value}"></co-icon>`;
+  const fillAttr = fillToggle.value ? ' fill' : '';
+  return `<co-icon name="${name}" variant="${selectedStyle.value}"${fillAttr}></co-icon>`;
 }
 
 function getSnippet(name: string, tabIndex: number): string {
@@ -196,6 +202,10 @@ function getSnippet(name: string, tabIndex: number): string {
           {{ s }}
         </button>
       </div>
+      <label class="fill-toggle">
+        <input v-model="fillToggle" type="checkbox" class="fill-checkbox" />
+        <span class="fill-label">Fill</span>
+      </label>
     </div>
 
     <!-- Main content -->
@@ -506,6 +516,36 @@ function getSnippet(name: string, tabIndex: number): string {
   color: #fff;
 }
 
+.fill-toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border: 1px solid var(--gallery-border);
+  border-radius: var(--gallery-radius);
+  background: var(--gallery-surface);
+  cursor: pointer;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--gallery-text-secondary);
+  white-space: nowrap;
+  transition: all 0.15s;
+}
+
+.fill-toggle:hover {
+  color: var(--gallery-text);
+  background: var(--gallery-accent-soft);
+}
+
+.fill-checkbox {
+  accent-color: var(--gallery-accent);
+  cursor: pointer;
+}
+
+.fill-label {
+  user-select: none;
+}
+
 /* Content layout */
 .gallery-content {
   display: grid;
@@ -671,7 +711,7 @@ function getSnippet(name: string, tabIndex: number): string {
 /* Style comparison */
 .detail-weights {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 6px;
 }
 
@@ -943,7 +983,7 @@ function getSnippet(name: string, tabIndex: number): string {
 
 .ig-sheet-weights {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 6px;
 }
 

@@ -1,6 +1,6 @@
 # Iconography
 
-Cobalt uses [Material Design Icons](https://fonts.google.com/icons) — 2,100+ icons across 5 style variants (filled, outlined, round, sharp, two-tone). Icons are rendered via the `<co-icon>` web component, which uses inline SVGs with `currentColor` for full control over color, size, and animation via CSS.
+Cobalt uses [Material Symbols](https://fonts.google.com/icons) — 2,500+ icons in 2 style variants (outlined, rounded) with an optional fill toggle. Icons are rendered via the `<co-icon>` web component, which uses inline SVGs with `currentColor` for full control over color, size, and animation via CSS.
 
 ## Icon Gallery
 
@@ -33,7 +33,8 @@ The recommended way to use icons is through the `<co-icon>` component, which han
 </script>
 
 <co-icon name="arrow-forward" variant="outlined"></co-icon>
-<co-icon name="check" variant="filled" size="sm"></co-icon>
+<co-icon name="check" variant="rounded" size="sm"></co-icon>
+<co-icon name="home" fill></co-icon>
 ```
 
 ### React
@@ -45,7 +46,8 @@ function Example() {
   return (
     <>
       <CoIcon name="arrow-forward" variant="outlined" />
-      <CoIcon name="check" variant="filled" size="sm" />
+      <CoIcon name="check" variant="rounded" size="sm" />
+      <CoIcon name="home" fill />
     </>
   );
 }
@@ -60,7 +62,8 @@ import { CoIcon } from '@cobalt/vue';
 
 <template>
   <CoIcon name="arrow-forward" variant="outlined" />
-  <CoIcon name="check" variant="filled" size="sm" />
+  <CoIcon name="check" variant="rounded" size="sm" />
+  <CoIcon name="home" fill />
 </template>
 ```
 
@@ -68,7 +71,8 @@ import { CoIcon } from '@cobalt/vue';
 
 ```html
 <co-icon name="arrow-forward" variant="outlined"></co-icon>
-<co-icon name="check" variant="filled" size="sm"></co-icon>
+<co-icon name="check" variant="rounded" size="sm"></co-icon>
+<co-icon name="home" fill></co-icon>
 ```
 
 ## Styling with CSS
@@ -129,7 +133,7 @@ For icon-only buttons, set `aria-label` on the button rather than the icon:
 ## Best Practices
 
 1. **Use a single size per context.** Don't mix 16 px and 20 px icons in the same button.
-2. **Match style to context.** Use `outlined` for most UI, `filled` for active/selected states, and `round` for a softer feel.
+2. **Use outlined for most UI.** Add `fill` for active/selected states to provide visual feedback. Use `rounded` for a softer feel.
 3. **Avoid icon overload.** If a row of actions has more than four icon-only buttons, add visible labels.
 4. **Align icons optically.** Some icons (e.g., play triangles) may need 1-2 px nudges to look visually centered.
 

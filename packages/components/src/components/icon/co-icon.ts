@@ -10,7 +10,7 @@ export type IconSize = 'xs' | 'sm' | 'md' | 'lg';
 
 /**
  * @tag co-icon
- * @summary Renders a Material Design icon from the @cobalt/icons registry.
+ * @summary Renders a Material Symbols icon from the @cobalt/icons registry.
  *
  * @csspart svg - The inner SVG element
  */
@@ -30,12 +30,16 @@ export class CoIcon extends LitElement {
   @property({ reflect: true })
   size: IconSize = 'md';
 
+  /** Whether to use the filled version of the icon. */
+  @property({ type: Boolean, reflect: true })
+  fill = false;
+
   /** Accessible label. When set, the icon is treated as informative (role="img"). */
   @property()
   label?: string;
 
   override render() {
-    const svgContent = getIcon(this.name, this.variant);
+    const svgContent = getIcon(this.name, this.variant, this.fill);
 
     if (!svgContent) return nothing;
 
@@ -45,7 +49,7 @@ export class CoIcon extends LitElement {
       <svg
         part="svg"
         xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 24 24"
+        viewBox="0 -960 960 960"
         fill="currentColor"
         role=${isDecorative ? 'presentation' : 'img'}
         aria-hidden=${isDecorative ? 'true' : 'false'}

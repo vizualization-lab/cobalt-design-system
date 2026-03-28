@@ -20,6 +20,7 @@ export class CoIcon {
   readonly name = input('');
   readonly variant = input<IconVariant>('outlined');
   readonly size = input<IconSize>('md');
+  readonly fill = input(false);
   readonly label = input<string | undefined>();
 
   private el = inject(ElementRef).nativeElement;
@@ -30,6 +31,7 @@ export class CoIcon {
       el.name = this.name();
       el.variant = this.variant();
       el.size = this.size();
+      el.fill = this.fill();
       const label = this.label();
       if (label !== undefined) el.label = label;
     });

@@ -1,7 +1,7 @@
 {
   "name": "@cobalt/icons",
   "version": "0.0.1",
-  "description": "Material Design Icons registry for the Cobalt Design System",
+  "description": "Material Symbols registry for the Cobalt Design System",
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -19,7 +19,7 @@
     "clean": "rm -rf dist"
   },
   "dependencies": {
-    "@material-design-icons/svg": "^0.14.13"
+    "@material-symbols/svg-300": "^0.43.0"
   },
   "license": "MIT"
 }

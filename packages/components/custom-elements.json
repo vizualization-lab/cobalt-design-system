@@ -485,6 +485,17 @@
             },
             {
               "kind": "field",
+              "name": "fill",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Whether to use the filled version of the icon.",
+              "attribute": "fill",
+              "reflects": true
+            },
+            {
+              "kind": "field",
               "name": "label",
               "type": {
                 "text": "string | undefined"
@@ -522,6 +533,15 @@
               "fieldName": "size"
             },
             {
+              "name": "fill",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Whether to use the filled version of the icon.",
+              "fieldName": "fill"
+            },
+            {
               "name": "label",
               "type": {
                 "text": "string | undefined"
@@ -536,7 +556,7 @@
           },
           "tagName": "co-icon",
           "customElement": true,
-          "summary": "Renders a Material Design icon from the"
+          "summary": "Renders a Material Symbols icon from the"
         }
       ],
       "exports": [

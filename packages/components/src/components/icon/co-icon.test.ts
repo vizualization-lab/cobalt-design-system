@@ -10,6 +10,7 @@ describe('co-icon', () => {
     expect(el.name).to.equal('home');
     expect(el.variant).to.equal('outlined');
     expect(el.size).to.equal('md');
+    expect(el.fill).to.equal(false);
     expect(el.label).to.be.undefined;
   });
 
@@ -20,9 +21,9 @@ describe('co-icon', () => {
   });
 
   it('reflects variant attribute', async () => {
-    const el = await fixture<CoIcon>(html`<co-icon name="home" variant="filled"></co-icon>`);
-    expect(el.variant).to.equal('filled');
-    expect(el.getAttribute('variant')).to.equal('filled');
+    const el = await fixture<CoIcon>(html`<co-icon name="home" variant="rounded"></co-icon>`);
+    expect(el.variant).to.equal('rounded');
+    expect(el.getAttribute('variant')).to.equal('rounded');
   });
 
   it('reflects size attribute', async () => {
@@ -31,11 +32,23 @@ describe('co-icon', () => {
     expect(el.getAttribute('size')).to.equal('lg');
   });
 
+  it('defaults fill to false', async () => {
+    const el = await fixture<CoIcon>(html`<co-icon name="home"></co-icon>`);
+    expect(el.fill).to.equal(false);
+    expect(el.hasAttribute('fill')).to.be.false;
+  });
+
+  it('reflects fill attribute when set', async () => {
+    const el = await fixture<CoIcon>(html`<co-icon name="home" fill></co-icon>`);
+    expect(el.fill).to.equal(true);
+    expect(el.hasAttribute('fill')).to.be.true;
+  });
+
   it('renders an SVG element inside shadow DOM', async () => {
     const el = await fixture<CoIcon>(html`<co-icon name="home"></co-icon>`);
     const svg = el.shadowRoot!.querySelector('svg');
     expect(svg).to.exist;
-    expect(svg!.getAttribute('viewBox')).to.equal('0 0 24 24');
+    expect(svg!.getAttribute('viewBox')).to.equal('0 -960 960 960');
   });
 
   it('renders nothing when name is empty', async () => {
