@@ -77,7 +77,6 @@ export const navigation: NavGroup[] = [
       { text: 'Overview', link: '/guidance/' },
       { text: 'Design Principles', link: '/guidance/principles' },
       { text: 'Content & Writing', link: '/guidance/content' },
-      { text: 'Developer Onboarding', link: '/guidance/developer-onboarding' },
       { text: 'Migration Guides', link: '/guidance/migration' },
     ],
   },
