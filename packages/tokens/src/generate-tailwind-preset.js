@@ -63,7 +63,22 @@ function buildMappings(tokens) {
   }
 
   // Primitive colors (escape hatch)
-  for (const hue of ['blue', 'gray', 'red', 'green', 'amber']) {
+  for (const hue of [
+    'neutral',
+    'blue',
+    'navy',
+    'teal',
+    'lime',
+    'purple',
+    'indigo',
+    'brick',
+    'rust',
+    'gold',
+    'red',
+    'green',
+    'orange',
+    'yellow',
+  ]) {
     const key = `primitive-${hue}`;
     colors[key] = {};
     for (const shade of [
