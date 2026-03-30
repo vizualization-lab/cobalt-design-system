@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue';
-import { data } from '../.generated/component-changelogs.data';
+import { data } from './component-changelogs.data';
 
 const props = defineProps<{ component: string }>();
 
