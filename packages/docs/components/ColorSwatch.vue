@@ -12,9 +12,13 @@ defineProps<{
 
 const copiedKey = ref<string | null>(null);
 
-async function copyHex(palette: string, scale: string, value: string) {
+function toToken(palette: string, scale: string): string {
+  return `--co-color-primitive-${palette.toLowerCase()}-${scale}`;
+}
+
+async function copyToken(palette: string, scale: string) {
   const key = `${palette}-${scale}`;
-  await navigator.clipboard.writeText(value);
+  await navigator.clipboard.writeText(toToken(palette, scale));
   copiedKey.value = key;
   setTimeout(() => {
     if (copiedKey.value === key) copiedKey.value = null;
@@ -24,7 +28,7 @@ async function copyHex(palette: string, scale: string, value: string) {
 
 <template>
   <div class="swatch-grid">
-    <p class="swatch-hint">Click any swatch to copy its hex value.</p>
+    <p class="swatch-hint">Click any swatch to copy its CSS token.</p>
     <div v-for="palette in palettes" :key="palette.name" class="palette">
       <div class="palette-label">{{ palette.name }}</div>
       <div class="palette-chips">
@@ -33,8 +37,8 @@ async function copyHex(palette: string, scale: string, value: string) {
             class="chip"
             :class="{ copied: copiedKey === `${palette.name}-${shade.scale}` }"
             :style="{ background: shade.value }"
-            :title="`Copy ${shade.value}`"
-            @click="copyHex(palette.name, shade.scale, shade.value)"
+            :title="toToken(palette.name, shade.scale)"
+            @click="copyToken(palette.name, shade.scale)"
           >
             <svg
               v-if="copiedKey === `${palette.name}-${shade.scale}`"
@@ -127,7 +131,6 @@ async function copyHex(palette: string, scale: string, value: string) {
   width: 16px;
   height: 16px;
   color: #fff;
-  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.4));
 }
 
 .chip-scale {
