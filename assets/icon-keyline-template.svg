@@ -1,0 +1,102 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="960" viewBox="0 0 24 24">
+  <defs>
+    <style>
+      .grid { fill: none; stroke: #e0e0e0; stroke-width: 0.05; }
+      .canvas { fill: none; stroke: #9e9e9e; stroke-width: 0.1; stroke-dasharray: 0.3,0.15; }
+      .live-area { fill: none; stroke: #1565c0; stroke-width: 0.1; stroke-dasharray: 0.3,0.15; }
+      .live-fill { fill: #e3f2fd; opacity: 0.3; }
+      .padding-fill { fill: #ffcdd2; opacity: 0.2; }
+      .keyline { fill: none; stroke-width: 0.1; }
+      .keyline-circle { stroke: #e65100; stroke-dasharray: 0.2,0.1; }
+      .keyline-square { stroke: #2e7d32; stroke-dasharray: 0.2,0.1; }
+      .keyline-vrect { stroke: #6a1b9a; stroke-dasharray: 0.2,0.1; }
+      .keyline-hrect { stroke: #c62828; stroke-dasharray: 0.2,0.1; }
+      .label { font-family: -apple-system, 'Helvetica Neue', Arial, sans-serif; fill: #424242; }
+      .label-sm { font-size: 0.55px; }
+      .label-xs { font-size: 0.45px; }
+      .dimension { fill: none; stroke: #757575; stroke-width: 0.04; }
+      .dim-text { font-family: -apple-system, 'Helvetica Neue', Arial, sans-serif; font-size: 0.4px; fill: #757575; }
+      .center-mark { stroke: #bdbdbd; stroke-width: 0.04; stroke-dasharray: 0.15,0.1; }
+    </style>
+  </defs>
+
+  <!-- Background -->
+  <rect width="24" height="24" fill="#fafafa"/>
+
+  <!-- 1dp Grid -->
+  <g class="grid">
+    <line x1="1" y1="0" x2="1" y2="24"/><line x1="2" y1="0" x2="2" y2="24"/>
+    <line x1="3" y1="0" x2="3" y2="24"/><line x1="4" y1="0" x2="4" y2="24"/>
+    <line x1="5" y1="0" x2="5" y2="24"/><line x1="6" y1="0" x2="6" y2="24"/>
+    <line x1="7" y1="0" x2="7" y2="24"/><line x1="8" y1="0" x2="8" y2="24"/>
+    <line x1="9" y1="0" x2="9" y2="24"/><line x1="10" y1="0" x2="10" y2="24"/>
+    <line x1="11" y1="0" x2="11" y2="24"/><line x1="12" y1="0" x2="12" y2="24"/>
+    <line x1="13" y1="0" x2="13" y2="24"/><line x1="14" y1="0" x2="14" y2="24"/>
+    <line x1="15" y1="0" x2="15" y2="24"/><line x1="16" y1="0" x2="16" y2="24"/>
+    <line x1="17" y1="0" x2="17" y2="24"/><line x1="18" y1="0" x2="18" y2="24"/>
+    <line x1="19" y1="0" x2="19" y2="24"/><line x1="20" y1="0" x2="20" y2="24"/>
+    <line x1="21" y1="0" x2="21" y2="24"/><line x1="22" y1="0" x2="22" y2="24"/>
+    <line x1="23" y1="0" x2="23" y2="24"/>
+    <line x1="0" y1="1" x2="24" y2="1"/><line x1="0" y1="2" x2="24" y2="2"/>
+    <line x1="0" y1="3" x2="24" y2="3"/><line x1="0" y1="4" x2="24" y2="4"/>
+    <line x1="0" y1="5" x2="24" y2="5"/><line x1="0" y1="6" x2="24" y2="6"/>
+    <line x1="0" y1="7" x2="24" y2="7"/><line x1="0" y1="8" x2="24" y2="8"/>
+    <line x1="0" y1="9" x2="24" y2="9"/><line x1="0" y1="10" x2="24" y2="10"/>
+    <line x1="0" y1="11" x2="24" y2="11"/><line x1="0" y1="12" x2="24" y2="12"/>
+    <line x1="0" y1="13" x2="24" y2="13"/><line x1="0" y1="14" x2="24" y2="14"/>
+    <line x1="0" y1="15" x2="24" y2="15"/><line x1="0" y1="16" x2="24" y2="16"/>
+    <line x1="0" y1="17" x2="24" y2="17"/><line x1="0" y1="18" x2="24" y2="18"/>
+    <line x1="0" y1="19" x2="24" y2="19"/><line x1="0" y1="20" x2="24" y2="20"/>
+    <line x1="0" y1="21" x2="24" y2="21"/><line x1="0" y1="22" x2="24" y2="22"/>
+    <line x1="0" y1="23" x2="24" y2="23"/>
+  </g>
+
+  <!-- Padding zone (2dp on each side) -->
+  <rect x="0" y="0" width="24" height="2" class="padding-fill"/>
+  <rect x="0" y="22" width="24" height="2" class="padding-fill"/>
+  <rect x="0" y="2" width="2" height="20" class="padding-fill"/>
+  <rect x="22" y="2" width="2" height="20" class="padding-fill"/>
+
+  <!-- Live area fill -->
+  <rect x="2" y="2" width="20" height="20" class="live-fill"/>
+
+  <!-- Canvas border (24x24) -->
+  <rect x="0" y="0" width="24" height="24" class="canvas"/>
+
+  <!-- Live area border (20x20, offset 2dp) -->
+  <rect x="2" y="2" width="20" height="20" class="live-area"/>
+
+  <!-- Center crosshair -->
+  <line x1="12" y1="0" x2="12" y2="24" class="center-mark"/>
+  <line x1="0" y1="12" x2="24" y2="12" class="center-mark"/>
+
+  <!-- Keyline shapes -->
+  <!-- Circle: 20dp diameter, centered -->
+  <circle cx="12" cy="12" r="10" class="keyline keyline-circle"/>
+
+  <!-- Square: 18x18dp, centered -->
+  <rect x="3" y="3" width="18" height="18" class="keyline keyline-square"/>
+
+  <!-- Vertical rectangle: 16x20dp, centered -->
+  <rect x="4" y="2" width="16" height="20" class="keyline keyline-vrect"/>
+
+  <!-- Horizontal rectangle: 20x16dp, centered -->
+  <rect x="2" y="4" width="20" height="16" class="keyline keyline-hrect"/>
+
+  <!-- Labels -->
+  <text x="12" y="0.65" text-anchor="middle" class="label label-sm">24 x 24 dp canvas</text>
+  <text x="12" y="23.65" text-anchor="middle" class="label label-xs">2 dp padding zone (all sides)</text>
+
+  <!-- Keyline shape labels -->
+  <text x="22.8" y="5.5" text-anchor="end" class="label label-xs" fill="#e65100">Circle 20dp</text>
+  <text x="22.8" y="6.2" text-anchor="end" class="label label-xs" fill="#2e7d32">Square 18dp</text>
+  <text x="22.8" y="6.9" text-anchor="end" class="label label-xs" fill="#6a1b9a">V-Rect 16x20dp</text>
+  <text x="22.8" y="7.6" text-anchor="end" class="label label-xs" fill="#c62828">H-Rect 20x16dp</text>
+
+  <!-- Live area label -->
+  <text x="2.2" y="3.8" class="label label-xs" fill="#1565c0">Live area 20x20dp</text>
+
+  <!-- 2dp stroke reference -->
+  <line x1="1" y1="9" x2="1" y2="15" stroke="#424242" stroke-width="0.083" stroke-linecap="round"/>
+  <text x="0.35" y="12.2" class="label label-xs" transform="rotate(-90, 0.35, 12.2)" fill="#424242">2dp stroke</text>
+</svg>
