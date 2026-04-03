@@ -6,6 +6,20 @@ import { data } from './tokens.data';
 
 Browse and search all Cobalt design tokens. Click any token name to copy it to your clipboard. Use the category pills or the search bar to narrow down tokens — search works across names, values, categories, and tiers.
 
+## Categories
+
+| Category       | Prefix                          | What it covers                                                                                                             |
+| -------------- | ------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| **Color**      | <nobr>`--co-color-`</nobr>      | Primitive palettes and hues, semantic roles (primary, neutral, ...), and contextual usage (surface, interactive, feedback) |
+| **Space**      | <nobr>`--co-space-`</nobr>      | Base spacing scale and semantic aliases for gaps, insets, section, and page margins                                        |
+| **Font**       | <nobr>`--co-font-`</nobr>       | Font families (sans, mono), size scale, weights, and line-heights                                                          |
+| **Shape**      | <nobr>`--co-shape-`</nobr>      | Border-radius scale and border-width values                                                                                |
+| **Elevation**  | <nobr>`--co-elevation-`</nobr>  | Box-shadow depths (sm–xl) and z-index layers for stacking contexts (dropdown through tooltip)                              |
+| **Motion**     | <nobr>`--co-motion-`</nobr>     | Transition durations and easing curves                                                                                     |
+| **Sizing**     | <nobr>`--co-sizing-`</nobr>     | Fixed dimensions for icons across four sizes                                                                               |
+| **Opacity**    | <nobr>`--co-opacity-`</nobr>    | Alpha values for disabled elements, overlays, and placeholder text                                                         |
+| **Breakpoint** | <nobr>`--co-breakpoint-`</nobr> | Responsive viewport widths for media queries                                                                               |
+
 <TokenTable :tokens="data.tokens" />
 
 ## Available Formats
