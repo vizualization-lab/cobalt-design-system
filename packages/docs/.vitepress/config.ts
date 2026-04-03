@@ -1,4 +1,5 @@
 import { defineConfig } from 'vitepress';
+import taskLists from 'markdown-it-task-lists';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -17,6 +18,9 @@ export default defineConfig({
     theme: {
       dark: 'tokyo-night',
       light: 'github-light',
+    },
+    config: (md) => {
+      md.use(taskLists);
     },
   },
   head: [
