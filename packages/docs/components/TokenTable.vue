@@ -4,7 +4,9 @@ import { ref, computed } from 'vue';
 export interface TokenEntry {
   name: string;
   value: string;
+  resolvedValue: string | null;
   category: string;
+  tier: 'primitive' | 'semantic';
 }
 
 const props = defineProps<{
@@ -12,18 +14,8 @@ const props = defineProps<{
 }>();
 
 const query = ref('');
+const activeCategory = ref<string | null>(null);
 const copiedName = ref<string | null>(null);
-
-const filtered = computed(() => {
-  const q = query.value.toLowerCase();
-  if (!q) return props.tokens;
-  return props.tokens.filter(
-    (t) =>
-      t.name.toLowerCase().includes(q) ||
-      t.value.toLowerCase().includes(q) ||
-      t.category.toLowerCase().includes(q),
-  );
-});
 
 const categories = computed(() => {
   const counts: Record<string, number> = {};
@@ -33,8 +25,49 @@ const categories = computed(() => {
   return counts;
 });
 
+const filtered = computed(() => {
+  let result = props.tokens;
+
+  if (activeCategory.value) {
+    result = result.filter((t) => t.category === activeCategory.value);
+  }
+
+  const q = query.value.toLowerCase();
+  if (q) {
+    result = result.filter(
+      (t) =>
+        t.name.toLowerCase().includes(q) ||
+        t.value.toLowerCase().includes(q) ||
+        (t.resolvedValue && t.resolvedValue.toLowerCase().includes(q)) ||
+        t.category.toLowerCase().includes(q) ||
+        t.tier.toLowerCase().includes(q),
+    );
+  }
+
+  return result;
+});
+
 function isColor(value: string): boolean {
   return /^#[0-9a-f]{3,8}$/i.test(value) || value.startsWith('rgb') || value.startsWith('hsl');
+}
+
+function displayValue(token: TokenEntry): string {
+  return token.value;
+}
+
+function swatchColor(token: TokenEntry): string | null {
+  if (isColor(token.value)) return token.value;
+  if (token.resolvedValue && isColor(token.resolvedValue)) return token.resolvedValue;
+  return null;
+}
+
+function referenceToken(token: TokenEntry): string | null {
+  const varMatch = token.value.match(/^var\((--[\w-]+)\)$/);
+  return varMatch ? varMatch[1] : null;
+}
+
+function toggleCategory(cat: string) {
+  activeCategory.value = activeCategory.value === cat ? null : cat;
 }
 
 async function copyToken(name: string) {
@@ -53,9 +86,29 @@ async function copyToken(name: string) {
         v-model="query"
         type="text"
         class="token-search-input"
-        placeholder="Search tokens by name, value, or category..."
+        placeholder="Search tokens by name, value, category, or tier..."
       />
       <span class="token-count"> {{ filtered.length }} of {{ tokens.length }} tokens </span>
+    </div>
+
+    <div class="category-filters">
+      <button
+        class="filter-pill"
+        :class="{ active: activeCategory === null }"
+        @click="activeCategory = null"
+      >
+        All
+      </button>
+      <button
+        v-for="(count, cat) in categories"
+        :key="cat"
+        class="filter-pill"
+        :class="{ active: activeCategory === cat }"
+        @click="toggleCategory(cat as string)"
+      >
+        {{ cat }}
+        <span class="pill-count">{{ count }}</span>
+      </button>
     </div>
 
     <table class="token-table">
@@ -63,7 +116,7 @@ async function copyToken(name: string) {
         <tr>
           <th class="col-token">Token</th>
           <th class="col-value">Value</th>
-          <th class="col-category">Category</th>
+          <th class="col-meta">Category / Tier</th>
         </tr>
       </thead>
       <tbody>
@@ -91,15 +144,23 @@ async function copyToken(name: string) {
             </button>
           </td>
           <td class="col-value">
-            <span
-              v-if="isColor(token.value)"
-              class="color-swatch"
-              :style="{ background: token.value }"
-            ></span>
-            <code class="token-value">{{ token.value }}</code>
+            <div class="value-row">
+              <span
+                v-if="swatchColor(token)"
+                class="color-swatch"
+                :style="{ background: swatchColor(token)! }"
+              ></span>
+              <div class="value-stack">
+                <code class="token-value">{{ displayValue(token) }}</code>
+                <span v-if="token.resolvedValue" class="resolved-value">
+                  → <code>{{ token.resolvedValue }}</code>
+                </span>
+              </div>
+            </div>
           </td>
-          <td class="col-category">
+          <td class="col-meta">
             <span class="category-badge">{{ token.category }}</span>
+            <span class="tier-badge" :class="token.tier">{{ token.tier }}</span>
           </td>
         </tr>
         <tr v-if="filtered.length === 0">
@@ -119,7 +180,7 @@ async function copyToken(name: string) {
   display: flex;
   align-items: center;
   gap: 12px;
-  margin-bottom: 16px;
+  margin-bottom: 12px;
   flex-wrap: wrap;
 }
 
@@ -150,6 +211,52 @@ async function copyToken(name: string) {
   color: var(--vp-c-text-3, #8e8e93);
   white-space: nowrap;
 }
+
+/* ── Category filter pills ── */
+
+.category-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.filter-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 12px;
+  border: 1px solid var(--vp-c-border, #e2e2e3);
+  border-radius: 16px;
+  background: var(--vp-c-bg, #fff);
+  color: var(--vp-c-text-2, #495464);
+  font-size: 0.78rem;
+  font-family: inherit;
+  font-weight: 500;
+  cursor: pointer;
+  transition:
+    background 0.15s,
+    border-color 0.15s,
+    color 0.15s;
+}
+
+.filter-pill:hover {
+  border-color: var(--vp-c-brand-1, #3451b2);
+  color: var(--vp-c-brand-1, #3451b2);
+}
+
+.filter-pill.active {
+  background: var(--vp-c-brand-1, #3451b2);
+  border-color: var(--vp-c-brand-1, #3451b2);
+  color: #fff;
+}
+
+.pill-count {
+  font-size: 0.7rem;
+  opacity: 0.7;
+}
+
+/* ── Table ── */
 
 .token-table {
   width: 100%;
@@ -183,12 +290,14 @@ async function copyToken(name: string) {
 }
 
 .col-value {
-  min-width: 160px;
+  min-width: 180px;
 }
 
-.col-category {
-  width: 100px;
+.col-meta {
+  width: 180px;
 }
+
+/* ── Token name button ── */
 
 .token-name {
   display: inline-flex;
@@ -228,6 +337,21 @@ async function copyToken(name: string) {
   flex-shrink: 0;
 }
 
+/* ── Value column ── */
+
+.value-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.value-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
 .token-value {
   font-family: var(--vp-font-family-mono, monospace);
   font-size: 0.8rem;
@@ -235,16 +359,30 @@ async function copyToken(name: string) {
   word-break: break-all;
 }
 
+.resolved-value {
+  font-size: 0.72rem;
+  color: var(--vp-c-text-3, #8e8e93);
+}
+
+.resolved-value code {
+  font-family: var(--vp-font-family-mono, monospace);
+  font-size: inherit;
+  background: none;
+  padding: 0;
+  color: inherit;
+}
+
 .color-swatch {
   display: inline-block;
-  width: 14px;
-  height: 14px;
+  width: 16px;
+  height: 16px;
   border-radius: 3px;
   border: 1px solid rgba(0, 0, 0, 0.1);
-  vertical-align: middle;
-  margin-right: 6px;
   flex-shrink: 0;
+  margin-top: 2px;
 }
+
+/* ── Category + tier badges ── */
 
 .category-badge {
   display: inline-block;
@@ -254,6 +392,27 @@ async function copyToken(name: string) {
   border-radius: 10px;
   background: var(--vp-c-bg-soft, #f6f6f7);
   color: var(--vp-c-text-2, #495464);
+  margin-right: 4px;
+}
+
+.tier-badge {
+  display: inline-block;
+  font-size: 0.68rem;
+  font-weight: 600;
+  padding: 1px 6px;
+  border-radius: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.tier-badge.primitive {
+  background: var(--vp-c-yellow-soft, #fef3cd);
+  color: var(--vp-c-yellow-dark, #8a6d00);
+}
+
+.tier-badge.semantic {
+  background: var(--vp-c-green-soft, #d1fae5);
+  color: var(--vp-c-green-dark, #166534);
 }
 
 .no-results {
