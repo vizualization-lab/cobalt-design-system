@@ -102,6 +102,43 @@ function build() {
     }
   }
 
+  // Scan override icons from overrides/{style}/
+  const overridesBase = join(root, 'overrides');
+  const overrideBaseNames = new Set();
+
+  for (const style of STYLES) {
+    const overrideStyleDir = join(overridesBase, style);
+    if (!existsSync(overrideStyleDir)) continue;
+
+    const styleMap = registry.get(style);
+    let files;
+    try {
+      files = readdirSync(overrideStyleDir).filter((f) => f.endsWith('.svg'));
+    } catch {
+      continue;
+    }
+
+    for (const file of files) {
+      const kebabName = basename(file, '.svg');
+      const nameToCheck = kebabName.endsWith('-fill') ? kebabName.slice(0, -5) : kebabName;
+
+      // Warn if the override doesn't match an existing Material Symbols icon
+      if (!styleMap.has(nameToCheck) && !styleMap.has(nameToCheck + '-fill')) {
+        console.warn(
+          `Warning: override icon "${file}" does not match any existing icon in "${style}" — possible typo`,
+        );
+      }
+
+      const svgString = readFileSync(join(overrideStyleDir, file), 'utf-8');
+      const content = extractSvgContent(svgString);
+      styleMap.set(kebabName, content);
+
+      // Track base icon names
+      const baseName = kebabName.endsWith('-fill') ? kebabName.slice(0, -5) : kebabName;
+      overrideBaseNames.add(baseName);
+    }
+  }
+
   // Scan animated icon variants from animated/{style}/
   const animatedBase = join(root, 'animated');
   const animatedRegistry = new Map();
@@ -135,6 +172,7 @@ function build() {
 
   const sortedNames = [...baseNames].sort();
   const sortedCustomNames = [...customBaseNames].sort();
+  const sortedOverrideNames = [...overrideBaseNames].sort();
   const sortedAnimatedNames = [...animatedBaseNames].sort();
 
   // Build the JS registry module
@@ -177,6 +215,11 @@ function build() {
   lines.push('');
   lines.push(`/** Set of icon names that use the 24×24 viewBox (custom icons). */`);
   lines.push(`export const customIconNames = new Set(${JSON.stringify(sortedCustomNames)});`);
+  lines.push('');
+  lines.push(
+    `/** Set of icon names that are overrides of Material Symbols icons (24×24 viewBox). */`,
+  );
+  lines.push(`export const overrideIconNames = new Set(${JSON.stringify(sortedOverrideNames)});`);
   lines.push('');
 
   // Animated registry
@@ -236,6 +279,9 @@ function build() {
     '/** Set of icon names that use the 24×24 viewBox (custom icons). */',
     'export declare const customIconNames: Set<string>;',
     '',
+    '/** Set of icon names that are overrides of Material Symbols icons (24×24 viewBox). */',
+    'export declare const overrideIconNames: Set<string>;',
+    '',
     '/**',
     ' * Get the animated SVG variant for an icon.',
     ' * @param name - Kebab-case icon name',
@@ -253,7 +299,7 @@ function build() {
   writeFileSync(join(outDir, 'index.d.ts'), dts.join('\n'));
 
   console.log(
-    `Icon registry built: ${sortedNames.length} icons (${sortedCustomNames.length} custom, ${sortedAnimatedNames.length} animated) across ${STYLES.length} styles → dist/index.js`,
+    `Icon registry built: ${sortedNames.length} icons (${sortedCustomNames.length} custom, ${sortedOverrideNames.length} overrides, ${sortedAnimatedNames.length} animated) across ${STYLES.length} styles → dist/index.js`,
   );
 }
 

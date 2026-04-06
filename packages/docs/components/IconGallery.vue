@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted, watch } from 'vue';
-import { iconNames, getIcon, customIconNames } from '@cobalt/icons';
+import { iconNames, getIcon, customIconNames, overrideIconNames } from '@cobalt/icons';
 
 const pngSizes = [16, 20, 24, 32, 48, 96, 192];
 
@@ -30,7 +30,8 @@ const totalCount = computed(() => filteredIcons.value.length);
 function getSvgForGrid(name: string): string {
   const content = getIcon(name, 'rounded', fillToggle.value);
   if (!content) return '';
-  const viewBox = customIconNames.has(name) ? '0 0 24 24' : '0 -960 960 960';
+  const viewBox =
+    customIconNames.has(name) || overrideIconNames.has(name) ? '0 0 24 24' : '0 -960 960 960';
   return `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="${viewBox}" fill="currentColor">${content}</svg>`;
 }
 
@@ -38,7 +39,10 @@ function getRenderedSvg(size: number, fill?: boolean): string {
   if (!selectedIcon.value) return '';
   const content = getIcon(selectedIcon.value, 'rounded', fill ?? fillToggle.value);
   if (!content) return '';
-  const viewBox = customIconNames.has(selectedIcon.value) ? '0 0 24 24' : '0 -960 960 960';
+  const viewBox =
+    customIconNames.has(selectedIcon.value) || overrideIconNames.has(selectedIcon.value)
+      ? '0 0 24 24'
+      : '0 -960 960 960';
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="${viewBox}" fill="currentColor">${content}</svg>`;
 }
 

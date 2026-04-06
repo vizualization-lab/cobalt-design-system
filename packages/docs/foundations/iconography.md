@@ -235,6 +235,60 @@ Use this checklist before handing off a custom icon:
 - [ ] File name in kebab-case
 - [ ] Tested in light and dark themes
 
+## Icon Overrides
+
+Occasionally, a Material Symbols icon doesn't meet Cobalt's visual standards — for example, `picture-as-pdf` has small, hard-to-read "PDF" lettering. Rather than creating a separate custom icon with a `co-` prefix, you can **override** the original icon so that every existing usage automatically picks up the improved version.
+
+### When to use overrides vs custom icons
+
+| Scenario                                                       | Use                                                            |
+| -------------------------------------------------------------- | -------------------------------------------------------------- |
+| Replacing a Material Symbols icon with a better version        | **Override** — keeps the same name, no consumer changes needed |
+| Adding a brand-new icon that doesn't exist in Material Symbols | **Custom icon** — use the `co-` prefix                         |
+
+### Directory structure
+
+Override SVGs live in `packages/icons/overrides/rounded/` and must use the **exact Material Symbols name** (kebab-case):
+
+```
+packages/icons/overrides/
+  rounded/
+    picture-as-pdf.svg        # unfilled override
+    picture-as-pdf-fill.svg   # filled override
+```
+
+The build warns if an override name doesn't match any existing Material Symbols icon (typo protection).
+
+### SVG requirements
+
+Override icons follow the same export rules as custom icons:
+
+- `viewBox="0 0 24 24"` (24×24 grid)
+- `<path>` elements only, `fill="currentColor"`
+- No `<style>`, `<defs>`, `<clipPath>`, or stroke attributes
+- The `co-icon` component automatically uses the correct viewBox for overrides
+
+### Build
+
+After adding or updating override SVGs, rebuild the icon registry:
+
+```bash
+cd packages/icons
+pnpm build
+```
+
+The build log will report the override count (e.g., "1 overrides").
+
+### Example
+
+The `picture-as-pdf` icon is overridden with larger, bolder "PDF" lettering for better readability at small sizes:
+
+```html
+<!-- Uses the override automatically — no code changes needed -->
+<co-icon name="picture-as-pdf"></co-icon>
+<co-icon name="picture-as-pdf" fill></co-icon>
+```
+
 ## Animated Icons
 
 Cobalt supports CSS microanimations on a curated set of icons. Animated variants are separate SVG files that wrap path groups in semantic `<g class="co-anim-*">` elements, which the `co-icon` component's stylesheet targets with CSS keyframes. Reduced motion is respected automatically.

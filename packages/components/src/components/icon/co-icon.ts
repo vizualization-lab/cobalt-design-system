@@ -1,7 +1,7 @@
 import { LitElement, html, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { unsafeSVG } from 'lit/directives/unsafe-svg.js';
-import { getIcon, getAnimatedIcon, customIconNames } from '@cobalt/icons';
+import { getIcon, getAnimatedIcon, customIconNames, overrideIconNames } from '@cobalt/icons';
 import { cobaltIconStyles } from './co-icon.styles.js';
 
 export type IconSize = 'xs' | 'sm' | 'md' | 'lg';
@@ -63,7 +63,10 @@ export class CoIcon extends LitElement {
     if (!svgContent) return nothing;
 
     const isDecorative = !this.label;
-    const viewBox = customIconNames.has(this.name) ? '0 0 24 24' : '0 -960 960 960';
+    const viewBox =
+      customIconNames.has(this.name) || overrideIconNames.has(this.name)
+        ? '0 0 24 24'
+        : '0 -960 960 960';
 
     return html`
       <svg
