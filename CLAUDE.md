@@ -101,15 +101,15 @@ A themed button wrapping Shoelace's sl-button.
 
 **Properties:**
 
-| Property   | Type                                              | Default     | Description                         |
-| ---------- | ------------------------------------------------- | ----------- | ----------------------------------- |
-| `variant`  | `'primary' \| 'secondary' \| 'danger' \| 'ghost'` | `'primary'` | Visual style                        |
-| `size`     | `'sm' \| 'md' \| 'lg'`                            | `'md'`      | Controls padding and font size      |
-| `disabled` | `boolean`                                         | `false`     | Prevents interaction                |
-| `loading`  | `boolean`                                         | `false`     | Shows spinner, disables interaction |
-| `type`     | `'submit' \| 'reset' \| 'button'`                 | `'button'`  | HTML button type                    |
-| `href`     | `string`                                          | —           | Renders as anchor element           |
-| `target`   | `'_blank' \| '_self' \| '_parent' \| '_top'`      | —           | Link target (when href is set)      |
+| Property   | Type                                               | Default     | Description                         |
+| ---------- | -------------------------------------------------- | ----------- | ----------------------------------- |
+| `variant`  | `'primary' \| 'secondary' \| 'error' \| 'success'` | `'primary'` | Visual style                        |
+| `size`     | `'sm' \| 'md' \| 'lg'`                             | `'md'`      | Controls padding and font size      |
+| `disabled` | `boolean`                                          | `false`     | Prevents interaction                |
+| `loading`  | `boolean`                                          | `false`     | Shows spinner, disables interaction |
+| `type`     | `'submit' \| 'reset' \| 'button'`                  | `'button'`  | HTML button type                    |
+| `href`     | `string`                                           | —           | Renders as anchor element           |
+| `target`   | `'_blank' \| '_self' \| '_parent' \| '_top'`       | —           | Link target (when href is set)      |
 
 **Events:** `co-focus`, `co-blur`
 
@@ -126,7 +126,7 @@ A themed button wrapping Shoelace's sl-button.
   import '@cobalt/components/co-button';
 </script>
 <co-button variant="primary">Save</co-button>
-<co-button variant="danger" loading>Deleting…</co-button>
+<co-button variant="error" loading>Deleting…</co-button>
 ```
 
 ### React (`@cobalt/react`)
@@ -135,7 +135,7 @@ A themed button wrapping Shoelace's sl-button.
 import { CoButton } from '@cobalt/react';
 
 <CoButton variant="primary" onClick={handleSave}>Save</CoButton>
-<CoButton variant="danger" onCoFocus={() => log('focused')}>Delete</CoButton>
+<CoButton variant="error" onCoFocus={() => log('focused')}>Delete</CoButton>
 ```
 
 ### Vue (`@cobalt/vue`)
@@ -146,7 +146,7 @@ import { CoButton } from '@cobalt/vue';
 </script>
 <template>
   <CoButton variant="primary" @click="handleSave">Save</CoButton>
-  <CoButton variant="danger" @co-focus="onFocus">Delete</CoButton>
+  <CoButton variant="error" @co-focus="onFocus">Delete</CoButton>
 </template>
 ```
 
@@ -167,7 +167,7 @@ export class AppComponent {}
 
 ```html
 <co-button variant="primary" (click)="handleSave()">Save</co-button>
-<co-button variant="danger" (coFocus)="onFocus($event)">Delete</co-button>
+<co-button variant="error" (coFocus)="onFocus($event)">Delete</co-button>
 ```
 
 ### Import strategy

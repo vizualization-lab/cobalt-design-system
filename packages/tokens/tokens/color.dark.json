@@ -63,9 +63,12 @@
         "disabled": { "$value": "{co.color.primitive.blue.700}", "$type": "color" },
         "subtle-hover": { "$value": "{co.color.primitive.blue.900}", "$type": "color" },
         "subtle-active": { "$value": "{co.color.primitive.blue.800}", "$type": "color" },
-        "danger-default": { "$value": "{co.color.primitive.red.500}", "$type": "color" },
-        "danger-hover": { "$value": "{co.color.primitive.red.400}", "$type": "color" },
-        "danger-active": { "$value": "{co.color.primitive.red.300}", "$type": "color" }
+        "error-default": { "$value": "{co.color.primitive.red.400}", "$type": "color" },
+        "error-hover": { "$value": "{co.color.primitive.red.300}", "$type": "color" },
+        "error-active": { "$value": "{co.color.primitive.red.200}", "$type": "color" },
+        "success-default": { "$value": "{co.color.primitive.green.400}", "$type": "color" },
+        "success-hover": { "$value": "{co.color.primitive.green.300}", "$type": "color" },
+        "success-active": { "$value": "{co.color.primitive.green.200}", "$type": "color" }
       },
       "feedback": {
         "danger-bg": { "$value": "{co.color.primitive.red.900}", "$type": "color" },

@@ -16,7 +16,7 @@ import '@cobalt/components/co-button';
 
 ```html
 <co-button variant="primary" size="md">Save</co-button>
-<co-button variant="danger" disabled>Delete</co-button>
+<co-button variant="error" disabled>Delete</co-button>
 ```
 
 **React** (`@cobalt/react`):
@@ -24,7 +24,7 @@ import '@cobalt/components/co-button';
 ```tsx
 import { CoButton } from '@cobalt/react';
 <CoButton variant="primary" onClick={handleSave}>Save</CoButton>
-<CoButton variant="danger" onCoFocus={() => log('focused')}>Delete</CoButton>
+<CoButton variant="error" onCoFocus={() => log('focused')}>Delete</CoButton>
 ```
 
 **Vue** (`@cobalt/vue`):
@@ -51,15 +51,15 @@ import { CobaltButtonModule } from '@cobalt/angular';
 
 ## co-button API
 
-| Property   | Type                                              | Default     |
-| ---------- | ------------------------------------------------- | ----------- |
-| `variant`  | `'primary' \| 'secondary' \| 'danger' \| 'ghost'` | `'primary'` |
-| `size`     | `'sm' \| 'md' \| 'lg'`                            | `'md'`      |
-| `disabled` | `boolean`                                         | `false`     |
-| `loading`  | `boolean`                                         | `false`     |
-| `type`     | `'submit' \| 'reset' \| 'button'`                 | `'button'`  |
-| `href`     | `string`                                          | —           |
-| `target`   | `'_blank' \| '_self' \| '_parent' \| '_top'`      | —           |
+| Property   | Type                                               | Default     |
+| ---------- | -------------------------------------------------- | ----------- |
+| `variant`  | `'primary' \| 'secondary' \| 'error' \| 'success'` | `'primary'` |
+| `size`     | `'sm' \| 'md' \| 'lg'`                             | `'md'`      |
+| `disabled` | `boolean`                                          | `false`     |
+| `loading`  | `boolean`                                          | `false`     |
+| `type`     | `'submit' \| 'reset' \| 'button'`                  | `'button'`  |
+| `href`     | `string`                                           | —           |
+| `target`   | `'_blank' \| '_self' \| '_parent' \| '_top'`       | —           |
 
 Events: `co-focus`, `co-blur`. Slots: default, `prefix`, `suffix`.
 

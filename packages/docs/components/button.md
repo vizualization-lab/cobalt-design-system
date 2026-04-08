@@ -8,7 +8,7 @@ The `co-button` component provides a themed, accessible button built on top of L
   tag="co-button"
   label="Click me"
   :defaults="{ variant: 'primary', size: 'md' }"
-  :options="{ variant: ['primary', 'secondary', 'danger', 'ghost'], size: ['sm', 'md', 'lg'] }"
+  :options="{ variant: ['primary', 'secondary', 'error', 'success'], size: ['sm', 'md', 'lg'] }"
   :booleans="['disabled', 'loading']"
 />
 
@@ -18,17 +18,17 @@ The `co-button` component provides a themed, accessible button built on top of L
 <div style="display: flex; gap: 12px; flex-wrap: wrap; margin: 16px 0 24px;">
   <co-button variant="primary">Primary</co-button>
   <co-button variant="secondary">Secondary</co-button>
-  <co-button variant="danger">Danger</co-button>
-  <co-button variant="ghost">Ghost</co-button>
+  <co-button variant="error">Error</co-button>
+  <co-button variant="success">Success</co-button>
 </div>
 </ClientOnly>
 
-| Variant     | Purpose                                               |
-| ----------- | ----------------------------------------------------- |
-| `primary`   | Main call-to-action. Use sparingly — one per section. |
-| `secondary` | Supporting actions alongside a primary button.        |
-| `danger`    | Destructive actions like delete or remove.            |
-| `ghost`     | Low-emphasis actions, toolbars, or inline links.      |
+| Variant     | Purpose                                                |
+| ----------- | ------------------------------------------------------ |
+| `primary`   | Main call-to-action. Use sparingly — one per section.  |
+| `secondary` | Supporting actions alongside a primary button.         |
+| `error`     | Destructive actions like delete or remove.             |
+| `success`   | Confirmation or positive actions like save or approve. |
 
 ## Sizes
 
@@ -121,8 +121,8 @@ function App() {
       {/* With loading state */}
       <CoButton loading={loading}>Submitting…</CoButton>
 
-      {/* Danger variant */}
-      <CoButton variant="danger" onCoFocus={() => console.log('focused')}>
+      {/* Error variant */}
+      <CoButton variant="error" onCoFocus={() => console.log('focused')}>
         Delete account
       </CoButton>
 
@@ -159,8 +159,8 @@ async function handleClick() {
   <!-- With loading state -->
   <CoButton :loading="loading">Submitting…</CoButton>
 
-  <!-- Danger variant -->
-  <CoButton variant="danger" @co-focus="onFocus"> Delete account </CoButton>
+  <!-- Error variant -->
+  <CoButton variant="error" @co-focus="onFocus"> Delete account </CoButton>
 
   <!-- Sizes -->
   <CoButton size="sm">Small</CoButton>
@@ -206,8 +206,8 @@ export class AppComponent {
 <!-- Bound properties -->
 <co-button [variant]="variant" [loading]="isLoading"> Submitting… </co-button>
 
-<!-- Danger variant with events -->
-<co-button variant="danger" (coFocus)="onFocus($event)"> Delete account </co-button>
+<!-- Error variant with events -->
+<co-button variant="error" (coFocus)="onFocus($event)"> Delete account </co-button>
 
 <!-- Sizes -->
 <co-button size="sm">Small</co-button>
@@ -225,8 +225,9 @@ export class AppComponent {
 - **Form submissions** — primary actions like "Save", "Submit", "Create"
 - **Calls to action** — directing users toward a key task
 - **Dialogs and modals** — confirm/cancel action pairs
-- **Toolbars** — grouped actions using `ghost` or `secondary` variants
-- **Destructive confirmations** — use `danger` for delete, remove, or revoke actions
+- **Toolbars** — grouped actions using `secondary` variant
+- **Destructive confirmations** — use `error` for delete, remove, or revoke actions
+- **Positive confirmations** — use `success` for approve, confirm, or complete actions
 
 ### When NOT to use
 
@@ -240,7 +241,7 @@ export class AppComponent {
 - Use **clear, concise verbs**: "Save", "Delete", "Upload" — not "Click here" or "Submit form"
 - **Sentence case** for labels: "Save changes" not "Save Changes"
 - Avoid long labels — if you need more than 3 words, reconsider the UX
-- Pair `danger` buttons with a confirmation step (dialog or undo)
+- Pair `error` buttons with a confirmation step (dialog or undo)
 - Show `loading` state when an action takes more than ~300ms
 
 ### Layout guidelines
@@ -254,15 +255,15 @@ export class AppComponent {
 
 ### Properties
 
-| Property   | Type                                              | Default     | Description                         |
-| ---------- | ------------------------------------------------- | ----------- | ----------------------------------- |
-| `variant`  | `'primary' \| 'secondary' \| 'danger' \| 'ghost'` | `'primary'` | Visual style of the button          |
-| `size`     | `'sm' \| 'md' \| 'lg'`                            | `'md'`      | Controls padding and font size      |
-| `disabled` | `boolean`                                         | `false`     | Prevents interaction                |
-| `loading`  | `boolean`                                         | `false`     | Shows spinner, disables interaction |
-| `type`     | `'submit' \| 'reset' \| 'button'`                 | `'button'`  | HTML button type                    |
-| `href`     | `string`                                          | —           | Renders as an anchor element        |
-| `target`   | `'_blank' \| '_self' \| '_parent' \| '_top'`      | —           | Link target (when `href` is set)    |
+| Property   | Type                                               | Default     | Description                         |
+| ---------- | -------------------------------------------------- | ----------- | ----------------------------------- |
+| `variant`  | `'primary' \| 'secondary' \| 'error' \| 'success'` | `'primary'` | Visual style of the button          |
+| `size`     | `'sm' \| 'md' \| 'lg'`                             | `'md'`      | Controls padding and font size      |
+| `disabled` | `boolean`                                          | `false`     | Prevents interaction                |
+| `loading`  | `boolean`                                          | `false`     | Shows spinner, disables interaction |
+| `type`     | `'submit' \| 'reset' \| 'button'`                  | `'button'`  | HTML button type                    |
+| `href`     | `string`                                           | —           | Renders as an anchor element        |
+| `target`   | `'_blank' \| '_self' \| '_parent' \| '_top'`       | —           | Link target (when `href` is set)    |
 
 ### Events
 

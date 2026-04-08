@@ -75,28 +75,28 @@ export const cobaltButtonStyles = css`
     background: var(--co-color-surface-sunken);
   }
 
-  /* ── Danger variant ── */
-  :host([variant='danger']) {
-    background: var(--co-color-interactive-danger-default);
+  /* ── Error variant ── */
+  :host([variant='error']) {
+    background: var(--co-color-interactive-error-default);
     color: var(--co-color-text-on-primary);
   }
-  :host([variant='danger']:hover) {
-    background: var(--co-color-interactive-danger-hover);
+  :host([variant='error']:hover) {
+    background: var(--co-color-interactive-error-hover);
   }
-  :host([variant='danger']:active) {
-    background: var(--co-color-interactive-danger-active);
+  :host([variant='error']:active) {
+    background: var(--co-color-interactive-error-active);
   }
 
-  /* ── Ghost variant ── */
-  :host([variant='ghost']) {
-    background: transparent;
-    color: var(--co-color-text-link);
+  /* ── Success variant ── */
+  :host([variant='success']) {
+    background: var(--co-color-interactive-success-default);
+    color: var(--co-color-text-on-primary);
   }
-  :host([variant='ghost']:hover) {
-    background: var(--co-color-interactive-subtle-hover);
+  :host([variant='success']:hover) {
+    background: var(--co-color-interactive-success-hover);
   }
-  :host([variant='ghost']:active) {
-    background: var(--co-color-interactive-subtle-active);
+  :host([variant='success']:active) {
+    background: var(--co-color-interactive-success-active);
   }
 
   /* ── Focus ── */

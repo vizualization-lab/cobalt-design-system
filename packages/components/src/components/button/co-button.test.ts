@@ -14,9 +14,15 @@ describe('co-button', () => {
   });
 
   it('reflects variant attribute', async () => {
-    const el = await fixture<CoButton>(html`<co-button variant="danger">Delete</co-button>`);
-    expect(el.variant).to.equal('danger');
-    expect(el.getAttribute('variant')).to.equal('danger');
+    const el = await fixture<CoButton>(html`<co-button variant="error">Delete</co-button>`);
+    expect(el.variant).to.equal('error');
+    expect(el.getAttribute('variant')).to.equal('error');
+  });
+
+  it('reflects success variant attribute', async () => {
+    const el = await fixture<CoButton>(html`<co-button variant="success">Confirm</co-button>`);
+    expect(el.variant).to.equal('success');
+    expect(el.getAttribute('variant')).to.equal('success');
   });
 
   it('reflects size attribute', async () => {

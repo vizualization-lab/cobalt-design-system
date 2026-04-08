@@ -61,7 +61,7 @@ Use `co-card` for browsable collections where each item is a distinct entity. Ca
     <co-card-header>Q4 Revenue Report</co-card-header>
     <co-card-body>Summary of Q4 performance across all regions.</co-card-body>
     <co-card-footer>
-      <co-button variant="ghost" size="sm">View report</co-button>
+      <co-button variant="secondary" size="sm">View report</co-button>
     </co-card-footer>
   </co-card>
 </co-card-grid>

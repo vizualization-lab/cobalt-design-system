@@ -21,7 +21,7 @@ Use a single-column layout for most forms. Multi-column layouts are acceptable o
 
   <co-form-actions>
     <co-button type="submit" variant="primary">Submit</co-button>
-    <co-button type="reset" variant="ghost">Cancel</co-button>
+    <co-button type="reset" variant="secondary">Cancel</co-button>
   </co-form-actions>
 </co-form>
 ```

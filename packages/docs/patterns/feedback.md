@@ -118,8 +118,8 @@ Use `co-dialog` for destructive or irreversible actions. State the consequence c
     This will permanently delete <strong>Project Alpha</strong> and all associated data. This action
     cannot be undone.
   </p>
-  <co-button slot="secondary" variant="ghost">Cancel</co-button>
-  <co-button slot="primary" variant="danger">Delete project</co-button>
+  <co-button slot="secondary" variant="secondary">Cancel</co-button>
+  <co-button slot="primary" variant="error">Delete project</co-button>
 </co-dialog>
 ```
 
