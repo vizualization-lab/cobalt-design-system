@@ -2,8 +2,9 @@
   "tokenSetOrder": [
     "primitives",
     "primitives.color",
-    "semantic.light",
-    "semantic.dark",
+    "semantic.shared",
+    "semantic.theme.default.light",
+    "semantic.theme.default.dark",
     "components"
   ]
 }

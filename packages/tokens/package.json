@@ -28,6 +28,7 @@
   },
   "scripts": {
     "build": "node config.js",
+    "validate": "node scripts/validate-tokens.js",
     "merge-tokens": "node scripts/merge-tokens.js",
     "clean": "rm -rf dist"
   },

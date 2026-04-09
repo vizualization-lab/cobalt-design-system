@@ -1,0 +1,17 @@
+{
+  "co": {
+    "focus": {
+      "ring": {
+        "width": { "$value": "{co.shape.border-width.thick}", "$type": "dimension" },
+        "offset": { "$value": "{co.space.1}", "$type": "dimension" }
+      }
+    },
+    "control": {
+      "height": {
+        "sm": { "$value": "32px", "$type": "dimension" },
+        "md": { "$value": "40px", "$type": "dimension" },
+        "lg": { "$value": "48px", "$type": "dimension" }
+      }
+    }
+  }
+}

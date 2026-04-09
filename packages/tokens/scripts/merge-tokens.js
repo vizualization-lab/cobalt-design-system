@@ -1,14 +1,15 @@
 /**
  * Merges individual DTCG token JSON files into a single Token Studio-compatible
- * JSON file. This merged file can be imported into Token Studio (free tier) or
- * any DTCG-aware Figma plugin to sync tokens as Figma Variables.
+ * JSON file. Generated token metadata is derived from the token-set filenames,
+ * so new semantic.theme.* files are picked up without script edits.
  *
  * Output format:
  * {
  *   "primitives": { ...primitive tokens... },
  *   "primitives.color": { ...primitive colors... },
- *   "semantic.light": { ...light semantic colors... },
- *   "semantic.dark": { ...dark semantic colors... },
+ *   "semantic.shared": { ...shared semantic tokens... },
+ *   "semantic.theme.default.light": { ...theme semantic tokens... },
+ *   "semantic.theme.default.dark": { ...theme semantic tokens... },
  *   "components": { ...component tokens... },
  *   "$themes": [ ...theme definitions... ],
  *   "$metadata": { ...token set ordering... }
@@ -22,32 +23,42 @@
 import { readFileSync, writeFileSync, mkdirSync } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
+import {
+  buildMetadata,
+  buildThemes,
+  discoverTokenSets,
+  getTokenSetOrder,
+  writeGeneratedTokenMetadata,
+} from './token-set-utils.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const tokensDir = join(__dirname, '..', 'tokens');
 const distDir = join(__dirname, '..', 'dist');
 
-const TOKEN_SETS = [
-  'primitives',
-  'primitives.color',
-  'semantic.light',
-  'semantic.dark',
-  'components',
-];
-
 function readJson(filePath) {
   return JSON.parse(readFileSync(filePath, 'utf-8'));
 }
 
+function assertSupportedTokenSets(discovery) {
+  if (discovery.uncategorized.length > 0) {
+    const names = discovery.uncategorized.map((tokenSet) => tokenSet.name).join(', ');
+    throw new Error(`Unsupported token sets detected: ${names}`);
+  }
+}
+
 export function mergeTokens() {
+  const discovery = discoverTokenSets(tokensDir);
+  assertSupportedTokenSets(discovery);
+  writeGeneratedTokenMetadata(tokensDir, discovery);
+
   const merged = {};
 
-  for (const setName of TOKEN_SETS) {
-    merged[setName] = readJson(join(tokensDir, `${setName}.json`));
+  for (const tokenSetName of getTokenSetOrder(discovery)) {
+    merged[tokenSetName] = readJson(join(tokensDir, `${tokenSetName}.json`));
   }
 
-  merged.$themes = readJson(join(tokensDir, '$themes.json'));
-  merged.$metadata = readJson(join(tokensDir, '$metadata.json'));
+  merged.$themes = buildThemes(discovery);
+  merged.$metadata = buildMetadata(discovery);
 
   return merged;
 }
@@ -65,6 +76,6 @@ if (isCLI) {
     mkdirSync(distDir, { recursive: true });
     const outPath = join(distDir, 'tokens-merged.json');
     writeFileSync(outPath, JSON.stringify(result, null, 2) + '\n');
-    console.log(`Merged ${TOKEN_SETS.length} token sets → ${outPath}`);
+    console.log(`Merged ${Object.keys(result).length - 2} token sets → ${outPath}`);
   }
 }

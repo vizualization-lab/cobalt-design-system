@@ -77,14 +77,14 @@ export const cobaltButtonStyles = css`
 
   /* ── Error variant ── */
   :host([variant='error']) {
-    background: var(--co-color-interactive-error-default);
+    background: var(--co-color-interactive-danger-default);
     color: var(--co-color-text-on-primary);
   }
   :host([variant='error']:hover) {
-    background: var(--co-color-interactive-error-hover);
+    background: var(--co-color-interactive-danger-hover);
   }
   :host([variant='error']:active) {
-    background: var(--co-color-interactive-error-active);
+    background: var(--co-color-interactive-danger-active);
   }
 
   /* ── Success variant ── */
@@ -101,8 +101,8 @@ export const cobaltButtonStyles = css`
 
   /* ── Focus ── */
   :host(:focus-visible) {
-    outline: var(--co-shape-border-width-thick) solid var(--co-color-border-focus);
-    outline-offset: 2px;
+    outline: var(--co-focus-ring-width) solid var(--co-color-border-focus);
+    outline-offset: var(--co-focus-ring-offset);
   }
 
   /* ── Disabled ── */

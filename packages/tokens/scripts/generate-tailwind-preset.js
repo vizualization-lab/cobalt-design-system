@@ -86,6 +86,9 @@ function buildMappings(tokens) {
     'danger-default',
     'danger-hover',
     'danger-active',
+    'success-default',
+    'success-hover',
+    'success-active',
   ]) {
     const varName = `--co-color-interactive-${variant}`;
     if (varName in tokens) {

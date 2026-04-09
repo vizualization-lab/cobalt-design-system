@@ -1,22 +1,24 @@
 [
   {
     "id": "light",
-    "name": "Light",
+    "name": "Default Light",
     "selectedTokenSets": {
       "primitives": "enabled",
       "primitives.color": "source",
-      "semantic.light": "enabled",
+      "semantic.shared": "enabled",
+      "semantic.theme.default.light": "enabled",
       "components": "enabled"
     },
     "group": "Theme"
   },
   {
     "id": "dark",
-    "name": "Dark",
+    "name": "Default Dark",
     "selectedTokenSets": {
       "primitives": "enabled",
       "primitives.color": "source",
-      "semantic.dark": "enabled",
+      "semantic.shared": "enabled",
+      "semantic.theme.default.dark": "enabled",
       "components": "enabled"
     },
     "group": "Theme"

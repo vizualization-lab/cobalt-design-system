@@ -66,8 +66,8 @@
   }
 
   [data-co-base] a:focus-visible {
-    outline: 2px solid var(--co-color-border-focus);
-    outline-offset: 2px;
+    outline: var(--co-focus-ring-width) solid var(--co-color-border-focus);
+    outline-offset: var(--co-focus-ring-offset);
     border-radius: var(--co-shape-radius-sm);
   }
 
