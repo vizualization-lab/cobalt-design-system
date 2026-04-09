@@ -6,7 +6,7 @@ The goal is simple:
 
 - use the existing token system where possible
 - make new token requests easy to classify
-- avoid handoff notes that force engineering to guess intent
+- avoid handoff notes that force developers to guess intent
 
 ## Core Principle
 
@@ -78,11 +78,11 @@ Examples:
 
 Use this only when the value should not become a system-wide rule.
 
-## What Engineering Needs From Figma
+## What Developers Needs From Figma
 
 ### Use named styles or variables whenever possible
 
-Do not rely on visual matching alone. If a frame uses a Cobalt token-backed style, engineering should be able to identify that directly.
+Do not rely on visual matching alone. If a frame uses a Cobalt token-backed style, developers should be able to identify that directly.
 
 ### Call out all supported states
 
@@ -122,7 +122,7 @@ If a value is intended to become reusable, say so.
 
 If it is intentionally unique to one component or pattern, say that too.
 
-This helps engineering place the token correctly.
+This helps developers place the token correctly.
 
 ## Handoff Checklist
 
