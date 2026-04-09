@@ -1,0 +1,168 @@
+# Figma Handoff
+
+This page explains what designers should hand off in Figma when working with Cobalt tokens.
+
+The goal is simple:
+
+- use the existing token system where possible
+- make new token requests easy to classify
+- avoid handoff notes that force engineering to guess intent
+
+## Core Principle
+
+Figma is a design workspace and review surface.
+
+The source of truth for tokens lives in the Cobalt token files. Figma should reflect that system, not replace it.
+
+In practice, that means:
+
+- use token-backed styles when they already exist
+- document intent when something is new
+- call out theme differences explicitly
+- avoid one-off visual values unless they are intentional
+
+## What To Hand Off
+
+Every handoff should make these things clear:
+
+1. which existing tokens or styles are being used
+2. which states need to be supported
+3. which values change by theme
+4. which values are component-specific exceptions
+
+## The Designer Decision Tree
+
+When a design needs a new value, use this order:
+
+### 1. Reuse an existing semantic token first
+
+This is the default choice.
+
+Examples:
+
+- text styles
+- surface colors
+- border colors
+- control heights
+- focus treatments
+
+If the value is already a system rule, use the semantic token instead of creating a new style.
+
+### 2. If it is a raw scale value, it is a primitive request
+
+Examples:
+
+- a new spacing step
+- a new radius value
+- a new palette color
+
+These are system-building values, not component decisions.
+
+### 3. If it changes between light, dark, or future brand themes, it is a theme request
+
+Examples:
+
+- text color on dark surfaces
+- surface elevation color shifts
+- primary brand color by theme
+
+Theme requests should describe what changes and where it changes.
+
+### 4. If it only belongs to one component, it is a component token request
+
+Examples:
+
+- avatar sizes
+- a unique chip shape
+- a component-only spacing rule
+
+Use this only when the value should not become a system-wide rule.
+
+## What Engineering Needs From Figma
+
+### Use named styles or variables whenever possible
+
+Do not rely on visual matching alone. If a frame uses a Cobalt token-backed style, engineering should be able to identify that directly.
+
+### Call out all supported states
+
+At minimum, include:
+
+- default
+- hover
+- focus
+- active when relevant
+- disabled when relevant
+- invalid or error when relevant
+- success when relevant
+
+### Call out all supported sizes
+
+If a component supports multiple sizes, show them in the same handoff.
+
+Examples:
+
+- `sm`
+- `md`
+- `lg`
+
+### Call out theme differences directly
+
+If a design differs in light and dark mode, do not assume the difference is obvious from screenshots alone.
+
+Show:
+
+- what changes
+- what stays the same
+- whether the difference is semantic or component-specific
+
+### Separate system rules from one-off exceptions
+
+If a value is intended to become reusable, say so.
+
+If it is intentionally unique to one component or pattern, say that too.
+
+This helps engineering place the token correctly.
+
+## Handoff Checklist
+
+Before marking a design ready:
+
+- [ ] colors use existing semantic styles or clearly request a new semantic/theme token
+- [ ] text uses existing text roles or clearly requests a new text role
+- [ ] spacing and radius values use existing system scales where possible
+- [ ] component sizes and states are shown explicitly
+- [ ] light and dark differences are documented when relevant
+- [ ] one-off values are labeled as intentional exceptions
+- [ ] accessibility requirements are present for labels, helper text, errors, and focus behavior
+
+## Common Examples
+
+| Design need                             | Best request type     | Why                                     |
+| --------------------------------------- | --------------------- | --------------------------------------- |
+| New body text style for product content | Shared semantic token | It should be reusable across the system |
+| Different text color in dark mode       | Theme semantic token  | It changes by mode                      |
+| New brand palette ramp                  | Primitive color token | It is a raw palette input               |
+| New avatar sizes                        | Component token       | It belongs to Avatar, not every control |
+| New default field height                | Shared semantic token | It affects standard controls            |
+
+## Good Handoff Notes
+
+Use notes like these:
+
+- "Uses existing body text role and default surface tokens."
+- "Dark mode changes only the semantic color layer; spacing and typography stay the same."
+- "Avatar sizes are component-specific and should not become global control sizes."
+- "Input uses shared control height and shared control padding."
+
+Avoid notes like these:
+
+- "Use whatever matches this visually."
+- "Same as before but darker."
+- "Special case for now."
+
+## Related Pages
+
+- [Token Structure](./structure.md)
+- [Token Reference](./index.md)
+- [For Designers](../getting-started/designers.md)
