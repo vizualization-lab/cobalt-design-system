@@ -1,3 +1,9 @@
 {
-  "tokenSetOrder": ["core", "color.primitive", "color.light", "color.dark"]
+  "tokenSetOrder": [
+    "primitives",
+    "primitives.color",
+    "semantic.light",
+    "semantic.dark",
+    "components"
+  ]
 }

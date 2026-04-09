@@ -7,13 +7,17 @@ import { mergeTokens } from './scripts/merge-tokens.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
-// Shared sources: core tokens + primitive color palette.
+// Shared sources: primitive tokens + primitive color palette + component tokens.
 // Theme-specific color files (light/dark) are added per-build to avoid collisions.
-const sharedSources = ['tokens/core.json', 'tokens/color.primitive.json'];
+const sharedSources = [
+  'tokens/primitives.json',
+  'tokens/primitives.color.json',
+  'tokens/components.json',
+];
 
 // ── Light theme build ───────────────────────────────────────────────────────
 const lightSD = new StyleDictionary({
-  source: [...sharedSources, 'tokens/color.light.json'],
+  source: [...sharedSources, 'tokens/semantic.light.json'],
   platforms: {
     css: {
       transformGroup: 'css',
@@ -66,7 +70,7 @@ const lightSD = new StyleDictionary({
 
 // ── Dark theme build ────────────────────────────────────────────────────────
 const darkSD = new StyleDictionary({
-  source: [...sharedSources, 'tokens/color.dark.json'],
+  source: [...sharedSources, 'tokens/semantic.dark.json'],
   platforms: {
     css: {
       transformGroup: 'css',

@@ -55,8 +55,8 @@ All CSS tokens use the `--co-` prefix. In JSON/JS they use `Co` prefix in camelC
 **Three-tier architecture:**
 
 - **Primitive:** `--co-color-primitive-blue-500` — raw palette values (avoid direct use)
-- **Semantic:** `--co-color-primary-base`, `--co-color-danger-dark` — 5 functional variants per role (base, light, dark, subtle, contrast)
-- **Contextual:** `--co-color-surface-default`, `--co-color-text-secondary`, `--co-color-interactive-hover` — usage-specific
+- **Semantic:** `--co-color-primary-base`, `--co-color-surface-default`, `--co-color-interactive-hover` — intent-based mappings
+- **Component:** `--co-button-primary-background`, `--co-button-border-radius` — component-specific decisions referencing semantic tokens
 
 **Token categories and patterns:**
 
@@ -279,11 +279,11 @@ Validated by commitlint hook.
 
 ## Key Files for Detailed Lookups
 
-| What                         | Where                                                                            |
-| ---------------------------- | -------------------------------------------------------------------------------- |
-| Full component API manifest  | `packages/components/custom-elements.json`                                       |
-| All 174 design tokens        | `packages/tokens/dist/tokens.json`                                               |
-| Component docs with examples | `packages/docs/components/*.md`                                                  |
-| Coding standards             | `packages/docs/contributing/coding-standards.md`                                 |
-| Developer setup guide        | `packages/docs/getting-started/developers.md`                                    |
-| Token source definitions     | `packages/tokens/tokens/*.json` (core, color.primitive, color.light, color.dark) |
+| What                         | Where                                                                                                     |
+| ---------------------------- | --------------------------------------------------------------------------------------------------------- |
+| Full component API manifest  | `packages/components/custom-elements.json`                                                                |
+| All 174 design tokens        | `packages/tokens/dist/tokens.json`                                                                        |
+| Component docs with examples | `packages/docs/components/*.md`                                                                           |
+| Coding standards             | `packages/docs/contributing/coding-standards.md`                                                          |
+| Developer setup guide        | `packages/docs/getting-started/developers.md`                                                             |
+| Token source definitions     | `packages/tokens/tokens/*.json` (primitives, primitives.color, semantic.light, semantic.dark, components) |

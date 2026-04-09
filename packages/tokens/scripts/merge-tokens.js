@@ -5,10 +5,11 @@
  *
  * Output format:
  * {
- *   "core": { ...core tokens... },
- *   "color.primitive": { ...primitive colors... },
- *   "color.light": { ...light semantic colors... },
- *   "color.dark": { ...dark semantic colors... },
+ *   "primitives": { ...primitive tokens... },
+ *   "primitives.color": { ...primitive colors... },
+ *   "semantic.light": { ...light semantic colors... },
+ *   "semantic.dark": { ...dark semantic colors... },
+ *   "components": { ...component tokens... },
  *   "$themes": [ ...theme definitions... ],
  *   "$metadata": { ...token set ordering... }
  * }
@@ -26,7 +27,13 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const tokensDir = join(__dirname, '..', 'tokens');
 const distDir = join(__dirname, '..', 'dist');
 
-const TOKEN_SETS = ['core', 'color.primitive', 'color.light', 'color.dark'];
+const TOKEN_SETS = [
+  'primitives',
+  'primitives.color',
+  'semantic.light',
+  'semantic.dark',
+  'components',
+];
 
 function readJson(filePath) {
   return JSON.parse(readFileSync(filePath, 'utf-8'));

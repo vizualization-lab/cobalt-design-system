@@ -3,9 +3,10 @@
     "id": "light",
     "name": "Light",
     "selectedTokenSets": {
-      "core": "enabled",
-      "color.primitive": "source",
-      "color.light": "enabled"
+      "primitives": "enabled",
+      "primitives.color": "source",
+      "semantic.light": "enabled",
+      "components": "enabled"
     },
     "group": "Theme"
   },
@@ -13,9 +14,10 @@
     "id": "dark",
     "name": "Dark",
     "selectedTokenSets": {
-      "core": "enabled",
-      "color.primitive": "source",
-      "color.dark": "enabled"
+      "primitives": "enabled",
+      "primitives.color": "source",
+      "semantic.dark": "enabled",
+      "components": "enabled"
     },
     "group": "Theme"
   }
