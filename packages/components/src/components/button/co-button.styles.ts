@@ -12,7 +12,7 @@ export const cobaltButtonStyles = css`
     font-size: var(--co-font-size-md);
     font-weight: var(--co-font-weight-medium);
     line-height: var(--co-font-line-height-tight);
-    border-radius: var(--co-shape-radius-sm);
+    border-radius: var(--co-control-radius);
     border: var(--co-shape-border-width-thin) solid transparent;
     cursor: pointer;
     transition:

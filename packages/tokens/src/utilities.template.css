@@ -325,16 +325,16 @@
     width: 100vw;
   }
   .co-max-w-screen-sm {
-    max-width: 640px;
+    max-width: var(--co-layout-content-max-width-sm);
   }
   .co-max-w-screen-md {
-    max-width: 768px;
+    max-width: var(--co-layout-content-max-width-md);
   }
   .co-max-w-screen-lg {
-    max-width: 1024px;
+    max-width: var(--co-layout-content-max-width-lg);
   }
   .co-max-w-screen-xl {
-    max-width: 1280px;
+    max-width: var(--co-layout-content-max-width-xl);
   }
 
   .co-h-full {
@@ -472,15 +472,15 @@
    * Responsive variants
    *
    * Breakpoints (from tokens):
-   *   sm  → 640px
-   *   md  → 768px
-   *   lg  → 1024px
-   *   xl  → 1280px
-   *   2xl → 1536px
+   *   sm  → __CO_BREAKPOINT_SM__
+   *   md  → __CO_BREAKPOINT_MD__
+   *   lg  → __CO_BREAKPOINT_LG__
+   *   xl  → __CO_BREAKPOINT_XL__
+   *   2xl → __CO_BREAKPOINT_2XL__
    * ══════════════════════════════════════════════ */
 
-  /* ── sm (≥ 640px) ───────────────────────────── */
-  @media (min-width: 640px) {
+  /* ── sm (≥ __CO_BREAKPOINT_SM__) ────────────── */
+  @media (min-width: __CO_BREAKPOINT_SM__) {
     .sm\:co-hidden {
       display: none;
     }
@@ -546,8 +546,8 @@
     }
   }
 
-  /* ── md (≥ 768px) ───────────────────────────── */
-  @media (min-width: 768px) {
+  /* ── md (≥ __CO_BREAKPOINT_MD__) ────────────── */
+  @media (min-width: __CO_BREAKPOINT_MD__) {
     .md\:co-hidden {
       display: none;
     }
@@ -613,8 +613,8 @@
     }
   }
 
-  /* ── lg (≥ 1024px) ──────────────────────────── */
-  @media (min-width: 1024px) {
+  /* ── lg (≥ __CO_BREAKPOINT_LG__) ───────────── */
+  @media (min-width: __CO_BREAKPOINT_LG__) {
     .lg\:co-hidden {
       display: none;
     }
@@ -680,8 +680,8 @@
     }
   }
 
-  /* ── xl (≥ 1280px) ──────────────────────────── */
-  @media (min-width: 1280px) {
+  /* ── xl (≥ __CO_BREAKPOINT_XL__) ───────────── */
+  @media (min-width: __CO_BREAKPOINT_XL__) {
     .xl\:co-hidden {
       display: none;
     }

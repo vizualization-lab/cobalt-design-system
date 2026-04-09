@@ -3,6 +3,7 @@ import { copyFileSync, readFileSync, writeFileSync } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 import { generateTailwindPreset } from './scripts/generate-tailwind-preset.js';
+import { generateUtilitiesCss } from './scripts/generate-utilities-css.js';
 import { mergeTokens } from './scripts/merge-tokens.js';
 import { discoverTokenSets, writeGeneratedTokenMetadata } from './scripts/token-set-utils.js';
 import { validateTokens } from './scripts/validate-tokens.js';
@@ -187,8 +188,8 @@ async function build() {
   console.log('Copying font-face stylesheet...');
   copyFileSync(join(__dirname, 'src/fonts.css'), join(__dirname, 'dist/css/fonts.css'));
 
-  console.log('Copying utility classes...');
-  copyFileSync(join(__dirname, 'src/utilities.css'), join(__dirname, 'dist/css/utilities.css'));
+  console.log('Generating utility classes...');
+  generateUtilitiesCss(__dirname, tokensDir);
 
   console.log('Generating TypeScript declarations...');
   const jsContent = readFileSync(join(__dirname, 'dist/js/tokens.js'), 'utf-8');

@@ -7,10 +7,21 @@
       }
     },
     "control": {
+      "radius": { "$value": "{co.shape.radius.sm}", "$type": "dimension" },
       "height": {
         "sm": { "$value": "32px", "$type": "dimension" },
         "md": { "$value": "40px", "$type": "dimension" },
         "lg": { "$value": "48px", "$type": "dimension" }
+      }
+    },
+    "layout": {
+      "content": {
+        "max-width": {
+          "sm": { "$value": "{co.breakpoint.sm}", "$type": "dimension" },
+          "md": { "$value": "{co.breakpoint.md}", "$type": "dimension" },
+          "lg": { "$value": "{co.breakpoint.lg}", "$type": "dimension" },
+          "xl": { "$value": "{co.breakpoint.xl}", "$type": "dimension" }
+        }
       }
     }
   }
