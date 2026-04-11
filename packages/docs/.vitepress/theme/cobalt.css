@@ -14,41 +14,29 @@
 
   /* Remap VitePress variables to Cobalt tokens */
   :root {
-    --vp-c-bg: var(--co-midnight);
-    --vp-c-bg-alt: var(--co-deep);
-    --vp-c-bg-soft: var(--co-surface);
-    --vp-c-text-1: var(--co-text-primary);
-    --vp-c-text-2: var(--co-text-secondary);
-    --vp-c-text-3: var(--co-text-muted);
-    --vp-c-divider: var(--co-border);
-    --vp-c-brand-1: var(--co-blue-600);
-    --vp-c-brand-soft: var(--co-blue-alpha-10);
-    --vp-c-default-soft: var(--co-surface);
-    --vp-c-neutral-inverse: #fff;
-    --vp-font-family-base: var(--co-font-body);
-    --vp-font-family-mono: var(--co-font-mono);
+    --vp-c-bg: var(--co-color-surface-page);
+    --vp-c-bg-alt: var(--co-color-surface-default);
+    --vp-c-bg-soft: var(--co-color-surface-raised);
+    --vp-c-text-1: var(--co-color-text-default);
+    --vp-c-text-2: var(--co-color-text-secondary);
+    --vp-c-text-3: var(--co-color-text-tertiary);
+    --vp-c-divider: var(--co-color-border-subtle);
+    --vp-c-brand-1: var(--co-color-primary-base);
+    --vp-c-brand-soft: color-mix(in srgb, var(--co-color-primary-base) 10%, transparent);
+    --vp-c-default-soft: var(--co-color-surface-raised);
+    --vp-c-neutral-inverse: var(--co-color-text-inverse);
+    --vp-font-family-base: var(--co-font-family-sans);
+    --vp-font-family-mono: var(--co-font-family-mono);
 
     /* Local search modal */
-    --vp-backdrop-bg-color: rgba(0, 0, 0, 0.6);
-    --vp-local-search-bg: var(--co-deep);
-    --vp-local-search-result-bg: var(--co-surface);
-    --vp-local-search-result-border: var(--co-border);
-    --vp-local-search-result-selected-bg: var(--co-surface-raised);
-    --vp-local-search-result-selected-border: var(--co-blue-600);
-    --vp-local-search-highlight-bg: var(--co-blue-600);
-    --vp-local-search-highlight-text: #fff;
-  }
-
-  [data-theme='light'] {
-    --vp-c-neutral-inverse: #fff;
-    --vp-backdrop-bg-color: rgba(0, 0, 0, 0.4);
-    --vp-local-search-bg: #fff;
-    --vp-local-search-result-bg: var(--co-surface);
-    --vp-local-search-result-border: var(--co-border);
-    --vp-local-search-result-selected-bg: var(--co-surface-raised);
-    --vp-local-search-result-selected-border: var(--co-blue-600);
-    --vp-local-search-highlight-bg: var(--co-blue-600);
-    --vp-local-search-highlight-text: #fff;
+    --vp-backdrop-bg-color: color-mix(in srgb, var(--co-color-surface-overlay) 60%, transparent);
+    --vp-local-search-bg: var(--co-color-surface-default);
+    --vp-local-search-result-bg: var(--co-color-surface-raised);
+    --vp-local-search-result-border: var(--co-color-border-subtle);
+    --vp-local-search-result-selected-bg: var(--co-color-surface-sunken);
+    --vp-local-search-result-selected-border: var(--co-color-primary-base);
+    --vp-local-search-highlight-bg: var(--co-color-primary-base);
+    --vp-local-search-highlight-text: var(--co-color-primary-contrast);
   }
 
   /* Kill the default VitePress container width for doc pages */
@@ -91,7 +79,7 @@
     background: var(--vp-local-search-bg) !important;
     border: 1px solid var(--co-border-strong) !important;
     border-radius: 12px !important;
-    box-shadow: 0 24px 64px rgba(0, 0, 0, 0.3) !important;
+    box-shadow: 0 24px 64px color-mix(in srgb, var(--co-color-surface-overlay) 30%, transparent) !important;
   }
 
   .VPLocalSearchBox .backdrop {
@@ -102,7 +90,7 @@
   .VPLocalSearchBox .search-bar {
     border: 1px solid var(--co-border-strong) !important;
     border-radius: 8px !important;
-    background: var(--co-surface) !important;
+    background: var(--co-color-surface-raised) !important;
     padding: 4px 8px !important;
     gap: 4px;
   }
@@ -121,14 +109,14 @@
     border: none !important;
     border-radius: 6px;
     background: transparent !important;
-    color: var(--co-text-muted);
+    color: var(--co-color-text-tertiary);
     opacity: 0.7;
     transition: all var(--co-duration, 200ms) ease;
   }
 
   .VPLocalSearchBox .search-actions button:not([disabled]):hover,
   .VPLocalSearchBox .search-actions button.detailed-list {
-    background: var(--co-blue-alpha-10, rgba(37, 99, 235, 0.1)) !important;
+    background: var(--co-blue-alpha-10) !important;
     color: var(--co-blue-600) !important;
     opacity: 1;
   }
@@ -143,7 +131,7 @@
   }
 
   .VPLocalSearchBox .search-input::placeholder {
-    color: var(--co-text-muted);
+    color: var(--co-color-text-tertiary);
   }
 
   .VPLocalSearchBox .result {
@@ -156,17 +144,17 @@
   }
 
   .VPLocalSearchBox .search-keyboard-shortcuts {
-    color: var(--co-text-muted);
+    color: var(--co-color-text-tertiary);
   }
 
   .VPLocalSearchBox .search-keyboard-shortcuts kbd {
-    background: var(--co-surface);
+    background: var(--co-color-surface-raised);
     border-color: var(--co-border);
     color: var(--co-text-secondary);
   }
 
   .VPLocalSearchBox .no-results {
-    color: var(--co-text-muted);
+    color: var(--co-color-text-tertiary);
   }
 
   .VPLocalSearchBox .title {

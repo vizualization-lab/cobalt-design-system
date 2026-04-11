@@ -383,13 +383,13 @@ function getSnippet(name: string, tabIndex: number): string {
 <style scoped>
 .icon-gallery {
   --gallery-radius: 10px;
-  --gallery-border: var(--vp-c-divider, var(--co-border, #e2e8f0));
-  --gallery-surface: var(--vp-c-bg-soft, var(--co-surface, #f6f6f7));
-  --gallery-text: var(--vp-c-text-1, var(--co-text, #213547));
-  --gallery-text-secondary: var(--vp-c-text-2, var(--co-text-secondary, #476582));
-  --gallery-text-muted: var(--vp-c-text-3, var(--co-text-muted, #8e99a4));
-  --gallery-accent: var(--vp-c-brand-1, var(--co-accent, #639bff));
-  --gallery-accent-soft: var(--vp-c-brand-soft, var(--co-accent-soft, rgba(99, 155, 255, 0.14)));
+  --gallery-border: var(--vp-c-divider);
+  --gallery-surface: var(--vp-c-bg-soft);
+  --gallery-text: var(--vp-c-text-1);
+  --gallery-text-secondary: var(--vp-c-text-2);
+  --gallery-text-muted: var(--vp-c-text-3);
+  --gallery-accent: var(--vp-c-brand-1);
+  --gallery-accent-soft: var(--vp-c-brand-soft);
   font-size: 0.875rem;
 }
 
@@ -770,7 +770,7 @@ function getSnippet(name: string, tabIndex: number): string {
 .snippet-tabs {
   display: flex;
   border-bottom: 1px solid var(--gallery-border);
-  background: var(--vp-c-bg-soft, rgba(0, 0, 0, 0.06));
+  background: var(--vp-c-bg-soft);
 }
 
 .snippet-tab {
@@ -806,7 +806,7 @@ function getSnippet(name: string, tabIndex: number): string {
   padding: 8px 10px;
   font-size: 0.72rem;
   line-height: 1.5;
-  font-family: var(--co-font-mono, monospace);
+  font-family: var(--co-font-mono);
   color: var(--gallery-text);
   overflow-x: auto;
   white-space: pre;
@@ -847,18 +847,18 @@ function getSnippet(name: string, tabIndex: number): string {
 .ig-detail-backdrop {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.4);
+  background: color-mix(in srgb, var(--co-color-surface-overlay) 40%, transparent);
   z-index: 100;
 }
 
 .ig-detail-sheet {
   --ig-radius: 10px;
-  --ig-border: var(--vp-c-divider, #e2e8f0);
-  --ig-surface: var(--vp-c-bg, #ffffff);
-  --ig-text: var(--vp-c-text-1, #213547);
-  --ig-text-muted: var(--vp-c-text-3, #8e99a4);
-  --ig-accent: var(--vp-c-brand-1, #639bff);
-  --ig-accent-soft: var(--vp-c-brand-soft, rgba(99, 155, 255, 0.14));
+  --ig-border: var(--vp-c-divider);
+  --ig-surface: var(--vp-c-bg);
+  --ig-text: var(--vp-c-text-1);
+  --ig-text-muted: var(--vp-c-text-3);
+  --ig-accent: var(--vp-c-brand-1);
+  --ig-accent-soft: var(--vp-c-brand-soft);
 
   position: fixed;
   bottom: 0;
@@ -1040,7 +1040,7 @@ function getSnippet(name: string, tabIndex: number): string {
 .ig-snippet-tabs {
   display: flex;
   border-bottom: 1px solid var(--ig-border);
-  background: var(--vp-c-bg-soft, rgba(0, 0, 0, 0.06));
+  background: var(--vp-c-bg-soft);
 }
 
 .ig-snippet-tab {
@@ -1076,7 +1076,7 @@ function getSnippet(name: string, tabIndex: number): string {
   padding: 8px 10px;
   font-size: 0.72rem;
   line-height: 1.5;
-  font-family: var(--co-font-mono, monospace);
+  font-family: var(--co-font-mono);
   color: var(--ig-text);
   overflow-x: auto;
   white-space: pre;

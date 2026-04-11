@@ -114,9 +114,11 @@ const next = computed(() =>
 }
 
 .prev-next-group {
-  font-size: 0.7rem;
-  font-weight: 500;
-  letter-spacing: 0.02em;
+  font-size: var(--co-typography-eyebrow-size);
+  font-weight: var(--co-typography-eyebrow-weight);
+  letter-spacing: var(--co-typography-eyebrow-tracking);
+  line-height: var(--co-typography-eyebrow-line-height);
+  text-transform: uppercase;
   color: var(--co-text-secondary);
 }
 
@@ -124,10 +126,11 @@ const next = computed(() =>
   display: flex;
   align-items: center;
   gap: 8px;
-  font-size: 0.9rem;
-  font-weight: 500;
+  font-size: var(--co-typography-label-size);
+  font-weight: var(--co-typography-label-weight);
+  letter-spacing: var(--co-typography-label-tracking);
+  line-height: var(--co-typography-label-line-height);
   color: var(--co-text-primary);
-  line-height: 1;
   transition: color var(--co-duration) var(--co-ease);
 }
 

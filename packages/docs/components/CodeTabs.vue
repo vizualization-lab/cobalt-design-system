@@ -31,18 +31,18 @@ const activeTab = ref(props.tabs[0]);
 
 <style scoped>
 .code-tabs {
-  border: 1px solid var(--co-border, rgba(99, 155, 255, 0.1));
+  border: 1px solid var(--co-border);
   border-radius: 12px;
   margin: 16px 0 24px;
   overflow: hidden;
-  background: var(--co-deep, #0f1d32);
+  background: var(--co-deep);
 }
 
 .code-tabs-bar {
   display: flex;
   gap: 0;
-  border-bottom: 1px solid var(--co-border, rgba(99, 155, 255, 0.1));
-  background: var(--co-surface, rgba(15, 29, 50, 0.6));
+  border-bottom: 1px solid var(--co-border);
+  background: var(--co-color-surface-raised);
   overflow-x: auto;
 }
 
@@ -51,10 +51,10 @@ const activeTab = ref(props.tabs[0]);
   border: none;
   background: none;
   cursor: pointer;
-  font-family: var(--co-font-body, sans-serif);
+  font-family: var(--co-font-body);
   font-size: 0.8rem;
   font-weight: 500;
-  color: var(--co-text-muted, #4e6382);
+  color: var(--co-color-text-tertiary);
   letter-spacing: 0.02em;
   transition: all 0.2s ease;
   position: relative;
@@ -62,11 +62,11 @@ const activeTab = ref(props.tabs[0]);
 }
 
 .code-tab:hover {
-  color: var(--co-text-secondary, #7a8da8);
+  color: var(--co-text-secondary);
 }
 
 .code-tab.is-active {
-  color: var(--co-code-color, #7eb3f0);
+  color: var(--co-code-color);
 }
 
 .code-tab.is-active::after {
@@ -76,7 +76,7 @@ const activeTab = ref(props.tabs[0]);
   left: 12px;
   right: 12px;
   height: 2px;
-  background: var(--co-blue-500, #3b82f6);
+  background: var(--co-blue-500);
   border-radius: 2px 2px 0 0;
 }
 

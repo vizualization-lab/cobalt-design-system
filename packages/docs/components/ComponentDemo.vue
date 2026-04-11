@@ -108,17 +108,17 @@ watch(state, () => renderKey.value++, { deep: true });
 
 <style scoped>
 .demo-block {
-  border: 1px solid var(--co-border, rgba(99, 155, 255, 0.1));
+  border: 1px solid var(--co-border);
   border-radius: 12px;
   margin: 16px 0 24px;
   overflow: hidden;
-  background: var(--co-surface, rgba(15, 29, 50, 0.6));
+  background: var(--co-color-surface-raised);
 }
 
 .demo-controls {
   padding: 14px 20px;
-  background: var(--co-surface, rgba(15, 29, 50, 0.5));
-  border-bottom: 1px solid var(--co-border, rgba(99, 155, 255, 0.1));
+  background: var(--co-color-surface-raised);
+  border-bottom: 1px solid var(--co-border);
   display: flex;
   gap: 20px;
   flex-wrap: wrap;
@@ -141,23 +141,23 @@ watch(state, () => renderKey.value++, { deep: true });
   justify-content: center;
   width: 32px;
   height: 32px;
-  border: 1px solid var(--co-border, rgba(99, 155, 255, 0.12));
+  border: 1px solid var(--co-border);
   border-radius: 8px;
   background: transparent;
-  color: var(--co-text-muted, #6d84a3);
+  color: var(--co-color-text-tertiary);
   cursor: pointer;
   transition: all 0.2s ease;
 }
 
 .demo-theme-btn:hover {
-  border-color: var(--co-border-strong, rgba(99, 155, 255, 0.2));
-  color: var(--co-text-primary, #e8eef6);
+  border-color: var(--co-border-strong);
+  color: var(--co-text-primary);
 }
 
 .demo-label {
   font-size: 0.78rem;
   font-weight: 600;
-  color: var(--co-text-muted, #4e6382);
+  color: var(--co-color-text-tertiary);
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
@@ -169,24 +169,24 @@ watch(state, () => renderKey.value++, { deep: true });
 .demo-select {
   appearance: none;
   padding: 5px 28px 5px 10px;
-  border: 1px solid var(--co-border-strong, rgba(99, 155, 255, 0.18));
+  border: 1px solid var(--co-border-strong);
   border-radius: 8px;
-  background: var(--co-deep, #0f1d32);
-  color: var(--co-text-primary, #e8edf5);
-  font-family: var(--co-font-mono, monospace);
+  background: var(--co-deep);
+  color: var(--co-text-primary);
+  font-family: var(--co-font-mono);
   font-size: 0.78rem;
   cursor: pointer;
   transition: border-color 0.2s ease;
 }
 
 .demo-select:hover {
-  border-color: var(--co-blue-500, #3b82f6);
+  border-color: var(--co-blue-500);
 }
 
 .demo-select:focus {
   outline: none;
-  border-color: var(--co-blue-500, #3b82f6);
-  box-shadow: 0 0 0 2px var(--co-blue-alpha-15, rgba(37, 99, 235, 0.15));
+  border-color: var(--co-blue-500);
+  box-shadow: 0 0 0 2px var(--co-blue-alpha-15);
 }
 
 .demo-select-wrap::after {
@@ -196,7 +196,7 @@ watch(state, () => renderKey.value++, { deep: true });
   top: 50%;
   transform: translateY(-50%);
   font-size: 0.7rem;
-  color: var(--co-text-muted, #4e6382);
+  color: var(--co-color-text-tertiary);
   pointer-events: none;
 }
 
@@ -219,13 +219,13 @@ watch(state, () => renderKey.value++, { deep: true });
   position: relative;
   width: 32px;
   height: 18px;
-  background: var(--co-border-strong, rgba(99, 155, 255, 0.18));
+  background: var(--co-border-strong);
   border-radius: 9px;
   transition: background 0.2s ease;
 }
 
 .demo-toggle input:checked + .demo-toggle-track {
-  background: var(--co-blue-600, #2563eb);
+  background: var(--co-blue-600);
 }
 
 .demo-toggle-thumb {
@@ -234,7 +234,7 @@ watch(state, () => renderKey.value++, { deep: true });
   left: 2px;
   width: 14px;
   height: 14px;
-  background: var(--co-text-primary, #e8edf5);
+  background: var(--co-text-primary);
   border-radius: 50%;
   transition: transform 0.2s ease;
 }
@@ -246,7 +246,7 @@ watch(state, () => renderKey.value++, { deep: true });
 .demo-toggle-label {
   font-size: 0.78rem;
   font-weight: 600;
-  color: var(--co-text-muted, #4e6382);
+  color: var(--co-color-text-tertiary);
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }

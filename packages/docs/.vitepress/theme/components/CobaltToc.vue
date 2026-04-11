@@ -110,11 +110,12 @@ onUnmounted(() => {
 }
 
 .toc-title {
-  font-size: 0.72rem;
-  font-weight: 600;
+  font-size: var(--co-typography-eyebrow-size);
+  font-weight: var(--co-typography-eyebrow-weight);
+  letter-spacing: var(--co-typography-eyebrow-tracking);
+  line-height: var(--co-typography-eyebrow-line-height);
   text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: var(--co-text-muted);
+  color: var(--co-color-text-tertiary);
   margin-bottom: 10px;
   padding-left: 12px;
 }
@@ -129,9 +130,11 @@ onUnmounted(() => {
 .toc-item a {
   display: block;
   padding: 4px 12px;
-  font-size: 0.8rem;
-  line-height: 1.45;
-  color: var(--co-text-muted);
+  font-size: var(--co-typography-body-sm-size);
+  font-weight: var(--co-typography-body-sm-weight);
+  letter-spacing: var(--co-typography-body-sm-tracking);
+  line-height: var(--co-typography-body-sm-line-height);
+  color: var(--co-color-text-tertiary);
   text-decoration: none;
   border-left: 2px solid transparent;
   margin-left: -1px;
@@ -143,7 +146,7 @@ onUnmounted(() => {
 
 .toc-level-3 a {
   padding-left: 24px;
-  font-size: 0.76rem;
+  font-size: var(--co-typography-caption-size);
 }
 
 .toc-item a:hover {

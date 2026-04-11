@@ -173,9 +173,10 @@ function isGroupActive(group: NavGroup): boolean {
   cursor: pointer;
   color: var(--co-text-secondary);
   font-family: var(--co-font-body);
-  font-size: 0.82rem;
-  font-weight: 500;
-  letter-spacing: 0.01em;
+  font-size: var(--co-typography-label-size);
+  font-weight: var(--co-typography-label-weight);
+  letter-spacing: var(--co-typography-label-tracking);
+  line-height: var(--co-typography-label-line-height);
   transition: all var(--co-duration) var(--co-ease);
   position: relative;
 }
@@ -217,7 +218,7 @@ function isGroupActive(group: NavGroup): boolean {
 }
 
 .group-chevron {
-  color: var(--co-text-muted);
+  color: var(--co-color-text-tertiary);
   transition: transform 0.3s var(--co-ease);
   flex-shrink: 0;
 }
@@ -255,10 +256,12 @@ function isGroupActive(group: NavGroup): boolean {
   padding: 7px 12px;
   margin: 1px 0;
   border-radius: 9px;
-  color: var(--co-text-muted);
+  color: var(--co-color-text-tertiary);
   text-decoration: none;
-  font-size: 0.84rem;
-  font-weight: 400;
+  font-size: var(--co-typography-body-sm-size);
+  font-weight: var(--co-typography-body-sm-weight);
+  letter-spacing: var(--co-typography-body-sm-tracking);
+  line-height: var(--co-typography-body-sm-line-height);
   position: relative;
   transition: all var(--co-duration) var(--co-ease);
   cursor: pointer;
@@ -280,17 +283,15 @@ function isGroupActive(group: NavGroup): boolean {
 }
 
 .nav-item.is-active .nav-item-indicator {
-  background: var(--co-blue-alpha-15);
-  box-shadow:
-    inset 0 0 0 1px var(--co-blue-alpha-20),
-    0 0 16px -4px var(--co-blue-alpha-20);
+  background: var(--co-color-interactive-subtle-selected);
+  border: 1px solid var(--co-color-border-selected);
 }
 
 .nav-item-dot {
   width: 5px;
   height: 5px;
   border-radius: 50%;
-  background: var(--co-text-muted);
+  background: var(--co-color-text-tertiary);
   flex-shrink: 0;
   transition: all var(--co-duration) var(--co-ease);
   opacity: 0.5;
@@ -308,11 +309,11 @@ function isGroupActive(group: NavGroup): boolean {
 
 .nav-item.is-active {
   color: var(--co-code-color);
-  font-weight: 500;
+  font-weight: var(--co-typography-label-weight);
 }
 
 .nav-item-text {
-  line-height: 1.3;
+  line-height: var(--co-typography-label-line-height);
 }
 
 /* ── Footer ────────────────────────────────── */
@@ -330,15 +331,19 @@ function isGroupActive(group: NavGroup): boolean {
 
 .badge-version {
   font-family: var(--co-font-mono);
-  font-size: 0.72rem;
-  color: var(--co-text-muted);
+  font-size: var(--co-typography-caption-size);
+  font-weight: var(--co-typography-caption-weight);
+  letter-spacing: var(--co-typography-caption-tracking);
+  line-height: var(--co-typography-caption-line-height);
+  color: var(--co-color-text-tertiary);
 }
 
 .badge-label {
-  font-size: 0.65rem;
-  font-weight: 600;
+  font-size: var(--co-typography-eyebrow-size);
+  font-weight: var(--co-typography-eyebrow-weight);
+  letter-spacing: var(--co-typography-eyebrow-tracking);
+  line-height: var(--co-typography-eyebrow-line-height);
   text-transform: uppercase;
-  letter-spacing: 0.08em;
   color: var(--co-blue-400);
   background: var(--co-blue-alpha-12);
   padding: 2px 7px;
@@ -350,9 +355,9 @@ function isGroupActive(group: NavGroup): boolean {
 @media (max-width: 768px) {
   .cobalt-sidebar {
     transform: translateX(-100%);
-    transition: transform 0.3s var(--co-ease, cubic-bezier(0.2, 0, 0, 1));
+    transition: transform 0.3s var(--co-ease);
     z-index: 70;
-    background: var(--co-midnight, #0a1628);
+    background: var(--co-midnight);
   }
 
   .cobalt-sidebar.is-open {

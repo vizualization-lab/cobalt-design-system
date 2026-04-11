@@ -27,7 +27,7 @@ export default defineConfig({
     [
       'script',
       {},
-      `(function(){var t=localStorage.getItem('cobalt-theme');if(t)document.documentElement.setAttribute('data-theme',t)})()`,
+      `(function(){var t=localStorage.getItem('cobalt-theme');if(t==='dark')document.documentElement.setAttribute('data-theme','dark')})()`,
     ],
   ],
   themeConfig: {

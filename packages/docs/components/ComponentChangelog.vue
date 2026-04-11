@@ -23,9 +23,9 @@ const TYPE_COLORS: Record<string, string> = {
   refactor: '#a78bfa',
   perf: '#34d399',
   test: '#60a5fa',
-  docs: 'var(--co-text-muted)',
-  style: 'var(--co-text-muted)',
-  chore: 'var(--co-text-muted)',
+  docs: 'var(--co-color-text-tertiary)',
+  style: 'var(--co-color-text-tertiary)',
+  chore: 'var(--co-color-text-tertiary)',
 };
 
 interface GroupedEntries {
@@ -45,7 +45,7 @@ const grouped = computed<GroupedEntries[]>(() => {
       groups[entry.type] = {
         type: entry.type,
         label: TYPE_LABELS[entry.type] || entry.type,
-        color: TYPE_COLORS[entry.type] || 'var(--co-text-muted)',
+        color: TYPE_COLORS[entry.type] || 'var(--co-color-text-tertiary)',
         entries: [],
       };
     }
@@ -92,7 +92,7 @@ const grouped = computed<GroupedEntries[]>(() => {
 }
 
 .changelog-empty {
-  color: var(--co-text-muted);
+  color: var(--co-color-text-tertiary);
   font-size: 0.88rem;
   padding: 12px 0;
 }
@@ -146,7 +146,7 @@ const grouped = computed<GroupedEntries[]>(() => {
 .entry-date {
   font-family: var(--co-font-mono);
   font-size: 0.76rem;
-  color: var(--co-text-muted);
+  color: var(--co-color-text-tertiary);
   flex-shrink: 0;
 }
 </style>

@@ -71,7 +71,7 @@ async function copyToken(palette: string, scale: string) {
 
 .swatch-hint {
   font-size: 0.8rem;
-  color: var(--co-text-muted, #6d84a3);
+  color: var(--co-color-text-tertiary);
   margin: 0;
 }
 
@@ -84,7 +84,7 @@ async function copyToken(palette: string, scale: string) {
 .palette-label {
   font-size: 0.82rem;
   font-weight: 600;
-  color: var(--co-text-secondary, #9badc6);
+  color: var(--co-text-secondary);
   text-transform: capitalize;
 }
 
@@ -113,7 +113,7 @@ async function copyToken(palette: string, scale: string) {
   width: 100%;
   height: 40px;
   border-radius: 8px;
-  border: 1px solid rgba(0, 0, 0, 0.1);
+  border: 1px solid var(--co-color-border-subtle);
   cursor: pointer;
   padding: 0;
   transition: transform 0.15s ease;
@@ -136,14 +136,14 @@ async function copyToken(palette: string, scale: string) {
 .chip-scale {
   font-size: 0.68rem;
   font-weight: 600;
-  color: var(--co-text-muted, #6d84a3);
+  color: var(--co-color-text-tertiary);
   font-variant-numeric: tabular-nums;
 }
 
 .chip-hex {
-  font-family: var(--co-font-mono, monospace);
+  font-family: var(--co-font-mono);
   font-size: 0.62rem;
-  color: var(--co-text-muted, #6d84a3);
+  color: var(--co-color-text-tertiary);
   background: none;
   padding: 0;
   border: none;

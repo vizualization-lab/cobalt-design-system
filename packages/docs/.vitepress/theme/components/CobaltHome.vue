@@ -52,23 +52,28 @@ const features = [
         </p>
 
         <div class="hero-actions">
-          <a :href="withBase('/components/button')" class="action-primary">
-            <span>Explore Components</span>
-            <svg
-              width="16"
-              height="16"
-              viewBox="0 0 16 16"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-              <line x1="3" y1="8" x2="13" y2="8" />
-              <polyline points="9 4 13 8 9 12" />
-            </svg>
+          <a :href="withBase('/components/button')" class="hero-action-link">
+            <co-button variant="primary" size="md">
+              <span>Explore Components</span>
+              <svg
+                slot="suffix"
+                width="16"
+                height="16"
+                viewBox="0 0 16 16"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <line x1="3" y1="8" x2="13" y2="8" />
+                <polyline points="9 4 13 8 9 12" />
+              </svg>
+            </co-button>
           </a>
-          <a :href="withBase('/tokens/')" class="action-secondary">View Tokens</a>
+          <a :href="withBase('/tokens/')" class="hero-action-link">
+            <co-button variant="secondary" size="lg">View Tokens</co-button>
+          </a>
         </div>
       </div>
 
@@ -342,8 +347,10 @@ const features = [
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  font-size: 0.78rem;
-  font-weight: 500;
+  font-size: var(--co-typography-caption-size);
+  font-weight: var(--co-typography-label-weight);
+  letter-spacing: var(--co-typography-caption-tracking);
+  line-height: var(--co-typography-caption-line-height);
   color: var(--co-code-color);
   background: var(--co-blue-alpha-8);
   border: 1px solid var(--co-blue-alpha-15);
@@ -371,19 +378,21 @@ const features = [
 }
 
 .hero-title {
-  font-size: 3rem;
-  font-weight: 700;
-  letter-spacing: -0.04em;
-  line-height: 1.1;
+  font-size: var(--co-typography-display-size);
+  font-weight: var(--co-typography-display-weight);
+  letter-spacing: var(--co-typography-display-tracking);
+  line-height: var(--co-typography-display-line-height);
   margin-bottom: 20px;
 }
 
 .title-line {
   display: block;
   color: var(--co-text-secondary);
-  font-weight: 400;
-  font-size: 1.3rem;
-  letter-spacing: -0.01em;
+  font-size: var(--co-typography-eyebrow-size);
+  font-weight: var(--co-typography-eyebrow-weight);
+  letter-spacing: var(--co-typography-eyebrow-tracking);
+  line-height: var(--co-typography-eyebrow-line-height);
+  text-transform: uppercase;
   margin-bottom: 6px;
 }
 
@@ -400,8 +409,10 @@ const features = [
 }
 
 .hero-subtitle {
-  font-size: 1.05rem;
-  line-height: 1.65;
+  font-size: var(--co-typography-body-lg-size);
+  font-weight: var(--co-typography-body-lg-weight);
+  letter-spacing: var(--co-typography-body-lg-tracking);
+  line-height: var(--co-typography-body-lg-line-height);
   color: var(--co-text-muted);
   max-width: 520px;
   margin-bottom: 36px;
@@ -413,49 +424,18 @@ const features = [
   align-items: center;
 }
 
-.action-primary {
+.hero-action-link {
   display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 10px 22px;
-  background: var(--co-blue-600);
-  color: white;
-  font-size: 0.88rem;
-  font-weight: 600;
-  border-radius: 10px;
   text-decoration: none;
-  transition: all var(--co-duration) var(--co-ease);
-  box-shadow:
-    0 0 0 1px var(--co-blue-alpha-50),
-    0 4px 16px -4px var(--co-blue-alpha-40);
+  color: inherit;
+  border-radius: var(--co-control-radius, 10px);
 }
 
-.action-primary:hover {
-  background: var(--co-blue-500);
-  transform: translateY(-1px);
-  box-shadow:
-    0 0 0 1px var(--co-blue-alpha-50),
-    0 8px 24px -4px var(--co-blue-alpha-40);
-}
-
-.action-secondary {
-  display: inline-flex;
-  align-items: center;
-  padding: 10px 22px;
-  background: transparent;
-  color: var(--co-text-secondary);
-  font-size: 0.88rem;
-  font-weight: 500;
-  border-radius: 10px;
+.hero-action-link:hover,
+.hero-action-link:focus,
+.hero-action-link:visited {
   text-decoration: none;
-  border: 1px solid var(--co-border-strong);
-  transition: all var(--co-duration) var(--co-ease);
-}
-
-.action-secondary:hover {
-  color: var(--co-text-primary);
-  border-color: var(--co-blue-500);
-  background: var(--co-shimmer);
+  color: inherit;
 }
 
 /* Crystal */
@@ -488,7 +468,7 @@ const features = [
 
 .feature-card {
   padding: 28px 24px;
-  background: var(--co-surface);
+  background: var(--co-color-surface-raised);
   border: 1px solid var(--co-border);
   border-radius: 14px;
   text-decoration: none;
@@ -511,7 +491,7 @@ const features = [
 
 .feature-card:hover {
   border-color: var(--co-blue-alpha-25);
-  background: var(--co-surface-raised);
+  background: var(--co-color-surface-sunken);
   transform: translateY(-2px);
   box-shadow: 0 8px 32px -8px var(--co-blue-alpha-15);
 }
@@ -535,16 +515,19 @@ const features = [
 }
 
 .feature-title {
-  font-size: 1.05rem;
-  font-weight: 600;
+  font-size: var(--co-typography-subtitle-size);
+  font-weight: var(--co-typography-subtitle-weight);
+  letter-spacing: var(--co-typography-subtitle-tracking);
+  line-height: var(--co-typography-subtitle-line-height);
   color: var(--co-text-primary);
   margin-bottom: 8px;
-  letter-spacing: -0.01em;
 }
 
 .feature-desc {
-  font-size: 0.85rem;
-  line-height: 1.6;
+  font-size: var(--co-typography-body-sm-size);
+  font-weight: var(--co-typography-body-sm-weight);
+  letter-spacing: var(--co-typography-body-sm-tracking);
+  line-height: var(--co-typography-body-sm-line-height);
   color: var(--co-text-muted);
   flex: 1;
 }
@@ -554,8 +537,10 @@ const features = [
   align-items: center;
   gap: 5px;
   margin-top: 16px;
-  font-size: 0.82rem;
-  font-weight: 500;
+  font-size: var(--co-typography-label-size);
+  font-weight: var(--co-typography-label-weight);
+  letter-spacing: var(--co-typography-label-tracking);
+  line-height: var(--co-typography-label-line-height);
   color: var(--co-blue-400);
   transition: gap var(--co-duration) var(--co-ease);
 }
@@ -571,11 +556,12 @@ const features = [
 }
 
 .arch-label {
-  font-size: 0.72rem;
-  font-weight: 600;
+  font-size: var(--co-typography-eyebrow-size);
+  font-weight: var(--co-typography-eyebrow-weight);
+  letter-spacing: var(--co-typography-eyebrow-tracking);
+  line-height: var(--co-typography-eyebrow-line-height);
   text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--co-text-muted);
+  color: var(--co-color-text-tertiary);
   margin-bottom: 24px;
 }
 
@@ -589,22 +575,26 @@ const features = [
   display: flex;
   flex-direction: column;
   padding: 14px 20px;
-  background: var(--co-surface);
+  background: var(--co-color-surface-raised);
   border: 1px solid var(--co-border);
   border-radius: 10px;
   flex: 1;
 }
 
 .arch-node-label {
-  font-size: 0.88rem;
-  font-weight: 600;
+  font-size: var(--co-typography-label-size);
+  font-weight: var(--co-typography-label-weight);
+  letter-spacing: var(--co-typography-label-tracking);
+  line-height: var(--co-typography-label-line-height);
   color: var(--co-text-primary);
-  letter-spacing: -0.01em;
 }
 
 .arch-node-sub {
-  font-size: 0.72rem;
-  color: var(--co-text-muted);
+  font-size: var(--co-typography-caption-size);
+  font-weight: var(--co-typography-caption-weight);
+  letter-spacing: var(--co-typography-caption-tracking);
+  line-height: var(--co-typography-caption-line-height);
+  color: var(--co-color-text-tertiary);
   margin-top: 2px;
 }
 
@@ -614,16 +604,16 @@ const features = [
 
 /* ── Responsive ──────────────────────────────────── */
 @media (max-width: 768px) {
+  /* On small screens, step the hero down one role. */
   .hero-title {
-    font-size: 2.2rem;
-  }
-
-  .title-line {
-    font-size: 1.1rem;
+    font-size: var(--co-typography-heading-size);
+    letter-spacing: var(--co-typography-heading-tracking);
+    line-height: var(--co-typography-heading-line-height);
   }
 
   .hero-subtitle {
-    font-size: 0.95rem;
+    font-size: var(--co-typography-body-size);
+    line-height: var(--co-typography-body-line-height);
   }
 
   .hero-actions {

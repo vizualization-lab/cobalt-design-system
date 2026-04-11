@@ -188,27 +188,27 @@ async function copyToken(name: string) {
   flex: 1;
   min-width: 240px;
   padding: 8px 12px;
-  border: 1px solid var(--vp-c-border, #e2e2e3);
+  border: 1px solid var(--vp-c-border);
   border-radius: 8px;
   font-size: 0.9rem;
   font-family: inherit;
-  background: var(--vp-c-bg, #fff);
-  color: var(--vp-c-text-1, #213547);
+  background: var(--vp-c-bg);
+  color: var(--vp-c-text-1);
   outline: none;
   transition: border-color 0.2s;
 }
 
 .token-search-input:focus {
-  border-color: var(--vp-c-brand-1, #3451b2);
+  border-color: var(--vp-c-brand-1);
 }
 
 .token-search-input::placeholder {
-  color: var(--vp-c-text-3, #8e8e93);
+  color: var(--vp-c-text-3);
 }
 
 .token-count {
   font-size: 0.8rem;
-  color: var(--vp-c-text-3, #8e8e93);
+  color: var(--vp-c-text-3);
   white-space: nowrap;
 }
 
@@ -226,10 +226,10 @@ async function copyToken(name: string) {
   align-items: center;
   gap: 4px;
   padding: 4px 12px;
-  border: 1px solid var(--vp-c-border, #e2e2e3);
+  border: 1px solid var(--vp-c-border);
   border-radius: 16px;
-  background: var(--vp-c-bg, #fff);
-  color: var(--vp-c-text-2, #495464);
+  background: var(--vp-c-bg);
+  color: var(--vp-c-text-2);
   font-size: 0.78rem;
   font-family: inherit;
   font-weight: 500;
@@ -241,13 +241,13 @@ async function copyToken(name: string) {
 }
 
 .filter-pill:hover {
-  border-color: var(--vp-c-brand-1, #3451b2);
-  color: var(--vp-c-brand-1, #3451b2);
+  border-color: var(--vp-c-brand-1);
+  color: var(--vp-c-brand-1);
 }
 
 .filter-pill.active {
-  background: var(--vp-c-brand-1, #3451b2);
-  border-color: var(--vp-c-brand-1, #3451b2);
+  background: var(--vp-c-brand-1);
+  border-color: var(--vp-c-brand-1);
   color: #fff;
 }
 
@@ -270,19 +270,19 @@ async function copyToken(name: string) {
   font-size: 0.75rem;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: var(--vp-c-text-3, #8e8e93);
+  color: var(--vp-c-text-3);
   padding: 8px 12px;
-  border-bottom: 2px solid var(--vp-c-border, #e2e2e3);
+  border-bottom: 2px solid var(--vp-c-border);
 }
 
 .token-table td {
   padding: 6px 12px;
-  border-bottom: 1px solid var(--vp-c-divider, #e2e2e3);
+  border-bottom: 1px solid var(--vp-c-divider);
   vertical-align: middle;
 }
 
 .token-table tbody tr:hover {
-  background: var(--vp-c-bg-soft, #f6f6f7);
+  background: var(--vp-c-bg-soft);
 }
 
 .col-token {
@@ -315,15 +315,15 @@ async function copyToken(name: string) {
 }
 
 .token-name:hover {
-  background: var(--vp-c-bg-soft, #f6f6f7);
+  background: var(--vp-c-bg-soft);
 }
 
 .token-name.copied {
-  color: #16a34a;
+  color: var(--co-color-success-base);
 }
 
 .token-name code {
-  font-family: var(--vp-font-family-mono, monospace);
+  font-family: var(--vp-font-family-mono);
   font-size: 0.82rem;
   background: none;
   padding: 0;
@@ -333,7 +333,7 @@ async function copyToken(name: string) {
 .copy-icon {
   width: 14px;
   height: 14px;
-  color: #16a34a;
+  color: var(--co-color-success-base);
   flex-shrink: 0;
 }
 
@@ -353,19 +353,19 @@ async function copyToken(name: string) {
 }
 
 .token-value {
-  font-family: var(--vp-font-family-mono, monospace);
+  font-family: var(--vp-font-family-mono);
   font-size: 0.8rem;
-  color: var(--vp-c-text-2, #495464);
+  color: var(--vp-c-text-2);
   word-break: break-all;
 }
 
 .resolved-value {
   font-size: 0.72rem;
-  color: var(--vp-c-text-3, #8e8e93);
+  color: var(--vp-c-text-3);
 }
 
 .resolved-value code {
-  font-family: var(--vp-font-family-mono, monospace);
+  font-family: var(--vp-font-family-mono);
   font-size: inherit;
   background: none;
   padding: 0;
@@ -377,7 +377,7 @@ async function copyToken(name: string) {
   width: 16px;
   height: 16px;
   border-radius: 3px;
-  border: 1px solid rgba(0, 0, 0, 0.1);
+  border: 1px solid var(--co-color-border-subtle);
   flex-shrink: 0;
   margin-top: 2px;
 }
@@ -390,8 +390,8 @@ async function copyToken(name: string) {
   font-weight: 500;
   padding: 2px 8px;
   border-radius: 10px;
-  background: var(--vp-c-bg-soft, #f6f6f7);
-  color: var(--vp-c-text-2, #495464);
+  background: var(--vp-c-bg-soft);
+  color: var(--vp-c-text-2);
   margin-right: 4px;
 }
 
@@ -417,7 +417,7 @@ async function copyToken(name: string) {
 
 .no-results {
   text-align: center;
-  color: var(--vp-c-text-3, #8e8e93);
+  color: var(--vp-c-text-3);
   padding: 24px 12px !important;
   font-style: italic;
 }

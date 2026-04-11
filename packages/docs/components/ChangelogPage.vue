@@ -69,7 +69,7 @@ function extractSections(content: string): { type: string; items: string[] }[] {
           <span
             class="section-badge"
             :style="{
-              color: TYPE_BADGES[section.type]?.color || 'var(--co-text-muted)',
+              color: TYPE_BADGES[section.type]?.color || 'var(--co-color-text-tertiary)',
               borderColor: TYPE_BADGES[section.type]?.color || 'var(--co-border)',
             }"
           >
@@ -90,7 +90,7 @@ function extractSections(content: string): { type: string; items: string[] }[] {
 }
 
 .changelog-empty {
-  color: var(--co-text-muted);
+  color: var(--co-color-text-tertiary);
   font-size: 0.92rem;
   padding: 24px 0;
 }
@@ -121,7 +121,7 @@ function extractSections(content: string): { type: string; items: string[] }[] {
 .release-date {
   font-family: var(--co-font-mono);
   font-size: 0.82rem;
-  color: var(--co-text-muted);
+  color: var(--co-color-text-tertiary);
 }
 
 .release-highlights {
