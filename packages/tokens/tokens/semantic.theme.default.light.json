@@ -64,6 +64,7 @@
         "danger": { "$value": "{co.color.primitive.red.500}", "$type": "color" },
         "success": { "$value": "{co.color.primitive.green.500}", "$type": "color" },
         "focus": { "$value": "{co.color.primitive.blue.500}", "$type": "color" },
+        "selected": { "$value": "{co.color.primitive.blue.200}", "$type": "color" },
         "bold": { "$value": "{co.color.primitive.neutral.800}", "$type": "color" }
       },
       "interactive": {

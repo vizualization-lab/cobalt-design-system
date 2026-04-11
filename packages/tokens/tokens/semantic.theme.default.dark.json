@@ -64,6 +64,7 @@
         "danger": { "$value": "{co.color.primitive.red.400}", "$type": "color" },
         "success": { "$value": "{co.color.primitive.green.400}", "$type": "color" },
         "focus": { "$value": "{co.color.primitive.blue.400}", "$type": "color" },
+        "selected": { "$value": "{co.color.primitive.navy.500}", "$type": "color" },
         "bold": { "$value": "{co.color.primitive.neutral.700}", "$type": "color" }
       },
       "interactive": {
@@ -73,7 +74,7 @@
         "disabled": { "$value": "{co.color.primitive.blue.700}", "$type": "color" },
         "subtle-hover": { "$value": "{co.color.primitive.blue.900}", "$type": "color" },
         "subtle-active": { "$value": "{co.color.primitive.blue.800}", "$type": "color" },
-        "subtle-selected": { "$value": "{co.color.primitive.blue.800}", "$type": "color" },
+        "subtle-selected": { "$value": "{co.color.primitive.navy.600}", "$type": "color" },
         "bold-hover": { "$value": "{co.color.primitive.neutral.800}", "$type": "color" },
         "bold-selected": { "$value": "{co.color.primitive.neutral.700}", "$type": "color" },
         "danger-default": { "$value": "{co.color.primitive.red.400}", "$type": "color" },
