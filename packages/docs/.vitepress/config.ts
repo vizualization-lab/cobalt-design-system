@@ -11,7 +11,7 @@ const pkg = JSON.parse(
 );
 
 export default defineConfig({
-  base: '/design-system-poc/',
+  base: '/cobalt-design-system/',
   title: 'Cobalt Design System',
   description: 'A design system built with Lit + Lion',
   markdown: {
