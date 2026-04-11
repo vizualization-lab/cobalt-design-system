@@ -30,6 +30,9 @@ export const cobaltButtonStyles = css`
     justify-content: center;
     gap: var(--co-space-gap-sm);
     padding: var(--co-space-2) var(--co-space-4);
+    /* Reset UA anchor defaults when rendered as a link (href variant) */
+    color: inherit;
+    text-decoration: none;
   }
 
   /* ── Sizes ── */
