@@ -4,6 +4,7 @@
       "primitive": {
         "neutral": {
           "50": { "$value": "#fcfcfc", "$type": "color" },
+          "75": { "$value": "#f7f7f7", "$type": "color" },
           "100": { "$value": "#f2f2f2", "$type": "color" },
           "200": { "$value": "#e9e9e9", "$type": "color" },
           "300": { "$value": "#dadada", "$type": "color" },
