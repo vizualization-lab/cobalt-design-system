@@ -121,17 +121,22 @@ Available steps: 0, 1, 2, 3, 4, 5, 6, 8, 10, 12, 16, 20, 24, px.
 
 ### Typography
 
-| Tailwind class                                       | Cobalt token                    |
-| ---------------------------------------------------- | ------------------------------- |
-| `font-sans`                                          | `var(--co-font-family-sans)`    |
-| `font-mono`                                          | `var(--co-font-family-mono)`    |
-| `text-xs` through `text-4xl`                         | `var(--co-font-size-*)`         |
-| `text-base`                                          | `var(--co-font-size-md)`        |
-| `font-normal`                                        | `var(--co-font-weight-regular)` |
-| `font-medium`, `font-semibold`, `font-bold`          | `var(--co-font-weight-*)`       |
-| `leading-tight`, `leading-normal`, `leading-relaxed` | `var(--co-font-line-height-*)`  |
+| Tailwind class                                                                              | Cobalt token                    |
+| ------------------------------------------------------------------------------------------- | ------------------------------- |
+| `font-sans`                                                                                 | `var(--co-font-family-sans)`    |
+| `font-mono`                                                                                 | `var(--co-font-family-mono)`    |
+| `text-xs` through `text-5xl`                                                                | `var(--co-font-size-*)`         |
+| `text-base`                                                                                 | `var(--co-font-size-md)`        |
+| `font-normal`                                                                               | `var(--co-font-weight-regular)` |
+| `font-medium`, `font-semibold`, `font-bold`                                                 | `var(--co-font-weight-*)`       |
+| `leading-display`, `leading-tight`, `leading-normal`, `leading-relaxed`                     | `var(--co-font-line-height-*)`  |
+| `tracking-tighter`, `tracking-tight`, `tracking-normal`, `tracking-wide`, `tracking-widest` | `var(--co-font-tracking-*)`     |
 
-Note: Cobalt's `md` font size maps to Tailwind's `base` (`text-base`), and Cobalt's `regular` weight maps to Tailwind's `normal` (`font-normal`).
+Note: Cobalt's `md` font size maps to Tailwind's `base` (`text-base`), and Cobalt's `regular` weight maps to Tailwind's `normal` (`font-normal`). The `text-5xl` utility (48 px / 3 rem) matches the `display` semantic role.
+
+#### Semantic typography roles
+
+Cobalt also exposes ten semantic role presets under `--co-typography-*` (display, heading, title, subtitle, eyebrow, body-lg, body, body-sm, label, caption). These aren't part of Tailwind's default class set, but you can surface them as plugin utilities or use the `.co-type-*` utility classes from `@cobalt/tokens/css/utilities` directly. See [Typography](./typography.md) for the full role reference.
 
 ### Shadows
 

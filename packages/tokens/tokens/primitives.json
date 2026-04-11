@@ -47,7 +47,8 @@
         "xl": { "$value": "1.25rem", "$type": "dimension" },
         "2xl": { "$value": "1.5rem", "$type": "dimension" },
         "3xl": { "$value": "1.875rem", "$type": "dimension" },
-        "4xl": { "$value": "2.25rem", "$type": "dimension" }
+        "4xl": { "$value": "2.25rem", "$type": "dimension" },
+        "5xl": { "$value": "3rem", "$type": "dimension" }
       },
       "weight": {
         "regular": { "$value": "400", "$type": "fontWeight" },
@@ -56,9 +57,17 @@
         "bold": { "$value": "700", "$type": "fontWeight" }
       },
       "line-height": {
+        "display": { "$value": "1.1", "$type": "number" },
         "tight": { "$value": "1.25", "$type": "number" },
         "normal": { "$value": "1.5", "$type": "number" },
         "relaxed": { "$value": "1.75", "$type": "number" }
+      },
+      "tracking": {
+        "tighter": { "$value": "-0.025em", "$type": "dimension" },
+        "tight": { "$value": "-0.015em", "$type": "dimension" },
+        "normal": { "$value": "0", "$type": "dimension" },
+        "wide": { "$value": "0.05em", "$type": "dimension" },
+        "widest": { "$value": "0.08em", "$type": "dimension" }
       }
     },
     "breakpoint": {

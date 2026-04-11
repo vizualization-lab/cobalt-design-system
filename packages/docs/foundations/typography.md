@@ -1,6 +1,25 @@
 # Typography
 
-Typography in Cobalt is built on a purposeful set of font families, a type scale, and consistent weight and line-height tokens. Today these foundations are exposed as primitive font tokens in `primitives.json`.
+Cobalt's typography system is built around an **editorial, regular-weight-first** philosophy: hierarchy comes from size, letter-spacing, and line-height — not from heavy weights. Medium (500) is reserved for UI emphasis (form labels, active nav items, tabs). Semibold and bold are effectively absent from the default ramp.
+
+The system has three layers:
+
+1. **Primitives** — raw font-family, size, weight, line-height, and tracking values in `primitives.json`.
+2. **Semantic roles** — ten named typography presets in `semantic.shared.json` (`display`, `heading`, `title`, …) that bundle size + weight + tracking + line-height into a single intent.
+3. **Element mappings** — `base.css` maps HTML elements to semantic roles so that opting into `[data-co-base]` produces editorial typography out of the box.
+
+## Philosophy
+
+> Regular (400) is the default at every size. Medium (500) is for UI-level emphasis. Size, letter-spacing, and line-height do the hierarchy work — not weight.
+
+This is the opposite of the traditional "bigger = bolder" pattern. A 48 px display headline at regular weight reads as airy and editorial; the same text at bold reads as dense and marketing-y. The system deliberately avoids the latter.
+
+Practical consequences:
+
+- **Display type is large and thin**, not large and heavy. The hero style is achieved with `3rem / regular / -0.025em tracking / 1.1 line-height`, not with a bold weight.
+- **Tracking compensates for size.** Inter and Noto Sans both need slight negative tracking (`-0.015em` to `-0.025em`) above ~24 px to feel optically correct. Below 16 px, tracking stays at zero or goes slightly positive.
+- **Line-height inverts.** Large type wants tight leading (1.1–1.25); body wants comfortable leading (1.5–1.6); captions want just enough to breathe (1.4).
+- **Three weights is enough.** `regular` for everything, `medium` for labels/subtitles, with `semibold` and `bold` available as escape hatches but not part of the default ramp.
 
 ## Font families
 
@@ -9,91 +28,196 @@ Typography in Cobalt is built on a purposeful set of font families, a type scale
 | `--co-font-family-sans` | `'Inter', 'Noto Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif` | Body text, UI labels, headings |
 | `--co-font-family-mono` | `'JetBrains Mono', 'Fira Code', monospace`                                                | Code blocks, technical values  |
 
-Import the self-hosted fonts from `@cobalt/tokens` — no additional packages needed:
+Import the self-hosted variable fonts from `@cobalt/tokens`:
 
 ```css
 @import '@cobalt/tokens/css/fonts';
 ```
 
-> **Tip:** Inter is the primary UI font. Noto Sans is included as a fallback for extended character sets (CJK, Cyrillic, Greek, math symbols, etc.). If neither loads, the token stack falls back to the operating system's default sans-serif font.
+> **Variable fonts.** All three families ship as variable fonts via `@fontsource-variable/*`, so any weight from 100 to 900 is available natively — no synthesized weights, no additional downloads per weight.
 
-## Type scale
+## Primitives
 
-The scale uses a modular ratio that produces consistent visual hierarchy.
+### Type scale
 
-| Token                | Size  | Rem       | Typical use              |
-| -------------------- | ----- | --------- | ------------------------ |
-| `--co-font-size-xs`  | 12 px | 0.75 rem  | Captions, badges         |
-| `--co-font-size-sm`  | 14 px | 0.875 rem | Helper text, table cells |
-| `--co-font-size-md`  | 16 px | 1 rem     | Body copy                |
-| `--co-font-size-lg`  | 18 px | 1.125 rem | Subtitles, card titles   |
-| `--co-font-size-xl`  | 20 px | 1.25 rem  | Section headings         |
-| `--co-font-size-2xl` | 24 px | 1.5 rem   | Page sub-headings        |
-| `--co-font-size-3xl` | 30 px | 1.875 rem | Page titles              |
-| `--co-font-size-4xl` | 36 px | 2.25 rem  | Hero headings            |
+| Token                | Size  | Rem       | Role that uses it    |
+| -------------------- | ----- | --------- | -------------------- |
+| `--co-font-size-xs`  | 12 px | 0.75 rem  | `caption`, `eyebrow` |
+| `--co-font-size-sm`  | 14 px | 0.875 rem | `body-sm`, `label`   |
+| `--co-font-size-md`  | 16 px | 1 rem     | `body`               |
+| `--co-font-size-lg`  | 18 px | 1.125 rem | `body-lg`            |
+| `--co-font-size-xl`  | 20 px | 1.25 rem  | `subtitle`           |
+| `--co-font-size-2xl` | 24 px | 1.5 rem   | `title`              |
+| `--co-font-size-3xl` | 30 px | 1.875 rem | —                    |
+| `--co-font-size-4xl` | 36 px | 2.25 rem  | `heading`            |
+| `--co-font-size-5xl` | 48 px | 3 rem     | `display`            |
 
-## Font weights
+### Font weights
 
-| Token                       | Value | Usage                        |
-| --------------------------- | ----- | ---------------------------- |
-| `--co-font-weight-regular`  | 400   | Body text                    |
-| `--co-font-weight-medium`   | 500   | Labels, navigation items     |
-| `--co-font-weight-semibold` | 600   | Sub-headings, emphasis       |
-| `--co-font-weight-bold`     | 700   | Page titles, strong emphasis |
+| Token                       | Value | When to reach for it                                                           |
+| --------------------------- | ----- | ------------------------------------------------------------------------------ |
+| `--co-font-weight-regular`  | 400   | The default. Body, display, headings, titles.                                  |
+| `--co-font-weight-medium`   | 500   | UI emphasis: form labels, selected nav items, active tabs, subtitles.          |
+| `--co-font-weight-semibold` | 600   | Escape hatch for emphasis in dense UI. Not used by any default role.           |
+| `--co-font-weight-bold`     | 700   | Rare — strong inline emphasis (e.g. `<strong>`). Not used by any default role. |
 
-## Line heights
+### Line heights
 
-| Token                           | Value | Pairing                                    |
-| ------------------------------- | ----- | ------------------------------------------ |
-| `--co-font-line-height-tight`   | 1.25  | Headings (`font-size-xl` and above)        |
-| `--co-font-line-height-normal`  | 1.5   | Body text (`font-size-md`, `font-size-sm`) |
-| `--co-font-line-height-relaxed` | 1.75  | Long-form reading, help text               |
+| Token                           | Value | Pairing                      |
+| ------------------------------- | ----- | ---------------------------- |
+| `--co-font-line-height-display` | 1.1   | 36 px+ display/heading type  |
+| `--co-font-line-height-tight`   | 1.25  | Titles, subtitles, labels    |
+| `--co-font-line-height-normal`  | 1.5   | Body text at every size      |
+| `--co-font-line-height-relaxed` | 1.75  | Long-form reading, help text |
 
-## Usage examples
+### Letter-spacing (tracking)
 
-### CSS
+Negative tracking tightens large type to match Inter's optical sizing. Positive tracking opens small caps for the `eyebrow` role.
+
+| Token                        | Value      | Pairing                        |
+| ---------------------------- | ---------- | ------------------------------ |
+| `--co-font-tracking-tighter` | `-0.025em` | Display (48 px+)               |
+| `--co-font-tracking-tight`   | `-0.015em` | Heading, title, subtitle       |
+| `--co-font-tracking-normal`  | `0`        | Body text, labels, captions    |
+| `--co-font-tracking-wide`    | `0.05em`   | Escape hatch                   |
+| `--co-font-tracking-widest`  | `0.08em`   | Eyebrow (uppercase small caps) |
+
+## Semantic role tokens
+
+The ten roles below are the canonical way to apply typography. Each role bundles `size` + `weight` + `tracking` + `line-height` into a single intent, so you reach for one concept instead of four primitives.
+
+| Role           | Size      | Weight  | Tracking | Line-height | Use it for                                                                                 |
+| -------------- | --------- | ------- | -------- | ----------- | ------------------------------------------------------------------------------------------ |
+| **`display`**  | 3 rem     | regular | tighter  | display     | Hero moments only — dashboard greetings, marketing banners. One per page.                  |
+| **`heading`**  | 2.25 rem  | regular | tight    | display     | Page title (`<h1>`). The "what am I looking at" anchor.                                    |
+| **`title`**    | 1.5 rem   | regular | tight    | tight       | Card titles, section titles (`<h2>`).                                                      |
+| **`subtitle`** | 1.25 rem  | medium  | tight    | tight       | Subsection heads (`<h3>`, `<h4>`), group labels.                                           |
+| **`eyebrow`**  | 0.75 rem  | medium  | widest   | tight       | Small-caps kicker above a heading ("Monday, January 1"–style metadata). Applies uppercase. |
+| **`body-lg`**  | 1.125 rem | regular | normal   | normal      | Lead paragraphs, hero subtitles, article intros.                                           |
+| **`body`**     | 1 rem     | regular | normal   | normal      | Default reading text.                                                                      |
+| **`body-sm`**  | 0.875 rem | regular | normal   | normal      | Compact body: table rows, dense cards.                                                     |
+| **`label`**    | 0.875 rem | medium  | normal   | tight       | Form labels, active nav items, tab labels, button text.                                    |
+| **`caption`**  | 0.75 rem  | regular | normal   | normal      | Metadata, timestamps, hints, auxiliary text.                                               |
+
+Each role emits four CSS custom properties under the `--co-typography-*` prefix:
 
 ```css
-.co-heading {
-  font-family: var(--co-font-family-sans);
-  font-size: var(--co-font-size-2xl);
-  font-weight: var(--co-font-weight-bold);
-  line-height: var(--co-font-line-height-tight);
-  color: var(--co-color-text-default);
+--co-typography-display-size
+--co-typography-display-weight
+--co-typography-display-tracking
+--co-typography-display-line-height
+```
+
+### `display` is not mapped to an element
+
+`display` is intentionally left out of `base.css`. Reach for it via the utility class (`.co-type-display`) or by consuming the semantic tokens directly when you need a hero moment. This keeps `<h1>` from accidentally rendering at 48 px across the whole site.
+
+## Element mappings
+
+When you opt into `[data-co-base]`, elements are mapped to semantic roles as follows:
+
+| Element      | Role                           | Rendered size |
+| ------------ | ------------------------------ | ------------- |
+| `h1`         | `heading`                      | 36 px         |
+| `h2`         | `title`                        | 24 px         |
+| `h3`         | `subtitle`                     | 20 px         |
+| `h4`         | `subtitle`                     | 20 px         |
+| `h5`         | `label`                        | 14 px         |
+| `h6`         | `label` weight, `caption` size | 12 px         |
+| `p`, root    | `body`                         | 16 px         |
+| `table` body | `body-sm`                      | 14 px         |
+| `th`         | `label`                        | 14 px         |
+| `small`      | `caption`                      | 12 px         |
+
+```html
+<html data-co-base data-theme="light">
+  <article>
+    <h1>Page title</h1>
+    <!-- heading -->
+    <p>Lead paragraph…</p>
+    <!-- body -->
+    <h2>Section title</h2>
+    <!-- title -->
+  </article>
+</html>
+```
+
+## Usage patterns
+
+### Consume a role via utility class
+
+The fastest way to apply a role is the matching `.co-type-*` utility class. Import utilities **after** the main token stylesheet:
+
+```js
+import '@cobalt/tokens/css';
+import '@cobalt/tokens/css/utilities';
+```
+
+```html
+<section>
+  <p class="co-type-eyebrow">Monday, January 1</p>
+  <h1 class="co-type-display">Good afternoon, Jane</h1>
+  <p class="co-type-body-lg">Your week at a glance.</p>
+</section>
+```
+
+`co-type-eyebrow` automatically applies `text-transform: uppercase` — the other utilities do not transform case.
+
+### Consume a role in component CSS
+
+Reach for the `--co-typography-*` tokens directly when you're writing component CSS. Pull the full set so size, weight, tracking, and leading stay in sync:
+
+```css
+.hero-title {
+  font-size: var(--co-typography-display-size);
+  font-weight: var(--co-typography-display-weight);
+  letter-spacing: var(--co-typography-display-tracking);
+  line-height: var(--co-typography-display-line-height);
 }
 
-.co-body {
-  font-family: var(--co-font-family-sans);
-  font-size: var(--co-font-size-md);
-  font-weight: var(--co-font-weight-regular);
-  line-height: var(--co-font-line-height-normal);
-  color: var(--co-color-text-default);
+.card-title {
+  font-size: var(--co-typography-title-size);
+  font-weight: var(--co-typography-title-weight);
+  letter-spacing: var(--co-typography-title-tracking);
+  line-height: var(--co-typography-title-line-height);
+}
+
+.form-label {
+  font-size: var(--co-typography-label-size);
+  font-weight: var(--co-typography-label-weight);
+  letter-spacing: var(--co-typography-label-tracking);
+  line-height: var(--co-typography-label-line-height);
 }
 ```
 
-### React / TSX
+### Reach for primitives only when roles don't fit
 
-```tsx
-import styles from './Article.module.css';
+Primitives (`--co-font-size-*`, `--co-font-weight-*`, `--co-font-tracking-*`, `--co-font-line-height-*`) are still available, but prefer semantic roles. Primitives are appropriate when:
 
-export function Article({ title, body }: { title: string; body: string }) {
-  return (
-    <article>
-      <h1 className={styles.heading}>{title}</h1>
-      <p className={styles.body}>{body}</p>
-    </article>
-  );
-}
+- You're composing a one-off type treatment that genuinely doesn't fit any role (rare — reconsider the role set before adding one).
+- You're building a new semantic role on top of primitives.
+- You need to match an external system's type scale exactly.
+
+```css
+/* Prefer this */
+font-size: var(--co-typography-body-size);
+
+/* Over this */
+font-size: var(--co-font-size-md);
 ```
 
 ## Best practices
 
-- Set `font-size: 100%` on `<html>` so rem values respect user browser settings.
-- Avoid absolute units (`px`) for font sizes in component CSS; rely on the token rem values instead.
-- Limit the number of sizes on a single screen to three or four to maintain clear hierarchy.
-- Pair `--co-font-line-height-tight` with headings and `--co-font-line-height-normal` with body text for optimal readability.
+- **Start with a role.** If you're writing `font-size: var(--co-font-size-2xl)`, you probably meant `title` — use the role instead.
+- **Don't split the pieces.** If you apply a role's `size`, apply its `weight`, `tracking`, and `line-height` too. Mixing primitives across roles is how type hierarchies drift.
+- **Use `display` sparingly.** At most once per page, for the single most important element.
+- **Never use `bold` for display.** The editorial look depends on `regular` at display sizes. If the design ever calls for display-weight bold, add a new role for it rather than one-off'ing the primitive.
+- **Respect the uppercase convention for `eyebrow`.** The role is named after the typographic pattern (all caps, wide tracking, small size); the utility class applies the transform automatically, but direct token usage should do the same.
+- **Honor user font-size preferences.** Use `rem` values exclusively (all the primitives do). Avoid `px` for font-size in component CSS.
 
 ## Related
 
+- [Utilities](./utilities.md) — `.co-type-*` role classes and the rest of the utility set
+- [Tailwind preset](./tailwind.md) — how typography maps to Tailwind class names
 - [Colors](./colors.md) — text color tokens
 - [Accessibility](./accessibility.md) — readable font sizes and contrast

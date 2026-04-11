@@ -1,57 +1,67 @@
 @layer co.base {
   [data-co-base] {
     font-family: var(--co-font-family-sans);
-    font-size: var(--co-font-size-md);
-    line-height: var(--co-font-line-height-normal);
+    font-size: var(--co-typography-body-size);
+    font-weight: var(--co-typography-body-weight);
+    letter-spacing: var(--co-typography-body-tracking);
+    line-height: var(--co-typography-body-line-height);
     color: var(--co-color-text-default);
   }
 
+  /* h1 → heading (not display — display is a utility only) */
   [data-co-base] h1 {
-    font-size: var(--co-font-size-4xl);
-    font-weight: var(--co-font-weight-bold);
-    line-height: var(--co-font-line-height-tight);
+    font-size: var(--co-typography-heading-size);
+    font-weight: var(--co-typography-heading-weight);
+    letter-spacing: var(--co-typography-heading-tracking);
+    line-height: var(--co-typography-heading-line-height);
     margin-bottom: var(--co-space-4);
   }
 
   [data-co-base] h2 {
-    font-size: var(--co-font-size-3xl);
-    font-weight: var(--co-font-weight-semibold);
-    line-height: var(--co-font-line-height-tight);
+    font-size: var(--co-typography-title-size);
+    font-weight: var(--co-typography-title-weight);
+    letter-spacing: var(--co-typography-title-tracking);
+    line-height: var(--co-typography-title-line-height);
     margin-bottom: var(--co-space-3);
   }
 
   [data-co-base] h3 {
-    font-size: var(--co-font-size-2xl);
-    font-weight: var(--co-font-weight-semibold);
-    line-height: var(--co-font-line-height-tight);
+    font-size: var(--co-typography-subtitle-size);
+    font-weight: var(--co-typography-subtitle-weight);
+    letter-spacing: var(--co-typography-subtitle-tracking);
+    line-height: var(--co-typography-subtitle-line-height);
     margin-bottom: var(--co-space-3);
   }
 
   [data-co-base] h4 {
-    font-size: var(--co-font-size-xl);
-    font-weight: var(--co-font-weight-semibold);
-    line-height: var(--co-font-line-height-tight);
+    font-size: var(--co-typography-subtitle-size);
+    font-weight: var(--co-typography-subtitle-weight);
+    letter-spacing: var(--co-typography-subtitle-tracking);
+    line-height: var(--co-typography-subtitle-line-height);
     margin-bottom: var(--co-space-2);
   }
 
   [data-co-base] h5 {
-    font-size: var(--co-font-size-lg);
-    font-weight: var(--co-font-weight-medium);
-    line-height: var(--co-font-line-height-tight);
+    font-size: var(--co-typography-label-size);
+    font-weight: var(--co-typography-label-weight);
+    letter-spacing: var(--co-typography-label-tracking);
+    line-height: var(--co-typography-label-line-height);
     margin-bottom: var(--co-space-2);
   }
 
   [data-co-base] h6 {
-    font-size: var(--co-font-size-md);
-    font-weight: var(--co-font-weight-medium);
-    line-height: var(--co-font-line-height-tight);
+    font-size: var(--co-typography-caption-size);
+    font-weight: var(--co-typography-label-weight);
+    letter-spacing: var(--co-typography-label-tracking);
+    line-height: var(--co-typography-label-line-height);
     margin-bottom: var(--co-space-2);
   }
 
   [data-co-base] p {
-    font-size: var(--co-font-size-md);
-    font-weight: var(--co-font-weight-regular);
-    line-height: var(--co-font-line-height-normal);
+    font-size: var(--co-typography-body-size);
+    font-weight: var(--co-typography-body-weight);
+    letter-spacing: var(--co-typography-body-tracking);
+    line-height: var(--co-typography-body-line-height);
     margin-bottom: var(--co-space-4);
   }
 
@@ -92,11 +102,13 @@
   [data-co-base] table {
     width: 100%;
     border-collapse: collapse;
-    font-size: var(--co-font-size-sm);
+    font-size: var(--co-typography-body-sm-size);
+    line-height: var(--co-typography-body-sm-line-height);
   }
 
   [data-co-base] th {
-    font-weight: var(--co-font-weight-semibold);
+    font-weight: var(--co-typography-label-weight);
+    letter-spacing: var(--co-typography-label-tracking);
     text-align: left;
     padding: var(--co-space-3);
     border-bottom: 2px solid var(--co-color-border-strong);
@@ -146,7 +158,8 @@
   }
 
   [data-co-base] small {
-    font-size: var(--co-font-size-sm);
+    font-size: var(--co-typography-caption-size);
+    line-height: var(--co-typography-caption-line-height);
     color: var(--co-color-text-secondary);
   }
 }

@@ -351,7 +351,76 @@
   }
 
   /* ──────────────────────────────────────────────
-   * Typography
+   * Typography roles  →  semantic presets
+   *
+   * Each .co-type-* applies the full set of role
+   * properties (size, weight, tracking, line-height)
+   * from the --co-typography-* semantic tokens.
+   * ────────────────────────────────────────────── */
+  .co-type-display {
+    font-size: var(--co-typography-display-size);
+    font-weight: var(--co-typography-display-weight);
+    letter-spacing: var(--co-typography-display-tracking);
+    line-height: var(--co-typography-display-line-height);
+  }
+  .co-type-heading {
+    font-size: var(--co-typography-heading-size);
+    font-weight: var(--co-typography-heading-weight);
+    letter-spacing: var(--co-typography-heading-tracking);
+    line-height: var(--co-typography-heading-line-height);
+  }
+  .co-type-title {
+    font-size: var(--co-typography-title-size);
+    font-weight: var(--co-typography-title-weight);
+    letter-spacing: var(--co-typography-title-tracking);
+    line-height: var(--co-typography-title-line-height);
+  }
+  .co-type-subtitle {
+    font-size: var(--co-typography-subtitle-size);
+    font-weight: var(--co-typography-subtitle-weight);
+    letter-spacing: var(--co-typography-subtitle-tracking);
+    line-height: var(--co-typography-subtitle-line-height);
+  }
+  .co-type-eyebrow {
+    font-size: var(--co-typography-eyebrow-size);
+    font-weight: var(--co-typography-eyebrow-weight);
+    letter-spacing: var(--co-typography-eyebrow-tracking);
+    line-height: var(--co-typography-eyebrow-line-height);
+    text-transform: uppercase;
+  }
+  .co-type-body-lg {
+    font-size: var(--co-typography-body-lg-size);
+    font-weight: var(--co-typography-body-lg-weight);
+    letter-spacing: var(--co-typography-body-lg-tracking);
+    line-height: var(--co-typography-body-lg-line-height);
+  }
+  .co-type-body {
+    font-size: var(--co-typography-body-size);
+    font-weight: var(--co-typography-body-weight);
+    letter-spacing: var(--co-typography-body-tracking);
+    line-height: var(--co-typography-body-line-height);
+  }
+  .co-type-body-sm {
+    font-size: var(--co-typography-body-sm-size);
+    font-weight: var(--co-typography-body-sm-weight);
+    letter-spacing: var(--co-typography-body-sm-tracking);
+    line-height: var(--co-typography-body-sm-line-height);
+  }
+  .co-type-label {
+    font-size: var(--co-typography-label-size);
+    font-weight: var(--co-typography-label-weight);
+    letter-spacing: var(--co-typography-label-tracking);
+    line-height: var(--co-typography-label-line-height);
+  }
+  .co-type-caption {
+    font-size: var(--co-typography-caption-size);
+    font-weight: var(--co-typography-caption-weight);
+    letter-spacing: var(--co-typography-caption-tracking);
+    line-height: var(--co-typography-caption-line-height);
+  }
+
+  /* ──────────────────────────────────────────────
+   * Typography primitives
    * ────────────────────────────────────────────── */
   .co-text-xs {
     font-size: var(--co-font-size-xs);
@@ -377,6 +446,9 @@
   .co-text-4xl {
     font-size: var(--co-font-size-4xl);
   }
+  .co-text-5xl {
+    font-size: var(--co-font-size-5xl);
+  }
 
   .co-font-normal {
     font-weight: var(--co-font-weight-regular);
@@ -391,6 +463,9 @@
     font-weight: var(--co-font-weight-bold);
   }
 
+  .co-leading-display {
+    line-height: var(--co-font-line-height-display);
+  }
   .co-leading-tight {
     line-height: var(--co-font-line-height-tight);
   }
@@ -399,6 +474,22 @@
   }
   .co-leading-relaxed {
     line-height: var(--co-font-line-height-relaxed);
+  }
+
+  .co-tracking-tighter {
+    letter-spacing: var(--co-font-tracking-tighter);
+  }
+  .co-tracking-tight {
+    letter-spacing: var(--co-font-tracking-tight);
+  }
+  .co-tracking-normal {
+    letter-spacing: var(--co-font-tracking-normal);
+  }
+  .co-tracking-wide {
+    letter-spacing: var(--co-font-tracking-wide);
+  }
+  .co-tracking-widest {
+    letter-spacing: var(--co-font-tracking-widest);
   }
 
   .co-text-left {

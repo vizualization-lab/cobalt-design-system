@@ -181,7 +181,36 @@ Available sizes for `mt` / `mb`: `0`, `2`, `4`, `6`, `8`
 
 ## Typography
 
+### Role presets
+
+The `.co-type-*` classes are the fastest way to apply a full typography treatment. Each class bundles size, weight, letter-spacing, and line-height from the matching semantic role. Reach for these before dropping down to the individual primitives below.
+
+| Class              | Role       | Size  | Weight  | Notes                                            |
+| ------------------ | ---------- | ----- | ------- | ------------------------------------------------ |
+| `co-type-display`  | `display`  | 48 px | regular | Hero moments. Utility-only (not mapped to `h1`). |
+| `co-type-heading`  | `heading`  | 36 px | regular | Page title (`<h1>` equivalent).                  |
+| `co-type-title`    | `title`    | 24 px | regular | Card / section titles.                           |
+| `co-type-subtitle` | `subtitle` | 20 px | medium  | Subsection heads.                                |
+| `co-type-eyebrow`  | `eyebrow`  | 12 px | medium  | Small-caps kicker. Automatically uppercase.      |
+| `co-type-body-lg`  | `body-lg`  | 18 px | regular | Lead paragraphs.                                 |
+| `co-type-body`     | `body`     | 16 px | regular | Default body text.                               |
+| `co-type-body-sm`  | `body-sm`  | 14 px | regular | Compact body, table rows.                        |
+| `co-type-label`    | `label`    | 14 px | medium  | Form labels, active nav, tab labels.             |
+| `co-type-caption`  | `caption`  | 12 px | regular | Metadata, timestamps, hints.                     |
+
+See [Typography](./typography.md) for the full role reference, including tracking and line-height values.
+
+```html
+<section>
+  <p class="co-type-eyebrow">Monday, January 1</p>
+  <h1 class="co-type-display">Good afternoon, Jane</h1>
+  <p class="co-type-body-lg">Your week at a glance.</p>
+</section>
+```
+
 ### Font size
+
+Use font-size utilities when composing a one-off treatment that doesn't match any role. Prefer the role presets above whenever possible.
 
 | Class          | Token                | Size  |
 | -------------- | -------------------- | ----- |
@@ -193,6 +222,7 @@ Available sizes for `mt` / `mb`: `0`, `2`, `4`, `6`, `8`
 | `co-text-2xl`  | `--co-font-size-2xl` | 24 px |
 | `co-text-3xl`  | `--co-font-size-3xl` | 30 px |
 | `co-text-4xl`  | `--co-font-size-4xl` | 36 px |
+| `co-text-5xl`  | `--co-font-size-5xl` | 48 px |
 
 ### Font weight
 
@@ -207,9 +237,20 @@ Available sizes for `mt` / `mb`: `0`, `2`, `4`, `6`, `8`
 
 | Class                | Token                                  |
 | -------------------- | -------------------------------------- |
+| `co-leading-display` | `--co-font-line-height-display` (1.1)  |
 | `co-leading-tight`   | `--co-font-line-height-tight` (1.25)   |
 | `co-leading-normal`  | `--co-font-line-height-normal` (1.5)   |
 | `co-leading-relaxed` | `--co-font-line-height-relaxed` (1.75) |
+
+### Letter spacing
+
+| Class                 | Token                        | Value     |
+| --------------------- | ---------------------------- | --------- |
+| `co-tracking-tighter` | `--co-font-tracking-tighter` | -0.025 em |
+| `co-tracking-tight`   | `--co-font-tracking-tight`   | -0.015 em |
+| `co-tracking-normal`  | `--co-font-tracking-normal`  | 0         |
+| `co-tracking-wide`    | `--co-font-tracking-wide`    | 0.05 em   |
+| `co-tracking-widest`  | `--co-font-tracking-widest`  | 0.08 em   |
 
 ### Text alignment
 

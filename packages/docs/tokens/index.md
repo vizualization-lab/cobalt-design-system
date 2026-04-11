@@ -14,7 +14,8 @@ Need a quick explanation of how the token system is organized? Start with [Token
 | -------------- | ------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
 | **Color**      | <nobr>`--co-color-`</nobr>      | Primitive palettes and hues, semantic roles (primary, neutral, ...), and contextual usage (surface, interactive, feedback) |
 | **Space**      | <nobr>`--co-space-`</nobr>      | Base spacing scale and semantic aliases for gaps, insets, section, and page margins                                        |
-| **Font**       | <nobr>`--co-font-`</nobr>       | Font families (sans, mono), size scale, weights, and line-heights                                                          |
+| **Font**       | <nobr>`--co-font-`</nobr>       | Font families (sans, mono), size scale, weights, line-heights, and letter-spacing (tracking)                               |
+| **Typography** | <nobr>`--co-typography-`</nobr> | Semantic role presets (display, heading, title, subtitle, eyebrow, body-lg, body, body-sm, label, caption)                 |
 | **Shape**      | <nobr>`--co-shape-`</nobr>      | Border-radius scale and border-width values                                                                                |
 | **Elevation**  | <nobr>`--co-elevation-`</nobr>  | Box-shadow depths (sm–xl) and z-index layers for stacking contexts (dropdown through tooltip)                              |
 | **Motion**     | <nobr>`--co-motion-`</nobr>     | Transition durations and easing curves                                                                                     |
