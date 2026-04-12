@@ -51,6 +51,25 @@ onMounted(() => {
   } else {
     isDark.value = document.documentElement.getAttribute('data-theme') === 'dark';
   }
+
+  // Copy heading anchor URL to clipboard on click
+  const article = document.querySelector('.cobalt-article');
+  if (article) {
+    article.addEventListener('click', (e) => {
+      const anchor = (e.target as HTMLElement).closest?.(
+        '.header-anchor',
+      ) as HTMLAnchorElement | null;
+      if (!anchor) return;
+
+      e.preventDefault();
+      const url = anchor.href;
+      navigator.clipboard.writeText(url);
+
+      // Brief visual feedback — swap # with checkmark
+      anchor.dataset.copied = 'true';
+      setTimeout(() => delete anchor.dataset.copied, 1500);
+    });
+  }
 });
 
 // Close sidebar on route change (mobile) + clear user's rail override so rail re-syncs.
@@ -591,6 +610,38 @@ body {
   color: var(--co-h3-color);
   margin-top: 36px;
   margin-bottom: 12px;
+}
+
+/* ── Heading anchor links ─────────────────────────────────── */
+.cobalt-article :is(h1, h2, h3) .header-anchor {
+  position: relative;
+  float: left;
+  margin-left: -0.87em;
+  padding-right: 0.23em;
+  font-weight: 500;
+  opacity: 0;
+  transition: opacity var(--co-duration) var(--co-ease);
+  text-decoration: none;
+  border-bottom: none;
+}
+
+.cobalt-article :is(h1, h2, h3) .header-anchor::after {
+  content: '#';
+  color: var(--co-color-text-tertiary);
+}
+
+.cobalt-article :is(h1, h2, h3):hover .header-anchor,
+.cobalt-article :is(h1, h2, h3) .header-anchor:focus-visible {
+  opacity: 1;
+}
+
+.cobalt-article :is(h1, h2, h3) .header-anchor:hover::after {
+  color: var(--co-color-interactive-default);
+}
+
+.cobalt-article .header-anchor[data-copied]::after {
+  content: '✓';
+  color: var(--co-color-success-base);
 }
 
 .cobalt-article p {
