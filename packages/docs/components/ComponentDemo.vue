@@ -17,10 +17,10 @@ const state = ref<Record<string, string | boolean>>({
   ),
 });
 
-const previewDark = ref(true);
+const previewDark = ref(false);
 
 function syncThemeFromPage() {
-  previewDark.value = document.documentElement.getAttribute('data-theme') !== 'light';
+  previewDark.value = document.documentElement.getAttribute('data-theme') === 'dark';
 }
 
 let observer: MutationObserver | null = null;
