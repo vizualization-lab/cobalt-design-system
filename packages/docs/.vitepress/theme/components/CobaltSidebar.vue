@@ -38,7 +38,13 @@ function isActive(link: string | undefined): boolean {
             :aria-current="isActive(item.link) ? 'page' : undefined"
           >
             <span class="nav-item-indicator" aria-hidden="true"></span>
-            <span class="nav-item-dot" aria-hidden="true"></span>
+            <co-icon
+              class="nav-item-marker"
+              name="fiber-manual-record"
+              size="xs"
+              :fill="isActive(item.link) || undefined"
+              aria-hidden="true"
+            ></co-icon>
             <span class="nav-item-text">{{ item.text }}</span>
           </a>
         </li>
@@ -100,7 +106,7 @@ function isActive(link: string | undefined): boolean {
 .nav-item {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   padding: 8px 12px;
   margin: 1px 0;
   border-radius: 9px;
@@ -135,24 +141,20 @@ function isActive(link: string | undefined): boolean {
   border: 1px solid var(--co-color-border-selected);
 }
 
-.nav-item-dot {
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: var(--co-color-text-tertiary);
+.nav-item-marker {
   flex-shrink: 0;
-  transition: all var(--co-duration) var(--co-ease);
+  color: var(--co-color-text-tertiary);
   opacity: 0.5;
+  transition: all var(--co-duration) var(--co-ease);
 }
 
-.nav-item.is-active .nav-item-dot {
-  background: var(--co-blue-400);
+.nav-item:hover .nav-item-marker {
+  opacity: 0.85;
+}
+
+.nav-item.is-active .nav-item-marker {
+  color: var(--co-blue-400);
   opacity: 1;
-  box-shadow: 0 0 8px var(--co-blue-alpha-50);
-}
-
-.nav-item:hover .nav-item-dot {
-  opacity: 0.8;
 }
 
 .nav-item.is-active {
