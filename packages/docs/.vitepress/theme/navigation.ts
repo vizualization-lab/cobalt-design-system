@@ -100,6 +100,17 @@ export const navigation: NavGroup[] = [
     ],
   },
   {
+    label: 'Resources',
+    icon: 'auto-stories',
+    defaultOpen: false,
+    items: [
+      { text: 'Overview', link: '/resources/' },
+      { text: 'Contact', link: '/resources/contact' },
+      { text: 'For Developers', link: '/resources/developers' },
+      { text: 'For Designers', link: '/resources/designers' },
+    ],
+  },
+  {
     label: 'Changelog',
     icon: 'description',
     defaultOpen: false,

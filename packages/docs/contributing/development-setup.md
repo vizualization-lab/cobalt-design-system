@@ -112,4 +112,4 @@ Tests use Web Test Runner with Playwright for browser-based testing. Accessibili
 | Components not reflecting changes                | Ensure `pnpm dev` is running; try `pnpm clean && pnpm install && pnpm build` |
 | Tests timeout in CI                              | Run `pnpm exec playwright install` to install browser binaries               |
 
-> **Note:** If you encounter issues not covered here, check the GitHub Discussions or reach out in `#cobalt-contributors` on Slack.
+> **Note:** If you encounter issues not covered here, check our [Contact page](/resources/contact) for support channels.

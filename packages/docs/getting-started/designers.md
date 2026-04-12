@@ -50,7 +50,7 @@ Always use tokens instead of raw hex values or pixel sizes. When you apply a fil
 4. Search for the token by name — e.g., "primary/base."
 5. Select the matching style.
 
-> **Warning:** Hardcoding values instead of using tokens causes inconsistencies and makes future theme changes painful. If a token does not exist for your use case, reach out in `#cobalt-support` before inventing one.
+> **Warning:** Hardcoding values instead of using tokens causes inconsistencies and makes future theme changes painful. If a token does not exist for your use case, [reach out to the Cobalt team](/resources/contact) before inventing one.
 
 ## Component Usage
 

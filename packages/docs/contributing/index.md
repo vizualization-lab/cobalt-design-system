@@ -33,7 +33,7 @@ Thank you for your interest in contributing to the Cobalt Design System. Whether
 The general process for contributing code or design changes follows these stages:
 
 1. **Identify the work** — Find an existing issue or create one describing the change
-2. **Discuss** — For non-trivial changes, get alignment in the relevant Slack channel or GitHub Discussion before starting
+2. **Discuss** — For non-trivial changes, get alignment by [contacting us](/resources/contact) starting
 3. **Set up your environment** — Follow the [Development Setup](./development-setup.md) guide
 4. **Implement** — Make your changes on a feature branch, following the [Coding Standards](./coding-standards.md)
 5. **Add a changeset** — Run `pnpm changeset` so your change is included in the next release
@@ -47,11 +47,7 @@ All contributors are expected to follow our Code of Conduct. We are committed to
 
 ## Getting Help
 
-If you're unsure where to start or have questions about the contribution process, reach out through any of these channels:
-
-- **Slack:** `#cobalt-contributors` in the internal workspace
-- **GitHub Discussions:** Use the Q&A category for questions
-- **Office Hours:** The Cobalt team holds weekly office hours every Thursday at 2 PM ET
+If you're unsure where to start or have questions about the contribution process, visit our [Contact](/resources/contact) page for all support channels.
 
 > **Tip:** Don't be afraid to ask questions. The team is happy to help you find the right area to contribute and guide you through the process.
 

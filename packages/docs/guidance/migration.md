@@ -143,4 +143,4 @@ Use this table when replacing hardcoded values or framework-specific variables w
 
 ## Need help?
 
-If you run into issues during migration, open a discussion in the Cobalt repository with the `migration` label. Include your source framework, target page, and any error messages. The team typically responds within one business day.
+If you run into issues during migration, visit the [Contact](/resources/contact) page for support channels. When opening a GitHub Discussion, include the `migration` label along with your source framework, target page, and any error messages.

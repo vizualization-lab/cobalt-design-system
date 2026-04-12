@@ -110,5 +110,4 @@ Track the value of the design system with these metrics:
 
 - **Component Library:** [Browse Components](/components/button)
 - **Roadmap:** `cobalt-design-system` GitHub project board
-- **Slack:** `#cobalt-support` for questions, `#cobalt-announcements` for release updates
-- **Office Hours:** Wednesdays 2-3 PM ET — open to all roles
+- **Support:** See the [Contact](/resources/contact) page for all support channels

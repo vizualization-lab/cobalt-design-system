@@ -77,14 +77,7 @@ Reviewers will look for:
 
 ## Communication Channels
 
-| Channel                         | Purpose                                           | Audience      |
-| ------------------------------- | ------------------------------------------------- | ------------- |
-| `#cobalt-support` (Slack)       | General questions and support                     | All consumers |
-| `#cobalt-contributors` (Slack)  | Contributor discussions and coordination          | Contributors  |
-| `#cobalt-announcements` (Slack) | Release notes and breaking change notices         | All consumers |
-| GitHub Issues                   | Bug reports and feature requests                  | Public        |
-| GitHub Discussions              | Design decisions, RFCs, and open questions        | Public        |
-| Weekly Office Hours             | Live Q&A with the Cobalt team (Thursdays 2 PM ET) | All           |
+For a full list of support channels, see the [Contact](/resources/contact) page.
 
 ## First-Time Contributors
 
