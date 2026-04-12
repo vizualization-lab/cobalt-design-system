@@ -15,12 +15,6 @@ export interface NavGroup {
 
 export const navigation: NavGroup[] = [
   {
-    label: 'Overview',
-    icon: 'home',
-    defaultOpen: true,
-    items: [{ text: 'Introduction', link: '/' }],
-  },
-  {
     label: 'Get Started',
     icon: 'rocket-launch',
     defaultOpen: false,

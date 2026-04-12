@@ -183,7 +183,7 @@ function toggleSidebar() {
       </nav>
     </header>
 
-    <div class="cobalt-body">
+    <div class="cobalt-body" :class="{ 'is-home': frontmatter.layout === 'home' }">
       <!-- Mobile overlay backdrop -->
       <div
         v-if="sidebarOpen"
@@ -499,6 +499,31 @@ body {
   max-width: 820px;
   margin: 0 auto;
   padding: 48px 56px 80px;
+}
+
+/* ── Home splash mode ────────────────────────────────────────
+   Hide the primary rail + contextual sidebar on desktop so the
+   landing page reads as a splash. Mobile keeps its existing
+   hamburger/slide-in behavior untouched. */
+@media (min-width: 769px) {
+  .cobalt-body.is-home .cobalt-rail,
+  .cobalt-body.is-home .cobalt-sidebar {
+    display: none;
+  }
+
+  .cobalt-body.is-home .cobalt-main {
+    margin-left: 0;
+  }
+}
+
+/* At ≥1281px the article layout reserves 268px on the right for the
+   TOC. Home has no TOC, so cancel that reserve and let .cobalt-content
+   (max-width: 820px, margin: 0 auto) center naturally across the full
+   viewport width. */
+@media (min-width: 1281px) {
+  .cobalt-body.is-home .cobalt-main {
+    padding-right: 0;
+  }
 }
 
 /* ── Article Styles ─────────────────────────────────────────── */
