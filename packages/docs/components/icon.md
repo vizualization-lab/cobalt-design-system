@@ -228,6 +228,10 @@ One-shot animations, such as `bell-ring`, or `check-circle`, play once on mount.
 </div>
 </ClientOnly>
 
+<CodeTabs :tabs="['Web Component', 'React', 'Vue', 'Angular']">
+
+<template #web-component>
+
 ```js
 // Trigger or restart animation on an event
 const icon = document.querySelector('co-icon[name="notifications"]');
@@ -239,6 +243,103 @@ icon.replay(); // sets animated = true and plays the animation
 // Stop animation
 icon.animated = false;
 ```
+
+</template>
+
+<template #react>
+
+```tsx
+import { useRef } from 'react';
+import { CoIcon } from '@cobalt/react';
+
+type CoIconElement = HTMLElement & { replay(): void; animated: boolean };
+
+function NotificationBell() {
+  const bellRef = useRef<CoIconElement>(null);
+
+  function handleNewMessage() {
+    // Trigger or restart animation on an event
+    bellRef.current?.replay();
+  }
+
+  function stopAnimation() {
+    if (bellRef.current) bellRef.current.animated = false;
+  }
+
+  return (
+    <>
+      <CoIcon ref={bellRef} name="notifications" animated />
+      <button onClick={handleNewMessage}>New message</button>
+    </>
+  );
+}
+```
+
+</template>
+
+<template #vue>
+
+```vue
+<script setup>
+import { ref } from 'vue';
+import { CoIcon } from '@cobalt/vue';
+
+const bellRef = ref(null);
+
+function handleNewMessage() {
+  // Trigger or restart animation on an event
+  bellRef.value?.replay();
+}
+
+function stopAnimation() {
+  if (bellRef.value) bellRef.value.animated = false;
+}
+</script>
+
+<template>
+  <CoIcon ref="bellRef" name="notifications" animated />
+  <button @click="handleNewMessage">New message</button>
+</template>
+```
+
+</template>
+
+<template #angular>
+
+```typescript
+// notifications.component.ts
+import { Component, ElementRef, ViewChild, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { CoIcon } from '@cobalt/angular';
+
+type CoIconElement = HTMLElement & { replay(): void; animated: boolean };
+
+@Component({
+  selector: 'app-notifications',
+  standalone: true,
+  imports: [CoIcon],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  template: `
+    <co-icon #bell name="notifications" animated></co-icon>
+    <button (click)="handleNewMessage()">New message</button>
+  `,
+})
+export class NotificationsComponent {
+  @ViewChild('bell') bell!: ElementRef<CoIconElement>;
+
+  handleNewMessage() {
+    // Trigger or restart animation on an event
+    this.bell.nativeElement.replay();
+  }
+
+  stopAnimation() {
+    this.bell.nativeElement.animated = false;
+  }
+}
+```
+
+</template>
+
+</CodeTabs>
 
 ## Best Practices
 
