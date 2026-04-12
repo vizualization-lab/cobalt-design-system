@@ -68,9 +68,9 @@
         "bold": { "$value": "{co.color.primitive.neutral.700}", "$type": "color" }
       },
       "interactive": {
-        "default": { "$value": "{co.color.primitive.blue.400}", "$type": "color" },
-        "hover": { "$value": "{co.color.primitive.blue.300}", "$type": "color" },
-        "active": { "$value": "{co.color.primitive.blue.200}", "$type": "color" },
+        "default": { "$value": "{co.color.primitive.blue.300}", "$type": "color" },
+        "hover": { "$value": "{co.color.primitive.blue.200}", "$type": "color" },
+        "active": { "$value": "{co.color.primitive.blue.100}", "$type": "color" },
         "disabled": { "$value": "{co.color.primitive.blue.700}", "$type": "color" },
         "subtle-hover": { "$value": "{co.color.primitive.blue.900}", "$type": "color" },
         "subtle-active": { "$value": "{co.color.primitive.blue.800}", "$type": "color" },
