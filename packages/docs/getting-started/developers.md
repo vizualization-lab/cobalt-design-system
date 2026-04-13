@@ -74,7 +74,7 @@ pnpm config set @cobalt:registry https://registry.your-org.com
 Clone the monorepo and build all packages:
 
 ```bash
-git clone https://github.com/your-org/cobalt-design-system.git
+git clone %GITHUB_URL%.git
 cd cobalt-design-system
 pnpm install
 pnpm build         # build all packages

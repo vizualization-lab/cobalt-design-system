@@ -8,8 +8,8 @@ This is the central place for all Cobalt support channels. Whether you have a qu
 
 ## GitHub
 
-- **Issues** — Use the [GitHub Issues](https://github.com/your-org/cobalt-design-system/issues) for bug reports and feature requests. Issue templates are available for common report types.
-- **Discussions** — Use [GitHub Discussions](https://github.com/your-org/cobalt-design-system/discussions) for open-ended questions, design decisions, RFCs, and community conversations.
+- **Issues** — Use the [GitHub Issues](%GITHUB_URL%/issues) for bug reports and feature requests. Issue templates are available for common report types.
+- **Discussions** — Use [GitHub Discussions](%GITHUB_URL%/discussions) for open-ended questions, design decisions, RFCs, and community conversations.
 
 ## Office Hours
 

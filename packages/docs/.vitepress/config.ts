@@ -3,12 +3,40 @@ import taskLists from 'markdown-it-task-lists';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { loadEnv } from 'vite';
 import { toVitePressNav, toVitePressSidebar } from './theme/navigation';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const pkg = JSON.parse(
   fs.readFileSync(path.resolve(__dirname, '../../components/package.json'), 'utf-8'),
 );
+
+const repoRoot = path.resolve(__dirname, '../../..');
+const env = loadEnv('production', repoRoot, 'COBALT_');
+
+const githubOrg = env.COBALT_GITHUB_ORG || 'vizualization-lab';
+const githubRepo = env.COBALT_GITHUB_REPO || 'cobalt-design-system';
+const githubUrl = env.COBALT_GITHUB_URL || `https://github.com/${githubOrg}/${githubRepo}`;
+
+/**
+ * Markdown-it plugin that replaces %GITHUB_URL% placeholders in the raw
+ * markdown source before parsing, so replacements work everywhere — including
+ * fenced code blocks and link hrefs.
+ */
+function replacePlaceholders(md: any) {
+  const replacements: Record<string, string> = {
+    '%GITHUB_URL%': githubUrl,
+  };
+
+  const originalParse = md.parse.bind(md);
+  md.parse = (src: string, env: any) => {
+    let processed = src;
+    for (const [key, value] of Object.entries(replacements)) {
+      processed = processed.replaceAll(key, value);
+    }
+    return originalParse(processed, env);
+  };
+}
 
 export default defineConfig({
   base: '/cobalt-design-system/',
@@ -21,6 +49,7 @@ export default defineConfig({
     },
     config: (md) => {
       md.use(taskLists);
+      md.use(replacePlaceholders);
     },
   },
   head: [
@@ -32,6 +61,11 @@ export default defineConfig({
   ],
   themeConfig: {
     cobaltVersion: pkg.version,
+    github: {
+      url: githubUrl,
+      org: githubOrg,
+      repo: githubRepo,
+    },
     search: {
       provider: 'local',
     },

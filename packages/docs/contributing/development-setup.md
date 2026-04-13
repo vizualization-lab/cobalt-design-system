@@ -18,7 +18,7 @@ Ensure the following tools are installed before proceeding:
 
 ```bash
 # Clone the repository
-git clone https://github.com/your-org/cobalt-design-system.git
+git clone %GITHUB_URL%.git
 cd cobalt-design-system
 
 # Install dependencies
@@ -51,6 +51,26 @@ cobalt-design-system/
 ├── turbo.json
 └── package.json
 ```
+
+## Environment Configuration
+
+The docs site reads optional environment variables from a `.env` file at the repository root. This is useful when working from a fork or a different GitHub org.
+
+To get started, copy the example file:
+
+```bash
+cp .env.example .env
+```
+
+Then uncomment and edit any values you need to override:
+
+| Variable             | Default                                                       | Description                |
+| -------------------- | ------------------------------------------------------------- | -------------------------- |
+| `COBALT_GITHUB_ORG`  | `vizualization-lab`                                           | GitHub organization name   |
+| `COBALT_GITHUB_REPO` | `cobalt-design-system`                                        | GitHub repository name     |
+| `COBALT_GITHUB_URL`  | `https://github.com/{COBALT_GITHUB_ORG}/{COBALT_GITHUB_REPO}` | Full GitHub repository URL |
+
+If `COBALT_GITHUB_URL` is not set, it is automatically derived from `COBALT_GITHUB_ORG` and `COBALT_GITHUB_REPO`. The `.env` file is git-ignored, so your local overrides will not be committed.
 
 ## Build Commands
 

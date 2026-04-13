@@ -11,3 +11,6 @@ a11y-reports
 local-packs/
 .generated/
 worktrees/
+.env
+.env.local
+.env.*.local
