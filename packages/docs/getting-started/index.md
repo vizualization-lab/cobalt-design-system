@@ -18,13 +18,15 @@ The element cobalt is known for two things: extraordinary resilience and a vivid
 
 ## Core Principles
 
-| Principle         | Description                                                                        |
-| ----------------- | ---------------------------------------------------------------------------------- |
-| **Consistency**   | Every component follows the same visual and interaction patterns across products.  |
-| **Accessibility** | All components meet WCAG 2.1 AA standards out of the box.                          |
-| **Composability** | Components are designed to be combined in flexible ways without breaking.          |
-| **Performance**   | Lightweight web components with minimal runtime overhead.                          |
-| **Theming**       | Default light and dark themes today, with a token structure ready for more themes. |
+| Principle         | Description                                                                            |
+| ----------------- | -------------------------------------------------------------------------------------- |
+| **Identifiable**  | Branded in both name and a timeless visual aesthetic.                                  |
+| **Collaborative** | Developed in the open, with clear guidance for how to [contribute](/contributing).     |
+| **Maintainable**  | Automated tooling formats the code, and generates semantically versioned changelogs.   |
+| **Composable**    | Components are designed to be combined in flexible ways without breaking.              |
+| **Enjoyable**     | Developer and designer experience is prioritized, centralizing resources and guidance. |
+| **Available**     | Architected to be accessible where users may work.                                     |
+| **Accessible**    | All components meet WCAG 2.1 AA standards out of the box.                              |
 
 ## Choose Your Path
 
