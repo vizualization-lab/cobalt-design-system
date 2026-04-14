@@ -1,6 +1,7 @@
 import { defineConfig, type Plugin } from 'vite';
 import { resolve } from 'path';
 import { execSync } from 'child_process';
+import { readdirSync } from 'fs';
 
 const root = resolve(__dirname);
 const repoRoot = resolve(__dirname, '../..');
@@ -21,21 +22,41 @@ function cobaltStylesPlugin(): Plugin {
   return {
     name: 'cobalt-styles-watch',
     configureServer(server) {
-      const stylesGlob = resolve(componentsDir, 'src/**/*.styles.css');
-      server.watcher.add(stylesGlob);
+      // Add each .styles.css file explicitly — glob strings passed to
+      // chokidar's add() are unreliable for paths outside the Vite root.
+      const srcDir = resolve(componentsDir, 'src/components');
+      const cssFiles: string[] = [];
+      for (const dir of readdirSync(srcDir, { withFileTypes: true })) {
+        if (!dir.isDirectory()) continue;
+        for (const file of readdirSync(resolve(srcDir, dir.name))) {
+          if (file.endsWith('.styles.css')) {
+            cssFiles.push(resolve(srcDir, dir.name, file));
+          }
+        }
+      }
+      server.watcher.add(cssFiles);
 
       server.watcher.on('change', (file) => {
-        if (file.endsWith('.styles.css') && file.includes(componentsDir)) {
-          console.log('\n[workbench] styles.css changed, regenerating styles.ts...');
-          try {
-            execSync('node scripts/generate-styles.js', {
-              cwd: componentsDir,
-              stdio: 'pipe',
-            });
-            console.log('[workbench] styles regenerated.');
-          } catch (err: any) {
-            console.error('[workbench] style generation failed:', err.stderr?.toString());
+        if (!file.endsWith('.styles.css') || !file.includes(componentsDir)) return;
+
+        console.log('\n[workbench] styles.css changed, regenerating styles.ts...');
+        try {
+          execSync('node scripts/generate-styles.js', {
+            cwd: componentsDir,
+            stdio: 'pipe',
+          });
+          console.log('[workbench] styles regenerated.');
+
+          // The .styles.ts file was rewritten — invalidate it in Vite's
+          // module graph so the next HMR update picks up the new content.
+          const tsFile = file.replace('.styles.css', '.styles.ts');
+          const mod = server.moduleGraph.getModulesByFile(tsFile);
+          if (mod) {
+            mod.forEach((m) => server.moduleGraph.invalidateModule(m));
           }
+          server.ws.send({ type: 'full-reload' });
+        } catch (err: any) {
+          console.error('[workbench] style generation failed:', err.stderr?.toString());
         }
       });
     },
