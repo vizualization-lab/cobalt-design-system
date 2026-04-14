@@ -6,7 +6,6 @@
   "description": "Lightweight component development environment for Cobalt",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
     "clean": "rm -rf dist"
   },
   "dependencies": {
