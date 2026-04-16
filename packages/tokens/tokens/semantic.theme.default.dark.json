@@ -220,7 +220,7 @@
       "interactive": {
         "default": {
           "$type": "color",
-          "$value": "{co.color.primitive.cobalt.300}"
+          "$value": "{co.color.primary.base}"
         },
         "hover": {
           "$type": "color",

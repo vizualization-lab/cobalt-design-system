@@ -4,23 +4,28 @@
       "primary": {
         "base": {
           "$type": "color",
-          "$value": "{co.color.primitive.cobalt.600}"
+          "$value": "{co.color.primitive.cobalt.500}",
+          "$description": "Core brand color — logos, accent borders, brand markers"
         },
         "light": {
           "$type": "color",
-          "$value": "{co.color.primitive.cobalt.200}"
+          "$value": "{co.color.primitive.cobalt.200}",
+          "$description": "Light brand tint for backgrounds and subtle emphasis"
         },
         "dark": {
           "$type": "color",
-          "$value": "{co.color.primitive.cobalt.800}"
+          "$value": "{co.color.primitive.cobalt.800}",
+          "$description": "Darkened brand accent for contrast pairings"
         },
         "subtle": {
           "$type": "color",
-          "$value": "{co.color.primitive.cobalt.50}"
+          "$value": "{co.color.primitive.cobalt.50}",
+          "$description": "Very light brand wash for large background areas"
         },
         "contrast": {
           "$type": "color",
-          "$value": "{co.color.primitive.white}"
+          "$value": "{co.color.primitive.white}",
+          "$description": "Foreground color guaranteed to contrast against primary.base"
         }
       },
       "neutral": {
@@ -220,7 +225,8 @@
       "interactive": {
         "default": {
           "$type": "color",
-          "$value": "{co.color.primitive.cobalt.500}"
+          "$value": "{co.color.primary.base}",
+          "$description": "Resting state for interactive controls — inherits from primary.base"
         },
         "hover": {
           "$type": "color",
