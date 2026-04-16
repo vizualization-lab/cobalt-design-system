@@ -4,7 +4,8 @@ import { css } from 'lit';
 export const cobaltButtonStyles = css`
   /* ── Base ── */
   :host {
-    display: inline-block;
+    display: inline-flex;
+    vertical-align: middle;
     box-sizing: border-box;
     min-block-size: var(--co-control-height-md);
     padding: 0;
