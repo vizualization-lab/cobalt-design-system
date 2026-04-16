@@ -171,7 +171,7 @@ If you are migrating older consumers, `data-theme="dark"` still works for the de
 
 ## Relationship to Utility Classes
 
-The `@cobalt/tokens/css/utilities` export provides a standalone set of utility classes with `co-` prefixes (e.g., `.co-flex`, `.co-gap-4`). These are useful when Tailwind is not part of your stack.
+The `@cobalt/tokens/css/utilities` export provides a standalone set of token-backed utility classes with `co-` prefixes (e.g., `.co-gap-4`, `.co-p-6`). These are useful when Tailwind is not part of your stack.
 
 If you are using the Tailwind preset, **you do not need** `@cobalt/tokens/css/utilities` — Tailwind's own utility classes cover the same functionality with the standard Tailwind naming convention.
 

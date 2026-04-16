@@ -130,14 +130,17 @@ Use `co-stack` for vertical rhythm and `co-inline` for horizontal arrangements. 
 
 ## Utility Classes
 
-For quick layout composition without writing custom CSS, Cobalt provides a set of token-backed utility classes modeled after Tailwind CSS conventions. Utilities are ideal for the structural glue between components — grid columns, flex alignment, gap, and responsive visibility.
+Cobalt provides [token utilities](../foundations/utilities.md) for spacing, typography, and sizing — classes like `co-gap-4` and `co-p-6` that map directly to `--co-*` tokens. For layout primitives (display, flexbox, grid), use [Tailwind with the Cobalt preset](../foundations/tailwind.md) or write CSS directly.
 
 ```html
-<div class="co-grid co-grid-cols-1 md:co-grid-cols-2 lg:co-grid-cols-3 co-gap-4">
+<div
+  style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr))"
+  class="co-gap-4"
+>
   <co-card>Item 1</co-card>
   <co-card>Item 2</co-card>
   <co-card>Item 3</co-card>
 </div>
 ```
 
-See the full [Utility Classes](../foundations/utilities.md) reference for available classes, responsive prefixes, and migration guidance.
+See the full [Token Utilities](../foundations/utilities.md) reference for available classes and responsive gap variants.
