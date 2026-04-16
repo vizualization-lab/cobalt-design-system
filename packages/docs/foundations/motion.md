@@ -74,10 +74,10 @@ Motion makes interfaces feel responsive and alive. The Cobalt motion system defi
 
 ## Animation principles
 
-1. **Be purposeful.** Every animation should serve a functional goal — guide attention, show causality, or maintain spatial context.
-2. **Be brief.** Most transitions should complete within 200 ms. Users perceive delays above 400 ms as sluggish.
-3. **Be consistent.** Use the same duration and easing for similar actions. All hover states should feel identical across components.
-4. **Respect user preferences.** Honor the `prefers-reduced-motion` media query.
+- **Purposeful** — every animation should guide attention, show causality, or maintain spatial context.
+- **Brief** — most transitions complete within 200 ms; above 400 ms feels sluggish.
+- **Consistent** — same duration and easing for similar actions across components.
+- **Accessible** — honor the `prefers-reduced-motion` media query (see [Accessibility — Reduced Motion](./accessibility.md#reduced-motion)).
 
 ## Reduced motion
 

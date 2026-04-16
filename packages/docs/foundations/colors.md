@@ -105,9 +105,7 @@ The `interactive.subtle-selected` / `border.selected` pair gives selected nav it
 
 ## Accessibility
 
-- All default semantic pairings satisfy WCAG 2.1 AA contrast requirements.
-- Never rely on color alone to communicate meaning — always pair color with text, icons, or patterns.
-- Use the `--co-color-border-focus` token for keyboard-focus outlines.
+Ensure all color pairings meet WCAG 2.1 AA contrast ratios. See [Accessibility — Color Contrast](./accessibility.md#color-contrast) for requirements and testing tools.
 
 ## Related
 

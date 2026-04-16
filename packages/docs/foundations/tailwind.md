@@ -100,12 +100,7 @@ Color roles (primary, neutral, danger, success, warning) use variant `base` as t
 
 ### Spacing
 
-| Tailwind class       | Cobalt token                                     |
-| -------------------- | ------------------------------------------------ |
-| `p-0` through `p-24` | `var(--co-space-0)` through `var(--co-space-24)` |
-| `m-4`, `gap-6`, etc. | Same spacing scale                               |
-
-Available steps: 0, 1, 2, 3, 4, 5, 6, 8, 10, 12, 16, 20, 24, px.
+Spacing classes (`p-*`, `m-*`, `gap-*`) map to `var(--co-space-*)` tokens. Available steps: 0, 1, 2, 3, 4, 5, 6, 8, 10, 12, 16, 20, 24, px. See [Spacing](./spacing.md) for the full scale.
 
 ### Border Radius
 
@@ -121,18 +116,7 @@ Available steps: 0, 1, 2, 3, 4, 5, 6, 8, 10, 12, 16, 20, 24, px.
 
 ### Typography
 
-| Tailwind class                                                                              | Cobalt token                    |
-| ------------------------------------------------------------------------------------------- | ------------------------------- |
-| `font-sans`                                                                                 | `var(--co-font-family-sans)`    |
-| `font-mono`                                                                                 | `var(--co-font-family-mono)`    |
-| `text-xs` through `text-5xl`                                                                | `var(--co-font-size-*)`         |
-| `text-base`                                                                                 | `var(--co-font-size-md)`        |
-| `font-normal`                                                                               | `var(--co-font-weight-regular)` |
-| `font-medium`, `font-semibold`, `font-bold`                                                 | `var(--co-font-weight-*)`       |
-| `leading-display`, `leading-tight`, `leading-normal`, `leading-relaxed`                     | `var(--co-font-line-height-*)`  |
-| `tracking-tighter`, `tracking-tight`, `tracking-normal`, `tracking-wide`, `tracking-widest` | `var(--co-font-tracking-*)`     |
-
-Note: Cobalt's `md` font size maps to Tailwind's `base` (`text-base`), and Cobalt's `regular` weight maps to Tailwind's `normal` (`font-normal`). The `text-5xl` utility (48 px / 3 rem) matches the `display` semantic role.
+Font size (`text-*`), weight (`font-*`), line-height (`leading-*`), and tracking (`tracking-*`) classes map to `var(--co-font-*)` tokens. Cobalt's `md` font size maps to Tailwind's `base` (`text-base`), and Cobalt's `regular` weight maps to Tailwind's `normal` (`font-normal`). See [Typography](./typography.md) for the full type scale and semantic roles.
 
 #### Semantic typography roles
 
@@ -162,25 +146,11 @@ Cobalt also exposes ten semantic role presets under `--co-typography-*` (display
 
 ### Transitions
 
-| Tailwind class                          | Cobalt token                       |
-| --------------------------------------- | ---------------------------------- |
-| `duration-fast`                         | `var(--co-motion-duration-fast)`   |
-| `duration` (default), `duration-normal` | `var(--co-motion-duration-normal)` |
-| `duration-slow`                         | `var(--co-motion-duration-slow)`   |
-| `ease` (default)                        | `var(--co-motion-easing-default)`  |
-| `ease-in`                               | `var(--co-motion-easing-in)`       |
-| `ease-out`                              | `var(--co-motion-easing-out)`      |
-| `ease-in-out`                           | `var(--co-motion-easing-in-out)`   |
+Duration (`duration-fast`, `duration-normal`, `duration-slow`) and easing (`ease`, `ease-in`, `ease-out`, `ease-in-out`) classes map to `var(--co-motion-*)` tokens. See [Motion](./motion.md) for the full token reference.
 
 ### Breakpoints
 
-| Tailwind prefix | Value    |
-| --------------- | -------- |
-| `sm:`           | `640px`  |
-| `md:`           | `768px`  |
-| `lg:`           | `1024px` |
-| `xl:`           | `1280px` |
-| `2xl:`          | `1536px` |
+Tailwind prefixes (`sm:`, `md:`, `lg:`, `xl:`, `2xl:`) map to the Cobalt breakpoint scale. See [Breakpoints](./breakpoints.md) for values and device targets.
 
 ## Dark Mode
 

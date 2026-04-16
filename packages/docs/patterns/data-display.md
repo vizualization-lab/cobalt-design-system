@@ -99,17 +99,7 @@ Use `co-skeleton` placeholders to indicate content is loading. Match the skeleto
 
 ## Data Formatting
 
-Follow these conventions for consistent data display across Cobalt applications.
-
-| Data Type      | Format                 | Example               |
-| -------------- | ---------------------- | --------------------- |
-| Date           | `MMM DD, YYYY`         | Mar 11, 2026          |
-| Date + time    | `MMM DD, YYYY, h:mm A` | Mar 11, 2026, 3:45 PM |
-| Relative time  | Plain language         | 2 hours ago           |
-| Number         | Thousands separator    | 1,248                 |
-| Large number   | Abbreviated            | 12.4K                 |
-| Currency (USD) | Symbol + 2 decimals    | $1,299.00             |
-| Percentage     | 1 decimal max          | 84.3%                 |
+For number, date, and currency formatting rules, see [Content & Writing — Formatting](../guidance/content.md#date-and-time-formatting).
 
 Use the `@cobalt/formatters` utility package to apply these formats programmatically:
 

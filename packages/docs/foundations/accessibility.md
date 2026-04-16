@@ -115,7 +115,7 @@ Dynamic content updates (toasts, inline validation) should use ARIA live regions
 
 ## Reduced motion
 
-Users who enable `prefers-reduced-motion` should see minimal or no animation. Cobalt handles this globally — see the [Motion](./motion.md) page for implementation details.
+Users who enable `prefers-reduced-motion` should see minimal or no animation. See [Motion — Reduced Motion](./motion.md#reduced-motion) for the CSS implementation and token reference.
 
 ## Testing checklist
 

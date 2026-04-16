@@ -4,27 +4,7 @@ Cobalt uses [CSS cascade layers](https://developer.mozilla.org/en-US/docs/Web/CS
 
 ## What are cascade layers?
 
-When you integrate a third-party CSS library, you often end up fighting specificity. A library selector like `.btn.btn-primary` requires increasingly specific selectors to override, leading to fragile, hard-to-maintain stylesheets.
-
-**`@layer` solves this.** It groups CSS rules into named layers with a declared priority order. Rules in a higher-priority layer _always_ beat rules in a lower-priority layer, regardless of selector specificity.
-
-```css
-@layer base, overrides;
-
-@layer base {
-  .button {
-    color: blue;
-  }
-}
-
-@layer overrides {
-  .button {
-    color: red; /* wins — "overrides" is declared after "base" */
-  }
-}
-```
-
-Because `overrides` is declared after `base`, the red color wins even though both selectors have the same specificity. You could even use a less specific selector in the higher layer and it would still win.
+[`@layer`](https://developer.mozilla.org/en-US/docs/Web/CSS/@layer) groups CSS rules into named layers with a declared priority order. Rules in a higher-priority layer always beat rules in a lower-priority layer, regardless of selector specificity — eliminating the need for increasingly specific selectors or `!important` when overriding library styles.
 
 ## Cobalt's layer stack
 

@@ -8,7 +8,7 @@ This guide covers everything you need to start building with Cobalt — from set
 
 | Tool    | Minimum Version | Check Command    |
 | ------- | --------------- | ---------------- |
-| Node.js | 18.x            | `node --version` |
+| Node.js | 20.x            | `node --version` |
 | pnpm    | 9.x             | `pnpm --version` |
 | Git     | 2.x             | `git --version`  |
 

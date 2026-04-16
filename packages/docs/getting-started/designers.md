@@ -101,7 +101,6 @@ Before marking a design as ready:
 ## Resources
 
 - **Token Structure:** [How tokens are organized](../tokens/structure.md)
-- **Figma Handoff:** [What to hand off with tokens](../tokens/figma-handoff.md)
-- **Figma Checklist:** [Copy-paste handoff template](../tokens/figma-checklist.md)
+- **Figma Handoff:** [What to hand off with tokens](../tokens/figma-handoff.md) (includes a [copy-paste template](../tokens/figma-handoff.md#quick-handoff-template))
 - **Token Reference:** [Tokens Documentation](../tokens/)
-- **Custom Icons:** Need to design a custom icon for Cobalt? See the [Designing Custom Icons](/foundations/iconography#designing-custom-icons) guide for grid specs, keyline templates, and an export checklist.
+- **Custom Icons:** Need to design a custom icon for Cobalt? See the [Designing Icons](/contributing/designing-icons) guide for grid specs, keyline templates, and an export checklist.

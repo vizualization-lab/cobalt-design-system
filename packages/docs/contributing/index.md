@@ -19,15 +19,6 @@ Thank you for your interest in contributing to the Cobalt Design System. Whether
 2. **Check existing issues.** Someone may already be working on what you have in mind. Search open issues and pull requests before starting new work.
 3. **Start small.** If this is your first contribution, look for issues labeled `good first issue` or `help wanted`.
 
-## Quick Links
-
-- [How to Contribute](./how-to-contribute.md) — Reporting bugs, requesting features, and submitting pull requests
-- [Component Proposal Process](./component-proposal.md) — The RFC workflow for proposing new components
-- [Development Setup](./development-setup.md) — Getting your local environment ready
-- [Coding Standards](./coding-standards.md) — TypeScript, Lit, CSS, and testing conventions
-- [Design Contribution Guidelines](./design-contribution.md) — Working with the Figma library and design reviews
-- [Versioning & Release Policy](./versioning.md) — Semver, changesets, and release cadence
-
 ## Contribution Workflow at a Glance
 
 The general process for contributing code or design changes follows these stages:

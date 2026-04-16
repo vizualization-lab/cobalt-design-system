@@ -10,15 +10,12 @@ The system has three layers:
 
 ## Philosophy
 
-> Regular (400) is the default at every size. Medium (500) is for UI-level emphasis. Size, letter-spacing, and line-height do the hierarchy work — not weight.
-
-This is the opposite of the traditional "bigger = bolder" pattern. A 48 px display headline at regular weight reads as airy and editorial; the same text at bold reads as dense and marketing-y. The system deliberately avoids the latter.
+Hierarchy comes from size, letter-spacing, and line-height — not weight. Regular (400) is the default at every size; medium (500) is reserved for UI emphasis (labels, active nav, tabs). This produces an editorial feel: a 48 px display headline at regular weight reads as airy, not dense.
 
 Practical consequences:
 
-- **Display type is large and thin**, not large and heavy. The hero style is achieved with `3rem / regular / -0.025em tracking / 1.1 line-height`, not with a bold weight.
-- **Tracking compensates for size.** Inter and Noto Sans both need slight negative tracking (`-0.015em` to `-0.025em`) above ~24 px to feel optically correct. Below 16 px, tracking stays at zero or goes slightly positive.
-- **Line-height inverts.** Large type wants tight leading (1.1–1.25); body wants comfortable leading (1.5–1.6); captions want just enough to breathe (1.4).
+- **Tracking compensates for size.** Negative tracking (`-0.015em` to `-0.025em`) above ~24 px; zero or slightly positive below 16 px.
+- **Line-height inverts.** Large type wants tight leading (1.1–1.25); body wants comfortable leading (1.5); captions want just enough to breathe (1.4).
 - **Three weights is enough.** `regular` for everything, `medium` for labels/subtitles, with `semibold` and `bold` available as escape hatches but not part of the default ramp.
 
 ## Font families
@@ -217,7 +214,7 @@ font-size: var(--co-font-size-md);
 
 ## Related
 
-- [Utilities](./utilities.md) — `.co-type-*` role classes and the rest of the utility set
+- [Utility Classes](./utilities.md) — `.co-type-*` role classes and `co-text-*` size utilities
 - [Tailwind preset](./tailwind.md) — how typography maps to Tailwind class names
 - [Colors](./colors.md) — text color tokens
 - [Accessibility](./accessibility.md) — readable font sizes and contrast

@@ -2,6 +2,54 @@
 
 This page explains what designers should hand off in Figma when working with Cobalt tokens.
 
+## Quick Handoff Template
+
+Copy and paste this block into Figma file descriptions, frame notes, or handoff tickets:
+
+```md
+## Cobalt Handoff
+
+### Token usage
+
+- Existing semantic tokens/styles used:
+- New token requests:
+- Component-specific exceptions:
+
+### States
+
+- Default:
+- Hover:
+- Focus:
+- Active:
+- Disabled:
+- Invalid/Error:
+- Success:
+
+### Sizes
+
+- Supported sizes:
+
+### Theme behavior
+
+- Light mode:
+- Dark mode:
+- Theme-specific changes:
+
+### Accessibility
+
+- Labeling:
+- Helper text:
+- Error behavior:
+- Focus behavior:
+
+### Notes for engineering
+
+- Shared system rule or one-off exception:
+- Anything intentionally unique:
+```
+
+---
+
 The goal is simple:
 
 - use the existing token system where possible

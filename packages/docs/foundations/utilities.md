@@ -118,22 +118,11 @@ This means token values and theme overrides are resolved before utilities apply,
 
 ## Spacing
 
-All spacing utilities map to `--co-space-*` tokens, keeping values consistent with the design system's 4 px base unit.
+All spacing utilities map to `--co-space-*` tokens, keeping values consistent with the design system's 4 px base unit. See [Spacing](./spacing.md) for the full token scale.
 
 ### Gap
 
-| Class       | Token           |
-| ----------- | --------------- |
-| `co-gap-0`  | `--co-space-0`  |
-| `co-gap-1`  | `--co-space-1`  |
-| `co-gap-2`  | `--co-space-2`  |
-| `co-gap-3`  | `--co-space-3`  |
-| `co-gap-4`  | `--co-space-4`  |
-| `co-gap-5`  | `--co-space-5`  |
-| `co-gap-6`  | `--co-space-6`  |
-| `co-gap-8`  | `--co-space-8`  |
-| `co-gap-10` | `--co-space-10` |
-| `co-gap-12` | `--co-space-12` |
+`co-gap-{n}` maps to `--co-space-{n}`. Available steps: `0`, `1`, `2`, `3`, `4`, `5`, `6`, `8`, `10`, `12`.
 
 ### Padding
 
@@ -210,19 +199,7 @@ See [Typography](./typography.md) for the full role reference, including trackin
 
 ### Font size
 
-Use font-size utilities when composing a one-off treatment that doesn't match any role. Prefer the role presets above whenever possible.
-
-| Class          | Token                | Size  |
-| -------------- | -------------------- | ----- |
-| `co-text-xs`   | `--co-font-size-xs`  | 12 px |
-| `co-text-sm`   | `--co-font-size-sm`  | 14 px |
-| `co-text-base` | `--co-font-size-md`  | 16 px |
-| `co-text-lg`   | `--co-font-size-lg`  | 18 px |
-| `co-text-xl`   | `--co-font-size-xl`  | 20 px |
-| `co-text-2xl`  | `--co-font-size-2xl` | 24 px |
-| `co-text-3xl`  | `--co-font-size-3xl` | 30 px |
-| `co-text-4xl`  | `--co-font-size-4xl` | 36 px |
-| `co-text-5xl`  | `--co-font-size-5xl` | 48 px |
+Use font-size utilities when composing a one-off treatment that doesn't match any role. Prefer the role presets above whenever possible. Classes follow the pattern `co-text-{size}` (e.g., `co-text-xs`, `co-text-base`, `co-text-5xl`) and map to `--co-font-size-*` tokens. See [Typography](./typography.md) for the full size scale.
 
 ### Font weight
 
@@ -301,7 +278,7 @@ Use font-size utilities when composing a one-off treatment that doesn't match an
 
 ## Responsive Prefixes
 
-All layout and grid utilities support responsive prefixes that follow the mobile-first breakpoint scale:
+All layout and grid utilities support responsive prefixes that follow the mobile-first breakpoint scale. See [Breakpoints](./breakpoints.md) for the full breakpoint definitions.
 
 | Prefix   | Min width | Target        |
 | -------- | --------- | ------------- |
@@ -353,27 +330,7 @@ This renders a single column on mobile, two columns from 640 px, and three colum
 </button>
 ```
 
-## Tailwind migration path
-
-Cobalt utility classes are intentionally modeled after Tailwind CSS conventions. Every class name is the Tailwind equivalent with a `co-` prefix:
-
-| Cobalt              | Tailwind         |
-| ------------------- | ---------------- |
-| `co-flex`           | `flex`           |
-| `co-grid-cols-3`    | `grid-cols-3`    |
-| `co-gap-4`          | `gap-4`          |
-| `co-p-6`            | `p-6`            |
-| `co-text-lg`        | `text-lg`        |
-| `co-font-bold`      | `font-bold`      |
-| `md:co-grid-cols-2` | `md:grid-cols-2` |
-
-If your team decides to adopt Tailwind, the migration is straightforward:
-
-1. Install Tailwind and configure it to use Cobalt's breakpoint and spacing tokens.
-2. Find-and-replace `co-` with `` across your templates.
-3. Remove the `@cobalt/tokens/css/utilities` import.
-
-The `co-` prefix exists to avoid collisions while your codebase uses both approaches during migration.
+> **Migrating to Tailwind?** See [Tailwind Integration](./tailwind.md) for the Cobalt preset and migration path.
 
 ## When to use utilities vs. custom CSS
 
@@ -412,4 +369,6 @@ Reach for custom CSS when you need:
 - [Spacing](./spacing.md) — the token scale behind gap, padding, and margin utilities
 - [Typography](./typography.md) — font size, weight, and line-height tokens
 - [Breakpoints](./breakpoints.md) — the responsive breakpoint scale
+- [CSS Layers](./css-layers.md) — the cascade layer order that utilities depend on
+- [Tailwind Integration](./tailwind.md) — using Tailwind classes backed by Cobalt tokens
 - [Layout Patterns](../patterns/layout.md) — higher-level layout guidance and page structure

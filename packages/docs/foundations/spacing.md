@@ -65,8 +65,6 @@ Tokens also work in `calc()` expressions when you need derived values:
 
 ## Choosing the right size
 
-Use these guidelines to decide which token fits your context:
-
 | Context                                    | Recommended tokens                             |
 | ------------------------------------------ | ---------------------------------------------- |
 | Inline elements (icon + label)             | `--co-space-gap-xs` to `--co-space-gap-sm`     |
@@ -75,8 +73,6 @@ Use these guidelines to decide which token fits your context:
 | Component internal padding (cards, alerts) | `--co-space-inset-md` to `--co-space-inset-lg` |
 | Between sibling components                 | `--co-space-gap-md` to `--co-space-gap-xl`     |
 | Page sections                              | `--co-space-section` to `--co-space-page`      |
-
-> **Tip:** When in doubt, start with `--co-space-inset-md` for internal padding and `--co-space-gap-md` for vertical rhythm. Reach for the raw numeric scale when you are defining a new primitive or doing layout math.
 
 ## Responsive spacing
 
@@ -109,5 +105,6 @@ Spacing tokens are static values, but you can combine them with breakpoint media
 
 ## Related
 
+- [Utility Classes](./utilities.md) — `co-p-*`, `co-m-*`, `co-gap-*` shorthand classes for spacing tokens
 - [Breakpoints](./breakpoints.md) — responsive viewport tokens
 - [Elevation](./elevation.md) — visual depth layers that complement spacing

@@ -78,12 +78,7 @@ For complex forms, display a summary of all errors at the top of the form after 
 
 ## Error Message Guidelines
 
-| Guideline          | Good                                | Bad                             |
-| ------------------ | ----------------------------------- | ------------------------------- |
-| Be specific        | "Enter a date in MM/DD/YYYY format" | "Invalid input"                 |
-| Use plain language | "This field is required"            | "Error: null value"             |
-| Suggest a fix      | "Password needs a number"           | "Password invalid"              |
-| Avoid blame        | "That email is already in use"      | "You entered a duplicate email" |
+For error message wording and formatting rules, see [Content & Writing — Error Messages](../guidance/content.md#error-messages).
 
 ## Form Submission
 

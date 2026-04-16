@@ -255,5 +255,5 @@ That keeps naming, implementation, and handoff anchored to one system instead of
 ## Related Pages
 
 - [Token Structure](./structure.md)
-- [Figma Handoff](./figma-handoff.md)
+- [Figma Handoff](./figma-handoff.md) — handoff process and quick template
 - [Token Reference](./index.md)

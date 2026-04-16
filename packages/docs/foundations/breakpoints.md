@@ -113,5 +113,6 @@ function Navigation() {
 
 ## Related
 
+- [Utility Classes](./utilities.md) — responsive prefix utilities (`sm:`, `md:`, `lg:`, `xl:`)
 - [Spacing](./spacing.md) — responsive spacing patterns
 - [Typography](./typography.md) — font sizes across viewports
