@@ -1,166 +1,406 @@
 {
   "co": {
     "space": {
-      "0": { "$value": "0", "$type": "dimension" },
-      "1": { "$value": "4px", "$type": "dimension" },
-      "2": { "$value": "8px", "$type": "dimension" },
-      "3": { "$value": "12px", "$type": "dimension" },
-      "4": { "$value": "16px", "$type": "dimension" },
-      "5": { "$value": "20px", "$type": "dimension" },
-      "6": { "$value": "24px", "$type": "dimension" },
-      "8": { "$value": "32px", "$type": "dimension" },
-      "10": { "$value": "40px", "$type": "dimension" },
-      "12": { "$value": "48px", "$type": "dimension" },
-      "16": { "$value": "64px", "$type": "dimension" },
-      "20": { "$value": "80px", "$type": "dimension" },
-      "24": { "$value": "96px", "$type": "dimension" },
+      "0": {
+        "$type": "dimension",
+        "$value": "0"
+      },
+      "1": {
+        "$type": "dimension",
+        "$value": "4px"
+      },
+      "2": {
+        "$type": "dimension",
+        "$value": "8px"
+      },
+      "3": {
+        "$type": "dimension",
+        "$value": "12px"
+      },
+      "4": {
+        "$type": "dimension",
+        "$value": "16px"
+      },
+      "5": {
+        "$type": "dimension",
+        "$value": "20px"
+      },
+      "6": {
+        "$type": "dimension",
+        "$value": "24px"
+      },
+      "8": {
+        "$type": "dimension",
+        "$value": "32px"
+      },
+      "10": {
+        "$type": "dimension",
+        "$value": "40px"
+      },
+      "12": {
+        "$type": "dimension",
+        "$value": "48px"
+      },
+      "16": {
+        "$type": "dimension",
+        "$value": "64px"
+      },
+      "20": {
+        "$type": "dimension",
+        "$value": "80px"
+      },
+      "24": {
+        "$type": "dimension",
+        "$value": "96px"
+      },
       "gap": {
-        "xs": { "$value": "{co.space.1}", "$type": "dimension" },
-        "sm": { "$value": "{co.space.2}", "$type": "dimension" },
-        "md": { "$value": "{co.space.4}", "$type": "dimension" },
-        "lg": { "$value": "{co.space.6}", "$type": "dimension" },
-        "xl": { "$value": "{co.space.8}", "$type": "dimension" }
+        "xs": {
+          "$type": "dimension",
+          "$value": "{co.space.1}"
+        },
+        "sm": {
+          "$type": "dimension",
+          "$value": "{co.space.2}"
+        },
+        "md": {
+          "$type": "dimension",
+          "$value": "{co.space.4}"
+        },
+        "lg": {
+          "$type": "dimension",
+          "$value": "{co.space.6}"
+        },
+        "xl": {
+          "$type": "dimension",
+          "$value": "{co.space.8}"
+        }
       },
       "inset": {
-        "xs": { "$value": "{co.space.1}", "$type": "dimension" },
-        "sm": { "$value": "{co.space.2}", "$type": "dimension" },
-        "md": { "$value": "{co.space.4}", "$type": "dimension" },
-        "lg": { "$value": "{co.space.6}", "$type": "dimension" },
-        "xl": { "$value": "{co.space.8}", "$type": "dimension" }
+        "xs": {
+          "$type": "dimension",
+          "$value": "{co.space.1}"
+        },
+        "sm": {
+          "$type": "dimension",
+          "$value": "{co.space.2}"
+        },
+        "md": {
+          "$type": "dimension",
+          "$value": "{co.space.4}"
+        },
+        "lg": {
+          "$type": "dimension",
+          "$value": "{co.space.6}"
+        },
+        "xl": {
+          "$type": "dimension",
+          "$value": "{co.space.8}"
+        }
       },
-      "section": { "$value": "{co.space.16}", "$type": "dimension" },
-      "page": { "$value": "{co.space.24}", "$type": "dimension" }
+      "section": {
+        "$type": "dimension",
+        "$value": "{co.space.16}"
+      },
+      "page": {
+        "$type": "dimension",
+        "$value": "{co.space.24}"
+      }
     },
     "font": {
       "family": {
         "sans": {
-          "$value": "'Inter Variable', 'Noto Sans Variable', system-ui, sans-serif",
-          "$type": "fontFamily"
+          "$type": "fontFamily",
+          "$value": "'Inter Variable', 'Noto Sans Variable', system-ui, sans-serif"
         },
         "mono": {
-          "$value": "'JetBrains Mono Variable', 'Fira Code', monospace",
-          "$type": "fontFamily"
+          "$type": "fontFamily",
+          "$value": "'JetBrains Mono Variable', 'Fira Code', monospace"
         }
       },
       "size": {
-        "xs": { "$value": "0.75rem", "$type": "dimension" },
-        "sm": { "$value": "0.875rem", "$type": "dimension" },
-        "md": { "$value": "1rem", "$type": "dimension" },
-        "lg": { "$value": "1.125rem", "$type": "dimension" },
-        "xl": { "$value": "1.25rem", "$type": "dimension" },
-        "2xl": { "$value": "1.5rem", "$type": "dimension" },
-        "3xl": { "$value": "1.875rem", "$type": "dimension" },
-        "4xl": { "$value": "2.25rem", "$type": "dimension" },
-        "5xl": { "$value": "3rem", "$type": "dimension" }
+        "xs": {
+          "$type": "dimension",
+          "$value": "0.75rem"
+        },
+        "sm": {
+          "$type": "dimension",
+          "$value": "0.875rem"
+        },
+        "md": {
+          "$type": "dimension",
+          "$value": "1rem"
+        },
+        "lg": {
+          "$type": "dimension",
+          "$value": "1.125rem"
+        },
+        "xl": {
+          "$type": "dimension",
+          "$value": "1.25rem"
+        },
+        "2xl": {
+          "$type": "dimension",
+          "$value": "1.5rem"
+        },
+        "3xl": {
+          "$type": "dimension",
+          "$value": "1.875rem"
+        },
+        "4xl": {
+          "$type": "dimension",
+          "$value": "2.25rem"
+        },
+        "5xl": {
+          "$type": "dimension",
+          "$value": "3rem"
+        }
       },
       "weight": {
-        "regular": { "$value": "400", "$type": "fontWeight" },
-        "medium": { "$value": "500", "$type": "fontWeight" },
-        "semibold": { "$value": "600", "$type": "fontWeight" },
-        "bold": { "$value": "700", "$type": "fontWeight" }
+        "regular": {
+          "$type": "fontWeight",
+          "$value": "400"
+        },
+        "medium": {
+          "$type": "fontWeight",
+          "$value": "500"
+        },
+        "semibold": {
+          "$type": "fontWeight",
+          "$value": "600"
+        },
+        "bold": {
+          "$type": "fontWeight",
+          "$value": "700"
+        }
       },
       "line-height": {
-        "display": { "$value": "1.1", "$type": "number" },
-        "tight": { "$value": "1.25", "$type": "number" },
-        "normal": { "$value": "1.5", "$type": "number" },
-        "relaxed": { "$value": "1.75", "$type": "number" }
+        "display": {
+          "$type": "number",
+          "$value": "1.1"
+        },
+        "tight": {
+          "$type": "number",
+          "$value": "1.25"
+        },
+        "normal": {
+          "$type": "number",
+          "$value": "1.5"
+        },
+        "relaxed": {
+          "$type": "number",
+          "$value": "1.75"
+        }
       },
       "tracking": {
-        "tighter": { "$value": "-0.025em", "$type": "dimension" },
-        "tight": { "$value": "-0.015em", "$type": "dimension" },
-        "normal": { "$value": "0", "$type": "dimension" },
-        "wide": { "$value": "0.05em", "$type": "dimension" },
-        "widest": { "$value": "0.08em", "$type": "dimension" }
+        "tighter": {
+          "$type": "dimension",
+          "$value": "-0.025em"
+        },
+        "tight": {
+          "$type": "dimension",
+          "$value": "-0.015em"
+        },
+        "normal": {
+          "$type": "dimension",
+          "$value": "0"
+        },
+        "wide": {
+          "$type": "dimension",
+          "$value": "0.05em"
+        },
+        "widest": {
+          "$type": "dimension",
+          "$value": "0.08em"
+        }
       }
     },
     "breakpoint": {
-      "sm": { "$value": "640px", "$type": "dimension" },
-      "md": { "$value": "768px", "$type": "dimension" },
-      "lg": { "$value": "1024px", "$type": "dimension" },
-      "xl": { "$value": "1280px", "$type": "dimension" },
-      "2xl": { "$value": "1536px", "$type": "dimension" }
+      "sm": {
+        "$type": "dimension",
+        "$value": "640px"
+      },
+      "md": {
+        "$type": "dimension",
+        "$value": "768px"
+      },
+      "lg": {
+        "$type": "dimension",
+        "$value": "1024px"
+      },
+      "xl": {
+        "$type": "dimension",
+        "$value": "1280px"
+      },
+      "2xl": {
+        "$type": "dimension",
+        "$value": "1536px"
+      }
     },
     "elevation": {
       "shadow": {
-        "sm": { "$value": "0 1px 2px 0 rgb(0 0 0 / 0.05)", "$type": "shadow" },
+        "sm": {
+          "$type": "shadow",
+          "$value": "0 1px 2px 0 rgb(0 0 0 / 0.05)"
+        },
         "md": {
-          "$value": "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
-          "$type": "shadow"
+          "$type": "shadow",
+          "$value": "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)"
         },
         "lg": {
-          "$value": "0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)",
-          "$type": "shadow"
+          "$type": "shadow",
+          "$value": "0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)"
         },
         "xl": {
-          "$value": "0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)",
-          "$type": "shadow"
+          "$type": "shadow",
+          "$value": "0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)"
         }
       },
       "z": {
-        "dropdown": { "$value": "1000", "$type": "number" },
-        "sticky": { "$value": "1020", "$type": "number" },
-        "fixed": { "$value": "1030", "$type": "number" },
-        "modal-backdrop": { "$value": "1040", "$type": "number" },
-        "modal": { "$value": "1050", "$type": "number" },
-        "popover": { "$value": "1060", "$type": "number" },
-        "tooltip": { "$value": "1070", "$type": "number" }
+        "dropdown": {
+          "$type": "number",
+          "$value": "1000"
+        },
+        "sticky": {
+          "$type": "number",
+          "$value": "1020"
+        },
+        "fixed": {
+          "$type": "number",
+          "$value": "1030"
+        },
+        "modal-backdrop": {
+          "$type": "number",
+          "$value": "1040"
+        },
+        "modal": {
+          "$type": "number",
+          "$value": "1050"
+        },
+        "popover": {
+          "$type": "number",
+          "$value": "1060"
+        },
+        "tooltip": {
+          "$type": "number",
+          "$value": "1070"
+        }
       }
     },
     "motion": {
       "duration": {
-        "fast": { "$value": "100ms", "$type": "duration" },
-        "normal": { "$value": "200ms", "$type": "duration" },
-        "slow": { "$value": "300ms", "$type": "duration" }
+        "fast": {
+          "$type": "duration",
+          "$value": "100ms"
+        },
+        "normal": {
+          "$type": "duration",
+          "$value": "200ms"
+        },
+        "slow": {
+          "$type": "duration",
+          "$value": "300ms"
+        }
       },
       "easing": {
-        "default": { "$value": "cubic-bezier(0.4, 0, 0.2, 1)", "$type": "cubicBezier" },
-        "in": { "$value": "cubic-bezier(0.4, 0, 1, 1)", "$type": "cubicBezier" },
-        "out": { "$value": "cubic-bezier(0, 0, 0.2, 1)", "$type": "cubicBezier" },
-        "in-out": { "$value": "cubic-bezier(0.4, 0, 0.2, 1)", "$type": "cubicBezier" }
+        "default": {
+          "$type": "cubicBezier",
+          "$value": "cubic-bezier(0.4, 0, 0.2, 1)"
+        },
+        "in": {
+          "$type": "cubicBezier",
+          "$value": "cubic-bezier(0.4, 0, 1, 1)"
+        },
+        "out": {
+          "$type": "cubicBezier",
+          "$value": "cubic-bezier(0, 0, 0.2, 1)"
+        },
+        "in-out": {
+          "$type": "cubicBezier",
+          "$value": "cubic-bezier(0.4, 0, 0.2, 1)"
+        }
       }
     },
     "shape": {
       "radius": {
-        "none": { "$value": "0", "$type": "dimension" },
-        "sm": { "$value": "4px", "$type": "dimension" },
-        "md": { "$value": "6px", "$type": "dimension" },
-        "lg": { "$value": "8px", "$type": "dimension" },
-        "xl": { "$value": "12px", "$type": "dimension" },
-        "2xl": { "$value": "16px", "$type": "dimension" },
-        "full": { "$value": "9999px", "$type": "dimension" }
+        "none": {
+          "$type": "dimension",
+          "$value": "0"
+        },
+        "sm": {
+          "$type": "dimension",
+          "$value": "4px"
+        },
+        "md": {
+          "$type": "dimension",
+          "$value": "6px"
+        },
+        "lg": {
+          "$type": "dimension",
+          "$value": "8px"
+        },
+        "xl": {
+          "$type": "dimension",
+          "$value": "12px"
+        },
+        "2xl": {
+          "$type": "dimension",
+          "$value": "16px"
+        },
+        "full": {
+          "$type": "dimension",
+          "$value": "9999px"
+        }
       },
       "border-width": {
-        "thin": { "$value": "1px", "$type": "dimension" },
-        "thick": { "$value": "2px", "$type": "dimension" },
-        "lg": { "$value": "3px", "$type": "dimension" }
+        "thin": {
+          "$type": "dimension",
+          "$value": "1px"
+        },
+        "thick": {
+          "$type": "dimension",
+          "$value": "2px"
+        },
+        "lg": {
+          "$type": "dimension",
+          "$value": "3px"
+        }
       }
     },
     "opacity": {
-      "disabled": { "$value": "0.5", "$type": "number" },
-      "overlay": { "$value": "0.4", "$type": "number" },
-      "placeholder": { "$value": "0.6", "$type": "number" }
+      "disabled": {
+        "$type": "number",
+        "$value": "0.5"
+      },
+      "overlay": {
+        "$type": "number",
+        "$value": "0.4"
+      },
+      "placeholder": {
+        "$type": "number",
+        "$value": "0.6"
+      }
     },
     "sizing": {
       "icon": {
         "xs": {
-          "$value": "16px",
           "$type": "dimension",
-          "description": "Extra small icon size — inline indicators, badges, tags"
+          "$value": "16px",
+          "$description": "Extra small icon size — inline indicators, badges, tags"
         },
         "sm": {
-          "$value": "20px",
           "$type": "dimension",
-          "description": "Small icon size — buttons, form controls"
+          "$value": "20px",
+          "$description": "Small icon size — buttons, form controls"
         },
         "md": {
-          "$value": "24px",
           "$type": "dimension",
-          "description": "Medium icon size — standalone icons, navigation"
+          "$value": "24px",
+          "$description": "Medium icon size — standalone icons, navigation"
         },
         "lg": {
-          "$value": "32px",
           "$type": "dimension",
-          "description": "Large icon size — empty states, feature highlights"
+          "$value": "32px",
+          "$description": "Large icon size — empty states, feature highlights"
         }
       }
     }
