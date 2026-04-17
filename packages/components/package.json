@@ -18,6 +18,10 @@
       "import": "./dist/components/button/co-button.js",
       "types": "./dist/components/button/co-button.d.ts"
     },
+    "./form": {
+      "import": "./dist/components/form/co-form.js",
+      "types": "./dist/components/form/co-form.d.ts"
+    },
     "./icon": {
       "import": "./dist/components/icon/co-icon.js",
       "types": "./dist/components/icon/co-icon.d.ts"

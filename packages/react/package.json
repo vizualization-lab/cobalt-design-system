@@ -17,6 +17,10 @@
       "import": "./dist/components/button.js",
       "types": "./dist/components/button.d.ts"
     },
+    "./form": {
+      "import": "./dist/components/form.js",
+      "types": "./dist/components/form.d.ts"
+    },
     "./icon": {
       "import": "./dist/components/icon.js",
       "types": "./dist/components/icon.d.ts"

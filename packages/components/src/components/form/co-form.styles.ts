@@ -1,0 +1,68 @@
+// Auto-generated from .styles.css — do not edit directly
+import { css } from 'lit';
+
+export const cobaltFormStyles = css`
+  :host {
+    display: block;
+    box-sizing: border-box;
+    inline-size: 100%;
+    font-family: var(--co-font-family-sans);
+    font-size: var(--co-font-size-md);
+    font-weight: var(--co-font-weight-regular);
+    line-height: var(--co-font-line-height-normal);
+    color: var(--co-color-text-default);
+  }
+
+  :host *,
+  :host *::before,
+  :host *::after {
+    box-sizing: border-box;
+  }
+
+  .form-field__group-one {
+    display: flex;
+    flex-direction: column;
+    gap: var(--co-space-1);
+    margin-block-end: var(--co-space-2);
+  }
+
+  .form-field__label {
+    color: var(--co-color-text-default);
+    font-size: var(--co-typography-label-size);
+    font-weight: var(--co-typography-label-weight);
+    line-height: var(--co-typography-label-line-height);
+  }
+
+  .form-field__help-text {
+    color: var(--co-color-text-tertiary);
+    font-size: var(--co-typography-caption-size);
+    line-height: var(--co-typography-caption-line-height);
+  }
+
+  .form-field__group-two {
+    display: flex;
+    flex-direction: column;
+    gap: var(--co-space-1);
+  }
+
+  .form-field__feedback {
+    color: var(--co-color-feedback-danger-text);
+    font-size: var(--co-typography-caption-size);
+    line-height: var(--co-typography-caption-line-height);
+  }
+
+  :host([disabled]) {
+    cursor: not-allowed;
+  }
+
+  :host([disabled]) .form-field__label,
+  :host([disabled]) .form-field__help-text {
+    color: var(--co-color-text-disabled);
+  }
+
+  ::slotted(form) {
+    display: flex;
+    flex-direction: column;
+    gap: var(--co-space-4);
+  }
+`;
