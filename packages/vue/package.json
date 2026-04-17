@@ -24,6 +24,10 @@
     "./input": {
       "import": "./dist/components/input.js",
       "types": "./dist/components/input.d.ts"
+    },
+    "./textarea": {
+      "import": "./dist/components/textarea.js",
+      "types": "./dist/components/textarea.d.ts"
     }
   },
   "scripts": {

@@ -87,6 +87,7 @@ export default defineConfig({
         'lit',
         '@lion/ui/button.js',
         '@lion/ui/input.js',
+        '@lion/ui/textarea.js',
         '@cobalt/components',
         '@cobalt/icons',
       ],

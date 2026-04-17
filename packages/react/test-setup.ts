@@ -1,11 +1,3 @@
-import 'zone.js';
-import 'zone.js/testing';
-import { getTestBed } from '@angular/core/testing';
-import {
-  BrowserDynamicTestingModule,
-  platformBrowserDynamicTesting,
-} from '@angular/platform-browser-dynamic/testing';
-
 class TestIntersectionObserver {
   readonly root = null;
   readonly rootMargin = '';
@@ -23,5 +15,3 @@ if (!globalThis.IntersectionObserver) {
   globalThis.IntersectionObserver =
     TestIntersectionObserver as unknown as typeof IntersectionObserver;
 }
-
-getTestBed().initTestEnvironment(BrowserDynamicTestingModule, platformBrowserDynamicTesting());
