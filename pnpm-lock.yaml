@@ -223,6 +223,9 @@ importers:
       '@cobalt/tokens':
         specifier: workspace:*
         version: link:../tokens
+      '@material-symbols/font-300':
+        specifier: ^0.44.2
+        version: 0.44.2
     devDependencies:
       vite:
         specifier: ^6.3.0
@@ -1084,6 +1087,9 @@ packages:
 
   '@manypkg/get-packages@1.1.3':
     resolution: {integrity: sha512-fo+QhuU3qE/2TQMQmbVMqaQ6EWbMhi4ABWP+O4AM1NqPBuy0OrApV5LO6BrrgnhtAHS2NH6RrVk9OL181tTi8A==}
+
+  '@material-symbols/font-300@0.44.2':
+    resolution: {integrity: sha512-tpPfiTCzHGosXc0mNY63z/fMTL31gjML4AGTT9WuQvxGKtBHihurvTZcILZByL7Pt4t1kWVurocvVdt6yJ9Daw==}
 
   '@material-symbols/svg-300@0.43.0':
     resolution: {integrity: sha512-dALeM0jcxrcUKYaO//cnI7bUskTCsAbV/6bmJBffAjg0rhfFydAx29J0RgI8ZRfMuZREHURS5IbcATsaFwClOw==}
@@ -5247,6 +5253,8 @@ snapshots:
       fs-extra: 8.1.0
       globby: 11.1.0
       read-yaml-file: 1.1.0
+
+  '@material-symbols/font-300@0.44.2': {}
 
   '@material-symbols/svg-300@0.43.0': {}
 

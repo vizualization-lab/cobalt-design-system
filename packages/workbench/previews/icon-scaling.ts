@@ -1,4 +1,5 @@
 import '@cobalt/components/icon';
+import '@material-symbols/font-300/rounded.css';
 
 export const title = 'Icon Scaling Comparison';
 
@@ -55,7 +56,33 @@ const pairs: IconPair[] = [
   },
 ];
 
-const materialBaseline = ['home', 'search', 'settings', 'delete'];
+const materialBaseline = [
+  'home',
+  'search',
+  'settings',
+  'delete',
+  'progress-activity',
+  'check-circle',
+  'notifications',
+  'description',
+  'image',
+];
+
+const opszMap: Record<string, number> = {
+  xs: 20,
+  sm: 20,
+  md: 24,
+  lg: 32,
+  xl: 48,
+};
+
+const fontSizeMap: Record<string, number> = {
+  xs: 16,
+  sm: 20,
+  md: 24,
+  lg: 32,
+  xl: 48,
+};
 
 function iconAttrs(
   icon: { name: string; fill?: boolean; animated?: boolean },
@@ -93,14 +120,42 @@ function renderPairRow(pair: IconPair): string {
 }
 
 function renderBaselineRow(name: string): string {
-  const cells = sizes
+  const fontName = name.replace(/-/g, '_');
+  const svgCells = sizes
     .map((s) => `<td><co-icon name="${name}" size="${s}"></co-icon></td>`)
+    .join('');
+  const fontCells = sizes
+    .map(
+      (s) =>
+        `<td><span class="material-symbols-rounded" style="font-size: ${fontSizeMap[s]}px; font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' ${opszMap[s]}">${fontName}</span></td>`,
+    )
+    .join('');
+  const svgFillCells = sizes
+    .map((s) => `<td><co-icon name="${name}" size="${s}" fill></co-icon></td>`)
+    .join('');
+  const fontFillCells = sizes
+    .map(
+      (s) =>
+        `<td><span class="material-symbols-rounded" style="font-size: ${fontSizeMap[s]}px; font-variation-settings: 'FILL' 1, 'wght' 300, 'GRAD' 0, 'opsz' ${opszMap[s]}">${fontName}</span></td>`,
+    )
     .join('');
   return `
     <tr>
-      <td class="row-label">${name}</td>
-      <td class="source-label">Material</td>
-      ${cells}
+      <td class="row-label" rowspan="4">${name}</td>
+      <td class="source-label">SVG</td>
+      ${svgCells}
+    </tr>
+    <tr>
+      <td class="source-label">Font (opsz)</td>
+      ${fontCells}
+    </tr>
+    <tr>
+      <td class="source-label">SVG (fill)</td>
+      ${svgFillCells}
+    </tr>
+    <tr>
+      <td class="source-label">Font (fill)</td>
+      ${fontFillCells}
     </tr>`;
 }
 
@@ -149,6 +204,13 @@ export const html = `
     }
     .pair-divider td {
       border-bottom: 2px solid var(--co-color-border-strong);
+    }
+    .material-symbols-rounded {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      vertical-align: middle;
+      line-height: 1;
     }
   </style>
 
