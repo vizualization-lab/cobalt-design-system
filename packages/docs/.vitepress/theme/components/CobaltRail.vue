@@ -118,17 +118,17 @@ function onKey(event: KeyboardEvent, i: number) {
 }
 
 .rail-item:hover {
-  background: var(--co-color-interactive-hover-bold);
+  background: var(--co-color-interactive-bold-hover);
   color: var(--co-color-text-on-bold);
 }
 
 .rail-item:focus-visible {
-  outline: 2px solid var(--co-color-border-focus, var(--co-color-interactive-default-primary));
+  outline: 2px solid var(--co-color-border-focus, var(--co-color-interactive-primary-default));
   outline-offset: 2px;
 }
 
 .rail-item.is-active {
-  background: var(--co-color-interactive-selected-bold);
+  background: var(--co-color-interactive-bold-selected);
   color: var(--co-color-text-on-bold);
 }
 

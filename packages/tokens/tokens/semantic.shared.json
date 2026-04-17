@@ -4,7 +4,7 @@
       "ring": {
         "width": {
           "$type": "dimension",
-          "$value": "{co.shape.border-width.thick}"
+          "$value": "{co.shape.border.width.thick}"
         },
         "offset": {
           "$type": "dimension",
@@ -38,22 +38,24 @@
     },
     "layout": {
       "content": {
-        "max-width": {
-          "sm": {
-            "$type": "dimension",
-            "$value": "{co.breakpoint.sm}"
-          },
-          "md": {
-            "$type": "dimension",
-            "$value": "{co.breakpoint.md}"
-          },
-          "lg": {
-            "$type": "dimension",
-            "$value": "{co.breakpoint.lg}"
-          },
-          "xl": {
-            "$type": "dimension",
-            "$value": "{co.breakpoint.xl}"
+        "max": {
+          "width": {
+            "sm": {
+              "$type": "dimension",
+              "$value": "{co.breakpoint.sm}"
+            },
+            "md": {
+              "$type": "dimension",
+              "$value": "{co.breakpoint.md}"
+            },
+            "lg": {
+              "$type": "dimension",
+              "$value": "{co.breakpoint.lg}"
+            },
+            "xl": {
+              "$type": "dimension",
+              "$value": "{co.breakpoint.xl}"
+            }
           }
         }
       }
@@ -72,9 +74,11 @@
           "$type": "dimension",
           "$value": "{co.font.tracking.tighter}"
         },
-        "line-height": {
-          "$type": "number",
-          "$value": "{co.font.line-height.display}"
+        "line": {
+          "height": {
+            "$type": "number",
+            "$value": "{co.font.line.height.display}"
+          }
         }
       },
       "heading": {
@@ -90,9 +94,11 @@
           "$type": "dimension",
           "$value": "{co.font.tracking.tight}"
         },
-        "line-height": {
-          "$type": "number",
-          "$value": "{co.font.line-height.display}"
+        "line": {
+          "height": {
+            "$type": "number",
+            "$value": "{co.font.line.height.display}"
+          }
         }
       },
       "title": {
@@ -108,9 +114,11 @@
           "$type": "dimension",
           "$value": "{co.font.tracking.tight}"
         },
-        "line-height": {
-          "$type": "number",
-          "$value": "{co.font.line-height.tight}"
+        "line": {
+          "height": {
+            "$type": "number",
+            "$value": "{co.font.line.height.tight}"
+          }
         }
       },
       "subtitle": {
@@ -126,9 +134,11 @@
           "$type": "dimension",
           "$value": "{co.font.tracking.tight}"
         },
-        "line-height": {
-          "$type": "number",
-          "$value": "{co.font.line-height.tight}"
+        "line": {
+          "height": {
+            "$type": "number",
+            "$value": "{co.font.line.height.tight}"
+          }
         }
       },
       "eyebrow": {
@@ -144,9 +154,11 @@
           "$type": "dimension",
           "$value": "{co.font.tracking.widest}"
         },
-        "line-height": {
-          "$type": "number",
-          "$value": "{co.font.line-height.tight}"
+        "line": {
+          "height": {
+            "$type": "number",
+            "$value": "{co.font.line.height.tight}"
+          }
         }
       },
       "body-lg": {
@@ -162,9 +174,11 @@
           "$type": "dimension",
           "$value": "{co.font.tracking.normal}"
         },
-        "line-height": {
-          "$type": "number",
-          "$value": "{co.font.line-height.normal}"
+        "line": {
+          "height": {
+            "$type": "number",
+            "$value": "{co.font.line.height.normal}"
+          }
         }
       },
       "body": {
@@ -180,9 +194,11 @@
           "$type": "dimension",
           "$value": "{co.font.tracking.normal}"
         },
-        "line-height": {
-          "$type": "number",
-          "$value": "{co.font.line-height.normal}"
+        "line": {
+          "height": {
+            "$type": "number",
+            "$value": "{co.font.line.height.normal}"
+          }
         }
       },
       "body-sm": {
@@ -198,9 +214,11 @@
           "$type": "dimension",
           "$value": "{co.font.tracking.normal}"
         },
-        "line-height": {
-          "$type": "number",
-          "$value": "{co.font.line-height.normal}"
+        "line": {
+          "height": {
+            "$type": "number",
+            "$value": "{co.font.line.height.normal}"
+          }
         }
       },
       "label": {
@@ -216,9 +234,11 @@
           "$type": "dimension",
           "$value": "{co.font.tracking.normal}"
         },
-        "line-height": {
-          "$type": "number",
-          "$value": "{co.font.line-height.tight}"
+        "line": {
+          "height": {
+            "$type": "number",
+            "$value": "{co.font.line.height.tight}"
+          }
         }
       },
       "caption": {
@@ -234,9 +254,11 @@
           "$type": "dimension",
           "$value": "{co.font.tracking.normal}"
         },
-        "line-height": {
-          "$type": "number",
-          "$value": "{co.font.line-height.normal}"
+        "line": {
+          "height": {
+            "$type": "number",
+            "$value": "{co.font.line.height.normal}"
+          }
         }
       }
     }

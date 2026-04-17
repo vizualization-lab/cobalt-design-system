@@ -74,39 +74,41 @@ function buildMappings(tokens) {
     }
   }
 
-  // Interactive colors (state → variant hierarchy)
+  // Interactive colors (role → state hierarchy)
   colors.interactive = {};
-  for (const [state, variants] of [
-    ['default', ['primary', 'subtle', 'bold', 'danger', 'success']],
-    ['hover', ['primary', 'subtle', 'bold', 'danger', 'success']],
-    ['active', ['primary', 'subtle', 'bold', 'danger', 'success']],
-    ['disabled', ['primary', 'subtle', 'bold', 'danger', 'success']],
-    ['selected', ['subtle', 'bold']],
+  for (const [role, states] of [
+    ['primary', ['default', 'hover', 'active', 'disabled']],
+    ['subtle', ['default', 'hover', 'active', 'disabled', 'selected']],
+    ['bold', ['default', 'hover', 'active', 'disabled', 'selected']],
+    ['danger', ['default', 'hover', 'active', 'disabled']],
+    ['success', ['default', 'hover', 'active', 'disabled']],
   ]) {
-    for (const variant of variants) {
-      const varName = `--co-color-interactive-${state}-${variant}`;
+    colors.interactive[role] = {};
+    for (const state of states) {
+      const varName = `--co-color-interactive-${role}-${state}`;
       if (varName in tokens) {
-        colors.interactive[`${state}-${variant}`] = `var(${varName})`;
-        if (state === 'default' && variant === 'primary') {
+        colors.interactive[role][state] = `var(${varName})`;
+        if (role === 'primary' && state === 'default') {
           colors.interactive.DEFAULT = `var(${varName})`;
         }
       }
     }
   }
 
-  // Feedback colors
+  // Feedback colors (status → property hierarchy)
   colors.feedback = {};
-  for (const variant of [
-    'danger-bg',
-    'danger-text',
-    'success-bg',
-    'success-text',
-    'warning-bg',
-    'warning-text',
+  for (const [status, properties] of [
+    ['danger', ['background', 'text']],
+    ['success', ['background', 'text']],
+    ['warning', ['background', 'text']],
+    ['neutral', ['background', 'text']],
   ]) {
-    const varName = `--co-color-feedback-${variant}`;
-    if (varName in tokens) {
-      colors.feedback[variant] = `var(${varName})`;
+    colors.feedback[status] = {};
+    for (const property of properties) {
+      const varName = `--co-color-feedback-${status}-${property}`;
+      if (varName in tokens) {
+        colors.feedback[status][property] = `var(${varName})`;
+      }
     }
   }
 
@@ -500,21 +502,17 @@ function generateV4ThemeCSS(mappings) {
 }
 
 /**
- * Emit v4 color theme variables. Handles nested color objects and DEFAULT keys.
+ * Emit v4 color theme variables. Handles deeply nested color objects and DEFAULT keys.
  */
-function emitV4Colors(lines, colors) {
+function emitV4Colors(lines, colors, path = []) {
   for (const [group, value] of Object.entries(colors)) {
     if (typeof value === 'string') {
-      lines.push(`  --color-${group}: ${value};`);
-    } else {
-      for (const [shade, colorValue] of Object.entries(value)) {
-        if (shade === 'DEFAULT') {
-          lines.push(`  --color-${group}: ${colorValue};`);
-        } else {
-          lines.push(`  --color-${group}-${shade}: ${colorValue};`);
-        }
-      }
+      const colorPath = group === 'DEFAULT' ? path : [...path, group];
+      lines.push(`  --color-${colorPath.join('-')}: ${value};`);
+      continue;
     }
+
+    emitV4Colors(lines, value, [...path, group]);
   }
 }
 

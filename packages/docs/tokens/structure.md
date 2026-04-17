@@ -55,7 +55,7 @@ Examples:
 - `focus.ring.offset`
 - `control.height.md`
 - `control.radius`
-- `layout.content.max-width.lg`
+- `layout.content.max.width.lg`
 
 These tokens answer questions like:
 
@@ -74,7 +74,7 @@ Examples:
 - `color.text.default`
 - `color.surface.raised`
 - `color.border.focus`
-- `color.interactive.default.primary`
+- `color.interactive.primary.default`
 
 This keeps theme files focused and prevents shared rules like typography or spacing from being repeated in every theme.
 

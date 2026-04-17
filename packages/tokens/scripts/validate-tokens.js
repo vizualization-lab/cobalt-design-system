@@ -170,23 +170,23 @@ function validateContrast(tokensDir, discovery, errors) {
       minimum: 4.5,
     },
     {
-      foreground: 'co.color.text.on-primary',
+      foreground: 'co.color.text.on.primary',
       background: 'co.color.primary.base',
       minimum: 4.5,
     },
     {
-      foreground: 'co.color.feedback.danger-text',
-      background: 'co.color.feedback.danger-bg',
+      foreground: 'co.color.feedback.danger.text',
+      background: 'co.color.feedback.danger.background',
       minimum: 4.5,
     },
     {
-      foreground: 'co.color.feedback.success-text',
-      background: 'co.color.feedback.success-bg',
+      foreground: 'co.color.feedback.success.text',
+      background: 'co.color.feedback.success.background',
       minimum: 4.5,
     },
     {
-      foreground: 'co.color.feedback.warning-text',
-      background: 'co.color.feedback.warning-bg',
+      foreground: 'co.color.feedback.warning.text',
+      background: 'co.color.feedback.warning.background',
       minimum: 4.5,
     },
   ];

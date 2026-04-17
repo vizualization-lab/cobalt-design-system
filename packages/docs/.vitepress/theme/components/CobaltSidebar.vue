@@ -136,7 +136,7 @@ function isActive(link: string | undefined): boolean {
 }
 
 .nav-item.is-active .nav-item-indicator {
-  background: var(--co-color-interactive-selected-subtle);
+  background: var(--co-color-interactive-subtle-selected);
   border-color: var(--co-color-border-selected);
 }
 
@@ -152,7 +152,7 @@ function isActive(link: string | undefined): boolean {
 }
 
 .nav-item.is-active .nav-item-marker {
-  color: var(--co-color-interactive-default-primary);
+  color: var(--co-color-interactive-primary-default);
   opacity: 1;
 }
 

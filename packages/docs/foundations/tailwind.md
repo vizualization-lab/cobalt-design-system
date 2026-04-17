@@ -83,18 +83,18 @@ The preset maps every Cobalt token category to standard Tailwind theme keys:
 
 ### Colors
 
-| Tailwind class                                                   | Cobalt token                                                  |
-| ---------------------------------------------------------------- | ------------------------------------------------------------- |
-| `bg-primary`, `text-primary`                                     | `var(--co-color-primary-base)`                                |
-| `bg-neutral-light`                                               | `var(--co-color-neutral-light)`                               |
-| `bg-danger`, `text-danger`                                       | `var(--co-color-danger-base)`                                 |
-| `bg-success`                                                     | `var(--co-color-success-base)`                                |
-| `bg-warning`                                                     | `var(--co-color-warning-base)`                                |
-| `bg-surface`, `bg-surface-raised`                                | `var(--co-color-surface-{default,raised})`                    |
-| `text-text`, `text-text-secondary`                               | `var(--co-color-text-{default,secondary})`                    |
-| `border-border`, `border-border-strong`                          | `var(--co-color-border-{default,strong})`                     |
-| `bg-interactive-default-primary`, `bg-interactive-hover-primary` | `var(--co-color-interactive-{default-primary,hover-primary})` |
-| `bg-primitive-cobalt-500`                                        | `var(--co-color-primitive-cobalt-500)`                        |
+| Tailwind class                                                   | Cobalt token                                          |
+| ---------------------------------------------------------------- | ----------------------------------------------------- |
+| `bg-primary`, `text-primary`                                     | `var(--co-color-primary-base)`                        |
+| `bg-neutral-light`                                               | `var(--co-color-neutral-light)`                       |
+| `bg-danger`, `text-danger`                                       | `var(--co-color-danger-base)`                         |
+| `bg-success`                                                     | `var(--co-color-success-base)`                        |
+| `bg-warning`                                                     | `var(--co-color-warning-base)`                        |
+| `bg-surface`, `bg-surface-raised`                                | `var(--co-color-surface-{default,raised})`            |
+| `text-text`, `text-text-secondary`                               | `var(--co-color-text-{default,secondary})`            |
+| `border-border`, `border-border-strong`                          | `var(--co-color-border-{default,strong})`             |
+| `bg-interactive-primary-default`, `bg-interactive-primary-hover` | `var(--co-color-interactive-primary-{default,hover})` |
+| `bg-primitive-cobalt-500`                                        | `var(--co-color-primitive-cobalt-500)`                |
 
 Color roles (primary, neutral, danger, success, warning) use variant `base` as the `DEFAULT`, so `bg-primary` is equivalent to `bg-primary-base`.
 

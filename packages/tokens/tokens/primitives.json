@@ -173,24 +173,6 @@
           "$value": "700"
         }
       },
-      "line-height": {
-        "display": {
-          "$type": "number",
-          "$value": "1.1"
-        },
-        "tight": {
-          "$type": "number",
-          "$value": "1.25"
-        },
-        "normal": {
-          "$type": "number",
-          "$value": "1.5"
-        },
-        "relaxed": {
-          "$type": "number",
-          "$value": "1.75"
-        }
-      },
       "tracking": {
         "tighter": {
           "$type": "dimension",
@@ -211,6 +193,26 @@
         "widest": {
           "$type": "dimension",
           "$value": "0.08em"
+        }
+      },
+      "line": {
+        "height": {
+          "display": {
+            "$type": "number",
+            "$value": "1.1"
+          },
+          "tight": {
+            "$type": "number",
+            "$value": "1.25"
+          },
+          "normal": {
+            "$type": "number",
+            "$value": "1.5"
+          },
+          "relaxed": {
+            "$type": "number",
+            "$value": "1.75"
+          }
         }
       }
     },
@@ -351,18 +353,20 @@
           "$value": "9999px"
         }
       },
-      "border-width": {
-        "thin": {
-          "$type": "dimension",
-          "$value": "1px"
-        },
-        "thick": {
-          "$type": "dimension",
-          "$value": "2px"
-        },
-        "lg": {
-          "$type": "dimension",
-          "$value": "3px"
+      "border": {
+        "width": {
+          "thin": {
+            "$type": "dimension",
+            "$value": "1px"
+          },
+          "thick": {
+            "$type": "dimension",
+            "$value": "2px"
+          },
+          "lg": {
+            "$type": "dimension",
+            "$value": "3px"
+          }
         }
       }
     },

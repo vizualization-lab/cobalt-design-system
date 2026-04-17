@@ -104,7 +104,7 @@ These were the strongest candidates because they represented real semantic gaps,
 | `co.color.border.active`    | Active border color is reused across controls                                                                              | `mapped.Border-Color.active` and repeated control state mappings |
 | `co.color.border.danger`    | Error border state is reused across checkbox, radio, toggle, and fields                                                    | `mapped.Border-Color.error`                                      |
 | `co.color.border.success`   | Success border state is reused across checkbox, radio, toggle, and fields                                                  | `mapped.Border-Color.success`                                    |
-| `co.shape.border-width.lg`  | A `3px` border width exists as a separate Figma primitive; add only if the system wants to support it consistently         | `mapped.Border-Width.Lg`                                         |
+| `co.shape.border.width.lg`  | A `3px` border width exists as a separate Figma primitive; add only if the system wants to support it consistently         | `mapped.Border-Width.Lg`                                         |
 
 ## Lower-Confidence Additions
 

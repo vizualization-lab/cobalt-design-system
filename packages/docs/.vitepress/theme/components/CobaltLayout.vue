@@ -248,14 +248,14 @@ function toggleSidebar() {
   /* Brand blues → interactive/primary semantics */
   --co-blue-900: var(--co-color-primary-dark);
   --co-blue-700: var(--co-color-primary-base);
-  --co-blue-600: var(--co-color-interactive-default-primary);
-  --co-blue-500: var(--co-color-interactive-hover-primary);
-  --co-blue-400: var(--co-color-interactive-active-primary);
+  --co-blue-600: var(--co-color-interactive-primary-default);
+  --co-blue-500: var(--co-color-interactive-primary-hover);
+  --co-blue-400: var(--co-color-interactive-primary-active);
   --co-blue-300: var(--co-color-primary-light);
   --co-blue-200: var(--co-color-primary-light);
   --co-blue-100: var(--co-color-primary-subtle);
-  --co-electric: var(--co-color-interactive-hover-primary);
-  --co-glow: var(--co-color-interactive-active-primary);
+  --co-electric: var(--co-color-interactive-primary-hover);
+  --co-glow: var(--co-color-interactive-primary-active);
   --co-shimmer: color-mix(in srgb, var(--co-color-primary-base) 6%, transparent);
 
   /* Text */
@@ -315,7 +315,7 @@ function toggleSidebar() {
 
   /* Scrollbar */
   --co-scrollbar-thumb: var(--co-color-border-strong);
-  --co-scrollbar-hover: var(--co-color-interactive-default-primary);
+  --co-scrollbar-hover: var(--co-color-interactive-primary-default);
 
   /* Typography */
   --co-font-body: var(--co-font-family-sans);
@@ -404,7 +404,7 @@ body {
 
 .brand-icon {
   display: flex;
-  color: var(--co-color-interactive-default-primary);
+  color: var(--co-color-interactive-primary-default);
   filter: var(--co-icon-glow);
 }
 
@@ -614,6 +614,10 @@ body {
   .cobalt-body.is-home .cobalt-main {
     margin-left: 0;
   }
+
+  .cobalt-body.is-home .cobalt-content {
+    max-width: 1080px;
+  }
 }
 
 /* At ≥1281px the article layout reserves 268px on the right for the
@@ -711,7 +715,7 @@ body {
 }
 
 .cobalt-article :is(h1, h2, h3) .header-anchor:hover::after {
-  color: var(--co-color-interactive-default-primary);
+  color: var(--co-color-interactive-primary-default);
 }
 
 .cobalt-article .header-anchor[data-copied]::after {
