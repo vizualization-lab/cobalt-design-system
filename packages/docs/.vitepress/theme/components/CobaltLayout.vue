@@ -248,14 +248,14 @@ function toggleSidebar() {
   /* Brand blues → interactive/primary semantics */
   --co-blue-900: var(--co-color-primary-dark);
   --co-blue-700: var(--co-color-primary-base);
-  --co-blue-600: var(--co-color-interactive-default);
-  --co-blue-500: var(--co-color-interactive-hover);
-  --co-blue-400: var(--co-color-interactive-active);
+  --co-blue-600: var(--co-color-interactive-default-primary);
+  --co-blue-500: var(--co-color-interactive-hover-primary);
+  --co-blue-400: var(--co-color-interactive-active-primary);
   --co-blue-300: var(--co-color-primary-light);
   --co-blue-200: var(--co-color-primary-light);
   --co-blue-100: var(--co-color-primary-subtle);
-  --co-electric: var(--co-color-interactive-hover);
-  --co-glow: var(--co-color-interactive-active);
+  --co-electric: var(--co-color-interactive-hover-primary);
+  --co-glow: var(--co-color-interactive-active-primary);
   --co-shimmer: color-mix(in srgb, var(--co-color-primary-base) 6%, transparent);
 
   /* Text */
@@ -315,7 +315,7 @@ function toggleSidebar() {
 
   /* Scrollbar */
   --co-scrollbar-thumb: var(--co-color-border-strong);
-  --co-scrollbar-hover: var(--co-color-interactive-default);
+  --co-scrollbar-hover: var(--co-color-interactive-default-primary);
 
   /* Typography */
   --co-font-body: var(--co-font-family-sans);
@@ -393,7 +393,7 @@ body {
 
 .brand-icon {
   display: flex;
-  color: var(--co-color-interactive-default);
+  color: var(--co-color-interactive-default-primary);
   filter: var(--co-icon-glow);
 }
 
@@ -636,7 +636,7 @@ body {
 }
 
 .cobalt-article :is(h1, h2, h3) .header-anchor:hover::after {
-  color: var(--co-color-interactive-default);
+  color: var(--co-color-interactive-default-primary);
 }
 
 .cobalt-article .header-anchor[data-copied]::after {

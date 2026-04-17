@@ -51,16 +51,16 @@
 /* ── Primary variant (default) ── */
 :host,
 :host([variant='primary']) {
-  background: var(--co-color-interactive-default);
+  background: var(--co-color-interactive-default-primary);
   color: var(--co-color-text-on-primary);
 }
 :host([variant='primary']:hover),
 :host(:not([variant]):hover) {
-  background: var(--co-color-interactive-hover);
+  background: var(--co-color-interactive-hover-primary);
 }
 :host([variant='primary']:active),
 :host(:not([variant]):active) {
-  background: var(--co-color-interactive-active);
+  background: var(--co-color-interactive-active-primary);
 }
 
 /* ── Secondary variant ── */
@@ -79,26 +79,26 @@
 
 /* ── Danger variant ── */
 :host([variant='danger']) {
-  background: var(--co-color-interactive-danger-default);
+  background: var(--co-color-interactive-default-danger);
   color: var(--co-color-text-on-primary);
 }
 :host([variant='danger']:hover) {
-  background: var(--co-color-interactive-danger-hover);
+  background: var(--co-color-interactive-hover-danger);
 }
 :host([variant='danger']:active) {
-  background: var(--co-color-interactive-danger-active);
+  background: var(--co-color-interactive-active-danger);
 }
 
 /* ── Success variant ── */
 :host([variant='success']) {
-  background: var(--co-color-interactive-success-default);
+  background: var(--co-color-interactive-default-success);
   color: var(--co-color-text-on-primary);
 }
 :host([variant='success']:hover) {
-  background: var(--co-color-interactive-success-hover);
+  background: var(--co-color-interactive-hover-success);
 }
 :host([variant='success']:active) {
-  background: var(--co-color-interactive-success-active);
+  background: var(--co-color-interactive-active-success);
 }
 
 /* ── Focus ── */

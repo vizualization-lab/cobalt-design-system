@@ -74,7 +74,7 @@ Examples:
 - `color.text.default`
 - `color.surface.raised`
 - `color.border.focus`
-- `color.interactive.default`
+- `color.interactive.default.primary`
 
 This keeps theme files focused and prevents shared rules like typography or spacing from being repeated in every theme.
 

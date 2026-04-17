@@ -59,10 +59,10 @@ export const html = `
   <section class="wb-section">
     <h2 class="wb-heading">With Color</h2>
     <div class="wb-row" style="align-items: center">
-      <co-icon name="check-circle" size="lg" style="color: var(--co-color-interactive-success-default)"></co-icon>
+      <co-icon name="check-circle" size="lg" style="color: var(--co-color-interactive-default-success)"></co-icon>
       <co-icon name="warning" size="lg" style="color: var(--co-color-status-warning)"></co-icon>
-      <co-icon name="error" size="lg" style="color: var(--co-color-interactive-danger-default)"></co-icon>
-      <co-icon name="info" size="lg" style="color: var(--co-color-interactive-default)"></co-icon>
+      <co-icon name="error" size="lg" style="color: var(--co-color-interactive-default-danger)"></co-icon>
+      <co-icon name="info" size="lg" style="color: var(--co-color-interactive-default-primary)"></co-icon>
     </div>
   </section>
 `;

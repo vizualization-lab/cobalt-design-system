@@ -74,26 +74,23 @@ function buildMappings(tokens) {
     }
   }
 
-  // Interactive colors
+  // Interactive colors (state → variant hierarchy)
   colors.interactive = {};
-  for (const variant of [
-    'default',
-    'hover',
-    'active',
-    'disabled',
-    'subtle-hover',
-    'subtle-active',
-    'danger-default',
-    'danger-hover',
-    'danger-active',
-    'success-default',
-    'success-hover',
-    'success-active',
+  for (const [state, variants] of [
+    ['default', ['primary', 'subtle', 'bold', 'danger', 'success']],
+    ['hover', ['primary', 'subtle', 'bold', 'danger', 'success']],
+    ['active', ['primary', 'subtle', 'bold', 'danger', 'success']],
+    ['disabled', ['primary', 'subtle', 'bold', 'danger', 'success']],
+    ['selected', ['subtle', 'bold']],
   ]) {
-    const varName = `--co-color-interactive-${variant}`;
-    if (varName in tokens) {
-      colors.interactive[variant] = `var(${varName})`;
-      if (variant === 'default') colors.interactive.DEFAULT = `var(${varName})`;
+    for (const variant of variants) {
+      const varName = `--co-color-interactive-${state}-${variant}`;
+      if (varName in tokens) {
+        colors.interactive[`${state}-${variant}`] = `var(${varName})`;
+        if (state === 'default' && variant === 'primary') {
+          colors.interactive.DEFAULT = `var(${varName})`;
+        }
+      }
     }
   }
 

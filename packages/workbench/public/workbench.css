@@ -28,7 +28,7 @@ body {
 
 .wb-back {
   font-size: 14px;
-  color: var(--co-color-interactive-default, #1a5eff);
+  color: var(--co-color-interactive-default-primary, #1a5eff);
   text-decoration: none;
 }
 
