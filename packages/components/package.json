@@ -26,6 +26,10 @@
       "import": "./dist/components/input/co-input.js",
       "types": "./dist/components/input/co-input.d.ts"
     },
+    "./listbox": {
+      "import": "./dist/components/listbox/co-listbox.js",
+      "types": "./dist/components/listbox/co-listbox.d.ts"
+    },
     "./textarea": {
       "import": "./dist/components/textarea/co-textarea.js",
       "types": "./dist/components/textarea/co-textarea.d.ts"

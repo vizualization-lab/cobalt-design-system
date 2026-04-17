@@ -4,9 +4,11 @@ import { ref, computed, watch, onMounted, onUnmounted } from 'vue';
 const props = defineProps<{
   tag: string;
   label?: string;
+  slotHtml?: string;
   defaults?: Record<string, string | boolean>;
   options?: Record<string, string[]>;
   booleans?: string[];
+  textInputs?: string[];
 }>();
 
 const state = ref<Record<string, string | boolean>>({
@@ -44,7 +46,7 @@ const attrString = computed(() => {
 
 const previewHtml = computed(() => {
   const attrs = attrString.value ? ' ' + attrString.value : '';
-  const text = props.label || 'Button';
+  const text = props.slotHtml || props.label || 'Button';
   return `<${props.tag}${attrs}>${text}</${props.tag}>`;
 });
 

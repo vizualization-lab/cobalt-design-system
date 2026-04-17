@@ -91,7 +91,7 @@ export class CoTextarea extends LionTextarea {
     const oldValue = this.value;
     super.value = value;
     this.requestUpdate('value', oldValue);
-    this._desizeForCurrentMode();
+    this._resizeForCurrentMode();
   }
 
   override connectedCallback(): void {
