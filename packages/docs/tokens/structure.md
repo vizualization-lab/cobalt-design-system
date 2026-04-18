@@ -1,6 +1,6 @@
 # Token Structure
 
-This page explains how Cobalt tokens are organized and how to decide where a token belongs.
+This page explains how Cobalt tokens are organized and how to decide where a token belongs. Cobalt adopts a a three tiered structure for tokens: primitives, semantic, and components.
 
 For designers working in Figma, the main idea is simple:
 
@@ -9,7 +9,39 @@ For designers working in Figma, the main idea is simple:
 - **Theme tokens** change that intent by theme or mode
 - **Component tokens** are reserved for true component-specific needs
 
+## Token Files
+
+For developers, the tokens are stored in `@cobalt/tokens/tokens` as a collection of JSON files organized by the type of token and its purpose. The following diagram shows how the files are organized and relate to the three tiers of the token system:
+
+```mermaid
+flowchart TD
+
+
+subgraph Primitives["Primitives"]
+p("primitives.json")
+pc("primitives.color.json")
+end
+
+subgraph Semantic["Semantic"]
+ss(semantic.shared)
+stl("semantic.theme.default.light.json")
+st("semantic.theme.default.dark.json")
+ss-->stl
+ss-->st
+end
+
+
+subgraph Components["Components"]
+c("components.json")
+end
+
+Primitives-->Semantic
+Semantic-->Components
+```
+
 ## The Five Layers
+
+Within the thriee tiers, there are five layers of token files that separate different types of values and design decisions:
 
 | Layer                                | What it means                                            | Use it for                                                          | Examples                                                            |
 | ------------------------------------ | -------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
