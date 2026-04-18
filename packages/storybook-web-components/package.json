@@ -1,0 +1,23 @@
+{
+  "name": "@cobalt/storybook-web-components",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "description": "Storybook runner for Cobalt native web components",
+  "scripts": {
+    "storybook": "storybook dev -p 6101 --ci --exact-port --no-open",
+    "build-storybook": "storybook build -o dist",
+    "build-storybook:hub": "storybook build -o ../storybook-hub/dist/web-components"
+  },
+  "dependencies": {
+    "@cobalt/components": "workspace:*",
+    "@cobalt/storybook-fixtures": "workspace:*",
+    "@cobalt/tokens": "workspace:*"
+  },
+  "devDependencies": {
+    "@storybook/addon-a11y": "^10.3.5",
+    "@storybook/web-components-vite": "^10.3.5",
+    "storybook": "^10.3.5",
+    "vite": "^6.3.0"
+  }
+}

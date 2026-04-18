@@ -1,0 +1,38 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "outDir": "dist/types",
+    "rootDir": "..",
+    "baseUrl": ".",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "types": ["node"],
+    "paths": {
+      "@cobalt/angular": ["../angular/src/index.ts"],
+      "@cobalt/components": ["../components/src/index.ts"],
+      "@cobalt/components/button": ["../components/src/components/button/co-button.ts"],
+      "@cobalt/components/button-icon": [
+        "../components/src/components/button-icon/co-button-icon.ts"
+      ],
+      "@cobalt/components/combobox": ["../components/src/components/combobox/co-combobox.ts"],
+      "@cobalt/components/form": ["../components/src/components/form/co-form.ts"],
+      "@cobalt/components/icon": ["../components/src/components/icon/co-icon.ts"],
+      "@cobalt/components/input": ["../components/src/components/input/co-input.ts"],
+      "@cobalt/components/listbox": ["../components/src/components/listbox/co-listbox.ts"],
+      "@cobalt/components/option": ["../components/src/components/option/co-option.ts"],
+      "@cobalt/components/select": ["../components/src/components/select/co-select.ts"],
+      "@cobalt/components/textarea": ["../components/src/components/textarea/co-textarea.ts"],
+      "@cobalt/storybook-fixtures": ["../storybook-fixtures/src/index.ts"]
+    }
+  },
+  "include": [
+    "../angular/stories/**/*.ts",
+    "../angular/src/index.ts",
+    "../angular/src/components/**/*.ts",
+    "../components/src/components/**/*.ts",
+    "../components/src/types/**/*.d.ts",
+    "../storybook-fixtures/src/**/*.ts",
+    ".storybook/preview.ts"
+  ],
+  "exclude": ["../angular/src/**/*.spec.ts", "../components/src/**/*.test.ts"]
+}

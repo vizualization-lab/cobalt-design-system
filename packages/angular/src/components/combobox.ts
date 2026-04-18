@@ -36,6 +36,7 @@ export class CoCombobox implements OnInit {
   readonly multiple = input(false);
   readonly multipleChoice = input(false);
   readonly allowCustomChoice = input(false);
+  readonly matchError = input('');
   readonly requireOptionMatch = input<boolean | undefined>();
 
   readonly coFocus = output<CustomEvent>();
@@ -62,6 +63,7 @@ export class CoCombobox implements OnInit {
       el.multiple = this.multiple();
       el.multipleChoice = this.multipleChoice();
       el.allowCustomChoice = this.allowCustomChoice();
+      el.matchError = this.matchError();
 
       const label = this.label();
       if (label !== undefined) el.label = label;

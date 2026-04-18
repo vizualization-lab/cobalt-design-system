@@ -1,0 +1,101 @@
+.cobalt-story {
+  min-height: 100%;
+  padding: var(--co-space-6);
+  color: var(--co-color-text-default);
+  background: var(--co-color-surface-sunken);
+}
+
+.cobalt-story,
+.cobalt-story * {
+  box-sizing: border-box;
+}
+
+.cobalt-stack {
+  display: grid;
+  gap: var(--co-space-5);
+}
+
+.cobalt-section {
+  display: grid;
+  gap: var(--co-space-3);
+}
+
+.cobalt-section h2,
+.cobalt-section h3 {
+  margin: 0;
+}
+
+.cobalt-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--co-space-3);
+}
+
+.cobalt-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--co-space-4);
+  max-width: 960px;
+}
+
+.cobalt-field {
+  max-width: 360px;
+}
+
+.cobalt-panel {
+  max-width: 460px;
+  padding: var(--co-space-4);
+  border: var(--co-shape-border-width-thin) solid var(--co-color-border-default);
+  border-radius: var(--co-shape-radius-sm);
+  background: var(--co-color-surface-default);
+}
+
+.cobalt-form-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--co-space-3);
+  margin-top: var(--co-space-4);
+}
+
+.cobalt-native-field {
+  display: grid;
+  gap: var(--co-space-2);
+}
+
+.cobalt-native-field input {
+  min-height: 40px;
+  padding: 0 var(--co-space-3);
+  border: var(--co-shape-border-width-thin) solid var(--co-color-border-default);
+  border-radius: var(--co-shape-radius-sm);
+  color: var(--co-color-text-default);
+  background: var(--co-color-surface-default);
+  font: inherit;
+}
+
+.cobalt-native-field + .cobalt-native-field {
+  margin-top: var(--co-space-3);
+}
+
+.cobalt-muted {
+  color: var(--co-color-text-secondary);
+}
+
+html[data-storybook-target-label] body::before {
+  position: fixed;
+  right: var(--co-space-3);
+  bottom: var(--co-space-3);
+  z-index: 2147483647;
+  padding: var(--co-space-1) var(--co-space-2);
+  border: var(--co-shape-border-width-thin) solid var(--co-color-border-default);
+  border-radius: var(--co-shape-radius-sm);
+  color: var(--co-color-text-default);
+  background: var(--co-color-surface-default);
+  box-shadow: var(--co-shadow-sm);
+  content: attr(data-storybook-target-label);
+  font-family: var(--co-font-family-sans);
+  font-size: var(--co-typography-label-size);
+  font-weight: var(--co-typography-label-weight);
+  line-height: var(--co-typography-label-line-height);
+  pointer-events: none;
+}

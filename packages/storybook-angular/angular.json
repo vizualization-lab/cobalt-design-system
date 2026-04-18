@@ -1,0 +1,85 @@
+{
+  "$schema": "../../node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "projects": {
+    "storybook-angular": {
+      "projectType": "application",
+      "root": "",
+      "sourceRoot": "src",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/angular-browser",
+            "index": "src/index.html",
+            "main": "src/main.ts",
+            "polyfills": ["zone.js"],
+            "tsConfig": "tsconfig.app.json",
+            "assets": [],
+            "styles": [
+              "../tokens/dist/css/tokens.css",
+              "../tokens/dist/css/fonts.css",
+              "../tokens/dist/css/base.css",
+              "../tokens/dist/css/tokens-dark.css",
+              "../storybook-fixtures/src/styles.css"
+            ]
+          }
+        },
+        "storybook": {
+          "builder": "@storybook/angular:start-storybook",
+          "options": {
+            "browserTarget": "storybook-angular:build",
+            "configDir": ".storybook",
+            "tsConfig": "tsconfig.json",
+            "compodoc": false,
+            "styles": [
+              "../tokens/dist/css/tokens.css",
+              "../tokens/dist/css/fonts.css",
+              "../tokens/dist/css/base.css",
+              "../tokens/dist/css/tokens-dark.css",
+              "../storybook-fixtures/src/styles.css"
+            ],
+            "host": "0.0.0.0",
+            "port": 6104,
+            "open": false,
+            "ci": true
+          }
+        },
+        "build-storybook": {
+          "builder": "@storybook/angular:build-storybook",
+          "options": {
+            "browserTarget": "storybook-angular:build",
+            "configDir": ".storybook",
+            "tsConfig": "tsconfig.json",
+            "compodoc": false,
+            "styles": [
+              "../tokens/dist/css/tokens.css",
+              "../tokens/dist/css/fonts.css",
+              "../tokens/dist/css/base.css",
+              "../tokens/dist/css/tokens-dark.css",
+              "../storybook-fixtures/src/styles.css"
+            ],
+            "outputDir": "dist"
+          }
+        },
+        "build-storybook-hub": {
+          "builder": "@storybook/angular:build-storybook",
+          "options": {
+            "browserTarget": "storybook-angular:build",
+            "configDir": ".storybook",
+            "tsConfig": "tsconfig.json",
+            "compodoc": false,
+            "styles": [
+              "../tokens/dist/css/tokens.css",
+              "../tokens/dist/css/fonts.css",
+              "../tokens/dist/css/base.css",
+              "../tokens/dist/css/tokens-dark.css",
+              "../storybook-fixtures/src/styles.css"
+            ],
+            "outputDir": "../storybook-hub/dist/angular"
+          }
+        }
+      }
+    }
+  }
+}

@@ -29,6 +29,7 @@ export type CoComboboxProps = {
   multiple?: boolean;
   multipleChoice?: boolean;
   allowCustomChoice?: boolean;
+  matchError?: string;
   requireOptionMatch?: boolean;
 };
 
@@ -111,6 +112,10 @@ export const CoCombobox = defineComponent({
       type: Boolean,
       default: false,
     },
+    matchError: {
+      type: String,
+      default: '',
+    },
     requireOptionMatch: {
       type: Boolean as PropType<boolean | undefined>,
       default: undefined,
@@ -173,6 +178,7 @@ export const CoCombobox = defineComponent({
           multiple: props.multiple || undefined,
           multipleChoice: props.multipleChoice || undefined,
           allowCustomChoice: props.allowCustomChoice || undefined,
+          matchError: props.matchError,
           ...(props.requireOptionMatch === undefined
             ? {}
             : { requireOptionMatch: props.requireOptionMatch }),

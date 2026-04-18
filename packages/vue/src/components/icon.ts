@@ -6,6 +6,7 @@ export type CoIconProps = {
   name?: string;
   size?: IconSize;
   fill?: boolean;
+  animated?: boolean;
   label?: string;
 };
 
@@ -24,6 +25,10 @@ export const CoIcon = defineComponent({
       type: Boolean,
       default: false,
     },
+    animated: {
+      type: Boolean,
+      default: false,
+    },
     label: {
       type: String,
       default: undefined,
@@ -35,6 +40,7 @@ export const CoIcon = defineComponent({
         name: props.name,
         size: props.size,
         fill: props.fill,
+        animated: props.animated,
         label: props.label,
       });
   },

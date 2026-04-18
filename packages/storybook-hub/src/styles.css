@@ -1,0 +1,186 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  color: var(--co-color-text-default);
+  background: var(--co-color-surface-sunken);
+}
+
+.hub-shell {
+  width: min(1180px, 100%);
+  margin: 0 auto;
+  padding: var(--co-space-8) var(--co-space-6);
+}
+
+.hub-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--co-space-6);
+  margin-bottom: var(--co-space-8);
+}
+
+.hub-eyebrow {
+  margin: 0 0 var(--co-space-2);
+  color: var(--co-color-text-secondary);
+  font-size: var(--co-font-size-sm);
+  font-weight: var(--co-font-weight-semibold);
+  text-transform: uppercase;
+}
+
+.hub-header h1 {
+  margin: 0;
+  font-size: var(--co-font-size-4xl);
+  line-height: var(--co-font-line-height-tight);
+}
+
+.hub-intro {
+  max-width: 620px;
+  margin: var(--co-space-3) 0 0;
+  color: var(--co-color-text-secondary);
+  font-size: var(--co-font-size-lg);
+  line-height: var(--co-font-line-height-relaxed);
+}
+
+.hub-theme {
+  flex: 0 0 auto;
+  min-height: 40px;
+  padding: 0 var(--co-space-4);
+  border: var(--co-shape-border-width-thin) solid var(--co-color-border-default);
+  border-radius: var(--co-shape-radius-sm);
+  color: var(--co-color-text-default);
+  background: var(--co-color-surface-default);
+  font: inherit;
+  cursor: pointer;
+}
+
+.hub-theme:hover {
+  border-color: var(--co-color-border-strong);
+}
+
+.hub-section {
+  display: grid;
+  gap: var(--co-space-4);
+  margin-top: var(--co-space-8);
+}
+
+.hub-section h2 {
+  margin: 0;
+  font-size: var(--co-font-size-2xl);
+}
+
+.hub-frameworks {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: var(--co-space-4);
+}
+
+.hub-framework {
+  display: flex;
+  align-items: center;
+  gap: var(--co-space-4);
+  min-height: 118px;
+  padding: var(--co-space-5);
+  border: var(--co-shape-border-width-thin) solid var(--co-color-border-default);
+  border-radius: var(--co-shape-radius-sm);
+  color: inherit;
+  background: var(--co-color-surface-default);
+  text-decoration: none;
+}
+
+.hub-framework:hover {
+  border-color: var(--co-color-border-strong);
+  box-shadow: var(--co-elevation-shadow-sm);
+}
+
+.hub-framework-mark {
+  display: inline-grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border-radius: var(--co-shape-radius-sm);
+  color: var(--co-color-text-on-primary);
+  background: var(--co-color-interactive-default-primary);
+  font-size: var(--co-font-size-xl);
+  font-weight: var(--co-font-weight-bold);
+}
+
+.hub-framework strong,
+.hub-framework span span {
+  display: block;
+}
+
+.hub-framework span span {
+  margin-top: var(--co-space-1);
+  color: var(--co-color-text-secondary);
+  line-height: var(--co-font-line-height-relaxed);
+}
+
+.hub-components {
+  display: grid;
+  gap: var(--co-space-3);
+}
+
+.hub-component {
+  display: grid;
+  grid-template-columns: minmax(180px, 1fr) auto;
+  gap: var(--co-space-4);
+  align-items: center;
+  padding: var(--co-space-4);
+  border: var(--co-shape-border-width-thin) solid var(--co-color-border-default);
+  border-radius: var(--co-shape-radius-sm);
+  background: var(--co-color-surface-default);
+}
+
+.hub-component h3 {
+  margin: 0;
+  font-size: var(--co-font-size-lg);
+}
+
+.hub-component p {
+  margin: var(--co-space-1) 0 0;
+  color: var(--co-color-text-secondary);
+  font-family: var(--co-font-family-mono);
+  font-size: var(--co-font-size-sm);
+}
+
+.hub-component-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: var(--co-space-2);
+}
+
+.hub-component-links a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 34px;
+  padding: 0 var(--co-space-3);
+  border: var(--co-shape-border-width-thin) solid var(--co-color-border-default);
+  border-radius: var(--co-shape-radius-sm);
+  color: var(--co-color-text-link);
+  text-decoration: none;
+}
+
+.hub-component-links a:hover {
+  border-color: var(--co-color-border-strong);
+}
+
+@media (max-width: 760px) {
+  .hub-header,
+  .hub-component {
+    grid-template-columns: 1fr;
+  }
+
+  .hub-header {
+    display: grid;
+  }
+
+  .hub-component-links {
+    justify-content: flex-start;
+  }
+}

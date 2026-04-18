@@ -1,0 +1,34 @@
+{
+  "name": "@cobalt/storybook-angular",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "description": "Storybook runner for Cobalt Angular wrappers",
+  "scripts": {
+    "storybook": "ng run storybook-angular:storybook",
+    "build-storybook": "ng run storybook-angular:build-storybook",
+    "build-storybook:hub": "ng run storybook-angular:build-storybook-hub"
+  },
+  "dependencies": {
+    "@angular/animations": "19.2.20",
+    "@angular/common": "19.2.20",
+    "@angular/compiler": "19.2.20",
+    "@angular/core": "19.2.20",
+    "@angular/platform-browser": "19.2.20",
+    "@angular/platform-browser-dynamic": "19.2.20",
+    "@cobalt/angular": "workspace:*",
+    "@cobalt/storybook-fixtures": "workspace:*",
+    "@cobalt/tokens": "workspace:*",
+    "rxjs": "^7.8.0",
+    "zone.js": "^0.15.0"
+  },
+  "devDependencies": {
+    "@angular-devkit/build-angular": "19.2.20",
+    "@angular/cli": "19.2.20",
+    "@angular/compiler-cli": "19.2.20",
+    "@storybook/addon-a11y": "^10.3.5",
+    "@storybook/angular": "^10.3.5",
+    "storybook": "^10.3.5",
+    "typescript": "~5.6.0"
+  }
+}
