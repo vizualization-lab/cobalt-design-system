@@ -2,6 +2,8 @@ export interface NavItem {
   text: string;
   link?: string;
   icon?: string;
+  children?: NavItem[];
+  defaultOpen?: boolean;
 }
 
 export interface NavGroup {
@@ -57,13 +59,19 @@ export const navigation: NavGroup[] = [
       { text: 'Overview', link: '/components/' },
       { text: 'Button', link: '/components/button' },
       { text: 'Button Icon', link: '/components/button-icon' },
-      { text: 'Combo box', link: '/components/combobox' },
-      { text: 'Form', link: '/components/form' },
+      {
+        text: 'Forms',
+        defaultOpen: true,
+        children: [
+          { text: 'Combo box', link: '/components/combobox' },
+          { text: 'Form', link: '/components/form' },
+          { text: 'Input', link: '/components/input' },
+          { text: 'Listbox', link: '/components/listbox' },
+          { text: 'Option', link: '/components/option' },
+          { text: 'Textarea', link: '/components/textarea' },
+        ],
+      },
       { text: 'Icon', link: '/components/icon' },
-      { text: 'Input', link: '/components/input' },
-      { text: 'Listbox', link: '/components/listbox' },
-      { text: 'Option', link: '/components/option' },
-      { text: 'Textarea', link: '/components/textarea' },
     ],
   },
   {
@@ -131,21 +139,42 @@ export interface FlatNavItem {
   group: string;
 }
 
+function flattenItems(items: NavItem[], group: string): FlatNavItem[] {
+  return items.flatMap((item) => {
+    if (item.children) return flattenItems(item.children, group);
+    if (!item.link) return [];
+    return [{ text: item.text, link: item.link, group }];
+  });
+}
+
 export const flatNavItems: FlatNavItem[] = navigation.flatMap((group) =>
-  group.items
-    .filter((item): item is NavItem & { link: string } => !!item.link)
-    .map((item) => ({ text: item.text, link: item.link, group: group.label })),
+  flattenItems(group.items, group.label),
 );
 
 /**
  * Derive the VitePress `themeConfig.sidebar` array from the navigation data.
  */
-export function toVitePressSidebar(): { text: string; items: { text: string; link: string }[] }[] {
+type SidebarItem = { text: string; link?: string; collapsed?: boolean; items?: SidebarItem[] };
+
+function mapNavItems(items: NavItem[]): SidebarItem[] {
+  return items
+    .filter((item) => item.link || item.children)
+    .map((item) => {
+      if (item.children) {
+        return {
+          text: item.text,
+          collapsed: !item.defaultOpen,
+          items: mapNavItems(item.children),
+        };
+      }
+      return { text: item.text, link: item.link! };
+    });
+}
+
+export function toVitePressSidebar(): { text: string; items: SidebarItem[] }[] {
   return navigation.map((group) => ({
     text: group.label,
-    items: group.items
-      .filter((item): item is NavItem & { link: string } => !!item.link)
-      .map((item) => ({ text: item.text, link: item.link })),
+    items: mapNavItems(group.items),
   }));
 }
 

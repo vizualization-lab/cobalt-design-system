@@ -6,7 +6,7 @@ import CobaltSidebar from './CobaltSidebar.vue';
 import CobaltHome from './CobaltHome.vue';
 import CobaltPrevNext from './CobaltPrevNext.vue';
 import CobaltToc from './CobaltToc.vue';
-import { navigation } from '../navigation';
+import { navigation, type NavItem } from '../navigation';
 import VPNavBarSearch from 'vitepress/dist/client/theme-default/components/VPNavBarSearch.vue';
 
 const { frontmatter, theme } = useData();
@@ -20,12 +20,18 @@ function normalizePath(p: string) {
   return p.replace(/\.html$/, '').replace(/\/$/, '') || '/';
 }
 
+function hasLink(items: NavItem[], path: string): boolean {
+  return items.some(
+    (item) =>
+      (item.link && normalizePath(withBase(item.link)) === path) ||
+      (item.children && hasLink(item.children, path)),
+  );
+}
+
 // Which category contains the current route?
 const routeCategoryIndex = computed(() => {
   const currentPath = normalizePath(route.path);
-  const idx = navigation.findIndex((g) =>
-    g.items.some((item) => item.link && normalizePath(withBase(item.link)) === currentPath),
-  );
+  const idx = navigation.findIndex((g) => hasLink(g.items, currentPath));
   return idx === -1 ? 0 : idx;
 });
 

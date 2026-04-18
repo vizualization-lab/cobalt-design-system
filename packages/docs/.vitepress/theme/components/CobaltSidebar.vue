@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useData, useRoute, withBase } from 'vitepress';
-import type { NavGroup } from '../navigation';
+import { ref, watch } from 'vue';
+import type { NavGroup, NavItem } from '../navigation';
 
 const { theme } = useData();
 const route = useRoute();
@@ -16,6 +17,32 @@ function isActive(link: string | undefined): boolean {
   const targetPath = withBase(link).replace(/\/$/, '') || '/';
   return currentPath === targetPath;
 }
+
+function hasActiveChild(children: NavItem[]): boolean {
+  return children.some(
+    (child) => isActive(child.link) || (child.children && hasActiveChild(child.children)),
+  );
+}
+
+// Track which groups the user has explicitly toggled. Maps group text to open/closed.
+const toggledGroups = ref(new Map<string, boolean>());
+
+function toggleGroup(text: string) {
+  const current = toggledGroups.value.get(text);
+  // If never toggled, it's currently in its default state — flip it
+  if (current === undefined) {
+    toggledGroups.value.set(text, false);
+  } else {
+    toggledGroups.value.set(text, !current);
+  }
+}
+
+function isGroupOpen(item: NavItem): boolean {
+  const explicit = toggledGroups.value.get(item.text);
+  if (explicit !== undefined) return explicit;
+  if (item.children && hasActiveChild(item.children)) return true;
+  return !!item.defaultOpen;
+}
 </script>
 
 <template>
@@ -29,25 +56,73 @@ function isActive(link: string | undefined): boolean {
     </h2>
     <nav class="subnav-nav">
       <ul class="subnav-list">
-        <li v-for="item in category.items" :key="item.link ?? item.text">
-          <a
-            v-if="item.link"
-            :href="withBase(item.link)"
-            class="nav-item"
-            :class="{ 'is-active': isActive(item.link) }"
-            :aria-current="isActive(item.link) ? 'page' : undefined"
-          >
-            <span class="nav-item-indicator" aria-hidden="true"></span>
-            <co-icon
-              class="nav-item-marker"
-              name="fiber-manual-record"
-              size="xs"
-              :fill="isActive(item.link) || undefined"
-              aria-hidden="true"
-            ></co-icon>
-            <span class="nav-item-text">{{ item.text }}</span>
-          </a>
-        </li>
+        <template v-for="item in category.items" :key="item.link ?? item.text">
+          <!-- Sub-group with children -->
+          <li v-if="item.children" class="nav-group">
+            <button
+              class="nav-group-toggle"
+              :class="{ 'is-open': isGroupOpen(item) }"
+              @click="toggleGroup(item.text)"
+              :aria-expanded="isGroupOpen(item)"
+            >
+              <svg
+                class="nav-group-chevron"
+                width="12"
+                height="12"
+                viewBox="0 0 12 12"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <polyline points="4 2 8 6 4 10" />
+              </svg>
+              <span class="nav-group-text">{{ item.text }}</span>
+            </button>
+            <ul v-show="isGroupOpen(item)" class="nav-group-children">
+              <li v-for="child in item.children" :key="child.link ?? child.text">
+                <a
+                  v-if="child.link"
+                  :href="withBase(child.link)"
+                  class="nav-item nav-item--nested"
+                  :class="{ 'is-active': isActive(child.link) }"
+                  :aria-current="isActive(child.link) ? 'page' : undefined"
+                >
+                  <span class="nav-item-indicator" aria-hidden="true"></span>
+                  <co-icon
+                    class="nav-item-marker"
+                    name="fiber-manual-record"
+                    size="xs"
+                    :fill="isActive(child.link) || undefined"
+                    aria-hidden="true"
+                  ></co-icon>
+                  <span class="nav-item-text">{{ child.text }}</span>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <!-- Regular nav item -->
+          <li v-else>
+            <a
+              v-if="item.link"
+              :href="withBase(item.link)"
+              class="nav-item"
+              :class="{ 'is-active': isActive(item.link) }"
+              :aria-current="isActive(item.link) ? 'page' : undefined"
+            >
+              <span class="nav-item-indicator" aria-hidden="true"></span>
+              <co-icon
+                class="nav-item-marker"
+                name="fiber-manual-record"
+                size="xs"
+                :fill="isActive(item.link) || undefined"
+                aria-hidden="true"
+              ></co-icon>
+              <span class="nav-item-text">{{ item.text }}</span>
+            </a>
+          </li>
+        </template>
       </ul>
     </nav>
 
@@ -100,6 +175,59 @@ function isActive(link: string | undefined): boolean {
   display: flex;
   flex-direction: column;
   gap: 1px;
+}
+
+/* ── Nav Group (collapsible sub-section) ───── */
+.nav-group {
+  margin: 4px 0 0;
+}
+
+.nav-group-toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 9px;
+  background: none;
+  color: var(--co-color-text-default);
+  font-size: var(--co-typography-body-sm-size);
+  font-weight: var(--co-typography-label-weight);
+  letter-spacing: var(--co-typography-body-sm-tracking);
+  line-height: var(--co-typography-body-sm-line-height);
+  cursor: pointer;
+  transition: color 0.15s ease;
+}
+
+.nav-group-toggle:hover {
+  color: var(--co-text-primary);
+}
+
+.nav-group-chevron {
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+}
+
+.nav-group-toggle.is-open .nav-group-chevron {
+  transform: rotate(90deg);
+}
+
+.nav-group-text {
+  line-height: var(--co-typography-eyebrow-line-height);
+}
+
+.nav-group-children {
+  list-style: none;
+  padding: 0 0 0 8px;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.nav-item--nested {
+  padding-left: 20px;
 }
 
 /* ── Nav Item ──────────────────────────────── */
