@@ -143,6 +143,11 @@ export const cobaltButtonIconStyles = css`
     color: var(--co-color-text-default);
   }
 
+  /* ── Circle ── */
+  :host([circle]) {
+    border-radius: var(--co-shape-radius-full);
+  }
+
   /* ── Focus ── */
   :host(:focus-visible) {
     outline: var(--co-focus-ring-width) solid var(--co-color-border-focus);

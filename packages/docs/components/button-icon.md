@@ -8,7 +8,7 @@ The `co-button-icon` component provides a button icon with an optional text labe
   tag="co-button-icon"
   :defaults="{ name: 'star', variant: 'primary', size: 'md', 'label-position': 'bottom' }"
   :options="{ variant: ['primary', 'secondary', 'danger', 'success', 'ghost'], size: ['sm', 'md', 'lg', 'xl'], 'label-position': ['bottom', 'top'] }"
-  :booleans="['disabled']"
+  :booleans="['disabled', 'circle']"
   :textInputs="['name', 'label']"
 />
 
@@ -77,6 +77,31 @@ Add a visible text label below (default) or above the icon using the `label` and
 <div style="display: flex; gap: 12px; flex-wrap: wrap; margin: 16px 0 24px;">
   <co-button-icon name="star" aria-label="Default"></co-button-icon>
   <co-button-icon name="star" disabled aria-label="Disabled"></co-button-icon>
+</div>
+</ClientOnly>
+
+## Circle
+
+Use the `circle` attribute for a fully rounded icon-only button. The `label` property is ignored when `circle` is set — use `aria-label` for accessibility.
+
+<ClientOnly>
+<div style="display: flex; gap: 12px; flex-wrap: wrap; margin: 16px 0 24px;">
+  <co-button-icon name="star" circle variant="primary" aria-label="Primary"></co-button-icon>
+  <co-button-icon name="star" circle variant="secondary" aria-label="Secondary"></co-button-icon>
+  <co-button-icon name="star" circle variant="danger" aria-label="Danger"></co-button-icon>
+  <co-button-icon name="star" circle variant="success" aria-label="Success"></co-button-icon>
+  <co-button-icon name="star" circle variant="ghost" aria-label="Ghost"></co-button-icon>
+</div>
+</ClientOnly>
+
+### Circle Sizes
+
+<ClientOnly>
+<div style="display: flex; gap: 12px; align-items: center; margin: 16px 0 24px;">
+  <co-button-icon name="star" circle size="sm" aria-label="Small"></co-button-icon>
+  <co-button-icon name="star" circle size="md" aria-label="Medium"></co-button-icon>
+  <co-button-icon name="star" circle size="lg" aria-label="Large"></co-button-icon>
+  <co-button-icon name="star" circle size="xl" aria-label="Extra Large"></co-button-icon>
 </div>
 </ClientOnly>
 
@@ -231,6 +256,7 @@ export class AppComponent {
 | `size`           | `'sm' \| 'md' \| 'lg' \| 'xl'`                                 | `'md'`      | Controls dimensions and icon size          |
 | `label`          | `string`                                                       | —           | Optional visible text label                |
 | `label-position` | `'top' \| 'bottom'`                                            | `'bottom'`  | Position of the label relative to the icon |
+| `circle`         | `boolean`                                                      | `false`     | Renders as a circle; label is ignored      |
 | `disabled`       | `boolean`                                                      | `false`     | Prevents interaction                       |
 
 ### Events

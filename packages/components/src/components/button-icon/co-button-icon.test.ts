@@ -97,6 +97,22 @@ describe('co-button-icon', () => {
     expect(el.disabled).to.be.true;
   });
 
+  it('renders as circle when circle attribute is set', async () => {
+    const el = await fixture<CoButtonIcon>(
+      html`<co-button-icon name="star" circle aria-label="Star"></co-button-icon>`,
+    );
+    expect(el.circle).to.be.true;
+    expect(el.hasAttribute('circle')).to.be.true;
+  });
+
+  it('suppresses label when circle is set', async () => {
+    const el = await fixture<CoButtonIcon>(
+      html`<co-button-icon name="star" label="Favorite" circle aria-label="Star"></co-button-icon>`,
+    );
+    const label = el.shadowRoot!.querySelector('[part="label"]');
+    expect(label).to.not.exist;
+  });
+
   it('dispatches co-focus event', async () => {
     const el = await fixture<CoButtonIcon>(
       html`<co-button-icon name="star" aria-label="Star"></co-button-icon>`,

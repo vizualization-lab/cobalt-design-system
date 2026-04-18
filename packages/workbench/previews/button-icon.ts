@@ -44,6 +44,27 @@ export const html = `
   </section>
 
   <section class="wb-section">
+    <h2 class="wb-heading">Circle</h2>
+    <div class="wb-row" style="align-items: center">
+      <co-button-icon name="star" circle variant="primary" aria-label="Primary"></co-button-icon>
+      <co-button-icon name="star" circle variant="secondary" aria-label="Secondary"></co-button-icon>
+      <co-button-icon name="star" circle variant="danger" aria-label="Danger"></co-button-icon>
+      <co-button-icon name="star" circle variant="success" aria-label="Success"></co-button-icon>
+      <co-button-icon name="star" circle variant="ghost" aria-label="Ghost"></co-button-icon>
+    </div>
+  </section>
+
+  <section class="wb-section">
+    <h2 class="wb-heading">Circle Sizes</h2>
+    <div class="wb-row" style="align-items: center">
+      <co-button-icon name="star" circle size="sm" aria-label="Small"></co-button-icon>
+      <co-button-icon name="star" circle size="md" aria-label="Medium"></co-button-icon>
+      <co-button-icon name="star" circle size="lg" aria-label="Large"></co-button-icon>
+      <co-button-icon name="star" circle size="xl" aria-label="Extra Large"></co-button-icon>
+    </div>
+  </section>
+
+  <section class="wb-section">
     <h2 class="wb-heading">States</h2>
     <div class="wb-row" style="align-items: center">
       <co-button-icon name="star" aria-label="Default"></co-button-icon>

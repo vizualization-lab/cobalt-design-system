@@ -9,6 +9,7 @@ export type CoButtonIconProps = {
   size?: ButtonSize;
   label?: string;
   labelPosition?: ButtonIconLabelPosition;
+  circle?: boolean;
   disabled?: boolean;
 };
 
@@ -34,6 +35,10 @@ export const CoButtonIcon = defineComponent({
     labelPosition: {
       type: String as PropType<ButtonIconLabelPosition>,
       default: 'bottom',
+    },
+    circle: {
+      type: Boolean,
+      default: false,
     },
     disabled: {
       type: Boolean,
@@ -73,6 +78,7 @@ export const CoButtonIcon = defineComponent({
         size: props.size,
         label: props.label,
         'label-position': props.labelPosition,
+        circle: props.circle || undefined,
         disabled: props.disabled || undefined,
       });
   },

@@ -23,6 +23,7 @@ export class CoButtonIcon implements OnInit {
   readonly size = input<ButtonSize>('md');
   readonly label = input<string | undefined>();
   readonly labelPosition = input<ButtonIconLabelPosition>('bottom');
+  readonly circle = input(false);
   readonly disabled = input(false);
 
   readonly coFocus = output<CustomEvent>();
@@ -36,6 +37,7 @@ export class CoButtonIcon implements OnInit {
       el.name = this.name();
       el.variant = this.variant();
       el.size = this.size();
+      el.circle = this.circle();
       el.disabled = this.disabled();
       const label = this.label();
       if (label !== undefined) el.label = label;

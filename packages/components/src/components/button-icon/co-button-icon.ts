@@ -52,6 +52,10 @@ export class CoButtonIcon extends LionButtonSubmit {
   @property({ reflect: true, attribute: 'label-position' })
   labelPosition: ButtonIconLabelPosition = 'bottom';
 
+  /** Renders the button as a circle. Label is ignored when set. */
+  @property({ type: Boolean, reflect: true })
+  circle = false;
+
   connectedCallback(): void {
     super.connectedCallback();
     this.addEventListener('focus', this._handleFocus);
@@ -74,7 +78,7 @@ export class CoButtonIcon extends LionButtonSubmit {
 
   render() {
     const iconSize = iconSizeMap[this.size];
-    const hasLabel = !!this.label;
+    const hasLabel = !!this.label && !this.circle;
 
     const labelTemplate = hasLabel
       ? html`<span part="label" class="label">${this.label}</span>`
