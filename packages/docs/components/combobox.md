@@ -1,4 +1,4 @@
-# Combo box
+#wCombo Box
 
 The `co-combobox` component provides a themed, accessible searchable selection field built on top of Lion Web Components. It supports filtering, inline autocomplete, optional multiple choice, optional custom values, validation feedback, and Cobalt option styling through [`co-option`](/components/option).
 
@@ -248,9 +248,9 @@ export class AppComponent {
 
 ### When NOT to use
 
-- **Short visible lists** - use listbox, radio, or checkbox patterns instead.
+- **Short visible lists** - use list box, radio, or checkbox patterns instead.
 - **Plain text entry** - use input when suggestions are not part of the task.
-- **Long-form content** - use textarea for multi-line writing.
+- **Long-form content** - use text area for multi-line writing.
 - **Actions or navigation** - use buttons, links, menus, or tabs instead.
 
 ### Content guidelines
@@ -314,7 +314,7 @@ export class AppComponent {
 | `prefix`            | Content before the input value             |
 | `suffix`            | Content after the input value              |
 | `listbox`           | Internal options container managed by Lion |
-| _(default)_         | Option content moved into the listbox      |
+| _(default)_         | Option content moved into the list box     |
 | `feedback`          | Validation feedback content                |
 
 ### CSS Parts
@@ -350,9 +350,9 @@ export class AppComponent {
 
 ### ARIA notes
 
-- Lion applies the WAI-ARIA combobox and listbox relationships.
+- Lion applies the WAI-ARIA combo box and list box relationships.
 - Lion connects `label`, `help-text`, and `feedback` content to the native input.
-- `multiple` updates `aria-multiselectable` on the internal listbox.
+- `multiple` updates `aria-multiselectable` on the internal list box.
 - `required` adds required validation and `aria-required`.
 - The `danger` property is visual only and does not set `aria-invalid`.
 

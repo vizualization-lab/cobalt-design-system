@@ -1,4 +1,4 @@
-# Textarea
+# Text Area
 
 The `co-textarea` component provides a themed, accessible multi-line text field built on top of Lion Web Components. It supports labels, help text, validation feedback, prefix and suffix slots, size variants, resize modes, and character counting.
 
@@ -16,10 +16,10 @@ The `co-textarea` component provides a themed, accessible multi-line text field 
 
 <ClientOnly>
 <div style="display: grid; gap: 16px; max-width: 480px; margin: 16px 0 24px;">
-  <co-textarea size="sm" label="Small" placeholder="Small textarea"></co-textarea>
-  <co-textarea size="md" label="Medium" placeholder="Medium textarea"></co-textarea>
-  <co-textarea size="lg" label="Large" placeholder="Large textarea"></co-textarea>
-  <co-textarea size="xl" label="Extra large" placeholder="Extra large textarea"></co-textarea>
+  <co-textarea size="sm" label="Small" placeholder="Small text area"></co-textarea>
+  <co-textarea size="md" label="Medium" placeholder="Medium text area"></co-textarea>
+  <co-textarea size="lg" label="Large" placeholder="Large text area"></co-textarea>
+  <co-textarea size="xl" label="Extra large" placeholder="Extra large text area"></co-textarea>
 </div>
 </ClientOnly>
 
@@ -57,7 +57,7 @@ Set `maxlength` to render a counter and apply the native character limit.
 </div>
 </ClientOnly>
 
-The counter is visual guidance and is also attached to the textarea description. Use validation feedback for required minimum length or business rules.
+The counter is visual guidance and is also attached to the text area description. Use validation feedback for required minimum length or business rules.
 
 ## States
 
@@ -283,9 +283,9 @@ export class AppComponent {
 ### Layout guidelines
 
 - Use one column for most forms.
-- Keep textarea widths consistent within the same form section.
+- Keep text area widths consistent within the same form section.
 - Match sizes within a field group unless hierarchy requires a larger field.
-- Use `maxRows` to keep auto-growing textareas from pushing important actions off screen.
+- Use `maxRows` to keep auto-growing text areas from pushing important actions off screen.
 
 ## API
 
@@ -296,9 +296,9 @@ export class AppComponent {
 | `size`        | `'sm' \| 'md' \| 'lg' \| 'xl'`   | `'md'`   | Controls field padding and font size                               |
 | `resize`      | `'auto' \| 'none' \| 'vertical'` | `'auto'` | Controls automatic or browser-native resizing                      |
 | `danger`      | `boolean`                        | `false`  | Applies danger styling without changing validity or `aria-invalid` |
-| `label`       | `string`                         | `''`     | Label text for the textarea                                        |
+| `label`       | `string`                         | `''`     | Label text for the text area                                       |
 | `helpText`    | `string`                         | `''`     | Help text shown below the label                                    |
-| `placeholder` | `string`                         | `''`     | Placeholder text for the native textarea                           |
+| `placeholder` | `string`                         | `''`     | Placeholder text for the native text area                          |
 | `value`       | `string`                         | `''`     | Current view value                                                 |
 | `modelValue`  | `unknown`                        | `''`     | Lion form model value                                              |
 | `name`        | `string`                         | `''`     | Form field name                                                    |
@@ -306,29 +306,29 @@ export class AppComponent {
 | `maxRows`     | `number`                         | `6`      | Maximum auto-resize rows when `resize="auto"`                      |
 | `maxLength`   | `number`                         | -        | Native maximum character count and counter value                   |
 | `minLength`   | `number`                         | -        | Native minimum character count                                     |
-| `required`    | `boolean`                        | `false`  | Marks the textarea as required                                     |
+| `required`    | `boolean`                        | `false`  | Marks the text area as required                                    |
 | `disabled`    | `boolean`                        | `false`  | Prevents interaction and removes the field from submission         |
 | `readOnly`    | `boolean`                        | `false`  | Prevents editing while keeping the field focusable                 |
 
 ### Events
 
-| Event       | Detail                                   | Description                                   |
-| ----------- | ---------------------------------------- | --------------------------------------------- |
-| `co-focus`  | -                                        | Fired when the native textarea receives focus |
-| `co-blur`   | -                                        | Fired when the native textarea loses focus    |
-| `co-input`  | `{ value: string; modelValue: unknown }` | Fired while the user edits the value          |
-| `co-change` | `{ value: string; modelValue: unknown }` | Fired when the user commits the current value |
+| Event       | Detail                                   | Description                                    |
+| ----------- | ---------------------------------------- | ---------------------------------------------- |
+| `co-focus`  | -                                        | Fired when the native text area receives focus |
+| `co-blur`   | -                                        | Fired when the native text area loses focus    |
+| `co-input`  | `{ value: string; modelValue: unknown }` | Fired while the user edits the value           |
+| `co-change` | `{ value: string; modelValue: unknown }` | Fired when the user commits the current value  |
 
 ### Slots
 
-| Name        | Description                             |
-| ----------- | --------------------------------------- |
-| `label`     | Label content                           |
-| `help-text` | Help text content                       |
-| `input`     | Native textarea element managed by Lion |
-| `prefix`    | Content before the textarea value       |
-| `suffix`    | Content after the textarea value        |
-| `feedback`  | Validation feedback content             |
+| Name        | Description                              |
+| ----------- | ---------------------------------------- |
+| `label`     | Label content                            |
+| `help-text` | Help text content                        |
+| `input`     | Native text area element managed by Lion |
+| `prefix`    | Content before the text area value       |
+| `suffix`    | Content after the text area value        |
+| `feedback`  | Validation feedback content              |
 
 ### CSS Parts
 
@@ -337,8 +337,8 @@ export class AppComponent {
 | `label`       | The label wrapper               |
 | `help-text`   | The help text wrapper           |
 | `input-group` | The input group wrapper         |
-| `control`     | The visual textarea control     |
-| `input`       | The native textarea wrapper     |
+| `control`     | The visual text area control    |
+| `input`       | The native text area wrapper    |
 | `prefix`      | The prefix slot container       |
 | `suffix`      | The suffix slot container       |
 | `meta`        | The feedback and counter row    |
@@ -355,18 +355,18 @@ export class AppComponent {
 
 | Key         | Action                                   |
 | ----------- | ---------------------------------------- |
-| `Tab`       | Moves focus to the textarea              |
+| `Tab`       | Moves focus to the text area             |
 | `Shift+Tab` | Moves focus to the previous focus target |
 | Text input  | Updates the value and emits `co-input`   |
-| `Enter`     | Adds a line break inside the textarea    |
+| `Enter`     | Adds a line break inside the text area   |
 
 ### ARIA notes
 
-- Lion connects `label`, `help-text`, and `feedback` content to the native textarea through ARIA relationships.
+- Lion connects `label`, `help-text`, and `feedback` content to the native text area through ARIA relationships.
 - Lion sets `aria-invalid` when validation feedback is visible.
 - The `danger` property is visual only and does not set `aria-invalid`.
 - The character counter is connected through `aria-describedby` when `maxlength` is set.
-- `readonly` textareas remain focusable; `disabled` textareas do not participate in normal interaction.
+- `readonly` text areas remain focusable; `disabled` text areas do not participate in normal interaction.
 
 ## Changelog
 

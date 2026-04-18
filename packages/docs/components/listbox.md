@@ -1,6 +1,6 @@
-# Listbox
+# List Box
 
-The `co-listbox` component provides a themed, accessible listbox built on top of Lion Web Components. It supports single and multiple selection, keyboard navigation, orientation, validation feedback, and Cobalt option styling through [`co-option`](/components/option).
+The `co-listbox` component provides a themed, accessible list box built on top of Lion Web Components. It supports single and multiple selection, keyboard navigation, orientation, validation feedback, and Cobalt option styling through [`co-option`](/components/option).
 
 ## Interactive Demo
 
@@ -273,20 +273,20 @@ export class AppComponent {
 
 - Use vertical orientation by default.
 - Use horizontal orientation only for short, related option groups.
-- Keep listbox width aligned with surrounding form controls.
+- Keep list box width aligned with surrounding form controls.
 - Avoid nesting complex interactive content inside options.
 
 ## API
 
-### Listbox Properties
+### List Box Properties
 
 | Property                   | Type                         | Default      | Description                                                     |
 | -------------------------- | ---------------------------- | ------------ | --------------------------------------------------------------- |
-| `label`                    | `string`                     | `''`         | Label text for the listbox                                      |
+| `label`                    | `string`                     | `''`         | Label text for the list box                                     |
 | `helpText`                 | `string`                     | `''`         | Help text shown below the label                                 |
 | `name`                     | `string`                     | `''`         | Form field name                                                 |
 | `disabled`                 | `boolean`                    | `false`      | Prevents interaction and disables registered options            |
-| `required`                 | `boolean`                    | `false`      | Marks the listbox as required for validation and ARIA           |
+| `required`                 | `boolean`                    | `false`      | Marks the list box as required for validation and ARIA          |
 | `multipleChoice`           | `boolean`                    | `false`      | Allows multiple options to be selected                          |
 | `orientation`              | `'vertical' \| 'horizontal'` | `'vertical'` | Controls arrow-key direction and `aria-orientation`             |
 | `selectionFollowsFocus`    | `boolean`                    | `false`      | Selects the active option while arrowing through options        |
@@ -303,7 +303,7 @@ See the [Option documentation](/components/option) for standalone option guidanc
 | Property      | Type      | Default | Description                                           |
 | ------------- | --------- | ------- | ----------------------------------------------------- |
 | `value`       | `string`  | `''`    | String value alias mapped to Lion's `choiceValue`     |
-| `choiceValue` | `unknown` | `''`    | Value registered with the parent listbox              |
+| `choiceValue` | `unknown` | `''`    | Value registered with the parent list box             |
 | `checked`     | `boolean` | `false` | Marks the option as selected                          |
 | `disabled`    | `boolean` | `false` | Prevents the option from being selected               |
 | `active`      | `boolean` | `false` | Marks the option as active during keyboard navigation |
@@ -320,7 +320,7 @@ See the [Option documentation](/components/option) for standalone option guidanc
 | ------------ | ----------- | ------------------------------------------ |
 | `co-listbox` | `label`     | Label content                              |
 | `co-listbox` | `help-text` | Help text content                          |
-| `co-listbox` | _(default)_ | Option content moved into the listbox      |
+| `co-listbox` | _(default)_ | Option content moved into the list box     |
 | `co-listbox` | `input`     | Internal options container managed by Lion |
 | `co-listbox` | `feedback`  | Validation feedback content                |
 | `co-option`  | _(default)_ | Option label content                       |
@@ -332,8 +332,8 @@ See the [Option documentation](/components/option) for standalone option guidanc
 | `co-listbox` | `label`       | The label wrapper               |
 | `co-listbox` | `help-text`   | The help text wrapper           |
 | `co-listbox` | `input-group` | The input group wrapper         |
-| `co-listbox` | `control`     | The visual listbox control      |
-| `co-listbox` | `input`       | The listbox input wrapper       |
+| `co-listbox` | `control`     | The visual list box control     |
+| `co-listbox` | `input`       | The list box input wrapper      |
 | `co-listbox` | `feedback`    | The validation feedback wrapper |
 | `co-option`  | `base`        | The option wrapper              |
 | `co-option`  | `indicator`   | The selection indicator         |
@@ -349,7 +349,7 @@ See the [Option documentation](/components/option) for standalone option guidanc
 
 | Key                    | Action                                                |
 | ---------------------- | ----------------------------------------------------- |
-| `Tab`                  | Moves focus to or away from the listbox               |
+| `Tab`                  | Moves focus to or away from the list box              |
 | `ArrowUp/ArrowDown`    | Moves active option in vertical orientation           |
 | `ArrowLeft/ArrowRight` | Moves active option in horizontal orientation         |
 | `Home/End`             | Moves active option to the first or last option       |
@@ -358,7 +358,7 @@ See the [Option documentation](/components/option) for standalone option guidanc
 
 ### ARIA notes
 
-- Lion connects `label`, `help-text`, and `feedback` content to the listbox through ARIA relationships.
+- Lion connects `label`, `help-text`, and `feedback` content to the list box through ARIA relationships.
 - `orientation` updates `aria-orientation`.
 - `multiple-choice` updates `aria-multiselectable`.
 - `required` adds `aria-required` through Lion's required validator.

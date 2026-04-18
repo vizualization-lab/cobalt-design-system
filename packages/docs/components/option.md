@@ -123,7 +123,7 @@ Future indicator slots will be added as their underlying components ship:
   import '@cobalt/components/option';
 </script>
 
-<!-- Inside a listbox -->
+<!-- Inside a list box -->
 <co-listbox label="Favorite fruit">
   <co-option value="apple">Apple</co-option>
   <co-option value="banana">Banana</co-option>
@@ -205,7 +205,7 @@ export class AppComponent {}
 
 ### When to use
 
-- **Listbox options** - use inside `co-listbox` for visible option sets.
+- **List box options** - use inside `co-listbox` for visible option sets.
 - **Combobox options** - use inside `co-combobox` for searchable option sets.
 - **Simple labels** - use concise text labels that are easy to scan.
 

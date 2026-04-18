@@ -227,7 +227,7 @@ export class AppComponent {
 
 ### When NOT to use
 
-- **Long-form content** - use a textarea for multi-line writing
+- **Long-form content** - use a text area for multi-line writing
 - **Known option sets** - use select, radio, checkbox, or combobox patterns instead
 - **Dates and numbers with special formatting** - use dedicated field types when available
 - **Validation-only emphasis** - use Lion validation feedback instead of the visual-only `danger` prop
