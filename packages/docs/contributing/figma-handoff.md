@@ -211,6 +211,6 @@ Avoid notes like these:
 
 ## Related Pages
 
-- [Token Structure](./structure.md)
-- [Token Reference](./index.md)
+- [Token Structure](/tokens/structure)
+- [Token Reference](/tokens/)
 - [For Designers](../getting-started/designers.md)

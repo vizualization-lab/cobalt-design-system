@@ -23,8 +23,7 @@ For setup instructions, see the [Getting Started for Designers](/getting-started
 
 A smooth handoff reduces back-and-forth between design and engineering. Key resources:
 
-- [Figma Handoff Guide](/tokens/figma-handoff) — What to include when handing off designs (includes a copy-paste template)
-- [Figma Alignment](/tokens/figma-alignment) — How Figma styles map to code tokens
+- [Figma Handoff Guide](/contributing/figma-handoff) — What to include when handing off designs (includes a copy-paste template)
 - [Token Structure](/tokens/structure) — Understanding the three-tier token architecture
 
 ## Design Community Resources
