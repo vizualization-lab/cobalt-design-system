@@ -22,9 +22,6 @@ export const cobaltOptionStyles = css`
     padding-inline: var(--co-space-inset-sm);
     border-radius: var(--co-control-radius);
     color: inherit;
-    transition:
-      background var(--co-motion-duration-fast) var(--co-motion-easing-default),
-      color var(--co-motion-duration-fast) var(--co-motion-easing-default);
   }
 
   :host(:hover:not([disabled])) .option,
@@ -46,27 +43,58 @@ export const cobaltOptionStyles = css`
     cursor: not-allowed;
   }
 
+  /* ── Indicator: shared ── */
+
   .option__indicator {
     display: inline-flex;
     align-items: center;
     justify-content: center;
     flex: 0 0 auto;
+  }
+
+  /* ── Default indicator (no custom content) ── */
+
+  .option__indicator:empty {
     inline-size: 0.75em;
     block-size: 0.75em;
     border: var(--co-shape-border-width-thin) solid var(--co-color-border-strong);
     border-radius: 999px;
+    background-color: transparent;
   }
 
-  :host([checked]) .option__indicator {
-    border-color: var(--co-color-border-active);
-    background: var(--co-color-border-active);
-    box-shadow: inset 0 0 0 2px var(--co-color-surface-default);
-  }
-
-  :host([disabled]) .option__indicator {
+  :host([disabled]) .option__indicator:empty {
     border-color: var(--co-color-border-subtle);
     background: transparent;
     box-shadow: none;
+  }
+
+  /* ── Radio (single-select) ── */
+
+  :host([checked]:not([multiple])) .option__indicator:empty {
+    border-color: var(--co-color-border-active);
+    box-shadow: inset 0 0 0 2px var(--co-color-surface-default);
+  }
+
+  /* ── Checkbox (multi-select) ── */
+
+  :host([multiple]) .option__indicator:empty {
+    border-radius: var(--co-shape-radius-sm, 3px);
+  }
+
+  :host([multiple][checked]) .option__indicator:empty {
+    border-color: var(--co-color-border-active);
+    background: var(--co-color-border-active);
+    box-shadow: none;
+  }
+
+  :host([multiple][checked]) .option__indicator:empty::after {
+    content: '';
+    display: block;
+    inline-size: 0.35em;
+    block-size: 0.2em;
+    border-left: 1.5px solid var(--co-color-surface-default);
+    border-bottom: 1.5px solid var(--co-color-surface-default);
+    transform: rotate(-45deg) translateY(-0.04em);
   }
 
   .option__label {

@@ -33,6 +33,10 @@
       "import": "./dist/components/listbox.js",
       "types": "./dist/components/listbox.d.ts"
     },
+    "./option": {
+      "import": "./dist/components/option.js",
+      "types": "./dist/components/option.d.ts"
+    },
     "./textarea": {
       "import": "./dist/components/textarea.js",
       "types": "./dist/components/textarea.d.ts"

@@ -1,9 +1,10 @@
 import { html, nothing, type PropertyValues, type TemplateResult } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import { LionListbox, LionOption } from '@lion/ui/listbox.js';
+import { LionListbox } from '@lion/ui/listbox.js';
 import { Required, type Validator } from '@lion/ui/form-core.js';
 import { cobaltListboxStyles } from './co-listbox.styles.js';
-import { cobaltOptionStyles } from './co-option.styles.js';
+
+export { CoOption } from '../option/co-option.js';
 
 export type ListboxOrientation = 'vertical' | 'horizontal';
 export type ListboxValue = string | string[];
@@ -12,48 +13,6 @@ export interface ListboxChangeDetail {
   value: ListboxValue;
   modelValue: ListboxValue;
   checkedIndex: number | number[];
-}
-
-/**
- * @tag co-option
- * @summary An option component for Cobalt listboxes.
- *
- * @slot - Option label content
- *
- * @csspart base - The option wrapper
- * @csspart indicator - The selection indicator
- * @csspart label - The option label wrapper
- */
-@customElement('co-option')
-export class CoOption extends LionOption {
-  static get styles() {
-    return [cobaltOptionStyles];
-  }
-
-  /** String value alias mapped to Lion's choiceValue. */
-  @property({ reflect: true })
-  override get value(): string {
-    return typeof this.choiceValue === 'string' ? this.choiceValue : '';
-  }
-
-  override set value(value: string) {
-    const oldValue = this.value;
-    if (this.choiceValue !== value) {
-      this.choiceValue = value;
-    }
-    this.requestUpdate('value', oldValue);
-  }
-
-  override render() {
-    return html`
-      <div part="base" class="option">
-        <span part="indicator" class="option__indicator" aria-hidden="true"></span>
-        <span part="label" class="option__label">
-          <slot></slot>
-        </span>
-      </div>
-    `;
-  }
 }
 
 /**
@@ -216,6 +175,5 @@ export class CoListbox extends LionListbox {
 declare global {
   interface HTMLElementTagNameMap {
     'co-listbox': CoListbox;
-    'co-option': CoOption;
   }
 }

@@ -60,6 +60,7 @@ export const navigation: NavGroup[] = [
       { text: 'Icon', link: '/components/icon' },
       { text: 'Input', link: '/components/input' },
       { text: 'Listbox', link: '/components/listbox' },
+      { text: 'Option', link: '/components/option' },
       { text: 'Textarea', link: '/components/textarea' },
     ],
   },
