@@ -18,6 +18,10 @@
       "import": "./dist/components/button/co-button.js",
       "types": "./dist/components/button/co-button.d.ts"
     },
+    "./button-icon": {
+      "import": "./dist/components/button-icon/co-button-icon.js",
+      "types": "./dist/components/button-icon/co-button-icon.d.ts"
+    },
     "./combobox": {
       "import": "./dist/components/combobox/co-combobox.js",
       "types": "./dist/components/combobox/co-combobox.d.ts"

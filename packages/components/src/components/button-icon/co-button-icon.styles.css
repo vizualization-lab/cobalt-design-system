@@ -1,0 +1,153 @@
+/* ── Base ── */
+:host {
+  display: inline-flex;
+  vertical-align: middle;
+  box-sizing: border-box;
+  align-items: center;
+  justify-content: center;
+  min-block-size: var(--co-control-height-md);
+  min-inline-size: var(--co-control-height-md);
+  padding: 0;
+  font-family: var(--co-font-family-sans);
+  font-weight: var(--co-font-weight-medium);
+  line-height: var(--co-font-line-height-tight);
+  border-radius: var(--co-control-radius);
+  border: none;
+  cursor: pointer;
+  transition:
+    background var(--co-motion-duration-fast) var(--co-motion-easing-default),
+    color var(--co-motion-duration-fast) var(--co-motion-easing-default),
+    box-shadow var(--co-motion-duration-fast) var(--co-motion-easing-default);
+}
+
+.button-icon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--co-space-1);
+  padding: var(--co-space-2);
+  color: inherit;
+}
+
+.button-icon.has-label {
+  padding: var(--co-space-1) var(--co-space-3);
+}
+
+.label {
+  font-size: var(--co-font-size-xs);
+  line-height: var(--co-font-line-height-tight);
+  white-space: nowrap;
+}
+
+/* ── Sizes ── */
+:host([size='sm']) {
+  min-block-size: var(--co-control-height-sm);
+  min-inline-size: var(--co-control-height-sm);
+}
+:host([size='sm']) .button-icon {
+  padding: var(--co-space-1);
+}
+:host([size='sm']) .button-icon.has-label {
+  padding: var(--co-space-1) var(--co-space-2);
+}
+
+:host([size='lg']) {
+  min-block-size: var(--co-control-height-lg);
+  min-inline-size: var(--co-control-height-lg);
+}
+:host([size='lg']) .button-icon {
+  padding: var(--co-space-3);
+}
+:host([size='lg']) .button-icon.has-label {
+  padding: var(--co-space-2) var(--co-space-4);
+}
+
+:host([size='xl']) {
+  min-block-size: var(--co-control-height-xl);
+  min-inline-size: var(--co-control-height-xl);
+}
+:host([size='xl']) .button-icon {
+  padding: var(--co-space-4);
+}
+:host([size='xl']) .button-icon.has-label {
+  padding: var(--co-space-3) var(--co-space-6);
+}
+
+/* ── Primary variant (default) ── */
+:host,
+:host([variant='primary']) {
+  background: var(--co-color-interactive-primary-default);
+  color: var(--co-color-text-on-primary);
+}
+:host([variant='primary']:hover),
+:host(:not([variant]):hover) {
+  background: var(--co-color-interactive-primary-hover);
+}
+:host([variant='primary']:active),
+:host(:not([variant]):active) {
+  background: var(--co-color-interactive-primary-active);
+}
+
+/* ── Secondary variant ── */
+:host([variant='secondary']) {
+  background: var(--co-color-surface-default);
+  color: var(--co-color-text-default);
+  box-shadow: inset 0 0 0 var(--co-shape-border-width-thin) var(--co-color-border-default);
+}
+:host([variant='secondary']:hover) {
+  background: var(--co-color-surface-raised);
+  box-shadow: inset 0 0 0 var(--co-shape-border-width-thin) var(--co-color-border-strong);
+}
+:host([variant='secondary']:active) {
+  background: var(--co-color-surface-sunken);
+}
+
+/* ── Danger variant ── */
+:host([variant='danger']) {
+  background: var(--co-color-interactive-danger-default);
+  color: var(--co-color-text-on-primary);
+}
+:host([variant='danger']:hover) {
+  background: var(--co-color-interactive-danger-hover);
+}
+:host([variant='danger']:active) {
+  background: var(--co-color-interactive-danger-active);
+}
+
+/* ── Success variant ── */
+:host([variant='success']) {
+  background: var(--co-color-interactive-success-default);
+  color: var(--co-color-text-on-primary);
+}
+:host([variant='success']:hover) {
+  background: var(--co-color-interactive-success-hover);
+}
+:host([variant='success']:active) {
+  background: var(--co-color-interactive-success-active);
+}
+
+/* ── Ghost variant ── */
+:host([variant='ghost']) {
+  background: transparent;
+  color: var(--co-color-text-default);
+}
+:host([variant='ghost']:hover) {
+  color: var(--co-color-text-secondary);
+}
+:host([variant='ghost']:active) {
+  color: var(--co-color-text-default);
+}
+
+/* ── Focus ── */
+:host(:focus-visible) {
+  outline: var(--co-focus-ring-width) solid var(--co-color-border-focus);
+  outline-offset: var(--co-focus-ring-offset);
+}
+
+/* ── Disabled ── */
+:host([disabled]) {
+  opacity: var(--co-opacity-disabled);
+  cursor: not-allowed;
+  pointer-events: none;
+}

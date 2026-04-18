@@ -17,6 +17,10 @@
       "import": "./dist/components/button.js",
       "types": "./dist/components/button.d.ts"
     },
+    "./button-icon": {
+      "import": "./dist/components/button-icon.js",
+      "types": "./dist/components/button-icon.d.ts"
+    },
     "./combobox": {
       "import": "./dist/components/combobox.js",
       "types": "./dist/components/combobox.d.ts"
