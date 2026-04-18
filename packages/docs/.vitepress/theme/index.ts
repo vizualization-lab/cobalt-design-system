@@ -18,6 +18,7 @@ import '@cobalt/tokens/css/dark';
 import 'vitepress/dist/client/theme-default/styles/icons.css';
 
 import './cobalt.css';
+import './mermaid.css';
 
 export default {
   Layout: CobaltLayout,

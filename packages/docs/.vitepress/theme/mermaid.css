@@ -1,0 +1,182 @@
+/*
+ * Mermaid diagram overrides using Cobalt design tokens.
+ *
+ * Cobalt tokens auto-switch values under [data-theme='dark'], so these
+ * CSS rules give diagrams the correct palette in both themes without
+ * needing JavaScript re-rendering.
+ *
+ * Uses !important to override Mermaid's inline SVG styles.
+ */
+
+/* ── Container ─────────────────────────────────────────────── */
+
+.cobalt-mermaid {
+  margin: var(--co-space-6) 0;
+  padding: var(--co-space-6);
+  background: var(--co-color-surface-default);
+  border: 1px solid var(--co-color-border-default);
+  border-radius: var(--co-shape-radius-lg);
+  overflow-x: auto;
+}
+
+.cobalt-mermaid svg {
+  display: block;
+  margin: 0 auto;
+  overflow: visible;
+}
+
+/* ── General text ──────────────────────────────────────────── */
+
+.cobalt-mermaid text,
+.cobalt-mermaid .label text {
+  fill: var(--co-color-text-default) !important;
+}
+
+/* ── Flowchart nodes ───────────────────────────────────────── */
+
+.cobalt-mermaid .node rect,
+.cobalt-mermaid .node polygon,
+.cobalt-mermaid .node circle {
+  fill: var(--co-color-primary-subtle) !important;
+  stroke: var(--co-color-primary-base) !important;
+}
+
+.cobalt-mermaid .node .label {
+  color: var(--co-color-text-default) !important;
+}
+
+/* ── Flowchart edges / links ───────────────────────────────── */
+
+.cobalt-mermaid .edgePath .path {
+  stroke: var(--co-color-text-secondary) !important;
+}
+
+.cobalt-mermaid .edgeLabel {
+  background-color: var(--co-color-surface-default) !important;
+  color: var(--co-color-text-secondary) !important;
+}
+
+.cobalt-mermaid marker path {
+  fill: var(--co-color-text-secondary) !important;
+}
+
+/* ── Flowchart subgraphs / clusters ────────────────────────── */
+
+.cobalt-mermaid .cluster rect {
+  fill: var(--co-color-surface-page) !important;
+  stroke: var(--co-color-border-default) !important;
+  rx: var(--co-shape-radius-lg) !important;
+  ry: var(--co-shape-radius-lg) !important;
+}
+
+.cobalt-mermaid .cluster text {
+  fill: var(--co-color-text-default) !important;
+}
+
+.cobalt-mermaid .cluster-label span,
+.cobalt-mermaid .cluster-label span p {
+  color: var(--co-color-text-default) !important;
+  font-weight: 500 !important;
+}
+
+/* ── Sequence diagram actors ───────────────────────────────── */
+
+.cobalt-mermaid .actor {
+  fill: var(--co-color-primary-subtle) !important;
+  stroke: var(--co-color-primary-base) !important;
+}
+
+.cobalt-mermaid text.actor > tspan {
+  fill: var(--co-color-text-default) !important;
+}
+
+/* ── Sequence diagram lifelines and messages ────────────────── */
+
+.cobalt-mermaid .messageLine0,
+.cobalt-mermaid .messageLine1 {
+  stroke: var(--co-color-text-secondary) !important;
+}
+
+.cobalt-mermaid .messageText {
+  fill: var(--co-color-text-default) !important;
+}
+
+.cobalt-mermaid .activation0,
+.cobalt-mermaid .activation1,
+.cobalt-mermaid .activation2 {
+  fill: var(--co-color-primary-subtle) !important;
+  stroke: var(--co-color-primary-base) !important;
+}
+
+/* ── Sequence diagram notes ────────────────────────────────── */
+
+.cobalt-mermaid .note {
+  fill: var(--co-color-warning-subtle) !important;
+  stroke: var(--co-color-border-default) !important;
+}
+
+.cobalt-mermaid .noteText {
+  fill: var(--co-color-text-default) !important;
+}
+
+/* ── Sequence diagram loop/alt boxes ───────────────────────── */
+
+.cobalt-mermaid .loopLine {
+  stroke: var(--co-color-border-strong) !important;
+}
+
+.cobalt-mermaid .labelBox {
+  fill: var(--co-color-surface-sunken) !important;
+  stroke: var(--co-color-border-default) !important;
+}
+
+.cobalt-mermaid .loopText,
+.cobalt-mermaid .loopText tspan {
+  fill: var(--co-color-text-secondary) !important;
+}
+
+/* ── State diagram states ──────────────────────────────────── */
+
+.cobalt-mermaid .stateGroup .composit {
+  fill: var(--co-color-surface-default) !important;
+}
+
+.cobalt-mermaid .stateGroup rect {
+  fill: var(--co-color-primary-subtle) !important;
+  stroke: var(--co-color-primary-base) !important;
+}
+
+.cobalt-mermaid .stateGroup .stateTitle {
+  fill: var(--co-color-text-default) !important;
+}
+
+/* ── State diagram transitions ─────────────────────────────── */
+
+.cobalt-mermaid .transition {
+  stroke: var(--co-color-text-secondary) !important;
+}
+
+.cobalt-mermaid .stateGroup .nodeLabel {
+  color: var(--co-color-text-default) !important;
+}
+
+/* ── State diagram start/end markers ───────────────────────── */
+
+.cobalt-mermaid .start-state,
+.cobalt-mermaid .node circle.state-start {
+  fill: var(--co-color-neutral-base) !important;
+}
+
+.cobalt-mermaid .end-state-outer {
+  fill: var(--co-color-neutral-base) !important;
+}
+
+.cobalt-mermaid .end-state-inner {
+  fill: var(--co-color-surface-default) !important;
+}
+
+/* ── Background ────────────────────────────────────────────── */
+
+.cobalt-mermaid .mermaid-main-bg {
+  fill: var(--co-color-surface-default) !important;
+}

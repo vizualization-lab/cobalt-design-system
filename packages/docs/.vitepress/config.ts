@@ -1,4 +1,5 @@
 import { defineConfig } from 'vitepress';
+import { withMermaid } from 'vitepress-plugin-mermaid';
 import taskLists from 'markdown-it-task-lists';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -40,58 +41,118 @@ function replacePlaceholders(md: any) {
   };
 }
 
-export default defineConfig({
-  base: '/cobalt-design-system/',
-  title: 'Cobalt Design System',
-  description: 'A design system built with Lit + Lion',
-  markdown: {
-    theme: {
-      dark: 'tokyo-night',
-      light: 'github-light',
-    },
-    config: (md) => {
-      md.use(taskLists);
-      md.use(replacePlaceholders);
-    },
-  },
-  head: [
-    [
-      'script',
-      {},
-      `(function(){var t=localStorage.getItem('cobalt-theme');if(t==='dark')document.documentElement.setAttribute('data-theme','dark')})()`,
-    ],
-  ],
-  themeConfig: {
-    cobaltVersion: pkg.version,
-    github: {
-      url: githubUrl,
-      org: githubOrg,
-      repo: githubRepo,
-    },
-    search: {
-      provider: 'local',
-    },
-    nav: toVitePressNav(),
-    sidebar: toVitePressSidebar(),
-  },
-  vue: {
-    template: {
-      compilerOptions: {
-        isCustomElement: (tag: string) => tag.startsWith('co-') || tag.startsWith('lion-'),
+export default withMermaid(
+  defineConfig({
+    base: '/cobalt-design-system/',
+    title: 'Cobalt Design System',
+    description: 'A design system built with Lit + Lion',
+    markdown: {
+      theme: {
+        dark: 'tokyo-night',
+        light: 'github-light',
+      },
+      config: (md) => {
+        md.use(taskLists);
+        md.use(replacePlaceholders);
       },
     },
-  },
-  vite: {
-    optimizeDeps: {
-      include: [
-        'lit',
-        '@lion/ui/button.js',
-        '@lion/ui/input.js',
-        '@lion/ui/listbox.js',
-        '@lion/ui/textarea.js',
-        '@cobalt/components',
-        '@cobalt/icons',
+    head: [
+      [
+        'script',
+        {},
+        `(function(){var t=localStorage.getItem('cobalt-theme');if(t==='dark')document.documentElement.setAttribute('data-theme','dark')})()`,
       ],
+    ],
+    mermaid: {
+      theme: 'base',
+      themeVariables: {
+        // Core palette — light-mode token values as defaults
+        primaryColor: '#e8efff', // --co-color-primary-subtle
+        primaryTextColor: '#464646', // --co-color-text-default
+        primaryBorderColor: '#1a5eff', // --co-color-primary-base
+        lineColor: '#686868', // --co-color-text-secondary
+        secondaryColor: '#f2f2f2', // --co-color-surface-sunken
+        secondaryTextColor: '#464646', // --co-color-text-default
+        secondaryBorderColor: '#dadada', // --co-color-border-strong
+        tertiaryColor: '#f7f7f7', // --co-color-surface-page
+        tertiaryTextColor: '#686868', // --co-color-text-secondary
+        tertiaryBorderColor: '#e9e9e9', // --co-color-border-default
+
+        // General
+        background: '#ffffff', // --co-color-surface-default
+
+        // Flowchart
+        nodeBorder: '#1a5eff', // --co-color-primary-base
+        clusterBkg: '#f7f7f7', // --co-color-surface-page
+        clusterBorder: '#e9e9e9', // --co-color-border-default
+        defaultLinkColor: '#686868', // --co-color-text-secondary
+        edgeLabelBackground: '#ffffff', // --co-color-surface-default
+        nodeTextColor: '#464646', // --co-color-text-default
+
+        // Sequence diagram
+        actorBkg: '#e8efff', // --co-color-primary-subtle
+        actorBorder: '#1a5eff', // --co-color-primary-base
+        actorTextColor: '#464646', // --co-color-text-default
+        signalColor: '#686868', // --co-color-text-secondary
+        activationBkgColor: '#e8efff', // --co-color-primary-subtle
+        activationBorderColor: '#1a5eff', // --co-color-primary-base
+
+        // Notes
+        noteBkgColor: '#fef6e8', // --co-color-warning-subtle
+        noteTextColor: '#464646', // --co-color-text-default
+        noteBorderColor: '#e9e9e9', // --co-color-border-default
+
+        // Text
+        textColor: '#464646', // --co-color-text-default
+      },
+      flowchart: {
+        useMaxWidth: false,
+        padding: 16,
+        subGraphTitleMargin: { top: 12, bottom: 4 },
+      },
+      sequence: {
+        useMaxWidth: false,
+      },
+      state: {
+        useMaxWidth: false,
+      },
     },
-  },
-});
+    mermaidPlugin: {
+      class: 'cobalt-mermaid',
+    },
+    themeConfig: {
+      cobaltVersion: pkg.version,
+      github: {
+        url: githubUrl,
+        org: githubOrg,
+        repo: githubRepo,
+      },
+      search: {
+        provider: 'local',
+      },
+      nav: toVitePressNav(),
+      sidebar: toVitePressSidebar(),
+    },
+    vue: {
+      template: {
+        compilerOptions: {
+          isCustomElement: (tag: string) => tag.startsWith('co-') || tag.startsWith('lion-'),
+        },
+      },
+    },
+    vite: {
+      optimizeDeps: {
+        include: [
+          'mermaid',
+          'lit',
+          '@lion/ui/button.js',
+          '@lion/ui/input.js',
+          '@lion/ui/listbox.js',
+          '@lion/ui/textarea.js',
+          '@cobalt/components',
+          '@cobalt/icons',
+        ],
+      },
+    },
+  }),
+);
