@@ -13,6 +13,10 @@ const props = defineProps<{
 
 const state = ref<Record<string, string | boolean>>({
   ...props.defaults,
+  ...(props.textInputs || []).reduce(
+    (acc, t) => ({ ...acc, [t]: props.defaults?.[t] ?? '' }),
+    {} as Record<string, string>,
+  ),
   ...(props.booleans || []).reduce(
     (acc, b) => ({ ...acc, [b]: false }),
     {} as Record<string, boolean>,
@@ -57,7 +61,7 @@ watch(state, () => renderKey.value++, { deep: true });
 
 <template>
   <div class="demo-block">
-    <div class="demo-controls" v-if="options || booleans">
+    <div class="demo-controls" v-if="options || booleans || textInputs">
       <div v-if="options" v-for="(values, key) in options" :key="key" class="demo-field">
         <label class="demo-label">{{ key }}</label>
         <div class="demo-select-wrap">
@@ -65,6 +69,10 @@ watch(state, () => renderKey.value++, { deep: true });
             <option v-for="val in values" :key="val" :value="val">{{ val }}</option>
           </select>
         </div>
+      </div>
+      <div v-if="textInputs" v-for="t in textInputs" :key="t" class="demo-field">
+        <label class="demo-label">{{ t }}</label>
+        <input type="text" v-model="state[t]" :placeholder="t" class="demo-text-input" />
       </div>
       <div v-if="booleans" v-for="b in booleans" :key="b" class="demo-field">
         <label class="demo-toggle">
@@ -200,6 +208,33 @@ watch(state, () => renderKey.value++, { deep: true });
   font-size: 0.7rem;
   color: var(--co-color-text-tertiary);
   pointer-events: none;
+}
+
+.demo-text-input {
+  padding: 5px 10px;
+  border: 1px solid var(--co-border-strong);
+  border-radius: 8px;
+  background: var(--co-deep);
+  color: var(--co-text-primary);
+  font-family: var(--co-font-mono);
+  font-size: 0.78rem;
+  width: 120px;
+  transition: border-color 0.2s ease;
+}
+
+.demo-text-input:hover {
+  border-color: var(--co-blue-500);
+}
+
+.demo-text-input:focus {
+  outline: none;
+  border-color: var(--co-blue-500);
+  box-shadow: 0 0 0 2px var(--co-blue-alpha-15);
+}
+
+.demo-text-input::placeholder {
+  color: var(--co-color-text-tertiary);
+  opacity: 0.6;
 }
 
 /* Toggle switch */
