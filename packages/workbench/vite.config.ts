@@ -119,6 +119,10 @@ export default defineConfig({
         replacement: resolve(componentsDir, 'src/components/combobox/co-combobox.ts'),
       },
       {
+        find: '@cobalt/components/form',
+        replacement: resolve(componentsDir, 'src/components/form/co-form.ts'),
+      },
+      {
         find: '@cobalt/components/icon',
         replacement: resolve(componentsDir, 'src/components/icon/co-icon.ts'),
       },

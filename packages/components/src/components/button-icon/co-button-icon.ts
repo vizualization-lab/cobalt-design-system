@@ -1,6 +1,6 @@
 import { html, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import { LionButton } from '@lion/ui/button.js';
+import { LionButtonSubmit } from '@lion/ui/button.js';
 import type { ButtonVariant, ButtonSize } from '../button/co-button.js';
 import type { IconSize } from '../icon/co-icon.js';
 import { cobaltButtonIconStyles } from './co-button-icon.styles.js';
@@ -27,7 +27,7 @@ const iconSizeMap: Record<ButtonSize, IconSize> = {
  * @fires co-blur - Emitted when the button loses focus
  */
 @customElement('co-button-icon')
-export class CoButtonIcon extends LionButton {
+export class CoButtonIcon extends LionButtonSubmit {
   static get styles() {
     return [...super.styles, cobaltButtonIconStyles];
   }

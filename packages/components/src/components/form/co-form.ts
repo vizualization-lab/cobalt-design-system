@@ -105,6 +105,22 @@ export class CoForm extends LionForm {
 
   protected override _reset(ev: Event) {
     super._reset(ev);
+
+    // Lion's _reset calls preventDefault on the native reset event and only
+    // resets Lion-registered form elements via resetGroup(). Manually reset
+    // any native form controls that aren't managed by Lion.
+    const form = this._formNode;
+    if (form) {
+      for (const el of Array.from(form.elements)) {
+        if ('resetGroup' in el) continue;
+        if (el instanceof HTMLInputElement || el instanceof HTMLTextAreaElement) {
+          el.value = el.defaultValue;
+        } else if (el instanceof HTMLSelectElement) {
+          el.selectedIndex = 0;
+        }
+      }
+    }
+
     this.dispatchEvent(
       new CustomEvent('co-reset', {
         bubbles: true,
