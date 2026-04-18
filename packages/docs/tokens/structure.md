@@ -23,7 +23,7 @@ pc("primitives.color.json")
 end
 
 subgraph Semantic["Semantic"]
-ss(semantic.shared)
+ss(semantic.shared.json)
 stl("semantic.theme.default.light.json")
 st("semantic.theme.default.dark.json")
 ss-->stl

@@ -116,6 +116,10 @@ export default withMermaid(
 
         // Text
         textColor: CoColorTextDefault,
+
+        // Font — must match --co-font-family-sans so Mermaid measures and
+        // renders with the same font, preventing text overflow in nodes.
+        fontFamily: '"Inter Variable", "Noto Sans Variable", system-ui, sans-serif',
       },
       flowchart: {
         useMaxWidth: false,
