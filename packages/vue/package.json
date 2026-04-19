@@ -45,6 +45,10 @@
       "import": "./dist/components/option.js",
       "types": "./dist/components/option.d.ts"
     },
+    "./select": {
+      "import": "./dist/components/select.js",
+      "types": "./dist/components/select.d.ts"
+    },
     "./textarea": {
       "import": "./dist/components/textarea.js",
       "types": "./dist/components/textarea.d.ts"

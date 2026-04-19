@@ -6,4 +6,5 @@ export { CoIcon, type CoIconProps } from './components/icon.js';
 export { CoInput, type CoInputProps } from './components/input.js';
 export { CoListbox, type CoListboxProps } from './components/listbox.js';
 export { CoOption, type CoOptionProps } from './components/option.js';
+export { CoSelect, type CoSelectProps } from './components/select.js';
 export { CoTextarea, type CoTextareaProps } from './components/textarea.js';

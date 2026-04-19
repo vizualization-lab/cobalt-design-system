@@ -131,6 +131,10 @@ export default defineConfig({
         replacement: resolve(componentsDir, 'src/components/listbox/co-listbox.ts'),
       },
       {
+        find: '@cobalt/components/select',
+        replacement: resolve(componentsDir, 'src/components/select/co-select.ts'),
+      },
+      {
         find: '@cobalt/components/option',
         replacement: resolve(componentsDir, 'src/components/option/co-option.ts'),
       },

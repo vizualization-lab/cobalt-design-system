@@ -46,6 +46,10 @@
       "import": "./dist/components/option/co-option.js",
       "types": "./dist/components/option/co-option.d.ts"
     },
+    "./select": {
+      "import": "./dist/components/select/co-select.js",
+      "types": "./dist/components/select/co-select.d.ts"
+    },
     "./textarea": {
       "import": "./dist/components/textarea/co-textarea.js",
       "types": "./dist/components/textarea/co-textarea.d.ts"
