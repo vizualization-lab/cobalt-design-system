@@ -148,6 +148,18 @@
   color: var(--co-color-text-tertiary);
 }
 
+/* ── Chevron indicator ── */
+
+.combobox__chevron {
+  color: var(--co-color-text-tertiary);
+  cursor: pointer;
+  transition: transform var(--co-motion-duration-fast) var(--co-motion-easing-default);
+}
+
+:host([opened]) .combobox__chevron {
+  transform: rotate(180deg);
+}
+
 .form-field__feedback {
   color: var(--co-color-feedback-danger-text);
   font-size: var(--co-typography-caption-size);

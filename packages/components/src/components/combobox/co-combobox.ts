@@ -4,6 +4,7 @@ import { LionCombobox, MatchesOption } from '@lion/ui/combobox.js';
 import { Required, Validator } from '@lion/ui/form-core.js';
 import type { OverlayConfig } from '@lion/ui/types/overlays.js';
 import { cobaltComboboxStyles } from './co-combobox.styles.js';
+import '../icon/co-icon.js';
 
 class CobaltMatchesOption extends MatchesOption {
   static async getMessage(data: { config: { getMessage?: () => string } }) {
@@ -225,14 +226,26 @@ export class CoCombobox extends LionCombobox {
     `;
   }
 
-  protected override _inputGroupSuffixTemplate(): TemplateResult | typeof nothing {
-    return !Array.from(this.children).find((child) => child.slot === 'suffix')
-      ? nothing
-      : html`
-          <div part="suffix" class="input-group__suffix">
-            <slot name="suffix"></slot>
-          </div>
-        `;
+  protected override _inputGroupSuffixTemplate(): TemplateResult {
+    const iconSize = { sm: 'xs', md: 'sm', lg: 'md', xl: 'lg' }[this.size] ?? 'sm';
+    return html`
+      <div part="suffix" class="input-group__suffix" @click=${this._onSuffixClick}>
+        <slot name="suffix">
+          <co-icon
+            class="combobox__chevron"
+            name="keyboard-arrow-down"
+            size=${iconSize}
+            aria-hidden="true"
+          ></co-icon>
+        </slot>
+      </div>
+    `;
+  }
+
+  private _onSuffixClick() {
+    if (this.disabled || this.readOnly) return;
+    this._inputNode?.focus();
+    this.opened = !this.opened;
   }
 
   protected override _overlayListboxTemplate() {
