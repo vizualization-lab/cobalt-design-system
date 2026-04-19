@@ -115,6 +115,14 @@ export default defineConfig({
         replacement: resolve(componentsDir, 'src/components/button-icon/co-button-icon.ts'),
       },
       {
+        find: '@cobalt/components/checkbox-group',
+        replacement: resolve(componentsDir, 'src/components/checkbox-group/co-checkbox-group.ts'),
+      },
+      {
+        find: '@cobalt/components/checkbox',
+        replacement: resolve(componentsDir, 'src/components/checkbox/co-checkbox.ts'),
+      },
+      {
         find: '@cobalt/components/combobox',
         replacement: resolve(componentsDir, 'src/components/combobox/co-combobox.ts'),
       },

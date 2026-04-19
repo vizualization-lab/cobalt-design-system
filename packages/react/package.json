@@ -17,6 +17,14 @@
       "import": "./dist/components/button.js",
       "types": "./dist/components/button.d.ts"
     },
+    "./checkbox": {
+      "import": "./dist/components/checkbox.js",
+      "types": "./dist/components/checkbox.d.ts"
+    },
+    "./checkbox-group": {
+      "import": "./dist/components/checkbox-group.js",
+      "types": "./dist/components/checkbox-group.d.ts"
+    },
     "./button-icon": {
       "import": "./dist/components/button-icon.js",
       "types": "./dist/components/button-icon.d.ts"

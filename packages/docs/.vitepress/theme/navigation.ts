@@ -62,6 +62,7 @@ export const navigation: NavGroup[] = [
         text: 'Forms',
         defaultOpen: true,
         children: [
+          { text: 'Checkbox Group', link: '/components/checkbox-group' },
           { text: 'Combo Box', link: '/components/combobox' },
           { text: 'Input', link: '/components/input' },
           { text: 'Form', link: '/components/form' },

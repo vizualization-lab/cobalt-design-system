@@ -162,6 +162,7 @@ export default withMermaid(
           'mermaid',
           'lit',
           '@lion/ui/button.js',
+          '@lion/ui/checkbox-group.js',
           '@lion/ui/combobox.js',
           '@lion/ui/input.js',
           '@lion/ui/listbox.js',

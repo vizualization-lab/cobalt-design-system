@@ -1,5 +1,7 @@
 export { CoButton } from './components/button.js';
 export { CoButtonIcon } from './components/button-icon.js';
+export { CoCheckbox } from './components/checkbox.js';
+export { CoCheckboxGroup } from './components/checkbox-group.js';
 export { CoCombobox } from './components/combobox.js';
 export { CoForm } from './components/form.js';
 export { CoIcon } from './components/icon.js';

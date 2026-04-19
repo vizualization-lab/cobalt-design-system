@@ -18,6 +18,14 @@
       "import": "./dist/components/button/co-button.js",
       "types": "./dist/components/button/co-button.d.ts"
     },
+    "./checkbox": {
+      "import": "./dist/components/checkbox/co-checkbox.js",
+      "types": "./dist/components/checkbox/co-checkbox.d.ts"
+    },
+    "./checkbox-group": {
+      "import": "./dist/components/checkbox-group/co-checkbox-group.js",
+      "types": "./dist/components/checkbox-group/co-checkbox-group.d.ts"
+    },
     "./button-icon": {
       "import": "./dist/components/button-icon/co-button-icon.js",
       "types": "./dist/components/button-icon/co-button-icon.d.ts"
