@@ -165,6 +165,7 @@ export default withMermaid(
           '@lion/ui/combobox.js',
           '@lion/ui/input.js',
           '@lion/ui/listbox.js',
+          '@lion/ui/radio-group.js',
           '@lion/ui/select-rich.js',
           '@lion/ui/textarea.js',
           '@cobalt/components',

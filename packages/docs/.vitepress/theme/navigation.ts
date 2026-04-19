@@ -67,6 +67,7 @@ export const navigation: NavGroup[] = [
           { text: 'Form', link: '/components/form' },
           { text: 'List Box', link: '/components/listbox' },
           { text: 'Option', link: '/components/option' },
+          { text: 'Radio Group', link: '/components/radio-group' },
           { text: 'Select', link: '/components/select' },
           { text: 'Text Area', link: '/components/textarea' },
         ],

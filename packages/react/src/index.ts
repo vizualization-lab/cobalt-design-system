@@ -6,5 +6,7 @@ export { CoIcon } from './components/icon.js';
 export { CoInput } from './components/input.js';
 export { CoListbox } from './components/listbox.js';
 export { CoOption } from './components/option.js';
+export { CoRadio } from './components/radio.js';
+export { CoRadioGroup } from './components/radio-group.js';
 export { CoSelect } from './components/select.js';
 export { CoTextarea } from './components/textarea.js';

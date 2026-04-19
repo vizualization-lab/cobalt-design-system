@@ -131,6 +131,14 @@ export default defineConfig({
         replacement: resolve(componentsDir, 'src/components/listbox/co-listbox.ts'),
       },
       {
+        find: '@cobalt/components/radio-group',
+        replacement: resolve(componentsDir, 'src/components/radio-group/co-radio-group.ts'),
+      },
+      {
+        find: '@cobalt/components/radio',
+        replacement: resolve(componentsDir, 'src/components/radio/co-radio.ts'),
+      },
+      {
         find: '@cobalt/components/select',
         replacement: resolve(componentsDir, 'src/components/select/co-select.ts'),
       },

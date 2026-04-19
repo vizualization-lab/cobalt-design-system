@@ -42,6 +42,14 @@
       "import": "./dist/components/listbox/co-listbox.js",
       "types": "./dist/components/listbox/co-listbox.d.ts"
     },
+    "./radio": {
+      "import": "./dist/components/radio/co-radio.js",
+      "types": "./dist/components/radio/co-radio.d.ts"
+    },
+    "./radio-group": {
+      "import": "./dist/components/radio-group/co-radio-group.js",
+      "types": "./dist/components/radio-group/co-radio-group.d.ts"
+    },
     "./option": {
       "import": "./dist/components/option/co-option.js",
       "types": "./dist/components/option/co-option.d.ts"
