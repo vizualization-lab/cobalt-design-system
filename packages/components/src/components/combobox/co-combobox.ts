@@ -229,7 +229,12 @@ export class CoCombobox extends LionCombobox {
   protected override _inputGroupSuffixTemplate(): TemplateResult {
     const iconSize = { sm: 'xs', md: 'sm', lg: 'md', xl: 'lg' }[this.size] ?? 'sm';
     return html`
-      <div part="suffix" class="input-group__suffix" @click=${this._onSuffixClick}>
+      <div
+        part="suffix"
+        class="input-group__suffix"
+        @mousedown=${this._onSuffixMousedown}
+        @click=${this._onSuffixClick}
+      >
         <slot name="suffix">
           <co-icon
             class="combobox__chevron"
@@ -240,6 +245,19 @@ export class CoCombobox extends LionCombobox {
         </slot>
       </div>
     `;
+  }
+
+  /** Prevent mousedown from stealing focus away from the input. */
+  private _preventFocusShift(e: Event) {
+    e.preventDefault();
+  }
+
+  private _onSuffixMousedown(e: Event) {
+    this._preventFocusShift(e);
+  }
+
+  private _onOverlayMousedown(e: Event) {
+    this._preventFocusShift(e);
   }
 
   private _onSuffixClick() {
@@ -260,7 +278,13 @@ export class CoCombobox extends LionCombobox {
 
   protected override _overlayListboxTemplate() {
     return html`
-      <div id="overlay-content-node-wrapper" part="overlay" role="dialog" aria-label="Options">
+      <div
+        id="overlay-content-node-wrapper"
+        part="overlay"
+        role="dialog"
+        aria-label="Options"
+        @mousedown=${this._onOverlayMousedown}
+      >
         <slot name="listbox"></slot>
       </div>
       <slot id="options-outlet"></slot>
@@ -310,6 +334,12 @@ export class CoCombobox extends LionCombobox {
 
     const shouldShow = super._showOverlayCondition(options);
     const inputValue = this._inputNode?.value;
+
+    // Respect Lion's explicit close decisions (Enter, Escape, Tab)
+    const closeKeys = ['Enter', 'Escape', 'Tab'];
+    if (!shouldShow && options.lastKey && closeKeys.includes(options.lastKey)) {
+      return false;
+    }
 
     if (!shouldShow && inputValue && this.formElements.length > 0) {
       // Lion returned false (e.g. filled=false in list mode), but the user

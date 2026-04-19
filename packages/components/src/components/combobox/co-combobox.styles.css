@@ -39,6 +39,7 @@
   display: flex;
   flex-direction: column;
   gap: var(--co-space-1);
+  position: relative;
 }
 
 .input-group {
@@ -71,7 +72,8 @@
 
 :host(:focus-within) .input-group__container {
   border-color: var(--co-color-border-focus);
-  box-shadow: 0 0 0 var(--co-focus-ring-width) var(--co-color-border-focus);
+  outline: var(--co-focus-ring-width) solid var(--co-color-border-focus);
+  outline-offset: calc(-1 * var(--co-shape-border-width-thin));
 }
 
 :host([danger]) .input-group__container,
@@ -84,7 +86,8 @@
 :host([has-feedback-for~='error']:focus-within) .input-group__container,
 :host([shows-feedback-for~='error']:focus-within) .input-group__container {
   border-color: var(--co-color-border-danger);
-  box-shadow: 0 0 0 var(--co-focus-ring-width) var(--co-color-border-danger);
+  outline: var(--co-focus-ring-width) solid var(--co-color-border-danger);
+  outline-offset: calc(-1 * var(--co-shape-border-width-thin));
 }
 
 :host([readonly]) .input-group__container {
@@ -173,9 +176,14 @@
   color: var(--co-color-feedback-danger-text);
   font-size: var(--co-typography-caption-size);
   line-height: var(--co-typography-caption-line-height);
+  min-block-size: var(--co-font-line-height-normal, 1.25em);
 }
 
 [data-overlay-outer-wrapper] {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
   inline-size: 0;
   block-size: 0;
   max-inline-size: none;
