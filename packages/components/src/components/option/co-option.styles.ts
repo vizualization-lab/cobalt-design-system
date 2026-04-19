@@ -24,18 +24,19 @@ export const cobaltOptionStyles = css`
     color: inherit;
   }
 
-  :host(:hover:not([disabled])) .option,
-  :host([active]) .option {
-    background: var(--co-color-surface-raised);
+  :host(:hover:not([disabled]):not([checked])) .option,
+  :host([active]:not([checked])) .option {
+    background: var(--co-color-primary-subtle);
   }
 
   :host([checked]) .option {
-    background: var(--co-color-interactive-subtle-selected);
-    color: var(--co-color-text-default);
+    background: var(--co-color-interactive-primary-default);
+    color: var(--co-color-text-on-primary);
   }
 
   :host([active][checked]) .option {
-    background: var(--co-color-interactive-subtle-selected);
+    background: var(--co-color-interactive-primary-default);
+    color: var(--co-color-text-on-primary);
   }
 
   :host([disabled]) {
@@ -71,8 +72,9 @@ export const cobaltOptionStyles = css`
   /* ── Radio (single-select) ── */
 
   :host([checked]:not([multiple])) .option__indicator:empty {
-    border-color: var(--co-color-border-active);
-    box-shadow: inset 0 0 0 2px var(--co-color-surface-default);
+    border-color: var(--co-color-text-on-primary);
+    background: var(--co-color-text-on-primary);
+    box-shadow: inset 0 0 0 2px var(--co-color-interactive-primary-default);
   }
 
   /* ── Checkbox (multi-select) ── */
@@ -82,8 +84,8 @@ export const cobaltOptionStyles = css`
   }
 
   :host([multiple][checked]) .option__indicator:empty {
-    border-color: var(--co-color-border-active);
-    background: var(--co-color-border-active);
+    border-color: var(--co-color-text-on-primary);
+    background: var(--co-color-text-on-primary);
     box-shadow: none;
   }
 
@@ -92,8 +94,8 @@ export const cobaltOptionStyles = css`
     display: block;
     inline-size: 0.35em;
     block-size: 0.2em;
-    border-left: 1.5px solid var(--co-color-surface-default);
-    border-bottom: 1.5px solid var(--co-color-surface-default);
+    border-left: 1.5px solid var(--co-color-interactive-primary-default);
+    border-bottom: 1.5px solid var(--co-color-interactive-primary-default);
     transform: rotate(-45deg) translateY(-0.04em);
   }
 

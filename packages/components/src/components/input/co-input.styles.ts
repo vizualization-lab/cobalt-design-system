@@ -156,6 +156,7 @@ export const cobaltInputStyles = css`
     color: var(--co-color-feedback-danger-text);
     font-size: var(--co-typography-caption-size);
     line-height: var(--co-typography-caption-line-height);
+    min-block-size: var(--co-font-line-height-normal, 1.25em);
   }
 
   slot[name='input']::slotted(input) {

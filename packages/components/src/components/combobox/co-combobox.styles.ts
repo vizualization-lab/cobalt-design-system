@@ -43,6 +43,7 @@ export const cobaltComboboxStyles = css`
     display: flex;
     flex-direction: column;
     gap: var(--co-space-1);
+    position: relative;
   }
 
   .input-group {
@@ -75,7 +76,8 @@ export const cobaltComboboxStyles = css`
 
   :host(:focus-within) .input-group__container {
     border-color: var(--co-color-border-focus);
-    box-shadow: 0 0 0 var(--co-focus-ring-width) var(--co-color-border-focus);
+    outline: var(--co-focus-ring-width) solid var(--co-color-border-focus);
+    outline-offset: calc(-1 * var(--co-shape-border-width-thin));
   }
 
   :host([danger]) .input-group__container,
@@ -88,7 +90,8 @@ export const cobaltComboboxStyles = css`
   :host([has-feedback-for~='error']:focus-within) .input-group__container,
   :host([shows-feedback-for~='error']:focus-within) .input-group__container {
     border-color: var(--co-color-border-danger);
-    box-shadow: 0 0 0 var(--co-focus-ring-width) var(--co-color-border-danger);
+    outline: var(--co-focus-ring-width) solid var(--co-color-border-danger);
+    outline-offset: calc(-1 * var(--co-shape-border-width-thin));
   }
 
   :host([readonly]) .input-group__container {
@@ -119,13 +122,22 @@ export const cobaltComboboxStyles = css`
     padding-inline: var(--co-space-inset-sm);
   }
 
+  :host([size='md']) {
+    font-size: var(--co-font-size-md);
+  }
+
+  :host([size='sm']) .input-group__container {
+    min-block-size: var(--co-control-height-md);
+    padding-inline: var(--co-space-inset-sm);
+  }
+
   :host([size='lg']) {
     font-size: var(--co-font-size-lg);
   }
 
   :host([size='lg']) .input-group__container {
     min-block-size: var(--co-control-height-lg);
-    padding-inline: var(--co-space-inset-lg);
+    padding-inline: var(--co-space-inset-sm);
   }
 
   :host([size='xl']) {
@@ -134,7 +146,7 @@ export const cobaltComboboxStyles = css`
 
   :host([size='xl']) .input-group__container {
     min-block-size: var(--co-control-height-xl);
-    padding-inline: var(--co-space-inset-xl);
+    padding-inline: var(--co-space-inset-sm);
   }
 
   .input-group__input {
@@ -152,13 +164,30 @@ export const cobaltComboboxStyles = css`
     color: var(--co-color-text-tertiary);
   }
 
+  /* ── Chevron indicator ── */
+
+  .combobox__chevron {
+    color: var(--co-color-text-default);
+    cursor: pointer;
+    transition: transform var(--co-motion-duration-fast) var(--co-motion-easing-default);
+  }
+
+  :host([opened]) .combobox__chevron {
+    transform: rotate(180deg);
+  }
+
   .form-field__feedback {
     color: var(--co-color-feedback-danger-text);
     font-size: var(--co-typography-caption-size);
     line-height: var(--co-typography-caption-line-height);
+    min-block-size: var(--co-font-line-height-normal, 1.25em);
   }
 
   [data-overlay-outer-wrapper] {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
     inline-size: 0;
     block-size: 0;
     max-inline-size: none;
