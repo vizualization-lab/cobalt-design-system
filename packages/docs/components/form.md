@@ -9,7 +9,7 @@ The `co-form` component wraps Lion's `LionForm` to provide form-level features: 
   :defaults="{ label: 'Contact form' }"
   :booleans="['disabled']"
   :textInputs="['label']"
-  :slotHtml="'<co-input label=&quot;Full name&quot; name=&quot;fullName&quot;></co-input><co-textarea label=&quot;Comment&quot; name=&quot;comment&quot; ></co-textarea><co-button type=&quot;submit&quot; variant=&quot;primary&quot;>Submit</co-button>'"
+  :slotHtml="'<co-input label=&quot;Full name&quot; name=&quot;fullName&quot;></co-input><co-select label=&quot;Role&quot; name=&quot;role&quot;><co-option value=&quot;developer&quot;>Developer</co-option><co-option value=&quot;designer&quot;>Designer</co-option></co-select><co-textarea label=&quot;Comment&quot; name=&quot;comment&quot;></co-textarea><co-button type=&quot;submit&quot; variant=&quot;primary&quot;>Submit</co-button>'"
 />
 
 ## Basic Form
@@ -75,13 +75,27 @@ Use a `<co-button type="reset">` or call `form.reset()` to restore all fields to
   <co-form label="Full example">
     <co-input label="Name" name="name"></co-input>
     <co-input label="Email" name="email" type="email"></co-input>
+    <co-select label="Department" name="department">
+      <co-option value="engineering">Engineering</co-option>
+      <co-option value="design">Design</co-option>
+      <co-option value="product">Product</co-option>
+    </co-select>
+    <co-combobox label="Skills" name="skills" show-all-on-empty multiple>
+      <co-option value="javascript">JavaScript</co-option>
+      <co-option value="typescript">TypeScript</co-option>
+      <co-option value="css">CSS</co-option>
+      <co-option value="figma">Figma</co-option>
+    </co-combobox>
     <co-listbox label="Role" name="role" has-no-default-selected>
       <co-option value="developer">Developer</co-option>
       <co-option value="designer">Designer</co-option>
       <co-option value="manager">Manager</co-option>
     </co-listbox>
     <co-textarea label="Bio" name="bio"></co-textarea>
-    <co-button type="submit" variant="primary">Submit</co-button>
+    <div style="display: flex; gap: 8px;">
+      <co-button type="submit" variant="primary">Submit</co-button>
+      <co-button type="reset" variant="secondary">Reset</co-button>
+    </div>
   </co-form>
 </div>
 </ClientOnly>
@@ -97,20 +111,41 @@ Use a `<co-button type="reset">` or call `form.reset()` to restore all fields to
 <script type="module">
   import '@cobalt/components/form';
   import '@cobalt/components/input';
+  import '@cobalt/components/select';
+  import '@cobalt/components/combobox';
+  import '@cobalt/components/listbox';
+  import '@cobalt/components/option';
   import '@cobalt/components/textarea';
 </script>
 
-<!-- Basic form -->
-<co-form label="Contact" id="contact-form">
+<!-- Form with all field types -->
+<co-form label="Full example" id="full-form">
   <co-input label="Name" name="name"></co-input>
   <co-input label="Email" name="email" type="email"></co-input>
-  <co-textarea label="Message" name="message"></co-textarea>
+  <co-select label="Department" name="department">
+    <co-option value="engineering">Engineering</co-option>
+    <co-option value="design">Design</co-option>
+    <co-option value="product">Product</co-option>
+  </co-select>
+  <co-combobox label="Skills" name="skills" show-all-on-empty multiple>
+    <co-option value="javascript">JavaScript</co-option>
+    <co-option value="typescript">TypeScript</co-option>
+    <co-option value="css">CSS</co-option>
+    <co-option value="figma">Figma</co-option>
+  </co-combobox>
+  <co-listbox label="Role" name="role" has-no-default-selected>
+    <co-option value="developer">Developer</co-option>
+    <co-option value="designer">Designer</co-option>
+    <co-option value="manager">Manager</co-option>
+  </co-listbox>
+  <co-textarea label="Bio" name="bio"></co-textarea>
   <co-button type="submit" variant="primary">Submit</co-button>
+  <co-button type="reset" variant="secondary">Reset</co-button>
 </co-form>
 
 <!-- Listen to submit -->
 <script>
-  document.getElementById('contact-form').addEventListener('co-submit', (event) => {
+  document.getElementById('full-form').addEventListener('co-submit', (event) => {
     console.log(event.detail.modelValue);
   });
 </script>
@@ -121,7 +156,16 @@ Use a `<co-button type="reset">` or call `form.reset()` to restore all fields to
 <template #react>
 
 ```tsx
-import { CoForm, CoInput, CoTextarea, CoButton } from '@cobalt/react';
+import {
+  CoForm,
+  CoInput,
+  CoSelect,
+  CoCombobox,
+  CoListbox,
+  CoOption,
+  CoTextarea,
+  CoButton,
+} from '@cobalt/react';
 
 function App() {
   const handleSubmit = (event) => {
@@ -129,12 +173,31 @@ function App() {
   };
 
   return (
-    <CoForm label="Contact" onCoSubmit={handleSubmit}>
+    <CoForm label="Full example" onCoSubmit={handleSubmit}>
       <CoInput label="Name" name="name" />
       <CoInput label="Email" name="email" type="email" />
-      <CoTextarea label="Message" name="message" />
+      <CoSelect label="Department" name="department">
+        <CoOption value="engineering">Engineering</CoOption>
+        <CoOption value="design">Design</CoOption>
+        <CoOption value="product">Product</CoOption>
+      </CoSelect>
+      <CoCombobox label="Skills" name="skills" showAllOnEmpty multiple>
+        <CoOption value="javascript">JavaScript</CoOption>
+        <CoOption value="typescript">TypeScript</CoOption>
+        <CoOption value="css">CSS</CoOption>
+        <CoOption value="figma">Figma</CoOption>
+      </CoCombobox>
+      <CoListbox label="Role" name="role" hasNoDefaultSelected>
+        <CoOption value="developer">Developer</CoOption>
+        <CoOption value="designer">Designer</CoOption>
+        <CoOption value="manager">Manager</CoOption>
+      </CoListbox>
+      <CoTextarea label="Bio" name="bio" />
       <CoButton type="submit" variant="primary">
         Submit
+      </CoButton>
+      <CoButton type="reset" variant="secondary">
+        Reset
       </CoButton>
     </CoForm>
   );
@@ -147,7 +210,16 @@ function App() {
 
 ```vue
 <script setup>
-import { CoForm, CoInput, CoTextarea, CoButton } from '@cobalt/vue';
+import {
+  CoForm,
+  CoInput,
+  CoSelect,
+  CoCombobox,
+  CoListbox,
+  CoOption,
+  CoTextarea,
+  CoButton,
+} from '@cobalt/vue';
 
 function onSubmit(event) {
   console.log(event.detail.modelValue);
@@ -155,11 +227,28 @@ function onSubmit(event) {
 </script>
 
 <template>
-  <CoForm label="Contact" @co-submit="onSubmit">
+  <CoForm label="Full example" @co-submit="onSubmit">
     <CoInput label="Name" name="name" />
     <CoInput label="Email" name="email" type="email" />
-    <CoTextarea label="Message" name="message" />
+    <CoSelect label="Department" name="department">
+      <CoOption value="engineering">Engineering</CoOption>
+      <CoOption value="design">Design</CoOption>
+      <CoOption value="product">Product</CoOption>
+    </CoSelect>
+    <CoCombobox label="Skills" name="skills" show-all-on-empty multiple>
+      <CoOption value="javascript">JavaScript</CoOption>
+      <CoOption value="typescript">TypeScript</CoOption>
+      <CoOption value="css">CSS</CoOption>
+      <CoOption value="figma">Figma</CoOption>
+    </CoCombobox>
+    <CoListbox label="Role" name="role" has-no-default-selected>
+      <CoOption value="developer">Developer</CoOption>
+      <CoOption value="designer">Designer</CoOption>
+      <CoOption value="manager">Manager</CoOption>
+    </CoListbox>
+    <CoTextarea label="Bio" name="bio" />
     <CoButton type="submit" variant="primary">Submit</CoButton>
+    <CoButton type="reset" variant="secondary">Reset</CoButton>
   </CoForm>
 </template>
 ```
@@ -171,12 +260,21 @@ function onSubmit(event) {
 ```typescript
 // app.component.ts
 import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { CoForm, CoInput, CoTextarea, CoButton } from '@cobalt/angular';
+import {
+  CoForm,
+  CoInput,
+  CoSelect,
+  CoCombobox,
+  CoListbox,
+  CoOption,
+  CoTextarea,
+  CoButton,
+} from '@cobalt/angular';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CoForm, CoInput, CoTextarea, CoButton],
+  imports: [CoForm, CoInput, CoSelect, CoCombobox, CoListbox, CoOption, CoTextarea, CoButton],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './app.component.html',
 })
@@ -189,11 +287,28 @@ export class AppComponent {
 
 ```html
 <!-- app.component.html -->
-<co-form label="Contact" (coSubmit)="onSubmit($event)">
+<co-form label="Full example" (coSubmit)="onSubmit($event)">
   <co-input label="Name" name="name"></co-input>
   <co-input label="Email" name="email" type="email"></co-input>
-  <co-textarea label="Message" name="message"></co-textarea>
+  <co-select label="Department" name="department">
+    <co-option value="engineering">Engineering</co-option>
+    <co-option value="design">Design</co-option>
+    <co-option value="product">Product</co-option>
+  </co-select>
+  <co-combobox label="Skills" name="skills" show-all-on-empty multiple>
+    <co-option value="javascript">JavaScript</co-option>
+    <co-option value="typescript">TypeScript</co-option>
+    <co-option value="css">CSS</co-option>
+    <co-option value="figma">Figma</co-option>
+  </co-combobox>
+  <co-listbox label="Role" name="role" has-no-default-selected>
+    <co-option value="developer">Developer</co-option>
+    <co-option value="designer">Designer</co-option>
+    <co-option value="manager">Manager</co-option>
+  </co-listbox>
+  <co-textarea label="Bio" name="bio"></co-textarea>
   <co-button type="submit" variant="primary">Submit</co-button>
+  <co-button type="reset" variant="secondary">Reset</co-button>
 </co-form>
 ```
 
@@ -248,12 +363,12 @@ export class AppComponent {
 
 ### Slots
 
-| Name        | Description                                      |
-| ----------- | ------------------------------------------------ |
-| (default)   | Form field content (co-input, co-textarea, etc.) |
-| `label`     | Label content                                    |
-| `help-text` | Help text content                                |
-| `feedback`  | Validation feedback content                      |
+| Name        | Description                                                                          |
+| ----------- | ------------------------------------------------------------------------------------ |
+| (default)   | Form field content (co-input, co-select, co-combobox, co-listbox, co-textarea, etc.) |
+| `label`     | Label content                                                                        |
+| `help-text` | Help text content                                                                    |
+| `feedback`  | Validation feedback content                                                          |
 
 ### CSS Parts
 
