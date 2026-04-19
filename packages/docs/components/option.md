@@ -31,45 +31,29 @@ The selection indicator automatically adapts to the parent context — a **radio
 </div>
 </ClientOnly>
 
-| Context         | Indicator style        | Behavior                       |
-| --------------- | ---------------------- | ------------------------------ |
-| Single-select   | Radio circle           | Filled dot when checked        |
-| Multiple-select | Checkbox square        | Checkmark when checked         |
-| Custom (slot)   | Consumer-provided icon | Replaces the default indicator |
+| Context         | Indicator style           | Behavior                       |
+| --------------- | ------------------------- | ------------------------------ |
+| Single-select   | `radio-button-*` co-icon  | Filled when checked            |
+| Multiple-select | `check-box-*` co-icon     | Filled when checked            |
+| Custom (prefix) | Consumer-provided content | Replaces the default indicator |
 
-## Custom indicator
+## Custom prefix
 
-### Icon indicator
-
-Use the `indicator-icon` slot to replace the default indicator with a `co-icon`. The option **automatically manages the `fill` attribute** based on checked state — no consumer logic needed.
+Use the `prefix` slot to replace the default radio/checkbox icon with a custom indicator.
 
 <ClientOnly>
 <div style="display: grid; gap: 16px; max-width: 420px; margin: 16px 0 24px;">
-  <co-listbox label="With check-circle icon" name="custom-indicator">
+  <co-listbox label="With star prefix" name="star-prefix">
     <co-option value="apple" checked>
-      <co-icon slot="indicator-icon" name="check-circle" size="sm"></co-icon>
+      <co-icon slot="prefix" name="star" size="sm"></co-icon>
       Apple
     </co-option>
     <co-option value="banana">
-      <co-icon slot="indicator-icon" name="check-circle" size="sm"></co-icon>
+      <co-icon slot="prefix" name="star" size="sm"></co-icon>
       Banana
     </co-option>
     <co-option value="carrot">
-      <co-icon slot="indicator-icon" name="check-circle" size="sm"></co-icon>
-      Carrot
-    </co-option>
-  </co-listbox>
-  <co-listbox label="With star icon" name="star-indicator">
-    <co-option value="apple" checked>
-      <co-icon slot="indicator-icon" name="star" size="sm"></co-icon>
-      Apple
-    </co-option>
-    <co-option value="banana">
-      <co-icon slot="indicator-icon" name="star" size="sm"></co-icon>
-      Banana
-    </co-option>
-    <co-option value="carrot">
-      <co-icon slot="indicator-icon" name="star" size="sm"></co-icon>
+      <co-icon slot="prefix" name="star" size="sm"></co-icon>
       Carrot
     </co-option>
   </co-listbox>
@@ -77,37 +61,45 @@ Use the `indicator-icon` slot to replace the default indicator with a `co-icon`.
 </ClientOnly>
 
 ```html
-<!-- Icon indicator — fill is auto-managed -->
+<!-- Custom prefix icon -->
 <co-option value="apple">
-  <co-icon slot="indicator-icon" name="check-circle" size="sm"></co-icon>
+  <co-icon slot="prefix" name="star" size="sm"></co-icon>
   Apple
 </co-option>
 
-<!-- Default indicator (no slot content needed) -->
+<!-- Default indicator (no prefix slot needed) -->
 <co-option value="banana">Banana</co-option>
 ```
 
-### Generic indicator
+## Suffix
 
-Use the `indicator` slot for fully custom indicator content that doesn't fit the icon pattern. No automatic state management is applied — the consumer controls the visual state.
+Use the `suffix` slot to add a trailing status indicator on the right side of the option.
+
+<ClientOnly>
+<div style="display: grid; gap: 16px; max-width: 420px; margin: 16px 0 24px;">
+  <co-listbox label="With suffix icons" name="suffix-demo">
+    <co-option value="download" checked>
+      Download
+      <co-icon slot="suffix" name="download" size="sm"></co-icon>
+    </co-option>
+    <co-option value="share">
+      Share
+      <co-icon slot="suffix" name="share" size="sm"></co-icon>
+    </co-option>
+    <co-option value="link">
+      Copy link
+      <co-icon slot="suffix" name="link" size="sm"></co-icon>
+    </co-option>
+  </co-listbox>
+</div>
+</ClientOnly>
 
 ```html
-<co-option value="apple">
-  <my-custom-indicator slot="indicator"></my-custom-indicator>
-  Apple
+<co-option value="download">
+  Download
+  <co-icon slot="suffix" name="download" size="sm"></co-icon>
 </co-option>
 ```
-
-### Planned slots
-
-Future indicator slots will be added as their underlying components ship:
-
-| Slot                 | Status  | Auto-managed state          |
-| -------------------- | ------- | --------------------------- |
-| `indicator-icon`     | Current | `fill` attribute on co-icon |
-| `indicator-radio`    | Planned | `checked` on co-radio       |
-| `indicator-checkbox` | Planned | `checked` on co-checkbox    |
-| `indicator`          | Current | None (generic fallback)     |
 
 ## Usage
 
@@ -235,19 +227,20 @@ export class AppComponent {}
 
 ### Slots
 
-| Name             | Description                                                                   |
-| ---------------- | ----------------------------------------------------------------------------- |
-| _(default)_      | Option label content                                                          |
-| `indicator-icon` | Icon indicator — auto-manages `fill` attribute from checked state             |
-| `indicator`      | Generic custom indicator (no auto state management, fallback for any content) |
+| Name        | Description                                                        |
+| ----------- | ------------------------------------------------------------------ |
+| _(default)_ | Option label content                                               |
+| `prefix`    | Custom prefix indicator (replaces the default radio/checkbox icon) |
+| `suffix`    | Trailing status indicator (icon, badge, etc.)                      |
 
 ### CSS Parts
 
-| Part        | Description              |
-| ----------- | ------------------------ |
-| `base`      | The option wrapper       |
-| `indicator` | The selection indicator  |
-| `label`     | The option label wrapper |
+| Part     | Description                    |
+| -------- | ------------------------------ |
+| `base`   | The option wrapper             |
+| `prefix` | The prefix indicator container |
+| `label`  | The option label wrapper       |
+| `suffix` | The suffix container           |
 
 ## Accessibility
 

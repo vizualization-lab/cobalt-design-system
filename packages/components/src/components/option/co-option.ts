@@ -2,18 +2,20 @@ import { html, type PropertyValues } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { LionOption } from '@lion/ui/listbox.js';
 import { cobaltOptionStyles } from './co-option.styles.js';
+import '../icon/co-icon.js';
 
 /**
  * @tag co-option
  * @summary A shared option component for Cobalt listbox and combobox controls.
  *
  * @slot - Option label content
- * @slot indicator-icon - Icon indicator (auto-manages `fill` from checked state)
- * @slot indicator - Generic custom indicator (no auto state management)
+ * @slot prefix - Custom prefix indicator (replaces default radio/checkbox icon)
+ * @slot suffix - Trailing status indicator (icon, badge, etc.)
  *
  * @csspart base - The option wrapper
- * @csspart indicator - The selection indicator
+ * @csspart prefix - The prefix indicator container
  * @csspart label - The option label wrapper
+ * @csspart suffix - The suffix container
  */
 @customElement('co-option')
 export class CoOption extends LionOption {
@@ -35,65 +37,40 @@ export class CoOption extends LionOption {
     this.requestUpdate('value', oldValue);
   }
 
-  private _iconElement: HTMLElement | null = null;
-
   override connectedCallback(): void {
     super.connectedCallback();
     this._syncMultipleAttribute();
   }
 
-  override firstUpdated(changedProperties: PropertyValues<this>): void {
-    super.firstUpdated(changedProperties);
-    this._discoverIndicatorElements();
-  }
-
   override updated(changedProperties: PropertyValues<this>): void {
     super.updated(changedProperties);
     this._syncMultipleAttribute();
-    this._syncIconFill();
+  }
+
+  private get _indicatorIconName(): string {
+    const isMultiple = this.hasAttribute('multiple');
+    if (isMultiple) {
+      return this.checked ? 'check-box' : 'check-box-outline-blank';
+    }
+    return this.checked ? 'radio-button-checked' : 'radio-button-unchecked';
   }
 
   override render() {
     return html`
       <div part="base" class="option">
-        <span part="indicator" class="option__indicator" aria-hidden="true"></span>
+        <span part="prefix" class="option__prefix" aria-hidden="true">
+          <slot name="prefix">
+            <co-icon name=${this._indicatorIconName} size="sm" ?fill=${this.checked}></co-icon>
+          </slot>
+        </span>
         <span part="label" class="option__label">
           <slot></slot>
         </span>
+        <span part="suffix" class="option__suffix">
+          <slot name="suffix"></slot>
+        </span>
       </div>
     `;
-  }
-
-  /**
-   * Lion's SlotMixin wraps light DOM content in a <span>, preventing named
-   * slot projection. Instead we find indicator elements in the light DOM and
-   * move them into the shadow DOM indicator container directly. The :empty
-   * pseudo-class in CSS hides the default indicator when custom content is present.
-   */
-  private _discoverIndicatorElements() {
-    const iconEl = this.querySelector<HTMLElement>('[slot="indicator-icon"]');
-    const genericEl = this.querySelector<HTMLElement>('[slot="indicator"]');
-    const el = iconEl ?? genericEl;
-
-    const indicatorHost = this.shadowRoot!.querySelector('.option__indicator');
-    if (!el || !indicatorHost) return;
-
-    indicatorHost.appendChild(el);
-
-    if (iconEl) {
-      this._iconElement = iconEl;
-      this._syncIconFill();
-    }
-  }
-
-  private _syncIconFill() {
-    if (!this._iconElement) return;
-
-    if (this.checked) {
-      this._iconElement.setAttribute('fill', '');
-    } else {
-      this._iconElement.removeAttribute('fill');
-    }
   }
 
   private _syncMultipleAttribute() {

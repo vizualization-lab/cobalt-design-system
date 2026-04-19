@@ -30,19 +30,19 @@ export const html = `
   </section>
 
   <section class="wb-section">
-    <h2 class="wb-heading">Icon Indicator (Star)</h2>
+    <h2 class="wb-heading">Custom Prefix (Star)</h2>
     <div style="max-width: 320px;">
-      <co-listbox label="Rate your favorite" name="star-indicator">
+      <co-listbox label="Rate your favorite" name="star-prefix">
         <co-option value="apple" checked>
-          <co-icon slot="indicator-icon" name="star" size="sm"></co-icon>
+          <co-icon slot="prefix" name="star" size="sm"></co-icon>
           Apple
         </co-option>
         <co-option value="banana">
-          <co-icon slot="indicator-icon" name="star" size="sm"></co-icon>
+          <co-icon slot="prefix" name="star" size="sm"></co-icon>
           Banana
         </co-option>
         <co-option value="carrot">
-          <co-icon slot="indicator-icon" name="star" size="sm"></co-icon>
+          <co-icon slot="prefix" name="star" size="sm"></co-icon>
           Carrot
         </co-option>
       </co-listbox>
@@ -50,20 +50,20 @@ export const html = `
   </section>
 
   <section class="wb-section">
-    <h2 class="wb-heading">Icon Indicator (Check Circle)</h2>
+    <h2 class="wb-heading">With Suffix</h2>
     <div style="max-width: 320px;">
-      <co-listbox label="Completed tasks" name="check-indicator">
-        <co-option value="task-1" checked>
-          <co-icon slot="indicator-icon" name="check-circle" size="sm"></co-icon>
-          Design review
+      <co-listbox label="File actions" name="suffix-demo">
+        <co-option value="download" checked>
+          Download
+          <co-icon slot="suffix" name="download" size="sm"></co-icon>
         </co-option>
-        <co-option value="task-2">
-          <co-icon slot="indicator-icon" name="check-circle" size="sm"></co-icon>
-          Code review
+        <co-option value="share">
+          Share
+          <co-icon slot="suffix" name="share" size="sm"></co-icon>
         </co-option>
-        <co-option value="task-3">
-          <co-icon slot="indicator-icon" name="check-circle" size="sm"></co-icon>
-          QA testing
+        <co-option value="link">
+          Copy link
+          <co-icon slot="suffix" name="link" size="sm"></co-icon>
         </co-option>
       </co-listbox>
     </div>
@@ -77,24 +77,6 @@ export const html = `
         <co-option value="banana" disabled>Banana (sold out)</co-option>
         <co-option value="carrot">Carrot</co-option>
         <co-option value="date" disabled>Date (sold out)</co-option>
-      </co-listbox>
-    </div>
-  </section>
-
-  <section class="wb-section">
-    <h2 class="wb-heading">Mixed (Default + Custom Indicator)</h2>
-    <div style="max-width: 320px;">
-      <co-listbox label="Mixed indicators" name="mixed-indicators">
-        <co-option value="apple" checked>Apple</co-option>
-        <co-option value="banana">
-          <co-icon slot="indicator-icon" name="star" size="sm"></co-icon>
-          Banana (star)
-        </co-option>
-        <co-option value="carrot">Carrot</co-option>
-        <co-option value="date">
-          <co-icon slot="indicator-icon" name="favorite" size="sm"></co-icon>
-          Date (heart)
-        </co-option>
       </co-listbox>
     </div>
   </section>

@@ -44,62 +44,32 @@ export const cobaltOptionStyles = css`
     cursor: not-allowed;
   }
 
-  /* ── Indicator: shared ── */
+  /* ── Prefix (indicator) ── */
 
-  .option__indicator {
+  .option__prefix {
     display: inline-flex;
     align-items: center;
     justify-content: center;
     flex: 0 0 auto;
   }
 
-  /* ── Default indicator (no custom content) ── */
-
-  .option__indicator:empty {
-    inline-size: 0.75em;
-    block-size: 0.75em;
-    border: var(--co-shape-border-width-thin) solid var(--co-color-border-strong);
-    border-radius: 999px;
-    background-color: transparent;
-  }
-
-  :host([disabled]) .option__indicator:empty {
-    border-color: var(--co-color-border-subtle);
-    background: transparent;
-    box-shadow: none;
-  }
-
-  /* ── Radio (single-select) ── */
-
-  :host([checked]:not([multiple])) .option__indicator:empty {
-    border-color: var(--co-color-text-on-primary);
-    background: var(--co-color-text-on-primary);
-    box-shadow: inset 0 0 0 2px var(--co-color-interactive-primary-default);
-  }
-
-  /* ── Checkbox (multi-select) ── */
-
-  :host([multiple]) .option__indicator:empty {
-    border-radius: var(--co-shape-radius-sm, 3px);
-  }
-
-  :host([multiple][checked]) .option__indicator:empty {
-    border-color: var(--co-color-text-on-primary);
-    background: var(--co-color-text-on-primary);
-    box-shadow: none;
-  }
-
-  :host([multiple][checked]) .option__indicator:empty::after {
-    content: '';
-    display: block;
-    inline-size: 0.35em;
-    block-size: 0.2em;
-    border-left: 1.5px solid var(--co-color-interactive-primary-default);
-    border-bottom: 1.5px solid var(--co-color-interactive-primary-default);
-    transform: rotate(-45deg) translateY(-0.04em);
-  }
+  /* ── Label ── */
 
   .option__label {
+    flex: 1 1 auto;
     min-inline-size: 0;
+  }
+
+  /* ── Suffix ── */
+
+  .option__suffix {
+    display: inline-flex;
+    align-items: center;
+    flex: 0 0 auto;
+    margin-inline-start: auto;
+  }
+
+  .option__suffix:empty {
+    display: none;
   }
 `;
