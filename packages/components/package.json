@@ -26,6 +26,10 @@
       "import": "./dist/components/checkbox-group/co-checkbox-group.js",
       "types": "./dist/components/checkbox-group/co-checkbox-group.d.ts"
     },
+    "./checkbox-indeterminate": {
+      "import": "./dist/components/checkbox-indeterminate/co-checkbox-indeterminate.js",
+      "types": "./dist/components/checkbox-indeterminate/co-checkbox-indeterminate.d.ts"
+    },
     "./button-icon": {
       "import": "./dist/components/button-icon/co-button-icon.js",
       "types": "./dist/components/button-icon/co-button-icon.d.ts"

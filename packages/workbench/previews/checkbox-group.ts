@@ -1,5 +1,6 @@
 import '@cobalt/components/checkbox-group';
 import '@cobalt/components/checkbox';
+import '@cobalt/components/checkbox-indeterminate';
 
 export const title = '<co-checkbox-group>';
 
@@ -53,6 +54,32 @@ export const html = `
       <co-checkbox-group label="Accept terms" name="required-group" required>
         <co-checkbox label="I agree to the terms" value="terms"></co-checkbox>
         <co-checkbox label="I agree to the privacy policy" value="privacy"></co-checkbox>
+      </co-checkbox-group>
+    </div>
+  </section>
+
+  <section class="wb-section">
+    <h2 class="wb-heading">Indeterminate (Select All)</h2>
+    <div style="max-width: 320px;">
+      <co-checkbox-group label="Permissions" name="indeterminate-group">
+        <co-checkbox-indeterminate label="Select all">
+          <co-checkbox label="Read" value="read" checked></co-checkbox>
+          <co-checkbox label="Write" value="write"></co-checkbox>
+          <co-checkbox label="Delete" value="delete"></co-checkbox>
+        </co-checkbox-indeterminate>
+      </co-checkbox-group>
+    </div>
+  </section>
+
+  <section class="wb-section">
+    <h2 class="wb-heading">Mixed State</h2>
+    <div style="max-width: 320px;">
+      <co-checkbox-group label="Features" name="mixed-state-group">
+        <co-checkbox-indeterminate label="All features" mixed-state>
+          <co-checkbox label="Dashboard" value="dashboard" checked></co-checkbox>
+          <co-checkbox label="Analytics" value="analytics"></co-checkbox>
+          <co-checkbox label="Reports" value="reports" checked></co-checkbox>
+        </co-checkbox-indeterminate>
       </co-checkbox-group>
     </div>
   </section>

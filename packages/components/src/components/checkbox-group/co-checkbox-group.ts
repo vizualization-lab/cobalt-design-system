@@ -5,6 +5,7 @@ import { Required, type Validator } from '@lion/ui/form-core.js';
 import { cobaltCheckboxGroupStyles } from './co-checkbox-group.styles.js';
 
 export { CoCheckbox } from '../checkbox/co-checkbox.js';
+export { CoCheckboxIndeterminate } from '../checkbox-indeterminate/co-checkbox-indeterminate.js';
 
 export interface CheckboxGroupChangeDetail {
   value: unknown;

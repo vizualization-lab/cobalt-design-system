@@ -2,6 +2,7 @@ export { CoButton } from './components/button/co-button.js';
 export { CoButtonIcon } from './components/button-icon/co-button-icon.js';
 export { CoCheckbox } from './components/checkbox/co-checkbox.js';
 export { CoCheckboxGroup } from './components/checkbox-group/co-checkbox-group.js';
+export { CoCheckboxIndeterminate } from './components/checkbox-indeterminate/co-checkbox-indeterminate.js';
 export { CoCombobox } from './components/combobox/co-combobox.js';
 export { CoForm } from './components/form/co-form.js';
 export { CoIcon } from './components/icon/co-icon.js';
