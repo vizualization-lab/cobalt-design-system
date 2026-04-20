@@ -4,15 +4,13 @@ The `co-checkbox-group` and `co-checkbox` components provide a themed, accessibl
 
 ## Interactive Demo
 
-<ClientOnly>
-<div style="max-width: 420px; margin: 16px 0 24px;">
-  <co-checkbox-group label="Toppings" name="demo-toppings">
-    <co-checkbox label="Cheese" value="cheese"></co-checkbox>
-    <co-checkbox label="Pepperoni" value="pepperoni"></co-checkbox>
-    <co-checkbox label="Mushrooms" value="mushrooms"></co-checkbox>
-  </co-checkbox-group>
-</div>
-</ClientOnly>
+<ComponentDemo
+  tag="co-checkbox-group"
+  :defaults="{ label: 'Ingredients' }"
+  :booleans="['disabled', 'required']"
+  :textInputs="['label']"
+  :slotHtml="'<co-checkbox label=&quot;Cheese&quot; value=&quot;cheese&quot;></co-checkbox><co-checkbox label=&quot;Pepperoni&quot; value=&quot;pepperoni&quot;></co-checkbox><co-checkbox label=&quot;Mushrooms&quot; value=&quot;mushrooms&quot;></co-checkbox>'"
+/>
 
 ## Pre-selected
 
@@ -42,6 +40,63 @@ The `co-checkbox-group` and `co-checkbox` components provide a themed, accessibl
 </div>
 </ClientOnly>
 
+## Indeterminate (Select All)
+
+Use `co-checkbox-indeterminate` as a parent checkbox that manages nested child checkboxes. It automatically tracks the state of its children:
+
+- **All checked** → parent shows checked
+- **None checked** → parent shows unchecked
+- **Some checked** → parent shows an indeterminate (dash) icon
+
+Clicking the parent toggles all children on or off.
+
+<ClientOnly>
+<div style="max-width: 420px; margin: 16px 0 24px;">
+  <co-checkbox-group label="Permissions" name="indeterminate-demo">
+    <co-checkbox-indeterminate label="Select all">
+      <co-checkbox label="Read" value="read"></co-checkbox>
+      <co-checkbox label="Write" value="write"></co-checkbox>
+      <co-checkbox label="Delete" value="delete"></co-checkbox>
+    </co-checkbox-indeterminate>
+  </co-checkbox-group>
+</div>
+</ClientOnly>
+
+### Mixed State
+
+Add the `mixed-state` attribute to enable three-state cycling: **checked → unchecked → indeterminate** (restores previous child states).
+
+<ClientOnly>
+<div style="max-width: 420px; margin: 16px 0 24px;">
+  <co-checkbox-group label="Features" name="mixed-demo">
+    <co-checkbox-indeterminate label="All features" mixed-state>
+      <co-checkbox label="Dashboard" value="dashboard" checked></co-checkbox>
+      <co-checkbox label="Analytics" value="analytics"></co-checkbox>
+      <co-checkbox label="Reports" value="reports" checked></co-checkbox>
+    </co-checkbox-indeterminate>
+  </co-checkbox-group>
+</div>
+</ClientOnly>
+
+```html
+<!-- Basic select all -->
+<co-checkbox-group label="Permissions" name="permissions">
+  <co-checkbox-indeterminate label="Select all">
+    <co-checkbox label="Read" value="read"></co-checkbox>
+    <co-checkbox label="Write" value="write"></co-checkbox>
+    <co-checkbox label="Delete" value="delete"></co-checkbox>
+  </co-checkbox-indeterminate>
+</co-checkbox-group>
+
+<!-- With mixed-state (three-way toggle) -->
+<co-checkbox-group label="Features" name="features">
+  <co-checkbox-indeterminate label="All features" mixed-state>
+    <co-checkbox label="Dashboard" value="dashboard" checked></co-checkbox>
+    <co-checkbox label="Analytics" value="analytics"></co-checkbox>
+  </co-checkbox-indeterminate>
+</co-checkbox-group>
+```
+
 ## Usage
 
 <CodeTabs :tabs="['Web Component', 'React', 'Vue', 'Angular']">
@@ -52,12 +107,23 @@ The `co-checkbox-group` and `co-checkbox` components provide a themed, accessibl
 <script type="module">
   import '@cobalt/components/checkbox-group';
   import '@cobalt/components/checkbox';
+  import '@cobalt/components/checkbox-indeterminate';
 </script>
 
+<!-- Basic checkbox group -->
 <co-checkbox-group label="Toppings" name="toppings">
   <co-checkbox label="Cheese" value="cheese"></co-checkbox>
   <co-checkbox label="Pepperoni" value="pepperoni"></co-checkbox>
   <co-checkbox label="Mushrooms" value="mushrooms"></co-checkbox>
+</co-checkbox-group>
+
+<!-- With select all -->
+<co-checkbox-group label="Permissions" name="permissions">
+  <co-checkbox-indeterminate label="Select all">
+    <co-checkbox label="Read" value="read"></co-checkbox>
+    <co-checkbox label="Write" value="write"></co-checkbox>
+    <co-checkbox label="Delete" value="delete"></co-checkbox>
+  </co-checkbox-indeterminate>
 </co-checkbox-group>
 
 <script>
@@ -72,15 +138,25 @@ The `co-checkbox-group` and `co-checkbox` components provide a themed, accessibl
 <template #react>
 
 ```tsx
-import { CoCheckboxGroup, CoCheckbox } from '@cobalt/react';
+import { CoCheckboxGroup, CoCheckbox, CoCheckboxIndeterminate } from '@cobalt/react';
 
 function App() {
   return (
-    <CoCheckboxGroup label="Toppings" name="toppings" onCoChange={(e) => console.log(e.detail)}>
-      <CoCheckbox label="Cheese" value="cheese" />
-      <CoCheckbox label="Pepperoni" value="pepperoni" />
-      <CoCheckbox label="Mushrooms" value="mushrooms" />
-    </CoCheckboxGroup>
+    <>
+      {/* Basic */}
+      <CoCheckboxGroup label="Toppings" name="toppings" onCoChange={(e) => console.log(e.detail)}>
+        <CoCheckbox label="Cheese" value="cheese" />
+        <CoCheckbox label="Pepperoni" value="pepperoni" />
+      </CoCheckboxGroup>
+
+      {/* With select all */}
+      <CoCheckboxGroup label="Permissions" name="permissions">
+        <CoCheckboxIndeterminate label="Select all">
+          <CoCheckbox label="Read" value="read" />
+          <CoCheckbox label="Write" value="write" />
+        </CoCheckboxIndeterminate>
+      </CoCheckboxGroup>
+    </>
   );
 }
 ```
@@ -91,7 +167,7 @@ function App() {
 
 ```vue
 <script setup>
-import { CoCheckboxGroup, CoCheckbox } from '@cobalt/vue';
+import { CoCheckboxGroup, CoCheckbox, CoCheckboxIndeterminate } from '@cobalt/vue';
 
 function onChange(e) {
   console.log('Selected:', e.detail.value);
@@ -99,10 +175,18 @@ function onChange(e) {
 </script>
 
 <template>
+  <!-- Basic -->
   <CoCheckboxGroup label="Toppings" name="toppings" @co-change="onChange">
     <CoCheckbox label="Cheese" value="cheese" />
     <CoCheckbox label="Pepperoni" value="pepperoni" />
-    <CoCheckbox label="Mushrooms" value="mushrooms" />
+  </CoCheckboxGroup>
+
+  <!-- With select all -->
+  <CoCheckboxGroup label="Permissions" name="permissions">
+    <CoCheckboxIndeterminate label="Select all">
+      <CoCheckbox label="Read" value="read" />
+      <CoCheckbox label="Write" value="write" />
+    </CoCheckboxIndeterminate>
   </CoCheckboxGroup>
 </template>
 ```
@@ -113,12 +197,12 @@ function onChange(e) {
 
 ```typescript
 import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { CoCheckboxGroup, CoCheckbox } from '@cobalt/angular';
+import { CoCheckboxGroup, CoCheckbox, CoCheckboxIndeterminate } from '@cobalt/angular';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CoCheckboxGroup, CoCheckbox],
+  imports: [CoCheckboxGroup, CoCheckbox, CoCheckboxIndeterminate],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './app.component.html',
 })
@@ -130,10 +214,18 @@ export class AppComponent {
 ```
 
 ```html
+<!-- Basic -->
 <co-checkbox-group label="Toppings" name="toppings" (coChange)="onChange($event)">
   <co-checkbox label="Cheese" value="cheese"></co-checkbox>
   <co-checkbox label="Pepperoni" value="pepperoni"></co-checkbox>
-  <co-checkbox label="Mushrooms" value="mushrooms"></co-checkbox>
+</co-checkbox-group>
+
+<!-- With select all -->
+<co-checkbox-group label="Permissions" name="permissions">
+  <co-checkbox-indeterminate label="Select all">
+    <co-checkbox label="Read" value="read"></co-checkbox>
+    <co-checkbox label="Write" value="write"></co-checkbox>
+  </co-checkbox-indeterminate>
 </co-checkbox-group>
 ```
 
@@ -165,7 +257,9 @@ export class AppComponent {
 
 ## API
 
-### co-checkbox-group Properties
+### Properties
+
+#### co-checkbox-group Properties
 
 | Property   | Type      | Default | Description                   |
 | ---------- | --------- | ------- | ----------------------------- |
@@ -173,7 +267,7 @@ export class AppComponent {
 | `disabled` | `boolean` | `false` | Disables all child checkboxes |
 | `required` | `boolean` | `false` | Adds required validation      |
 
-### co-checkbox Properties
+#### co-checkbox Properties
 
 | Property   | Type      | Default | Description                                |
 | ---------- | --------- | ------- | ------------------------------------------ |
@@ -181,13 +275,25 @@ export class AppComponent {
 | `checked`  | `boolean` | `false` | Whether this checkbox is selected          |
 | `disabled` | `boolean` | `false` | Disables this individual checkbox          |
 
+#### co-checkbox-indeterminate Properties
+
+| Property        | Type      | Default | Description                                                       |
+| --------------- | --------- | ------- | ----------------------------------------------------------------- |
+| `value`         | `string`  | `''`    | Value alias for choiceValue                                       |
+| `checked`       | `boolean` | `false` | Fully checked state (all children checked)                        |
+| `indeterminate` | `boolean` | `false` | Partial selection state (some children checked)                   |
+| `mixed-state`   | `boolean` | `false` | Enables three-state cycling (checked → unchecked → indeterminate) |
+| `disabled`      | `boolean` | `false` | Disables this checkbox and all nested children                    |
+
 ### Events
 
 | Event       | Detail                  | Description                      |
 | ----------- | ----------------------- | -------------------------------- |
 | `co-change` | `{ value, modelValue }` | Fired when the selection changes |
 
-### co-checkbox-group Slots
+### Slots
+
+#### co-checkbox-group Slots
 
 | Name        | Description                 |
 | ----------- | --------------------------- |
@@ -196,13 +302,31 @@ export class AppComponent {
 | `help-text` | Help text below the label   |
 | `feedback`  | Validation feedback content |
 
-### co-checkbox Slots
+#### co-checkbox Slots
 
 | Name    | Description            |
 | ------- | ---------------------- |
 | `label` | Checkbox label content |
 
-### co-checkbox-group CSS Parts
+#### co-checkbox-indeterminate Slots
+
+| Name        | Description                  |
+| ----------- | ---------------------------- |
+| _(default)_ | Nested co-checkbox children  |
+| `label`     | Indeterminate checkbox label |
+
+### CSS Parts
+
+#### co-checkbox-indeterminate CSS Parts
+
+| Part       | Description                     |
+| ---------- | ------------------------------- |
+| `base`     | The checkbox wrapper            |
+| `icon`     | The co-icon indicator           |
+| `label`    | The label wrapper               |
+| `children` | The nested checkboxes container |
+
+#### co-checkbox-group CSS Parts
 
 | Part        | Description                     |
 | ----------- | ------------------------------- |
@@ -211,7 +335,7 @@ export class AppComponent {
 | `group`     | The checkbox options container  |
 | `feedback`  | The validation feedback wrapper |
 
-### co-checkbox CSS Parts
+#### co-checkbox CSS Parts
 
 | Part    | Description           |
 | ------- | --------------------- |
