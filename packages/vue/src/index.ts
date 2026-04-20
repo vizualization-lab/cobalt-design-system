@@ -2,6 +2,10 @@ export { CoButton, type CoButtonProps } from './components/button.js';
 export { CoButtonIcon, type CoButtonIconProps } from './components/button-icon.js';
 export { CoCheckbox, type CoCheckboxProps } from './components/checkbox.js';
 export { CoCheckboxGroup, type CoCheckboxGroupProps } from './components/checkbox-group.js';
+export {
+  CoCheckboxIndeterminate,
+  type CoCheckboxIndeterminateProps,
+} from './components/checkbox-indeterminate.js';
 export { CoCombobox, type CoComboboxProps } from './components/combobox.js';
 export { CoForm, type CoFormProps } from './components/form.js';
 export { CoIcon, type CoIconProps } from './components/icon.js';
