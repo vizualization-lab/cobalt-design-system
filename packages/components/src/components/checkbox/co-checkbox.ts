@@ -64,9 +64,9 @@ export class CoCheckbox extends LionCheckbox {
     }
   }
 
-  private _onCheckboxClick() {
+  private _onCheckboxClick(e: Event) {
     const input = this.querySelector('[slot="input"]') as HTMLInputElement | null;
-    if (input && !this.disabled) {
+    if (input && !this.disabled && e.target !== input) {
       input.click();
       input.focus();
     }

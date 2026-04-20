@@ -54,7 +54,9 @@ export class CoSelect extends LionSelectRich {
   @property({ type: Boolean, reflect: true })
   required = false;
 
-  private readonly _requiredValidator = new Required();
+  private readonly _requiredValidator = new Required(undefined, {
+    getMessage: async () => 'Please select an option.',
+  });
 
   override connectedCallback(): void {
     super.connectedCallback();

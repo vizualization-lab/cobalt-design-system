@@ -128,7 +128,9 @@ export class CoCombobox extends LionCombobox {
     super.requireOptionMatch = value;
   }
 
-  private readonly _requiredValidator = new Required();
+  private readonly _requiredValidator = new Required(undefined, {
+    getMessage: async () => 'Please select an option.',
+  });
   private readonly _matchesOptionValidator = new CobaltMatchesOption();
 
   override connectedCallback(): void {

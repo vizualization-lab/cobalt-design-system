@@ -64,7 +64,9 @@ export class CoListbox extends LionListbox {
   @property({ type: Boolean, reflect: true })
   required = false;
 
-  private readonly _requiredValidator = new Required();
+  private readonly _requiredValidator = new Required(undefined, {
+    getMessage: async () => 'Please select an option.',
+  });
 
   override connectedCallback(): void {
     super.connectedCallback();

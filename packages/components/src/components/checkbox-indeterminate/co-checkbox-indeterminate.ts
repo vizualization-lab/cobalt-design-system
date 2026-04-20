@@ -80,9 +80,9 @@ export class CoCheckboxIndeterminate extends LionCheckboxIndeterminate {
     }
   }
 
-  private _onCheckboxClick() {
+  private _onCheckboxClick(e: Event) {
     const input = this.querySelector('[slot="input"]') as HTMLInputElement | null;
-    if (input && !this.disabled) {
+    if (input && !this.disabled && e.target !== input) {
       input.click();
       input.focus();
     }

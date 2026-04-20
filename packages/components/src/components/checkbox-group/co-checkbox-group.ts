@@ -38,7 +38,9 @@ export class CoCheckboxGroup extends LionCheckboxGroup {
   @property({ type: Boolean, reflect: true })
   required = false;
 
-  private readonly _requiredValidator = new Required();
+  private readonly _requiredValidator = new Required(undefined, {
+    getMessage: async () => 'Please select at least one option.',
+  });
 
   override connectedCallback(): void {
     super.connectedCallback();
