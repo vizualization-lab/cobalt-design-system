@@ -1,4 +1,4 @@
-#wCombo Box
+# Combo Box
 
 The `co-combobox` component provides a themed, accessible searchable selection field built on top of Lion Web Components. It supports filtering, inline autocomplete, optional multiple choice, optional custom values, validation feedback, and Cobalt option styling through [`co-option`](/components/option).
 
