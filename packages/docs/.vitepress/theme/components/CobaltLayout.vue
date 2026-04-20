@@ -9,9 +9,16 @@ import CobaltToc from './CobaltToc.vue';
 import { navigation, type NavItem } from '../navigation';
 import VPNavBarSearch from 'vitepress/dist/client/theme-default/components/VPNavBarSearch.vue';
 
-const { frontmatter, theme } = useData();
+const { frontmatter, theme, page } = useData();
 const route = useRoute();
 const router = useRouter();
+
+const editUrl = computed(() => {
+  const filePath = page.value.relativePath;
+  const githubUrl = theme.value.github?.url;
+  if (!filePath || !githubUrl) return null;
+  return `${githubUrl}/edit/main/packages/docs/${filePath}`;
+});
 
 const isDark = ref(false);
 const sidebarOpen = ref(false);
@@ -230,7 +237,19 @@ function toggleSidebar() {
           <CobaltHome />
         </div>
         <article class="cobalt-content cobalt-article vp-doc" v-else>
+          <div class="edit-link edit-link--top" v-if="editUrl">
+            <a :href="editUrl" target="_blank" rel="noopener noreferrer">
+              <co-icon name="edit" size="xs" aria-hidden="true"></co-icon>
+              Edit this page on GitHub
+            </a>
+          </div>
           <Content />
+          <div class="edit-link edit-link--bottom" v-if="editUrl">
+            <a :href="editUrl" target="_blank" rel="noopener noreferrer">
+              <co-icon name="edit" size="xs" aria-hidden="true"></co-icon>
+              Edit this page on GitHub
+            </a>
+          </div>
           <CobaltPrevNext />
         </article>
         <CobaltToc v-if="frontmatter.layout !== 'home'" />
@@ -866,6 +885,33 @@ body {
   border: none;
   border-top: 1px solid var(--co-border);
   margin: 40px 0;
+}
+
+/* Edit link */
+.edit-link--top {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 12px;
+}
+
+.edit-link--bottom {
+  margin-top: 48px;
+  padding-top: 20px;
+  border-top: 1px solid var(--co-border);
+}
+
+.edit-link a {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--co-typography-body-sm-size);
+  color: var(--co-color-text-tertiary);
+  text-decoration: none;
+  transition: color var(--co-duration) var(--co-ease);
+}
+
+.edit-link a:hover {
+  color: var(--co-color-interactive-primary-default);
 }
 
 /* Demo containers — inline component previews */
