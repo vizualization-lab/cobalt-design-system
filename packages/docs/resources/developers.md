@@ -45,4 +45,4 @@ Cobalt builds on top of these open-source projects:
 
 ## Need Help?
 
-Visit the [Contact](/resources/contact) page for all support channels, including Slack, GitHub, and office hours.
+Visit the [Contact](/resources/contact) page for all support channels, including GitHub Discussions.

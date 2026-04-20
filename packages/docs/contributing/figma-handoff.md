@@ -42,7 +42,7 @@ Copy and paste this block into Figma file descriptions, frame notes, or handoff 
 - Error behavior:
 - Focus behavior:
 
-### Notes for engineering
+### Notes for Developers
 
 - Shared system rule or one-off exception:
 - Anything intentionally unique:

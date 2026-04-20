@@ -17,7 +17,7 @@ Cobalt is a shared library of reusable UI components, design tokens, and guideli
 
 When scoping a feature, check the Cobalt component library first. Many common patterns are already solved and the component list is growing.
 
-Using existing components means less design and engineering effort, which translates to smaller estimates and faster development times.
+Using existing components means less design and development effort, which translates to smaller estimates and faster development times.
 
 ### During Design Review
 
@@ -56,7 +56,7 @@ When reviewing proposals, the team weighs these criteria:
 | ----------------------- | ------ | ---------------------------------------------------- |
 | Cross-team demand       | High   | Is this needed by more than one product team?        |
 | User impact             | High   | Does this affect a core workflow or conversion path? |
-| Complexity              | Medium | How much design and engineering effort is required?  |
+| Complexity              | Medium | How much design and development effort is required?  |
 | Workaround availability | Medium | Can teams use an existing component as a stopgap?    |
 | Strategic alignment     | Low    | Does this support a broader platform initiative?     |
 

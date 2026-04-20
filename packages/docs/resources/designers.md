@@ -21,7 +21,7 @@ For setup instructions, see the [Getting Started for Designers](/getting-started
 
 ## Handoff Workflow
 
-A smooth handoff reduces back-and-forth between design and engineering. Key resources:
+A smooth handoff reduces back-and-forth between designers and developers. Key resources:
 
 - [Figma Handoff Guide](/contributing/figma-handoff) — What to include when handing off designs (includes a copy-paste template)
 - [Token Structure](/tokens/structure) — Understanding the three-tier token architecture
@@ -35,4 +35,4 @@ A smooth handoff reduces back-and-forth between design and engineering. Key reso
 
 ## Need Help?
 
-Visit the [Contact](/resources/contact) page for all support channels, including Slack, GitHub, and office hours.
+Visit the [Contact](/resources/contact) page for all support channels, including GitHub Discussions.

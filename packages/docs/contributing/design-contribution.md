@@ -31,7 +31,7 @@ For small adjustments (e.g., spacing tweaks, color refinements, icon updates):
 
 1. Create a **branch** in the relevant Figma file
 2. Make your changes, annotating what was modified and why
-3. Post a link to the branch in `#cobalt-design` on Slack with a brief description
+3. Open a GitHub Discussion or Issue with a link to the branch and a brief description
 4. A design system designer will review and merge within 3 business days
 
 ### Major Changes

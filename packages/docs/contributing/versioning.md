@@ -114,7 +114,7 @@ Keep summaries:
 1. The Changesets GitHub Action opens a **Version Packages** PR automatically when changesets accumulate on `main`
 2. The core team reviews the PR, verifying version bumps and changelog entries
 3. Merging the PR triggers the publish pipeline, which publishes updated packages to npm
-4. Release notes are posted in `#cobalt-announcements` on Slack
+4. Release notes are published with the GitHub release
 
 ## Pre-release Channels
 

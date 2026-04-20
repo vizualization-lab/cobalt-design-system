@@ -266,4 +266,4 @@ For running tests within the monorepo, see [Development Setup — Running Tests]
 
 - Browse the [Component documentation](/components/button) for API details, demos, and best practices
 - Review the [Coding Standards](../contributing/coding-standards) before submitting a PR
-- Join `#cobalt-engineering` on Slack for questions and discussion
+- Use [GitHub Discussions](https://github.com/vizualization-lab/cobalt-design-system/discussions) for questions and discussion
