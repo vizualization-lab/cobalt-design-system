@@ -80,17 +80,17 @@ The same `unicode-range` optimization applies: each script's glyphs are only dow
 
 ### Type scale
 
-| Token                | Size  | Rem       | Role that uses it    |
-| -------------------- | ----- | --------- | -------------------- |
-| `--co-font-size-xs`  | 12 px | 0.75 rem  | `caption`, `eyebrow` |
-| `--co-font-size-sm`  | 14 px | 0.875 rem | `body-sm`, `label`   |
-| `--co-font-size-md`  | 16 px | 1 rem     | `body`               |
-| `--co-font-size-lg`  | 18 px | 1.125 rem | `body-lg`            |
-| `--co-font-size-xl`  | 20 px | 1.25 rem  | `subtitle`           |
-| `--co-font-size-2xl` | 24 px | 1.5 rem   | `title`              |
-| `--co-font-size-3xl` | 30 px | 1.875 rem | —                    |
-| `--co-font-size-4xl` | 36 px | 2.25 rem  | `heading`            |
-| `--co-font-size-5xl` | 48 px | 3 rem     | `display`            |
+| Token                   | Size  | Rem       | Role that uses it    |
+| ----------------------- | ----- | --------- | -------------------- |
+| `--co-font-size-xsmall` | 12 px | 0.75 rem  | `caption`, `eyebrow` |
+| `--co-font-size-small`  | 14 px | 0.875 rem | `body-sm`, `label`   |
+| `--co-font-size-p`      | 16 px | 1 rem     | `body`               |
+| `--co-font-size-h6`     | 18 px | 1.125 rem | `body-lg`            |
+| `--co-font-size-h5`     | 20 px | 1.25 rem  | `subtitle`           |
+| `--co-font-size-h4`     | 24 px | 1.5 rem   | `title`              |
+| `--co-font-size-h3`     | 30 px | 1.875 rem | —                    |
+| `--co-font-size-h2`     | 36 px | 2.25 rem  | `heading`            |
+| `--co-font-size-h1`     | 48 px | 3 rem     | `display`            |
 
 ### Font weights
 
@@ -243,12 +243,12 @@ Primitives (`--co-font-size-*`, `--co-font-weight-*`, `--co-font-tracking-*`, `-
 font-size: var(--co-typography-body-size);
 
 /* Over this */
-font-size: var(--co-font-size-md);
+font-size: var(--co-font-size-p);
 ```
 
 ## Best practices
 
-- **Start with a role.** If you're writing `font-size: var(--co-font-size-2xl)`, you probably meant `title` — use the role instead.
+- **Start with a role.** If you're writing `font-size: var(--co-font-size-h4)`, you probably meant `title` — use the role instead.
 - **Don't split the pieces.** If you apply a role's `size`, apply its `weight`, `tracking`, and `line-height` too. Mixing primitives across roles is how type hierarchies drift.
 - **Use `display` sparingly.** At most once per page, for the single most important element.
 - **Never use `bold` for display.** The editorial look depends on `regular` at display sizes. If the design ever calls for display-weight bold, add a new role for it rather than one-off'ing the primitive.

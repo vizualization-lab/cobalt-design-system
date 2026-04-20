@@ -65,7 +65,7 @@ All CSS tokens use the `--co-` prefix. In JSON/JS they use `Co` prefix in camelC
 | Space     | `--co-space-{scale}` or `--co-space-{role}-{size}` | `--co-space-4`, `--co-space-gap-md`, `--co-space-inset-lg`   |
 | Shape     | `--co-shape-{property}-{size}`                     | `--co-shape-radius-md`, `--co-shape-border-width-thin`       |
 | Elevation | `--co-elevation-{type}-{size}`                     | `--co-elevation-shadow-lg`, `--co-elevation-z-modal`         |
-| Font      | `--co-font-{property}-{value}`                     | `--co-font-size-md`, `--co-font-weight-semibold`             |
+| Font      | `--co-font-{property}-{value}`                     | `--co-font-size-p`, `--co-font-weight-semibold`              |
 | Motion    | `--co-motion-{property}-{value}`                   | `--co-motion-duration-fast`, `--co-motion-easing-default`    |
 | Sizing    | `--co-sizing-{element}-{size}`                     | `--co-sizing-icon-md`                                        |
 | Opacity   | `--co-opacity-{role}`                              | `--co-opacity-disabled`, `--co-opacity-overlay`              |

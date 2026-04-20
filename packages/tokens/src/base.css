@@ -121,7 +121,7 @@
 
   [data-co-base] code {
     font-family: var(--co-font-family-mono);
-    font-size: var(--co-font-size-sm);
+    font-size: var(--co-font-size-small);
     background: var(--co-color-surface-raised);
     padding: 0.125em 0.375em;
     border-radius: var(--co-shape-radius-sm);

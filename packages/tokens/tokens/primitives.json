@@ -145,50 +145,50 @@
         }
       },
       "size": {
-        "xs": {
+        "xsmall": {
           "$type": "dimension",
           "$value": "0.75rem",
-          "$description": "Extra small font size used by typography roles."
+          "$description": "Extra small font size for captions and fine print."
         },
-        "sm": {
+        "small": {
           "$type": "dimension",
           "$value": "0.875rem",
-          "$description": "Small font size used by typography roles."
+          "$description": "Small font size for labels and secondary text."
         },
-        "md": {
+        "p": {
           "$type": "dimension",
           "$value": "1rem",
-          "$description": "Medium font size used by typography roles."
+          "$description": "Paragraph baseline font size (body text)."
         },
-        "lg": {
+        "h6": {
           "$type": "dimension",
           "$value": "1.125rem",
-          "$description": "Large font size used by typography roles."
+          "$description": "Heading 6 font size."
         },
-        "xl": {
+        "h5": {
           "$type": "dimension",
           "$value": "1.25rem",
-          "$description": "Extra large font size used by typography roles."
+          "$description": "Heading 5 font size."
         },
-        "2xl": {
+        "h4": {
           "$type": "dimension",
           "$value": "1.5rem",
-          "$description": "Double extra large font size used by typography roles."
+          "$description": "Heading 4 font size."
         },
-        "3xl": {
+        "h3": {
           "$type": "dimension",
           "$value": "1.875rem",
-          "$description": "Triple extra large font size used by typography roles."
+          "$description": "Heading 3 font size."
         },
-        "4xl": {
+        "h2": {
           "$type": "dimension",
           "$value": "2.25rem",
-          "$description": "Quadruple extra large font size used by typography roles."
+          "$description": "Heading 2 font size."
         },
-        "5xl": {
+        "h1": {
           "$type": "dimension",
           "$value": "3rem",
-          "$description": "Quintuple extra large font size used by typography roles."
+          "$description": "Heading 1 font size."
         }
       },
       "weight": {

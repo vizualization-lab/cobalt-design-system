@@ -80,7 +80,7 @@
         },
         "size": {
           "$type": "dimension",
-          "$value": "{co.font.size.5xl}",
+          "$value": "{co.font.size.h1}",
           "$description": "Font size for the display typography role."
         },
         "tracking": {
@@ -104,7 +104,7 @@
         },
         "size": {
           "$type": "dimension",
-          "$value": "{co.font.size.4xl}",
+          "$value": "{co.font.size.h2}",
           "$description": "Font size for the heading typography role."
         },
         "tracking": {
@@ -128,7 +128,7 @@
         },
         "size": {
           "$type": "dimension",
-          "$value": "{co.font.size.2xl}",
+          "$value": "{co.font.size.h4}",
           "$description": "Font size for the title typography role."
         },
         "tracking": {
@@ -152,7 +152,7 @@
         },
         "size": {
           "$type": "dimension",
-          "$value": "{co.font.size.xl}",
+          "$value": "{co.font.size.h5}",
           "$description": "Font size for the subtitle typography role."
         },
         "tracking": {
@@ -176,7 +176,7 @@
         },
         "size": {
           "$type": "dimension",
-          "$value": "{co.font.size.xs}",
+          "$value": "{co.font.size.xsmall}",
           "$description": "Font size for the eyebrow typography role."
         },
         "tracking": {
@@ -200,7 +200,7 @@
         },
         "size": {
           "$type": "dimension",
-          "$value": "{co.font.size.lg}",
+          "$value": "{co.font.size.h6}",
           "$description": "Font size for the large body typography role."
         },
         "tracking": {
@@ -224,7 +224,7 @@
         },
         "size": {
           "$type": "dimension",
-          "$value": "{co.font.size.md}",
+          "$value": "{co.font.size.p}",
           "$description": "Font size for the body typography role."
         },
         "tracking": {
@@ -248,7 +248,7 @@
         },
         "size": {
           "$type": "dimension",
-          "$value": "{co.font.size.sm}",
+          "$value": "{co.font.size.small}",
           "$description": "Font size for the small body typography role."
         },
         "tracking": {
@@ -272,7 +272,7 @@
         },
         "size": {
           "$type": "dimension",
-          "$value": "{co.font.size.sm}",
+          "$value": "{co.font.size.small}",
           "$description": "Font size for the label typography role."
         },
         "tracking": {
@@ -296,7 +296,7 @@
         },
         "size": {
           "$type": "dimension",
-          "$value": "{co.font.size.xs}",
+          "$value": "{co.font.size.xsmall}",
           "$description": "Font size for the caption typography role."
         },
         "tracking": {

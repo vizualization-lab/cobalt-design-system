@@ -226,32 +226,32 @@
   /* ──────────────────────────────────────────────
    * Typography primitives
    * ────────────────────────────────────────────── */
-  .co-text-xs {
-    font-size: var(--co-font-size-xs);
+  .co-text-xsmall {
+    font-size: var(--co-font-size-xsmall);
   }
-  .co-text-sm {
-    font-size: var(--co-font-size-sm);
+  .co-text-small {
+    font-size: var(--co-font-size-small);
   }
-  .co-text-base {
-    font-size: var(--co-font-size-md);
+  .co-text-p {
+    font-size: var(--co-font-size-p);
   }
-  .co-text-lg {
-    font-size: var(--co-font-size-lg);
+  .co-text-h6 {
+    font-size: var(--co-font-size-h6);
   }
-  .co-text-xl {
-    font-size: var(--co-font-size-xl);
+  .co-text-h5 {
+    font-size: var(--co-font-size-h5);
   }
-  .co-text-2xl {
-    font-size: var(--co-font-size-2xl);
+  .co-text-h4 {
+    font-size: var(--co-font-size-h4);
   }
-  .co-text-3xl {
-    font-size: var(--co-font-size-3xl);
+  .co-text-h3 {
+    font-size: var(--co-font-size-h3);
   }
-  .co-text-4xl {
-    font-size: var(--co-font-size-4xl);
+  .co-text-h2 {
+    font-size: var(--co-font-size-h2);
   }
   .co-text-5xl {
-    font-size: var(--co-font-size-5xl);
+    font-size: var(--co-font-size-h1);
   }
 
   .co-font-normal {
