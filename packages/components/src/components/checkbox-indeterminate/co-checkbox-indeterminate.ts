@@ -22,6 +22,20 @@ export class CoCheckboxIndeterminate extends LionCheckboxIndeterminate {
     return [...super.styles, cobaltCheckboxIndeterminateStyles];
   }
 
+  override connectedCallback(): void {
+    super.connectedCallback();
+    this.addEventListener('focusout', this._onFocusOut);
+  }
+
+  override disconnectedCallback(): void {
+    super.disconnectedCallback();
+    this.removeEventListener('focusout', this._onFocusOut);
+  }
+
+  private _onFocusOut = () => {
+    this.removeAttribute('_own-focus');
+  };
+
   /** String value alias mapped to Lion's choiceValue. */
   @property({ reflect: true })
   override get value(): string {
@@ -81,8 +95,8 @@ export class CoCheckboxIndeterminate extends LionCheckboxIndeterminate {
   }
 
   private _onCheckboxClick(e: Event) {
-    const input = this.querySelector('[slot="input"]') as HTMLInputElement | null;
-    if (!input || this.disabled || e.target === input) return;
+    const ownInput = this._inputNode as HTMLInputElement | null;
+    if (!ownInput || this.disabled || e.target === ownInput) return;
 
     // Determine target state: if any sub is unchecked → check all, else uncheck all
     const subs = (this as unknown as { _subCheckboxes: HTMLElement[] })._subCheckboxes ?? [];
@@ -103,13 +117,14 @@ export class CoCheckboxIndeterminate extends LionCheckboxIndeterminate {
     // Update own state
     this.checked = targetChecked;
     this.indeterminate = false;
-    if (input) input.checked = targetChecked;
+    ownInput.checked = targetChecked;
+
+    this.setAttribute('_own-focus', '');
 
     this.updateComplete.then(() => {
       (this as unknown as { __settingOwnSubs: boolean }).__settingOwnSubs = false;
+      ownInput.focus();
     });
-
-    input.focus();
   }
 }
 
