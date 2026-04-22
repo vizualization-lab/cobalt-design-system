@@ -107,6 +107,10 @@ export default defineConfig({
     // swallowed by the '@cobalt/components' prefix.
     alias: [
       {
+        find: '@cobalt/components/input-pill',
+        replacement: resolve(componentsDir, 'src/components/input-pill/co-input-pill.ts'),
+      },
+      {
         find: '@cobalt/components/button',
         replacement: resolve(componentsDir, 'src/components/button/co-button.ts'),
       },

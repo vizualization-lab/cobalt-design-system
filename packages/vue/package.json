@@ -13,6 +13,10 @@
       "import": "./dist/index.js",
       "types": "./dist/index.d.ts"
     },
+    "./input-pill": {
+      "import": "./dist/components/input-pill.js",
+      "types": "./dist/components/input-pill.d.ts"
+    },
     "./button": {
       "import": "./dist/components/button.js",
       "types": "./dist/components/button.d.ts"

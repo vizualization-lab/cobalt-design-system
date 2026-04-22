@@ -58,6 +58,7 @@ export const navigation: NavGroup[] = [
       { text: 'Button', link: '/components/button' },
       { text: 'Button Icon', link: '/components/button-icon' },
       { text: 'Icon', link: '/components/icon' },
+      { text: 'Input Pill', link: '/components/input-pill' },
       {
         text: 'Forms',
         defaultOpen: true,

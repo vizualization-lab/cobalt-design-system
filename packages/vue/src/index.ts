@@ -1,3 +1,4 @@
+export { CoInputPill, type CoInputPillProps } from './components/input-pill.js';
 export { CoButton, type CoButtonProps } from './components/button.js';
 export { CoButtonIcon, type CoButtonIconProps } from './components/button-icon.js';
 export { CoCheckbox, type CoCheckboxProps } from './components/checkbox.js';

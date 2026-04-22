@@ -1,3 +1,4 @@
+export { CoInputPill } from './components/input-pill.js';
 export { CoButton } from './components/button.js';
 export { CoButtonIcon } from './components/button-icon.js';
 export { CoCheckbox } from './components/checkbox.js';
