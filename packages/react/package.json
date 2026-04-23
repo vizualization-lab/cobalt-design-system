@@ -21,6 +21,10 @@
       "import": "./dist/components/button.js",
       "types": "./dist/components/button.d.ts"
     },
+    "./nav-rail-item": {
+      "import": "./dist/components/nav-rail-item.js",
+      "types": "./dist/components/nav-rail-item.d.ts"
+    },
     "./checkbox": {
       "import": "./dist/components/checkbox.js",
       "types": "./dist/components/checkbox.d.ts"
@@ -64,6 +68,10 @@
     "./radio-group": {
       "import": "./dist/components/radio-group.js",
       "types": "./dist/components/radio-group.d.ts"
+    },
+    "./nav-rail-bar": {
+      "import": "./dist/components/nav-rail-bar.js",
+      "types": "./dist/components/nav-rail-bar.d.ts"
     },
     "./option": {
       "import": "./dist/components/option.js",

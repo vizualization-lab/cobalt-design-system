@@ -78,10 +78,10 @@ For pages with persistent side navigation, use the sidebar slot on `co-app-shell
 
 ```html
 <co-app-shell sidebar-width="260px" sidebar-collapsible>
-  <co-side-nav slot="sidebar">
-    <co-nav-item href="/settings/general" icon="settings">General</co-nav-item>
-    <co-nav-item href="/settings/security" icon="shield">Security</co-nav-item>
-  </co-side-nav>
+  <co-nav-rail-bar slot="sidebar">
+    <co-nav-rail-item href="/settings/general" icon="settings">General</co-nav-rail-item>
+    <co-nav-rail-item href="/settings/security" icon="shield">Security</co-nav-rail-item>
+  </co-nav-rail-bar>
   <co-main slot="content"><!-- Settings page content --></co-main>
 </co-app-shell>
 ```

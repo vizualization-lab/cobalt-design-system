@@ -20,10 +20,10 @@ Use `co-top-nav` for primary application navigation. It supports a logo slot, na
 <co-top-nav>
   <co-logo slot="logo" href="/">Cobalt</co-logo>
 
-  <co-nav-item href="/dashboard" active>Dashboard</co-nav-item>
-  <co-nav-item href="/projects">Projects</co-nav-item>
-  <co-nav-item href="/reports">Reports</co-nav-item>
-  <co-nav-item href="/settings">Settings</co-nav-item>
+  <co-nav-item href="/dashboard" active>Dashboard</co-nav-rail-item>
+  <co-nav-item href="/projects">Projects</co-nav-rail-item>
+  <co-nav-item href="/reports">Reports</co-nav-rail-item>
+  <co-nav-item href="/settings">Settings</co-nav-rail-item>
 
   <co-nav-actions slot="actions">
     <co-icon-button icon="bell" label="Notifications"></co-icon-button>
@@ -34,19 +34,19 @@ Use `co-top-nav` for primary application navigation. It supports a logo slot, na
 
 ## Sidebar Navigation
 
-Use `co-side-nav` for applications with deep information architecture. It supports collapsible sections and nested items.
+Use `co-side-nav` for applications with persistent information architecture. It supports collapsible sections and nested items.
 
 ```html
 <co-side-nav collapsible>
-  <co-nav-section label="Workspace">
-    <co-nav-item href="/inbox" icon="inbox">Inbox</co-nav-item>
-    <co-nav-item href="/tasks" icon="check-square">Tasks</co-nav-item>
-  </co-nav-section>
+  <co-nav-rail-bar label="Workspace">
+    <co-nav-rail-item href="/inbox" icon="inbox">Inbox</co-nav-rail-item>
+    <co-nav-rail-item href="/tasks" icon="check-square">Tasks</co-nav-rail-item>
+  </co-nav-rail-bar>
 
   <co-nav-section label="Settings" expanded>
-    <co-nav-item href="/settings/profile" icon="user">Profile</co-nav-item>
-    <co-nav-item href="/settings/team" icon="users">Team</co-nav-item>
-    <co-nav-item href="/settings/billing" icon="credit-card">Billing</co-nav-item>
+    <co-nav-rail-item href="/settings/profile" icon="user">Profile</co-nav-rail-item>
+    <co-nav-rail-item href="/settings/team" icon="users">Team</co-nav-rail-item>
+    <co-nav-rail-item href="/settings/billing" icon="credit-card">Billing</co-nav-rail-item>
   </co-nav-section>
 </co-side-nav>
 ```
@@ -97,8 +97,8 @@ On viewports narrower than `768px`, the top navigation collapses into a hamburge
 ```html
 <co-top-nav>
   <!-- Navigation items are automatically placed in a drawer on mobile -->
-  <co-nav-item href="/dashboard">Dashboard</co-nav-item>
-  <co-nav-item href="/projects">Projects</co-nav-item>
+  <co-nav-rail-item href="/dashboard">Dashboard</co-nav-rail-item>
+  <co-nav-rail-item href="/projects">Projects</co-nav-rail-item>
 </co-top-nav>
 ```
 

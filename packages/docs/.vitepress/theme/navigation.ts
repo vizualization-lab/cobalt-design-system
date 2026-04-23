@@ -60,6 +60,14 @@ export const navigation: NavGroup[] = [
       { text: 'Icon', link: '/components/icon' },
       { text: 'Input Pill', link: '/components/input-pill' },
       {
+        text: 'Layout',
+        defaultOpen: true,
+        children: [
+          { text: 'Nav Rail Bar', link: '/components/nav-rail-bar' },
+          { text: 'Nav Rail Item', link: '/components/nav-rail-item' },
+        ],
+      },
+      {
         text: 'Forms',
         defaultOpen: true,
         children: [

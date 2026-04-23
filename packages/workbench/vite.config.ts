@@ -115,6 +115,10 @@ export default defineConfig({
         replacement: resolve(componentsDir, 'src/components/button/co-button.ts'),
       },
       {
+        find: '@cobalt/components/nav-rail-item',
+        replacement: resolve(componentsDir, 'src/components/nav-rail-item/co-nav-rail-item.ts'),
+      },
+      {
         find: '@cobalt/components/button-icon',
         replacement: resolve(componentsDir, 'src/components/button-icon/co-button-icon.ts'),
       },
@@ -152,6 +156,10 @@ export default defineConfig({
       {
         find: '@cobalt/components/radio-group',
         replacement: resolve(componentsDir, 'src/components/radio-group/co-radio-group.ts'),
+      },
+      {
+        find: '@cobalt/components/nav-rail-bar',
+        replacement: resolve(componentsDir, 'src/components/nav-rail-bar/co-nav-rail-bar.ts'),
       },
       {
         find: '@cobalt/components/radio',

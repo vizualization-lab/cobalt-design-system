@@ -1,4 +1,6 @@
 export { CoInputPill } from './components/input-pill/co-input-pill.js';
+export { CoNavRailItem } from './components/nav-rail-item/co-nav-rail-item.js';
+export type { NavRailItemTarget } from './components/nav-rail-item/co-nav-rail-item.js';
 export { CoButton } from './components/button/co-button.js';
 export { CoButtonIcon } from './components/button-icon/co-button-icon.js';
 export { CoCheckbox } from './components/checkbox/co-checkbox.js';
@@ -12,5 +14,7 @@ export { CoListbox } from './components/listbox/co-listbox.js';
 export { CoOption } from './components/option/co-option.js';
 export { CoRadio } from './components/radio/co-radio.js';
 export { CoRadioGroup } from './components/radio-group/co-radio-group.js';
+export { CoNavRailBar } from './components/nav-rail-bar/co-nav-rail-bar.js';
+export type { NavRailBarChangeDetail } from './components/nav-rail-bar/co-nav-rail-bar.js';
 export { CoSelect } from './components/select/co-select.js';
 export { CoTextarea } from './components/textarea/co-textarea.js';
