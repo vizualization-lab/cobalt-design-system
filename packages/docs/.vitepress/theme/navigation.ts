@@ -140,7 +140,7 @@ export const navigation: NavGroup[] = [
     label: 'Changelog',
     icon: 'description',
     defaultOpen: false,
-    items: [{ text: 'Release Notes', link: '/changelog' }],
+    items: [{ text: 'Release Notes', link: '/release-notes' }],
   },
 ];
 

@@ -7,7 +7,7 @@ Helpful links, tools, and references for developers working with the Cobalt Desi
 ## Package Registry
 
 - **npm:** All Cobalt packages are published under the `@cobalt` scope
-- **Versions:** Check the [Changelog](/changelog) for the latest release notes
+- **Versions:** Check the [Release Notes](/release-notes) for the latest release information
 - **Compatibility:** See the [Getting Started for Developers](/getting-started/developers) guide for supported frameworks and versions
 
 ## Browser DevTools Tips

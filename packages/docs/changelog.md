@@ -1,6 +1,7 @@
----
+# @cobalt/docs
 
 ## 0.1.0
+
 ### Minor Changes
 
 - 5287fe4: Added baseline navigation rail bar component
@@ -14,11 +15,3 @@
     - Select
     - Combo boxes
     - Text areas
-title: Changelog
----
-
-# Changelog
-
-All notable changes to Cobalt are documented here.
-
-<ChangelogPage />
