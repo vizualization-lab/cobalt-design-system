@@ -1,0 +1,30 @@
+:host {
+  display: block;
+  max-inline-size: 280px;
+  inline-size: 280px;
+  block-size: 100%;
+  font-family: var(--co-font-family-sans);
+  background: var(--co-color-surface-default);
+  border-radius: var(--co-shape-radius-md);
+  box-shadow: var(--co-elevation-shadow-sm);
+  overflow: hidden;
+  transition: transform var(--co-motion-duration-normal) var(--co-motion-easing-default);
+}
+
+:host(:not([open])) {
+  transform: translateX(-100%);
+  pointer-events: none;
+}
+
+.drawer {
+  display: flex;
+  flex-direction: column;
+  block-size: 100%;
+}
+
+.drawer__content {
+  flex: 1;
+  overflow-y: auto;
+  padding-block-start: var(--co-space-3);
+  padding-inline: var(--co-space-3);
+}

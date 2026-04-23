@@ -1,0 +1,14 @@
+// Auto-generated from .styles.css — do not edit directly
+import { css } from 'lit';
+
+export const cobaltNavSeparatorStyles = css`
+  :host {
+    display: block;
+  }
+
+  .separator {
+    border: none;
+    border-top: var(--co-shape-border-width-thin) solid var(--co-color-border-default);
+    margin: var(--co-space-2) 0;
+  }
+`;

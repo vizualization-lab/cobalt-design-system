@@ -63,6 +63,8 @@ export const navigation: NavGroup[] = [
         text: 'Layout',
         defaultOpen: true,
         children: [
+          { text: 'Nav Drawer', link: '/components/nav-drawer' },
+          { text: 'Nav Drawer Item', link: '/components/nav-drawer-item' },
           { text: 'Nav Rail Bar', link: '/components/nav-rail-bar' },
           { text: 'Nav Rail Item', link: '/components/nav-rail-item' },
         ],

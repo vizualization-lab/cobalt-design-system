@@ -107,6 +107,18 @@ export default defineConfig({
     // swallowed by the '@cobalt/components' prefix.
     alias: [
       {
+        find: '@cobalt/components/nav-drawer-item',
+        replacement: resolve(componentsDir, 'src/components/nav-drawer-item/co-nav-drawer-item.ts'),
+      },
+      {
+        find: '@cobalt/components/nav-drawer',
+        replacement: resolve(componentsDir, 'src/components/nav-drawer/co-nav-drawer.ts'),
+      },
+      {
+        find: '@cobalt/components/nav-separator',
+        replacement: resolve(componentsDir, 'src/components/nav-separator/co-nav-separator.ts'),
+      },
+      {
         find: '@cobalt/components/input-pill',
         replacement: resolve(componentsDir, 'src/components/input-pill/co-input-pill.ts'),
       },

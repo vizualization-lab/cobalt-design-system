@@ -58,6 +58,18 @@
       "import": "./dist/components/input/co-input.js",
       "types": "./dist/components/input/co-input.d.ts"
     },
+    "./nav-drawer": {
+      "import": "./dist/components/nav-drawer/co-nav-drawer.js",
+      "types": "./dist/components/nav-drawer/co-nav-drawer.d.ts"
+    },
+    "./nav-drawer-item": {
+      "import": "./dist/components/nav-drawer-item/co-nav-drawer-item.js",
+      "types": "./dist/components/nav-drawer-item/co-nav-drawer-item.d.ts"
+    },
+    "./nav-separator": {
+      "import": "./dist/components/nav-separator/co-nav-separator.js",
+      "types": "./dist/components/nav-separator/co-nav-separator.d.ts"
+    },
     "./listbox": {
       "import": "./dist/components/listbox/co-listbox.js",
       "types": "./dist/components/listbox/co-listbox.d.ts"

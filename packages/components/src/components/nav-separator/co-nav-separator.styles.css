@@ -1,0 +1,9 @@
+:host {
+  display: block;
+}
+
+.separator {
+  border: none;
+  border-top: var(--co-shape-border-width-thin) solid var(--co-color-border-default);
+  margin: var(--co-space-2) 0;
+}
