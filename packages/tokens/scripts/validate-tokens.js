@@ -170,8 +170,33 @@ function validateContrast(tokensDir, discovery, errors) {
       minimum: 4.5,
     },
     {
+      foreground: 'co.color.text.placeholder',
+      background: 'co.color.surface.default',
+      minimum: 4.5,
+    },
+    {
+      foreground: 'co.color.text.disabled',
+      background: 'co.color.surface.disabled',
+      minimum: 4.5,
+    },
+    {
       foreground: 'co.color.text.on.primary',
       background: 'co.color.primary.base',
+      minimum: 4.5,
+    },
+    {
+      foreground: 'co.color.primary.contrast',
+      background: 'co.color.primary.base',
+      minimum: 4.5,
+    },
+    {
+      foreground: 'co.color.danger.contrast',
+      background: 'co.color.danger.base',
+      minimum: 4.5,
+    },
+    {
+      foreground: 'co.color.success.contrast',
+      background: 'co.color.success.base',
       minimum: 4.5,
     },
     {

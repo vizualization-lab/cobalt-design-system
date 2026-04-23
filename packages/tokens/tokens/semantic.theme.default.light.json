@@ -183,12 +183,12 @@
         },
         "placeholder": {
           "$type": "color",
-          "$value": "{co.color.primitive.neutral.500}",
+          "$value": "{co.color.primitive.neutral.600}",
           "$description": "Text color for placeholder content in form controls."
         },
         "disabled": {
           "$type": "color",
-          "$value": "{co.color.primitive.neutral.400}",
+          "$value": "{co.color.primitive.neutral.700}",
           "$description": "Text color for disabled content and inactive controls."
         },
         "inverse": {

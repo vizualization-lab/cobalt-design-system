@@ -60,7 +60,7 @@ export default withMermaid(
     description: 'A design system built with Lit + Lion',
     markdown: {
       theme: {
-        dark: 'tokyo-night',
+        dark: 'github-dark-high-contrast',
         light: 'github-light',
       },
       config: (md) => {

@@ -154,7 +154,7 @@ watch(state, () => renderKey.value++, { deep: true });
   border: 1px solid var(--co-border);
   border-radius: 8px;
   background: transparent;
-  color: var(--co-color-text-tertiary);
+  color: var(--co-color-text-secondary);
   cursor: pointer;
   transition: all 0.2s ease;
 }
@@ -167,7 +167,7 @@ watch(state, () => renderKey.value++, { deep: true });
 .demo-label {
   font-size: 0.78rem;
   font-weight: 600;
-  color: var(--co-color-text-tertiary);
+  color: var(--co-color-text-secondary);
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
@@ -206,7 +206,7 @@ watch(state, () => renderKey.value++, { deep: true });
   top: 50%;
   transform: translateY(-50%);
   font-size: 0.7rem;
-  color: var(--co-color-text-tertiary);
+  color: var(--co-color-text-secondary);
   pointer-events: none;
 }
 
@@ -233,7 +233,7 @@ watch(state, () => renderKey.value++, { deep: true });
 }
 
 .demo-text-input::placeholder {
-  color: var(--co-color-text-tertiary);
+  color: var(--co-color-text-secondary);
   opacity: 0.6;
 }
 
@@ -283,7 +283,7 @@ watch(state, () => renderKey.value++, { deep: true });
 .demo-toggle-label {
   font-size: 0.78rem;
   font-weight: 600;
-  color: var(--co-color-text-tertiary);
+  color: var(--co-color-text-secondary);
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }

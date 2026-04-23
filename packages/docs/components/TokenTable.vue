@@ -208,7 +208,7 @@ async function copyToken(name: string) {
 
 .token-count {
   font-size: 0.8rem;
-  color: var(--vp-c-text-3);
+  color: var(--co-color-text-secondary);
   white-space: nowrap;
 }
 
@@ -229,7 +229,7 @@ async function copyToken(name: string) {
   border: 1px solid var(--vp-c-border);
   border-radius: 16px;
   background: var(--vp-c-bg);
-  color: var(--vp-c-text-2);
+  color: var(--co-color-text-secondary);
   font-size: 0.78rem;
   font-family: inherit;
   font-weight: 500;
@@ -248,7 +248,7 @@ async function copyToken(name: string) {
 .filter-pill.active {
   background: var(--vp-c-brand-1);
   border-color: var(--vp-c-brand-1);
-  color: #fff;
+  color: var(--co-color-text-on-primary);
 }
 
 .pill-count {
@@ -270,7 +270,7 @@ async function copyToken(name: string) {
   font-size: 0.75rem;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: var(--vp-c-text-3);
+  color: var(--co-color-text-secondary);
   padding: 8px 12px;
   border-bottom: 2px solid var(--vp-c-border);
 }
@@ -361,7 +361,7 @@ async function copyToken(name: string) {
 
 .resolved-value {
   font-size: 0.72rem;
-  color: var(--vp-c-text-3);
+  color: var(--co-color-text-secondary);
 }
 
 .resolved-value code {
@@ -406,8 +406,8 @@ async function copyToken(name: string) {
 }
 
 .tier-badge.primitive {
-  background: var(--vp-c-yellow-soft, #fef3cd);
-  color: var(--vp-c-yellow-dark, #8a6d00);
+  background: var(--co-color-warning-base);
+  color: var(--co-color-warning-contrast);
 }
 
 .tier-badge.semantic {
@@ -417,7 +417,7 @@ async function copyToken(name: string) {
 
 .no-results {
   text-align: center;
-  color: var(--vp-c-text-3);
+  color: var(--co-color-text-secondary);
   padding: 24px 12px !important;
   font-style: italic;
 }

@@ -312,7 +312,7 @@ function isGroupOpen(item: NavItem): boolean {
   font-weight: var(--co-typography-caption-weight);
   letter-spacing: var(--co-typography-caption-tracking);
   line-height: var(--co-typography-caption-line-height);
-  color: var(--co-color-text-tertiary);
+  color: var(--co-color-text-secondary);
 }
 
 .badge-label {

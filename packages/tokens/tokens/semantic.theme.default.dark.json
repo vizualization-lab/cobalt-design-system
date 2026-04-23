@@ -22,7 +22,7 @@
         },
         "contrast": {
           "$type": "color",
-          "$value": "{co.color.primitive.white}",
+          "$value": "{co.color.primitive.neutral.950}",
           "$description": "Foreground color intended to contrast against primary.base."
         }
       },
@@ -72,7 +72,7 @@
         },
         "contrast": {
           "$type": "color",
-          "$value": "{co.color.primitive.white}",
+          "$value": "{co.color.primitive.neutral.950}",
           "$description": "Foreground color intended to contrast against danger.base."
         }
       },
@@ -97,7 +97,7 @@
         },
         "contrast": {
           "$type": "color",
-          "$value": "{co.color.primitive.white}",
+          "$value": "{co.color.primitive.neutral.950}",
           "$description": "Foreground color intended to contrast against success.base."
         }
       },
@@ -181,12 +181,12 @@
         },
         "placeholder": {
           "$type": "color",
-          "$value": "{co.color.primitive.neutral.600}",
+          "$value": "{co.color.primitive.neutral.400}",
           "$description": "Text color for placeholder content in form controls."
         },
         "disabled": {
           "$type": "color",
-          "$value": "{co.color.primitive.neutral.600}",
+          "$value": "{co.color.primitive.neutral.400}",
           "$description": "Text color for disabled content and inactive controls."
         },
         "inverse": {

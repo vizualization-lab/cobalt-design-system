@@ -775,7 +775,7 @@ body {
 }
 
 .cobalt-article pre {
-  background: var(--co-deep) !important;
+  background: var(--co-color-surface-sunken) !important;
   border: 1px solid var(--co-border);
   border-radius: 12px;
   padding: 20px 24px;
@@ -935,7 +935,7 @@ body {
 }
 
 .vp-doc div[class*='language-'] {
-  background: var(--co-deep) !important;
+  background: var(--co-color-surface-sunken) !important;
   border: 1px solid var(--co-border) !important;
   border-radius: 12px !important;
   margin: 16px 0 24px !important;
@@ -963,7 +963,7 @@ body {
   position: absolute !important;
   top: 8px !important;
   right: 52px !important;
-  color: var(--co-color-text-tertiary) !important;
+  color: var(--co-color-text-secondary) !important;
   font-size: var(--co-typography-eyebrow-size) !important;
   font-weight: var(--co-typography-eyebrow-weight) !important;
   letter-spacing: var(--co-typography-eyebrow-tracking) !important;

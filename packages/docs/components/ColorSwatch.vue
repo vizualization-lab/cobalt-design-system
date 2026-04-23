@@ -16,6 +16,32 @@ function toToken(palette: string, scale: string): string {
   return `--co-color-primitive-${palette.toLowerCase()}-${scale}`;
 }
 
+function hexToRgb(hex: string): [number, number, number] {
+  const normalized = hex.replace('#', '');
+  const full =
+    normalized.length === 3
+      ? normalized
+          .split('')
+          .map((char) => char + char)
+          .join('')
+      : normalized;
+  const numeric = Number.parseInt(full, 16);
+  return [(numeric >> 16) & 255, (numeric >> 8) & 255, numeric & 255];
+}
+
+function luminance(hex: string): number {
+  const [r, g, b] = hexToRgb(hex).map((channel) => {
+    const normalized = channel / 255;
+    return normalized <= 0.03928 ? normalized / 12.92 : Math.pow((normalized + 0.055) / 1.055, 2.4);
+  });
+
+  return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+}
+
+function chipIconColor(hex: string): string {
+  return luminance(hex) > 0.35 ? 'var(--co-color-text-inverse)' : '#fff';
+}
+
 async function copyToken(palette: string, scale: string) {
   const key = `${palette}-${scale}`;
   await navigator.clipboard.writeText(toToken(palette, scale));
@@ -36,7 +62,7 @@ async function copyToken(palette: string, scale: string) {
           <button
             class="chip"
             :class="{ copied: copiedKey === `${palette.name}-${shade.scale}` }"
-            :style="{ background: shade.value }"
+            :style="{ background: shade.value, color: chipIconColor(shade.value) }"
             :title="toToken(palette.name, shade.scale)"
             @click="copyToken(palette.name, shade.scale)"
           >
@@ -130,7 +156,7 @@ async function copyToken(palette: string, scale: string) {
 .chip-icon {
   width: 16px;
   height: 16px;
-  color: #fff;
+  color: currentColor;
 }
 
 .chip-scale {

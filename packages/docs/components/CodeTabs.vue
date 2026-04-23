@@ -35,7 +35,7 @@ const activeTab = ref(props.tabs[0]);
   border-radius: 12px;
   margin: 16px 0 24px;
   overflow: hidden;
-  background: var(--co-deep);
+  background: var(--co-color-surface-sunken);
 }
 
 .code-tabs-bar {
@@ -54,7 +54,7 @@ const activeTab = ref(props.tabs[0]);
   font-family: var(--co-font-body);
   font-size: 0.8rem;
   font-weight: 500;
-  color: var(--co-color-text-tertiary);
+  color: var(--co-color-text-secondary);
   letter-spacing: 0.02em;
   transition: all 0.2s ease;
   position: relative;
@@ -62,7 +62,7 @@ const activeTab = ref(props.tabs[0]);
 }
 
 .code-tab:hover {
-  color: var(--co-text-secondary);
+  color: var(--co-text-primary);
 }
 
 .code-tab.is-active {
