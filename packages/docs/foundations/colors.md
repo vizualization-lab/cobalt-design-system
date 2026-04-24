@@ -1,145 +1,233 @@
 # Colors
 
 <script setup>
+import { ref } from 'vue';
 import { data } from './colors.data';
+
+const paletteMode = ref('light');
 </script>
 
-The Cobalt color system is organized into **primitive palettes** and **semantic color tokens**. Primitive colors live in `primitives.color.json`; semantic color roles live in `semantic.theme.default.light.json` and `semantic.theme.default.dark.json` so the same UI role can adapt by theme or mode.
+Cobalt color families are organized as ordered shade scales from `50` to `950`. Their progression is influenced by [Radix Colors](https://www.radix-ui.com/colors/docs/overview): the lightest shades support quiet page and component backgrounds, the middle shades support fills and borders, `700`–`800` carry solid accents, and `900`–`950` provide readable same-hue text.
 
-## Core palette
+<div class="color-preview-toolbar">
+  <p class="color-preview-note">
+    Toggle <strong>{{ paletteMode === 'light' ? 'Light' : 'Dark' }}</strong> mode to compare the palettes, and click any swatch to copy its CSS token.
+  </p>
+  <div class="color-mode-toggle" role="group" aria-label="Palette preview mode">
+    <button
+      type="button"
+      class="color-mode-button"
+      :class="{ 'is-active': paletteMode === 'light' }"
+      :aria-pressed="paletteMode === 'light'"
+      @click="paletteMode = 'light'"
+    >
+      Light
+    </button>
+    <button
+      type="button"
+      class="color-mode-button"
+      :class="{ 'is-active': paletteMode === 'dark' }"
+      :aria-pressed="paletteMode === 'dark'"
+      @click="paletteMode = 'dark'"
+    >
+      Dark
+    </button>
+  </div>
+</div>
 
-The core palette includes **Neutral** and the four colors used by semantic tokens (Cobalt, Red, Green, Orange).
+## Default Theme
 
-<ColorSwatch :palettes="data.corePalettes" />
+The default theme pairs the custom `blue` brand scale with `gray` neutrals.
 
-## Extended palette
+<template v-for="theme in data.themes.filter((entry) => entry.id === 'default')" :key="theme.id">
+  <ColorSwatch :modes="theme.modes" :usage-groups="data.usageGroups" :active-mode="paletteMode" />
+</template>
 
-Additional primitives available for illustrations, data visualization, status indicators, and brand expression. These do not have semantic aliases — reference them directly via `--co-color-primitive-{name}-{shade}`.
+## Alternate Accent Theme
 
-<ColorSwatch :palettes="data.extendedPalettes" />
+Purple is the shipped alternate accent theme. It keeps the same neutral, surface, border, and status structure, and swaps the accent family from the default blue scale to stock Radix `purple`.
 
-## Semantic tokens
+See [Using the Purple Theme](#using-the-purple-theme) below for the stylesheet imports and the `data-theme` / `data-mode` toggle pattern.
 
-Semantic tokens abstract primitives so your UI adapts to theme changes without touching component code. The table below shows a representative selection — see the [Tokens reference](../tokens/index.md) for the complete list.
+<template v-for="theme in data.themes.filter((entry) => entry.id === 'purple')" :key="theme.id">
+  <ColorSwatch :modes="theme.modes" :usage-groups="data.usageGroups" :active-mode="paletteMode" />
+</template>
 
-| Token                                    | Light mode                     | Dark mode                      | Usage                                                              |
-| ---------------------------------------- | ------------------------------ | ------------------------------ | ------------------------------------------------------------------ |
-| `--co-color-primary-base`                | `#1a5eff` <br/>(`cobalt.500`)  | `#769eff` <br/>(`cobalt.300`)  | Brand identity — logos, accent borders, brand markers              |
-| `--co-color-surface-page`                | `#f7f7f7` <br/>(`neutral.75`)  | `#1e1f21` <br/>(`neutral.900`) | Page canvas — the floor of the app                                 |
-| `--co-color-surface-default`             | `#ffffff` <br/>(`white`)       | `#363738` <br/>(`neutral.800`) | Cards, panels, default containers                                  |
-| `--co-color-surface-raised`              | `#fcfcfc` <br/>(`neutral.50`)  | `#363738` <br/>(`neutral.800`) | Popovers, menus, sticky headers                                    |
-| `--co-color-surface-sunken`              | `#f2f2f2` <br/>(`neutral.100`) | `#0c0c0d` <br/>(`neutral.950`) | Inset wells, code blocks, input backgrounds                        |
-| `--co-color-surface-bold`                | `#1e1f21` <br/>(`neutral.900`) | `#1e1f21` <br/>(`neutral.900`) | App-shell chrome — navigation rails, header bars                   |
-| `--co-color-text-default`                | `#464646` <br/>(`neutral.700`) | `#fcfcfc` <br/>(`neutral.50`)  | Body text                                                          |
-| `--co-color-text-secondary`              | `#686868` <br/>(`neutral.600`) | `#c0c0c0` <br/>(`neutral.400`) | Subordinate text, body secondary                                   |
-| `--co-color-text-tertiary`               | `#919191` <br/>(`neutral.500`) | `#919191` <br/>(`neutral.500`) | Quietest text — captions, icons, chrome accents                    |
-| `--co-color-danger-base`                 | `#a61b12` <br/>(`red.600`)     | `#d94e45` <br/>(`red.400`)     | Destructive actions, errors                                        |
-| `--co-color-success-base`                | `#16652a` <br/>(`green.600`)   | `#49985d` <br/>(`green.400`)   | Success states                                                     |
-| `--co-color-warning-base`                | `#c78017` <br/>(`orange.600`)  | `#fab34a` <br/>(`orange.400`)  | Warning indicators                                                 |
-| `--co-color-interactive-primary-default` | inherits `primary.base`        | inherits `primary.base`        | Resting state for buttons, toggles, controls                       |
-| `--co-color-interactive-primary-hover`   | `#154bcc` <br/>(`cobalt.600`)  | `#769eff` <br/>(`cobalt.300`)  | Interactive hover                                                  |
-| `--co-color-interactive-subtle-selected` | `#e8efff` <br/>(`cobalt.50`)   | `#1d3c53` <br/>(`navy.600`)    | Persistent selection background (selected nav, tabs)               |
-| `--co-color-border-focus`                | `#1a5eff` <br/>(`cobalt.500`)  | `#487eff` <br/>(`cobalt.400`)  | Focus outlines                                                     |
-| `--co-color-border-selected`             | `#a3bfff` <br/>(`cobalt.200`)  | `#244b68` <br/>(`navy.500`)    | Edge of a selected item, paired with `interactive.subtle.selected` |
+## How the Scale Works
 
-### Primary vs Interactive
+Each family follows the same numeric progression:
 
-The `primary.*` and `interactive.*` groups share the same brand hue but serve different purposes:
+| Shade | Typical use                         |
+| ----- | ----------------------------------- |
+| `50`  | App and page backgrounds            |
+| `75`  | Subtle background tints             |
+| `100` | Component backgrounds               |
+| `200` | Pressed and selected subtle fills   |
+| `300` | Stronger subtle fills               |
+| `400` | Quiet borders and separators        |
+| `500` | Active borders and selection edges  |
+| `600` | Focus rings and strong borders      |
+| `700` | Solid accents and interactive fills |
+| `800` | Hovered or reinforced solids        |
+| `900` | Low-contrast text on the same hue   |
+| `950` | High-contrast text on the same hue  |
 
-| Group           | Purpose                 | Has states?                             | Use for                                                                |
-| --------------- | ----------------------- | --------------------------------------- | ---------------------------------------------------------------------- |
-| `primary.*`     | Brand identity palette  | No                                      | Accent borders, tinted backgrounds, brand markers, decorative elements |
-| `interactive.*` | Stateful control colors | Yes (hover, active, disabled, selected) | Buttons, toggles, links, and any element the user clicks               |
+For the default accent family, `blue.700` is `#1a5eff` in both light and dark mode. That keeps the core brand accent stable while the surrounding shades adapt to each surface context.
 
-`interactive.primary.default` **inherits from `primary.base`**, so they always stay in sync. If you re-theme `primary.base`, every interactive control follows automatically.
+## Semantic Examples
 
-**Rule of thumb:** if the element has hover/active/disabled states, use `interactive.*`. If it's decorative or static brand color, use `primary.*`.
+These examples come from the source theme mappings, so you can compare how the same semantic token resolves across the default and purple themes without changing component code.
+
+<table>
+  <thead>
+    <tr>
+      <th>Token</th>
+      <th>Usage</th>
+      <th>Default Light</th>
+      <th>Default Dark</th>
+      <th>Purple Light</th>
+      <th>Purple Dark</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr v-for="example in data.semanticExamples" :key="example.token">
+      <td><code>{{ example.token }}</code></td>
+      <td>{{ example.usage }}</td>
+      <td>
+        <code>{{ example.values['default.light'].value }}</code><br />
+        <span>{{ example.values['default.light'].reference }}</span>
+      </td>
+      <td>
+        <code>{{ example.values['default.dark'].value }}</code><br />
+        <span>{{ example.values['default.dark'].reference }}</span>
+      </td>
+      <td>
+        <code>{{ example.values['purple.light'].value }}</code><br />
+        <span>{{ example.values['purple.light'].reference }}</span>
+      </td>
+      <td>
+        <code>{{ example.values['purple.dark'].value }}</code><br />
+        <span>{{ example.values['purple.dark'].reference }}</span>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+## Using the Purple Theme
+
+Default light values still come from `@cobalt/tokens/css`, and default dark values still come from `@cobalt/tokens/css/dark`. The purple theme is opt-in and ships as two scoped stylesheets, one for each mode:
 
 ```css
-/* Decorative — no states needed */
-.brand-accent {
-  border-left: 4px solid var(--co-color-primary-base);
-  background: var(--co-color-primary-subtle);
-}
-
-/* Interactive — needs the full state ramp */
-.co-button--primary {
-  background: var(--co-color-interactive-primary-default);
-}
-.co-button--primary:hover {
-  background: var(--co-color-interactive-primary-hover);
-}
-.co-button--primary:active {
-  background: var(--co-color-interactive-primary-active);
-}
+@import '@cobalt/tokens/css';
+@import '@cobalt/tokens/css/dark';
+@import '@cobalt/tokens/css/themes/purple-light';
+@import '@cobalt/tokens/css/themes/purple-dark';
 ```
 
-## Usage in CSS
+After those files are loaded, switch themes by updating `data-theme` and `data-mode` on the document root:
 
-Reference tokens with `var()`:
+```js
+const root = document.documentElement;
 
-```css
-.co-button--primary {
-  background-color: var(--co-color-interactive-primary-default);
-  color: var(--co-color-text-on-primary);
+export function applyCobaltTheme(theme = 'default', mode = 'light') {
+  root.dataset.theme = theme;
+  root.dataset.mode = mode;
 }
 
-.co-alert--danger {
-  background-color: var(--co-color-feedback-danger-background);
-  border-left: 4px solid var(--co-color-danger-base);
-  color: var(--co-color-feedback-danger-text);
-}
+applyCobaltTheme('purple', 'light');
+applyCobaltTheme('purple', 'dark');
+applyCobaltTheme('default', 'dark');
 ```
 
-## Light and dark mode
+Example markup:
 
-Cobalt ships two published token layers today:
-
-- `@cobalt/tokens/css` for the default light values
-- `@cobalt/tokens/css/dark` for the default dark overrides
-
-The recommended selector model for dark mode is `data-theme="default" data-mode="dark"`. For backward compatibility, the dark stylesheet also supports `data-theme="dark"` for the default dark theme.
-
-```css
-/* Automatically provided by @cobalt/tokens */
-:root {
-  --co-color-primary-base: #154bcc;
-  --co-color-surface-page: #f7f7f7;
-  --co-color-text-default: #464646;
-}
-
-[data-theme='dark'],
-[data-theme='default'][data-mode='dark'] {
-  --co-color-primary-base: #769eff;
-  --co-color-surface-page: #1e1f21;
-  --co-color-text-default: #fcfcfc;
-}
+```html
+<html data-theme="purple" data-mode="light"></html>
+<html data-theme="purple" data-mode="dark"></html>
 ```
 
-No component CSS needs to change — the same `var(--co-color-primary-base)` resolves to the correct value in either mode.
+The selector model stays the same:
 
-### The light → dark mirroring rule
+- `data-theme="default" data-mode="light"` for the default light theme
+- `data-theme="default" data-mode="dark"` for the default dark theme
+- `data-theme="purple" data-mode="light"` or `data-theme="purple" data-mode="dark"` for the alternate accent theme
+- `data-theme="dark"` still works as a backward-compatible alias for the default dark theme only
 
-Dark-mode cobalt values are **shifted one step brighter on the cobalt primitive ramp** compared to their light-mode counterparts. Saturated mid-blues (e.g. `cobalt.500` = #1a5eff) look harsh on dark backgrounds, so the dark theme uses `cobalt.300`/`cobalt.400` where light uses `cobalt.500`/`cobalt.600`. Hover and active states continue the mirror: in light mode they move _darker_ than the default (more commitment), in dark mode they move _brighter_.
+If you are building a theme toggle, load the purple stylesheets once and then only switch the data attributes at runtime. Component code should keep using semantic tokens such as `--co-color-primary-base` and `--co-color-interactive-primary-default`.
 
-| State                         | Light                       | Dark                          |
-| ----------------------------- | --------------------------- | ----------------------------- |
-| `primary.base`                | `cobalt.500` (#1a5eff)      | `cobalt.300` (#769eff)        |
-| `interactive.primary.default` | inherits `primary.base`     | inherits `primary.base`       |
-| `interactive.primary.hover`   | `cobalt.600` (darker)       | `cobalt.200` (brighter)       |
-| `interactive.primary.active`  | `cobalt.700` (darker still) | `cobalt.100` (brighter still) |
+## Practical Rules
 
-### Selection backgrounds use different cobalt sub-families
-
-The `interactive.subtle.selected` / `border.selected` pair gives selected nav items a soft tinted pill treatment. In **light mode** these reach for the saturated `cobalt.50` / `cobalt.200` primitives because pale blues on a white surface read as airy highlight. In **dark mode**, the same saturated-cobalt primitives render as deep vivid navy on a dark surface — so the dark theme uses the desaturated `navy.500` / `navy.600` primitives instead, giving a muted tonal pill that reads as quiet elevation rather than a saturated accent. Different primitive sub-families, same semantic intent.
-
-> **Tip:** Always verify that foreground/background pairings meet a minimum contrast ratio of **4.5:1** for normal text and **3:1** for large text, as required by WCAG 2.1 AA.
-
-## Accessibility
-
-Ensure all color pairings meet WCAG 2.1 AA contrast ratios. See [Accessibility — Color Contrast](./accessibility.md#color-contrast) for requirements and testing tools.
+- Prefer semantic tokens such as `--co-color-surface-default` or `--co-color-interactive-primary-default` in components and app code.
+- Reach for primitive tokens only when you are extending the system itself, building documentation, or deliberately creating a non-semantic illustration or data-vis palette.
+- Think in `50`–`950`: lower shades for backgrounds, middle shades for borders and subtle fills, `700`–`800` for solid accents, and `900`–`950` for readable same-hue text.
 
 ## Related
 
 - [Accessibility Standards](./accessibility.md)
-- [Tokens reference](../tokens/index.md)
+- [Token Structure](../tokens/structure.md)
+- [Token Reference](../tokens/index.md)
+
+<style scoped>
+.color-preview-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin: 20px 0 24px;
+  padding: 12px 14px;
+  border: 1px solid var(--co-color-border-subtle);
+  border-radius: var(--co-shape-radius-md);
+  background: var(--co-color-surface-raised);
+}
+
+.color-preview-note {
+  margin: 0;
+  color: var(--co-color-text-secondary);
+  font-size: 0.9rem;
+}
+
+.color-mode-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px;
+  border: 1px solid var(--co-color-border-subtle);
+  border-radius: 999px;
+  background: var(--co-color-surface-default);
+  flex-shrink: 0;
+}
+
+.color-mode-button {
+  border: none;
+  background: transparent;
+  color: var(--co-color-text-secondary);
+  font: inherit;
+  font-size: 0.85rem;
+  font-weight: var(--co-typography-label-weight);
+  line-height: 1;
+  padding: 0.55rem 0.95rem;
+  border-radius: 999px;
+  cursor: pointer;
+  transition:
+    background var(--co-motion-duration-fast) var(--co-motion-easing-default),
+    color var(--co-motion-duration-fast) var(--co-motion-easing-default),
+    box-shadow var(--co-motion-duration-fast) var(--co-motion-easing-default);
+}
+
+.color-mode-button:hover {
+  color: var(--co-color-text-default);
+}
+
+.color-mode-button.is-active {
+  background: var(--co-color-interactive-subtle-selected);
+  color: var(--co-color-text-link);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, currentColor 16%, transparent);
+}
+
+@media (max-width: 720px) {
+  .color-preview-toolbar {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+</style>

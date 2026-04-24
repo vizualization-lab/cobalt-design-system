@@ -2,753 +2,913 @@
   "co": {
     "color": {
       "primitive": {
-        "neutral": {
+        "gray": {
           "50": {
             "$type": "color",
-            "$value": "#fcfcfc",
-            "$description": "Neutral 50 primitive palette color. Prefer semantic color tokens for UI decisions."
+            "$value": "#fcfcfc"
           },
           "75": {
             "$type": "color",
-            "$value": "#f7f7f7",
-            "$description": "Neutral 75 primitive palette color. Prefer semantic color tokens for UI decisions."
+            "$value": "#f9f9f9"
           },
           "100": {
             "$type": "color",
-            "$value": "#f2f2f2",
-            "$description": "Neutral 100 primitive palette color. Prefer semantic color tokens for UI decisions."
+            "$value": "#f0f0f0"
           },
           "200": {
             "$type": "color",
-            "$value": "#e9e9e9",
-            "$description": "Neutral 200 primitive palette color. Prefer semantic color tokens for UI decisions."
+            "$value": "#e8e8e8"
           },
           "300": {
             "$type": "color",
-            "$value": "#dadada",
-            "$description": "Neutral 300 primitive palette color. Prefer semantic color tokens for UI decisions."
+            "$value": "#e0e0e0"
           },
           "400": {
             "$type": "color",
-            "$value": "#c0c0c0",
-            "$description": "Neutral 400 primitive palette color. Prefer semantic color tokens for UI decisions."
+            "$value": "#d9d9d9"
           },
           "500": {
             "$type": "color",
-            "$value": "#919191",
-            "$description": "Neutral 500 primitive palette color. Prefer semantic color tokens for UI decisions."
+            "$value": "#cecece"
           },
           "600": {
             "$type": "color",
-            "$value": "#686868",
-            "$description": "Neutral 600 primitive palette color. Prefer semantic color tokens for UI decisions."
+            "$value": "#bbbbbb"
           },
           "700": {
             "$type": "color",
-            "$value": "#464646",
-            "$description": "Neutral 700 primitive palette color. Prefer semantic color tokens for UI decisions."
+            "$value": "#8d8d8d"
           },
           "800": {
             "$type": "color",
-            "$value": "#363738",
-            "$description": "Neutral 800 primitive palette color. Prefer semantic color tokens for UI decisions."
+            "$value": "#838383"
           },
           "900": {
             "$type": "color",
-            "$value": "#1e1f21",
-            "$description": "Neutral 900 primitive palette color. Prefer semantic color tokens for UI decisions."
+            "$value": "#646464"
           },
           "950": {
             "$type": "color",
-            "$value": "#0c0c0d",
-            "$description": "Neutral 950 primitive palette color. Prefer semantic color tokens for UI decisions."
+            "$value": "#202020"
+          }
+        },
+        "gray-dark": {
+          "50": {
+            "$type": "color",
+            "$value": "#111111"
+          },
+          "75": {
+            "$type": "color",
+            "$value": "#191919"
+          },
+          "100": {
+            "$type": "color",
+            "$value": "#222222"
+          },
+          "200": {
+            "$type": "color",
+            "$value": "#2a2a2a"
+          },
+          "300": {
+            "$type": "color",
+            "$value": "#313131"
+          },
+          "400": {
+            "$type": "color",
+            "$value": "#3a3a3a"
+          },
+          "500": {
+            "$type": "color",
+            "$value": "#484848"
+          },
+          "600": {
+            "$type": "color",
+            "$value": "#606060"
+          },
+          "700": {
+            "$type": "color",
+            "$value": "#6e6e6e"
+          },
+          "800": {
+            "$type": "color",
+            "$value": "#7b7b7b"
+          },
+          "900": {
+            "$type": "color",
+            "$value": "#b4b4b4"
+          },
+          "950": {
+            "$type": "color",
+            "$value": "#eeeeee"
+          }
+        },
+        "neutral": {
+          "50": {
+            "$type": "color",
+            "$value": "{co.color.primitive.gray.50}"
+          },
+          "75": {
+            "$type": "color",
+            "$value": "{co.color.primitive.gray.75}"
+          },
+          "100": {
+            "$type": "color",
+            "$value": "{co.color.primitive.gray.100}"
+          },
+          "200": {
+            "$type": "color",
+            "$value": "{co.color.primitive.gray.200}"
+          },
+          "300": {
+            "$type": "color",
+            "$value": "{co.color.primitive.gray.300}"
+          },
+          "400": {
+            "$type": "color",
+            "$value": "{co.color.primitive.gray.400}"
+          },
+          "500": {
+            "$type": "color",
+            "$value": "{co.color.primitive.gray.500}"
+          },
+          "600": {
+            "$type": "color",
+            "$value": "{co.color.primitive.gray.600}"
+          },
+          "700": {
+            "$type": "color",
+            "$value": "{co.color.primitive.gray.700}"
+          },
+          "800": {
+            "$type": "color",
+            "$value": "{co.color.primitive.gray.800}"
+          },
+          "900": {
+            "$type": "color",
+            "$value": "{co.color.primitive.gray.900}"
+          },
+          "950": {
+            "$type": "color",
+            "$value": "{co.color.primitive.gray.950}"
+          }
+        },
+        "neutral-dark": {
+          "50": {
+            "$type": "color",
+            "$value": "{co.color.primitive.gray-dark.50}"
+          },
+          "75": {
+            "$type": "color",
+            "$value": "{co.color.primitive.gray-dark.75}"
+          },
+          "100": {
+            "$type": "color",
+            "$value": "{co.color.primitive.gray-dark.100}"
+          },
+          "200": {
+            "$type": "color",
+            "$value": "{co.color.primitive.gray-dark.200}"
+          },
+          "300": {
+            "$type": "color",
+            "$value": "{co.color.primitive.gray-dark.300}"
+          },
+          "400": {
+            "$type": "color",
+            "$value": "{co.color.primitive.gray-dark.400}"
+          },
+          "500": {
+            "$type": "color",
+            "$value": "{co.color.primitive.gray-dark.500}"
+          },
+          "600": {
+            "$type": "color",
+            "$value": "{co.color.primitive.gray-dark.600}"
+          },
+          "700": {
+            "$type": "color",
+            "$value": "{co.color.primitive.gray-dark.700}"
+          },
+          "800": {
+            "$type": "color",
+            "$value": "{co.color.primitive.gray-dark.800}"
+          },
+          "900": {
+            "$type": "color",
+            "$value": "{co.color.primitive.gray-dark.900}"
+          },
+          "950": {
+            "$type": "color",
+            "$value": "{co.color.primitive.gray-dark.950}"
+          }
+        },
+        "blue": {
+          "50": {
+            "$type": "color",
+            "$value": "#fbfcff"
+          },
+          "75": {
+            "$type": "color",
+            "$value": "#f5f8ff"
+          },
+          "100": {
+            "$type": "color",
+            "$value": "#edf2ff"
+          },
+          "200": {
+            "$type": "color",
+            "$value": "#dfe8ff"
+          },
+          "300": {
+            "$type": "color",
+            "$value": "#cfdaff"
+          },
+          "400": {
+            "$type": "color",
+            "$value": "#b8c9ff"
+          },
+          "500": {
+            "$type": "color",
+            "$value": "#94acff"
+          },
+          "600": {
+            "$type": "color",
+            "$value": "#5f86ff"
+          },
+          "700": {
+            "$type": "color",
+            "$value": "#1a5eff"
+          },
+          "800": {
+            "$type": "color",
+            "$value": "#124fd7"
+          },
+          "900": {
+            "$type": "color",
+            "$value": "#103899"
+          },
+          "950": {
+            "$type": "color",
+            "$value": "#081f59"
+          }
+        },
+        "blue-dark": {
+          "50": {
+            "$type": "color",
+            "$value": "#0d1526"
+          },
+          "75": {
+            "$type": "color",
+            "$value": "#101b2f"
+          },
+          "100": {
+            "$type": "color",
+            "$value": "#10274c"
+          },
+          "200": {
+            "$type": "color",
+            "$value": "#133263"
+          },
+          "300": {
+            "$type": "color",
+            "$value": "#183c78"
+          },
+          "400": {
+            "$type": "color",
+            "$value": "#1e488f"
+          },
+          "500": {
+            "$type": "color",
+            "$value": "#2456a9"
+          },
+          "600": {
+            "$type": "color",
+            "$value": "#2f67c9"
+          },
+          "700": {
+            "$type": "color",
+            "$value": "#1a5eff"
+          },
+          "800": {
+            "$type": "color",
+            "$value": "#5c8cff"
+          },
+          "900": {
+            "$type": "color",
+            "$value": "#a6beff"
+          },
+          "950": {
+            "$type": "color",
+            "$value": "#dde7ff"
           }
         },
         "cobalt": {
           "50": {
             "$type": "color",
-            "$value": "#e8efff",
-            "$description": "Cobalt 50 primitive palette color. Prefer semantic color tokens for UI decisions."
+            "$value": "{co.color.primitive.blue.50}"
+          },
+          "75": {
+            "$type": "color",
+            "$value": "{co.color.primitive.blue.75}"
           },
           "100": {
             "$type": "color",
-            "$value": "#d1dfff",
-            "$description": "Cobalt 100 primitive palette color. Prefer semantic color tokens for UI decisions."
+            "$value": "{co.color.primitive.blue.100}"
           },
           "200": {
             "$type": "color",
-            "$value": "#a3bfff",
-            "$description": "Cobalt 200 primitive palette color. Prefer semantic color tokens for UI decisions."
+            "$value": "{co.color.primitive.blue.200}"
           },
           "300": {
             "$type": "color",
-            "$value": "#769eff",
-            "$description": "Cobalt 300 primitive palette color. Prefer semantic color tokens for UI decisions."
+            "$value": "{co.color.primitive.blue.300}"
           },
           "400": {
             "$type": "color",
-            "$value": "#487eff",
-            "$description": "Cobalt 400 primitive palette color. Prefer semantic color tokens for UI decisions."
+            "$value": "{co.color.primitive.blue.400}"
           },
           "500": {
             "$type": "color",
-            "$value": "#1a5eff",
-            "$description": "Cobalt 500 primitive palette color. Prefer semantic color tokens for UI decisions."
+            "$value": "{co.color.primitive.blue.500}"
           },
           "600": {
             "$type": "color",
-            "$value": "#154bcc",
-            "$description": "Cobalt 600 primitive palette color. Prefer semantic color tokens for UI decisions."
+            "$value": "{co.color.primitive.blue.600}"
           },
           "700": {
             "$type": "color",
-            "$value": "#103899",
-            "$description": "Cobalt 700 primitive palette color. Prefer semantic color tokens for UI decisions."
+            "$value": "{co.color.primitive.blue.700}"
           },
           "800": {
             "$type": "color",
-            "$value": "#0a2666",
-            "$description": "Cobalt 800 primitive palette color. Prefer semantic color tokens for UI decisions."
+            "$value": "{co.color.primitive.blue.800}"
           },
           "900": {
             "$type": "color",
-            "$value": "#051333",
-            "$description": "Cobalt 900 primitive palette color. Prefer semantic color tokens for UI decisions."
+            "$value": "{co.color.primitive.blue.900}"
+          },
+          "950": {
+            "$type": "color",
+            "$value": "{co.color.primitive.blue.950}"
           }
         },
-        "navy": {
+        "cobalt-dark": {
           "50": {
             "$type": "color",
-            "$value": "#e9edf0",
-            "$description": "Navy 50 primitive palette color. Prefer semantic color tokens for UI decisions."
+            "$value": "{co.color.primitive.blue-dark.50}"
+          },
+          "75": {
+            "$type": "color",
+            "$value": "{co.color.primitive.blue-dark.75}"
           },
           "100": {
             "$type": "color",
-            "$value": "#d3dbe1",
-            "$description": "Navy 100 primitive palette color. Prefer semantic color tokens for UI decisions."
+            "$value": "{co.color.primitive.blue-dark.100}"
           },
           "200": {
             "$type": "color",
-            "$value": "#a7b7c3",
-            "$description": "Navy 200 primitive palette color. Prefer semantic color tokens for UI decisions."
+            "$value": "{co.color.primitive.blue-dark.200}"
           },
           "300": {
             "$type": "color",
-            "$value": "#7c93a4",
-            "$description": "Navy 300 primitive palette color. Prefer semantic color tokens for UI decisions."
+            "$value": "{co.color.primitive.blue-dark.300}"
           },
           "400": {
             "$type": "color",
-            "$value": "#506f86",
-            "$description": "Navy 400 primitive palette color. Prefer semantic color tokens for UI decisions."
+            "$value": "{co.color.primitive.blue-dark.400}"
           },
           "500": {
             "$type": "color",
-            "$value": "#244b68",
-            "$description": "Navy 500 primitive palette color. Prefer semantic color tokens for UI decisions."
+            "$value": "{co.color.primitive.blue-dark.500}"
           },
           "600": {
             "$type": "color",
-            "$value": "#1d3c53",
-            "$description": "Navy 600 primitive palette color. Prefer semantic color tokens for UI decisions."
+            "$value": "{co.color.primitive.blue-dark.600}"
           },
           "700": {
             "$type": "color",
-            "$value": "#162d3e",
-            "$description": "Navy 700 primitive palette color. Prefer semantic color tokens for UI decisions."
+            "$value": "{co.color.primitive.blue-dark.700}"
           },
           "800": {
             "$type": "color",
-            "$value": "#0e1e2a",
-            "$description": "Navy 800 primitive palette color. Prefer semantic color tokens for UI decisions."
+            "$value": "{co.color.primitive.blue-dark.800}"
           },
           "900": {
             "$type": "color",
-            "$value": "#070f15",
-            "$description": "Navy 900 primitive palette color. Prefer semantic color tokens for UI decisions."
-          }
-        },
-        "teal": {
-          "50": {
-            "$type": "color",
-            "$value": "#eaf2f4",
-            "$description": "Teal 50 primitive palette color. Prefer semantic color tokens for UI decisions."
+            "$value": "{co.color.primitive.blue-dark.900}"
           },
-          "100": {
+          "950": {
             "$type": "color",
-            "$value": "#d6e4e9",
-            "$description": "Teal 100 primitive palette color. Prefer semantic color tokens for UI decisions."
-          },
-          "200": {
-            "$type": "color",
-            "$value": "#acc9d3",
-            "$description": "Teal 200 primitive palette color. Prefer semantic color tokens for UI decisions."
-          },
-          "300": {
-            "$type": "color",
-            "$value": "#83afbd",
-            "$description": "Teal 300 primitive palette color. Prefer semantic color tokens for UI decisions."
-          },
-          "400": {
-            "$type": "color",
-            "$value": "#5994a7",
-            "$description": "Teal 400 primitive palette color. Prefer semantic color tokens for UI decisions."
-          },
-          "500": {
-            "$type": "color",
-            "$value": "#307991",
-            "$description": "Teal 500 primitive palette color. Prefer semantic color tokens for UI decisions."
-          },
-          "600": {
-            "$type": "color",
-            "$value": "#266174",
-            "$description": "Teal 600 primitive palette color. Prefer semantic color tokens for UI decisions."
-          },
-          "700": {
-            "$type": "color",
-            "$value": "#1d4957",
-            "$description": "Teal 700 primitive palette color. Prefer semantic color tokens for UI decisions."
-          },
-          "800": {
-            "$type": "color",
-            "$value": "#13303a",
-            "$description": "Teal 800 primitive palette color. Prefer semantic color tokens for UI decisions."
-          },
-          "900": {
-            "$type": "color",
-            "$value": "#0a181d",
-            "$description": "Teal 900 primitive palette color. Prefer semantic color tokens for UI decisions."
-          }
-        },
-        "lime": {
-          "50": {
-            "$type": "color",
-            "$value": "#f2f8e9",
-            "$description": "Lime 50 primitive palette color. Prefer semantic color tokens for UI decisions."
-          },
-          "100": {
-            "$type": "color",
-            "$value": "#e6f2d4",
-            "$description": "Lime 100 primitive palette color. Prefer semantic color tokens for UI decisions."
-          },
-          "200": {
-            "$type": "color",
-            "$value": "#cde5a9",
-            "$description": "Lime 200 primitive palette color. Prefer semantic color tokens for UI decisions."
-          },
-          "300": {
-            "$type": "color",
-            "$value": "#b3d87d",
-            "$description": "Lime 300 primitive palette color. Prefer semantic color tokens for UI decisions."
-          },
-          "400": {
-            "$type": "color",
-            "$value": "#9acb52",
-            "$description": "Lime 400 primitive palette color. Prefer semantic color tokens for UI decisions."
-          },
-          "500": {
-            "$type": "color",
-            "$value": "#81be27",
-            "$description": "Lime 500 primitive palette color. Prefer semantic color tokens for UI decisions."
-          },
-          "600": {
-            "$type": "color",
-            "$value": "#67981f",
-            "$description": "Lime 600 primitive palette color. Prefer semantic color tokens for UI decisions."
-          },
-          "700": {
-            "$type": "color",
-            "$value": "#4d7217",
-            "$description": "Lime 700 primitive palette color. Prefer semantic color tokens for UI decisions."
-          },
-          "800": {
-            "$type": "color",
-            "$value": "#344c10",
-            "$description": "Lime 800 primitive palette color. Prefer semantic color tokens for UI decisions."
-          },
-          "900": {
-            "$type": "color",
-            "$value": "#1a2608",
-            "$description": "Lime 900 primitive palette color. Prefer semantic color tokens for UI decisions."
+            "$value": "{co.color.primitive.blue-dark.950}"
           }
         },
         "purple": {
           "50": {
             "$type": "color",
-            "$value": "#f3eafc",
-            "$description": "Purple 50 primitive palette color. Prefer semantic color tokens for UI decisions."
+            "$value": "#fefcfe"
+          },
+          "75": {
+            "$type": "color",
+            "$value": "#fbf7fe"
           },
           "100": {
             "$type": "color",
-            "$value": "#e8d5f9",
-            "$description": "Purple 100 primitive palette color. Prefer semantic color tokens for UI decisions."
+            "$value": "#f7edfe"
           },
           "200": {
             "$type": "color",
-            "$value": "#d0aaf3",
-            "$description": "Purple 200 primitive palette color. Prefer semantic color tokens for UI decisions."
+            "$value": "#f2e2fc"
           },
           "300": {
             "$type": "color",
-            "$value": "#b980ee",
-            "$description": "Purple 300 primitive palette color. Prefer semantic color tokens for UI decisions."
+            "$value": "#ead5f9"
           },
           "400": {
             "$type": "color",
-            "$value": "#a155e8",
-            "$description": "Purple 400 primitive palette color. Prefer semantic color tokens for UI decisions."
+            "$value": "#e0c4f4"
           },
           "500": {
             "$type": "color",
-            "$value": "#8a2be2",
-            "$description": "Purple 500 primitive palette color. Prefer semantic color tokens for UI decisions."
+            "$value": "#d1afec"
           },
           "600": {
             "$type": "color",
-            "$value": "#6e22b5",
-            "$description": "Purple 600 primitive palette color. Prefer semantic color tokens for UI decisions."
+            "$value": "#be93e4"
           },
           "700": {
             "$type": "color",
-            "$value": "#531a88",
-            "$description": "Purple 700 primitive palette color. Prefer semantic color tokens for UI decisions."
+            "$value": "#8e4ec6"
           },
           "800": {
             "$type": "color",
-            "$value": "#37115a",
-            "$description": "Purple 800 primitive palette color. Prefer semantic color tokens for UI decisions."
+            "$value": "#8347b9"
           },
           "900": {
             "$type": "color",
-            "$value": "#1c092d",
-            "$description": "Purple 900 primitive palette color. Prefer semantic color tokens for UI decisions."
+            "$value": "#8145b5"
+          },
+          "950": {
+            "$type": "color",
+            "$value": "#402060"
           }
         },
-        "indigo": {
+        "purple-dark": {
           "50": {
             "$type": "color",
-            "$value": "#ece9f6",
-            "$description": "Indigo 50 primitive palette color. Prefer semantic color tokens for UI decisions."
+            "$value": "#18111b"
+          },
+          "75": {
+            "$type": "color",
+            "$value": "#1e1523"
           },
           "100": {
             "$type": "color",
-            "$value": "#d9d4ee",
-            "$description": "Indigo 100 primitive palette color. Prefer semantic color tokens for UI decisions."
+            "$value": "#301c3b"
           },
           "200": {
             "$type": "color",
-            "$value": "#b3a9dd",
-            "$description": "Indigo 200 primitive palette color. Prefer semantic color tokens for UI decisions."
+            "$value": "#3d224e"
           },
           "300": {
             "$type": "color",
-            "$value": "#8c7dcc",
-            "$description": "Indigo 300 primitive palette color. Prefer semantic color tokens for UI decisions."
+            "$value": "#48295c"
           },
           "400": {
             "$type": "color",
-            "$value": "#6652bb",
-            "$description": "Indigo 400 primitive palette color. Prefer semantic color tokens for UI decisions."
+            "$value": "#54346b"
           },
           "500": {
             "$type": "color",
-            "$value": "#4027aa",
-            "$description": "Indigo 500 primitive palette color. Prefer semantic color tokens for UI decisions."
+            "$value": "#664282"
           },
           "600": {
             "$type": "color",
-            "$value": "#331f88",
-            "$description": "Indigo 600 primitive palette color. Prefer semantic color tokens for UI decisions."
+            "$value": "#8457aa"
           },
           "700": {
             "$type": "color",
-            "$value": "#261766",
-            "$description": "Indigo 700 primitive palette color. Prefer semantic color tokens for UI decisions."
+            "$value": "#8e4ec6"
           },
           "800": {
             "$type": "color",
-            "$value": "#1a1044",
-            "$description": "Indigo 800 primitive palette color. Prefer semantic color tokens for UI decisions."
+            "$value": "#9a5cd0"
           },
           "900": {
             "$type": "color",
-            "$value": "#0d0822",
-            "$description": "Indigo 900 primitive palette color. Prefer semantic color tokens for UI decisions."
-          }
-        },
-        "brick": {
-          "50": {
-            "$type": "color",
-            "$value": "#f4e7e7",
-            "$description": "Brick 50 primitive palette color. Prefer semantic color tokens for UI decisions."
+            "$value": "#d19dff"
           },
-          "100": {
+          "950": {
             "$type": "color",
-            "$value": "#eacfcf",
-            "$description": "Brick 100 primitive palette color. Prefer semantic color tokens for UI decisions."
-          },
-          "200": {
-            "$type": "color",
-            "$value": "#d59e9e",
-            "$description": "Brick 200 primitive palette color. Prefer semantic color tokens for UI decisions."
-          },
-          "300": {
-            "$type": "color",
-            "$value": "#bf6e6e",
-            "$description": "Brick 300 primitive palette color. Prefer semantic color tokens for UI decisions."
-          },
-          "400": {
-            "$type": "color",
-            "$value": "#aa3d3d",
-            "$description": "Brick 400 primitive palette color. Prefer semantic color tokens for UI decisions."
-          },
-          "500": {
-            "$type": "color",
-            "$value": "#950d0d",
-            "$description": "Brick 500 primitive palette color. Prefer semantic color tokens for UI decisions."
-          },
-          "600": {
-            "$type": "color",
-            "$value": "#770a0a",
-            "$description": "Brick 600 primitive palette color. Prefer semantic color tokens for UI decisions."
-          },
-          "700": {
-            "$type": "color",
-            "$value": "#590808",
-            "$description": "Brick 700 primitive palette color. Prefer semantic color tokens for UI decisions."
-          },
-          "800": {
-            "$type": "color",
-            "$value": "#3c0505",
-            "$description": "Brick 800 primitive palette color. Prefer semantic color tokens for UI decisions."
-          },
-          "900": {
-            "$type": "color",
-            "$value": "#1e0303",
-            "$description": "Brick 900 primitive palette color. Prefer semantic color tokens for UI decisions."
-          }
-        },
-        "rust": {
-          "50": {
-            "$type": "color",
-            "$value": "#f5eee6",
-            "$description": "Rust 50 primitive palette color. Prefer semantic color tokens for UI decisions."
-          },
-          "100": {
-            "$type": "color",
-            "$value": "#ebdecd",
-            "$description": "Rust 100 primitive palette color. Prefer semantic color tokens for UI decisions."
-          },
-          "200": {
-            "$type": "color",
-            "$value": "#d8bd9c",
-            "$description": "Rust 200 primitive palette color. Prefer semantic color tokens for UI decisions."
-          },
-          "300": {
-            "$type": "color",
-            "$value": "#c49b6a",
-            "$description": "Rust 300 primitive palette color. Prefer semantic color tokens for UI decisions."
-          },
-          "400": {
-            "$type": "color",
-            "$value": "#b17a39",
-            "$description": "Rust 400 primitive palette color. Prefer semantic color tokens for UI decisions."
-          },
-          "500": {
-            "$type": "color",
-            "$value": "#9d5907",
-            "$description": "Rust 500 primitive palette color. Prefer semantic color tokens for UI decisions."
-          },
-          "600": {
-            "$type": "color",
-            "$value": "#7e4706",
-            "$description": "Rust 600 primitive palette color. Prefer semantic color tokens for UI decisions."
-          },
-          "700": {
-            "$type": "color",
-            "$value": "#5e3504",
-            "$description": "Rust 700 primitive palette color. Prefer semantic color tokens for UI decisions."
-          },
-          "800": {
-            "$type": "color",
-            "$value": "#3f2403",
-            "$description": "Rust 800 primitive palette color. Prefer semantic color tokens for UI decisions."
-          },
-          "900": {
-            "$type": "color",
-            "$value": "#1f1201",
-            "$description": "Rust 900 primitive palette color. Prefer semantic color tokens for UI decisions."
-          }
-        },
-        "gold": {
-          "50": {
-            "$type": "color",
-            "$value": "#fcf6e5",
-            "$description": "Gold 50 primitive palette color. Prefer semantic color tokens for UI decisions."
-          },
-          "100": {
-            "$type": "color",
-            "$value": "#f8eecc",
-            "$description": "Gold 100 primitive palette color. Prefer semantic color tokens for UI decisions."
-          },
-          "200": {
-            "$type": "color",
-            "$value": "#f2dd99",
-            "$description": "Gold 200 primitive palette color. Prefer semantic color tokens for UI decisions."
-          },
-          "300": {
-            "$type": "color",
-            "$value": "#ebcc66",
-            "$description": "Gold 300 primitive palette color. Prefer semantic color tokens for UI decisions."
-          },
-          "400": {
-            "$type": "color",
-            "$value": "#e5bb33",
-            "$description": "Gold 400 primitive palette color. Prefer semantic color tokens for UI decisions."
-          },
-          "500": {
-            "$type": "color",
-            "$value": "#deaa00",
-            "$description": "Gold 500 primitive palette color. Prefer semantic color tokens for UI decisions."
-          },
-          "600": {
-            "$type": "color",
-            "$value": "#b28800",
-            "$description": "Gold 600 primitive palette color. Prefer semantic color tokens for UI decisions."
-          },
-          "700": {
-            "$type": "color",
-            "$value": "#856600",
-            "$description": "Gold 700 primitive palette color. Prefer semantic color tokens for UI decisions."
-          },
-          "800": {
-            "$type": "color",
-            "$value": "#594400",
-            "$description": "Gold 800 primitive palette color. Prefer semantic color tokens for UI decisions."
-          },
-          "900": {
-            "$type": "color",
-            "$value": "#2c2200",
-            "$description": "Gold 900 primitive palette color. Prefer semantic color tokens for UI decisions."
+            "$value": "#ecd9fa"
           }
         },
         "red": {
           "50": {
             "$type": "color",
-            "$value": "#fae9e8",
-            "$description": "Red 50 primitive palette color. Prefer semantic color tokens for UI decisions."
+            "$value": "#fffcfc"
+          },
+          "75": {
+            "$type": "color",
+            "$value": "#fff7f7"
           },
           "100": {
             "$type": "color",
-            "$value": "#f6d3d0",
-            "$description": "Red 100 primitive palette color. Prefer semantic color tokens for UI decisions."
+            "$value": "#feebec"
           },
           "200": {
             "$type": "color",
-            "$value": "#eca7a2",
-            "$description": "Red 200 primitive palette color. Prefer semantic color tokens for UI decisions."
+            "$value": "#ffdbdc"
           },
           "300": {
             "$type": "color",
-            "$value": "#e37a73",
-            "$description": "Red 300 primitive palette color. Prefer semantic color tokens for UI decisions."
+            "$value": "#ffcdce"
           },
           "400": {
             "$type": "color",
-            "$value": "#d94e45",
-            "$description": "Red 400 primitive palette color. Prefer semantic color tokens for UI decisions."
+            "$value": "#fdbdbe"
           },
           "500": {
             "$type": "color",
-            "$value": "#d02216",
-            "$description": "Red 500 primitive palette color. Prefer semantic color tokens for UI decisions."
+            "$value": "#f4a9aa"
           },
           "600": {
             "$type": "color",
-            "$value": "#a61b12",
-            "$description": "Red 600 primitive palette color. Prefer semantic color tokens for UI decisions."
+            "$value": "#eb8e90"
           },
           "700": {
             "$type": "color",
-            "$value": "#7d140d",
-            "$description": "Red 700 primitive palette color. Prefer semantic color tokens for UI decisions."
+            "$value": "#e5484d"
           },
           "800": {
             "$type": "color",
-            "$value": "#530e09",
-            "$description": "Red 800 primitive palette color. Prefer semantic color tokens for UI decisions."
+            "$value": "#dc3e42"
           },
           "900": {
             "$type": "color",
-            "$value": "#2a0704",
-            "$description": "Red 900 primitive palette color. Prefer semantic color tokens for UI decisions."
+            "$value": "#ce2c31"
+          },
+          "950": {
+            "$type": "color",
+            "$value": "#641723"
+          }
+        },
+        "red-dark": {
+          "50": {
+            "$type": "color",
+            "$value": "#191111"
+          },
+          "75": {
+            "$type": "color",
+            "$value": "#201314"
+          },
+          "100": {
+            "$type": "color",
+            "$value": "#3b1219"
+          },
+          "200": {
+            "$type": "color",
+            "$value": "#500f1c"
+          },
+          "300": {
+            "$type": "color",
+            "$value": "#611623"
+          },
+          "400": {
+            "$type": "color",
+            "$value": "#72232d"
+          },
+          "500": {
+            "$type": "color",
+            "$value": "#8c333a"
+          },
+          "600": {
+            "$type": "color",
+            "$value": "#b54548"
+          },
+          "700": {
+            "$type": "color",
+            "$value": "#e5484d"
+          },
+          "800": {
+            "$type": "color",
+            "$value": "#ec5d5e"
+          },
+          "900": {
+            "$type": "color",
+            "$value": "#ff9592"
+          },
+          "950": {
+            "$type": "color",
+            "$value": "#ffd1d9"
           }
         },
         "green": {
           "50": {
             "$type": "color",
-            "$value": "#e8f2eb",
-            "$description": "Green 50 primitive palette color. Prefer semantic color tokens for UI decisions."
+            "$value": "#fbfefc"
+          },
+          "75": {
+            "$type": "color",
+            "$value": "#f4fbf6"
           },
           "100": {
             "$type": "color",
-            "$value": "#d1e5d7",
-            "$description": "Green 100 primitive palette color. Prefer semantic color tokens for UI decisions."
+            "$value": "#e6f6eb"
           },
           "200": {
             "$type": "color",
-            "$value": "#a4cbae",
-            "$description": "Green 200 primitive palette color. Prefer semantic color tokens for UI decisions."
+            "$value": "#d6f1df"
           },
           "300": {
             "$type": "color",
-            "$value": "#76b286",
-            "$description": "Green 300 primitive palette color. Prefer semantic color tokens for UI decisions."
+            "$value": "#c4e8d1"
           },
           "400": {
             "$type": "color",
-            "$value": "#49985d",
-            "$description": "Green 400 primitive palette color. Prefer semantic color tokens for UI decisions."
+            "$value": "#adddc0"
           },
           "500": {
             "$type": "color",
-            "$value": "#1b7e35",
-            "$description": "Green 500 primitive palette color. Prefer semantic color tokens for UI decisions."
+            "$value": "#8eceaa"
           },
           "600": {
             "$type": "color",
-            "$value": "#16652a",
-            "$description": "Green 600 primitive palette color. Prefer semantic color tokens for UI decisions."
+            "$value": "#5bb98b"
           },
           "700": {
             "$type": "color",
-            "$value": "#104c20",
-            "$description": "Green 700 primitive palette color. Prefer semantic color tokens for UI decisions."
+            "$value": "#30a46c"
           },
           "800": {
             "$type": "color",
-            "$value": "#0b3215",
-            "$description": "Green 800 primitive palette color. Prefer semantic color tokens for UI decisions."
+            "$value": "#2b9a66"
           },
           "900": {
             "$type": "color",
-            "$value": "#05190b",
-            "$description": "Green 900 primitive palette color. Prefer semantic color tokens for UI decisions."
+            "$value": "#218358"
+          },
+          "950": {
+            "$type": "color",
+            "$value": "#193b2d"
+          }
+        },
+        "green-dark": {
+          "50": {
+            "$type": "color",
+            "$value": "#0e1512"
+          },
+          "75": {
+            "$type": "color",
+            "$value": "#121b17"
+          },
+          "100": {
+            "$type": "color",
+            "$value": "#132d21"
+          },
+          "200": {
+            "$type": "color",
+            "$value": "#113b29"
+          },
+          "300": {
+            "$type": "color",
+            "$value": "#174933"
+          },
+          "400": {
+            "$type": "color",
+            "$value": "#20573e"
+          },
+          "500": {
+            "$type": "color",
+            "$value": "#28684a"
+          },
+          "600": {
+            "$type": "color",
+            "$value": "#2f7c57"
+          },
+          "700": {
+            "$type": "color",
+            "$value": "#30a46c"
+          },
+          "800": {
+            "$type": "color",
+            "$value": "#33b074"
+          },
+          "900": {
+            "$type": "color",
+            "$value": "#3dd68c"
+          },
+          "950": {
+            "$type": "color",
+            "$value": "#b1f1cb"
+          }
+        },
+        "amber": {
+          "50": {
+            "$type": "color",
+            "$value": "#fefdfb"
+          },
+          "75": {
+            "$type": "color",
+            "$value": "#fefbe9"
+          },
+          "100": {
+            "$type": "color",
+            "$value": "#fff7c2"
+          },
+          "200": {
+            "$type": "color",
+            "$value": "#ffee9c"
+          },
+          "300": {
+            "$type": "color",
+            "$value": "#fbe577"
+          },
+          "400": {
+            "$type": "color",
+            "$value": "#f3d673"
+          },
+          "500": {
+            "$type": "color",
+            "$value": "#e9c162"
+          },
+          "600": {
+            "$type": "color",
+            "$value": "#e2a336"
+          },
+          "700": {
+            "$type": "color",
+            "$value": "#ffc53d"
+          },
+          "800": {
+            "$type": "color",
+            "$value": "#ffba18"
+          },
+          "900": {
+            "$type": "color",
+            "$value": "#ab6400"
+          },
+          "950": {
+            "$type": "color",
+            "$value": "#4f3422"
+          }
+        },
+        "amber-dark": {
+          "50": {
+            "$type": "color",
+            "$value": "#16120c"
+          },
+          "75": {
+            "$type": "color",
+            "$value": "#1d180f"
+          },
+          "100": {
+            "$type": "color",
+            "$value": "#302008"
+          },
+          "200": {
+            "$type": "color",
+            "$value": "#3f2700"
+          },
+          "300": {
+            "$type": "color",
+            "$value": "#4d3000"
+          },
+          "400": {
+            "$type": "color",
+            "$value": "#5c3d05"
+          },
+          "500": {
+            "$type": "color",
+            "$value": "#714f19"
+          },
+          "600": {
+            "$type": "color",
+            "$value": "#8f6424"
+          },
+          "700": {
+            "$type": "color",
+            "$value": "#ffc53d"
+          },
+          "800": {
+            "$type": "color",
+            "$value": "#ffd60a"
+          },
+          "900": {
+            "$type": "color",
+            "$value": "#ffca16"
+          },
+          "950": {
+            "$type": "color",
+            "$value": "#ffe7b3"
           }
         },
         "orange": {
           "50": {
             "$type": "color",
-            "$value": "#fef6e8",
-            "$description": "Orange 50 primitive palette color. Prefer semantic color tokens for UI decisions."
+            "$value": "{co.color.primitive.amber.50}"
+          },
+          "75": {
+            "$type": "color",
+            "$value": "{co.color.primitive.amber.75}"
           },
           "100": {
             "$type": "color",
-            "$value": "#feecd2",
-            "$description": "Orange 100 primitive palette color. Prefer semantic color tokens for UI decisions."
+            "$value": "{co.color.primitive.amber.100}"
           },
           "200": {
             "$type": "color",
-            "$value": "#fcd9a4",
-            "$description": "Orange 200 primitive palette color. Prefer semantic color tokens for UI decisions."
+            "$value": "{co.color.primitive.amber.200}"
           },
           "300": {
             "$type": "color",
-            "$value": "#fbc677",
-            "$description": "Orange 300 primitive palette color. Prefer semantic color tokens for UI decisions."
+            "$value": "{co.color.primitive.amber.300}"
           },
           "400": {
             "$type": "color",
-            "$value": "#fab34a",
-            "$description": "Orange 400 primitive palette color. Prefer semantic color tokens for UI decisions."
+            "$value": "{co.color.primitive.amber.400}"
           },
           "500": {
             "$type": "color",
-            "$value": "#f8a01c",
-            "$description": "Orange 500 primitive palette color. Prefer semantic color tokens for UI decisions."
+            "$value": "{co.color.primitive.amber.500}"
           },
           "600": {
             "$type": "color",
-            "$value": "#c78017",
-            "$description": "Orange 600 primitive palette color. Prefer semantic color tokens for UI decisions."
+            "$value": "{co.color.primitive.amber.600}"
           },
           "700": {
             "$type": "color",
-            "$value": "#956011",
-            "$description": "Orange 700 primitive palette color. Prefer semantic color tokens for UI decisions."
+            "$value": "{co.color.primitive.amber.700}"
           },
           "800": {
             "$type": "color",
-            "$value": "#63400b",
-            "$description": "Orange 800 primitive palette color. Prefer semantic color tokens for UI decisions."
+            "$value": "{co.color.primitive.amber.800}"
           },
           "900": {
             "$type": "color",
-            "$value": "#322006",
-            "$description": "Orange 900 primitive palette color. Prefer semantic color tokens for UI decisions."
+            "$value": "{co.color.primitive.amber.900}"
+          },
+          "950": {
+            "$type": "color",
+            "$value": "{co.color.primitive.amber.950}"
           }
         },
-        "yellow": {
+        "orange-dark": {
           "50": {
             "$type": "color",
-            "$value": "#fcfbe8",
-            "$description": "Yellow 50 primitive palette color. Prefer semantic color tokens for UI decisions."
+            "$value": "{co.color.primitive.amber-dark.50}"
+          },
+          "75": {
+            "$type": "color",
+            "$value": "{co.color.primitive.amber-dark.75}"
           },
           "100": {
             "$type": "color",
-            "$value": "#faf7d1",
-            "$description": "Yellow 100 primitive palette color. Prefer semantic color tokens for UI decisions."
+            "$value": "{co.color.primitive.amber-dark.100}"
           },
           "200": {
             "$type": "color",
-            "$value": "#f5efa3",
-            "$description": "Yellow 200 primitive palette color. Prefer semantic color tokens for UI decisions."
+            "$value": "{co.color.primitive.amber-dark.200}"
           },
           "300": {
             "$type": "color",
-            "$value": "#efe775",
-            "$description": "Yellow 300 primitive palette color. Prefer semantic color tokens for UI decisions."
+            "$value": "{co.color.primitive.amber-dark.300}"
           },
           "400": {
             "$type": "color",
-            "$value": "#eadf47",
-            "$description": "Yellow 400 primitive palette color. Prefer semantic color tokens for UI decisions."
+            "$value": "{co.color.primitive.amber-dark.400}"
           },
           "500": {
             "$type": "color",
-            "$value": "#e5d719",
-            "$description": "Yellow 500 primitive palette color. Prefer semantic color tokens for UI decisions."
+            "$value": "{co.color.primitive.amber-dark.500}"
           },
           "600": {
             "$type": "color",
-            "$value": "#b7ac14",
-            "$description": "Yellow 600 primitive palette color. Prefer semantic color tokens for UI decisions."
+            "$value": "{co.color.primitive.amber-dark.600}"
           },
           "700": {
             "$type": "color",
-            "$value": "#89810f",
-            "$description": "Yellow 700 primitive palette color. Prefer semantic color tokens for UI decisions."
+            "$value": "{co.color.primitive.amber-dark.700}"
           },
           "800": {
             "$type": "color",
-            "$value": "#5c560a",
-            "$description": "Yellow 800 primitive palette color. Prefer semantic color tokens for UI decisions."
+            "$value": "{co.color.primitive.amber-dark.800}"
           },
           "900": {
             "$type": "color",
-            "$value": "#2e2b05",
-            "$description": "Yellow 900 primitive palette color. Prefer semantic color tokens for UI decisions."
+            "$value": "{co.color.primitive.amber-dark.900}"
+          },
+          "950": {
+            "$type": "color",
+            "$value": "{co.color.primitive.amber-dark.950}"
           }
         },
         "white": {
           "$type": "color",
-          "$value": "#ffffff",
-          "$description": "Primitive white color. Prefer semantic color tokens for UI decisions."
+          "$value": "#ffffff"
         },
         "black": {
           "$type": "color",
-          "$value": "#000000",
-          "$description": "Primitive black color. Prefer semantic color tokens for UI decisions."
+          "$value": "#000000"
         }
       }
     }

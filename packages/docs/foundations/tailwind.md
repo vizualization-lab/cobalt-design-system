@@ -94,7 +94,7 @@ The preset maps every Cobalt token category to standard Tailwind theme keys:
 | `text-text`, `text-text-secondary`                               | `var(--co-color-text-{default,secondary})`            |
 | `border-border`, `border-border-strong`                          | `var(--co-color-border-{default,strong})`             |
 | `bg-interactive-primary-default`, `bg-interactive-primary-hover` | `var(--co-color-interactive-primary-{default,hover})` |
-| `bg-primitive-cobalt-500`                                        | `var(--co-color-primitive-cobalt-500)`                |
+| `bg-primitive-blue-700`                                          | `var(--co-color-primitive-blue-700)`                  |
 
 Color roles (primary, neutral, danger, success, warning) use variant `base` as the `DEFAULT`, so `bg-primary` is equivalent to `bg-primary-base`.
 

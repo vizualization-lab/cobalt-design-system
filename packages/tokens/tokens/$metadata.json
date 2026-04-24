@@ -5,6 +5,8 @@
     "semantic.shared",
     "semantic.theme.default.light",
     "semantic.theme.default.dark",
+    "semantic.theme.purple.light",
+    "semantic.theme.purple.dark",
     "components"
   ]
 }

@@ -112,42 +112,29 @@ function buildMappings(tokens) {
     }
   }
 
-  // Primitive colors (escape hatch)
-  for (const hue of [
-    'neutral',
-    'blue',
-    'navy',
-    'teal',
-    'lime',
-    'purple',
-    'indigo',
-    'brick',
-    'rust',
-    'gold',
-    'red',
-    'green',
-    'orange',
-    'yellow',
-  ]) {
-    const key = `primitive-${hue}`;
+  // Primitive colors (escape hatch) are discovered from built CSS so new
+  // families or extra aliases flow through without hand-maintaining a list.
+  const primitiveFamilies = new Map();
+  for (const varName of Object.keys(tokens)) {
+    const match = varName.match(/^--co-color-primitive-(.+)-(\d+)$/);
+    if (!match) continue;
+
+    const [, family, shade] = match;
+    if (!primitiveFamilies.has(family)) {
+      primitiveFamilies.set(family, new Set());
+    }
+
+    primitiveFamilies.get(family).add(shade);
+  }
+
+  for (const [family, shades] of [...primitiveFamilies.entries()].sort((a, b) =>
+    a[0].localeCompare(b[0]),
+  )) {
+    const key = `primitive-${family}`;
     colors[key] = {};
-    for (const shade of [
-      '50',
-      '100',
-      '200',
-      '300',
-      '400',
-      '500',
-      '600',
-      '700',
-      '800',
-      '900',
-      '950',
-    ]) {
-      const varName = `--co-color-primitive-${hue}-${shade}`;
-      if (varName in tokens) {
-        colors[key][shade] = `var(${varName})`;
-      }
+
+    for (const shade of [...shades].sort((a, b) => Number(a) - Number(b))) {
+      colors[key][shade] = `var(--co-color-primitive-${family}-${shade})`;
     }
   }
 

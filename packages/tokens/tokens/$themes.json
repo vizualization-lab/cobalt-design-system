@@ -22,5 +22,29 @@
       "components": "enabled"
     },
     "group": "Theme"
+  },
+  {
+    "id": "purple-light",
+    "name": "Purple Light",
+    "selectedTokenSets": {
+      "primitives": "enabled",
+      "primitives.color": "source",
+      "semantic.shared": "enabled",
+      "semantic.theme.purple.light": "enabled",
+      "components": "enabled"
+    },
+    "group": "Purple"
+  },
+  {
+    "id": "purple-dark",
+    "name": "Purple Dark",
+    "selectedTokenSets": {
+      "primitives": "enabled",
+      "primitives.color": "source",
+      "semantic.shared": "enabled",
+      "semantic.theme.purple.dark": "enabled",
+      "components": "enabled"
+    },
+    "group": "Purple"
   }
 ]

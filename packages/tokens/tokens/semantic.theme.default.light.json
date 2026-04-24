@@ -4,60 +4,51 @@
       "primary": {
         "base": {
           "$type": "color",
-          "$value": "{co.color.primitive.cobalt.500}",
-          "$description": "Core brand color — logos, accent borders, brand markers"
+          "$value": "{co.color.primitive.blue.700}"
         },
         "light": {
           "$type": "color",
-          "$value": "{co.color.primitive.cobalt.200}",
-          "$description": "Light brand tint for backgrounds and subtle emphasis"
+          "$value": "{co.color.primitive.blue.200}"
         },
         "dark": {
           "$type": "color",
-          "$value": "{co.color.primitive.cobalt.800}",
-          "$description": "Darkened brand accent for contrast pairings"
+          "$value": "{co.color.primitive.blue.900}"
         },
         "subtle": {
           "$type": "color",
-          "$value": "{co.color.primitive.cobalt.50}",
-          "$description": "Very light brand wash for large background areas"
+          "$value": "{co.color.primitive.blue.75}"
         },
         "contrast": {
           "$type": "color",
-          "$value": "{co.color.primitive.white}",
-          "$description": "Foreground color guaranteed to contrast against primary.base"
+          "$value": "{co.color.primitive.white}"
         }
       },
       "neutral": {
         "base": {
           "$type": "color",
-          "$value": "{co.color.primitive.neutral.500}",
-          "$description": "Primary neutral color for non-brand emphasis and neutral UI states."
+          "$value": "{co.color.primitive.gray.700}"
         },
         "light": {
           "$type": "color",
-          "$value": "{co.color.primitive.neutral.200}"
+          "$value": "{co.color.primitive.gray.200}"
         },
         "dark": {
           "$type": "color",
-          "$value": "{co.color.primitive.neutral.800}"
+          "$value": "{co.color.primitive.gray.900}"
         },
         "subtle": {
           "$type": "color",
-          "$value": "{co.color.primitive.neutral.50}",
-          "$description": "Low-emphasis neutral wash for non-brand UI states."
+          "$value": "{co.color.primitive.gray.75}"
         },
         "contrast": {
           "$type": "color",
-          "$value": "{co.color.primitive.white}",
-          "$description": "Foreground color intended to contrast against neutral.base."
+          "$value": "{co.color.primitive.gray.950}"
         }
       },
       "danger": {
         "base": {
           "$type": "color",
-          "$value": "{co.color.primitive.red.600}",
-          "$description": "Primary destructive or error color for critical actions and status indicators."
+          "$value": "{co.color.primitive.red.900}"
         },
         "light": {
           "$type": "color",
@@ -65,24 +56,21 @@
         },
         "dark": {
           "$type": "color",
-          "$value": "{co.color.primitive.red.800}"
+          "$value": "{co.color.primitive.red.950}"
         },
         "subtle": {
           "$type": "color",
-          "$value": "{co.color.primitive.red.50}",
-          "$description": "Low-emphasis danger wash for destructive or error contexts."
+          "$value": "{co.color.primitive.red.75}"
         },
         "contrast": {
           "$type": "color",
-          "$value": "{co.color.primitive.white}",
-          "$description": "Foreground color intended to contrast against danger.base."
+          "$value": "{co.color.primitive.white}"
         }
       },
       "success": {
         "base": {
           "$type": "color",
-          "$value": "{co.color.primitive.green.600}",
-          "$description": "Primary success color for positive actions and status indicators."
+          "$value": "{co.color.primitive.green.900}"
         },
         "light": {
           "$type": "color",
@@ -90,296 +78,244 @@
         },
         "dark": {
           "$type": "color",
-          "$value": "{co.color.primitive.green.800}"
+          "$value": "{co.color.primitive.green.950}"
         },
         "subtle": {
           "$type": "color",
-          "$value": "{co.color.primitive.green.50}",
-          "$description": "Low-emphasis success wash for positive status contexts."
+          "$value": "{co.color.primitive.green.75}"
         },
         "contrast": {
           "$type": "color",
-          "$value": "{co.color.primitive.white}",
-          "$description": "Foreground color intended to contrast against success.base."
+          "$value": "{co.color.primitive.white}"
         }
       },
       "warning": {
         "base": {
           "$type": "color",
-          "$value": "{co.color.primitive.orange.600}",
-          "$description": "Primary warning color for cautionary actions and status indicators."
+          "$value": "{co.color.primitive.amber.700}"
         },
         "light": {
           "$type": "color",
-          "$value": "{co.color.primitive.orange.200}"
+          "$value": "{co.color.primitive.amber.200}"
         },
         "dark": {
           "$type": "color",
-          "$value": "{co.color.primitive.orange.800}"
+          "$value": "{co.color.primitive.amber.900}"
         },
         "subtle": {
           "$type": "color",
-          "$value": "{co.color.primitive.orange.50}",
-          "$description": "Low-emphasis warning wash for cautionary status contexts."
+          "$value": "{co.color.primitive.amber.75}"
         },
         "contrast": {
           "$type": "color",
-          "$value": "{co.color.primitive.neutral.900}",
-          "$description": "Foreground color intended to contrast against warning.base."
+          "$value": "{co.color.primitive.gray.950}"
         }
       },
       "surface": {
         "page": {
           "$type": "color",
-          "$value": "{co.color.primitive.neutral.75}",
-          "$description": "Page canvas background for the app or document root."
+          "$value": "{co.color.primitive.gray.75}"
         },
         "default": {
           "$type": "color",
-          "$value": "{co.color.primitive.white}",
-          "$description": "Default container background for cards, panels, and content surfaces."
+          "$value": "{co.color.primitive.gray.50}"
         },
         "raised": {
           "$type": "color",
-          "$value": "{co.color.primitive.neutral.50}",
-          "$description": "Raised surface background for popovers, menus, and sticky regions."
+          "$value": "{co.color.primitive.white}"
         },
         "sunken": {
           "$type": "color",
-          "$value": "{co.color.primitive.neutral.100}",
-          "$description": "Inset surface background for wells, code blocks, and input-like areas."
+          "$value": "{co.color.primitive.gray.100}"
         },
         "disabled": {
           "$type": "color",
-          "$value": "{co.color.primitive.neutral.300}",
-          "$description": "Background color for disabled surfaces and inactive controls."
+          "$value": "{co.color.primitive.gray.200}"
         },
         "overlay": {
           "$type": "color",
-          "$value": "{co.color.primitive.neutral.900}",
-          "$description": "Overlay backdrop color used behind modals, drawers, and scrims."
+          "$value": "{co.color.primitive.black}"
         },
         "bold": {
           "$type": "color",
-          "$value": "{co.color.primitive.neutral.800}",
-          "$description": "High-emphasis surface color for app chrome and prominent containers."
+          "$value": "{co.color.primitive.gray.950}"
         }
       },
       "text": {
         "default": {
           "$type": "color",
-          "$value": "{co.color.primitive.neutral.700}",
-          "$description": "Default text color for primary content."
+          "$value": "{co.color.primitive.gray.950}"
         },
         "secondary": {
           "$type": "color",
-          "$value": "{co.color.primitive.neutral.600}",
-          "$description": "Secondary text color for supporting content."
+          "$value": "{co.color.primitive.gray.900}"
         },
         "tertiary": {
           "$type": "color",
-          "$value": "{co.color.primitive.neutral.500}",
-          "$description": "Tertiary text color for metadata and low-emphasis content."
+          "$value": "{co.color.primitive.gray.800}"
         },
         "placeholder": {
           "$type": "color",
-          "$value": "{co.color.primitive.neutral.600}",
-          "$description": "Text color for placeholder content in form controls."
+          "$value": "{co.color.primitive.gray.900}"
         },
         "disabled": {
           "$type": "color",
-          "$value": "{co.color.primitive.neutral.700}",
-          "$description": "Text color for disabled content and inactive controls."
+          "$value": "{co.color.primitive.gray.900}"
         },
         "inverse": {
           "$type": "color",
-          "$value": "{co.color.primitive.white}",
-          "$description": "Text color for content placed on inverse surfaces."
+          "$value": "{co.color.primitive.white}"
         },
         "link": {
           "$type": "color",
-          "$value": "{co.color.primitive.cobalt.600}",
-          "$description": "Text color for links and inline navigation."
+          "$value": "{co.color.primitive.blue.900}"
         },
         "on": {
           "primary": {
             "$type": "color",
-            "$value": "{co.color.primitive.white}",
-            "$description": "Text color for content placed on primary interactive fills."
+            "$value": "{co.color.primitive.white}"
           },
           "bold": {
             "$type": "color",
-            "$value": "{co.color.primitive.neutral.50}",
-            "$description": "Text color for content placed on bold surfaces."
+            "$value": "{co.color.primitive.white}"
           }
         }
       },
       "border": {
         "default": {
           "$type": "color",
-          "$value": "{co.color.primitive.neutral.200}",
-          "$description": "Default border color for controls, containers, and dividers."
+          "$value": "{co.color.primitive.gray.400}"
         },
         "strong": {
           "$type": "color",
-          "$value": "{co.color.primitive.neutral.300}",
-          "$description": "Stronger border color for emphasized boundaries."
+          "$value": "{co.color.primitive.gray.500}"
         },
         "subtle": {
           "$type": "color",
-          "$value": "{co.color.primitive.neutral.100}",
-          "$description": "Subtle border color for low-emphasis dividers and boundaries."
+          "$value": "{co.color.primitive.gray.300}"
         },
         "active": {
           "$type": "color",
-          "$value": "{co.color.primitive.cobalt.700}",
-          "$description": "Border color for active controls and current selections."
+          "$value": "{co.color.primitive.blue.600}"
         },
         "danger": {
           "$type": "color",
-          "$value": "{co.color.primitive.red.500}",
-          "$description": "Border color for destructive or error states."
+          "$value": "{co.color.primitive.red.600}"
         },
         "success": {
           "$type": "color",
-          "$value": "{co.color.primitive.green.500}",
-          "$description": "Border color for success states."
+          "$value": "{co.color.primitive.green.600}"
         },
         "focus": {
           "$type": "color",
-          "$value": "{co.color.primitive.cobalt.500}",
-          "$description": "Border color used with keyboard focus indicators."
+          "$value": "{co.color.primitive.blue.700}"
         },
         "selected": {
           "$type": "color",
-          "$value": "{co.color.primitive.cobalt.200}",
-          "$description": "Border color for selected items and surfaces."
+          "$value": "{co.color.primitive.blue.500}"
         },
         "bold": {
           "$type": "color",
-          "$value": "{co.color.primitive.neutral.800}",
-          "$description": "Border color for bold surfaces and high-contrast chrome."
+          "$value": "{co.color.primitive.gray.600}"
         }
       },
       "interactive": {
         "primary": {
           "default": {
             "$type": "color",
-            "$value": "{co.color.primary.base}",
-            "$description": "Resting state for interactive controls — inherits from primary.base"
+            "$value": "{co.color.primary.base}"
           },
           "hover": {
             "$type": "color",
-            "$value": "{co.color.primitive.cobalt.600}",
-            "$description": "Primary interactive fill on hover."
+            "$value": "{co.color.primitive.blue.800}"
           },
           "active": {
             "$type": "color",
-            "$value": "{co.color.primitive.cobalt.700}",
-            "$description": "Primary interactive fill during press or active state."
+            "$value": "{co.color.primitive.blue.900}"
           },
           "disabled": {
             "$type": "color",
-            "$value": "{co.color.primitive.cobalt.200}",
-            "$description": "Primary interactive fill for disabled controls."
+            "$value": "{co.color.primitive.blue.400}"
           }
         },
         "subtle": {
           "default": {
             "$type": "color",
-            "$value": "transparent",
-            "$description": "Low-emphasis interactive background in the resting state."
+            "$value": "transparent"
           },
           "hover": {
             "$type": "color",
-            "$value": "{co.color.primitive.cobalt.50}",
-            "$description": "Low-emphasis interactive background on hover."
+            "$value": "{co.color.primitive.blue.100}"
           },
           "active": {
             "$type": "color",
-            "$value": "{co.color.primitive.cobalt.100}",
-            "$description": "Low-emphasis interactive background during press or active state."
+            "$value": "{co.color.primitive.blue.200}"
           },
           "disabled": {
             "$type": "color",
-            "$value": "transparent",
-            "$description": "Low-emphasis interactive background for disabled controls."
+            "$value": "transparent"
           },
           "selected": {
             "$type": "color",
-            "$value": "{co.color.primitive.cobalt.50}",
-            "$description": "Low-emphasis interactive background for selected controls and navigation items."
+            "$value": "{co.color.primitive.blue.300}"
           }
         },
         "bold": {
           "default": {
             "$type": "color",
-            "$value": "transparent",
-            "$description": "High-contrast interactive background in the resting state."
+            "$value": "transparent"
           },
           "hover": {
             "$type": "color",
-            "$value": "{co.color.primitive.neutral.800}",
-            "$description": "High-contrast interactive background on hover."
+            "$value": "{co.color.primitive.gray.100}"
           },
           "active": {
             "$type": "color",
-            "$value": "{co.color.primitive.neutral.900}",
-            "$description": "High-contrast interactive background during press or active state."
+            "$value": "{co.color.primitive.gray.200}"
           },
           "disabled": {
             "$type": "color",
-            "$value": "transparent",
-            "$description": "High-contrast interactive background for disabled controls."
+            "$value": "transparent"
           },
           "selected": {
             "$type": "color",
-            "$value": "{co.color.primitive.neutral.700}",
-            "$description": "High-contrast interactive background for selected controls and navigation items."
+            "$value": "{co.color.primitive.gray.300}"
           }
         },
         "danger": {
           "default": {
             "$type": "color",
-            "$value": "{co.color.primitive.red.500}",
-            "$description": "Destructive interactive fill in the resting state."
+            "$value": "{co.color.primitive.red.900}"
           },
           "hover": {
             "$type": "color",
-            "$value": "{co.color.primitive.red.600}",
-            "$description": "Destructive interactive fill on hover."
+            "$value": "{co.color.primitive.red.950}"
           },
           "active": {
             "$type": "color",
-            "$value": "{co.color.primitive.red.700}",
-            "$description": "Destructive interactive fill during press or active state."
+            "$value": "{co.color.primitive.red.950}"
           },
           "disabled": {
             "$type": "color",
-            "$value": "{co.color.primitive.red.200}",
-            "$description": "Destructive interactive fill for disabled controls."
+            "$value": "{co.color.primitive.red.300}"
           }
         },
         "success": {
           "default": {
             "$type": "color",
-            "$value": "{co.color.primitive.green.500}",
-            "$description": "Success interactive fill in the resting state."
+            "$value": "{co.color.primitive.green.900}"
           },
           "hover": {
             "$type": "color",
-            "$value": "{co.color.primitive.green.600}",
-            "$description": "Success interactive fill on hover."
+            "$value": "{co.color.primitive.green.950}"
           },
           "active": {
             "$type": "color",
-            "$value": "{co.color.primitive.green.700}",
-            "$description": "Success interactive fill during press or active state."
+            "$value": "{co.color.primitive.green.950}"
           },
           "disabled": {
             "$type": "color",
-            "$value": "{co.color.primitive.green.200}",
-            "$description": "Success interactive fill for disabled controls."
+            "$value": "{co.color.primitive.green.300}"
           }
         }
       },
@@ -387,49 +323,41 @@
         "danger": {
           "text": {
             "$type": "color",
-            "$value": "{co.color.primitive.red.700}",
-            "$description": "Text color for destructive or error feedback messages."
+            "$value": "{co.color.primitive.red.950}"
           },
           "background": {
             "$type": "color",
-            "$value": "{co.color.primitive.red.50}",
-            "$description": "Background color for destructive or error feedback messages."
+            "$value": "{co.color.primitive.red.75}"
           }
         },
         "success": {
           "text": {
             "$type": "color",
-            "$value": "{co.color.primitive.green.700}",
-            "$description": "Text color for success feedback messages."
+            "$value": "{co.color.primitive.green.950}"
           },
           "background": {
             "$type": "color",
-            "$value": "{co.color.primitive.green.50}",
-            "$description": "Background color for success feedback messages."
+            "$value": "{co.color.primitive.green.75}"
           }
         },
         "warning": {
           "text": {
             "$type": "color",
-            "$value": "{co.color.primitive.orange.700}",
-            "$description": "Text color for warning feedback messages."
+            "$value": "{co.color.primitive.amber.950}"
           },
           "background": {
             "$type": "color",
-            "$value": "{co.color.primitive.orange.50}",
-            "$description": "Background color for warning feedback messages."
+            "$value": "{co.color.primitive.amber.75}"
           }
         },
         "neutral": {
           "text": {
             "$type": "color",
-            "$value": "{co.color.primitive.neutral.700}",
-            "$description": "Text color for neutral feedback messages."
+            "$value": "{co.color.primitive.gray.950}"
           },
           "background": {
             "$type": "color",
-            "$value": "{co.color.primitive.neutral.100}",
-            "$description": "Background color for neutral feedback messages."
+            "$value": "{co.color.primitive.gray.75}"
           }
         }
       }

@@ -16,6 +16,7 @@
     "./css": "./dist/css/tokens.css",
     "./css/base": "./dist/css/base.css",
     "./css/dark": "./dist/css/tokens-dark.css",
+    "./css/themes/*": "./dist/css/themes/tokens-*.css",
     "./css/fonts": "./dist/css/fonts.css",
     "./css/fonts-international": "./dist/css/fonts-international.css",
     "./css/utilities": "./dist/css/utilities.css",

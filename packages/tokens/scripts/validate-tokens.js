@@ -134,6 +134,31 @@ function validateThemeSchemas(tokensDir, discovery, errors) {
   }
 }
 
+function validateThemeModeCoverage(discovery, errors) {
+  const themeModes = new Map();
+
+  for (const tokenSet of discovery.themeTokenSets) {
+    if (!themeModes.has(tokenSet.themeId)) {
+      themeModes.set(tokenSet.themeId, new Set());
+    }
+
+    themeModes.get(tokenSet.themeId).add(tokenSet.mode);
+  }
+
+  if (!themeModes.has('default')) {
+    errors.push('Missing required theme: default');
+    return;
+  }
+
+  for (const [themeId, modes] of themeModes) {
+    for (const requiredMode of ['light', 'dark']) {
+      if (!modes.has(requiredMode)) {
+        errors.push(`Theme "${themeId}" is missing required mode "${requiredMode}".`);
+      }
+    }
+  }
+}
+
 function validateComponentColorReferences(tokensDir, discovery, errors) {
   for (const tokenSet of discovery.componentTokenSets) {
     const tokens = readJson(join(tokensDir, tokenSet.fileName));
@@ -250,14 +275,7 @@ export function validateTokens(tokensDir) {
     );
   }
 
-  if (
-    !discovery.themeTokenSets.some(
-      (tokenSet) => tokenSet.themeId === 'default' && tokenSet.mode === 'light',
-    )
-  ) {
-    errors.push('Missing required token set: semantic.theme.default.light');
-  }
-
+  validateThemeModeCoverage(discovery, errors);
   validateThemeSchemas(tokensDir, discovery, errors);
   validateComponentColorReferences(tokensDir, discovery, errors);
   validateContrast(tokensDir, discovery, errors);
