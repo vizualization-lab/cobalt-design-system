@@ -50,7 +50,7 @@ export const cobaltCheckboxStyles = css`
     color: var(--co-color-interactive-primary-default);
   }
 
-  :host(:focus-within) .checkbox__icon {
+  :host([_keyboard-focus]) .checkbox__icon {
     outline: var(--co-focus-ring-width) solid var(--co-color-border-focus);
     outline-offset: calc(-1 * var(--co-shape-border-width-thin));
     border-radius: var(--co-shape-radius-sm);

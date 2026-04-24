@@ -2,6 +2,7 @@ import { html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { LionRadio } from '@lion/ui/radio-group.js';
 import { cobaltRadioStyles } from './co-radio.styles.js';
+import { trackKeyboardFocus } from '../../utils/keyboard-focus.js';
 import '../icon/co-icon.js';
 
 /**
@@ -32,6 +33,11 @@ export class CoRadio extends LionRadio {
       this.choiceValue = value;
     }
     this.requestUpdate('value', oldValue);
+  }
+
+  override connectedCallback(): void {
+    super.connectedCallback();
+    trackKeyboardFocus(this);
   }
 
   override render() {

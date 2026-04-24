@@ -2,6 +2,7 @@ import { html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { LionCheckboxIndeterminate } from '@lion/ui/checkbox-group.js';
 import { cobaltCheckboxIndeterminateStyles } from './co-checkbox-indeterminate.styles.js';
+import { trackKeyboardFocus } from '../../utils/keyboard-focus.js';
 import '../icon/co-icon.js';
 
 /**
@@ -22,20 +23,6 @@ export class CoCheckboxIndeterminate extends LionCheckboxIndeterminate {
     return [...super.styles, cobaltCheckboxIndeterminateStyles];
   }
 
-  override connectedCallback(): void {
-    super.connectedCallback();
-    this.addEventListener('focusout', this._onFocusOut);
-  }
-
-  override disconnectedCallback(): void {
-    super.disconnectedCallback();
-    this.removeEventListener('focusout', this._onFocusOut);
-  }
-
-  private _onFocusOut = () => {
-    this.removeAttribute('_own-focus');
-  };
-
   /** String value alias mapped to Lion's choiceValue. */
   @property({ reflect: true })
   override get value(): string {
@@ -48,6 +35,11 @@ export class CoCheckboxIndeterminate extends LionCheckboxIndeterminate {
       this.choiceValue = value;
     }
     this.requestUpdate('value', oldValue);
+  }
+
+  override connectedCallback(): void {
+    super.connectedCallback();
+    trackKeyboardFocus(this);
   }
 
   private get _indicatorIconName(): string {
@@ -118,8 +110,6 @@ export class CoCheckboxIndeterminate extends LionCheckboxIndeterminate {
     this.checked = targetChecked;
     this.indeterminate = false;
     ownInput.checked = targetChecked;
-
-    this.setAttribute('_own-focus', '');
 
     this.updateComplete.then(() => {
       (this as unknown as { __settingOwnSubs: boolean }).__settingOwnSubs = false;
