@@ -347,7 +347,7 @@ function toggleSidebar() {
   --co-font-mono: var(--co-font-family-mono);
 
   /* Layout metrics (not theme) */
-  --co-rail-width: 92px;
+  --co-rail-width: var(--co-component-nav-rail-bar-width, 115px);
   --co-sidebar-width: 260px;
   --co-topbar-height: 56px;
   --co-panel-gap: 12px;

@@ -78,11 +78,11 @@ function onKey(event: KeyboardEvent, i: number) {
   z-index: 55;
   display: flex;
   flex-direction: column;
-  gap: 2px;
-  padding: 12px 8px;
-  background: var(--co-color-surface-bold);
-  border-radius: var(--co-shape-radius-md);
-  box-shadow: var(--co-elevation-shadow-sm, 0 1px 2px rgba(0, 0, 0, 0.08));
+  gap: var(--co-component-nav-rail-bar-gap, var(--co-space-2));
+  padding: var(--co-component-nav-rail-bar-padding, var(--co-space-2));
+  background: var(--co-component-nav-rail-bar-background, var(--co-color-surface-sunken));
+  border-radius: var(--co-component-nav-rail-bar-radius, var(--co-shape-radius-lg));
+  box-shadow: var(--co-elevation-shadow-md, 0 4px 12px rgba(0, 0, 0, 0.12));
   overflow-y: auto;
   overflow-x: hidden;
 }
@@ -92,50 +92,68 @@ function onKey(event: KeyboardEvent, i: number) {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 6px;
+  gap: var(--co-component-nav-rail-item-gap, var(--co-space-3));
   width: 100%;
-  padding: 10px 4px;
+  padding: var(--co-component-nav-rail-item-padding-y, var(--co-space-2))
+    var(--co-component-nav-rail-item-padding-x, var(--co-space-2));
   border: none;
-  background: none;
-  border-radius: 10px;
+  background: var(
+    --co-component-nav-rail-item-background-default,
+    var(--co-color-interactive-subtle-default)
+  );
+  border-radius: var(--co-component-nav-rail-item-radius, var(--co-shape-radius-2xl));
   cursor: pointer;
-  color: color-mix(in srgb, var(--co-color-text-on-bold) 70%, transparent);
+  color: var(--co-component-nav-rail-item-foreground-default, var(--co-color-text-secondary));
   font-family: var(--co-font-body);
   font-size: 10.5px;
   font-weight: var(--co-typography-label-weight);
   letter-spacing: var(--co-typography-caption-tracking);
   line-height: 1.2;
   text-align: center;
-  transition: all var(--co-duration) var(--co-ease);
+  transition:
+    background var(--co-duration) var(--co-ease),
+    color var(--co-duration) var(--co-ease),
+    box-shadow var(--co-duration) var(--co-ease),
+    transform var(--co-duration) var(--co-ease);
 }
 
 .rail-item co-icon {
-  --icon-size: 22px;
-  font-size: 22px;
-  width: 22px;
-  height: 22px;
+  --icon-size: var(--co-component-nav-rail-item-icon-size, 22px);
+  color: currentColor;
+  font-size: var(--co-component-nav-rail-item-icon-size, 22px);
+  width: var(--co-component-nav-rail-item-icon-size, 22px);
+  height: var(--co-component-nav-rail-item-icon-size, 22px);
   flex-shrink: 0;
 }
 
 .rail-item:hover {
-  background: var(--co-color-interactive-bold-hover);
-  color: var(--co-color-text-on-bold);
+  background: var(
+    --co-component-nav-rail-item-background-hover,
+    var(--co-color-interactive-subtle-hover)
+  );
+  color: var(--co-component-nav-rail-item-foreground-hover, var(--co-color-text-link));
+}
+
+.rail-item:active {
+  background: var(
+    --co-component-nav-rail-item-background-active,
+    var(--co-color-interactive-subtle-active)
+  );
+  color: var(--co-component-nav-rail-item-foreground-active, var(--co-color-text-link));
 }
 
 .rail-item:focus-visible {
-  outline: 2px solid var(--co-color-border-focus, var(--co-color-interactive-primary-default));
+  outline: 2px solid var(--co-component-nav-rail-item-focus-ring, var(--co-color-border-focus));
   outline-offset: 2px;
 }
 
 .rail-item.is-active {
-  background: var(--co-color-interactive-bold-selected);
-  color: var(--co-color-text-on-bold);
-}
-
-/* Icon pops in brand cobalt when selected — uses a primitive so it stays
-   identical in light and dark (the rail background is dark in both). */
-.rail-item.is-active co-icon {
-  color: var(--co-color-primitive-cobalt-300);
+  background: var(
+    --co-component-nav-rail-item-background-selected,
+    var(--co-color-interactive-subtle-selected)
+  );
+  color: var(--co-component-nav-rail-item-foreground-selected, var(--co-color-text-link));
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, currentColor 16%, transparent);
 }
 
 .rail-item-label {

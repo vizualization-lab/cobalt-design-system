@@ -208,6 +208,27 @@ export class AppComponent {}
 | `icon`    | The icon container                       |
 | `label`   | The label container                      |
 
+## Design Tokens
+
+`co-nav-rail-item` consumes the `component.nav.rail.item.*` token family. This keeps item-specific sizing and state treatment aligned with the rail component instead of turning them into global interaction rules.
+
+- `--co-component-nav-rail-item-padding-x`
+- `--co-component-nav-rail-item-padding-y`
+- `--co-component-nav-rail-item-gap`
+- `--co-component-nav-rail-item-radius`
+- `--co-component-nav-rail-item-icon-size`
+- `--co-component-nav-rail-item-background-default`
+- `--co-component-nav-rail-item-background-hover`
+- `--co-component-nav-rail-item-background-active`
+- `--co-component-nav-rail-item-background-selected`
+- `--co-component-nav-rail-item-background-disabled`
+- `--co-component-nav-rail-item-foreground-default`
+- `--co-component-nav-rail-item-foreground-hover`
+- `--co-component-nav-rail-item-foreground-active`
+- `--co-component-nav-rail-item-foreground-selected`
+- `--co-component-nav-rail-item-foreground-disabled`
+- `--co-component-nav-rail-item-focus-ring`
+
 ## Accessibility
 
 <ClientOnly>

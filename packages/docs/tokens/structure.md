@@ -1,6 +1,6 @@
 # Token Structure
 
-This page explains how Cobalt tokens are organized and how to decide where a token belongs. Cobalt adopts a a three tiered structure for tokens: `primitives`, `semantic`, and components. This makes the token system easier to scale as more themes are added and easier to understand in Figma handoff.
+This page explains how Cobalt tokens are organized and how to decide where a token belongs. Cobalt adopts a three-tier structure for tokens: `primitives`, `semantic`, and component tokens. This makes the system easier to scale as more themes are added and easier to understand in Figma handoff.
 
 For designers working in Figma, the main idea is simple:
 
@@ -24,9 +24,13 @@ end
 subgraph Semantic["Semantic"]
 ss(semantic.shared.json)
 stl("semantic.theme.default.light.json")
-st("semantic.theme.default.dark.json")
+std("semantic.theme.default.dark.json")
+sptl("semantic.theme.purple.light.json")
+sptd("semantic.theme.purple.dark.json")
 ss-->stl
-ss-->st
+ss-->std
+ss-->sptl
+ss-->sptd
 end
 
 
@@ -38,13 +42,13 @@ Primitives-->Semantic
 Semantic-->Components
 ```
 
-| Token File                           | What it means                                            | Use it for                                                          | Examples                                                            |
-| ------------------------------------ | -------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
-| `primitives.json`                    | Raw foundational values                                  | Spacing scale, radius scale, type scale, motion values, breakpoints | `space.4`, `shape.radius.sm`, `font.size.md`                        |
-| `primitives.color.json`              | Raw color palette                                        | Neutral and brand ramps                                             | `neutral.100`, `cobalt.500`, `red.600`                              |
-| `semantic.shared.json`               | Shared design decisions that stay the same across themes | Control sizing, focus rules, shared layout values                   | `control.height.md`, `control.radius`, `focus.ring.width`           |
-| `semantic.theme.<theme>.<mode>.json` | Semantic tokens that change by theme or mode             | Mostly color behavior today                                         | `color.text.default`, `color.surface.default`, `color.primary.base` |
-| `components.json`                    | Component-specific tokens                                | Public component contracts or intentional exceptions                | `component.avatar.size.md`                                          |
+| Token File                           | What it means                                            | Use it for                                                          | Examples                                                                  |
+| ------------------------------------ | -------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------------- |
+| `primitives.json`                    | Raw foundational values                                  | Spacing scale, radius scale, type scale, motion values, breakpoints | `space.4`, `shape.radius.sm`, `font.size.md`                              |
+| `primitives.color.json`              | Raw color palette                                        | Numeric hue families organized as `50`–`950` scales                 | `gray.100`, `blue.700`, `blue.900`                                        |
+| `semantic.shared.json`               | Shared design decisions that stay the same across themes | Control sizing, focus rules, shared layout values                   | `control.height.md`, `control.radius`, `focus.ring.width`                 |
+| `semantic.theme.<theme>.<mode>.json` | Semantic tokens that change by theme or mode             | Mostly color behavior today                                         | `color.text.default`, `color.surface.default`, `color.primary.base`       |
+| `components.json`                    | Component-specific tokens                                | Public component contracts or intentional exceptions                | `component.avatar.size.md`, `component.nav.rail.item.background.selected` |
 
 ## Export Artifacts
 
@@ -71,7 +75,8 @@ Examples:
 - `font.size.md`
 - `space.4`
 - `shape.radius.sm`
-- `blue.500`
+- `blue.700`
+- `blue.900`
 
 These values exist so the system has a consistent base scale, but they do not explain how the value should be used.
 
@@ -114,11 +119,12 @@ This keeps theme files focused and prevents shared rules like typography or spac
 
 It exists for cases where a component has its own public sizing or behavior contract.
 
-Example:
+Examples:
 
-- `component.avatar.size.sm`
 - `component.avatar.size.md`
-- `component.avatar.size.lg`
+- `component.nav.rail.bar.width`
+- `component.nav.rail.item.background.selected`
+- `component.nav.rail.item.foreground.selected`
 
 This keeps component tokens useful without creating token bloat.
 
@@ -164,19 +170,22 @@ If yes, it belongs in `components`.
 Example:
 
 - avatar size
+- nav rail bar width
+- nav rail item selected surface
 - a unique component-only spacing rule
 - a component shape that should not become a system-wide standard
 
 ## Common Examples
 
-| Need                            | Best location                 | Why                                     |
-| ------------------------------- | ----------------------------- | --------------------------------------- |
-| Focus ring width                | `semantic.shared`             | It is a shared interaction rule         |
-| Primary text color in dark mode | `semantic.theme.default.dark` | It changes by theme                     |
-| Button and input height         | `semantic.shared`             | It is a shared control rule             |
-| Avatar sizes                    | `components`                  | It belongs to Avatar, not every control |
-| New gray ramp                   | `primitives.color`            | It is a raw palette                     |
-| New radius scale step           | `primitives`                  | It is a foundational value              |
+| Need                            | Best location                 | Why                                       |
+| ------------------------------- | ----------------------------- | ----------------------------------------- |
+| Focus ring width                | `semantic.shared`             | It is a shared interaction rule           |
+| Primary text color in dark mode | `semantic.theme.default.dark` | It changes by theme                       |
+| Button and input height         | `semantic.shared`             | It is a shared control rule               |
+| Avatar sizes                    | `components`                  | It belongs to Avatar, not every control   |
+| Nav rail selected item surface  | `components`                  | It belongs to Nav Rail, not every control |
+| New accent shade scale          | `primitives.color`            | It is a raw palette                       |
+| New radius scale step           | `primitives`                  | It is a foundational value                |
 
 ## About The `control` Section
 
@@ -199,6 +208,7 @@ This was added so controls feel related to each other instead of each component 
 This section should **not** be used for:
 
 - avatars
+- navigation rails
 - icons
 - cards
 - layout containers

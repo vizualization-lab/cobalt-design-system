@@ -39,7 +39,7 @@ Use this rule:
 | **Focus**      | <nobr>`--co-focus-`</nobr>      | Shared focus ring width and offset                                                                                         |
 | **Control**    | <nobr>`--co-control-`</nobr>    | Shared control sizing values such as height and radius                                                                     |
 | **Layout**     | <nobr>`--co-layout-`</nobr>     | Shared layout constraints such as content max widths                                                                       |
-| **Component**  | <nobr>`--co-component-`</nobr>  | Component-specific tokens such as avatar sizes                                                                             |
+| **Component**  | <nobr>`--co-component-`</nobr>  | Component-specific contracts such as avatar sizes and nav rail layout or state tokens                                      |
 
 <TokenTable :tokens="data.tokens" />
 
@@ -47,25 +47,28 @@ Use this rule:
 
 Tokens are available in multiple formats via the `@cobalt/tokens` package:
 
-| Format                | Import                         |
-| --------------------- | ------------------------------ |
-| CSS Custom Properties | `@cobalt/tokens/css`           |
-| Base Element Styles   | `@cobalt/tokens/css/base`      |
-| Dark Theme            | `@cobalt/tokens/css/dark`      |
-| Self-Hosted Fonts     | `@cobalt/tokens/css/fonts`     |
-| Utility Classes       | `@cobalt/tokens/css/utilities` |
-| SCSS Variables        | `@cobalt/tokens/scss`          |
-| JS/TS Constants       | `@cobalt/tokens`               |
-| Flat JSON             | `@cobalt/tokens/json`          |
-| DTCG Export           | `@cobalt/tokens/dtcg`          |
-| Tailwind Preset       | `@cobalt/tokens/tailwind`      |
-| Tailwind Theme CSS    | `@cobalt/tokens/tailwind/css`  |
+| Format                | Import                                     |
+| --------------------- | ------------------------------------------ |
+| CSS Custom Properties | `@cobalt/tokens/css`                       |
+| Base Element Styles   | `@cobalt/tokens/css/base`                  |
+| Dark Theme            | `@cobalt/tokens/css/dark`                  |
+| Named Theme CSS       | `@cobalt/tokens/css/themes/<theme>-<mode>` |
+| Self-Hosted Fonts     | `@cobalt/tokens/css/fonts`                 |
+| Utility Classes       | `@cobalt/tokens/css/utilities`             |
+| SCSS Variables        | `@cobalt/tokens/scss`                      |
+| JS/TS Constants       | `@cobalt/tokens`                           |
+| Flat JSON             | `@cobalt/tokens/json`                      |
+| DTCG Export           | `@cobalt/tokens/dtcg`                      |
+| Tailwind Preset       | `@cobalt/tokens/tailwind`                  |
+| Tailwind Theme CSS    | `@cobalt/tokens/tailwind/css`              |
 
 ### CSS
 
 ```css
 @import '@cobalt/tokens/css';
 @import '@cobalt/tokens/css/dark'; /* opt-in default dark theme */
+@import '@cobalt/tokens/css/themes/purple-light';
+@import '@cobalt/tokens/css/themes/purple-dark';
 
 .card {
   padding: var(--co-space-inset-md);

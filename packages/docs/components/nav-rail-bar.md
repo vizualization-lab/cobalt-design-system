@@ -203,6 +203,16 @@ export class AppComponent {
 | `base`  | The nav landmark wrapper  |
 | `items` | The items stack container |
 
+## Design Tokens
+
+`co-nav-rail-bar` consumes the `component.nav.rail.bar.*` token family. These values stay scoped to the rail container rather than becoming shared control tokens.
+
+- `--co-component-nav-rail-bar-width`
+- `--co-component-nav-rail-bar-padding`
+- `--co-component-nav-rail-bar-gap`
+- `--co-component-nav-rail-bar-radius`
+- `--co-component-nav-rail-bar-background`
+
 ## Accessibility
 
 <ClientOnly>

@@ -121,6 +121,7 @@ Theme requests should describe what changes and where it changes.
 Examples:
 
 - avatar sizes
+- nav rail selected item states
 - a unique chip shape
 - a component-only spacing rule
 
@@ -186,13 +187,14 @@ Before marking a design ready:
 
 ## Common Examples
 
-| Design need                       | Best request type     | Why                                     |
-| --------------------------------- | --------------------- | --------------------------------------- |
-| Different text color in dark mode | Theme semantic token  | It changes by mode                      |
-| New brand palette ramp            | Primitive color token | It is a raw palette input               |
-| New avatar sizes                  | Component token       | It belongs to Avatar, not every control |
-| New default field height          | Shared semantic token | It affects standard controls            |
-| New content max width             | Shared semantic token | It affects shared layout behavior       |
+| Design need                       | Best request type     | Why                                       |
+| --------------------------------- | --------------------- | ----------------------------------------- |
+| Different text color in dark mode | Theme semantic token  | It changes by mode                        |
+| New brand palette ramp            | Primitive color token | It is a raw palette input                 |
+| New avatar sizes                  | Component token       | It belongs to Avatar, not every control   |
+| Nav rail selected item treatment  | Component token       | It belongs to Nav Rail, not every control |
+| New default field height          | Shared semantic token | It affects standard controls              |
+| New content max width             | Shared semantic token | It affects shared layout behavior         |
 
 ## Good Handoff Notes
 
@@ -201,6 +203,7 @@ Use notes like these:
 - "Uses existing font-size and semantic color tokens."
 - "Dark mode changes only the semantic color layer; spacing and typography stay the same."
 - "Avatar sizes are component-specific and should not become global control sizes."
+- "Nav rail selected and hover states are component-specific and should stay under the nav rail token family."
 - "Input uses shared control height and shared control radius."
 
 Avoid notes like these:

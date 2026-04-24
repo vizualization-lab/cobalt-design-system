@@ -19,6 +19,129 @@
             "$description": "Large avatar size for profile headers and prominent identity surfaces."
           }
         }
+      },
+      "nav": {
+        "rail": {
+          "bar": {
+            "width": {
+              "$type": "dimension",
+              "$value": "115px",
+              "$description": "Default width for compact vertical navigation rails."
+            },
+            "padding": {
+              "$type": "dimension",
+              "$value": "{co.space.2}",
+              "$description": "Inset padding applied around nav rail items."
+            },
+            "gap": {
+              "$type": "dimension",
+              "$value": "{co.space.2}",
+              "$description": "Vertical gap between nav rail items."
+            },
+            "radius": {
+              "$type": "dimension",
+              "$value": "{co.shape.radius.lg}",
+              "$description": "Outer corner radius for the nav rail container."
+            },
+            "background": {
+              "$type": "color",
+              "$value": "{co.color.surface.sunken}",
+              "$description": "Container background for nav rail bars in both light and dark themes."
+            }
+          },
+          "item": {
+            "padding": {
+              "x": {
+                "$type": "dimension",
+                "$value": "{co.space.2}",
+                "$description": "Horizontal padding for each nav rail item."
+              },
+              "y": {
+                "$type": "dimension",
+                "$value": "{co.space.2}",
+                "$description": "Vertical padding for each nav rail item."
+              }
+            },
+            "gap": {
+              "$type": "dimension",
+              "$value": "{co.space.3}",
+              "$description": "Space between the icon and label within a nav rail item."
+            },
+            "radius": {
+              "$type": "dimension",
+              "$value": "{co.shape.radius.2xl}",
+              "$description": "Corner radius for nav rail item surfaces."
+            },
+            "icon": {
+              "size": {
+                "$type": "dimension",
+                "$value": "22px",
+                "$description": "Default icon size for compact nav rail destinations."
+              }
+            },
+            "background": {
+              "default": {
+                "$type": "color",
+                "$value": "{co.color.interactive.subtle.default}",
+                "$description": "Resting surface for nav rail items."
+              },
+              "hover": {
+                "$type": "color",
+                "$value": "{co.color.interactive.subtle.hover}",
+                "$description": "Hover surface for nav rail items."
+              },
+              "active": {
+                "$type": "color",
+                "$value": "{co.color.interactive.subtle.active}",
+                "$description": "Pressed surface for nav rail items."
+              },
+              "selected": {
+                "$type": "color",
+                "$value": "{co.color.interactive.subtle.selected}",
+                "$description": "Selected surface for the current nav rail destination."
+              },
+              "disabled": {
+                "$type": "color",
+                "$value": "{co.color.interactive.subtle.disabled}",
+                "$description": "Disabled surface for nav rail items."
+              }
+            },
+            "foreground": {
+              "default": {
+                "$type": "color",
+                "$value": "{co.color.text.secondary}",
+                "$description": "Default text and icon color for nav rail items."
+              },
+              "hover": {
+                "$type": "color",
+                "$value": "{co.color.text.link}",
+                "$description": "Hover text and icon color for nav rail items."
+              },
+              "active": {
+                "$type": "color",
+                "$value": "{co.color.text.link}",
+                "$description": "Pressed text and icon color for nav rail items."
+              },
+              "selected": {
+                "$type": "color",
+                "$value": "{co.color.text.link}",
+                "$description": "Selected text and icon color for the current nav rail destination."
+              },
+              "disabled": {
+                "$type": "color",
+                "$value": "{co.color.text.secondary}",
+                "$description": "Disabled text and icon color for nav rail items."
+              }
+            },
+            "focus": {
+              "ring": {
+                "$type": "color",
+                "$value": "{co.color.border.focus}",
+                "$description": "Focus ring color for nav rail item keyboard focus."
+              }
+            }
+          }
+        }
       }
     }
   }
