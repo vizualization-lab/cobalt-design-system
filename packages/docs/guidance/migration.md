@@ -37,7 +37,7 @@ This is the most straightforward path. Replace hand-written HTML elements with C
 ### Step-by-step
 
 1. Install the required packages: `npm install @cobalt/co-button @cobalt/tokens`.
-2. Import `@cobalt/tokens/base.css` in your global stylesheet to apply token resets.
+2. Import `@cobalt/tokens/css/base` in your global stylesheet to apply the global reset.
 3. Replace each hand-written element with its Cobalt counterpart.
 4. Replace hardcoded values in remaining custom CSS with token references.
 

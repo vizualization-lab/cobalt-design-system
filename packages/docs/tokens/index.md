@@ -47,20 +47,20 @@ Use this rule:
 
 Tokens are available in multiple formats via the `@cobalt/tokens` package:
 
-| Format                | Import                                     |
-| --------------------- | ------------------------------------------ |
-| CSS Custom Properties | `@cobalt/tokens/css`                       |
-| Base Element Styles   | `@cobalt/tokens/css/base`                  |
-| Dark Theme            | `@cobalt/tokens/css/dark`                  |
-| Named Theme CSS       | `@cobalt/tokens/css/themes/<theme>-<mode>` |
-| Self-Hosted Fonts     | `@cobalt/tokens/css/fonts`                 |
-| Utility Classes       | `@cobalt/tokens/css/utilities`             |
-| SCSS Variables        | `@cobalt/tokens/scss`                      |
-| JS/TS Constants       | `@cobalt/tokens`                           |
-| Flat JSON             | `@cobalt/tokens/json`                      |
-| DTCG Export           | `@cobalt/tokens/dtcg`                      |
-| Tailwind Preset       | `@cobalt/tokens/tailwind`                  |
-| Tailwind Theme CSS    | `@cobalt/tokens/tailwind/css`              |
+| Format                      | Import                                     |
+| --------------------------- | ------------------------------------------ |
+| CSS Custom Properties       | `@cobalt/tokens/css`                       |
+| Base Element Styles + Reset | `@cobalt/tokens/css/base`                  |
+| Dark Theme                  | `@cobalt/tokens/css/dark`                  |
+| Named Theme CSS             | `@cobalt/tokens/css/themes/<theme>-<mode>` |
+| Self-Hosted Fonts           | `@cobalt/tokens/css/fonts`                 |
+| Utility Classes             | `@cobalt/tokens/css/utilities`             |
+| SCSS Variables              | `@cobalt/tokens/scss`                      |
+| JS/TS Constants             | `@cobalt/tokens`                           |
+| Flat JSON                   | `@cobalt/tokens/json`                      |
+| DTCG Export                 | `@cobalt/tokens/dtcg`                      |
+| Tailwind Preset             | `@cobalt/tokens/tailwind`                  |
+| Tailwind Theme CSS          | `@cobalt/tokens/tailwind/css`              |
 
 ### CSS
 

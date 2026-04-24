@@ -63,9 +63,10 @@ Finally, import the design tokens stylesheet in your app's global CSS (e.g., `st
 ```css
 @import '@cobalt/tokens/css'; /* tokens (required) */
 @import '@cobalt/tokens/css/fonts'; /* self-hosted fonts (recommended) */
+@import '@cobalt/tokens/css/base'; /* global reset + opt-in base styles (recommended) */
 ```
 
-The first import provides all `--co-*` CSS custom properties that components need for colors, spacing, typography, and more. Without it, components will render without visual styles. The second import loads self-hosted Inter, Noto Sans, and JetBrains Mono fonts — if omitted, the font-family tokens fall back to system fonts.
+The first import provides all `--co-*` CSS custom properties that components need for colors, spacing, typography, and more. Without it, components will render without visual styles. The second import loads self-hosted Inter, Noto Sans, and JetBrains Mono fonts — if omitted, the font-family tokens fall back to system fonts. The third import applies Cobalt's global reset and enables opt-in base element styles anywhere you add `data-co-base`.
 
 > **Contributing to Cobalt?** See the [Development Setup](/contributing/development-setup) guide for cloning the monorepo, building packages, and running the dev environment.
 

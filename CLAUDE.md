@@ -165,16 +165,17 @@ Apply `data-theme="dark"` on the `<html>` element. Custom themes override CSS cu
 All global CSS output uses `@layer` to provide a structured cascade hierarchy:
 
 ```
-@layer co.reset, co.base, co.tokens, co.theme, co.overrides;
+@layer co.reset, co.base, co.tokens, co.theme, co.utilities, co.overrides;
 ```
 
-| Layer          | Purpose                  | Source                                     |
-| -------------- | ------------------------ | ------------------------------------------ |
-| `co.reset`     | CSS resets               | Empty — consumers place their resets here  |
-| `co.base`      | Base element styles      | `base.css` (opt-in via `[data-co-base]`)   |
-| `co.tokens`    | Design token definitions | `tokens.css` (`:root` custom properties)   |
-| `co.theme`     | Theme overrides          | `tokens-dark.css`, custom themes           |
-| `co.overrides` | Consumer customizations  | Empty — consumers put brand overrides here |
+| Layer          | Purpose                  | Source                                                             |
+| -------------- | ------------------------ | ------------------------------------------------------------------ |
+| `co.reset`     | CSS resets               | `base.css` global reset; consumers can extend or override in-layer |
+| `co.base`      | Base element styles      | `base.css` (opt-in via `[data-co-base]`)                           |
+| `co.tokens`    | Design token definitions | `tokens.css` (`:root` custom properties)                           |
+| `co.theme`     | Theme overrides          | `tokens-dark.css`, custom themes                                   |
+| `co.utilities` | Utility classes          | `utilities.css` (`.co-*`)                                          |
+| `co.overrides` | Consumer customizations  | Empty — consumers put brand overrides here                         |
 
 **Override tokens example:**
 
@@ -188,7 +189,7 @@ All global CSS output uses `@layer` to provide a structured cascade hierarchy:
 
 **Base element styles (opt-in):**
 
-Import `@cobalt/tokens/css/base` and add `data-co-base` to scope base typography/element styles:
+Import `@cobalt/tokens/css/base` to apply the global reset, and add `data-co-base` to scope base typography/element styles:
 
 ```html
 <html data-co-base data-theme="light"></html>

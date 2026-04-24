@@ -1,3 +1,48 @@
+@layer co.reset {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  :where(body, h1, h2, h3, h4, h5, h6, p, blockquote, figure, dl, dd, pre, hr, ul, ol) {
+    margin: 0;
+  }
+
+  body {
+    line-height: 1.5;
+  }
+
+  :where(ul, ol) {
+    padding-inline-start: 0;
+  }
+
+  :where(table) {
+    border-collapse: collapse;
+    border-spacing: 0;
+  }
+
+  :where(button, input, select, textarea) {
+    margin: 0;
+    font: inherit;
+    letter-spacing: inherit;
+    color: inherit;
+  }
+
+  textarea {
+    overflow: auto;
+  }
+
+  :where(img, video, iframe) {
+    max-inline-size: 100%;
+    block-size: auto;
+  }
+}
+
 @layer co.base {
   [data-co-base] {
     font-family: var(--co-font-family-sans);
@@ -6,6 +51,11 @@
     letter-spacing: var(--co-typography-body-tracking);
     line-height: var(--co-typography-body-line-height);
     color: var(--co-color-text-default);
+  }
+
+  /* When the base scope is on <html>, let <body> inherit the tokenized leading. */
+  html[data-co-base] body {
+    line-height: inherit;
   }
 
   /* h1 → heading (not display — display is a utility only) */

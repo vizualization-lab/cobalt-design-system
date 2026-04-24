@@ -1,16 +1,5 @@
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-  margin: 0;
-}
-
 body {
-  font-family: var(--co-font-family-sans, system-ui, -apple-system, sans-serif);
   background: var(--co-color-surface-sunken, #f5f5f5);
-  color: var(--co-color-text-default, #1a1a1a);
-  padding: 0;
-  line-height: 1.5;
 }
 
 /* ── Header ── */
@@ -40,6 +29,7 @@ body {
   font-size: 16px;
   font-weight: 600;
   font-family: var(--co-font-family-mono, monospace);
+  margin: 0;
   flex: 1;
 }
 
