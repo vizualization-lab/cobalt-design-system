@@ -3,7 +3,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const changelogPath = path.resolve(__dirname, '../components/CHANGELOG.md');
+const changelogPath = path.resolve(__dirname, '../../CHANGELOG.md');
 const highlightsPath = path.resolve(__dirname, 'changelog-highlights.json');
 
 export interface ReleaseHighlights {
@@ -46,7 +46,7 @@ function parseChangelogMd(raw: string): Release[] {
 }
 
 export default {
-  watch: ['./changelog-highlights.json'],
+  watch: ['./changelog-highlights.json', '../../CHANGELOG.md'],
   load(): ChangelogData {
     let releases: Release[] = [];
 

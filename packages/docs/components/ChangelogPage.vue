@@ -7,6 +7,9 @@ const TYPE_BADGES: Record<string, { label: string; color: string }> = {
   Fixed: { label: 'Fixed', color: '#f59e0b' },
   Removed: { label: 'Removed', color: '#f87171' },
   Deprecated: { label: 'Deprecated', color: '#a78bfa' },
+  'Minor Changes': { label: 'Minor', color: '#34d399' },
+  'Patch Changes': { label: 'Patch', color: '#f59e0b' },
+  'Major Changes': { label: 'Major', color: '#f87171' },
 };
 
 function extractSections(content: string): { type: string; items: string[] }[] {
