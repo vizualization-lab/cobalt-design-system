@@ -1,36 +1,40 @@
 # Colors
 
 <script setup>
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import { data } from './colors.data';
 
 const paletteMode = ref('light');
+const isDarkPalette = computed(() => paletteMode.value === 'dark');
+
+function togglePaletteMode() {
+  paletteMode.value = isDarkPalette.value ? 'light' : 'dark';
+}
 </script>
 
 Cobalt color families are organized as ordered shade scales from `50` to `950`. Their progression is influenced by [Radix Colors](https://www.radix-ui.com/colors/docs/overview): the lightest shades support quiet page and component backgrounds, the middle shades support fills and borders, `700`–`800` carry solid accents, and `900`–`950` provide readable same-hue text.
 
 <div class="color-preview-toolbar">
   <p class="color-preview-note">
-    Toggle <strong>{{ paletteMode === 'light' ? 'Light' : 'Dark' }}</strong> mode to compare the palettes, and click any swatch to copy its CSS token.
+    Use the mode toggle to compare the palettes, and click any swatch to copy its CSS token.
   </p>
-  <div class="color-mode-toggle" role="group" aria-label="Palette preview mode">
+  <div class="color-mode-control">
+    <span class="color-mode-label">Palette Mode</span>
     <button
       type="button"
-      class="color-mode-button"
-      :class="{ 'is-active': paletteMode === 'light' }"
-      :aria-pressed="paletteMode === 'light'"
-      @click="paletteMode = 'light'"
+      class="color-mode-toggle"
+      :class="{ 'is-dark': isDarkPalette }"
+      role="switch"
+      :aria-checked="isDarkPalette"
+      :title="isDarkPalette ? 'Switch to light palette' : 'Switch to dark palette'"
+      :aria-label="isDarkPalette ? 'Switch to light palette' : 'Switch to dark palette'"
+      @click="togglePaletteMode"
     >
-      Light
-    </button>
-    <button
-      type="button"
-      class="color-mode-button"
-      :class="{ 'is-active': paletteMode === 'dark' }"
-      :aria-pressed="paletteMode === 'dark'"
-      @click="paletteMode = 'dark'"
-    >
-      Dark
+      <span class="color-mode-option" :class="{ 'is-active': !isDarkPalette }">Light</span>
+      <span class="color-mode-switch" aria-hidden="true">
+        <span class="color-mode-thumb"></span>
+      </span>
+      <span class="color-mode-option" :class="{ 'is-active': isDarkPalette }">Dark</span>
     </button>
   </div>
 </div>
@@ -186,48 +190,100 @@ If you are building a theme toggle, load the purple stylesheets once and then on
   font-size: 0.9rem;
 }
 
-.color-mode-toggle {
+.color-mode-control {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
-  padding: 4px;
-  border: 1px solid var(--co-color-border-subtle);
-  border-radius: 999px;
-  background: var(--co-color-surface-default);
+  gap: 10px;
   flex-shrink: 0;
 }
 
-.color-mode-button {
-  border: none;
-  background: transparent;
+.color-mode-label {
   color: var(--co-color-text-secondary);
-  font: inherit;
-  font-size: 0.85rem;
-  font-weight: var(--co-typography-label-weight);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
   line-height: 1;
-  padding: 0.55rem 0.95rem;
-  border-radius: 999px;
-  cursor: pointer;
-  transition:
-    background var(--co-motion-duration-fast) var(--co-motion-easing-default),
-    color var(--co-motion-duration-fast) var(--co-motion-easing-default),
-    box-shadow var(--co-motion-duration-fast) var(--co-motion-easing-default);
+  text-transform: uppercase;
 }
 
-.color-mode-button:hover {
+.color-mode-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 32px;
+  border: 1px solid var(--co-color-border-default);
+  border-radius: 8px;
+  background: transparent;
+  color: var(--co-color-text-secondary);
+  cursor: pointer;
+  flex-shrink: 0;
+  padding: 0.35rem 0.65rem;
+  transition: all 0.2s ease;
+}
+
+.color-mode-toggle:hover {
+  border-color: var(--co-color-border-strong);
   color: var(--co-color-text-default);
 }
 
-.color-mode-button.is-active {
-  background: var(--co-color-interactive-subtle-selected);
-  color: var(--co-color-text-link);
-  box-shadow: inset 0 0 0 1px color-mix(in srgb, currentColor 16%, transparent);
+.color-mode-toggle:focus-visible {
+  outline: none;
+  border-color: var(--co-color-border-focus);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--co-color-primary-base) 15%, transparent);
+}
+
+.color-mode-option {
+  color: var(--co-color-text-secondary);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  line-height: 1;
+  text-transform: uppercase;
+  transition: color 0.2s ease;
+}
+
+.color-mode-option.is-active {
+  color: var(--co-color-text-default);
+}
+
+.color-mode-switch {
+  position: relative;
+  width: 32px;
+  height: 18px;
+  background: var(--co-color-border-strong);
+  border-radius: 9px;
+  transition: background 0.2s ease;
+}
+
+.color-mode-toggle.is-dark .color-mode-switch {
+  background: var(--co-color-interactive-primary-default);
+}
+
+.color-mode-thumb {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 14px;
+  height: 14px;
+  background: var(--co-color-surface-page);
+  border-radius: 999px;
+  transition: transform 0.2s ease;
+}
+
+.color-mode-toggle.is-dark .color-mode-thumb {
+  transform: translateX(14px);
 }
 
 @media (max-width: 720px) {
   .color-preview-toolbar {
     align-items: flex-start;
     flex-direction: column;
+  }
+
+  .color-mode-control {
+    width: 100%;
+    justify-content: space-between;
   }
 }
 </style>

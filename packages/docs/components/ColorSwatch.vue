@@ -114,9 +114,13 @@ async function copyToken(key: string, token: string) {
           </div>
 
           <div
-            v-for="palette in mode.palettes"
+            v-for="(palette, paletteIndex) in mode.palettes"
             :key="`${mode.id}-${palette.family}`"
             class="scale-grid palette-row"
+            :class="{
+              'palette-row--first': paletteIndex === 0,
+              'palette-row--last': paletteIndex === mode.palettes.length - 1,
+            }"
           >
             <div class="palette-name" :title="palette.description">{{ palette.name }}</div>
 
@@ -151,6 +155,7 @@ async function copyToken(key: string, token: string) {
 
 <style scoped>
 .scale-stack {
+  --scale-swatch-divider: color-mix(in srgb, var(--co-color-border-subtle) 60%, transparent);
   display: flex;
   flex-direction: column;
   gap: 18px;
@@ -191,7 +196,7 @@ async function copyToken(key: string, token: string) {
 .scale-grid {
   display: grid;
   grid-template-columns: minmax(64px, 96px) repeat(12, minmax(0, 1fr));
-  gap: 6px;
+  column-gap: 0;
   align-items: center;
 }
 
@@ -207,6 +212,7 @@ async function copyToken(key: string, token: string) {
   display: flex;
   flex-direction: column;
   gap: 2px;
+  padding-inline: 6px;
   padding-bottom: 8px;
   border-bottom: 1px solid var(--co-color-border-subtle);
   text-align: center;
@@ -234,6 +240,7 @@ async function copyToken(key: string, token: string) {
   display: flex;
   align-items: center;
   justify-content: center;
+  padding-inline: 6px;
   padding-bottom: 4px;
 }
 
@@ -245,42 +252,64 @@ async function copyToken(key: string, token: string) {
   line-height: 1;
 }
 
-.palette-row {
-  margin-top: 6px;
-}
-
 .palette-name {
   font-size: 0.74rem;
   font-weight: 600;
   color: var(--co-color-text-secondary);
   white-space: nowrap;
+  padding-right: 10px;
 }
 
 .swatch {
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
   width: 100%;
   height: clamp(28px, 2.8vw, 40px);
-  border: 1px solid var(--co-color-border-subtle);
-  border-radius: 4px;
+  border: 0;
+  border-block: 1px solid var(--scale-swatch-divider);
+  border-inline-end: 1px solid var(--scale-swatch-divider);
+  border-radius: 0;
   cursor: pointer;
   padding: 0;
-  transition:
-    transform 0.15s ease,
-    border-color 0.15s ease,
-    box-shadow 0.15s ease;
+  transition: box-shadow 0.15s ease;
+}
+
+.palette-row .swatch:first-of-type {
+  border-inline-start: 1px solid var(--scale-swatch-divider);
+}
+
+.palette-row--first .swatch:first-of-type {
+  border-radius: 6px 0 0 0;
+}
+
+.palette-row--first .swatch:last-of-type {
+  border-radius: 0 6px 0 0;
+}
+
+.palette-row--last .swatch:first-of-type {
+  border-radius: 0 0 0 6px;
+}
+
+.palette-row--last .swatch:last-of-type {
+  border-radius: 0 0 6px 0;
 }
 
 .swatch:hover {
-  transform: translateY(-1px);
-  border-color: var(--co-color-border-strong);
-  box-shadow: 0 1px 0 rgb(0 0 0 / 0.04);
+  z-index: 1;
+  box-shadow: inset 0 0 0 1px var(--co-color-border-strong);
+}
+
+.swatch:focus-visible {
+  outline: none;
+  z-index: 1;
+  box-shadow: inset 0 0 0 2px var(--co-color-border-focus);
 }
 
 .swatch.copied {
-  border-color: var(--co-color-border-focus);
-  box-shadow: 0 0 0 1px var(--co-color-border-focus);
+  z-index: 1;
+  box-shadow: inset 0 0 0 2px var(--co-color-border-focus);
 }
 
 .swatch-icon {
