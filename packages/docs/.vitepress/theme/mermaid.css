@@ -1,7 +1,7 @@
 /*
  * Mermaid diagram overrides using Cobalt design tokens.
  *
- * Cobalt tokens auto-switch values under [data-theme='dark'], so these
+ * Cobalt tokens auto-switch values under [data-mode='dark'], so these
  * CSS rules give diagrams the correct palette in both themes without
  * needing JavaScript re-rendering.
  *

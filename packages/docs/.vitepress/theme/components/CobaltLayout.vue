@@ -7,6 +7,7 @@ import CobaltHome from './CobaltHome.vue';
 import CobaltPrevNext from './CobaltPrevNext.vue';
 import CobaltToc from './CobaltToc.vue';
 import { navigation, type NavItem } from '../navigation';
+import { setTheme } from '@cobalt/tokens/theme';
 import VPNavBarSearch from 'vitepress/dist/client/theme-default/components/VPNavBarSearch.vue';
 
 const { frontmatter, theme, page } = useData();
@@ -21,6 +22,7 @@ const editUrl = computed(() => {
 });
 
 const isDark = ref(false);
+const activeTheme = 'default';
 const sidebarOpen = ref(false);
 
 function normalizePath(p: string) {
@@ -57,13 +59,9 @@ function selectCategory(i: number) {
 }
 
 onMounted(() => {
-  const saved = localStorage.getItem('cobalt-theme');
-  if (saved === 'dark') {
-    isDark.value = true;
-    document.documentElement.setAttribute('data-theme', 'dark');
-  } else {
-    isDark.value = document.documentElement.getAttribute('data-theme') === 'dark';
-  }
+  const savedMode = localStorage.getItem('cobalt-mode');
+  isDark.value = savedMode === 'dark';
+  setTheme(activeTheme, isDark.value ? 'dark' : 'light');
 
   // Copy heading anchor URL to clipboard on click
   const article = document.querySelector('.cobalt-article');
@@ -96,9 +94,9 @@ watch(
 
 function toggleTheme() {
   isDark.value = !isDark.value;
-  const theme = isDark.value ? 'dark' : 'light';
-  document.documentElement.setAttribute('data-theme', theme);
-  localStorage.setItem('cobalt-theme', theme);
+  const mode = isDark.value ? 'dark' : 'light';
+  setTheme(activeTheme, mode);
+  localStorage.setItem('cobalt-mode', mode);
 }
 
 function toggleSidebar() {
@@ -797,7 +795,7 @@ body {
   color: var(--shiki-light) !important;
 }
 
-[data-theme='dark'] .cobalt-article pre code span {
+[data-mode='dark'] .cobalt-article pre code span {
   color: var(--shiki-dark) !important;
 }
 
@@ -955,7 +953,7 @@ body {
   color: var(--shiki-light) !important;
 }
 
-[data-theme='dark'] .vp-doc div[class*='language-'] code span {
+[data-mode='dark'] .vp-doc div[class*='language-'] code span {
   color: var(--shiki-dark) !important;
 }
 

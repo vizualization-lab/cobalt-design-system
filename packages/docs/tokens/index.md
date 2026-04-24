@@ -47,29 +47,50 @@ Use this rule:
 
 Tokens are available in multiple formats via the `@cobalt/tokens` package:
 
-| Format                      | Import                                     |
-| --------------------------- | ------------------------------------------ |
-| CSS Custom Properties       | `@cobalt/tokens/css`                       |
-| Base Element Styles + Reset | `@cobalt/tokens/css/base`                  |
-| Dark Theme                  | `@cobalt/tokens/css/dark`                  |
-| Named Theme CSS             | `@cobalt/tokens/css/themes/<theme>-<mode>` |
-| Self-Hosted Fonts           | `@cobalt/tokens/css/fonts`                 |
-| Utility Classes             | `@cobalt/tokens/css/utilities`             |
-| SCSS Variables              | `@cobalt/tokens/scss`                      |
-| JS/TS Constants             | `@cobalt/tokens`                           |
-| Flat JSON                   | `@cobalt/tokens/json`                      |
-| DTCG Export                 | `@cobalt/tokens/dtcg`                      |
-| Tailwind Preset             | `@cobalt/tokens/tailwind`                  |
-| Tailwind Theme CSS          | `@cobalt/tokens/tailwind/css`              |
+| Format                      | Import                          |
+| --------------------------- | ------------------------------- |
+| CSS Custom Properties       | `@cobalt/tokens/css`            |
+| Base Element Styles + Reset | `@cobalt/tokens/css/base`       |
+| Theme Bundle (light + dark) | `@cobalt/tokens/themes/<theme>` |
+| Self-Hosted Fonts           | `@cobalt/tokens/css/fonts`      |
+| Utility Classes             | `@cobalt/tokens/css/utilities`  |
+| SCSS Variables              | `@cobalt/tokens/scss`           |
+| JS/TS Constants             | `@cobalt/tokens`                |
+| Flat JSON                   | `@cobalt/tokens/json`           |
+| DTCG Export                 | `@cobalt/tokens/dtcg`           |
+| Tailwind Preset             | `@cobalt/tokens/tailwind`       |
+| Tailwind Theme CSS          | `@cobalt/tokens/tailwind/css`   |
 
 ### CSS
 
-```css
-@import '@cobalt/tokens/css';
-@import '@cobalt/tokens/css/dark'; /* opt-in default dark theme */
-@import '@cobalt/tokens/css/themes/purple-light';
-@import '@cobalt/tokens/css/themes/purple-dark';
+Each theme is available as a single import that includes both light and dark modes:
 
+```css
+@import '@cobalt/tokens/css'; /* layer order + base tokens */
+@import '@cobalt/tokens/css/fonts'; /* self-hosted fonts */
+@import '@cobalt/tokens/themes/purple'; /* purple theme (light + dark) */
+```
+
+To switch themes, swap the theme import — no other code changes needed. Use the `setTheme` utility to activate a theme at runtime:
+
+```js
+import { setTheme } from '@cobalt/tokens/theme';
+
+setTheme('purple'); // purple light
+setTheme('purple', 'dark'); // purple dark
+setTheme('default', 'dark'); // default dark
+```
+
+For the default theme, use `@cobalt/tokens/themes/default` or import light and dark separately:
+
+```css
+@import '@cobalt/tokens/css'; /* default light (always required) */
+@import '@cobalt/tokens/css/dark'; /* default dark overrides */
+```
+
+Per-mode imports are also available at `@cobalt/tokens/css/themes/<theme>-<mode>` for advanced use cases where you only need one mode.
+
+```css
 .card {
   padding: var(--co-space-inset-md);
   border-radius: var(--co-shape-radius-md);

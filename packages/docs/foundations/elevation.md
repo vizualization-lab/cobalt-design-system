@@ -59,8 +59,7 @@ A special **none** token is also available for explicitly removing shadows:
 In dark mode, shadows alone are not enough to communicate depth because the base background is already dark. Cobalt supplements shadows with semantic surface shifts:
 
 ```css
-[data-theme='dark'],
-[data-theme='default'][data-mode='dark'] {
+[data-mode='dark'] {
   --co-color-surface-raised: var(--co-color-primitive-neutral-900);
   --co-color-surface-overlay: var(--co-color-primitive-neutral-950);
 }

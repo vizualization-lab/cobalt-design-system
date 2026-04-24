@@ -1,5 +1,5 @@
 import StyleDictionary from 'style-dictionary';
-import { copyFileSync, readFileSync, writeFileSync } from 'fs';
+import { copyFileSync, existsSync, mkdirSync, readFileSync, writeFileSync } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 import { exportDtcgTokens } from './scripts/export-dtcg.js';
@@ -183,6 +183,31 @@ async function build() {
     wrapCssInLayer(join(__dirname, 'dist/css', getThemeCssDestination(themeTokenSet)), 'co.theme');
   }
 
+  // Generate bundled theme files (light + dark combined per theme)
+  console.log('Generating theme bundles...');
+  const themesDir = join(__dirname, 'dist/css/themes');
+  if (!existsSync(themesDir)) mkdirSync(themesDir, { recursive: true });
+
+  const themeIds = [...new Set(discovery.themeTokenSets.map((ts) => ts.themeId))];
+  for (const themeId of themeIds) {
+    const parts = [];
+    if (themeId === 'default') {
+      parts.push(readFileSync(join(__dirname, 'dist/css/tokens.css'), 'utf-8'));
+      parts.push(readFileSync(join(__dirname, 'dist/css/tokens-dark.css'), 'utf-8'));
+    } else {
+      for (const mode of ['light', 'dark']) {
+        const filePath = join(themesDir, `tokens-${themeId}-${mode}.css`);
+        if (existsSync(filePath)) {
+          parts.push(readFileSync(filePath, 'utf-8'));
+        }
+      }
+    }
+    if (parts.length > 0) {
+      writeFileSync(join(themesDir, `${themeId}.css`), parts.join('\n'));
+      console.log(`  → themes/${themeId}.css`);
+    }
+  }
+
   console.log('Copying base element styles...');
   copyFileSync(join(__dirname, 'src/base.css'), join(__dirname, 'dist/css/base.css'));
 
@@ -207,6 +232,9 @@ async function build() {
     })
     .filter(Boolean);
   writeFileSync(join(__dirname, 'dist/js/tokens.d.ts'), dtsLines.join('\n') + '\n');
+
+  console.log('Copying theme utility...');
+  copyFileSync(join(__dirname, 'src/theme.js'), join(__dirname, 'dist/js/theme.js'));
 
   console.log('Generating Tailwind preset...');
   await generateTailwindPreset(__dirname);

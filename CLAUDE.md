@@ -158,7 +158,7 @@ import '@cobalt/components/co-button'; // Good — registers only co-button
 
 ## Theming
 
-Apply `data-theme="dark"` on the `<html>` element. Custom themes override CSS custom properties under a scoped selector.
+Use `setTheme` from `@cobalt/tokens/theme` to switch themes and modes. Import a theme bundle (e.g. `@cobalt/tokens/themes/purple`) then call `setTheme('purple', 'dark')`. This sets `data-theme` and `data-mode` attributes on `<html>`.
 
 ### CSS Cascade Layers
 

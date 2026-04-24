@@ -196,18 +196,22 @@ import { CoColorPrimaryBase } from '@cobalt/tokens';
 
 ## Theming
 
-Cobalt ships default light values in `@cobalt/tokens/css` and a default dark override in `@cobalt/tokens/css/dark`.
+Cobalt ships default light values in `@cobalt/tokens/css` and theme bundles that include both light and dark modes.
 
-The recommended selector model is:
+Use the `setTheme` utility to switch themes and modes:
+
+```js
+import { setTheme } from '@cobalt/tokens/theme';
+
+setTheme('default', 'dark'); // default dark
+setTheme('purple'); // purple light
+setTheme('purple', 'dark'); // purple dark
+```
+
+This sets `data-theme` and `data-mode` attributes on `<html>`:
 
 ```html
 <html data-theme="default" data-mode="dark"></html>
-```
-
-For backward compatibility, the published dark stylesheet also supports:
-
-```html
-<html data-theme="dark"></html>
 ```
 
 Override any token at the root level or scope overrides to a specific subtree:

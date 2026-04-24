@@ -149,8 +149,8 @@ try {
     const url = `${baseRoot}${currentPath}`;
     await page.goto(url, { waitUntil: 'networkidle' });
     await page.evaluate(() => {
-      localStorage.setItem('cobalt-theme', 'dark');
-      document.documentElement.setAttribute('data-theme', 'dark');
+      localStorage.setItem('cobalt-mode', 'dark');
+      document.documentElement.setAttribute('data-mode', 'dark');
     });
     await page.reload({ waitUntil: 'networkidle' });
     const failures = await page.evaluate(audit);

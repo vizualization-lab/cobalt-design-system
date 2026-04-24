@@ -72,7 +72,7 @@ export default withMermaid(
       [
         'script',
         {},
-        `(function(){var t=localStorage.getItem('cobalt-theme');if(t==='dark')document.documentElement.setAttribute('data-theme','dark')})()`,
+        `(function(){var m=localStorage.getItem('cobalt-mode');if(m==='dark')document.documentElement.setAttribute('data-mode','dark')})()`,
       ],
     ],
     mermaid: {

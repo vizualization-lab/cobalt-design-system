@@ -26,7 +26,7 @@ const state = ref<Record<string, string | boolean>>({
 const previewDark = ref(false);
 
 function syncThemeFromPage() {
-  previewDark.value = document.documentElement.getAttribute('data-theme') === 'dark';
+  previewDark.value = document.documentElement.getAttribute('data-mode') === 'dark';
 }
 
 let observer: MutationObserver | null = null;
@@ -34,7 +34,7 @@ let observer: MutationObserver | null = null;
 onMounted(() => {
   syncThemeFromPage();
   observer = new MutationObserver(syncThemeFromPage);
-  observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+  observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-mode'] });
 });
 
 onUnmounted(() => {
@@ -107,7 +107,7 @@ watch(state, () => renderKey.value++, { deep: true });
     <div
       class="demo-preview"
       :class="previewDark ? 'demo-preview--dark' : 'demo-preview--light'"
-      :data-theme="previewDark ? 'dark' : undefined"
+      :data-mode="previewDark ? 'dark' : undefined"
     >
       <ClientOnly>
         <div :key="renderKey" v-html="previewHtml"></div>

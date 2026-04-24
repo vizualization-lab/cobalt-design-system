@@ -39,7 +39,7 @@ Cobalt builds on top of these open-source projects:
 | ---------------------------- | ------------------------------------------------------------------------------ |
 | Component not rendering      | Confirm the import is correct and the custom element is registered             |
 | Tokens not applying          | Check that `@cobalt/tokens/css/tokens.css` is imported before component styles |
-| Dark mode not working        | Verify `data-theme="dark"` is set on the `<html>` element                      |
+| Dark mode not working        | Verify `data-mode="dark"` is set on the `<html>` element via `setTheme`        |
 | Styles leaking or overridden | Review the [CSS Layers](/foundations/css-layers) guide for cascade order       |
 | Tests failing in CI          | Run `pnpm exec playwright install` to install browser binaries                 |
 

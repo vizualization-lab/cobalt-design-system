@@ -397,11 +397,11 @@ const features = [
 /* Dark-mode tiles sit darker than the card (which is surface-raised /
    neutral-800), recessing into the page neutral so the muted icon
    reads as a quiet inset rather than a bright accent. */
-[data-theme='dark'] .feature-icon {
+[data-mode='dark'] .feature-icon {
   background: var(--co-color-primitive-neutral-900);
 }
 
-[data-theme='dark'] .feature-card:hover .feature-icon {
+[data-mode='dark'] .feature-card:hover .feature-icon {
   background: var(--co-color-primitive-neutral-950);
 }
 

@@ -119,45 +119,30 @@ These examples come from the source theme mappings, so you can compare how the s
 
 ## Using the Purple Theme
 
-Default light values still come from `@cobalt/tokens/css`, and default dark values still come from `@cobalt/tokens/css/dark`. The purple theme is opt-in and ships as two scoped stylesheets, one for each mode:
+Each theme is available as a single import that includes both light and dark modes:
 
 ```css
-@import '@cobalt/tokens/css';
-@import '@cobalt/tokens/css/dark';
-@import '@cobalt/tokens/css/themes/purple-light';
-@import '@cobalt/tokens/css/themes/purple-dark';
+@import '@cobalt/tokens/css'; /* always required — layer order + base tokens */
+@import '@cobalt/tokens/themes/purple'; /* purple light + dark in one import */
 ```
 
-After those files are loaded, switch themes by updating `data-theme` and `data-mode` on the document root:
+Activate the theme with the `setTheme` utility:
 
 ```js
-const root = document.documentElement;
+import { setTheme } from '@cobalt/tokens/theme';
 
-export function applyCobaltTheme(theme = 'default', mode = 'light') {
-  root.dataset.theme = theme;
-  root.dataset.mode = mode;
-}
-
-applyCobaltTheme('purple', 'light');
-applyCobaltTheme('purple', 'dark');
-applyCobaltTheme('default', 'dark');
+setTheme('purple'); // purple light
+setTheme('purple', 'dark'); // purple dark
+setTheme('default', 'dark'); // default dark
 ```
 
-Example markup:
-
-```html
-<html data-theme="purple" data-mode="light"></html>
-<html data-theme="purple" data-mode="dark"></html>
-```
-
-The selector model stays the same:
+This sets `data-theme` and `data-mode` on `<html>`:
 
 - `data-theme="default" data-mode="light"` for the default light theme
 - `data-theme="default" data-mode="dark"` for the default dark theme
-- `data-theme="purple" data-mode="light"` or `data-theme="purple" data-mode="dark"` for the alternate accent theme
-- `data-theme="dark"` still works as a backward-compatible alias for the default dark theme only
+- `data-theme="purple" data-mode="light"` or `data-mode="dark"` for the purple theme
 
-If you are building a theme toggle, load the purple stylesheets once and then only switch the data attributes at runtime. Component code should keep using semantic tokens such as `--co-color-primary-base` and `--co-color-interactive-primary-default`.
+Component code should keep using semantic tokens such as `--co-color-primary-base` and `--co-color-interactive-primary-default`.
 
 ## Practical Rules
 

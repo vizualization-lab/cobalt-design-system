@@ -12,7 +12,7 @@ import ArchitectureFlow from '../../components/ArchitectureFlow.vue';
 
 // Cobalt design tokens
 import '@cobalt/tokens/css';
-import '@cobalt/tokens/css/dark';
+import '@cobalt/tokens/themes/default';
 
 // VitePress icons (needed for local search component)
 import 'vitepress/dist/client/theme-default/styles/icons.css';
