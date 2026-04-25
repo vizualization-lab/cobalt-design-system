@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import { ref } from 'vue';
+import { useData } from 'vitepress';
 import { navigation } from '../navigation';
 
+const { theme } = useData();
 const props = defineProps<{ activeIndex: number }>();
 const emit = defineEmits<{ (e: 'select', index: number): void }>();
 
@@ -65,6 +67,11 @@ function onKey(event: KeyboardEvent, i: number) {
       ></co-icon>
       <span class="rail-item-label">{{ group.railLabel ?? group.label }}</span>
     </button>
+
+    <div class="rail-footer">
+      <span class="rail-version">v{{ theme.cobaltVersion }}</span>
+      <span class="rail-badge">alpha</span>
+    </div>
   </aside>
 </template>
 
@@ -166,6 +173,36 @@ function onKey(event: KeyboardEvent, i: number) {
 
 .is-active .rail-item-label {
   color: var(--co-color-text-secondary);
+}
+
+.rail-footer {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--co-space-1);
+  padding: var(--co-space-2) 0;
+}
+
+.rail-version {
+  font-family: var(--co-font-mono);
+  font-size: var(--co-typography-caption-size);
+  font-weight: var(--co-typography-caption-weight);
+  letter-spacing: var(--co-typography-caption-tracking);
+  line-height: var(--co-typography-caption-line-height);
+  color: var(--co-color-text-tertiary);
+}
+
+.rail-badge {
+  font-size: var(--co-typography-eyebrow-size);
+  font-weight: var(--co-typography-eyebrow-weight);
+  letter-spacing: var(--co-typography-eyebrow-tracking);
+  line-height: var(--co-typography-eyebrow-line-height);
+  text-transform: uppercase;
+  color: var(--co-color-primary-base);
+  background: var(--co-color-interactive-subtle-selected);
+  padding: 2px 7px;
+  border-radius: var(--co-shape-radius-sm);
 }
 
 @media (max-width: 768px) {

@@ -125,13 +125,6 @@ function isGroupOpen(item: NavItem): boolean {
         </template>
       </ul>
     </nav>
-
-    <div class="sidebar-footer">
-      <div class="sidebar-badge">
-        <span class="badge-version">v{{ theme.cobaltVersion }}</span>
-        <span class="badge-label">alpha</span>
-      </div>
-    </div>
   </aside>
 </template>
 
@@ -289,41 +282,6 @@ function isGroupOpen(item: NavItem): boolean {
 
 .nav-item-text {
   line-height: var(--co-typography-label-line-height);
-}
-
-/* ── Footer ────────────────────────────────── */
-.sidebar-footer {
-  padding: 16px 20px;
-  border-top: 1px solid var(--co-color-border-subtle);
-  flex-shrink: 0;
-}
-
-.sidebar-badge {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.badge-version {
-  font-family: var(--co-font-mono);
-  font-size: var(--co-typography-caption-size);
-  font-weight: var(--co-typography-caption-weight);
-  letter-spacing: var(--co-typography-caption-tracking);
-  line-height: var(--co-typography-caption-line-height);
-  color: var(--co-color-text-secondary);
-}
-
-.badge-label {
-  font-size: var(--co-typography-eyebrow-size);
-  font-weight: var(--co-typography-eyebrow-weight);
-  letter-spacing: var(--co-typography-eyebrow-tracking);
-  line-height: var(--co-typography-eyebrow-line-height);
-  text-transform: uppercase;
-  color: var(--co-blue-400);
-  background: var(--co-blue-alpha-12);
-  padding: 2px 7px;
-  border-radius: var(--co-control-radius);
-  border: 1px solid var(--co-blue-alpha-15);
 }
 
 /* ── Mobile: slide-in overlay ──────────────────────────── */
