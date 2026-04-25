@@ -23,14 +23,10 @@ end
 
 subgraph Semantic["Semantic"]
 ss(semantic.shared.json)
-stl("semantic.theme.default.light.json")
-std("semantic.theme.default.dark.json")
-sptl("semantic.theme.purple.light.json")
-sptd("semantic.theme.purple.dark.json")
+stl("semantic.theme.[theme].light.json")
+std("semantic.theme.[theme].dark.json")
 ss-->stl
 ss-->std
-ss-->sptl
-ss-->sptd
 end
 
 
