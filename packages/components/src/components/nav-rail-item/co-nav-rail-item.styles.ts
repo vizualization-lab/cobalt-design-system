@@ -63,13 +63,17 @@ export const cobaltNavRailItemStyles = css`
     overflow-wrap: anywhere;
   }
 
-  :host([selected]) .nav-item,
   :host(:not([selected]):not([disabled])) .nav-item:active {
     background: var(
       --co-component-nav-rail-item-background-active,
       var(--co-color-interactive-subtle-active)
     );
-    color: var(--co-component-nav-rail-item-foreground-active, var(--co-color-text-link));
+  }
+
+  :host(:not([selected]):not([disabled])) .nav-item:active .nav-item__icon,
+  :host(:not([selected])) .nav-item:hover .nav-item__icon,
+  :host([selected]) .nav-item__icon {
+    color: var(--co-color-interactive-primary-default);
   }
 
   :host([selected]) .nav-item {
@@ -77,7 +81,6 @@ export const cobaltNavRailItemStyles = css`
       --co-component-nav-rail-item-background-selected,
       var(--co-color-interactive-subtle-selected)
     );
-    color: var(--co-component-nav-rail-item-foreground-selected, var(--co-color-text-link));
   }
 
   :host(:not([selected])) .nav-item:hover {
@@ -85,7 +88,6 @@ export const cobaltNavRailItemStyles = css`
       --co-component-nav-rail-item-background-hover,
       var(--co-color-interactive-subtle-hover)
     );
-    color: var(--co-component-nav-rail-item-foreground-hover, var(--co-color-text-link));
   }
 
   .nav-item:focus-visible {

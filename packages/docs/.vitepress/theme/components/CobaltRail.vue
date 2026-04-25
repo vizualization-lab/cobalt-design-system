@@ -140,7 +140,9 @@ function onKey(event: KeyboardEvent, i: number) {
   );
 }
 
-.rail-item:hover co-icon {
+.rail-item:hover co-icon,
+.rail-item:active co-icon,
+.rail-item.is-active co-icon {
   color: var(--co-color-interactive-primary-default);
 }
 
@@ -161,7 +163,6 @@ function onKey(event: KeyboardEvent, i: number) {
     --co-component-nav-rail-item-background-selected,
     var(--co-color-interactive-subtle-selected)
   );
-  color: var(--co-color-primary-base);
 }
 
 .rail-item-label {
@@ -169,10 +170,6 @@ function onKey(event: KeyboardEvent, i: number) {
   max-width: 100%;
   overflow-wrap: break-word;
   word-break: break-word;
-}
-
-.is-active .rail-item-label {
-  color: var(--co-color-text-secondary);
 }
 
 .rail-footer {
