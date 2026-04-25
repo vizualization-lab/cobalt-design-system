@@ -45,7 +45,7 @@
             },
             "background": {
               "$type": "color",
-              "$value": "{co.color.surface.sunken}",
+              "$value": "{co.color.surface.bold}",
               "$description": "Container background for nav rail bars in both light and dark themes."
             }
           },

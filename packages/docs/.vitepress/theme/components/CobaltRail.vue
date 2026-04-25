@@ -131,7 +131,10 @@ function onKey(event: KeyboardEvent, i: number) {
     --co-component-nav-rail-item-background-hover,
     var(--co-color-interactive-subtle-hover)
   );
-  color: var(--co-component-nav-rail-item-foreground-hover, var(--co-color-text-link));
+}
+
+.rail-item:hover co-icon {
+  color: var(--co-color-interactive-primary-default);
 }
 
 .rail-item:active {
@@ -139,7 +142,6 @@ function onKey(event: KeyboardEvent, i: number) {
     --co-component-nav-rail-item-background-active,
     var(--co-color-interactive-subtle-active)
   );
-  color: var(--co-component-nav-rail-item-foreground-active, var(--co-color-text-link));
 }
 
 .rail-item:focus-visible {
@@ -152,8 +154,7 @@ function onKey(event: KeyboardEvent, i: number) {
     --co-component-nav-rail-item-background-selected,
     var(--co-color-interactive-subtle-selected)
   );
-  color: var(--co-component-nav-rail-item-foreground-selected, var(--co-color-text-link));
-  box-shadow: inset 0 0 0 1px color-mix(in srgb, currentColor 16%, transparent);
+  color: var(--co-color-primary-base);
 }
 
 .rail-item-label {
@@ -161,6 +162,10 @@ function onKey(event: KeyboardEvent, i: number) {
   max-width: 100%;
   overflow-wrap: break-word;
   word-break: break-word;
+}
+
+.is-active .rail-item-label {
+  color: var(--co-color-text-secondary);
 }
 
 @media (max-width: 768px) {

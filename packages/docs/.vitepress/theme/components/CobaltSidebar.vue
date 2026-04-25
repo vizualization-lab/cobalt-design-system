@@ -145,9 +145,8 @@ function isGroupOpen(item: NavItem): boolean {
   z-index: 50;
   display: flex;
   flex-direction: column;
-  background: var(--co-color-surface-default);
-  border: 1px solid var(--co-color-border-subtle);
-  border-radius: var(--co-shape-radius-md);
+  background: var(--co-color-surface-raised);
+  border-radius: var(--co-shape-radius-lg);
   box-shadow: var(--co-elevation-shadow-sm, 0 1px 2px rgba(0, 0, 0, 0.08));
   overflow-y: auto;
   overflow-x: hidden;
@@ -189,7 +188,7 @@ function isGroupOpen(item: NavItem): boolean {
   width: 100%;
   padding: 8px 12px;
   border: none;
-  border-radius: 9px;
+  border-radius: var(--co-shape-radius-lg);
   background: none;
   color: var(--co-color-text-default);
   font-size: var(--co-typography-body-sm-size);
@@ -237,7 +236,7 @@ function isGroupOpen(item: NavItem): boolean {
   gap: 8px;
   padding: 8px 12px;
   margin: 1px 0;
-  border-radius: 9px;
+  border-radius: var(--co-shape-radius-lg);
   color: var(--co-color-text-default);
   text-decoration: none;
   font-size: var(--co-typography-body-sm-size);
@@ -249,15 +248,15 @@ function isGroupOpen(item: NavItem): boolean {
 }
 
 .nav-item:hover {
-  color: var(--co-text-primary);
-  background: var(--co-shimmer);
+  color: var(--co-code-color);
+  background: var(--co-color-interactive-subtle-hover);
 }
 
 /* Active indicator pill */
 .nav-item-indicator {
   position: absolute;
   inset: 0;
-  border-radius: 9px;
+  border-radius: var(--co-shape-radius-lg);
   background: transparent;
   border: 1px solid transparent;
   z-index: -1;
@@ -265,7 +264,6 @@ function isGroupOpen(item: NavItem): boolean {
 
 .nav-item.is-active .nav-item-indicator {
   background: var(--co-color-interactive-subtle-selected);
-  border-color: var(--co-color-border-selected);
 }
 
 .nav-item-marker {
@@ -324,7 +322,7 @@ function isGroupOpen(item: NavItem): boolean {
   color: var(--co-blue-400);
   background: var(--co-blue-alpha-12);
   padding: 2px 7px;
-  border-radius: 4px;
+  border-radius: var(--co-control-radius);
   border: 1px solid var(--co-blue-alpha-15);
 }
 

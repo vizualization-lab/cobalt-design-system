@@ -236,6 +236,10 @@
           "disabled": {
             "$type": "color",
             "$value": "{co.color.primitive.blue-dark.300}"
+          },
+          "selected": {
+            "$type": "color",
+            "$value": "{co.color.primitive.gray-dark.300}"
           }
         },
         "subtle": {
@@ -245,11 +249,11 @@
           },
           "hover": {
             "$type": "color",
-            "$value": "{co.color.primitive.blue-dark.100}"
+            "$value": "color-mix(in srgb, {co.color.primary.base} 8%, transparent)"
           },
           "active": {
             "$type": "color",
-            "$value": "{co.color.primitive.blue-dark.200}"
+            "$value": "color-mix(in srgb, {co.color.primary.base} 12%, transparent)"
           },
           "disabled": {
             "$type": "color",
@@ -257,7 +261,7 @@
           },
           "selected": {
             "$type": "color",
-            "$value": "{co.color.primitive.blue-dark.300}"
+            "$value": "color-mix(in srgb, {co.color.primary.base} 15%, transparent)"
           }
         },
         "bold": {

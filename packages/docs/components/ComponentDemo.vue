@@ -300,7 +300,7 @@ watch(state, () => renderKey.value++, { deep: true });
 }
 
 .demo-preview--dark {
-  background-color: #0f1d32;
+  background-color: var(--co-color-surface-sunken);
   color: #e8eef6;
 }
 
