@@ -208,7 +208,7 @@
         },
         "focus": {
           "$type": "color",
-          "$value": "{co.color.primitive.purple.700}"
+          "$value": "{co.color.primitive.purple.500}"
         },
         "selected": {
           "$type": "color",

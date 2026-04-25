@@ -180,7 +180,7 @@ const features = [
 /* ── Hero ───────────────────────────────────────── */
 .hero {
   position: relative;
-  padding: 80px 0 60px;
+  padding: 80px 8px 60px;
   overflow: hidden;
 }
 

@@ -4,12 +4,12 @@
       "ring": {
         "width": {
           "$type": "dimension",
-          "$value": "{co.shape.border.width.thick}",
+          "$value": "{co.shape.border.width.lg}",
           "$description": "Width of the visible focus ring used for keyboard focus states."
         },
         "offset": {
           "$type": "dimension",
-          "$value": "{co.space.1}",
+          "$value": "{co.space.0}",
           "$description": "Space between a focused element and its focus ring."
         }
       }

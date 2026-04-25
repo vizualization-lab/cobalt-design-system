@@ -52,6 +52,9 @@ export class CoButton extends LionButtonSubmit {
 
   connectedCallback(): void {
     super.connectedCallback();
+    if (!this.hasAttribute('tabindex')) {
+      this.tabIndex = 0;
+    }
     this.addEventListener('focus', this._handleFocus);
     this.addEventListener('blur', this._handleBlur);
     this.addEventListener('click', this._handleClick);
@@ -90,7 +93,7 @@ export class CoButton extends LionButtonSubmit {
           href=${this.href}
           target=${this.target ?? '_self'}
           rel=${this.target === '_blank' ? 'noopener noreferrer' : ''}
-          tabindex=${this.disabled ? -1 : 0}
+          tabindex="-1"
           aria-disabled=${this.disabled}
         >
           <slot name="prefix" part="prefix"></slot>

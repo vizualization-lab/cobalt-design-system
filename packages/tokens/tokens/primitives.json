@@ -442,12 +442,12 @@
           "thick": {
             "$type": "dimension",
             "$value": "2px",
-            "$description": "Thick border width for focus rings and emphasized outlines."
+            "$description": "Thick border width for emphasized outlines."
           },
           "lg": {
             "$type": "dimension",
-            "$value": "3px",
-            "$description": "Large border width for highly emphasized outlines."
+            "$value": "4px",
+            "$description": "Large border width for focus rings highly emphasized outlines."
           }
         }
       }
