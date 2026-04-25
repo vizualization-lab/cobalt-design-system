@@ -105,7 +105,7 @@ function onKey(event: KeyboardEvent, i: number) {
   cursor: pointer;
   color: var(--co-component-nav-rail-item-foreground-default, var(--co-color-text-secondary));
   font-family: var(--co-font-body);
-  font-size: 10.5px;
+  font-size: var(--co-font-size-xsmall);
   font-weight: var(--co-typography-label-weight);
   letter-spacing: var(--co-typography-caption-tracking);
   line-height: 1.2;

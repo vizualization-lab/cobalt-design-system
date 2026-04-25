@@ -115,7 +115,7 @@ onUnmounted(() => {
   letter-spacing: var(--co-typography-eyebrow-tracking);
   line-height: var(--co-typography-eyebrow-line-height);
   text-transform: uppercase;
-  color: var(--co-color-text-tertiary);
+  color: var(--co-color-text-default);
   margin-bottom: 10px;
   padding-left: 12px;
 }
@@ -134,7 +134,7 @@ onUnmounted(() => {
   font-weight: var(--co-typography-body-sm-weight);
   letter-spacing: var(--co-typography-body-sm-tracking);
   line-height: var(--co-typography-body-sm-line-height);
-  color: var(--co-color-text-tertiary);
+  color: var(--co-color-text-secondary);
   text-decoration: none;
   border-left: 2px solid transparent;
   margin-left: -1px;
@@ -150,12 +150,12 @@ onUnmounted(() => {
 }
 
 .toc-item a:hover {
-  color: var(--co-text-secondary);
+  color: var(--co-color-text-link);
 }
 
 .toc-item.is-active a {
-  color: var(--co-blue-400);
-  border-left-color: var(--co-blue-600);
+  color: var(--co-color-text-link);
+  border-left-color: var(--co-color-text-link);
 }
 
 /* Hide on narrow viewports where there's no room */
