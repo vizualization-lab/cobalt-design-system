@@ -108,6 +108,10 @@ export default defineConfig({
     // swallowed by the '@cobalt/components' prefix.
     alias: [
       {
+        find: '@cobalt/components/card',
+        replacement: resolve(componentsDir, 'src/components/card/co-card.ts'),
+      },
+      {
         find: '@cobalt/components/banner',
         replacement: resolve(componentsDir, 'src/components/banner/co-banner.ts'),
       },

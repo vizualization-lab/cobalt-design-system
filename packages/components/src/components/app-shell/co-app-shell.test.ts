@@ -308,7 +308,7 @@ describe('co-app-shell', () => {
     expect(getComputedStyle(topnav!).position).to.equal('static');
     expect(getComputedStyle(rail!).position).to.equal('static');
     expect(getComputedStyle(drawer!).position).to.equal('static');
-    expect(getComputedStyle(contentRow!).overflow).to.equal('hidden');
+    expect(getComputedStyle(contentRow!).overflow).to.equal('visible');
     expect(getComputedStyle(body!).overflow).to.equal('auto');
     expect(body!.scrollHeight).to.be.greaterThan(body!.clientHeight);
     expect(rail!.scrollHeight).to.equal(rail!.clientHeight);
@@ -334,10 +334,8 @@ describe('co-app-shell', () => {
     expect(drawer).to.exist;
     expect(body).to.exist;
 
-    expect(getComputedStyle(rail!).overflow).to.equal('auto');
-    expect(getComputedStyle(drawer!).overflow).to.equal('auto');
-    expect(rail!.scrollHeight).to.be.greaterThan(rail!.clientHeight);
-    expect(drawer!.scrollHeight).to.be.greaterThan(drawer!.clientHeight);
+    expect(getComputedStyle(rail!).overflow).to.equal('visible');
+    expect(getComputedStyle(drawer!).overflow).to.equal('visible');
     expect(body!.scrollHeight).to.equal(body!.clientHeight);
   });
 

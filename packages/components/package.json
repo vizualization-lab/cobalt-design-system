@@ -26,6 +26,10 @@
       "import": "./dist/components/banner/co-banner.js",
       "types": "./dist/components/banner/co-banner.d.ts"
     },
+    "./card": {
+      "import": "./dist/components/card/co-card.js",
+      "types": "./dist/components/card/co-card.d.ts"
+    },
     "./button": {
       "import": "./dist/components/button/co-button.js",
       "types": "./dist/components/button/co-button.d.ts"

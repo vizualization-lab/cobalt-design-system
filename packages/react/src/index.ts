@@ -2,6 +2,7 @@ export { CoInputPill } from './components/input-pill.js';
 export { CoNavRailItem } from './components/nav-rail-item.js';
 export { CoAppShell } from './components/app-shell.js';
 export { CoBanner } from './components/banner.js';
+export { CoCard } from './components/card.js';
 export { CoButton } from './components/button.js';
 export { CoButtonIcon } from './components/button-icon.js';
 export { CoCheckbox } from './components/checkbox.js';

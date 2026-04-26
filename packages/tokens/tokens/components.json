@@ -20,6 +20,33 @@
           }
         }
       },
+      "card": {
+        "padding": {
+          "$type": "dimension",
+          "$value": "{co.space.inset.lg}",
+          "$description": "Internal padding for the card."
+        },
+        "gap": {
+          "$type": "dimension",
+          "$value": "{co.space.gap.sm}",
+          "$description": "Gap between card sections."
+        },
+        "radius": {
+          "$type": "dimension",
+          "$value": "{co.shape.radius.lg}",
+          "$description": "Corner radius for the card."
+        },
+        "background": {
+          "$type": "color",
+          "$value": "{co.color.surface.raised}",
+          "$description": "Card background color."
+        },
+        "shadow": {
+          "$type": "shadow",
+          "$value": "{co.elevation.shadow.sm}",
+          "$description": "Card elevation shadow."
+        }
+      },
       "banner": {
         "height": {
           "$type": "dimension",

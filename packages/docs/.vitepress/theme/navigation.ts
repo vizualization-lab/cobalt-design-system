@@ -65,6 +65,7 @@ export const navigation: NavGroup[] = [
         children: [
           { text: 'App Shell', link: '/components/app-shell' },
           { text: 'Banner', link: '/components/banner' },
+          { text: 'Card', link: '/components/card' },
         ],
       },
       {

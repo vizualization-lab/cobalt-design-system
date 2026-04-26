@@ -25,6 +25,10 @@
       "import": "./dist/components/banner.js",
       "types": "./dist/components/banner.d.ts"
     },
+    "./card": {
+      "import": "./dist/components/card.js",
+      "types": "./dist/components/card.d.ts"
+    },
     "./button": {
       "import": "./dist/components/button.js",
       "types": "./dist/components/button.d.ts"
