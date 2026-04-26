@@ -81,12 +81,12 @@
           "bar": {
             "width": {
               "$type": "dimension",
-              "$value": "115px",
+              "$value": "116px",
               "$description": "Default width for compact vertical navigation rails."
             },
             "width-max": {
               "$type": "dimension",
-              "$value": "200px",
+              "$value": "140px",
               "$description": "Max width for compact vertical navigation rails."
             },
             "padding": {
@@ -121,12 +121,12 @@
             "padding": {
               "x": {
                 "$type": "dimension",
-                "$value": "{co.space.2}",
+                "$value": "{co.space.3}",
                 "$description": "Horizontal padding for each nav rail item."
               },
               "y": {
                 "$type": "dimension",
-                "$value": "{co.space.4}",
+                "$value": "{co.space.2}",
                 "$description": "Vertical padding for each nav rail item."
               }
             },
@@ -137,7 +137,7 @@
             },
             "radius": {
               "$type": "dimension",
-              "$value": "{co.shape.radius.2xl}",
+              "$value": "{co.shape.radius.sm}",
               "$description": "Corner radius for nav rail item surfaces."
             },
             "icon": {
