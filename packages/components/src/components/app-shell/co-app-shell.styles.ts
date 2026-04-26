@@ -4,7 +4,7 @@ import { css } from 'lit';
 export const cobaltAppShellStyles = css`
   :host {
     display: block;
-    min-block-size: 100%;
+    block-size: 100dvh;
     --_co-app-shell-backdrop: rgb(0 0 0 / 0.4);
   }
 
@@ -15,7 +15,6 @@ export const cobaltAppShellStyles = css`
     block-size: 100%;
     min-block-size: 0;
     background: var(--co-color-surface-page);
-    overflow: hidden;
   }
 
   .app-shell__banner,
@@ -73,7 +72,6 @@ export const cobaltAppShellStyles = css`
     row-gap: var(--co-space-4);
     min-block-size: 0;
     padding: var(--co-space-4);
-    overflow: hidden;
   }
 
   .app-shell__rail,
@@ -81,7 +79,7 @@ export const cobaltAppShellStyles = css`
     align-self: stretch;
     min-block-size: 0;
     block-size: 100%;
-    overflow: auto;
+    overflow: visible;
   }
 
   .app-shell__body {
