@@ -55,7 +55,6 @@ export const navigation: NavGroup[] = [
     defaultOpen: true,
     items: [
       { text: 'Overview', link: '/components/' },
-      { text: 'Banner', link: '/components/banner' },
       { text: 'Button', link: '/components/button' },
       { text: 'Button Icon', link: '/components/button-icon' },
       { text: 'Icon', link: '/components/icon' },
@@ -65,6 +64,13 @@ export const navigation: NavGroup[] = [
         defaultOpen: true,
         children: [
           { text: 'App Shell', link: '/components/app-shell' },
+          { text: 'Banner', link: '/components/banner' },
+        ],
+      },
+      {
+        text: 'Navigation',
+        defaultOpen: true,
+        children: [
           { text: 'Navigation Header Bar', link: '/components/nav-header-bar' },
           { text: 'Navigation Rail Bar', link: '/components/nav-rail-bar' },
           { text: 'Navigation Rail Item', link: '/components/nav-rail-item' },
