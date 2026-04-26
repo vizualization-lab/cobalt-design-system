@@ -8,6 +8,7 @@
       import '@cobalt/tokens/css';
       import '@cobalt/tokens/css/fonts';
       import '@cobalt/tokens/css/base';
+      import '@cobalt/components/card';
     </script>
     <style>
       body {
@@ -53,20 +54,14 @@
 
       .card {
         display: block;
-        padding: var(--co-space-5);
-        background: var(--co-color-surface-default);
-        border: var(--co-shape-border-width-thin) solid var(--co-color-border-default);
-        border-radius: var(--co-shape-radius-md);
         text-decoration: none;
         color: inherit;
-        transition:
-          border-color var(--co-motion-duration-fast) var(--co-motion-easing-default),
-          box-shadow var(--co-motion-duration-fast) var(--co-motion-easing-default);
+        border-radius: var(--co-component-card-radius, var(--co-shape-radius-lg));
+        transition: transform var(--co-motion-duration-fast) var(--co-motion-easing-default);
       }
 
       .card:hover {
-        border-color: var(--co-color-border-strong);
-        box-shadow: var(--co-elevation-shadow-sm);
+        transform: translateY(-2px);
       }
 
       .card-name {
@@ -95,80 +90,118 @@
       </p>
       <div class="grid">
         <a class="card" href="/app-shell.html" target="_blank" rel="noopener noreferrer">
-          <div class="card-name">App Shell</div>
-          <div class="card-tag">&lt;co-app-shell&gt;</div>
+          <co-card>
+            <div class="card-name">App Shell</div>
+            <div class="card-tag" slot="footer">&lt;co-app-shell&gt;</div>
+          </co-card>
         </a>
         <a class="card" href="/preview.html?component=nav-drawer">
-          <div class="card-name">Nav Drawer</div>
-          <div class="card-tag">&lt;co-nav-drawer&gt;</div>
+          <co-card>
+            <div class="card-name">Nav Drawer</div>
+            <div class="card-tag" slot="footer">&lt;co-nav-drawer&gt;</div>
+          </co-card>
         </a>
         <a class="card" href="/preview.html?component=nav-drawer-item">
-          <div class="card-name">Nav Drawer Item</div>
-          <div class="card-tag">&lt;co-nav-drawer-item&gt;</div>
+          <co-card>
+            <div class="card-name">Nav Drawer Item</div>
+            <div class="card-tag" slot="footer">&lt;co-nav-drawer-item&gt;</div>
+          </co-card>
         </a>
         <a class="card" href="/preview.html?component=banner">
-          <div class="card-name">Banner</div>
-          <div class="card-tag">&lt;co-banner&gt;</div>
+          <co-card>
+            <div class="card-name">Banner</div>
+            <div class="card-tag" slot="footer">&lt;co-banner&gt;</div>
+          </co-card>
         </a>
         <a class="card" href="/preview.html?component=card">
-          <div class="card-name">Card</div>
-          <div class="card-tag">&lt;co-card&gt;</div>
+          <co-card>
+            <div class="card-name">Card</div>
+            <div class="card-tag" slot="footer">&lt;co-card&gt;</div>
+          </co-card>
         </a>
         <a class="card" href="/preview.html?component=nav-header-bar">
-          <div class="card-name">Nav Header Bar</div>
-          <div class="card-tag">&lt;co-nav-header-bar&gt;</div>
+          <co-card>
+            <div class="card-name">Nav Header Bar</div>
+            <div class="card-tag" slot="footer">&lt;co-nav-header-bar&gt;</div>
+          </co-card>
         </a>
         <a class="card" href="/preview.html?component=input-pill">
-          <div class="card-name">Input Pill</div>
-          <div class="card-tag">&lt;co-input-pill&gt;</div>
+          <co-card>
+            <div class="card-name">Input Pill</div>
+            <div class="card-tag" slot="footer">&lt;co-input-pill&gt;</div>
+          </co-card>
         </a>
         <a class="card" href="/preview.html?component=button">
-          <div class="card-name">Button</div>
-          <div class="card-tag">&lt;co-button&gt;</div>
+          <co-card>
+            <div class="card-name">Button</div>
+            <div class="card-tag" slot="footer">&lt;co-button&gt;</div>
+          </co-card>
         </a>
         <a class="card" href="/preview.html?component=button-icon">
-          <div class="card-name">Button Icon</div>
-          <div class="card-tag">&lt;co-button-icon&gt;</div>
+          <co-card>
+            <div class="card-name">Button Icon</div>
+            <div class="card-tag" slot="footer">&lt;co-button-icon&gt;</div>
+          </co-card>
         </a>
         <a class="card" href="/preview.html?component=nav-rail-item">
-          <div class="card-name">Nav Rail Item</div>
-          <div class="card-tag">&lt;co-nav-rail-item&gt;</div>
+          <co-card>
+            <div class="card-name">Nav Rail Item</div>
+            <div class="card-tag" slot="footer">&lt;co-nav-rail-item&gt;</div>
+          </co-card>
         </a>
         <a class="card" href="/preview.html?component=nav-rail-bar">
-          <div class="card-name">Nav Rail Bar</div>
-          <div class="card-tag">&lt;co-nav-rail-bar&gt;</div>
+          <co-card>
+            <div class="card-name">Nav Rail Bar</div>
+            <div class="card-tag" slot="footer">&lt;co-nav-rail-bar&gt;</div>
+          </co-card>
         </a>
         <a class="card" href="/preview.html?component=icon">
-          <div class="card-name">Icon</div>
-          <div class="card-tag">&lt;co-icon&gt;</div>
+          <co-card>
+            <div class="card-name">Icon</div>
+            <div class="card-tag" slot="footer">&lt;co-icon&gt;</div>
+          </co-card>
         </a>
         <a class="card" href="/preview.html?component=checkbox-group">
-          <div class="card-name">Checkbox Group</div>
-          <div class="card-tag">&lt;co-checkbox-group&gt;</div>
+          <co-card>
+            <div class="card-name">Checkbox Group</div>
+            <div class="card-tag" slot="footer">&lt;co-checkbox-group&gt;</div>
+          </co-card>
         </a>
         <a class="card" href="/preview.html?component=form">
-          <div class="card-name">Form</div>
-          <div class="card-tag">&lt;co-form&gt;</div>
+          <co-card>
+            <div class="card-name">Form</div>
+            <div class="card-tag" slot="footer">&lt;co-form&gt;</div>
+          </co-card>
         </a>
         <a class="card" href="/preview.html?component=combobox">
-          <div class="card-name">Combobox</div>
-          <div class="card-tag">&lt;co-combobox&gt;</div>
+          <co-card>
+            <div class="card-name">Combobox</div>
+            <div class="card-tag" slot="footer">&lt;co-combobox&gt;</div>
+          </co-card>
         </a>
         <a class="card" href="/preview.html?component=radio-group">
-          <div class="card-name">Radio Group</div>
-          <div class="card-tag">&lt;co-radio-group&gt;</div>
+          <co-card>
+            <div class="card-name">Radio Group</div>
+            <div class="card-tag" slot="footer">&lt;co-radio-group&gt;</div>
+          </co-card>
         </a>
         <a class="card" href="/preview.html?component=select">
-          <div class="card-name">Select</div>
-          <div class="card-tag">&lt;co-select&gt;</div>
+          <co-card>
+            <div class="card-name">Select</div>
+            <div class="card-tag" slot="footer">&lt;co-select&gt;</div>
+          </co-card>
         </a>
         <a class="card" href="/preview.html?component=option">
-          <div class="card-name">Option</div>
-          <div class="card-tag">&lt;co-option&gt;</div>
+          <co-card>
+            <div class="card-name">Option</div>
+            <div class="card-tag" slot="footer">&lt;co-option&gt;</div>
+          </co-card>
         </a>
         <a class="card" href="/preview.html?component=icon-scaling">
-          <div class="card-name">Icon Scaling</div>
-          <div class="card-tag">comparison</div>
+          <co-card>
+            <div class="card-name">Icon Scaling</div>
+            <div class="card-tag" slot="footer">comparison</div>
+          </co-card>
         </a>
       </div>
     </main>

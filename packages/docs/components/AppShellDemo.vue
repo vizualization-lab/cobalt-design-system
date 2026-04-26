@@ -198,7 +198,7 @@ const viewportLabel = computed(() =>
               </co-nav-drawer>
 
               <div slot="body" class="app-shell-demo__body">
-                <section class="app-shell-demo__panel">
+                <co-card>
                   <p class="app-shell-demo__eyebrow">Pattern guidance</p>
                   <h2 class="app-shell-demo__title">Compose article and TOC inside body</h2>
                   <p class="app-shell-demo__copy">
@@ -206,15 +206,33 @@ const viewportLabel = computed(() =>
                     right-side reference content inside the body region.
                   </p>
                   <div class="app-shell-demo__stack">
-                    <div class="app-shell-demo__card">Introduction</div>
-                    <div class="app-shell-demo__card">API summary</div>
-                    <div class="app-shell-demo__card">Examples</div>
+                    <co-card
+                      style="
+                        --co-component-card-background: var(--co-color-surface-page);
+                        --co-component-card-shadow: none;
+                      "
+                      >Introduction</co-card
+                    >
+                    <co-card
+                      style="
+                        --co-component-card-background: var(--co-color-surface-page);
+                        --co-component-card-shadow: none;
+                      "
+                      >API summary</co-card
+                    >
+                    <co-card
+                      style="
+                        --co-component-card-background: var(--co-color-surface-page);
+                        --co-component-card-shadow: none;
+                      "
+                      >Examples</co-card
+                    >
                   </div>
-                </section>
+                </co-card>
 
-                <aside class="app-shell-demo__panel app-shell-demo__panel--secondary">
+                <co-card style="color: var(--co-color-text-secondary)">
                   Optional TOC or reference panel composed inside body
-                </aside>
+                </co-card>
               </div>
 
               <div slot="footer" style="padding: 12px 0">Footer content</div>

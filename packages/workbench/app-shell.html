@@ -13,6 +13,7 @@
       import '@cobalt/components/app-shell';
       import '@cobalt/components/banner';
       import '@cobalt/components/button';
+      import '@cobalt/components/card';
       import '@cobalt/components/form';
       import '@cobalt/components/input';
       import '@cobalt/components/nav-drawer';
@@ -131,12 +132,7 @@
         grid-template-columns: minmax(0, 1fr);
       }
 
-      .wb-app-shell-form-panel {
-        padding: 24px;
-        background: var(--co-color-surface-default);
-        border: 1px solid var(--co-color-border-default);
-        border-radius: 16px;
-      }
+      /* Form panel now uses co-card */
 
       .wb-app-shell-form-eyebrow {
         margin: 0 0 8px;
@@ -242,50 +238,27 @@
           <co-nav-drawer-item value="approvals" icon="task-alt">Approvals</co-nav-drawer-item>
         </co-nav-drawer>
         <div slot="body" class="wb-app-shell-body">
-          <section
-            style="
-              padding: 20px;
-              background: var(--co-color-surface-default);
-              border: 1px solid var(--co-color-border-default);
-              border-radius: 16px;
-            "
-          >
-            <p style="margin: 0 0 8px; color: var(--co-color-text-secondary)">Dashboard</p>
+          <co-card>
+            <p slot="header" style="margin: 0; color: var(--co-color-text-secondary)">Dashboard</p>
             <h1 style="margin: 0 0 12px">Track live operational health</h1>
             <p style="margin: 0 0 16px">Compose page-level structure inside the body slot.</p>
-            <div style="display: grid; gap: 10px">
-              <div
-                style="
-                  padding: 14px 16px;
-                  background: var(--co-color-surface-page);
-                  border-radius: 12px;
-                "
-              >
-                Summary cards
-              </div>
-              <div
-                style="
-                  padding: 14px 16px;
-                  background: var(--co-color-surface-page);
-                  border-radius: 12px;
-                "
-              >
-                Activity feed
-              </div>
+            <div style="display: flex; gap: 10px">
+              <co-card style="--co-component-card-background: var(--co-color-surface-page)">
+                <h4 slot="header">Health</h4>
+                <span style="font-size: 2.2rem">18</span>
+                <h5 slot="footer">Last 24 hours</h5>
+              </co-card>
+              <co-card style="--co-component-card-background: var(--co-color-surface-page)">
+                <h4 slot="header">Health</h4>
+                <span style="font-size: 2.2rem">42</span>
+                <h5 slot="footer">Last 30 Days</h5>
+              </co-card>
             </div>
-          </section>
-          <aside
-            style="
-              padding: 14px 16px;
-              background: var(--co-color-surface-raised);
-              border: 1px solid var(--co-color-border-default);
-              border-radius: 16px;
-              color: var(--co-color-text-secondary);
-            "
-          >
+          </co-card>
+          <co-card style="color: var(--co-color-text-secondary)">
             Optional TOC or reference content inside body
-          </aside>
-          <section class="wb-app-shell-form-panel">
+          </co-card>
+          <co-card>
             <p class="wb-app-shell-form-eyebrow">Workspace settings</p>
             <h2 class="wb-app-shell-form-title">Adjust incident routing</h2>
             <p class="wb-app-shell-form-copy">
@@ -328,7 +301,7 @@
                 <co-button type="submit" variant="primary">Save changes</co-button>
               </div>
             </co-form>
-          </section>
+          </co-card>
           <section class="wb-app-shell-log" aria-label="Operational timeline">
             <p class="wb-app-shell-log-heading">Operational timeline</p>
             <p class="wb-app-shell-log-intro">

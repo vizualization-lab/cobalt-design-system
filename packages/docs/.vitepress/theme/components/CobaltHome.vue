@@ -150,27 +150,29 @@ const features = [
         class="feature-card"
         :style="{ animationDelay: `${200 + i * 100}ms` }"
       >
-        <div class="feature-icon">
-          <co-icon :name="feature.iconName" size="md" aria-hidden="true"></co-icon>
-        </div>
-        <h3 class="feature-title">{{ feature.title }}</h3>
-        <p class="feature-desc">{{ feature.description }}</p>
-        <span class="feature-link">
-          Learn more
-          <svg
-            width="14"
-            height="14"
-            viewBox="0 0 16 16"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
-            <line x1="3" y1="8" x2="13" y2="8" />
-            <polyline points="9 4 13 8 9 12" />
-          </svg>
-        </span>
+        <co-card>
+          <div class="feature-icon" slot="header">
+            <co-icon :name="feature.iconName" size="md" aria-hidden="true"></co-icon>
+          </div>
+          <h3 class="feature-title">{{ feature.title }}</h3>
+          <p class="feature-desc">{{ feature.description }}</p>
+          <span class="feature-link" slot="footer">
+            Learn more
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 16 16"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <line x1="3" y1="8" x2="13" y2="8" />
+              <polyline points="9 4 13 8 9 12" />
+            </svg>
+          </span>
+        </co-card>
       </a>
     </section>
   </div>
@@ -348,15 +350,17 @@ const features = [
 }
 
 .feature-card {
-  padding: 28px 24px;
-  background: var(--co-color-surface-raised);
-  border: 1px solid var(--co-border);
-  border-radius: 14px;
   text-decoration: none;
+  color: inherit;
   transition: all 0.3s var(--co-ease);
   animation: featureSlideIn 0.5s var(--co-ease) both;
   display: flex;
-  flex-direction: column;
+  border-radius: var(--co-component-card-radius, var(--co-shape-radius-lg));
+}
+
+.feature-card co-card {
+  flex: 1;
+  block-size: 100%;
 }
 
 @keyframes featureSlideIn {
@@ -371,8 +375,6 @@ const features = [
 }
 
 .feature-card:hover {
-  border-color: var(--co-blue-alpha-25);
-  background: var(--co-color-surface-sunken);
   transform: translateY(-2px);
   box-shadow: 0 8px 32px -8px var(--co-blue-alpha-15);
 }
