@@ -51,10 +51,10 @@
   inline-size: 100%;
   color: currentColor;
   font-family: var(--co-font-family-sans);
-  font-size: min(var(--co-typography-subtitle-size), 1rem);
-  font-weight: var(--co-typography-subtitle-weight);
-  letter-spacing: var(--co-typography-subtitle-tracking);
-  line-height: var(--co-typography-subtitle-line-height);
+  font-size: min(var(--co-typography-body-sm-size), 1rem);
+  font-weight: var(--co-typography-body-sm-weight);
+  letter-spacing: var(--co-typography-body-sm-tracking);
+  line-height: var(--co-typography-body-sm-line-height);
   text-wrap: balance;
   overflow-wrap: anywhere;
 }

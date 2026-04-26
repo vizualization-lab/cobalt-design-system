@@ -72,7 +72,7 @@ export class CoNavRailItem extends LitElement {
   }
 
   private get _iconSize(): IconSize {
-    return 'md';
+    return 'sm';
   }
 
   private _handleDisabledLinkClick(event: MouseEvent): void {

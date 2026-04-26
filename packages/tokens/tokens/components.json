@@ -57,10 +57,22 @@
               "$value": "115px",
               "$description": "Default width for compact vertical navigation rails."
             },
-            "padding": {
+            "width-max": {
               "$type": "dimension",
-              "$value": "{co.space.2}",
-              "$description": "Inset padding applied around nav rail items."
+              "$value": "200px",
+              "$description": "Max width for compact vertical navigation rails."
+            },
+            "padding": {
+              "x": {
+                "$type": "dimension",
+                "$value": "{co.space.2}",
+                "$description": "Horizontal inset padding applied around nav rail items."
+              },
+              "y": {
+                "$type": "dimension",
+                "$value": "{co.space.3}",
+                "$description": "Vertical inset padding applied around nav rail items."
+              }
             },
             "gap": {
               "$type": "dimension",
@@ -87,13 +99,13 @@
               },
               "y": {
                 "$type": "dimension",
-                "$value": "{co.space.2}",
+                "$value": "{co.space.4}",
                 "$description": "Vertical padding for each nav rail item."
               }
             },
             "gap": {
               "$type": "dimension",
-              "$value": "{co.space.3}",
+              "$value": "{co.space.1}",
               "$description": "Space between the icon and label within a nav rail item."
             },
             "radius": {

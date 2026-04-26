@@ -5,7 +5,7 @@ export const cobaltNavRailBarStyles = css`
   :host {
     display: block;
     inline-size: min(100%, var(--co-component-nav-rail-bar-width, 115px));
-    max-inline-size: var(--co-component-nav-rail-bar-width, 115px);
+    max-inline-size: var(--co-component-nav-rail-bar-width-max, 200px);
     block-size: 100%;
     box-sizing: border-box;
   }
@@ -13,10 +13,11 @@ export const cobaltNavRailBarStyles = css`
   .nav-rail-bar {
     display: flex;
     flex-direction: column;
+    box-sizing: border-box;
     inline-size: 100%;
     block-size: 100%;
-    padding: var(--co-component-nav-rail-bar-padding, var(--co-space-2));
-    border-radius: var(--co-component-nav-rail-bar-radius, var(--co-shape-radius-lg));
+    padding: var(--co-component-nav-rail-bar-padding-y) var(--co-component-nav-rail-bar-padding-x);
+    border-radius: var(--co-component-nav-rail-bar-radius);
     background: var(--co-component-nav-rail-bar-background, var(--co-color-surface-sunken));
     box-shadow: var(--co-elevation-shadow-md);
   }

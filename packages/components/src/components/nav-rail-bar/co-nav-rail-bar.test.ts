@@ -122,6 +122,20 @@ describe('co-nav-rail-bar', () => {
     expect(items[2].selected).to.be.true;
   });
 
+  it('does not overflow its host width when padded', async () => {
+    const el = await fixture<CoNavRailBar>(html`
+      <co-nav-rail-bar style="inline-size: 200px;">
+        <co-nav-rail-item value="home" icon="home" selected>Home</co-nav-rail-item>
+        <co-nav-rail-item value="reports" icon="sync">Reports</co-nav-rail-item>
+      </co-nav-rail-bar>
+    `);
+
+    const nav = el.shadowRoot?.querySelector<HTMLElement>('.nav-rail-bar');
+    expect(nav).to.exist;
+    expect(nav!.offsetWidth).to.equal(el.clientWidth);
+    expect(el.scrollWidth).to.equal(el.clientWidth);
+  });
+
   describe('accessibility', () => {
     it('is accessible as a vertical navigation landmark', async () => {
       const el = await fixture(
