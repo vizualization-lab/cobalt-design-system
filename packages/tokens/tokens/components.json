@@ -20,6 +20,35 @@
           }
         }
       },
+      "banner": {
+        "height": {
+          "$type": "dimension",
+          "$value": "44px",
+          "$description": "Minimum height for the banner."
+        },
+        "padding": {
+          "$type": "dimension",
+          "$value": "{co.space.1}",
+          "$description": "Internal padding for the banner."
+        },
+        "background": {
+          "$type": "color",
+          "$value": "{co.color.surface.raised}",
+          "$description": "Banner background color."
+        },
+        "foreground": {
+          "$type": "color",
+          "$value": "{co.color.text.default}",
+          "$description": "Banner text color."
+        },
+        "title": {
+          "weight": {
+            "$type": "fontWeight",
+            "$value": "{co.font.weight.medium}",
+            "$description": "Font weight for the banner title."
+          }
+        }
+      },
       "nav": {
         "rail": {
           "bar": {

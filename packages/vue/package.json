@@ -17,6 +17,10 @@
       "import": "./dist/components/input-pill.js",
       "types": "./dist/components/input-pill.d.ts"
     },
+    "./banner": {
+      "import": "./dist/components/banner.js",
+      "types": "./dist/components/banner.d.ts"
+    },
     "./button": {
       "import": "./dist/components/button.js",
       "types": "./dist/components/button.d.ts"

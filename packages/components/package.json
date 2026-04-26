@@ -18,6 +18,10 @@
       "import": "./dist/components/input-pill/co-input-pill.js",
       "types": "./dist/components/input-pill/co-input-pill.d.ts"
     },
+    "./banner": {
+      "import": "./dist/components/banner/co-banner.js",
+      "types": "./dist/components/banner/co-banner.d.ts"
+    },
     "./button": {
       "import": "./dist/components/button/co-button.js",
       "types": "./dist/components/button/co-button.d.ts"
