@@ -9,6 +9,7 @@ export { CoCombobox } from './components/combobox.js';
 export { CoForm } from './components/form.js';
 export { CoIcon } from './components/icon.js';
 export { CoInput } from './components/input.js';
+export { CoNavHeaderBar } from './components/nav-header-bar.js';
 export { CoNavDrawer } from './components/nav-drawer.js';
 export { CoNavDrawerItem } from './components/nav-drawer-item.js';
 export { CoNavSeparator } from './components/nav-separator.js';

@@ -14,6 +14,7 @@ export { CoListbox } from './components/listbox/co-listbox.js';
 export { CoOption } from './components/option/co-option.js';
 export { CoRadio } from './components/radio/co-radio.js';
 export { CoRadioGroup } from './components/radio-group/co-radio-group.js';
+export { CoNavHeaderBar } from './components/nav-header-bar/co-nav-header-bar.js';
 export { CoNavDrawer } from './components/nav-drawer/co-nav-drawer.js';
 export { CoNavDrawerItem } from './components/nav-drawer-item/co-nav-drawer-item.js';
 export { CoNavSeparator } from './components/nav-separator/co-nav-separator.js';

@@ -1,0 +1,44 @@
+// Auto-generated from .styles.css — do not edit directly
+import { css } from 'lit';
+
+export const cobaltNavHeaderBarStyles = css`
+  :host {
+    display: block;
+    inline-size: 100%;
+    box-sizing: border-box;
+  }
+
+  .nav-header-bar {
+    display: flex;
+    align-items: center;
+    gap: var(--co-space-gap-md);
+    inline-size: 100%;
+    min-block-size: var(--co-component-nav-header-bar-height, 64px);
+    padding: var(--co-space-4);
+    box-sizing: border-box;
+    background: var(--co-component-nav-header-bar-background, var(--co-color-surface-default));
+    border-block-end: var(--co-shape-border-width-thin) solid
+      var(--co-component-nav-header-bar-border-color, var(--co-color-border-subtle));
+  }
+
+  .nav-header-bar__logo {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+  }
+
+  .nav-header-bar__content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex: 1 1 auto;
+    min-inline-size: 0;
+    gap: var(--co-space-gap-md);
+  }
+
+  .nav-header-bar__avatar {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+  }
+`;

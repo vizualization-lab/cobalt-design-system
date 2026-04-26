@@ -107,6 +107,10 @@ export default defineConfig({
     // swallowed by the '@cobalt/components' prefix.
     alias: [
       {
+        find: '@cobalt/components/nav-header-bar',
+        replacement: resolve(componentsDir, 'src/components/nav-header-bar/co-nav-header-bar.ts'),
+      },
+      {
         find: '@cobalt/components/nav-drawer-item',
         replacement: resolve(componentsDir, 'src/components/nav-drawer-item/co-nav-drawer-item.ts'),
       },
