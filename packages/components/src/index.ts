@@ -1,6 +1,8 @@
 export { CoInputPill } from './components/input-pill/co-input-pill.js';
 export { CoNavRailItem } from './components/nav-rail-item/co-nav-rail-item.js';
 export type { NavRailItemTarget } from './components/nav-rail-item/co-nav-rail-item.js';
+export { CoAppShell } from './components/app-shell/co-app-shell.js';
+export type { AppShellDrawerDetail } from './components/app-shell/co-app-shell.js';
 export { CoBanner } from './components/banner/co-banner.js';
 export { CoButton } from './components/button/co-button.js';
 export { CoButtonIcon } from './components/button-icon/co-button-icon.js';

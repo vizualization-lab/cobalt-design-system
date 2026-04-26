@@ -11,14 +11,23 @@
       import '@cobalt/tokens/css/base';
       import '@cobalt/tokens/css/dark';
 
-      const params = new URLSearchParams(location.search);
-      const component = params.get('component');
+      async function loadPreview() {
+        const params = new URLSearchParams(location.search);
+        const component = params.get('component');
 
-      if (!component) {
-        document.getElementById('title').textContent = 'No component specified';
-        document.getElementById('content').innerHTML =
-          '<p>Add <code>?component=button</code> to the URL.</p>';
-      } else {
+        if (!component) {
+          document.getElementById('title').textContent = 'No component specified';
+          document.getElementById('content').innerHTML =
+            '<p>Add <code>?component=button</code> to the URL.</p>';
+          return;
+        }
+
+        if (component === 'app-shell') {
+          const dedicatedUrl = new URL('./app-shell.html', window.location.href);
+          window.location.replace(dedicatedUrl.toString());
+          return;
+        }
+
         try {
           const preview = await import(`./previews/${component}.ts`);
           document.title = `${preview.title} — Cobalt Workbench`;
@@ -30,6 +39,8 @@
             `<p>Could not load preview for <code>${component}</code>.</p><pre>${err}</pre>`;
         }
       }
+
+      loadPreview();
     </script>
   </head>
   <body>

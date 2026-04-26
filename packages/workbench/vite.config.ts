@@ -12,6 +12,7 @@ const tokensDir = resolve(repoRoot, 'packages/tokens');
 const inputs: Record<string, string> = {
   main: resolve(root, 'index.html'),
   preview: resolve(root, 'preview.html'),
+  appShell: resolve(root, 'app-shell.html'),
 };
 
 /**
@@ -115,6 +116,10 @@ export default defineConfig({
         replacement: resolve(componentsDir, 'src/components/nav-header-bar/co-nav-header-bar.ts'),
       },
       {
+        find: '@cobalt/components/app-shell',
+        replacement: resolve(componentsDir, 'src/components/app-shell/co-app-shell.ts'),
+      },
+      {
         find: '@cobalt/components/nav-drawer-item',
         replacement: resolve(componentsDir, 'src/components/nav-drawer-item/co-nav-drawer-item.ts'),
       },
@@ -129,6 +134,10 @@ export default defineConfig({
       {
         find: '@cobalt/components/input-pill',
         replacement: resolve(componentsDir, 'src/components/input-pill/co-input-pill.ts'),
+      },
+      {
+        find: '@cobalt/components/input',
+        replacement: resolve(componentsDir, 'src/components/input/co-input.ts'),
       },
       {
         find: '@cobalt/components/button',
@@ -188,6 +197,10 @@ export default defineConfig({
       {
         find: '@cobalt/components/select',
         replacement: resolve(componentsDir, 'src/components/select/co-select.ts'),
+      },
+      {
+        find: '@cobalt/components/textarea',
+        replacement: resolve(componentsDir, 'src/components/textarea/co-textarea.ts'),
       },
       {
         find: '@cobalt/components/option',

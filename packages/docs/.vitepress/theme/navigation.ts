@@ -64,11 +64,12 @@ export const navigation: NavGroup[] = [
         text: 'Layout',
         defaultOpen: true,
         children: [
+          { text: 'App Shell', link: '/components/app-shell' },
           { text: 'Navigation Header Bar', link: '/components/nav-header-bar' },
-          { text: 'Nav Drawer', link: '/components/nav-drawer' },
-          { text: 'Nav Drawer Item', link: '/components/nav-drawer-item' },
-          { text: 'Nav Rail Bar', link: '/components/nav-rail-bar' },
-          { text: 'Nav Rail Item', link: '/components/nav-rail-item' },
+          { text: 'Navigation Rail Bar', link: '/components/nav-rail-bar' },
+          { text: 'Navigation Rail Item', link: '/components/nav-rail-item' },
+          { text: 'Navigation Drawer', link: '/components/nav-drawer' },
+          { text: 'Navigation Drawer Item', link: '/components/nav-drawer-item' },
         ],
       },
       {

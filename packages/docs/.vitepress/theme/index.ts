@@ -1,6 +1,8 @@
 import type { Theme } from 'vitepress';
 import CobaltLayout from './components/CobaltLayout.vue';
 import ComponentDemo from '../../components/ComponentDemo.vue';
+import AppShellDemo from '../../components/AppShellDemo.vue';
+import AppShellComposition from '../../components/AppShellComposition.vue';
 import CodeTabs from '../../components/CodeTabs.vue';
 import ColorSwatch from '../../components/ColorSwatch.vue';
 import IconGallery from '../../components/IconGallery.vue';
@@ -24,6 +26,8 @@ export default {
   Layout: CobaltLayout,
   enhanceApp({ app }) {
     app.component('ComponentDemo', ComponentDemo);
+    app.component('AppShellDemo', AppShellDemo);
+    app.component('AppShellComposition', AppShellComposition);
     app.component('CodeTabs', CodeTabs);
     app.component('ColorSwatch', ColorSwatch);
     app.component('IconGallery', IconGallery);
