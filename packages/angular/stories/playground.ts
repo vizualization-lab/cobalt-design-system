@@ -2,63 +2,76 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import {
   CoButton,
   CoButtonIcon,
+  CoCheckbox,
+  CoCheckboxGroup,
+  CoCheckboxIndeterminate,
   CoCombobox,
   CoForm,
   CoIcon,
   CoInput,
   CoListbox,
   CoOption,
+  CoRadio,
+  CoRadioGroup,
   CoSelect,
   CoTextarea,
 } from '@cobalt/angular';
 import {
-  getEventProps,
-  getOptionItems,
-  getPlaygroundArgs,
-  getPlaygroundArgTypes,
-  getSelectedValues,
-  type CobaltComponentId,
-  type CobaltStoryArgs,
+  getWrapperStoryArgs,
+  getWrapperStoryArgTypes,
+  getWrapperStoryEventProps,
+  getWrapperStoryOptionItems,
+  getWrapperStorySelectedValues,
+  type WrapperStoryArgs,
+  type WrapperStoryComponentId,
 } from '@cobalt/storybook-fixtures';
 
 const moduleMetadata = {
   imports: [
     CoButton,
     CoButtonIcon,
+    CoCheckbox,
+    CoCheckboxGroup,
+    CoCheckboxIndeterminate,
     CoCombobox,
     CoForm,
     CoIcon,
     CoInput,
     CoListbox,
     CoOption,
+    CoRadio,
+    CoRadioGroup,
     CoSelect,
     CoTextarea,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 };
 
-export function createAngularPlaygroundStory(componentId: CobaltComponentId) {
+export function createAngularPlaygroundStory(componentId: WrapperStoryComponentId) {
   return {
-    args: getPlaygroundArgs(componentId),
-    argTypes: getPlaygroundArgTypes(componentId),
-    render: (args: CobaltStoryArgs) => renderAngularPlayground(componentId, args),
+    args: getWrapperStoryArgs(componentId),
+    argTypes: getWrapperStoryArgTypes(componentId),
+    render: (args: WrapperStoryArgs) => renderAngularPlayground(componentId, args),
   };
 }
 
-export function renderAngularPlayground(componentId: CobaltComponentId, args: CobaltStoryArgs) {
+export function renderAngularPlayground(
+  componentId: WrapperStoryComponentId,
+  args: WrapperStoryArgs,
+) {
   return {
     moduleMetadata,
     props: {
       ...args,
-      ...getEventProps(componentId, args),
-      optionItems: getOptionItems(componentId, args),
-      selectedValues: getSelectedValues(args),
+      ...getWrapperStoryEventProps(componentId, args),
+      optionItems: getWrapperStoryOptionItems(componentId, args),
+      selectedValues: getWrapperStorySelectedValues(args),
     },
     template: getTemplate(componentId),
   };
 }
 
-function getTemplate(componentId: CobaltComponentId): string {
+function getTemplate(componentId: WrapperStoryComponentId): string {
   switch (componentId) {
     case 'button':
       return frame(
@@ -100,6 +113,72 @@ function getTemplate(componentId: CobaltComponentId): string {
             (coFocus)="onCoFocus($event)"
             (coBlur)="onCoBlur($event)"
           ></co-button-icon>
+        `,
+      );
+    case 'checkbox':
+      return frame(
+        'cobalt-grid',
+        `
+          <co-checkbox [value]="value" [checked]="checked" [disabled]="disabled">
+            {{ slotDefault }}
+          </co-checkbox>
+        `,
+      );
+    case 'checkboxGroup':
+      return frame(
+        'cobalt-grid',
+        `
+          <co-checkbox-group
+            [name]="name"
+            [disabled]="disabled"
+            [required]="required"
+            (coChange)="onCoChange($event)"
+          >
+            @if (slotLabel) {
+              <span slot="label">{{ slotLabel }}</span>
+            }
+            @if (slotHelpText) {
+              <span slot="help-text">{{ slotHelpText }}</span>
+            }
+            @if (slotFeedback) {
+              <span slot="feedback">{{ slotFeedback }}</span>
+            }
+            @for (item of optionItems; track item.value) {
+              <co-checkbox
+                [value]="item.value"
+                [checked]="selectedValues.includes(item.value)"
+                [disabled]="item.disabled"
+              >
+                {{ item.label }}
+              </co-checkbox>
+            }
+          </co-checkbox-group>
+        `,
+      );
+    case 'checkboxIndeterminate':
+      return frame(
+        'cobalt-grid',
+        `
+          <co-checkbox-indeterminate
+            [value]="value"
+            [checked]="checked"
+            [indeterminate]="indeterminate"
+            [mixedState]="mixedState"
+            [disabled]="disabled"
+          >
+            @if (slotLabel) {
+              <span slot="label">{{ slotLabel }}</span>
+            }
+            @for (item of optionItems; track item.value) {
+              <co-checkbox
+                [value]="item.value"
+                [checked]="selectedValues.includes(item.value)"
+                [disabled]="item.disabled"
+              >
+                {{ item.label }}
+              </co-checkbox>
+            }
+          </co-checkbox-indeterminate>
         `,
       );
     case 'icon':
@@ -208,6 +287,46 @@ function getTemplate(componentId: CobaltComponentId): string {
               {{ slotDefault }}
             </co-option>
           </co-listbox>
+        `,
+      );
+    case 'radio':
+      return frame(
+        'cobalt-grid',
+        `
+          <co-radio [value]="value" [checked]="checked" [disabled]="disabled">
+            {{ slotDefault }}
+          </co-radio>
+        `,
+      );
+    case 'radioGroup':
+      return frame(
+        'cobalt-grid',
+        `
+          <co-radio-group
+            [name]="name"
+            [disabled]="disabled"
+            [required]="required"
+            (coChange)="onCoChange($event)"
+          >
+            @if (slotLabel) {
+              <span slot="label">{{ slotLabel }}</span>
+            }
+            @if (slotHelpText) {
+              <span slot="help-text">{{ slotHelpText }}</span>
+            }
+            @if (slotFeedback) {
+              <span slot="feedback">{{ slotFeedback }}</span>
+            }
+            @for (item of optionItems; track item.value) {
+              <co-radio
+                [value]="item.value"
+                [checked]="selectedValues.includes(item.value)"
+                [disabled]="item.disabled"
+              >
+                {{ item.label }}
+              </co-radio>
+            }
+          </co-radio-group>
         `,
       );
     case 'listbox':

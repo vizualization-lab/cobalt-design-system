@@ -1,36 +1,44 @@
 import {
   CoButton,
   CoButtonIcon,
+  CoCheckbox,
+  CoCheckboxGroup,
+  CoCheckboxIndeterminate,
   CoCombobox,
   CoForm,
   CoIcon,
   CoInput,
   CoListbox,
   CoOption,
+  CoRadio,
+  CoRadioGroup,
   CoSelect,
   CoTextarea,
 } from '@cobalt/react';
 import {
-  getComponentProps,
-  getEventProps,
-  getOptionItems,
-  getPlaygroundArgs,
-  getPlaygroundArgTypes,
-  getSelectedValues,
-  getSlotValue,
-  type CobaltComponentId,
-  type CobaltStoryArgs,
+  getWrapperStoryArgs,
+  getWrapperStoryArgTypes,
+  getWrapperStoryComponentProps,
+  getWrapperStoryEventProps,
+  getWrapperStoryOptionItems,
+  getWrapperStorySelectedValues,
+  getWrapperStorySlotValue,
+  type WrapperStoryArgs,
+  type WrapperStoryComponentId,
 } from '@cobalt/storybook-fixtures';
 
-export function createReactPlaygroundStory(componentId: CobaltComponentId) {
+export function createReactPlaygroundStory(componentId: WrapperStoryComponentId) {
   return {
-    args: getPlaygroundArgs(componentId),
-    argTypes: getPlaygroundArgTypes(componentId),
-    render: (args: CobaltStoryArgs) => renderReactPlayground(componentId, args),
+    args: getWrapperStoryArgs(componentId),
+    argTypes: getWrapperStoryArgTypes(componentId),
+    render: (args: WrapperStoryArgs) => renderReactPlayground(componentId, args),
   };
 }
 
-export function renderReactPlayground(componentId: CobaltComponentId, args: CobaltStoryArgs) {
+export function renderReactPlayground(
+  componentId: WrapperStoryComponentId,
+  args: WrapperStoryArgs,
+) {
   return (
     <div className="cobalt-story cobalt-stack">
       <section className="cobalt-section">
@@ -46,73 +54,134 @@ export function renderReactPlayground(componentId: CobaltComponentId, args: Coba
   );
 }
 
-function renderComponent(componentId: CobaltComponentId, args: CobaltStoryArgs) {
+function renderComponent(componentId: WrapperStoryComponentId, args: WrapperStoryArgs) {
   switch (componentId) {
     case 'button':
       return (
-        <CoButton {...getComponentProps('button', args)} {...getEventProps('button', args)}>
-          {slotIcon('prefix', getSlotValue('button', 'prefix', args))}
-          {getSlotValue('button', '', args)}
-          {slotIcon('suffix', getSlotValue('button', 'suffix', args))}
+        <CoButton
+          {...getWrapperStoryComponentProps('button', args)}
+          {...getWrapperStoryEventProps('button', args)}
+        >
+          {slotIcon('prefix', getWrapperStorySlotValue('button', 'prefix', args))}
+          {getWrapperStorySlotValue('button', '', args)}
+          {slotIcon('suffix', getWrapperStorySlotValue('button', 'suffix', args))}
         </CoButton>
       );
     case 'buttonIcon':
       return (
         <CoButtonIcon
-          {...getComponentProps('buttonIcon', args)}
-          {...getEventProps('buttonIcon', args)}
+          {...getWrapperStoryComponentProps('buttonIcon', args)}
+          {...getWrapperStoryEventProps('buttonIcon', args)}
         />
       );
+    case 'checkbox':
+      return (
+        <CoCheckbox {...getWrapperStoryComponentProps('checkbox', args)}>
+          {getWrapperStorySlotValue('checkbox', '', args)}
+        </CoCheckbox>
+      );
+    case 'checkboxGroup':
+      return (
+        <CoCheckboxGroup
+          {...getWrapperStoryComponentProps('checkboxGroup', args)}
+          {...getWrapperStoryEventProps('checkboxGroup', args)}
+        >
+          {slotText('label', getWrapperStorySlotValue('checkboxGroup', 'label', args))}
+          {slotText('help-text', getWrapperStorySlotValue('checkboxGroup', 'help-text', args))}
+          {slotText('feedback', getWrapperStorySlotValue('checkboxGroup', 'feedback', args))}
+          {checkboxChildren('checkboxGroup', args)}
+        </CoCheckboxGroup>
+      );
+    case 'checkboxIndeterminate':
+      return (
+        <CoCheckboxIndeterminate {...getWrapperStoryComponentProps('checkboxIndeterminate', args)}>
+          {slotText('label', getWrapperStorySlotValue('checkboxIndeterminate', 'label', args))}
+          {checkboxChildren('checkboxIndeterminate', args)}
+        </CoCheckboxIndeterminate>
+      );
     case 'icon':
-      return <CoIcon {...getComponentProps('icon', args)} />;
+      return <CoIcon {...getWrapperStoryComponentProps('icon', args)} />;
     case 'input':
       return (
-        <CoInput {...getComponentProps('input', args)} {...getEventProps('input', args)}>
-          {slotIcon('prefix', getSlotValue('input', 'prefix', args))}
-          {slotIcon('suffix', getSlotValue('input', 'suffix', args))}
-          {slotText('feedback', getSlotValue('input', 'feedback', args))}
+        <CoInput
+          {...getWrapperStoryComponentProps('input', args)}
+          {...getWrapperStoryEventProps('input', args)}
+        >
+          {slotIcon('prefix', getWrapperStorySlotValue('input', 'prefix', args))}
+          {slotIcon('suffix', getWrapperStorySlotValue('input', 'suffix', args))}
+          {slotText('feedback', getWrapperStorySlotValue('input', 'feedback', args))}
         </CoInput>
       );
     case 'textarea':
       return (
-        <CoTextarea {...getComponentProps('textarea', args)} {...getEventProps('textarea', args)}>
-          {slotIcon('prefix', getSlotValue('textarea', 'prefix', args))}
-          {slotIcon('suffix', getSlotValue('textarea', 'suffix', args))}
-          {slotText('feedback', getSlotValue('textarea', 'feedback', args))}
+        <CoTextarea
+          {...getWrapperStoryComponentProps('textarea', args)}
+          {...getWrapperStoryEventProps('textarea', args)}
+        >
+          {slotIcon('prefix', getWrapperStorySlotValue('textarea', 'prefix', args))}
+          {slotIcon('suffix', getWrapperStorySlotValue('textarea', 'suffix', args))}
+          {slotText('feedback', getWrapperStorySlotValue('textarea', 'feedback', args))}
         </CoTextarea>
       );
     case 'option':
       return (
         <CoListbox label="Option preview" name="option-preview">
-          <CoOption {...getComponentProps('option', args)}>
-            {slotIcon('indicator-icon', getSlotValue('option', 'indicator-icon', args))}
-            {slotText('indicator', getSlotValue('option', 'indicator', args))}
-            {getSlotValue('option', '', args)}
+          <CoOption {...getWrapperStoryComponentProps('option', args)}>
+            {slotIcon('indicator-icon', getWrapperStorySlotValue('option', 'indicator-icon', args))}
+            {slotText('indicator', getWrapperStorySlotValue('option', 'indicator', args))}
+            {getWrapperStorySlotValue('option', '', args)}
           </CoOption>
         </CoListbox>
       );
+    case 'radio':
+      return (
+        <CoRadio {...getWrapperStoryComponentProps('radio', args)}>
+          {getWrapperStorySlotValue('radio', '', args)}
+        </CoRadio>
+      );
+    case 'radioGroup':
+      return (
+        <CoRadioGroup
+          {...getWrapperStoryComponentProps('radioGroup', args)}
+          {...getWrapperStoryEventProps('radioGroup', args)}
+        >
+          {slotText('label', getWrapperStorySlotValue('radioGroup', 'label', args))}
+          {slotText('help-text', getWrapperStorySlotValue('radioGroup', 'help-text', args))}
+          {slotText('feedback', getWrapperStorySlotValue('radioGroup', 'feedback', args))}
+          {radioChildren('radioGroup', args)}
+        </CoRadioGroup>
+      );
     case 'listbox':
       return (
-        <CoListbox {...getComponentProps('listbox', args)} {...getEventProps('listbox', args)}>
-          {slotText('feedback', getSlotValue('listbox', 'feedback', args))}
+        <CoListbox
+          {...getWrapperStoryComponentProps('listbox', args)}
+          {...getWrapperStoryEventProps('listbox', args)}
+        >
+          {slotText('feedback', getWrapperStorySlotValue('listbox', 'feedback', args))}
           {optionChildren('listbox', args)}
         </CoListbox>
       );
     case 'select':
       return (
-        <CoSelect {...getComponentProps('select', args)} {...getEventProps('select', args)}>
-          {slotText('label', getSlotValue('select', 'label', args))}
-          {slotText('help-text', getSlotValue('select', 'help-text', args))}
-          {slotText('feedback', getSlotValue('select', 'feedback', args))}
+        <CoSelect
+          {...getWrapperStoryComponentProps('select', args)}
+          {...getWrapperStoryEventProps('select', args)}
+        >
+          {slotText('label', getWrapperStorySlotValue('select', 'label', args))}
+          {slotText('help-text', getWrapperStorySlotValue('select', 'help-text', args))}
+          {slotText('feedback', getWrapperStorySlotValue('select', 'feedback', args))}
           {optionChildren('select', args)}
         </CoSelect>
       );
     case 'combobox':
       return (
-        <CoCombobox {...getComponentProps('combobox', args)} {...getEventProps('combobox', args)}>
-          {slotIcon('prefix', getSlotValue('combobox', 'prefix', args))}
-          {slotIcon('suffix', getSlotValue('combobox', 'suffix', args))}
-          {slotText('feedback', getSlotValue('combobox', 'feedback', args))}
+        <CoCombobox
+          {...getWrapperStoryComponentProps('combobox', args)}
+          {...getWrapperStoryEventProps('combobox', args)}
+        >
+          {slotIcon('prefix', getWrapperStorySlotValue('combobox', 'prefix', args))}
+          {slotIcon('suffix', getWrapperStorySlotValue('combobox', 'suffix', args))}
+          {slotText('feedback', getWrapperStorySlotValue('combobox', 'feedback', args))}
           {optionChildren('combobox', args)}
         </CoCombobox>
       );
@@ -120,10 +189,10 @@ function renderComponent(componentId: CobaltComponentId, args: CobaltStoryArgs) 
       return (
         <CoForm
           className="cobalt-panel"
-          {...getComponentProps('form', args)}
-          {...getEventProps('form', args)}
+          {...getWrapperStoryComponentProps('form', args)}
+          {...getWrapperStoryEventProps('form', args)}
         >
-          {slotText('feedback', getSlotValue('form', 'feedback', args))}
+          {slotText('feedback', getWrapperStorySlotValue('form', 'feedback', args))}
           <div className="cobalt-stack">
             <CoInput label="Name" name="name" required placeholder="Ada Lovelace" />
             <CoTextarea label="Message" name="message" rows={4} placeholder="Write a message" />
@@ -141,10 +210,43 @@ function renderComponent(componentId: CobaltComponentId, args: CobaltStoryArgs) 
   }
 }
 
-function optionChildren(componentId: 'combobox' | 'listbox' | 'select', args: CobaltStoryArgs) {
-  const selectedValues = getSelectedValues(args);
+function checkboxChildren(
+  componentId: 'checkboxGroup' | 'checkboxIndeterminate',
+  args: WrapperStoryArgs,
+) {
+  const selectedValues = getWrapperStorySelectedValues(args);
 
-  return getOptionItems(componentId, args).map((item) => (
+  return getWrapperStoryOptionItems(componentId, args).map((item) => (
+    <CoCheckbox
+      key={item.value}
+      value={item.value}
+      checked={selectedValues.includes(item.value)}
+      disabled={item.disabled}
+    >
+      {item.label}
+    </CoCheckbox>
+  ));
+}
+
+function radioChildren(componentId: 'radioGroup', args: WrapperStoryArgs) {
+  const selectedValues = getWrapperStorySelectedValues(args);
+
+  return getWrapperStoryOptionItems(componentId, args).map((item) => (
+    <CoRadio
+      key={item.value}
+      value={item.value}
+      checked={selectedValues.includes(item.value)}
+      disabled={item.disabled}
+    >
+      {item.label}
+    </CoRadio>
+  ));
+}
+
+function optionChildren(componentId: 'combobox' | 'listbox' | 'select', args: WrapperStoryArgs) {
+  const selectedValues = getWrapperStorySelectedValues(args);
+
+  return getWrapperStoryOptionItems(componentId, args).map((item) => (
     <CoOption
       key={item.value}
       value={item.value}

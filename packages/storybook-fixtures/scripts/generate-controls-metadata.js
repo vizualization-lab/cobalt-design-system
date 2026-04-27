@@ -30,6 +30,33 @@ const componentConfigs = [
     componentPath: 'button-icon',
   },
   {
+    id: 'checkbox',
+    title: 'Checkbox',
+    tagName: 'co-checkbox',
+    className: 'CoCheckbox',
+    angularSource: 'packages/angular/src/components/checkbox.ts',
+    importName: 'CoCheckbox',
+    componentPath: 'checkbox',
+  },
+  {
+    id: 'checkboxGroup',
+    title: 'Checkbox Group',
+    tagName: 'co-checkbox-group',
+    className: 'CoCheckboxGroup',
+    angularSource: 'packages/angular/src/components/checkbox-group.ts',
+    importName: 'CoCheckboxGroup',
+    componentPath: 'checkbox-group',
+  },
+  {
+    id: 'checkboxIndeterminate',
+    title: 'Checkbox Indeterminate',
+    tagName: 'co-checkbox-indeterminate',
+    className: 'CoCheckboxIndeterminate',
+    angularSource: 'packages/angular/src/components/checkbox-indeterminate.ts',
+    importName: 'CoCheckboxIndeterminate',
+    componentPath: 'checkbox-indeterminate',
+  },
+  {
     id: 'icon',
     title: 'Icon',
     tagName: 'co-icon',
@@ -64,6 +91,24 @@ const componentConfigs = [
     angularSource: 'packages/angular/src/components/listbox.ts',
     importName: 'CoOption',
     componentPath: 'option',
+  },
+  {
+    id: 'radio',
+    title: 'Radio',
+    tagName: 'co-radio',
+    className: 'CoRadio',
+    angularSource: 'packages/angular/src/components/radio.ts',
+    importName: 'CoRadio',
+    componentPath: 'radio',
+  },
+  {
+    id: 'radioGroup',
+    title: 'Radio Group',
+    tagName: 'co-radio-group',
+    className: 'CoRadioGroup',
+    angularSource: 'packages/angular/src/components/radio-group.ts',
+    importName: 'CoRadioGroup',
+    componentPath: 'radio-group',
   },
   {
     id: 'listbox',
@@ -140,6 +185,20 @@ const slotControls = {
     { name: 'prefix', argName: 'slotPrefix', label: 'Prefix icon', defaultValue: 'add' },
     { name: 'suffix', argName: 'slotSuffix', label: 'Suffix icon', defaultValue: '' },
   ],
+  checkbox: [{ name: '', argName: 'slotDefault', label: 'Label', defaultValue: 'Accept terms' }],
+  checkboxGroup: [
+    { name: 'label', argName: 'slotLabel', label: 'Label', defaultValue: 'Preferences' },
+    {
+      name: 'help-text',
+      argName: 'slotHelpText',
+      label: 'Help text',
+      defaultValue: 'Choose all that apply.',
+    },
+    { name: 'feedback', argName: 'slotFeedback', label: 'Feedback', defaultValue: '' },
+  ],
+  checkboxIndeterminate: [
+    { name: 'label', argName: 'slotLabel', label: 'Label', defaultValue: 'Notifications' },
+  ],
   input: [
     { name: 'prefix', argName: 'slotPrefix', label: 'Prefix icon', defaultValue: 'search' },
     { name: 'suffix', argName: 'slotSuffix', label: 'Suffix icon', defaultValue: '' },
@@ -159,6 +218,17 @@ const slotControls = {
       defaultValue: 'check-circle',
     },
     { name: 'indicator', argName: 'slotIndicator', label: 'Indicator', defaultValue: '' },
+  ],
+  radio: [{ name: '', argName: 'slotDefault', label: 'Label', defaultValue: 'Standard' }],
+  radioGroup: [
+    { name: 'label', argName: 'slotLabel', label: 'Label', defaultValue: 'Plan' },
+    {
+      name: 'help-text',
+      argName: 'slotHelpText',
+      label: 'Help text',
+      defaultValue: 'Choose one option.',
+    },
+    { name: 'feedback', argName: 'slotFeedback', label: 'Feedback', defaultValue: '' },
   ],
   listbox: [{ name: 'feedback', argName: 'slotFeedback', label: 'Feedback', defaultValue: '' }],
   select: [
@@ -187,6 +257,28 @@ const playgroundDefaults = {
     name: 'star',
     label: 'Favorite',
   },
+  checkbox: {
+    value: 'accept',
+  },
+  checkboxGroup: {
+    name: 'preferences',
+    selectedValues: 'email,product',
+    optionItems: [
+      { value: 'email', label: 'Email updates' },
+      { value: 'product', label: 'Product news' },
+      { value: 'research', label: 'Research invitations' },
+    ],
+  },
+  checkboxIndeterminate: {
+    value: 'notifications',
+    indeterminate: true,
+    optionItems: [
+      { value: 'email', label: 'Email' },
+      { value: 'sms', label: 'SMS' },
+      { value: 'push', label: 'Push' },
+    ],
+    selectedValues: 'email',
+  },
   icon: {
     name: 'home',
     label: 'Home',
@@ -211,6 +303,19 @@ const playgroundDefaults = {
   option: {
     value: 'apple',
     checked: true,
+  },
+  radio: {
+    value: 'standard',
+    checked: true,
+  },
+  radioGroup: {
+    name: 'plan',
+    selectedValues: 'team',
+    optionItems: [
+      { value: 'starter', label: 'Starter' },
+      { value: 'team', label: 'Team' },
+      { value: 'enterprise', label: 'Enterprise' },
+    ],
   },
   listbox: {
     label: 'Fruit',
@@ -345,10 +450,15 @@ function collectUnionTypeAliases() {
   const sourcePaths = [
     'packages/components/src/components/button/co-button.ts',
     'packages/components/src/components/button-icon/co-button-icon.ts',
+    'packages/components/src/components/checkbox/co-checkbox.ts',
+    'packages/components/src/components/checkbox-group/co-checkbox-group.ts',
+    'packages/components/src/components/checkbox-indeterminate/co-checkbox-indeterminate.ts',
     'packages/components/src/components/combobox/co-combobox.ts',
     'packages/components/src/components/icon/co-icon.ts',
     'packages/components/src/components/input/co-input.ts',
     'packages/components/src/components/listbox/co-listbox.ts',
+    'packages/components/src/components/radio/co-radio.ts',
+    'packages/components/src/components/radio-group/co-radio-group.ts',
     'packages/components/src/components/select/co-select.ts',
     'packages/components/src/components/textarea/co-textarea.ts',
   ];

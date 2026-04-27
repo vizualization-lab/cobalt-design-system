@@ -27,6 +27,24 @@ const aliases = [
     replacement: resolve(repoRoot, 'packages/components/src/components/button/co-button.ts'),
   },
   {
+    find: '@cobalt/components/checkbox-group',
+    replacement: resolve(
+      repoRoot,
+      'packages/components/src/components/checkbox-group/co-checkbox-group.ts',
+    ),
+  },
+  {
+    find: '@cobalt/components/checkbox-indeterminate',
+    replacement: resolve(
+      repoRoot,
+      'packages/components/src/components/checkbox-indeterminate/co-checkbox-indeterminate.ts',
+    ),
+  },
+  {
+    find: '@cobalt/components/checkbox',
+    replacement: resolve(repoRoot, 'packages/components/src/components/checkbox/co-checkbox.ts'),
+  },
+  {
     find: '@cobalt/components/combobox',
     replacement: resolve(repoRoot, 'packages/components/src/components/combobox/co-combobox.ts'),
   },
@@ -49,6 +67,17 @@ const aliases = [
   {
     find: '@cobalt/components/option',
     replacement: resolve(repoRoot, 'packages/components/src/components/option/co-option.ts'),
+  },
+  {
+    find: '@cobalt/components/radio-group',
+    replacement: resolve(
+      repoRoot,
+      'packages/components/src/components/radio-group/co-radio-group.ts',
+    ),
+  },
+  {
+    find: '@cobalt/components/radio',
+    replacement: resolve(repoRoot, 'packages/components/src/components/radio/co-radio.ts'),
   },
   {
     find: '@cobalt/components/select',

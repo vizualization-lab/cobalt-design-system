@@ -20,6 +20,18 @@ const aliases = {
     repoRoot,
     'packages/components/src/components/button/co-button.ts',
   ),
+  '@cobalt/components/checkbox-group': resolve(
+    repoRoot,
+    'packages/components/src/components/checkbox-group/co-checkbox-group.ts',
+  ),
+  '@cobalt/components/checkbox-indeterminate': resolve(
+    repoRoot,
+    'packages/components/src/components/checkbox-indeterminate/co-checkbox-indeterminate.ts',
+  ),
+  '@cobalt/components/checkbox': resolve(
+    repoRoot,
+    'packages/components/src/components/checkbox/co-checkbox.ts',
+  ),
   '@cobalt/components/combobox': resolve(
     repoRoot,
     'packages/components/src/components/combobox/co-combobox.ts',
@@ -43,6 +55,14 @@ const aliases = {
   '@cobalt/components/option': resolve(
     repoRoot,
     'packages/components/src/components/option/co-option.ts',
+  ),
+  '@cobalt/components/radio-group': resolve(
+    repoRoot,
+    'packages/components/src/components/radio-group/co-radio-group.ts',
+  ),
+  '@cobalt/components/radio': resolve(
+    repoRoot,
+    'packages/components/src/components/radio/co-radio.ts',
   ),
   '@cobalt/components/select': resolve(
     repoRoot,

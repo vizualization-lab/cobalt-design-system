@@ -222,6 +222,12 @@ function createWebComponent(componentId: CobaltComponentId, args: CobaltStoryArg
       return createButton(args);
     case 'buttonIcon':
       return configureElement(document.createElement('co-button-icon'), componentId, args);
+    case 'checkbox':
+      return createChoice('co-checkbox', componentId, args);
+    case 'checkboxGroup':
+      return createCheckboxGroup(args);
+    case 'checkboxIndeterminate':
+      return createCheckboxIndeterminate(args);
     case 'icon':
       return configureElement(document.createElement('co-icon'), componentId, args);
     case 'input':
@@ -230,6 +236,10 @@ function createWebComponent(componentId: CobaltComponentId, args: CobaltStoryArg
       return createField('co-textarea', componentId, args);
     case 'option':
       return createOptionPreview(args);
+    case 'radio':
+      return createChoice('co-radio', componentId, args);
+    case 'radioGroup':
+      return createRadioGroup(args);
     case 'listbox':
       return createOptionContainer('co-listbox', componentId, args);
     case 'select':
@@ -247,6 +257,78 @@ function createButton(args: CobaltStoryArgs): HTMLElement {
   button.append(getSlotValue('button', '', args) || 'Button');
   appendIconSlot(button, 'suffix', getSlotValue('button', 'suffix', args));
   return button;
+}
+
+function createChoice(
+  tagName: 'co-checkbox' | 'co-radio',
+  componentId: 'checkbox' | 'radio',
+  args: CobaltStoryArgs,
+): HTMLElement {
+  const choice = configureElement(document.createElement(tagName), componentId, args);
+  choice.append(getSlotValue(componentId, '', args) || getComponentMetadata(componentId).title);
+  return choice;
+}
+
+function createCheckboxGroup(args: CobaltStoryArgs): HTMLElement {
+  const group = createChoiceGroup('co-checkbox-group', 'checkboxGroup', args);
+
+  for (const item of getOptionItems('checkboxGroup', args)) {
+    const checkbox = document.createElement('co-checkbox');
+    setElementProperty(checkbox, 'value', item.value);
+    setElementProperty(checkbox, 'checked', isSelectedValue(item.value, args));
+    setElementProperty(checkbox, 'disabled', item.disabled === true);
+    checkbox.append(item.label);
+    group.append(checkbox);
+  }
+
+  return group;
+}
+
+function createCheckboxIndeterminate(args: CobaltStoryArgs): HTMLElement {
+  const checkbox = configureElement(
+    document.createElement('co-checkbox-indeterminate'),
+    'checkboxIndeterminate',
+    args,
+  );
+  appendTextSlot(checkbox, 'label', getSlotValue('checkboxIndeterminate', 'label', args));
+
+  for (const item of getOptionItems('checkboxIndeterminate', args)) {
+    const child = document.createElement('co-checkbox');
+    setElementProperty(child, 'value', item.value);
+    setElementProperty(child, 'checked', isSelectedValue(item.value, args));
+    setElementProperty(child, 'disabled', item.disabled === true);
+    child.append(item.label);
+    checkbox.append(child);
+  }
+
+  return checkbox;
+}
+
+function createRadioGroup(args: CobaltStoryArgs): HTMLElement {
+  const group = createChoiceGroup('co-radio-group', 'radioGroup', args);
+
+  for (const item of getOptionItems('radioGroup', args)) {
+    const radio = document.createElement('co-radio');
+    setElementProperty(radio, 'value', item.value);
+    setElementProperty(radio, 'checked', isSelectedValue(item.value, args));
+    setElementProperty(radio, 'disabled', item.disabled === true);
+    radio.append(item.label);
+    group.append(radio);
+  }
+
+  return group;
+}
+
+function createChoiceGroup(
+  tagName: 'co-checkbox-group' | 'co-radio-group',
+  componentId: 'checkboxGroup' | 'radioGroup',
+  args: CobaltStoryArgs,
+): HTMLElement {
+  const group = configureElement(document.createElement(tagName), componentId, args);
+  appendTextSlot(group, 'label', getSlotValue(componentId, 'label', args));
+  appendTextSlot(group, 'help-text', getSlotValue(componentId, 'help-text', args));
+  appendTextSlot(group, 'feedback', getSlotValue(componentId, 'feedback', args));
+  return group;
 }
 
 function createField(

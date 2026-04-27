@@ -2,32 +2,37 @@ import { h } from 'vue';
 import {
   CoButton,
   CoButtonIcon,
+  CoCheckbox,
+  CoCheckboxGroup,
+  CoCheckboxIndeterminate,
   CoCombobox,
   CoForm,
   CoIcon,
   CoInput,
   CoListbox,
   CoOption,
+  CoRadio,
+  CoRadioGroup,
   CoSelect,
   CoTextarea,
 } from '@cobalt/vue';
 import {
-  getComponentProps,
-  getEventProps,
-  getOptionItems,
-  getPlaygroundArgs,
-  getPlaygroundArgTypes,
-  getSelectedValues,
-  getSlotValue,
-  type CobaltComponentId,
-  type CobaltStoryArgs,
+  getWrapperStoryArgs,
+  getWrapperStoryArgTypes,
+  getWrapperStoryComponentProps,
+  getWrapperStoryEventProps,
+  getWrapperStoryOptionItems,
+  getWrapperStorySelectedValues,
+  getWrapperStorySlotValue,
+  type WrapperStoryArgs,
+  type WrapperStoryComponentId,
 } from '@cobalt/storybook-fixtures';
 
-export function createVuePlaygroundStory(componentId: CobaltComponentId) {
+export function createVuePlaygroundStory(componentId: WrapperStoryComponentId) {
   return {
-    args: getPlaygroundArgs(componentId),
-    argTypes: getPlaygroundArgTypes(componentId),
-    render: (args: CobaltStoryArgs) => ({
+    args: getWrapperStoryArgs(componentId),
+    argTypes: getWrapperStoryArgTypes(componentId),
+    render: (args: WrapperStoryArgs) => ({
       setup() {
         return () => renderVuePlayground(componentId, args);
       },
@@ -35,7 +40,7 @@ export function createVuePlaygroundStory(componentId: CobaltComponentId) {
   };
 }
 
-export function renderVuePlayground(componentId: CobaltComponentId, args: CobaltStoryArgs) {
+export function renderVuePlayground(componentId: WrapperStoryComponentId, args: WrapperStoryArgs) {
   return h('div', { class: 'cobalt-story cobalt-stack' }, [
     h('section', { class: 'cobalt-section' }, [
       h(
@@ -49,48 +54,88 @@ export function renderVuePlayground(componentId: CobaltComponentId, args: Cobalt
   ]);
 }
 
-function renderComponent(componentId: CobaltComponentId, args: CobaltStoryArgs) {
+function renderComponent(componentId: WrapperStoryComponentId, args: WrapperStoryArgs) {
   switch (componentId) {
     case 'button':
       return h(
         CoButton,
-        { ...getComponentProps('button', args), ...getEventProps('button', args) },
+        {
+          ...getWrapperStoryComponentProps('button', args),
+          ...getWrapperStoryEventProps('button', args),
+        },
         {
           default: () => [
-            slotIcon('prefix', getSlotValue('button', 'prefix', args)),
-            getSlotValue('button', '', args),
-            slotIcon('suffix', getSlotValue('button', 'suffix', args)),
+            slotIcon('prefix', getWrapperStorySlotValue('button', 'prefix', args)),
+            getWrapperStorySlotValue('button', '', args),
+            slotIcon('suffix', getWrapperStorySlotValue('button', 'suffix', args)),
           ],
         },
       );
     case 'buttonIcon':
       return h(CoButtonIcon, {
-        ...getComponentProps('buttonIcon', args),
-        ...getEventProps('buttonIcon', args),
+        ...getWrapperStoryComponentProps('buttonIcon', args),
+        ...getWrapperStoryEventProps('buttonIcon', args),
       });
+    case 'checkbox':
+      return h(CoCheckbox, getWrapperStoryComponentProps('checkbox', args), {
+        default: () => getWrapperStorySlotValue('checkbox', '', args),
+      });
+    case 'checkboxGroup':
+      return h(
+        CoCheckboxGroup,
+        {
+          ...getWrapperStoryComponentProps('checkboxGroup', args),
+          ...getWrapperStoryEventProps('checkboxGroup', args),
+        },
+        {
+          default: () => [
+            slotText('label', getWrapperStorySlotValue('checkboxGroup', 'label', args)),
+            slotText('help-text', getWrapperStorySlotValue('checkboxGroup', 'help-text', args)),
+            slotText('feedback', getWrapperStorySlotValue('checkboxGroup', 'feedback', args)),
+            ...checkboxChildren('checkboxGroup', args),
+          ],
+        },
+      );
+    case 'checkboxIndeterminate':
+      return h(
+        CoCheckboxIndeterminate,
+        getWrapperStoryComponentProps('checkboxIndeterminate', args),
+        {
+          default: () => [
+            slotText('label', getWrapperStorySlotValue('checkboxIndeterminate', 'label', args)),
+            ...checkboxChildren('checkboxIndeterminate', args),
+          ],
+        },
+      );
     case 'icon':
-      return h(CoIcon, getComponentProps('icon', args));
+      return h(CoIcon, getWrapperStoryComponentProps('icon', args));
     case 'input':
       return h(
         CoInput,
-        { ...getComponentProps('input', args), ...getEventProps('input', args) },
+        {
+          ...getWrapperStoryComponentProps('input', args),
+          ...getWrapperStoryEventProps('input', args),
+        },
         {
           default: () => [
-            slotIcon('prefix', getSlotValue('input', 'prefix', args)),
-            slotIcon('suffix', getSlotValue('input', 'suffix', args)),
-            slotText('feedback', getSlotValue('input', 'feedback', args)),
+            slotIcon('prefix', getWrapperStorySlotValue('input', 'prefix', args)),
+            slotIcon('suffix', getWrapperStorySlotValue('input', 'suffix', args)),
+            slotText('feedback', getWrapperStorySlotValue('input', 'feedback', args)),
           ],
         },
       );
     case 'textarea':
       return h(
         CoTextarea,
-        { ...getComponentProps('textarea', args), ...getEventProps('textarea', args) },
+        {
+          ...getWrapperStoryComponentProps('textarea', args),
+          ...getWrapperStoryEventProps('textarea', args),
+        },
         {
           default: () => [
-            slotIcon('prefix', getSlotValue('textarea', 'prefix', args)),
-            slotIcon('suffix', getSlotValue('textarea', 'suffix', args)),
-            slotText('feedback', getSlotValue('textarea', 'feedback', args)),
+            slotIcon('prefix', getWrapperStorySlotValue('textarea', 'prefix', args)),
+            slotIcon('suffix', getWrapperStorySlotValue('textarea', 'suffix', args)),
+            slotText('feedback', getWrapperStorySlotValue('textarea', 'feedback', args)),
           ],
         },
       );
@@ -100,22 +145,48 @@ function renderComponent(componentId: CobaltComponentId, args: CobaltStoryArgs) 
         { label: 'Option preview', name: 'option-preview' },
         {
           default: () =>
-            h(CoOption, getComponentProps('option', args), {
+            h(CoOption, getWrapperStoryComponentProps('option', args), {
               default: () => [
-                slotIcon('indicator-icon', getSlotValue('option', 'indicator-icon', args)),
-                slotText('indicator', getSlotValue('option', 'indicator', args)),
-                getSlotValue('option', '', args),
+                slotIcon(
+                  'indicator-icon',
+                  getWrapperStorySlotValue('option', 'indicator-icon', args),
+                ),
+                slotText('indicator', getWrapperStorySlotValue('option', 'indicator', args)),
+                getWrapperStorySlotValue('option', '', args),
               ],
             }),
+        },
+      );
+    case 'radio':
+      return h(CoRadio, getWrapperStoryComponentProps('radio', args), {
+        default: () => getWrapperStorySlotValue('radio', '', args),
+      });
+    case 'radioGroup':
+      return h(
+        CoRadioGroup,
+        {
+          ...getWrapperStoryComponentProps('radioGroup', args),
+          ...getWrapperStoryEventProps('radioGroup', args),
+        },
+        {
+          default: () => [
+            slotText('label', getWrapperStorySlotValue('radioGroup', 'label', args)),
+            slotText('help-text', getWrapperStorySlotValue('radioGroup', 'help-text', args)),
+            slotText('feedback', getWrapperStorySlotValue('radioGroup', 'feedback', args)),
+            ...radioChildren('radioGroup', args),
+          ],
         },
       );
     case 'listbox':
       return h(
         CoListbox,
-        { ...getComponentProps('listbox', args), ...getEventProps('listbox', args) },
+        {
+          ...getWrapperStoryComponentProps('listbox', args),
+          ...getWrapperStoryEventProps('listbox', args),
+        },
         {
           default: () => [
-            slotText('feedback', getSlotValue('listbox', 'feedback', args)),
+            slotText('feedback', getWrapperStorySlotValue('listbox', 'feedback', args)),
             ...optionChildren('listbox', args),
           ],
         },
@@ -123,12 +194,15 @@ function renderComponent(componentId: CobaltComponentId, args: CobaltStoryArgs) 
     case 'select':
       return h(
         CoSelect,
-        { ...getComponentProps('select', args), ...getEventProps('select', args) },
+        {
+          ...getWrapperStoryComponentProps('select', args),
+          ...getWrapperStoryEventProps('select', args),
+        },
         {
           default: () => [
-            slotText('label', getSlotValue('select', 'label', args)),
-            slotText('help-text', getSlotValue('select', 'help-text', args)),
-            slotText('feedback', getSlotValue('select', 'feedback', args)),
+            slotText('label', getWrapperStorySlotValue('select', 'label', args)),
+            slotText('help-text', getWrapperStorySlotValue('select', 'help-text', args)),
+            slotText('feedback', getWrapperStorySlotValue('select', 'feedback', args)),
             ...optionChildren('select', args),
           ],
         },
@@ -136,12 +210,15 @@ function renderComponent(componentId: CobaltComponentId, args: CobaltStoryArgs) 
     case 'combobox':
       return h(
         CoCombobox,
-        { ...getComponentProps('combobox', args), ...getEventProps('combobox', args) },
+        {
+          ...getWrapperStoryComponentProps('combobox', args),
+          ...getWrapperStoryEventProps('combobox', args),
+        },
         {
           default: () => [
-            slotIcon('prefix', getSlotValue('combobox', 'prefix', args)),
-            slotIcon('suffix', getSlotValue('combobox', 'suffix', args)),
-            slotText('feedback', getSlotValue('combobox', 'feedback', args)),
+            slotIcon('prefix', getWrapperStorySlotValue('combobox', 'prefix', args)),
+            slotIcon('suffix', getWrapperStorySlotValue('combobox', 'suffix', args)),
+            slotText('feedback', getWrapperStorySlotValue('combobox', 'feedback', args)),
             ...optionChildren('combobox', args),
           ],
         },
@@ -151,12 +228,12 @@ function renderComponent(componentId: CobaltComponentId, args: CobaltStoryArgs) 
         CoForm,
         {
           class: 'cobalt-panel',
-          ...getComponentProps('form', args),
-          ...getEventProps('form', args),
+          ...getWrapperStoryComponentProps('form', args),
+          ...getWrapperStoryEventProps('form', args),
         },
         {
           default: () => [
-            slotText('feedback', getSlotValue('form', 'feedback', args)),
+            slotText('feedback', getWrapperStorySlotValue('form', 'feedback', args)),
             h('div', { class: 'cobalt-stack' }, [
               h(CoInput, {
                 label: 'Name',
@@ -181,10 +258,47 @@ function renderComponent(componentId: CobaltComponentId, args: CobaltStoryArgs) 
   }
 }
 
-function optionChildren(componentId: 'combobox' | 'listbox' | 'select', args: CobaltStoryArgs) {
-  const selectedValues = getSelectedValues(args);
+function checkboxChildren(
+  componentId: 'checkboxGroup' | 'checkboxIndeterminate',
+  args: WrapperStoryArgs,
+) {
+  const selectedValues = getWrapperStorySelectedValues(args);
 
-  return getOptionItems(componentId, args).map((item) =>
+  return getWrapperStoryOptionItems(componentId, args).map((item) =>
+    h(
+      CoCheckbox,
+      {
+        key: item.value,
+        value: item.value,
+        checked: selectedValues.includes(item.value),
+        disabled: item.disabled,
+      },
+      { default: () => item.label },
+    ),
+  );
+}
+
+function radioChildren(componentId: 'radioGroup', args: WrapperStoryArgs) {
+  const selectedValues = getWrapperStorySelectedValues(args);
+
+  return getWrapperStoryOptionItems(componentId, args).map((item) =>
+    h(
+      CoRadio,
+      {
+        key: item.value,
+        value: item.value,
+        checked: selectedValues.includes(item.value),
+        disabled: item.disabled,
+      },
+      { default: () => item.label },
+    ),
+  );
+}
+
+function optionChildren(componentId: 'combobox' | 'listbox' | 'select', args: WrapperStoryArgs) {
+  const selectedValues = getWrapperStorySelectedValues(args);
+
+  return getWrapperStoryOptionItems(componentId, args).map((item) =>
     h(
       CoOption,
       {

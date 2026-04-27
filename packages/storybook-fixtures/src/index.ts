@@ -33,10 +33,19 @@ export const animatedIcons = ['notifications', 'progress-activity', 'check-circl
 export const componentLinks = [
   { label: 'Button', path: 'button', tag: '<co-button>' },
   { label: 'Button Icon', path: 'button-icon', tag: '<co-button-icon>' },
+  { label: 'Checkbox', path: 'checkbox', tag: '<co-checkbox>' },
+  { label: 'Checkbox Group', path: 'checkbox-group', tag: '<co-checkbox-group>' },
+  {
+    label: 'Checkbox Indeterminate',
+    path: 'checkbox-indeterminate',
+    tag: '<co-checkbox-indeterminate>',
+  },
   { label: 'Icon', path: 'icon', tag: '<co-icon>' },
   { label: 'Input', path: 'input', tag: '<co-input>' },
   { label: 'Textarea', path: 'textarea', tag: '<co-textarea>' },
   { label: 'Option', path: 'option', tag: '<co-option>' },
+  { label: 'Radio', path: 'radio', tag: '<co-radio>' },
+  { label: 'Radio Group', path: 'radio-group', tag: '<co-radio-group>' },
   { label: 'Listbox', path: 'listbox', tag: '<co-listbox>' },
   { label: 'Select', path: 'select', tag: '<co-select>' },
   { label: 'Combobox', path: 'combobox', tag: '<co-combobox>' },
@@ -83,3 +92,4 @@ export function titleCase(value: string) {
 
 export * from './api-metadata.js';
 export * from './controls.js';
+export * from './wrapper-story-controls.js';
