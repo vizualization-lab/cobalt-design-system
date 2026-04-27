@@ -1,5 +1,7 @@
 # Navigation Rail Item
 
+<ComponentStatus component="co-nav-rail-item" />
+
 The `co-nav-rail-item` component is the vertically stacked building block used inside `co-nav-rail-bar`. It renders an icon above a short label and can behave as either a link destination or a managed navigation action.
 
 ## Interactive Demo

@@ -1,5 +1,7 @@
 # List Box
 
+<ComponentStatus component="co-listbox" />
+
 The `co-listbox` component provides a themed, accessible list box built on top of Lion Web Components. It supports single and multiple selection, keyboard navigation, orientation, validation feedback, and Cobalt option styling through [`co-option`](/components/option).
 
 ## Interactive Demo

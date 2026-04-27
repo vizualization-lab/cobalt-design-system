@@ -1,5 +1,7 @@
 # Button
 
+<ComponentStatus component="co-button" />
+
 The `co-button` component provides a themed, accessible button built on top of Lion Web Components. It supports multiple variants, sizes, loading states, and slot-based content composition.
 
 ## Interactive Demo

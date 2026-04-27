@@ -1,5 +1,7 @@
 # Navigation Drawer Item
 
+<ComponentStatus component="co-nav-drawer-item" />
+
 The `co-nav-drawer-item` is a navigation link for use inside `co-nav-drawer`. It renders an icon + label row with selected and disabled states.
 
 ## Interactive Demo

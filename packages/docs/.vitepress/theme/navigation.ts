@@ -55,6 +55,7 @@ export const navigation: NavGroup[] = [
     defaultOpen: true,
     items: [
       { text: 'Overview', link: '/components/' },
+      { text: 'Component Status', link: '/components/status' },
       { text: 'Button', link: '/components/button' },
       { text: 'Button Icon', link: '/components/button-icon' },
       { text: 'Icon', link: '/components/icon' },

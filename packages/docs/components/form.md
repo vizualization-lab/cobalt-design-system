@@ -1,5 +1,7 @@
 # Form
 
+<ComponentStatus component="co-form" />
+
 The `co-form` component wraps Lion's `LionForm` to provide form-level features: grouped validation, serialization (`modelValue` as an object of all field values), submit/reset handling, interaction state tracking, and automatic focus-on-first-error. It renders a `<form>` element internally so you can nest form fields directly.
 
 ## Interactive Demo

@@ -1,5 +1,7 @@
 # Select
 
+<ComponentStatus component="co-select" />
+
 The `co-select` component provides a themed, accessible dropdown select built on Lion's `LionSelectRich`. It uses `co-option` for fully customizable option items with keyboard navigation, focus management, and validation support.
 
 ## Interactive Demo

@@ -1,5 +1,7 @@
 # Radio Group
 
+<ComponentStatus component="co-radio-group" />
+
 The `co-radio-group` and `co-radio` components provide a themed, accessible radio button group built on Lion Web Components. Use radio groups for single-choice selection where all options should be visible.
 
 ## Interactive Demo

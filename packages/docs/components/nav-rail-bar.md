@@ -1,5 +1,7 @@
 # Navigation Rail Bar
 
+<ComponentStatus component="co-nav-rail-bar" />
+
 The `co-nav-rail-bar` component is a layout-focused vertical navigation container for app shells and workspace navigation. It manages a single selected `co-nav-rail-item` at all times and provides arrow-key navigation between items.
 
 ## Interactive Demo

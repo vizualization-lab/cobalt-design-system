@@ -1,5 +1,7 @@
 # Card
 
+<ComponentStatus component="co-card" />
+
 A layout container with rounded corners, subtle shadow, and structured header, body, and footer regions. Cards group related content and actions into a visually distinct surface.
 
 ## Demo

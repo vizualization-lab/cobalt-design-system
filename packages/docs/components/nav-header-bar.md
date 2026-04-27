@@ -1,5 +1,7 @@
 # Navigation Header Bar
 
+<ComponentStatus component="co-nav-header-bar" />
+
 A horizontal header bar for app-level navigation. Provides a structured layout with a logo area on the left, a flexible content region in the middle, and an avatar area on the right.
 
 ## Demo

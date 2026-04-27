@@ -1,5 +1,7 @@
 # Button Icon
 
+<ComponentStatus component="co-button-icon" />
+
 The `co-button-icon` component provides a button icon with an optional text label. It supports the same variants and sizes as `co-button`, with a compact square shape when used icon-only.
 
 ## Interactive Demo

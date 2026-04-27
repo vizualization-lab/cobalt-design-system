@@ -1,5 +1,7 @@
 # Banner
 
+<ComponentStatus component="co-banner" />
+
 A persistent, full-width banner that sits above page content. Content is centered both vertically and horizontally.
 
 ## Interactive Demo

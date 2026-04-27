@@ -1,5 +1,7 @@
 # App Shell
 
+<ComponentStatus component="co-app-shell" />
+
 The `co-app-shell` component provides top-level application chrome with six named regions: `banner`, `topnav`, `rail`, `drawer`, `body`, and `footer`. On desktop, shell chrome stays fixed while `body` owns content scrolling; mobile collapses `rail` and `drawer` into one shell-owned overlay.
 
 ## Interactive Demo

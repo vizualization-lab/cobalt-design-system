@@ -1,5 +1,7 @@
 # Option
 
+<ComponentStatus component="co-option" />
+
 The `co-option` component provides Cobalt option styling for selection controls. Use it inside [`co-listbox`](/components/listbox) and [`co-combobox`](/components/combobox).
 
 ## Interactive Demo

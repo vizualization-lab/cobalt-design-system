@@ -1,5 +1,7 @@
 # Icon
 
+<ComponentStatus component="co-icon" />
+
 The `co-icon` component renders Material Symbols icons as inline SVGs. It supports a fill toggle, 5 sizes, and built-in accessibility for both decorative and informative use cases.
 
 ## Interactive Demo

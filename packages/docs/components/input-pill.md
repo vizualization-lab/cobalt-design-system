@@ -1,5 +1,7 @@
 # Input Pill
 
+<ComponentStatus component="co-input-pill" />
+
 The `co-input-pill` is a stylized standalone input with a pill shape, designed for prominent call-to-action contexts like search bars and chat inputs. It extends `co-input` with all its form capabilities while hiding the label, help text, and feedback for a clean standalone appearance.
 
 ## Interactive Demo

@@ -1,5 +1,7 @@
 # Navigation Drawer
 
+<ComponentStatus component="co-nav-drawer" />
+
 The `co-nav-drawer`, `co-nav-drawer-item`, and `co-nav-separator` components provide a collapsible side navigation menu. The drawer manages selection state across its items and supports keyboard navigation.
 
 ## Interactive Demo

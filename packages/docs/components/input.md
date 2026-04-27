@@ -1,5 +1,7 @@
 # Input
 
+<ComponentStatus component="co-input" />
+
 The `co-input` component provides a themed, accessible text input built on top of Lion Web Components. It supports labels, help text, validation feedback, prefix and suffix slots, size variants, and Cobalt form states.
 
 ## Interactive Demo

@@ -1,5 +1,7 @@
 # Text Area
 
+<ComponentStatus component="co-textarea" />
+
 The `co-textarea` component provides a themed, accessible multi-line text field built on top of Lion Web Components. It supports labels, help text, validation feedback, prefix and suffix slots, size variants, resize modes, and character counting.
 
 ## Interactive Demo

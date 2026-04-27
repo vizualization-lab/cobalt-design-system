@@ -1,5 +1,7 @@
 # Checkbox Group
 
+<ComponentStatus component="co-checkbox-group" />
+
 The `co-checkbox-group` and `co-checkbox` components provide a themed, accessible checkbox group built on Lion Web Components. Use checkbox groups for multi-choice selection where users can select zero or more options.
 
 ## Interactive Demo
