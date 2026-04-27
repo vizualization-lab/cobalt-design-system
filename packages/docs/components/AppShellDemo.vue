@@ -347,7 +347,7 @@ const viewportLabel = computed(() =>
 
 .demo-segmented-btn.is-active {
   background: var(--co-color-interactive-default-primary);
-  color: var(--co-color-text-inverse);
+  color: var(--co-color-text-on-primary);
   box-shadow: var(--co-elevation-shadow-sm);
 }
 

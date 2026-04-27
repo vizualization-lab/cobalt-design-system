@@ -162,10 +162,6 @@
           "$type": "color",
           "$value": "{co.color.primitive.gray-dark.900}"
         },
-        "inverse": {
-          "$type": "color",
-          "$value": "{co.color.primitive.gray.950}"
-        },
         "link": {
           "$type": "color",
           "$value": "{co.color.primitive.purple-dark.900}"
@@ -174,6 +170,18 @@
           "primary": {
             "$type": "color",
             "$value": "{co.color.primitive.white}"
+          },
+          "danger": {
+            "$type": "color",
+            "$value": "{co.color.primitive.white}"
+          },
+          "success": {
+            "$type": "color",
+            "$value": "{co.color.primitive.white}"
+          },
+          "warning": {
+            "$type": "color",
+            "$value": "{co.color.primitive.gray-dark.950}"
           },
           "bold": {
             "$type": "color",

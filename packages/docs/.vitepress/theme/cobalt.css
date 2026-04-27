@@ -24,7 +24,7 @@
     --vp-c-brand-1: var(--co-color-primary-base);
     --vp-c-brand-soft: color-mix(in srgb, var(--co-color-primary-base) 10%, transparent);
     --vp-c-default-soft: var(--co-color-surface-raised);
-    --vp-c-neutral-inverse: var(--co-color-text-inverse);
+    --vp-c-neutral-inverse: var(--co-color-text-on-primary);
     --vp-font-family-base: var(--co-font-family-sans);
     --vp-font-family-mono: var(--co-font-family-mono);
 

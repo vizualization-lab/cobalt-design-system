@@ -234,7 +234,7 @@ describe('co-app-shell', () => {
     expect(el.shadowRoot?.querySelector('lion-drawer')).to.not.exist;
     expect(getComputedStyle(overlay!).position).to.equal('fixed');
     expect(panel?.dataset.overlayLayout).to.equal('split');
-    expect(panel?.style.gridTemplateColumns).to.contain('115px');
+    expect(panel?.style.gridTemplateColumns).to.contain('116px');
     expect(panel?.getAttribute('role')).to.equal('dialog');
   });
 

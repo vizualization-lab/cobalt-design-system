@@ -92,7 +92,7 @@ export const cobaltButtonStyles = css`
   /* ── Danger variant ── */
   :host([variant='danger']) {
     background: var(--co-color-interactive-danger-default);
-    color: var(--co-color-text-on-primary);
+    color: var(--co-color-text-on-danger);
   }
   :host([variant='danger']:hover) {
     background: var(--co-color-interactive-danger-hover);
@@ -104,7 +104,7 @@ export const cobaltButtonStyles = css`
   /* ── Success variant ── */
   :host([variant='success']) {
     background: var(--co-color-interactive-success-default);
-    color: var(--co-color-text-on-primary);
+    color: var(--co-color-text-on-success);
   }
   :host([variant='success']:hover) {
     background: var(--co-color-interactive-success-hover);
