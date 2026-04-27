@@ -60,6 +60,19 @@ export function createAngularPlaygroundStory(componentId: WrapperStoryComponentI
   };
 }
 
+export function createAngularStarterOverviewStory(componentId: WrapperStoryComponentId) {
+  return {
+    args: getWrapperStoryArgs(componentId),
+    parameters: {
+      controls: { disable: true },
+      cobaltSource: {
+        componentId,
+      },
+    },
+    render: (args: WrapperStoryArgs) => renderAngularPlayground(componentId, args),
+  };
+}
+
 export function renderAngularPlayground(
   componentId: WrapperStoryComponentId,
   args: WrapperStoryArgs,

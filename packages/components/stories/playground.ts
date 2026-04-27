@@ -13,3 +13,13 @@ export function createWebPlaygroundStory(componentId: CobaltComponentId) {
     render: (args: CobaltStoryArgs) => createWebComponentPlayground(componentId, args),
   };
 }
+
+export function createWebStarterOverviewStory(componentId: CobaltComponentId) {
+  return {
+    args: getPlaygroundArgs(componentId),
+    parameters: {
+      controls: { disable: true },
+    },
+    render: (args: CobaltStoryArgs) => createWebComponentPlayground(componentId, args),
+  };
+}

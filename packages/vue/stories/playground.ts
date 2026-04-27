@@ -45,6 +45,23 @@ export function createVuePlaygroundStory(componentId: WrapperStoryComponentId) {
   };
 }
 
+export function createVueStarterOverviewStory(componentId: WrapperStoryComponentId) {
+  return {
+    args: getWrapperStoryArgs(componentId),
+    parameters: {
+      controls: { disable: true },
+      cobaltSource: {
+        componentId,
+      },
+    },
+    render: (args: WrapperStoryArgs) => ({
+      setup() {
+        return () => renderVuePlayground(componentId, args);
+      },
+    }),
+  };
+}
+
 export function renderVuePlayground(componentId: WrapperStoryComponentId, args: WrapperStoryArgs) {
   return h('div', { class: 'cobalt-story cobalt-stack' }, [
     h('section', { class: 'cobalt-section' }, [

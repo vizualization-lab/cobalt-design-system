@@ -1,3 +1,5 @@
+import { storybookComponentDefinitions } from './component-registry.js';
+
 export const buttonVariants = ['primary', 'secondary', 'danger', 'success', 'ghost'] as const;
 export const buttonSizes = ['sm', 'md', 'lg', 'xl'] as const;
 export const fieldSizes = ['sm', 'md', 'lg', 'xl'] as const;
@@ -30,27 +32,11 @@ export const commonIcons = [
 
 export const animatedIcons = ['notifications', 'progress-activity', 'check-circle'] as const;
 
-export const componentLinks = [
-  { label: 'Button', path: 'button', tag: '<co-button>' },
-  { label: 'Button Icon', path: 'button-icon', tag: '<co-button-icon>' },
-  { label: 'Checkbox', path: 'checkbox', tag: '<co-checkbox>' },
-  { label: 'Checkbox Group', path: 'checkbox-group', tag: '<co-checkbox-group>' },
-  {
-    label: 'Checkbox Indeterminate',
-    path: 'checkbox-indeterminate',
-    tag: '<co-checkbox-indeterminate>',
-  },
-  { label: 'Icon', path: 'icon', tag: '<co-icon>' },
-  { label: 'Input', path: 'input', tag: '<co-input>' },
-  { label: 'Textarea', path: 'textarea', tag: '<co-textarea>' },
-  { label: 'Option', path: 'option', tag: '<co-option>' },
-  { label: 'Radio', path: 'radio', tag: '<co-radio>' },
-  { label: 'Radio Group', path: 'radio-group', tag: '<co-radio-group>' },
-  { label: 'Listbox', path: 'listbox', tag: '<co-listbox>' },
-  { label: 'Select', path: 'select', tag: '<co-select>' },
-  { label: 'Combobox', path: 'combobox', tag: '<co-combobox>' },
-  { label: 'Form', path: 'form', tag: '<co-form>' },
-] as const;
+export const componentLinks = storybookComponentDefinitions.map((definition) => ({
+  label: definition.title,
+  path: definition.componentPath,
+  tag: `<${definition.tagName}>`,
+}));
 
 export const frameworkTargets = [
   {
@@ -91,6 +77,8 @@ export function titleCase(value: string) {
 }
 
 export * from './api-metadata.js';
+export * from './component-registry.js';
 export * from './controls.js';
+export * from './story-overrides.js';
 export * from './wrapper-story-controls.js';
 export * from './wrapper-story-source.js';

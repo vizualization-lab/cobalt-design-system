@@ -6,7 +6,9 @@
   "description": "Shared Storybook demo data and styles for Cobalt",
   "scripts": {
     "generate-controls": "node scripts/generate-controls-metadata.js",
-    "check-controls": "node scripts/generate-controls-metadata.js --check"
+    "check-controls": "node scripts/generate-controls-metadata.js --check",
+    "generate-stories": "node scripts/generate-stories.js",
+    "check-stories": "node scripts/generate-stories.js --check"
   },
   "exports": {
     ".": "./src/index.ts",

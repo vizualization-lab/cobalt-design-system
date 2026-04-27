@@ -1,10 +1,10 @@
 import {
-  wrapperStoryMetadata,
+  cobaltComponentMetadata,
   type CobaltApiProp,
   type CobaltComponentMetadata,
-} from './wrapper-story-metadata.js';
+} from './api-metadata.js';
 
-export type WrapperStoryComponentId = keyof typeof wrapperStoryMetadata;
+export type WrapperStoryComponentId = keyof typeof cobaltComponentMetadata;
 export type WrapperStoryArgs = Record<string, unknown>;
 export type WrapperStoryOptionItem = {
   value: string;
@@ -17,7 +17,7 @@ const noop = () => {};
 export function getWrapperStoryMetadata(
   componentId: WrapperStoryComponentId,
 ): CobaltComponentMetadata {
-  return wrapperStoryMetadata[componentId];
+  return cobaltComponentMetadata[componentId];
 }
 
 export function getWrapperStoryArgs(componentId: WrapperStoryComponentId): WrapperStoryArgs {

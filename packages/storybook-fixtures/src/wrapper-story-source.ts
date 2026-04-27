@@ -7,7 +7,7 @@ import {
   type WrapperStoryArgs,
   type WrapperStoryComponentId,
 } from './wrapper-story-controls.js';
-import type { CobaltApiProp } from './wrapper-story-metadata.js';
+import type { CobaltApiProp } from './api-metadata.js';
 
 type WrapperFramework = 'react' | 'vue';
 

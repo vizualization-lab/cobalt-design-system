@@ -40,6 +40,19 @@ export function createReactPlaygroundStory(componentId: WrapperStoryComponentId)
   };
 }
 
+export function createReactStarterOverviewStory(componentId: WrapperStoryComponentId) {
+  return {
+    args: getWrapperStoryArgs(componentId),
+    parameters: {
+      controls: { disable: true },
+      cobaltSource: {
+        componentId,
+      },
+    },
+    render: (args: WrapperStoryArgs) => renderReactPlayground(componentId, args),
+  };
+}
+
 export function renderReactPlayground(
   componentId: WrapperStoryComponentId,
   args: WrapperStoryArgs,

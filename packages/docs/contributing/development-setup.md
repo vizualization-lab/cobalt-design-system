@@ -106,6 +106,22 @@ Typical workbench use cases:
 - preview token changes without navigating the full docs site
 - validate composed examples before writing docs
 
+## Storybook Stories
+
+Storybook onboarding for new components is generator-driven and separate from the workbench preview flow.
+
+Use the [Storybook Stories](./storybook-stories.md) guide when you need to:
+
+- add a component to the Web Components, React, Vue, and Angular Storybooks
+- generate starter `Overview` and `Playground` stories
+- add the component to the Storybook hub
+
+The short version is:
+
+1. Add a registry entry in `packages/storybook-fixtures/src/component-registry.js`.
+2. Run `pnpm storybook:generate`.
+3. Verify with `pnpm storybook:check` and `pnpm storybook:build`.
+
 ## Running the Documentation Site
 
 The docs site is built with VitePress:

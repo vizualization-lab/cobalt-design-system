@@ -10,6 +10,7 @@ Thank you for your interest in contributing to the Cobalt Design System. Whether
 | Feature Requests     | Have an idea for a new feature or enhancement?     | [How to Contribute](./how-to-contribute.md)     |
 | New Components       | Propose and build a new component for the library. | [Component Proposal](./component-proposal.md)   |
 | Code Contributions   | Fix bugs, improve performance, or add features.    | [Development Setup](./development-setup.md)     |
+| Storybook Stories    | Add or update component stories across frameworks. | [Storybook Stories](./storybook-stories.md)     |
 | Design Contributions | Propose design updates or new patterns in Figma.   | [Design Contribution](./design-contribution.md) |
 | Documentation        | Improve guides, examples, or API references.       | [Development Setup](./development-setup.md)     |
 
