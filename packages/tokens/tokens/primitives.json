@@ -148,47 +148,47 @@
         "xsmall": {
           "$type": "dimension",
           "$value": "0.75rem",
-          "$description": "Extra small font size for captions and fine print."
+          "$description": "Extra small font size of 12px for captions and fine print."
         },
         "small": {
           "$type": "dimension",
           "$value": "0.875rem",
-          "$description": "Small font size for labels and secondary text."
+          "$description": "Small font size of 14px for labels and secondary text."
         },
         "p": {
           "$type": "dimension",
           "$value": "1rem",
-          "$description": "Paragraph baseline font size (body text)."
+          "$description": "Paragraph baseline font size of 16px (body text)."
         },
         "h6": {
           "$type": "dimension",
           "$value": "1.125rem",
-          "$description": "Heading 6 font size."
+          "$description": "Heading 6 font size of 18px."
         },
         "h5": {
           "$type": "dimension",
           "$value": "1.25rem",
-          "$description": "Heading 5 font size."
+          "$description": "Heading 5 font size of 20px."
         },
         "h4": {
           "$type": "dimension",
           "$value": "1.5rem",
-          "$description": "Heading 4 font size."
+          "$description": "Heading 4 font size of 24px."
         },
         "h3": {
           "$type": "dimension",
           "$value": "1.875rem",
-          "$description": "Heading 3 font size."
+          "$description": "Heading 3 font size of 30px."
         },
         "h2": {
           "$type": "dimension",
           "$value": "2.25rem",
-          "$description": "Heading 2 font size."
+          "$description": "Heading 2 font size of 36px."
         },
         "h1": {
           "$type": "dimension",
           "$value": "3rem",
-          "$description": "Heading 1 font size."
+          "$description": "Heading 1 font size of 48px."
         }
       },
       "weight": {
