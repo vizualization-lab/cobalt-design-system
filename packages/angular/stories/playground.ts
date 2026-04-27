@@ -51,6 +51,11 @@ export function createAngularPlaygroundStory(componentId: WrapperStoryComponentI
   return {
     args: getWrapperStoryArgs(componentId),
     argTypes: getWrapperStoryArgTypes(componentId),
+    parameters: {
+      cobaltSource: {
+        componentId,
+      },
+    },
     render: (args: WrapperStoryArgs) => renderAngularPlayground(componentId, args),
   };
 }

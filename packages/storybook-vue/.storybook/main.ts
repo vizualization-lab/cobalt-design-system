@@ -99,7 +99,7 @@ const aliases = [
 
 const config: StorybookConfig = {
   stories: ['../../vue/stories/**/*.stories.ts'],
-  addons: ['@storybook/addon-a11y'],
+  addons: ['@storybook/addon-a11y', '@storybook/addon-docs'],
   framework: {
     name: '@storybook/vue3-vite',
     options: {},

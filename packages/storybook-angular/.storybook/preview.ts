@@ -1,4 +1,19 @@
+import type { Preview } from '@storybook/angular';
+import {
+  getAngularWrapperStorySource,
+  type WrapperStoryArgs,
+  type WrapperStoryComponentId,
+} from '@cobalt/storybook-fixtures';
+
 const storybookTargetLabel = 'Angular';
+type CobaltSourceContext = {
+  parameters: {
+    cobaltSource?: {
+      componentId?: WrapperStoryComponentId;
+    };
+  };
+  args: WrapperStoryArgs;
+};
 
 const applyPreviewGlobals = (theme: string) => {
   document.documentElement.setAttribute('data-co-base', '');
@@ -7,7 +22,7 @@ const applyPreviewGlobals = (theme: string) => {
   document.body.setAttribute('data-storybook-target-label', storybookTargetLabel);
 };
 
-const preview = {
+const preview: Preview = {
   globalTypes: {
     storybookTarget: {
       description: 'Storybook instance',
@@ -45,6 +60,21 @@ const preview = {
     controls: {
       expanded: true,
     },
+    docs: {
+      codePanel: true,
+      source: {
+        language: 'html',
+        transform: (source: string, context: CobaltSourceContext) => {
+          const componentId = context.parameters.cobaltSource?.componentId;
+
+          if (!componentId) {
+            return source;
+          }
+
+          return getAngularWrapperStorySource(componentId, context.args);
+        },
+      },
+    },
     options: {
       storySort: {
         method: 'configure',
@@ -54,7 +84,7 @@ const preview = {
     },
   },
   decorators: [
-    (Story: () => unknown, context: { globals: { theme?: string } }) => {
+    (Story, context) => {
       applyPreviewGlobals(context.globals.theme ?? 'light');
       return Story();
     },

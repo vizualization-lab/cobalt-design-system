@@ -32,6 +32,11 @@ export function createVuePlaygroundStory(componentId: WrapperStoryComponentId) {
   return {
     args: getWrapperStoryArgs(componentId),
     argTypes: getWrapperStoryArgTypes(componentId),
+    parameters: {
+      cobaltSource: {
+        componentId,
+      },
+    },
     render: (args: WrapperStoryArgs) => ({
       setup() {
         return () => renderVuePlayground(componentId, args);

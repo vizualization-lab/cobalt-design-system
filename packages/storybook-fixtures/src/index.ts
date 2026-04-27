@@ -93,3 +93,4 @@ export function titleCase(value: string) {
 export * from './api-metadata.js';
 export * from './controls.js';
 export * from './wrapper-story-controls.js';
+export * from './wrapper-story-source.js';

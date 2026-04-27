@@ -77,7 +77,7 @@ const aliases = {
 
 const config: StorybookConfig = {
   stories: ['../../angular/stories/**/*.stories.ts'],
-  addons: ['@storybook/addon-a11y'],
+  addons: ['@storybook/addon-a11y', '@storybook/addon-docs'],
   framework: {
     name: '@storybook/angular',
     options: {},
