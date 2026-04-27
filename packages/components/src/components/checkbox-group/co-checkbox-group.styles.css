@@ -5,7 +5,10 @@
 }
 
 .form-field__label {
-  font-weight: var(--co-font-weight-medium);
+  color: var(--co-color-text-default);
+  font-size: var(--co-typography-label-size);
+  font-weight: var(--co-typography-label-weight);
+  line-height: var(--co-typography-label-line-height);
   margin-block-end: var(--co-space-1);
 }
 
