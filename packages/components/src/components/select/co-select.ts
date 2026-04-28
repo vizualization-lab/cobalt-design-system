@@ -61,11 +61,13 @@ export class CoSelect extends LionSelectRich {
   override connectedCallback(): void {
     super.connectedCallback();
     this.addEventListener('model-value-changed', this._handleModelValueChanged);
+    this.addEventListener('opened-changed', this._syncChevronRotation);
   }
 
   override disconnectedCallback(): void {
     super.disconnectedCallback();
     this.removeEventListener('model-value-changed', this._handleModelValueChanged);
+    this.removeEventListener('opened-changed', this._syncChevronRotation);
   }
 
   override firstUpdated(changedProperties: PropertyValues<this>): void {
@@ -83,12 +85,12 @@ export class CoSelect extends LionSelectRich {
     this._syncChevronRotation();
   }
 
-  private _syncChevronRotation() {
+  private _syncChevronRotation = () => {
     const chevron = this.querySelector('.select__chevron') as HTMLElement | null;
     if (chevron) {
       chevron.style.transform = this.opened ? 'rotate(180deg)' : '';
     }
-  }
+  };
 
   protected override _labelTemplate() {
     return html`
@@ -118,6 +120,8 @@ export class CoSelect extends LionSelectRich {
         icon.setAttribute('size', { sm: 'xs', md: 'sm', lg: 'md', xl: 'lg' }[this.size] ?? 'sm');
         icon.setAttribute('aria-hidden', 'true');
         icon.classList.add('select__chevron');
+        icon.style.transition =
+          'transform var(--co-motion-duration-fast, 0.15s) var(--co-motion-easing-default, ease)';
         invoker.appendChild(icon);
         return invoker;
       },
