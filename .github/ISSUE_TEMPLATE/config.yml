@@ -1,8 +1,1 @@
 blank_issues_enabled: true
-contact_links:
-  - name: Open-ended questions and design discussion
-    url: https://github.com/vizualization-lab/cobalt-design-system/discussions
-    about: Use GitHub Discussions for broad questions, design decisions, and community conversation.
-  - name: New component proposal
-    url: https://github.com/vizualization-lab/cobalt-design-system/discussions/new?category=component-proposals
-    about: Use the Component Proposals discussion form for new component RFCs.

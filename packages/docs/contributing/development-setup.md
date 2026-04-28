@@ -66,7 +66,7 @@ Then uncomment and edit any values you need to override:
 
 | Variable              | Default                                                       | Description                |
 | --------------------- | ------------------------------------------------------------- | -------------------------- |
-| `COBALT_GITHUB_ORG`   | `vizualization-lab`                                           | GitHub organization name   |
+| `COBALT_GITHUB_ORG`   | ``                                                            | GitHub organization name   |
 | `COBALT_GITHUB_REPO`  | `cobalt-design-system`                                        | GitHub repository name     |
 | `COBALT_GITHUB_URL`   | `https://github.com/{COBALT_GITHUB_ORG}/{COBALT_GITHUB_REPO}` | Full GitHub repository URL |
 | `COBALT_REGISTRY_URL` | `https://registry.your-org.com`                               | Private npm registry URL   |

@@ -18,8 +18,9 @@ Refs:
 
 ## Checklist
 
-- [ ] Code follows [Coding Standards](https://vizualization-lab.github.io/cobalt-design-system/contributing/coding-standards)
+- [ ] Code follows Coding Standards
 - [ ] All commits adhere to conventional commit format
+- [ ] Changeset file added (if applicable)
 - [ ] Tests added or updated
 - [ ] Documentation updated (if applicable)
 - [ ] Verified in the workbench (`pnpm dev:workbench`)
