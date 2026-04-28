@@ -237,7 +237,7 @@ function toggleSidebar() {
             <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" />
           </svg>
         </button>
-        <co-icon name="colors" size="md" />
+        <co-icon name="colors" size="md" style="color: var(--co-color-primary-base)" />
         <co-select
           :key="activeTheme"
           class="topbar-theme-select"
