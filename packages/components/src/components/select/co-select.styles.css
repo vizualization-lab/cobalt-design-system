@@ -61,6 +61,11 @@
   background: var(--co-color-surface-raised);
 }
 
+/* Suppress Lion's default focus ring on the invoker — we draw our own on the container */
+slot[name='invoker']::slotted(lion-select-invoker) {
+  outline: none !important;
+}
+
 :host(:focus-within) .input-group__container {
   border-color: var(--co-color-border-focus);
   outline: var(--co-focus-ring-width) solid var(--co-color-border-focus);
