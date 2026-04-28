@@ -25,13 +25,28 @@ export const cobaltNavDrawerItemStyles = css`
     outline: none;
   }
 
-  .item:hover {
-    background: var(--co-color-surface-raised);
+  :host(:not([selected])) .item:hover {
+    background: var(
+      --co-component-nav-drawer-item-background-hover,
+      color-mix(in srgb, var(--co-color-interactive-primary-default) 8%, transparent)
+    );
+    color: var(--co-component-nav-drawer-item-foreground-hover, var(--co-color-text-link));
+  }
+
+  :host(:not([selected]):not([disabled])) .item:active {
+    background: var(
+      --co-component-nav-drawer-item-background-active,
+      color-mix(in srgb, var(--co-color-interactive-primary-default) 20%, transparent)
+    );
+    color: var(--co-component-nav-drawer-item-foreground-active, var(--co-color-text-link));
   }
 
   :host([selected]) .item {
-    background: var(--co-color-primary-subtle);
-    color: var(--co-color-interactive-primary-default);
+    background: var(
+      --co-component-nav-drawer-item-background-selected,
+      color-mix(in srgb, var(--co-color-interactive-primary-default) 12%, transparent)
+    );
+    color: var(--co-component-nav-drawer-item-foreground-selected, var(--co-color-text-link));
     font-weight: var(--co-font-weight-medium);
   }
 
@@ -45,7 +60,8 @@ export const cobaltNavDrawerItemStyles = css`
   }
 
   .item:focus-visible {
-    outline: var(--co-focus-ring-width) solid var(--co-color-border-focus);
+    outline: var(--co-focus-ring-width) solid
+      var(--co-component-nav-drawer-item-focus-ring, var(--co-color-border-focus));
     outline-offset: calc(-1 * var(--co-shape-border-width-thin));
   }
 

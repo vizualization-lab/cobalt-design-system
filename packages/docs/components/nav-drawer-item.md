@@ -92,6 +92,18 @@ Override the default icon with the `prefix` slot.
 | `prefix` | The prefix icon container |
 | `label`  | The label text container  |
 
+## Design Tokens
+
+`co-nav-drawer-item` consumes the `component.nav.drawer.item.*` token family for its selected-state treatment and focus ring.
+
+- `--co-component-nav-drawer-item-background-hover`
+- `--co-component-nav-drawer-item-background-active`
+- `--co-component-nav-drawer-item-background-selected`
+- `--co-component-nav-drawer-item-foreground-hover`
+- `--co-component-nav-drawer-item-foreground-active`
+- `--co-component-nav-drawer-item-foreground-selected`
+- `--co-component-nav-drawer-item-focus-ring`
+
 ## Accessibility
 
 ### ARIA notes

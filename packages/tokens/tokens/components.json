@@ -155,17 +155,17 @@
               },
               "hover": {
                 "$type": "color",
-                "$value": "{co.color.interactive.subtle.hover}",
+                "$value": "color-mix(in srgb, {co.color.interactive.primary.default} 8%, transparent)",
                 "$description": "Hover surface for nav rail items."
               },
               "active": {
                 "$type": "color",
-                "$value": "{co.color.interactive.subtle.active}",
+                "$value": "color-mix(in srgb, {co.color.interactive.primary.default} 20%, transparent)",
                 "$description": "Pressed surface for nav rail items."
               },
               "selected": {
                 "$type": "color",
-                "$value": "{co.color.interactive.subtle.selected}",
+                "$value": "color-mix(in srgb, {co.color.interactive.primary.default} 12%, transparent)",
                 "$description": "Selected surface for the current nav rail destination."
               }
             },
@@ -196,6 +196,51 @@
                 "$type": "color",
                 "$value": "{co.color.border.focus}",
                 "$description": "Focus ring color for nav rail item keyboard focus."
+              }
+            }
+          }
+        },
+        "drawer": {
+          "item": {
+            "background": {
+              "hover": {
+                "$type": "color",
+                "$value": "color-mix(in srgb, {co.color.interactive.primary.default} 8%, transparent)",
+                "$description": "Hover surface for nav drawer items."
+              },
+              "active": {
+                "$type": "color",
+                "$value": "color-mix(in srgb, {co.color.interactive.primary.default} 20%, transparent)",
+                "$description": "Pressed surface for nav drawer items."
+              },
+              "selected": {
+                "$type": "color",
+                "$value": "color-mix(in srgb, {co.color.interactive.primary.default} 12%, transparent)",
+                "$description": "Selected surface for the current nav drawer destination."
+              }
+            },
+            "foreground": {
+              "hover": {
+                "$type": "color",
+                "$value": "{co.color.text.link}",
+                "$description": "Hover text and icon color for nav drawer items."
+              },
+              "active": {
+                "$type": "color",
+                "$value": "{co.color.text.link}",
+                "$description": "Pressed text and icon color for nav drawer items."
+              },
+              "selected": {
+                "$type": "color",
+                "$value": "{co.color.text.link}",
+                "$description": "Selected text and icon color for the current nav drawer destination."
+              }
+            },
+            "focus": {
+              "ring": {
+                "$type": "color",
+                "$value": "{co.color.border.focus}",
+                "$description": "Focus ring color for nav drawer item keyboard focus."
               }
             }
           }
