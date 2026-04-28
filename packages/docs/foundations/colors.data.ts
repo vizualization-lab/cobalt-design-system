@@ -1,6 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { codeToHtml } from 'shiki';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const tokensDir = path.resolve(__dirname, '../../tokens/tokens');
@@ -28,6 +29,16 @@ const PALETTE_LABELS: Record<string, { name: string; description: string }> = {
   'blue-dark': {
     name: 'Blue',
     description: 'Default brand accent built from the custom blue scale.',
+  },
+  brick: { name: 'Brick', description: 'Alternate accent using the custom brick scale.' },
+  'brick-dark': {
+    name: 'Brick',
+    description: 'Alternate accent using the custom brick scale.',
+  },
+  forest: { name: 'Forest', description: 'Alternate accent using the custom forest scale.' },
+  'forest-dark': {
+    name: 'Forest',
+    description: 'Alternate accent using the custom forest scale.',
   },
   purple: { name: 'Purple', description: 'Alternate accent using the stock Radix purple scale.' },
   'purple-dark': {
@@ -113,21 +124,21 @@ export interface ThemeGroup {
   palettes: ThemePalette[];
 }
 
-export interface SemanticExampleValue {
-  value: string;
-  reference: string;
-}
-
 export interface SemanticExample {
   token: string;
   usage: string;
-  values: Record<string, SemanticExampleValue>;
+}
+
+export interface ThemeCodeSnippets {
+  css: string;
+  javascript: string;
 }
 
 export interface ColorsData {
   usageGroups: UsageGroup[];
   themes: ThemeGroup[];
   semanticExamples: SemanticExample[];
+  themeCodeSnippets: Record<string, ThemeCodeSnippets>;
 }
 
 function readJson(filePath: string) {
@@ -172,6 +183,10 @@ function discoverThemeFiles() {
     });
 }
 
+const themeTokenWatchPaths = discoverThemeFiles().map(
+  (fileName) => `../../tokens/tokens/${fileName}`,
+);
+
 function familyLabel(family: string) {
   return (
     PALETTE_LABELS[family] ?? {
@@ -184,13 +199,6 @@ function familyLabel(family: string) {
   );
 }
 
-function describeReference(rawValue: string) {
-  if (!/^\{.+\}$/.test(rawValue)) return rawValue;
-
-  const tokenPath = rawValue.slice(1, -1);
-  return tokenPath.replace(/^co\.color\.primitive\./, '');
-}
-
 function buildPaletteShades(primitives: any, family: string) {
   return SHADE_MAP.map(({ shade, usage }) => ({
     label: shade,
@@ -200,17 +208,48 @@ function buildPaletteShades(primitives: any, family: string) {
   }));
 }
 
+function wrapHighlightedCode(html: string, language: string) {
+  const highlightedPre = html.replace('<pre class="shiki', '<pre class="vp-code shiki');
+  return `<div class="language-${language}">${highlightedPre}</div>`;
+}
+
+async function highlightCodeSnippet(source: string, language: string) {
+  const html = await codeToHtml(source, {
+    lang: language,
+    themes: {
+      light: 'github-light-default',
+      dark: 'github-dark-default',
+    },
+  });
+
+  return wrapHighlightedCode(html, language);
+}
+
+async function buildThemeCodeSnippets(themeId: string): Promise<ThemeCodeSnippets> {
+  const cssSource = [
+    "@import '@cobalt/tokens/css'; /* always required — layer order + base tokens */",
+    `@import '@cobalt/tokens/themes/${themeId}'; /* ${themeId} light + dark in one import */`,
+  ].join('\n');
+
+  const javascriptSource = [
+    "import { setTheme } from '@cobalt/tokens/theme';",
+    '',
+    `setTheme('${themeId}'); // ${themeId} light`,
+    `setTheme('${themeId}', 'dark'); // ${themeId} dark`,
+  ].join('\n');
+
+  const [css, javascript] = await Promise.all([
+    highlightCodeSnippet(cssSource, 'css'),
+    highlightCodeSnippet(javascriptSource, 'js'),
+  ]);
+
+  return { css, javascript };
+}
+
 export default {
-  watch: [
-    '../../tokens/tokens/primitives.color.json',
-    '../../tokens/tokens/semantic.theme.default.light.json',
-    '../../tokens/tokens/semantic.theme.default.dark.json',
-    '../../tokens/tokens/semantic.theme.purple.light.json',
-    '../../tokens/tokens/semantic.theme.purple.dark.json',
-  ],
-  load(): ColorsData {
+  watch: ['../../tokens/tokens/primitives.color.json', ...themeTokenWatchPaths],
+  async load(): Promise<ColorsData> {
     const primitives = readJson(primitivesPath);
-    const primitiveRoot = primitives.co.color.primitive;
     const themeFiles = discoverThemeFiles();
     const themesById = new Map<string, ThemeGroup>();
 
@@ -261,29 +300,10 @@ export default {
       });
     }
 
-    const semanticExamples = SEMANTIC_EXAMPLE_ROWS.map(({ path: tokenPath, token, usage }) => {
-      const values: Record<string, SemanticExampleValue> = {};
-
-      for (const fileName of themeFiles) {
-        const [, , themeId, mode] = fileName.replace('.json', '').split('.');
-        const themeRoot = readJson(path.join(tokensDir, fileName));
-        const mergedRoot = {
-          co: {
-            color: {
-              primitive: primitiveRoot,
-              ...themeRoot.co.color,
-            },
-          },
-        };
-
-        values[`${themeId}.${mode}`] = {
-          value: resolveTokenValue(mergedRoot, tokenPath),
-          reference: describeReference(rawTokenValue(themeRoot, tokenPath)),
-        };
-      }
-
-      return { token, usage, values };
-    });
+    const semanticExamples = SEMANTIC_EXAMPLE_ROWS.map(({ token, usage }) => ({
+      token,
+      usage,
+    }));
 
     const usageGroups: UsageGroup[] = [
       { label: 'Backgrounds', description: '50-75', span: 2 },
@@ -293,45 +313,54 @@ export default {
       { label: 'Accessible Text', description: '900-950', span: 2 },
     ];
 
-    return {
-      usageGroups,
-      themes: [...themesById.values()].map((theme) => {
-        const modes = theme.modes.sort((a, b) => (a.id === 'light' ? -1 : 1));
-        const lightAccent = theme.accentFamily.replace(/-dark$/, '');
-        const baseFamilies = ['gray', lightAccent, 'red', 'green', 'amber'];
+    const themes = [...themesById.values()].map((theme) => {
+      const modes = theme.modes.sort((a, b) => (a.id === 'light' ? -1 : 1));
+      const lightAccent = theme.accentFamily.replace(/-dark$/, '');
+      const baseFamilies = ['gray', lightAccent, 'red', 'green', 'amber'];
 
-        const palettes: ThemePalette[] = baseFamilies.map((baseFamily) => {
-          const lightFamily = baseFamily;
-          const darkFamily = baseFamily === 'gray' ? 'gray-dark' : `${baseFamily}-dark`;
-          const meta = familyLabel(baseFamily);
-
-          return {
-            name: meta.name,
-            description: meta.description,
-            rows: [
-              {
-                id: 'light',
-                label: 'Light',
-                family: lightFamily,
-                shades: buildPaletteShades(primitives, lightFamily),
-              },
-              {
-                id: 'dark',
-                label: 'Dark',
-                family: darkFamily,
-                shades: buildPaletteShades(primitives, darkFamily),
-              },
-            ],
-          };
-        });
+      const palettes: ThemePalette[] = baseFamilies.map((baseFamily) => {
+        const lightFamily = baseFamily;
+        const darkFamily = baseFamily === 'gray' ? 'gray-dark' : `${baseFamily}-dark`;
+        const meta = familyLabel(baseFamily);
 
         return {
-          ...theme,
-          modes,
-          palettes,
+          name: meta.name,
+          description: meta.description,
+          rows: [
+            {
+              id: 'light',
+              label: 'Light',
+              family: lightFamily,
+              shades: buildPaletteShades(primitives, lightFamily),
+            },
+            {
+              id: 'dark',
+              label: 'Dark',
+              family: darkFamily,
+              shades: buildPaletteShades(primitives, darkFamily),
+            },
+          ],
         };
-      }),
+      });
+
+      return {
+        ...theme,
+        modes,
+        palettes,
+      };
+    });
+
+    const themeCodeSnippets = Object.fromEntries(
+      await Promise.all(
+        themes.map(async (theme) => [theme.id, await buildThemeCodeSnippets(theme.id)] as const),
+      ),
+    );
+
+    return {
+      usageGroups,
+      themes,
       semanticExamples,
+      themeCodeSnippets,
     };
   },
 };
