@@ -117,11 +117,12 @@ export const cobaltAppShellStyles = css`
   .app-shell__overlay-panel {
     display: grid;
     grid-template-columns: minmax(0, 1fr);
-    align-content: start;
+    grid-template-rows: 1fr;
+    align-content: stretch;
     box-sizing: border-box;
     inline-size: min(var(--_co-app-shell-overlay-width), calc(100vw - var(--co-space-6)));
     max-inline-size: calc(100vw - var(--co-space-6));
-    min-block-size: 100dvh;
+    block-size: 100dvh;
     overflow: auto;
     background: var(--co-color-surface-default);
     border-inline-end: var(--co-shape-border-width-thin) solid var(--co-color-border-default);
@@ -138,7 +139,8 @@ export const cobaltAppShellStyles = css`
 
   .app-shell__overlay-section {
     min-inline-size: 0;
-    padding: var(--co-space-4);
+    min-block-size: 0;
+    overflow: auto;
   }
 
   .app-shell__overlay-section + .app-shell__overlay-section {
