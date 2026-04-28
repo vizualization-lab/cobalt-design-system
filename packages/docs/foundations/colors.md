@@ -257,6 +257,7 @@ These semantic token names stay stable across themes even as their resolved colo
   border: 1px solid var(--co-color-border-subtle);
   border-radius: var(--co-shape-radius-md);
   background: var(--co-color-surface-raised);
+  z-index: 6;
 }
 
 .color-preview-note {
@@ -457,6 +458,13 @@ These semantic token names stay stable across themes even as their resolved colo
 
 .theme-attribute-list li + li {
   margin-top: 6px;
+}
+
+@media (min-width: 961px) {
+  .color-preview-toolbar {
+    position: sticky;
+    top: calc(var(--co-topbar-height) + 20px);
+  }
 }
 
 @media (max-width: 720px) {

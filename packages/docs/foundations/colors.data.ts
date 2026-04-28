@@ -209,7 +209,13 @@ function buildPaletteShades(primitives: any, family: string) {
 }
 
 function wrapHighlightedCode(html: string, language: string) {
-  const highlightedPre = html.replace('<pre class="shiki', '<pre class="vp-code shiki');
+  const normalizedHtml = html
+    .replace(
+      /background-color:([^;"]+);--shiki-dark-bg:([^;"]+)/g,
+      '--shiki-light-bg:$1;background-color:$1;--shiki-dark-bg:$2',
+    )
+    .replace(/color:([^;"]+);--shiki-dark:([^;"]+)/g, '--shiki-light:$1;color:$1;--shiki-dark:$2');
+  const highlightedPre = normalizedHtml.replace('<pre class="shiki', '<pre class="vp-code shiki');
   return `<div class="language-${language}">${highlightedPre}</div>`;
 }
 
@@ -227,8 +233,11 @@ async function highlightCodeSnippet(source: string, language: string) {
 
 async function buildThemeCodeSnippets(themeId: string): Promise<ThemeCodeSnippets> {
   const cssSource = [
-    "@import '@cobalt/tokens/css'; /* always required — layer order + base tokens */",
-    `@import '@cobalt/tokens/themes/${themeId}'; /* ${themeId} light + dark in one import */`,
+    '/* always required — layer order + base tokens */',
+    "@import '@cobalt/tokens/css';",
+    '',
+    `/* ${themeId} light + dark in one import */`,
+    `@import '@cobalt/tokens/themes/${themeId}';`,
   ].join('\n');
 
   const javascriptSource = [
