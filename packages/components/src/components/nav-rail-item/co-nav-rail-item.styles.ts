@@ -55,7 +55,7 @@ export const cobaltNavRailItemStyles = css`
     inline-size: 100%;
     color: currentColor;
     font-family: var(--co-font-family-sans);
-    font-size: min(var(--co-typography-body-sm-size), 1rem);
+    font-size: var(--co-font-size-xsmall);
     font-weight: var(--co-typography-body-sm-weight);
     letter-spacing: var(--co-typography-body-sm-tracking);
     line-height: var(--co-typography-body-sm-line-height);
@@ -70,9 +70,11 @@ export const cobaltNavRailItemStyles = css`
     );
   }
 
-  :host(:not([selected]):not([disabled])) .nav-item:active .nav-item__icon,
-  :host(:not([selected])) .nav-item:hover .nav-item__icon,
-  :host([selected]) .nav-item__icon {
+  :host(:not([selected])) .nav-item:hover {
+    background: var(
+      --co-component-nav-rail-item-background-hover,
+      var(--co-color-interactive-subtle-hover)
+    );
     color: var(--co-color-interactive-primary-default);
   }
 
@@ -81,13 +83,7 @@ export const cobaltNavRailItemStyles = css`
       --co-component-nav-rail-item-background-selected,
       var(--co-color-interactive-subtle-selected)
     );
-  }
-
-  :host(:not([selected])) .nav-item:hover {
-    background: var(
-      --co-component-nav-rail-item-background-hover,
-      var(--co-color-interactive-subtle-hover)
-    );
+    color: var(--co-color-interactive-primary-default);
   }
 
   .nav-item:focus-visible {

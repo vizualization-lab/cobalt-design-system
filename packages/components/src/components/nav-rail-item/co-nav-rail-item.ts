@@ -101,7 +101,11 @@ export class CoNavRailItem extends LitElement {
       <span part="icon" class="nav-item__icon" aria-hidden="true">
         <slot name="icon">
           ${this.icon
-            ? html`<co-icon name=${this.icon} size=${this._iconSize}></co-icon>`
+            ? html`<co-icon
+                name=${this.icon}
+                size=${this._iconSize}
+                ?fill=${this.selected}
+              ></co-icon>`
             : nothing}
         </slot>
       </span>
