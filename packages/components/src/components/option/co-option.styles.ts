@@ -24,19 +24,20 @@ export const cobaltOptionStyles = css`
     color: inherit;
   }
 
-  :host(:hover:not([disabled]):not([checked])) .option,
+  :host(:hover:not([disabled]):not([checked]):not([active])) .option {
+    background: var(--co-color-interactive-subtle-hover);
+  }
+
   :host([active]:not([checked])) .option {
-    background: var(--co-color-primary-subtle);
+    background: var(--co-color-interactive-subtle-active);
   }
 
   :host([checked]) .option {
-    background: var(--co-color-interactive-primary-default);
-    color: var(--co-color-text-on-primary);
+    background: var(--co-color-interactive-subtle-selected);
   }
 
   :host([active][checked]) .option {
-    background: var(--co-color-interactive-primary-default);
-    color: var(--co-color-text-on-primary);
+    background: var(--co-color-interactive-subtle-selected);
   }
 
   :host([disabled]) {
