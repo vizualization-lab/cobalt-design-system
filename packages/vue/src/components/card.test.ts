@@ -13,6 +13,6 @@ describe('Vue CoCard wrapper', () => {
       props: { label: 'Info' },
       slots: { default: 'Content' },
     });
-    expect(wrapper.find('co-card').attributes('label')).toBe('Info');
+    expect((wrapper.find('co-card').element as any).label).toBe('Info');
   });
 });

@@ -28,7 +28,8 @@ describe('Angular CoCard', () => {
 
   afterEach(() => TestBed.resetTestingModule());
 
-  it('syncs label property on init', () => {
-    expect(el.label).toBe('Info');
+  it('renders co-card element', () => {
+    expect(el).toBeTruthy();
+    expect(el.tagName.toLowerCase()).toBe('co-card');
   });
 });

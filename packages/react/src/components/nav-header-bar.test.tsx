@@ -12,7 +12,7 @@ describe('React CoNavHeaderBar wrapper', () => {
 
   it('passes label prop', () => {
     const { container } = render(<CoNavHeaderBar label="App Header">Content</CoNavHeaderBar>);
-    const el = container.querySelector('co-nav-header-bar');
-    expect(el?.getAttribute('label')).toBe('App Header');
+    const el = container.querySelector('co-nav-header-bar') as any;
+    expect(el?.label).toBe('App Header');
   });
 });

@@ -20,7 +20,7 @@ describe('React CoBanner wrapper', () => {
         <span slot="title">Alert</span>
       </CoBanner>,
     );
-    const el = container.querySelector('co-banner');
-    expect(el?.getAttribute('label')).toBe('Alert');
+    const el = container.querySelector('co-banner') as any;
+    expect(el?.label).toBe('Alert');
   });
 });

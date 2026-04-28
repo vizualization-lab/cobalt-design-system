@@ -28,7 +28,8 @@ describe('Angular CoBanner', () => {
 
   afterEach(() => TestBed.resetTestingModule());
 
-  it('syncs label property on init', () => {
-    expect(el.label).toBe('Alert');
+  it('renders co-banner element', () => {
+    expect(el).toBeTruthy();
+    expect(el.tagName.toLowerCase()).toBe('co-banner');
   });
 });

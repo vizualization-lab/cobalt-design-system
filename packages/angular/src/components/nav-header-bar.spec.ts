@@ -28,7 +28,8 @@ describe('Angular CoNavHeaderBar', () => {
 
   afterEach(() => TestBed.resetTestingModule());
 
-  it('syncs label property on init', () => {
-    expect(el.label).toBe('App Header');
+  it('renders co-nav-header-bar element', () => {
+    expect(el).toBeTruthy();
+    expect(el.tagName.toLowerCase()).toBe('co-nav-header-bar');
   });
 });

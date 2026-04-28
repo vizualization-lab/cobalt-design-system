@@ -12,7 +12,7 @@ describe('React CoCard wrapper', () => {
 
   it('passes label prop', () => {
     const { container } = render(<CoCard label="Info">Content</CoCard>);
-    const el = container.querySelector('co-card');
-    expect(el?.getAttribute('label')).toBe('Info');
+    const el = container.querySelector('co-card') as any;
+    expect(el?.label).toBe('Info');
   });
 });

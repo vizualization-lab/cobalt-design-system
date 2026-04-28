@@ -13,6 +13,6 @@ describe('Vue CoBanner wrapper', () => {
       props: { label: 'Alert' },
       slots: { default: '<span slot="title">Alert</span>' },
     });
-    expect(wrapper.find('co-banner').attributes('label')).toBe('Alert');
+    expect((wrapper.find('co-banner').element as any).label).toBe('Alert');
   });
 });

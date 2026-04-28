@@ -13,6 +13,6 @@ describe('Vue CoNavHeaderBar wrapper', () => {
       props: { label: 'App Header' },
       slots: { default: 'Content' },
     });
-    expect(wrapper.find('co-nav-header-bar').attributes('label')).toBe('App Header');
+    expect((wrapper.find('co-nav-header-bar').element as any).label).toBe('App Header');
   });
 });
