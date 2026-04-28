@@ -4,19 +4,19 @@
       "primary": {
         "base": {
           "$type": "color",
-          "$value": "{co.color.primitive.purple.700}"
+          "$value": "{co.color.primitive.forest.700}"
         },
         "light": {
           "$type": "color",
-          "$value": "{co.color.primitive.purple.200}"
+          "$value": "{co.color.primitive.forest.200}"
         },
         "dark": {
           "$type": "color",
-          "$value": "{co.color.primitive.purple.900}"
+          "$value": "{co.color.primitive.forest.900}"
         },
         "subtle": {
           "$type": "color",
-          "$value": "{co.color.primitive.purple.75}"
+          "$value": "{co.color.primitive.forest.75}"
         },
         "contrast": {
           "$type": "color",
@@ -164,7 +164,7 @@
         },
         "link": {
           "$type": "color",
-          "$value": "{co.color.primitive.purple.900}"
+          "$value": "{co.color.primitive.forest.900}"
         },
         "on": {
           "primary": {
@@ -204,7 +204,7 @@
         },
         "active": {
           "$type": "color",
-          "$value": "{co.color.primitive.purple.600}"
+          "$value": "{co.color.primitive.forest.600}"
         },
         "danger": {
           "$type": "color",
@@ -216,11 +216,11 @@
         },
         "focus": {
           "$type": "color",
-          "$value": "{co.color.primitive.purple.500}"
+          "$value": "{co.color.primitive.forest.500}"
         },
         "selected": {
           "$type": "color",
-          "$value": "{co.color.primitive.purple.500}"
+          "$value": "{co.color.primitive.forest.500}"
         },
         "bold": {
           "$type": "color",
@@ -235,15 +235,15 @@
           },
           "hover": {
             "$type": "color",
-            "$value": "{co.color.primitive.purple.800}"
+            "$value": "{co.color.primitive.forest.800}"
           },
           "active": {
             "$type": "color",
-            "$value": "{co.color.primitive.purple.900}"
+            "$value": "{co.color.primitive.forest.900}"
           },
           "disabled": {
             "$type": "color",
-            "$value": "{co.color.primitive.purple.400}"
+            "$value": "{co.color.primitive.forest.400}"
           },
           "selected": {
             "$type": "color",

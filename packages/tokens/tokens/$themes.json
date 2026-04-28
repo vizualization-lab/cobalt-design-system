@@ -1,5 +1,29 @@
 [
   {
+    "id": "brick-light",
+    "name": "Brick Light",
+    "selectedTokenSets": {
+      "primitives": "enabled",
+      "primitives.color": "source",
+      "semantic.shared": "enabled",
+      "semantic.theme.brick.light": "enabled",
+      "components": "enabled"
+    },
+    "group": "Brick"
+  },
+  {
+    "id": "brick-dark",
+    "name": "Brick Dark",
+    "selectedTokenSets": {
+      "primitives": "enabled",
+      "primitives.color": "source",
+      "semantic.shared": "enabled",
+      "semantic.theme.brick.dark": "enabled",
+      "components": "enabled"
+    },
+    "group": "Brick"
+  },
+  {
     "id": "light",
     "name": "Default Light",
     "selectedTokenSets": {
@@ -22,6 +46,30 @@
       "components": "enabled"
     },
     "group": "Theme"
+  },
+  {
+    "id": "forest-light",
+    "name": "Forest Light",
+    "selectedTokenSets": {
+      "primitives": "enabled",
+      "primitives.color": "source",
+      "semantic.shared": "enabled",
+      "semantic.theme.forest.light": "enabled",
+      "components": "enabled"
+    },
+    "group": "Forest"
+  },
+  {
+    "id": "forest-dark",
+    "name": "Forest Dark",
+    "selectedTokenSets": {
+      "primitives": "enabled",
+      "primitives.color": "source",
+      "semantic.shared": "enabled",
+      "semantic.theme.forest.dark": "enabled",
+      "components": "enabled"
+    },
+    "group": "Forest"
   },
   {
     "id": "purple-light",

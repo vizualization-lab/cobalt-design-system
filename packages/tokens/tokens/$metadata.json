@@ -3,8 +3,12 @@
     "primitives",
     "primitives.color",
     "semantic.shared",
+    "semantic.theme.brick.light",
+    "semantic.theme.brick.dark",
     "semantic.theme.default.light",
     "semantic.theme.default.dark",
+    "semantic.theme.forest.light",
+    "semantic.theme.forest.dark",
     "semantic.theme.purple.light",
     "semantic.theme.purple.dark",
     "components"
