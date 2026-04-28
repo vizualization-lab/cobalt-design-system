@@ -11,6 +11,7 @@ export interface PhaseInfo {
   key: string;
   label: string;
   description: string;
+  category: string;
 }
 
 export interface ComponentPhases {
@@ -32,35 +33,65 @@ export interface StatusData {
 }
 
 const PHASES: PhaseInfo[] = [
-  { key: 'figma', label: 'Figma', description: 'Code matches Figma design specs.' },
+  {
+    key: 'figma',
+    label: 'Figma',
+    description: 'Code matches Figma design specs.',
+    category: 'Design',
+  },
   {
     key: 'artDirector',
     label: 'Art Dir.',
     description: 'Visual review approved by design lead.',
+    category: 'Design',
   },
   {
     key: 'tokens',
     label: 'Tokens',
     description: 'Component uses only design tokens, no hardcoded values.',
+    category: 'Design',
   },
   {
     key: 'unitTests',
     label: 'Tests',
     description: 'Passing unit tests with adequate coverage.',
+    category: 'Development',
   },
-  { key: 'a11y', label: 'A11y', description: 'Accessibility tests completed and passing.' },
+  {
+    key: 'a11y',
+    label: 'A11y',
+    description: 'Accessibility tests completed and passing.',
+    category: 'Development',
+  },
   {
     key: 'docs',
     label: 'Docs',
     description: 'Docs page complete: demo, usage, API, accessibility, best practices.',
+    category: 'Development',
   },
-  { key: 'react', label: 'React', description: 'React wrapper verified and tested.' },
-  { key: 'vue', label: 'Vue', description: 'Vue wrapper verified and tested.' },
-  { key: 'angular', label: 'Angular', description: 'Angular wrapper verified and tested.' },
+  {
+    key: 'react',
+    label: 'React',
+    description: 'React wrapper verified and tested.',
+    category: 'Verification',
+  },
+  {
+    key: 'vue',
+    label: 'Vue',
+    description: 'Vue wrapper verified and tested.',
+    category: 'Verification',
+  },
+  {
+    key: 'angular',
+    label: 'Angular',
+    description: 'Angular wrapper verified and tested.',
+    category: 'Verification',
+  },
   {
     key: 'browsers',
     label: 'Browsers',
     description: 'Verified across Chrome, Firefox, Safari, Edge.',
+    category: 'Verification',
   },
 ];
 

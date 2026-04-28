@@ -29,6 +29,14 @@ function componentLink(name: string): string {
   return withBase(`/components/${slug}`);
 }
 
+function componentDisplayName(name: string): string {
+  return name
+    .replace(/^co-/, '')
+    .split('-')
+    .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+    .join(' ');
+}
+
 const summary = computed(() => {
   let total = 0;
   let passed = 0;
@@ -65,9 +73,7 @@ const summary = computed(() => {
         <tbody>
           <tr v-for="[name, statuses] in components" :key="name">
             <td class="matrix-component">
-              <a :href="componentLink(name)"
-                ><code>{{ name }}</code></a
-              >
+              <a :href="componentLink(name)">{{ componentDisplayName(name) }}</a>
             </td>
             <td
               v-for="phase in phases"
@@ -88,10 +94,18 @@ const summary = computed(() => {
 </template>
 
 <style scoped>
+.status-matrix {
+  background: var(--co-color-primary-subtle);
+  border-radius: var(--co-shape-radius-md);
+  box-shadow: var(--co-elevation-shadow-sm);
+  padding: var(--co-space-3);
+}
+
 .status-overview {
-  font-size: 0.92rem;
+  font-family: var(--co-font-family-sans);
+  font-size: var(--co-typography-body-sm-size);
   color: var(--co-color-text-secondary);
-  margin-bottom: 16px;
+  margin-bottom: var(--co-space-3);
 }
 
 .status-overview strong {
@@ -100,39 +114,49 @@ const summary = computed(() => {
 
 .matrix-scroll {
   overflow-x: auto;
-  margin: 0 0 24px;
 }
 
 .matrix-table {
   border-collapse: collapse;
-  font-size: 0.75rem;
+  font-family: var(--co-font-family-sans);
+  font-size: var(--co-typography-caption-size);
   width: 100%;
 }
 
 .matrix-table th,
 .matrix-table td {
-  padding: 4px 6px;
-  border: 1px solid var(--co-color-border-subtle);
+  padding: var(--co-space-1) var(--co-space-2);
+  border: var(--co-shape-border-width-thin) solid var(--co-color-border-subtle);
   text-align: center;
+}
+
+/* Remove top and left outer borders only */
+.matrix-table tr:first-child th {
+  border-block-start: none;
+}
+.matrix-table th:first-child,
+.matrix-table td:first-child {
+  border-inline-start: none;
 }
 
 .matrix-th--component,
 .matrix-component {
-  text-align: left;
-  font-weight: 600;
+  text-align: right;
+  font-weight: var(--co-typography-label-weight);
   position: sticky;
   left: 0;
-  background: var(--co-color-surface-default);
+  background: var(--co-color-primary-subtle);
   z-index: 1;
   white-space: nowrap;
 }
 
 .matrix-th--phase {
-  font-weight: 600;
-  font-size: 0.68rem;
+  font-weight: var(--co-typography-label-weight);
+  font-size: var(--co-typography-eyebrow-size);
   writing-mode: vertical-lr;
   text-orientation: mixed;
-  padding: 8px 4px;
+  padding: var(--co-space-2) var(--co-space-1);
+  color: var(--co-color-text-tertiary);
 }
 
 .matrix-th--phase a {
@@ -144,43 +168,41 @@ const summary = computed(() => {
   text-decoration: underline;
 }
 
-.matrix-component {
-  text-align: left;
-}
-
 .matrix-component a {
   text-decoration: none;
   color: var(--co-color-text-link);
 }
 
 .matrix-component code {
-  font-size: 0.78rem;
+  font-family: var(--co-font-family-mono);
+  font-size: var(--co-typography-caption-size);
   background: none;
   padding: 0;
 }
 
 .matrix-cell {
   font-weight: 700;
-  font-size: 0.85rem;
+  font-size: var(--co-typography-body-sm-size);
 }
 
 .matrix-cell--pass {
-  background: var(--co-color-feedback-success-background, #e6f6eb);
-  color: var(--co-color-feedback-success-text, #193b2d);
+  background: var(--co-color-success-subtle);
+  color: var(--co-color-success-base);
 }
 
 .matrix-cell--fail {
-  background: var(--co-color-feedback-danger-background, #fff7f7);
-  color: var(--co-color-feedback-danger-text, #641723);
+  background: var(--co-color-danger-subtle);
+  color: var(--co-color-danger-base);
 }
 
 .matrix-cell--pending {
-  background: var(--co-color-feedback-warning-background, #fefbe9);
-  color: var(--co-color-feedback-warning-text, #4f3422);
+  background: var(--co-color-surface-raised);
+  color: var(--co-color-text-tertiary);
 }
 
 .matrix-cell--na {
-  background: var(--co-color-feedback-neutral-background, #f9f9fb);
-  color: var(--co-color-feedback-neutral-text, #62636c);
+  background: transparent;
+  color: var(--co-color-text-tertiary);
+  opacity: 0.6;
 }
 </style>
