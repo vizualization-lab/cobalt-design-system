@@ -13,6 +13,7 @@ import TokenTable from '../../components/TokenTable.vue';
 import ArchitectureFlow from '../../components/ArchitectureFlow.vue';
 import ComponentStatus from '../../components/ComponentStatus.vue';
 import StatusMatrix from '../../components/StatusMatrix.vue';
+import LayerStack from '../../components/LayerStack.vue';
 
 // Cobalt design tokens
 import '@cobalt/tokens/css';
@@ -42,6 +43,7 @@ export default {
     app.component('TokenTable', TokenTable);
     app.component('ArchitectureFlow', ArchitectureFlow);
     app.component('ComponentStatus', ComponentStatus);
+    app.component('LayerStack', LayerStack);
     app.component('StatusMatrix', StatusMatrix);
 
     // Register Cobalt web components (client-side only)

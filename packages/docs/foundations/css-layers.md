@@ -10,6 +10,8 @@ Cobalt uses [CSS cascade layers](https://developer.mozilla.org/en-US/docs/Web/CS
 
 Cobalt declares six layers in a fixed order. Later layers always take priority over earlier ones:
 
+<LayerStack />
+
 | Priority    | Layer          | Purpose                                       | Who edits         |
 | ----------- | -------------- | --------------------------------------------- | ----------------- |
 | 1 (lowest)  | `co.reset`     | Global reset defaults                         | System / Consumer |
