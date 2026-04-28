@@ -17,6 +17,9 @@ import StatusMatrix from '../../components/StatusMatrix.vue';
 // Cobalt design tokens
 import '@cobalt/tokens/css';
 import '@cobalt/tokens/themes/default';
+import '@cobalt/tokens/themes/purple';
+import '@cobalt/tokens/themes/brick';
+import '@cobalt/tokens/themes/forest';
 
 // VitePress icons (needed for local search component)
 import 'vitepress/dist/client/theme-default/styles/icons.css';

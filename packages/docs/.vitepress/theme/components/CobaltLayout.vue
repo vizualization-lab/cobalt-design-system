@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useData, useRoute, useRouter, withBase } from 'vitepress';
-import { ref, computed, onMounted, watch, onUnmounted } from 'vue';
+import { ref, computed, onMounted, watch } from 'vue';
 import CobaltRail from './CobaltRail.vue';
 import CobaltSidebar from './CobaltSidebar.vue';
 import CobaltHome from './CobaltHome.vue';
@@ -9,10 +9,23 @@ import CobaltToc from './CobaltToc.vue';
 import { navigation, type NavItem } from '../navigation';
 import { setTheme } from '@cobalt/tokens/theme';
 import VPNavBarSearch from 'vitepress/dist/client/theme-default/components/VPNavBarSearch.vue';
+import {
+  DEFAULT_DOCS_THEME,
+  DOCS_THEME_OPTIONS,
+  isDocsThemeId,
+  type DocsThemeId,
+} from '../theme-options';
 
 const { frontmatter, theme, page } = useData();
 const route = useRoute();
 const router = useRouter();
+
+interface ThemeChangeDetail {
+  value?: unknown;
+}
+
+const MODE_STORAGE_KEY = 'cobalt-mode';
+const THEME_STORAGE_KEY = 'cobalt-theme';
 
 const editUrl = computed(() => {
   const filePath = page.value.relativePath;
@@ -22,8 +35,23 @@ const editUrl = computed(() => {
 });
 
 const isDark = ref(false);
-const activeTheme = 'default';
+const activeTheme = ref<DocsThemeId>(DEFAULT_DOCS_THEME);
 const sidebarOpen = ref(false);
+const docsThemeOptions = DOCS_THEME_OPTIONS;
+
+function resolveStoredTheme(themeId: string | null): DocsThemeId {
+  return isDocsThemeId(themeId) ? themeId : DEFAULT_DOCS_THEME;
+}
+
+function resolveStoredMode(mode: string | null): 'light' | 'dark' {
+  return mode === 'dark' ? 'dark' : 'light';
+}
+
+function applyThemePreferences(themeId: DocsThemeId, mode: 'light' | 'dark') {
+  activeTheme.value = themeId;
+  isDark.value = mode === 'dark';
+  setTheme(themeId, mode);
+}
 
 function normalizePath(p: string) {
   return p.replace(/\.html$/, '').replace(/\/$/, '') || '/';
@@ -59,9 +87,11 @@ function selectCategory(i: number) {
 }
 
 onMounted(() => {
-  const savedMode = localStorage.getItem('cobalt-mode');
-  isDark.value = savedMode === 'dark';
-  setTheme(activeTheme, isDark.value ? 'dark' : 'light');
+  const savedTheme = resolveStoredTheme(localStorage.getItem(THEME_STORAGE_KEY));
+  const savedMode = resolveStoredMode(localStorage.getItem(MODE_STORAGE_KEY));
+  applyThemePreferences(savedTheme, savedMode);
+  localStorage.setItem(THEME_STORAGE_KEY, savedTheme);
+  localStorage.setItem(MODE_STORAGE_KEY, savedMode);
 
   // Copy heading anchor URL to clipboard on click
   const article = document.querySelector('.cobalt-article');
@@ -93,10 +123,19 @@ watch(
 );
 
 function toggleTheme() {
-  isDark.value = !isDark.value;
+  const mode = isDark.value ? 'light' : 'dark';
+  applyThemePreferences(activeTheme.value, mode);
+  localStorage.setItem(MODE_STORAGE_KEY, mode);
+}
+
+function onThemeChange(event: Event) {
+  const detail = (event as CustomEvent<ThemeChangeDetail>).detail;
+  const nextTheme = resolveStoredTheme(typeof detail?.value === 'string' ? detail.value : null);
+  if (nextTheme === activeTheme.value) return;
+
   const mode = isDark.value ? 'dark' : 'light';
-  setTheme(activeTheme, mode);
-  localStorage.setItem('cobalt-mode', mode);
+  applyThemePreferences(nextTheme, mode);
+  localStorage.setItem(THEME_STORAGE_KEY, nextTheme);
 }
 
 function toggleSidebar() {
@@ -198,6 +237,24 @@ function toggleSidebar() {
             <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" />
           </svg>
         </button>
+        <co-icon name="colors" size="md" />
+        <co-select
+          :key="activeTheme"
+          class="topbar-theme-select"
+          label="Theme"
+          name="docs-theme"
+          size="sm"
+          @co-change="onThemeChange"
+        >
+          <co-option
+            v-for="themeOption in docsThemeOptions"
+            :key="themeOption.id"
+            :value="themeOption.id"
+            :checked="themeOption.id === activeTheme"
+          >
+            {{ themeOption.label }}
+          </co-option>
+        </co-select>
         <a :href="theme.github.url" class="topbar-link" target="_blank" rel="noopener">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
             <path
@@ -564,6 +621,7 @@ body {
   display: flex;
   align-items: center;
   gap: 8px;
+  min-width: 0;
 }
 
 .topbar-link {
@@ -599,6 +657,30 @@ body {
 .topbar-toggle:hover {
   color: var(--co-text-primary);
   background: var(--co-shimmer);
+}
+
+.topbar-theme-select {
+  flex: 0 0 auto;
+  inline-size: clamp(80px, 10vw, 148px);
+}
+
+.topbar-theme-select::part(label) {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+.topbar-theme-select::part(invoker) {
+  min-block-size: 36px;
+  border-radius: 10px;
+  background: var(--co-color-surface-raised);
 }
 
 /* ── Body ───────────────────────────────────────────────────── */
@@ -1087,6 +1169,14 @@ div[class*='language-'] > button.copy.copied::before {
 
   .brand-tag {
     display: none;
+  }
+
+  .topbar-nav {
+    gap: 6px;
+  }
+
+  .topbar-theme-select {
+    inline-size: 112px;
   }
 
   .cobalt-main {

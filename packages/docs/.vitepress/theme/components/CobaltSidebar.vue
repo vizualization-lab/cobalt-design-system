@@ -241,8 +241,19 @@ function isGroupOpen(item: NavItem): boolean {
 }
 
 .nav-item:hover {
-  color: var(--co-code-color);
-  background: var(--co-color-interactive-subtle-hover);
+  color: var(--co-component-nav-drawer-item-foreground-hover, var(--co-color-text-link));
+  background: var(
+    --co-component-nav-drawer-item-background-hover,
+    color-mix(in srgb, var(--co-color-interactive-primary-default) 8%, transparent)
+  );
+}
+
+.nav-item:active {
+  color: var(--co-component-nav-drawer-item-foreground-active, var(--co-color-text-link));
+  background: var(
+    --co-component-nav-drawer-item-background-active,
+    color-mix(in srgb, var(--co-color-interactive-primary-default) 20%, transparent)
+  );
 }
 
 /* Active indicator pill */
@@ -256,7 +267,10 @@ function isGroupOpen(item: NavItem): boolean {
 }
 
 .nav-item.is-active .nav-item-indicator {
-  background: var(--co-color-interactive-subtle-selected);
+  background: var(
+    --co-component-nav-drawer-item-background-selected,
+    color-mix(in srgb, var(--co-color-interactive-primary-default) 12%, transparent)
+  );
 }
 
 .nav-item-marker {
@@ -267,16 +281,21 @@ function isGroupOpen(item: NavItem): boolean {
 }
 
 .nav-item:hover .nav-item-marker {
+  color: var(--co-component-nav-drawer-item-foreground-hover, var(--co-color-text-link));
   opacity: 0.85;
 }
 
+.nav-item:active .nav-item-marker {
+  color: var(--co-component-nav-drawer-item-foreground-active, var(--co-color-text-link));
+}
+
 .nav-item.is-active .nav-item-marker {
-  color: var(--co-color-interactive-primary-default);
+  color: var(--co-component-nav-drawer-item-foreground-selected, var(--co-color-text-link));
   opacity: 1;
 }
 
 .nav-item.is-active {
-  color: var(--co-code-color);
+  color: var(--co-component-nav-drawer-item-foreground-selected, var(--co-color-text-link));
   font-weight: var(--co-typography-label-weight);
 }
 
