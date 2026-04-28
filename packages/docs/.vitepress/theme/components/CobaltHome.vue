@@ -282,9 +282,8 @@ const features = [
 .title-accent {
   background: linear-gradient(
     135deg,
-    var(--co-color-interactive-primary-default) 0%,
-    var(--co-color-primitive-cobalt-400) 50%,
-    var(--co-color-interactive-primary-default) 100%
+    var(--co-color-primary-dark) 0%,
+    var(--co-color-primary-base) 100%
   );
   background-clip: text;
   -webkit-background-clip: text;
