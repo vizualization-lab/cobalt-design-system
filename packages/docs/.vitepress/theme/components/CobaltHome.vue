@@ -71,13 +71,13 @@ const features = [
         <svg width="320" height="320" viewBox="0 0 320 320" fill="none">
           <defs>
             <linearGradient id="crystal-fill" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stop-color="rgba(37,99,235,0.12)" />
-              <stop offset="100%" stop-color="rgba(37,99,235,0.03)" />
+              <stop offset="0%" style="stop-color: var(--co-hero-crystal-fill-start)" />
+              <stop offset="100%" style="stop-color: var(--co-hero-crystal-fill-end)" />
             </linearGradient>
             <linearGradient id="crystal-stroke" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stop-color="rgba(96,165,250,0.3)" />
-              <stop offset="50%" stop-color="rgba(37,99,235,0.15)" />
-              <stop offset="100%" stop-color="rgba(96,165,250,0.05)" />
+              <stop offset="0%" style="stop-color: var(--co-hero-crystal-stroke-start)" />
+              <stop offset="50%" style="stop-color: var(--co-hero-crystal-stroke-mid)" />
+              <stop offset="100%" style="stop-color: var(--co-hero-crystal-stroke-end)" />
             </linearGradient>
           </defs>
           <polygon
@@ -91,7 +91,7 @@ const features = [
             y1="20"
             x2="160"
             y2="300"
-            stroke="rgba(96,165,250,0.08)"
+            style="stroke: var(--co-hero-crystal-facet)"
             stroke-width="0.5"
           />
           <line
@@ -99,7 +99,7 @@ const features = [
             y1="90"
             x2="280"
             y2="230"
-            stroke="rgba(96,165,250,0.08)"
+            style="stroke: var(--co-hero-crystal-facet)"
             stroke-width="0.5"
           />
           <line
@@ -107,18 +107,18 @@ const features = [
             y1="90"
             x2="40"
             y2="230"
-            stroke="rgba(96,165,250,0.08)"
+            style="stroke: var(--co-hero-crystal-facet)"
             stroke-width="0.5"
           />
           <!-- Inner hexagon -->
           <polygon
             points="160,80 230,120 230,200 160,240 90,200 90,120"
             fill="none"
-            stroke="rgba(96,165,250,0.1)"
+            style="stroke: var(--co-hero-crystal-inner)"
             stroke-width="0.5"
           />
           <!-- Shimmer dot -->
-          <circle cx="160" cy="160" r="3" fill="rgba(96,165,250,0.4)">
+          <circle cx="160" cy="160" r="3" style="fill: var(--co-hero-crystal-dot)">
             <animate
               attributeName="opacity"
               values="0.2;0.8;0.2"
@@ -131,7 +131,7 @@ const features = [
             cy="160"
             r="8"
             fill="none"
-            stroke="rgba(96,165,250,0.15)"
+            style="stroke: var(--co-hero-crystal-pulse)"
             stroke-width="0.5"
           >
             <animate attributeName="r" values="8;16;8" dur="3s" repeatCount="indefinite" />
@@ -322,6 +322,15 @@ const features = [
 
 /* Crystal */
 .hero-crystal {
+  --co-hero-crystal-fill-start: color-mix(in srgb, var(--co-color-primary-base) 12%, transparent);
+  --co-hero-crystal-fill-end: color-mix(in srgb, var(--co-color-primary-base) 3%, transparent);
+  --co-hero-crystal-stroke-start: color-mix(in srgb, var(--co-color-text-link) 30%, transparent);
+  --co-hero-crystal-stroke-mid: color-mix(in srgb, var(--co-color-primary-base) 15%, transparent);
+  --co-hero-crystal-stroke-end: color-mix(in srgb, var(--co-color-text-link) 5%, transparent);
+  --co-hero-crystal-facet: color-mix(in srgb, var(--co-color-text-link) 8%, transparent);
+  --co-hero-crystal-inner: color-mix(in srgb, var(--co-color-text-link) 10%, transparent);
+  --co-hero-crystal-dot: color-mix(in srgb, var(--co-color-primary-base) 40%, transparent);
+  --co-hero-crystal-pulse: color-mix(in srgb, var(--co-color-primary-base) 15%, transparent);
   position: absolute;
   top: 10px;
   right: -40px;
