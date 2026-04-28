@@ -128,10 +128,6 @@
           "$type": "color",
           "$value": "{co.color.primitive.gray-dark.50}"
         },
-        "disabled": {
-          "$type": "color",
-          "$value": "{co.color.primitive.gray-dark.200}"
-        },
         "overlay": {
           "$type": "color",
           "$value": "{co.color.primitive.black}"
@@ -155,10 +151,6 @@
           "$value": "{co.color.primitive.gray-dark.800}"
         },
         "placeholder": {
-          "$type": "color",
-          "$value": "{co.color.primitive.gray-dark.900}"
-        },
-        "disabled": {
           "$type": "color",
           "$value": "{co.color.primitive.gray-dark.900}"
         },
@@ -241,10 +233,6 @@
             "$type": "color",
             "$value": "{co.color.primitive.blue-dark.500}"
           },
-          "disabled": {
-            "$type": "color",
-            "$value": "{co.color.primitive.blue-dark.300}"
-          },
           "selected": {
             "$type": "color",
             "$value": "{co.color.primitive.gray-dark.300}"
@@ -262,10 +250,6 @@
           "active": {
             "$type": "color",
             "$value": "{co.color.primitive.blue-dark.300}"
-          },
-          "disabled": {
-            "$type": "color",
-            "$value": "transparent"
           },
           "selected": {
             "$type": "color",
@@ -285,10 +269,6 @@
             "$type": "color",
             "$value": "{co.color.primitive.gray-dark.200}"
           },
-          "disabled": {
-            "$type": "color",
-            "$value": "transparent"
-          },
           "selected": {
             "$type": "color",
             "$value": "{co.color.primitive.gray-dark.300}"
@@ -306,10 +286,6 @@
           "active": {
             "$type": "color",
             "$value": "{co.color.primitive.red-dark.400}"
-          },
-          "disabled": {
-            "$type": "color",
-            "$value": "{co.color.primitive.red-dark.300}"
           }
         },
         "success": {
@@ -324,10 +300,6 @@
           "active": {
             "$type": "color",
             "$value": "{co.color.primitive.green-dark.400}"
-          },
-          "disabled": {
-            "$type": "color",
-            "$value": "{co.color.primitive.green-dark.300}"
           }
         }
       },

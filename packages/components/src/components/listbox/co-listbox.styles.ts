@@ -116,14 +116,7 @@ export const cobaltListboxStyles = css`
   }
 
   :host([disabled]) slot[name='input']::slotted([role='listbox']) {
-    background: var(--co-color-surface-disabled);
-    color: var(--co-color-text-disabled);
     opacity: var(--co-opacity-disabled);
-  }
-
-  :host([disabled]) .form-field__label,
-  :host([disabled]) .form-field__help-text {
-    color: var(--co-color-text-disabled);
   }
 
   .form-field__feedback {

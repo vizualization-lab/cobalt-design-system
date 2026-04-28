@@ -167,11 +167,6 @@
                 "$type": "color",
                 "$value": "{co.color.interactive.subtle.selected}",
                 "$description": "Selected surface for the current nav rail destination."
-              },
-              "disabled": {
-                "$type": "color",
-                "$value": "{co.color.interactive.subtle.disabled}",
-                "$description": "Disabled surface for nav rail items."
               }
             },
             "foreground": {
@@ -194,11 +189,6 @@
                 "$type": "color",
                 "$value": "{co.color.text.link}",
                 "$description": "Selected text and icon color for the current nav rail destination."
-              },
-              "disabled": {
-                "$type": "color",
-                "$value": "{co.color.text.secondary}",
-                "$description": "Disabled text and icon color for nav rail items."
               }
             },
             "focus": {

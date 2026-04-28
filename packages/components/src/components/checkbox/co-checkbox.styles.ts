@@ -11,7 +11,6 @@ export const cobaltCheckboxStyles = css`
   }
 
   :host([disabled]) {
-    color: var(--co-color-text-disabled);
     cursor: not-allowed;
     opacity: var(--co-opacity-disabled);
   }

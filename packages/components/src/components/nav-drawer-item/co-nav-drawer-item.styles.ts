@@ -36,7 +36,6 @@ export const cobaltNavDrawerItemStyles = css`
   }
 
   :host([disabled]) .item {
-    color: var(--co-color-text-disabled);
     cursor: not-allowed;
     opacity: var(--co-opacity-disabled);
   }

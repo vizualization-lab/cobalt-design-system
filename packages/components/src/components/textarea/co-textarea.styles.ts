@@ -100,15 +100,7 @@ export const cobaltTextareaStyles = css`
   }
 
   :host([disabled]) .input-group__container {
-    background: var(--co-color-surface-disabled);
-    color: var(--co-color-text-disabled);
     opacity: var(--co-opacity-disabled);
-  }
-
-  :host([disabled]) .form-field__label,
-  :host([disabled]) .form-field__help-text,
-  :host([disabled]) .form-field__counter {
-    color: var(--co-color-text-disabled);
   }
 
   :host([size='sm']) {

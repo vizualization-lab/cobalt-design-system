@@ -93,11 +93,7 @@ export const cobaltNavRailItemStyles = css`
   }
 
   :host([disabled]) .nav-item {
-    background: var(
-      --co-component-nav-rail-item-background-disabled,
-      var(--co-color-interactive-subtle-disabled)
-    );
-    color: var(--co-component-nav-rail-item-foreground-disabled, var(--co-color-text-secondary));
+    background: transparent;
     opacity: var(--co-opacity-disabled);
     cursor: not-allowed;
   }

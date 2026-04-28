@@ -57,7 +57,7 @@ export const cobaltFormStyles = css`
 
   :host([disabled]) .form-field__label,
   :host([disabled]) .form-field__help-text {
-    color: var(--co-color-text-disabled);
+    opacity: var(--co-opacity-disabled);
   }
 
   ::slotted(form) {
