@@ -1,6 +1,9 @@
 {
   "name": "@cobalt/vue",
   "version": "0.1.0",
+  "publishConfig": {
+    "access": "public"
+  },
   "description": "Vue wrappers for Cobalt Design System",
   "type": "module",
   "main": "dist/index.js",

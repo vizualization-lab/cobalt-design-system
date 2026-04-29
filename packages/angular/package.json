@@ -1,6 +1,9 @@
 {
   "name": "@cobalt/angular",
   "version": "0.1.0",
+  "publishConfig": {
+    "access": "public"
+  },
   "description": "Angular wrappers for Cobalt Design System",
   "type": "module",
   "main": "dist/index.js",
