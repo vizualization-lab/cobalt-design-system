@@ -2,7 +2,7 @@
   "name": "cobalt-design-system",
   "version": "0.0.0",
   "private": true,
-  "description": "Cobalt Design System — Lit + Lion extension",
+  "description": "Cobalt Design System — a design token driven web component library built with Lit and TypeScript.",
   "scripts": {
     "clean": "pnpm -r --stream clean && rm -rf packages/docs/.vitepress/cache",
     "build": "pnpm -r --stream build",
@@ -17,7 +17,7 @@
     "pack:local": "bash scripts/pack-local.sh",
     "changeset": "changeset",
     "version:bump": "changeset version && node scripts/aggregate-changelog.js",
-    "version:check": "changeset status",
+    "version:check": "changeset status --verbose",
     "release": "changeset publish",
     "prepare": "husky"
   },
