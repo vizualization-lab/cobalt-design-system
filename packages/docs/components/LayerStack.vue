@@ -4,7 +4,7 @@
     xmlns="http://www.w3.org/2000/svg"
     role="img"
     preserveAspectRatio="xMidYMid meet"
-    aria-label="CSS cascade layers as fanned sheets"
+    aria-label="CSS cascade layers as a stacked priority diagram"
     style="width: 100%; max-width: 540px; display: block; margin: 16px auto"
   >
     <defs>
@@ -17,166 +17,142 @@
           <feMergeNode in="SourceGraphic" />
         </feMerge>
       </filter>
-      <linearGradient id="ls-primary-grad" x1="0" y1="0" x2="1" y2="1">
-        <stop offset="0%" stop-color="var(--co-color-primary-base)" />
-        <stop offset="100%" stop-color="var(--co-color-primary-dark)" />
-      </linearGradient>
     </defs>
 
-    <!-- Layers 1–5: raised cards -->
-    <g
-      v-for="(layer, i) in standardLayers"
-      :key="layer.name"
-      :transform="`rotate(-8 270 ${62 + i * 50})`"
-      filter="url(#ls-shadow)"
-    >
+    <!-- Layers 1–6: stacked with the highest-priority layer in front -->
+    <g v-for="(layer, i) in layers" :key="layer.name" filter="url(#ls-shadow)">
       <rect
-        x="80"
-        :y="30 + i * 50"
-        width="380"
-        height="64"
+        :x="cardX"
+        :y="cardTop(stackIndex(i))"
+        :width="cardWidth"
+        :height="cardHeight"
         rx="8"
         ry="8"
-        fill="var(--co-color-surface-raised)"
-        stroke="var(--co-color-border-subtle)"
+        :fill="
+          layer.isFront
+            ? 'var(--co-color-interactive-subtle-active)'
+            : 'var(--co-color-surface-raised)'
+        "
+        :stroke="
+          layer.isFront
+            ? 'var(--co-color-interactive-subtle-selected)'
+            : 'var(--co-color-border-subtle)'
+        "
         stroke-width="1"
       />
       <text
-        :x="100"
-        :y="56 + i * 50"
+        :x="cardX + 20"
+        :y="cardTop(stackIndex(i)) + 26"
         font-family="var(--co-font-family-mono)"
         font-size="13"
-        font-weight="500"
-        fill="var(--co-color-primary-base)"
+        :font-weight="layer.isFront ? '600' : '500'"
+        :fill="layer.isFront ? 'var(--co-color-text-link)' : 'var(--co-color-primary-base)'"
       >
         @layer {{ layer.name }}
       </text>
       <text
-        :x="100"
-        :y="77 + i * 50"
+        :x="cardX + 20"
+        :y="cardTop(stackIndex(i)) + 47"
         font-family="var(--co-font-family-sans)"
         font-size="12"
         font-weight="400"
-        fill="var(--co-color-text-tertiary)"
+        :fill="layer.isFront ? 'var(--co-color-text-default)' : 'var(--co-color-text-tertiary)'"
+        :opacity="layer.isFront ? '0.85' : '1'"
       >
         {{ layer.desc }}
       </text>
       <g>
         <rect
-          :x="410"
-          :y="52 + i * 50"
-          width="32"
-          height="20"
+          :x="badgeX"
+          :y="cardTop(stackIndex(i)) + 22"
+          :width="badgeWidth"
+          :height="badgeHeight"
           rx="10"
           ry="10"
-          fill="var(--co-color-surface-sunken)"
-          stroke="transparent"
+          :fill="
+            layer.isFront ? 'var(--co-color-surface-default)' : 'var(--co-color-surface-sunken)'
+          "
+          :stroke="layer.isFront ? 'var(--co-color-interactive-subtle-selected)' : 'transparent'"
         />
         <text
-          :x="426"
-          :y="66 + i * 50"
+          :x="badgeX + badgeWidth / 2"
+          :y="cardTop(stackIndex(i)) + 36"
           text-anchor="middle"
           font-family="var(--co-font-family-sans)"
           font-size="11"
           font-weight="600"
-          fill="var(--co-color-text-default)"
+          :fill="layer.isFront ? 'var(--co-color-text-link)' : 'var(--co-color-text-default)'"
         >
           {{ i + 1 }}
         </text>
       </g>
     </g>
 
-    <!-- Layer 6: primary accent card -->
-    <g transform="rotate(-8 270 312)" filter="url(#ls-shadow)">
-      <rect
-        x="80"
-        y="280"
-        width="380"
-        height="64"
-        rx="8"
-        ry="8"
-        fill="url(#ls-primary-grad)"
-        stroke="var(--co-color-primary-base)"
-        stroke-width="1"
-      />
-      <text
-        x="100"
-        y="306"
-        font-family="var(--co-font-family-mono)"
-        font-size="13"
-        font-weight="600"
-        fill="var(--co-color-text-on-primary)"
-      >
-        @layer co.overrides
-      </text>
-      <text
-        x="100"
-        y="327"
-        font-family="var(--co-font-family-sans)"
-        font-size="12"
-        font-weight="400"
-        fill="var(--co-color-text-on-primary)"
-        opacity="0.85"
-      >
-        Consumer overrides
-      </text>
-      <g>
-        <rect
-          x="410"
-          y="302"
-          width="32"
-          height="20"
-          rx="10"
-          ry="10"
-          fill="rgba(255,255,255,0.18)"
-          stroke="rgba(255,255,255,0.35)"
-        />
-        <text
-          x="426"
-          y="316"
-          text-anchor="middle"
-          font-family="var(--co-font-family-sans)"
-          font-size="11"
-          font-weight="600"
-          fill="var(--co-color-text-on-primary)"
-        >
-          6
-        </text>
-      </g>
-    </g>
-
-    <!-- WINS callout -->
+    <!-- Priority callout -->
     <g>
       <line
-        x1="470"
-        y1="292"
-        x2="500"
-        y2="320"
-        stroke="var(--co-color-primary-base)"
+        :x1="calloutDotX"
+        :y1="calloutDotY"
+        :x2="calloutLineEndX"
+        :y2="calloutLineEndY"
+        stroke="var(--co-color-text-link)"
         stroke-width="1"
       />
-      <circle cx="500" cy="320" r="3" fill="var(--co-color-primary-base)" />
+      <circle :cx="calloutDotX" :cy="calloutDotY" r="3" fill="var(--co-color-text-link)" />
       <text
-        x="464"
-        y="284"
+        :x="calloutTextX"
+        :y="calloutTextY"
+        text-anchor="end"
         font-family="var(--co-font-family-sans)"
         font-size="11"
         font-weight="600"
-        fill="var(--co-color-primary-base)"
-        letter-spacing="0.14em"
+        fill="var(--co-color-text-link)"
       >
-        WINS
+        Takes priority
       </text>
     </g>
   </svg>
 </template>
 
 <script setup lang="ts">
-const standardLayers = [
+type Layer = {
+  name: string;
+  desc: string;
+  isFront?: boolean;
+};
+
+const layers: Layer[] = [
   { name: 'co.reset', desc: 'Global reset defaults' },
   { name: 'co.base', desc: 'Base element styles' },
   { name: 'co.tokens', desc: 'Light-mode tokens' },
   { name: 'co.theme', desc: 'Dark + custom themes' },
   { name: 'co.utilities', desc: 'Utility classes' },
+  { name: 'co.overrides', desc: 'Consumer overrides', isFront: true },
 ];
+
+const cardX = 80;
+const cardWidth = 380;
+const cardHeight = 64;
+const cardStartY = 44;
+const cardStepY = 56;
+
+const badgeWidth = 32;
+const badgeHeight = 20;
+const badgeX = cardX + cardWidth - 50;
+
+function cardTop(index: number) {
+  return cardStartY + index * cardStepY;
+}
+
+function stackIndex(renderIndex: number) {
+  return layers.length - 1 - renderIndex;
+}
+
+const frontLayerTop = cardTop(0);
+const calloutDotX = cardX + cardWidth - 18;
+const calloutDotY = frontLayerTop + 18;
+const calloutLineEndX = cardX + cardWidth - 6;
+const calloutLineEndY = frontLayerTop - 6;
+const calloutTextX = 532;
+const calloutTextY = frontLayerTop - 12;
 </script>
