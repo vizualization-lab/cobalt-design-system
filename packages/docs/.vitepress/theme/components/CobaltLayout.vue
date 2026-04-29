@@ -245,24 +245,35 @@ function toggleSidebar() {
             <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" />
           </svg>
         </button>
-        <co-icon name="colors" size="md" style="color: var(--co-color-primary-base)" />
-        <co-select
-          :key="activeTheme"
-          class="topbar-theme-select"
-          label="Theme"
-          name="docs-theme"
-          size="sm"
-          @co-change="onThemeChange"
-        >
-          <co-option
-            v-for="themeOption in docsThemeOptions"
-            :key="themeOption.id"
-            :value="themeOption.id"
-            :checked="themeOption.id === activeTheme"
-          >
-            {{ themeOption.label }}
-          </co-option>
-        </co-select>
+        <!-- Lion-based controls rewrite light DOM during upgrade, so keep this picker client-only. -->
+        <ClientOnly>
+          <div class="topbar-theme-picker">
+            <co-icon name="colors" size="md" style="color: var(--co-color-primary-base)" />
+            <co-select
+              :key="activeTheme"
+              class="topbar-theme-select"
+              label="Theme"
+              name="docs-theme"
+              size="sm"
+              @co-change="onThemeChange"
+            >
+              <co-option
+                v-for="themeOption in docsThemeOptions"
+                :key="themeOption.id"
+                :value="themeOption.id"
+                :checked="themeOption.id === activeTheme"
+              >
+                {{ themeOption.label }}
+              </co-option>
+            </co-select>
+          </div>
+          <template #fallback>
+            <div class="topbar-theme-picker topbar-theme-picker--placeholder" aria-hidden="true">
+              <span class="topbar-theme-picker__icon-placeholder"></span>
+              <span class="topbar-theme-picker__select-placeholder"></span>
+            </div>
+          </template>
+        </ClientOnly>
         <a :href="theme.github.url" class="topbar-link" target="_blank" rel="noopener">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
             <path
@@ -699,9 +710,19 @@ body {
   background: var(--co-shimmer);
 }
 
-.topbar-theme-select {
+.topbar-theme-picker {
+  display: flex;
+  align-items: center;
+  gap: 8px;
   flex: 0 0 auto;
-  inline-size: clamp(80px, 10vw, 148px);
+  inline-size: clamp(108px, 14vw, 180px);
+  min-inline-size: 0;
+}
+
+.topbar-theme-select {
+  flex: 1 1 auto;
+  min-inline-size: 0;
+  inline-size: auto;
 }
 
 .topbar-theme-select::part(label) {
@@ -721,6 +742,33 @@ body {
   min-block-size: 36px;
   border-radius: 10px;
   background: var(--co-color-surface-raised);
+}
+
+.topbar-theme-picker--placeholder {
+  pointer-events: none;
+}
+
+.topbar-theme-picker__icon-placeholder,
+.topbar-theme-picker__select-placeholder {
+  display: block;
+  flex: 0 0 auto;
+  border-radius: 10px;
+  background: var(--co-color-surface-raised);
+  border: 1px solid var(--co-color-border-default);
+}
+
+.topbar-theme-picker__icon-placeholder {
+  inline-size: 20px;
+  block-size: 20px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--co-color-primary-base) 18%, transparent);
+  border-color: color-mix(in srgb, var(--co-color-primary-base) 18%, transparent);
+}
+
+.topbar-theme-picker__select-placeholder {
+  flex: 1 1 auto;
+  min-inline-size: 0;
+  block-size: 36px;
 }
 
 /* ── Body ───────────────────────────────────────────────────── */
@@ -1215,8 +1263,8 @@ div[class*='language-'] > button.copy.copied::before {
     gap: 6px;
   }
 
-  .topbar-theme-select {
-    inline-size: 112px;
+  .topbar-theme-picker {
+    inline-size: 144px;
   }
 
   .cobalt-main {
