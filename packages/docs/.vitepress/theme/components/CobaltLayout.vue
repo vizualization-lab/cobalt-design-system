@@ -34,11 +34,6 @@ const editUrl = computed(() => {
   return `${githubUrl}/edit/main/packages/docs/${filePath}`;
 });
 
-const isDark = ref(false);
-const activeTheme = ref<DocsThemeId>(DEFAULT_DOCS_THEME);
-const sidebarOpen = ref(false);
-const docsThemeOptions = DOCS_THEME_OPTIONS;
-
 function resolveStoredTheme(themeId: string | null): DocsThemeId {
   return isDocsThemeId(themeId) ? themeId : DEFAULT_DOCS_THEME;
 }
@@ -46,6 +41,16 @@ function resolveStoredTheme(themeId: string | null): DocsThemeId {
 function resolveStoredMode(mode: string | null): 'light' | 'dark' {
   return mode === 'dark' ? 'dark' : 'light';
 }
+
+const isBrowser = typeof window !== 'undefined';
+const isDark = ref(
+  isBrowser ? resolveStoredMode(localStorage.getItem(MODE_STORAGE_KEY)) === 'dark' : false,
+);
+const activeTheme = ref<DocsThemeId>(
+  isBrowser ? resolveStoredTheme(localStorage.getItem(THEME_STORAGE_KEY)) : DEFAULT_DOCS_THEME,
+);
+const sidebarOpen = ref(false);
+const docsThemeOptions = DOCS_THEME_OPTIONS;
 
 function applyThemePreferences(themeId: DocsThemeId, mode: 'light' | 'dark') {
   activeTheme.value = themeId;
