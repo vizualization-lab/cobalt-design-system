@@ -144,6 +144,7 @@ export const navigation: NavGroup[] = [
     defaultOpen: false,
     items: [
       { text: 'Overview', link: '/resources/' },
+      { text: 'About Cobalt', link: '/resources/about-cobalt' },
       { text: 'Contact', link: '/resources/contact' },
       { text: 'For Developers', link: '/resources/developers' },
       { text: 'For Designers', link: '/resources/designers' },

@@ -6,15 +6,7 @@ Welcome to the Cobalt Design System. This guide will help you get up and running
 
 Cobalt is a unified design system that provides reusable components, design tokens, and guidelines to help teams build accessible, performant interfaces with a consistent look and feel. It bridges the gap between designers and developers by offering a shared language and toolkit.
 
-## Why Cobalt?
-
-The element cobalt is known for two things: extraordinary resilience and a vivid blue hue that has shaped art and craft for millennia. Both qualities inspired the name of this design system.
-
-**Built to endure.** Cobalt superalloys withstand the extreme heat inside jet engine turbine blades. A design system faces a different kind of stress — scaling across teams, supporting enterprise-grade products, and edge cases — but the demand is the same: hold up under pressure without losing integrity.
-
-**Rooted in craft.** Cobalt's blue pigment appears in Egyptian jewelry, the frescoes of Pompeii, and Chinese porcelain dating to the Tang Dynasty. Good design outlasts trends, and Cobalt is crafted to remain relevant as styles evolve.
-
-**Woven into the system.** Cobalt's periodic symbol, `Co`, namespaces every token and component. As a period-four element, it sits on the fourth row of the periodic table, and the number four echoes throughout the system: a 4 px base unit for spacing, as well as a four-level elevation scale. The result is a consistent rhythm that is easy to learn and easy to extend.
+> Curious about the name? [Learn about the inspiration behind Cobalt](/resources/about-cobalt).
 
 ## Core Principles
 
@@ -27,28 +19,6 @@ The element cobalt is known for two things: extraordinary resilience and a vivid
 | **Enjoyable**     | Developer and designer experience is prioritized, centralizing resources and guidance. |
 | **Available**     | Architected to be accessible where users may work.                                     |
 | **Accessible**    | All components meet WCAG 2.1 AA standards out of the box.                              |
-
-## Choose Your Path
-
-Beyond serving end users, Cobalt provides role-specific onboarding for designers, developers, and product managers. Pick the guide that fits your role.
-
-### For Designers
-
-Learn how to use the Cobalt Figma, Penpot, and XD resources and hand off specs to developers with confidence.
-
-[Read the Designers Guide](./designers.md)
-
-### For Developers
-
-Install packages, set up your framework of choice, import components, and start building. Covers vanilla HTML, React, Vue, and Angular.
-
-[Read the Developers Guide](./developers.md)
-
-### For Product Managers
-
-Understand what the design system provides, how it can benefit your team, and the governance model that keeps Cobalt evolving.
-
-[Read the Product Managers Guide](./product-managers.md)
 
 ## Architecture Overview
 
@@ -83,3 +53,25 @@ Cobalt is distributed as a set of scoped npm packages:
 | `@cobalt/react`      | React wrappers for Cobalt web components, with proper prop and event binding.              |
 | `@cobalt/vue`        | Vue 3 wrappers for Cobalt web components, using `defineComponent` for type safety.         |
 | `@cobalt/angular`    | Angular directives that adopt modern patterns such as signals and standalone components.   |
+
+## Choose Your Path
+
+Beyond serving end users, Cobalt provides role-specific onboarding for designers, developers, and product managers. Pick the guide that fits your role.
+
+### For Designers
+
+Learn how to use the Cobalt Figma, Penpot, and XD resources and hand off specs to developers with confidence.
+
+[Read the Designers Guide](./designers.md)
+
+### For Developers
+
+Install packages, set up your framework of choice, import components, and start building. Covers vanilla HTML, React, Vue, and Angular.
+
+[Read the Developers Guide](./developers.md)
+
+### For Product Managers
+
+Understand what the design system provides, how it can benefit your team, and the governance model that keeps Cobalt evolving.
+
+[Read the Product Managers Guide](./product-managers.md)
