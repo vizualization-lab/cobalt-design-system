@@ -743,7 +743,7 @@ body {
 .cobalt-content {
   max-width: 820px;
   margin: 0 auto;
-  padding: 48px 56px 80px;
+  padding: 20px 56px 80px;
 }
 
 /* ── Home splash mode ────────────────────────────────────────

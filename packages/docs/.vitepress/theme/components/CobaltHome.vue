@@ -15,7 +15,7 @@ const features = [
     iconName: 'widgets',
     title: 'Web Components',
     description:
-      'Lit provides a structured foundation for components that abstract implementation. Components ship with token-driven Cobalt theming.',
+      'Lit provides a structured foundation for components that abstract implementation. Components are shiped with token-driven Cobalt theming baked in.',
     link: '/components',
   },
   {
@@ -362,13 +362,8 @@ const features = [
   color: inherit;
   transition: all 0.3s var(--co-ease);
   animation: featureSlideIn 0.5s var(--co-ease) both;
-  display: flex;
+  display: grid;
   border-radius: var(--co-component-card-radius, var(--co-shape-radius-lg));
-}
-
-.feature-card co-card {
-  flex: 1;
-  block-size: 100%;
 }
 
 @keyframes featureSlideIn {
