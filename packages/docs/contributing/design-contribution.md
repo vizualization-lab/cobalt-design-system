@@ -63,7 +63,7 @@ Before a design is approved for development, it must pass the following review:
 - [ ] Uses only Cobalt design tokens — no hard-coded values
 - [ ] Follows the established grid and spacing system
 - [ ] Typography uses defined type scale styles
-- [ ] Colors pass WCAG 2.2 AA contrast requirements (4.5:1 for text, 3:1 for UI elements)
+- [ ] Colors pass WCAG 2.1 AA contrast requirements (4.5:1 for text, 3:1 for UI elements)
 - [ ] Works in both light and dark themes
 
 ### Interaction Design

@@ -2,30 +2,23 @@
 
 This is the central place for all Cobalt support channels. Whether you have a question, want to report a bug, or need help with a migration, here's how to reach us.
 
-## Live Chat
-
-> **TBD:** We intend to have a live chat channel once the system is integrated into the enterprise solution and a finalized governanced and communications plan is established.
-
-## GitHub
+## Available Today
 
 - **Issues** — Use the [GitHub issue templates](%GITHUB_URL%/issues/new/choose) for bug reports, feature requests, migration help, and structured support requests.
 - **Discussions** — Use [GitHub Discussions](%GITHUB_URL%/discussions) for open-ended questions, design decisions, RFCs, and community conversations.
 
-## Office Hours
+If you are requesting Figma access, registry help, or migration guidance, include your team or product context in the request so the Cobalt team can route you faster.
 
-> **TBD:** We intend to have office hours once the system is integrated into the enterprise solution and a finalized governanced and communications plan is established.
+## Planned Channels
 
-- **When:** _TBD_ — likely weekly or biweekly
-- **Where:** _TBD_ — likely a recurring virtual meeting
-- **Who:** Open to everyone — designers, developers, product managers, and anyone working with Cobalt
+The following channels are planned, but they should not be treated as active support paths yet:
 
-There will be no agenda required and anyone will be able to drop in with questions or just listen.
+- **Live chat** — TBD once communications and governance are finalized
+- **Office hours** — TBD once the recurring forum is established
 
 ## Response Times
 
-| Channel            | Typical Response Time |
-| ------------------ | --------------------- |
-| Live Chat          | Same business day     |
-| GitHub Issues      | 1-2 business days     |
-| GitHub Discussions | 1-2 business days     |
-| Office Hours       | Live                  |
+| Channel            | Availability | Typical Response Time |
+| ------------------ | ------------ | --------------------- |
+| GitHub Issues      | Available    | 1-2 business days     |
+| GitHub Discussions | Available    | 1-2 business days     |

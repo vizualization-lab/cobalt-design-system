@@ -31,6 +31,7 @@ const githubOrg = env.COBALT_GITHUB_ORG || 'vizualization-lab';
 const githubRepo = env.COBALT_GITHUB_REPO || 'cobalt-design-system';
 const githubUrl = env.COBALT_GITHUB_URL || `https://github.com/${githubOrg}/${githubRepo}`;
 const registryUrl = env.COBALT_REGISTRY_URL || 'https://registry.your-org.com';
+const caBundlePath = env.COBALT_CA_BUNDLE || './path/to/ca/bundle';
 
 /**
  * Markdown-it plugin that replaces %GITHUB_URL% placeholders in the raw
@@ -41,6 +42,7 @@ function replacePlaceholders(md: any) {
   const replacements: Record<string, string> = {
     '%GITHUB_URL%': githubUrl,
     '%REGISTRY_URL%': registryUrl,
+    '%CA_BUNDLE_PATH%': caBundlePath,
   };
 
   const originalParse = md.parse.bind(md);

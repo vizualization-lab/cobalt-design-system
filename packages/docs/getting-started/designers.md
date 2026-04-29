@@ -4,17 +4,17 @@ This guide walks you through setting up the Cobalt Figma library, working with d
 
 ## Setting Up Figma
 
-### 1. Enable the Cobalt Library
+### 1. Request Access to the Cobalt Figma Team
 
-Open any Figma file, then go to **Assets > Team Library** and enable the following libraries:
+Cobalt's design resources are hosted in a shared Figma team. To request access, please contact the Cobalt team through our [contact page](/resources/contact).
 
-- **Cobalt Components** — all production-ready UI components
-- **Cobalt Icons** — the full icon set
-- **Cobalt Tokens** — color, spacing, and typography styles
+### 2. Enable the Cobalt Library
 
-> **Tip:** Pin the Cobalt libraries to keep them at the top of your asset panel. This makes drag-and-drop much faster during daily work.
+Once you have access, open any Figma file, then go to **Assets > Team Library** and enable the `Cobalt Design System [MVP]` library. This will give you access to all the components, tokens, and icons.
 
-### 2. Install the Tokens Studio Figma Plugin
+> **Tip:** Pin the Cobalt library to keep them at the top of your asset panel. This makes drag-and-drop much faster during daily work.
+
+### 3. Install the Tokens Studio Figma Plugin
 
 The Tokens Studio plugin helps you import and export design tokens, and synchronize with Figma variables.
 

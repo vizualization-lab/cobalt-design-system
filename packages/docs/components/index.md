@@ -26,7 +26,7 @@ Every component page in this section follows the same structure so you always kn
 
 ## For Designers
 
-- Interactive demos let you preview the Figma/PenPot componets in action
+- Interactive demos let you preview the Cobalt component library in action
 - Variants & States sections show the full visual spec for each component
 - Accessibility reports confirm WCAG compliance per component and state
 - Design token names give you the shared vocabulary for design–dev handoff
@@ -40,7 +40,7 @@ Every component page in this section follows the same structure so you always kn
 
 ```html
 <script type="module">
-  import '@cobalt/components/co-button';
+  import '@cobalt/components/button';
 </script>
 
 <co-button variant="primary">Save</co-button>

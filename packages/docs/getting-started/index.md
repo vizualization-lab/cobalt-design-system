@@ -2,6 +2,8 @@
 
 Welcome to the Cobalt Design System. This guide will help you get up and running regardless of your role on the product team.
 
+Need a quick answer instead of a full walkthrough? Start with the new [FAQs](/faqs/).
+
 ## What is Cobalt?
 
 Cobalt is a unified design system that provides reusable components, design tokens, and guidelines to help teams build accessible, performant interfaces with a consistent look and feel. It bridges the gap between designers and developers by offering a shared language and toolkit.
@@ -32,7 +34,7 @@ The foundation of Cobalt is a single source of truth for design decisions, autho
 
 **DTCG** stands for the [Design Tokens Community Group](https://www.designtokens.org/), a W3C community group defining an open, vendor-neutral standard for how design tokens are structured and serialized. The format prescribes a predictable JSON shape — each token carries a `$value`, `$type`, and optional `$description` — plus a reference syntax (`{color.brand.500}`) for aliasing tokens to other tokens.
 
-This matters because it turns tokens into portable data: Figma, PenPot, Tokens Studio, Style Dictionary, and any future tool that speaks DTCG can read and write the same files without a custom adapter. It future-proofs the pipeline against tool churn and lets designers and developers share one canonical definition of every value.
+This matters because it turns tokens into portable data: Figma, Tokens Studio, Style Dictionary, and any future tool that speaks DTCG can read and write the same files without a custom adapter. It future-proofs the pipeline against tool churn and lets designers and developers share one canonical definition of every value.
 
 From one set of DTCG JSON files we generate CSS custom properties, SCSS variables, JS/TS exports, and a flat JSON reference so designers, developers, and tooling all consume the same values. A three-tier structure (primitive → semantic → component) keeps raw palette values out of components and makes theming a matter of swapping semantic mappings.
 
@@ -60,7 +62,7 @@ Beyond serving end users, Cobalt provides role-specific onboarding for designers
 
 ### For Designers
 
-Learn how to use the Cobalt Figma, Penpot, and XD resources and hand off specs to developers with confidence.
+Learn how to use the Cobalt Figma libraries, token workflows, and handoff guidance with confidence.
 
 [Read the Designers Guide](./designers.md)
 

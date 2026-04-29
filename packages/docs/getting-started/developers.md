@@ -12,7 +12,7 @@ This guide covers everything you need to start building with Cobalt — from set
 | pnpm    | 9.x             | `pnpm --version` |
 | Git     | 2.x             | `git --version`  |
 
-> **Tip:** We recommend using [nvm](https://github.com/nvm-sh/nvm) to manage Node versions. The repository includes an `.nvmrc` file.
+> **Tip:** Node 20.x is the contributor baseline. We recommend using [nvm](https://github.com/nvm-sh/nvm) to manage Node versions, and the repository includes an `.nvmrc` file.
 
 ### Browser support
 
@@ -37,13 +37,28 @@ Framework wrappers are optional but recommended for better DX (typed props, nati
 
 ## Environment Setup
 
-First, configure the private npm registry so you can install Cobalt packages:
+Cobalt packages are hosted on a private repository and you can you must configure npm to point to the private repository when installing packages with scoped with `@cobalt`. You can configure npm at the project level or globally. We recommend the project-level configuration however you use Cobalt across multiple projects, you can opt for the global option.
 
-```bash
-pnpm config set @cobalt:registry %REGISTRY_URL%
+### Project-level registry configuration
+
+Add the following line to your project's `.npmrc` file:
+
+```ini
+@cobalt:registry=%REGISTRY_URL%
+cafile=%CA_BUNDLE_PATH%
 ```
 
-Then install the core packages into your project:
+> **NOTE:** If you are having issues with the CA bundle, you can add `strict-ssl=false` to your `.npmrc` file for debuging purposes, but this is not recommended for security reasons.
+
+### Global registry configuration
+
+The following command sets the registry for all `@cobalt` scoped packages globally on your machine:
+
+```bash
+npm config set @cobalt:registry %REGISTRY_URL%
+```
+
+Once you have configured the registry, you can then install the core packages into your project:
 
 ```bash
 npm install @cobalt/components @cobalt/tokens
@@ -83,6 +98,12 @@ Import the token stylesheet and the component module. No build step required.
 </script>
 
 <co-button variant="primary">Save Changes</co-button>
+```
+
+When you are using a bundler, prefer the package import path in your global CSS instead:
+
+```css
+@import '@cobalt/tokens/css';
 ```
 
 ### React
@@ -243,7 +264,7 @@ pnpm add -D vitest @open-wc/testing
 
 ```js
 import { html, fixture, expect } from '@open-wc/testing';
-import '@cobalt/components/co-button';
+import '@cobalt/components/button';
 
 describe('co-button', () => {
   it('renders with the correct label', async () => {

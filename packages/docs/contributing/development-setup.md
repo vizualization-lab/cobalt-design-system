@@ -1,62 +1,56 @@
 # Development Setup
 
-This guide walks you through setting up a local development environment for the Cobalt Design System.
+This guide walks you through setting up a local development environment for the Cobalt monorepo.
 
 ## Prerequisites
 
 Ensure the following tools are installed before proceeding:
 
-| Tool    | Minimum Version | Installation                                                 |
-| ------- | --------------- | ------------------------------------------------------------ |
-| Node.js | 20.0.0          | [nodejs.org](https://nodejs.org) or use `nvm`                |
-| pnpm    | 9.0.0           | `corepack enable && corepack prepare pnpm@latest --activate` |
-| Git     | 2.40+           | [git-scm.com](https://git-scm.com)                           |
+| Tool    | Supported Version | Installation                                                 |
+| ------- | ----------------- | ------------------------------------------------------------ |
+| Node.js | 20+               | [nodejs.org](https://nodejs.org) or use `nvm`                |
+| pnpm    | 9+                | `corepack enable && corepack prepare pnpm@latest --activate` |
+| Git     | 2.40+             | [git-scm.com](https://git-scm.com)                           |
 
-> **Tip:** We recommend using `nvm` or `fnm` to manage Node versions. The repository includes an `.nvmrc` file, so you can run `nvm use` to switch to the correct version automatically.
+> **Tip:** Node 20.x is the contributor baseline. The repository includes an `.nvmrc` file, so `nvm use` is the easiest way to match the expected environment.
 
 ## Clone and Install
 
 ```bash
-# Clone the repository
 git clone %GITHUB_URL%.git
 cd cobalt-design-system
-
-# Install dependencies
 pnpm install
 ```
 
-The install step uses pnpm workspaces to link all packages together. You should not need to install dependencies in individual packages.
+The install step uses pnpm workspaces to link packages together. You should not need to install dependencies inside individual packages.
 
 ## Project Structure
 
-The repository is organized as a monorepo using pnpm workspaces:
+The repository is organized as a pnpm workspace:
 
-```
+```text
 cobalt-design-system/
 ├── packages/
-│   ├── core/                  # @cobalt/core — shared utilities and base classes
-│   ├── tokens/                # @cobalt/tokens — design tokens (colors, spacing, etc.)
-│   ├── components/
-│   │   ├── co-button/         # @cobalt/co-button
-│   │   ├── co-input/          # @cobalt/co-input
-│   │   ├── co-modal/          # @cobalt/co-modal
-│   │   └── ...                # Additional components
-│   ├── icons/                 # @cobalt/icons — icon library
-│   ├── themes/                # @cobalt/themes — theme definitions
-│   └── docs/                  # Documentation site (you are here)
-├── tools/
-│   ├── eslint-config/         # Shared ESLint configuration
-│   └── test-utils/            # Testing helpers and fixtures
+│   ├── tokens/       # @cobalt/tokens — source tokens + generated outputs
+│   ├── components/   # @cobalt/components — Lit web components
+│   ├── react/        # @cobalt/react — React wrappers
+│   ├── vue/          # @cobalt/vue — Vue wrappers
+│   ├── angular/      # @cobalt/angular — Angular wrappers
+│   ├── docs/         # @cobalt/docs — VitePress documentation site
+│   ├── icons/        # @cobalt/icons — shared icon assets/runtime
+│   └── workbench/    # isolated component preview environment
+├── scripts/
 ├── pnpm-workspace.yaml
-├── turbo.json
 └── package.json
 ```
+
+Component source files live under `packages/components/src/components/`. Token source files live under `packages/tokens/tokens/`.
 
 ## Environment Configuration
 
 The docs site reads optional environment variables from a `.env` file at the repository root. This is useful when working from a fork or a different GitHub org.
 
-To get started, copy the example file:
+To get started:
 
 ```bash
 cp .env.example .env
@@ -64,182 +58,134 @@ cp .env.example .env
 
 Then uncomment and edit any values you need to override:
 
-| Variable              | Default                                                       | Description                |
-| --------------------- | ------------------------------------------------------------- | -------------------------- |
-| `COBALT_GITHUB_ORG`   | ``                                                            | GitHub organization name   |
-| `COBALT_GITHUB_REPO`  | `cobalt-design-system`                                        | GitHub repository name     |
-| `COBALT_GITHUB_URL`   | `https://github.com/{COBALT_GITHUB_ORG}/{COBALT_GITHUB_REPO}` | Full GitHub repository URL |
-| `COBALT_REGISTRY_URL` | `https://registry.your-org.com`                               | Private npm registry URL   |
+| Variable              | Default                                                       | Description                        |
+| --------------------- | ------------------------------------------------------------- | ---------------------------------- |
+| `COBALT_GITHUB_ORG`   | ``                                                            | GitHub organization name           |
+| `COBALT_GITHUB_REPO`  | `cobalt-design-system`                                        | GitHub repository name             |
+| `COBALT_GITHUB_URL`   | `https://github.com/{COBALT_GITHUB_ORG}/{COBALT_GITHUB_REPO}` | Full GitHub repository URL         |
+| `COBALT_REGISTRY_URL` | `https://registry.your-org.com`                               | npm registry URL for docs examples |
 
-If `COBALT_GITHUB_URL` is not set, it is automatically derived from `COBALT_GITHUB_ORG` and `COBALT_GITHUB_REPO`. The `.env` file is git-ignored, so your local overrides will not be committed.
+If `COBALT_GITHUB_URL` is not set, it is derived automatically from `COBALT_GITHUB_ORG` and `COBALT_GITHUB_REPO`. The `.env` file is git-ignored.
 
-## Build Commands
+## Common Root Commands
 
-All commands should be run from the **repository root**.
+Run these from the repository root:
 
-| Command                                 | Description                                   |
-| --------------------------------------- | --------------------------------------------- |
-| `pnpm build`                            | Build all packages                            |
-| `pnpm build --filter=@cobalt/co-button` | Build a single package                        |
-| `pnpm dev`                              | Start development mode with file watching     |
-| `pnpm lint`                             | Run ESLint across all packages                |
-| `pnpm lint --fix`                       | Auto-fix linting issues                       |
-| `pnpm format`                           | Run Prettier on all files                     |
-| `pnpm clean`                            | Remove all build artifacts and `node_modules` |
+| Command           | Description                                          |
+| ----------------- | ---------------------------------------------------- |
+| `pnpm build`      | Build every package in the workspace                 |
+| `pnpm dev`        | Start the docs site locally                          |
+| `pnpm workbench`  | Start the isolated component workbench               |
+| `pnpm test`       | Run the workspace test suites                        |
+| `pnpm test:watch` | Run the component test suite in watch mode           |
+| `pnpm lint`       | Run ESLint across TypeScript source files            |
+| `pnpm format`     | Format the repo with Prettier                        |
+| `pnpm clean`      | Remove build artifacts and docs cache                |
+| `pnpm pack:local` | Build local publish-style tarballs for external apps |
+
+When you only need one package, prefer package-scoped commands:
+
+```bash
+pnpm --filter @cobalt/components build
+pnpm --filter @cobalt/components test
+pnpm --filter @cobalt/docs build
+pnpm --filter @cobalt/docs preview
+```
 
 ## Component Workbench
 
-The workbench is a lightweight Vite-powered environment for developing and previewing components in isolation. It offers instant hot-reload for component code, styles, and design tokens — without the caching issues of the full docs site.
+The workbench is a lightweight Vite-powered environment for developing and previewing components in isolation. It avoids much of the docs-site overhead while still giving you live component and token feedback.
 
 ```bash
 pnpm workbench
 ```
 
-This starts a dev server at `http://localhost:5173` with a landing page linking to each component preview.
+Typical workbench use cases:
 
-### How it works
-
-- **Component changes** — Editing a component's `.ts` or `.styles.css` file triggers an immediate hot-reload in the browser.
-- **Token changes** — Editing token source files in `packages/tokens/tokens/` triggers an automatic token rebuild and browser refresh.
-- **Theme toggle** — Each preview includes a light/dark theme toggle.
-- **Composed components** — Previews can import multiple components (e.g. `co-icon` inside `co-button`).
-
-### Adding a preview for a new component
-
-Create a new `.ts` file in `packages/workbench/previews/`:
-
-```ts
-// packages/workbench/previews/input.ts
-import '@cobalt/components/input';
-
-export const title = '<co-input>';
-
-export const html = `
-  <section class="wb-section">
-    <h2 class="wb-heading">Variants</h2>
-    <div class="wb-row">
-      <co-input placeholder="Default"></co-input>
-      <co-input placeholder="Disabled" disabled></co-input>
-    </div>
-  </section>
-`;
-```
-
-Then add a link on the landing page (`packages/workbench/index.html`):
-
-```html
-<a class="card" href="/preview.html?component=input">
-  <div class="card-name">Input</div>
-  <div class="card-tag">&lt;co-input&gt;</div>
-</a>
-```
-
-Use the `wb-section`, `wb-heading`, and `wb-row` CSS classes to keep preview layouts consistent.
+- iterate on component TS and generated styles quickly
+- preview token changes without navigating the full docs site
+- validate composed examples before writing docs
 
 ## Running the Documentation Site
 
-The docs site is built with VitePress and can be started locally:
+The docs site is built with VitePress:
 
 ```bash
-# Start the dev server
-pnpm docs:dev
+# Start the local docs dev server
+pnpm dev
 
-# Build for production
-pnpm docs:build
+# Build the docs package
+pnpm --filter @cobalt/docs build
 
 # Preview the production build
-pnpm docs:preview
+pnpm --filter @cobalt/docs preview
 ```
 
-The dev server runs at `http://localhost:5173` by default and supports hot module replacement.
+`pnpm dev` is the default contributor entry point for docs work because it runs the same site most users consume.
 
 ## Running Tests
 
+Use the workspace or package-scoped commands depending on the change:
+
 ```bash
-# Run all tests
+# Run all workspace tests
 pnpm test
 
-# Run tests for a specific package
-pnpm test --filter=@cobalt/co-button
+# Run the component test suite directly
+pnpm --filter @cobalt/components test
 
-# Run tests in watch mode
+# Re-run component tests in watch mode
 pnpm test:watch
-
-# Run accessibility tests only
-pnpm test:a11y
-
-# Generate a coverage report
-pnpm test:coverage
 ```
 
-Tests use Web Test Runner with Playwright for browser-based testing. Accessibility tests use `@open-wc/testing` helpers along with `axe-core`.
+Component tests run through Web Test Runner with Playwright-backed browsers. Accessibility audits are part of the component test suite, so there is no separate root-level `pnpm test:a11y` command today.
 
 ## Local Testing in External Apps
 
-When developing Cobalt, you often need to test your changes in an external application before publishing. There are two approaches depending on your workflow.
+When developing Cobalt, you may need to validate changes in a separate application before publishing.
 
 ### Using `pack:local` (recommended)
 
-The `pack:local` script builds all packages and produces tarballs identical to what `npm publish` would create. This is the most reliable method because it validates package exports, `files` configuration, and build output — catching issues that symlinks would hide.
+`pnpm pack:local` builds publish-style tarballs. This is the safest option because it validates exports, file inclusion, and build output rather than relying on symlinks.
 
 ```bash
-# In the cobalt monorepo
 pnpm pack:local
 ```
 
-This creates `.tgz` files in `./local-packs/`. Then install them in your app:
+Then install the generated tarballs in your app:
 
 ```bash
-# Install all Cobalt packages at once
 npm install /path/to/cobalt/local-packs/*.tgz
-
-# Or install only what you need
-npm install /path/to/cobalt/local-packs/cobalt-components-0.0.1.tgz \
-            /path/to/cobalt/local-packs/cobalt-tokens-0.0.1.tgz
 ```
 
-If you already ran `pnpm build` separately, skip the build step:
+If you already ran `pnpm build`, you can skip the extra build step:
 
 ```bash
 pnpm pack:local --skip-build
 ```
 
-After making changes in the monorepo, re-run `pnpm pack:local` and reinstall in your app to pick up the updates.
-
 ### Using `pnpm link` (faster iteration)
 
-For rapid development where you are making frequent changes, symlinks avoid the pack-reinstall cycle:
+If you need faster feedback and can tolerate symlink quirks:
 
 ```bash
-# In the cobalt monorepo — register a package globally
 cd packages/components
 pnpm link --global
 
-# In your external app — link the package
+# in the external app
 pnpm link --global @cobalt/components
 ```
 
-Changes are reflected after running `pnpm build` in the monorepo — no reinstall needed. Repeat for each package you want to link.
-
-::: warning
-Linked packages can cause duplicate dependency issues at runtime (e.g., two copies of Lit or Vue). If you encounter unexpected errors, switch to `pack:local` instead.
-:::
-
-### When you don't need an external app
-
-For most development work, the monorepo itself provides full integration testing:
-
-- **`pnpm build`** — verifies all packages compile and interoperate
-- **`pnpm test`** — runs component unit tests and accessibility checks
-- **`pnpm dev`** — the docs site imports every `@cobalt` package and serves as a live integration environment
+This avoids reinstalling tarballs after every change, but linked packages can surface duplicate dependency issues. If that happens, fall back to `pack:local`.
 
 ## Troubleshooting
 
-| Problem                                          | Solution                                                                     |
-| ------------------------------------------------ | ---------------------------------------------------------------------------- |
-| `pnpm install` fails with peer dependency errors | Run `pnpm install --no-frozen-lockfile` and commit the updated lockfile      |
-| Components not reflecting changes                | Ensure `pnpm dev` is running; try `pnpm clean && pnpm install && pnpm build` |
-| Tests timeout in CI                              | Run `pnpm exec playwright install` to install browser binaries               |
-| Tests fail with "custom element already defined" | Run each test file in its own browser context or use `--isolation` flag      |
+| Problem                                             | Solution                                                                   |
+| --------------------------------------------------- | -------------------------------------------------------------------------- |
+| `pnpm install` fails with workspace issues          | Re-run from the repo root and confirm you are using pnpm 9+                |
+| Docs changes do not show up                         | Restart `pnpm dev` or run `pnpm clean` before restarting                   |
+| Token changes do not appear in previews             | Rebuild or refresh the workbench/docs site after the token package updates |
+| Tests timeout in CI or locally                      | Run `pnpm exec playwright install` to install browser binaries             |
+| Linked packages behave strangely in an external app | Switch from `pnpm link` to `pnpm pack:local`                               |
 
-> **Note:** If you encounter issues not covered here, check our [Contact page](/resources/contact) for support channels.
+If you hit a problem that is not covered here, use the [Contact](/resources/contact) page or [GitHub Discussions](%GITHUB_URL%/discussions).
