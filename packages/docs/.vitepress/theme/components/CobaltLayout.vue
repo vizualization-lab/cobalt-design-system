@@ -402,9 +402,6 @@ function toggleSidebar() {
 
   /* Ambient effects */
   --co-grain-opacity: 0.03;
-  --co-icon-glow: drop-shadow(
-    0 0 8px color-mix(in srgb, var(--co-color-primary-base) 30%, transparent)
-  );
   --co-hero-glow: radial-gradient(
     ellipse at center,
     color-mix(in srgb, var(--co-color-primary-base) 12%, transparent) 0%,
@@ -536,7 +533,6 @@ body {
 .brand-icon {
   display: flex;
   color: var(--co-color-interactive-primary-default);
-  filter: var(--co-icon-glow);
 }
 
 .brand-icon .gem-outline {
