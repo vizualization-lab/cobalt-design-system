@@ -148,6 +148,14 @@ function toggleSidebar() {
     <!-- Ambient background grain -->
     <div class="cobalt-grain" aria-hidden="true"></div>
 
+    <!-- Alpha banner -->
+    <div class="cobalt-alpha-banner" role="banner" aria-label="Alpha notice">
+      <strong class="cobalt-alpha-banner__title">Alpha</strong>
+      <span class="cobalt-alpha-banner__text"
+        >This design system is in active development — APIs and tokens may change.</span
+      >
+    </div>
+
     <!-- Top bar -->
     <header class="cobalt-topbar">
       <button
@@ -404,7 +412,9 @@ function toggleSidebar() {
   /* Layout metrics (not theme) */
   --co-rail-width: var(--co-component-nav-rail-bar-width, 115px);
   --co-sidebar-width: 260px;
+  --co-banner-height: 46px;
   --co-topbar-height: 56px;
+  --co-topbar-offset: calc(var(--co-banner-height, 0px) + var(--co-topbar-height));
   --co-panel-gap: 12px;
 
   /* Transitions */
@@ -459,9 +469,39 @@ body {
 }
 
 /* ── Top Bar ────────────────────────────────────────────────── */
-.cobalt-topbar {
+.cobalt-alpha-banner {
   position: fixed;
   top: 0;
+  left: 0;
+  right: 0;
+  z-index: 101;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: var(--co-banner-height);
+  padding: var(--co-space-1);
+  background: var(--co-color-surface-raised);
+  color: var(--co-color-text-default);
+  font-family: var(--co-font-family-sans);
+  font-size: var(--co-typography-caption-size);
+  line-height: var(--co-typography-caption-line-height);
+  border-bottom: 1px solid var(--co-color-border-subtle);
+}
+
+.cobalt-alpha-banner__title {
+  font-weight: var(--co-font-weight-medium);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.cobalt-alpha-banner__text {
+  color: var(--co-color-text-secondary);
+}
+
+.cobalt-topbar {
+  position: fixed;
+  top: var(--co-banner-height);
   left: 0;
   right: 0;
   height: var(--co-topbar-height);
@@ -686,7 +726,7 @@ body {
 /* ── Body ───────────────────────────────────────────────────── */
 .cobalt-body {
   display: flex;
-  padding-top: var(--co-topbar-height);
+  padding-top: var(--co-topbar-offset);
   min-height: 100vh;
 }
 

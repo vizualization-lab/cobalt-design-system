@@ -131,7 +131,7 @@ function isGroupOpen(item: NavItem): boolean {
 <style scoped>
 .cobalt-sidebar {
   position: fixed;
-  top: calc(var(--co-topbar-height) + var(--co-panel-gap));
+  top: calc(var(--co-topbar-offset, var(--co-topbar-height)) + var(--co-panel-gap));
   left: calc(var(--co-panel-gap) + var(--co-rail-width) + var(--co-panel-gap));
   bottom: var(--co-panel-gap);
   width: var(--co-sidebar-width);

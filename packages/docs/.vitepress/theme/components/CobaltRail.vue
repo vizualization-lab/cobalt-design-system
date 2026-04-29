@@ -78,7 +78,7 @@ function onKey(event: KeyboardEvent, i: number) {
 <style scoped>
 .cobalt-rail {
   position: fixed;
-  top: calc(var(--co-topbar-height) + var(--co-panel-gap));
+  top: calc(var(--co-topbar-offset, var(--co-topbar-height)) + var(--co-panel-gap));
   left: var(--co-panel-gap);
   bottom: var(--co-panel-gap);
   width: var(--co-rail-width);
