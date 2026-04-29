@@ -24,6 +24,19 @@ export class CoOption extends LionOption {
     return [cobaltOptionStyles];
   }
 
+  /**
+   * Intercept the checked attribute so that the string "false"
+   * (set by frameworks like Vue) is treated as falsy.  Lit's default
+   * Boolean converter treats any present attribute as truthy.
+   */
+  override attributeChangedCallback(name: string, old: string | null, value: string | null): void {
+    if (name === 'checked' && value === 'false') {
+      this.removeAttribute('checked');
+      return;
+    }
+    super.attributeChangedCallback(name, old, value);
+  }
+
   /** String value alias mapped to Lion's choiceValue. */
   @property({ reflect: true })
   override get value(): string {
