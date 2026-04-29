@@ -32,7 +32,7 @@ Reuse the same patterns, tokens, and language throughout the product. Consistent
 
 ## 3. Accessible by default
 
-Accessibility is not an enhancement — it is a baseline requirement. Every Cobalt component ships with proper ARIA attributes, keyboard navigation, and color contrast ratios that meet WCAG 2.2 AA.
+Accessibility is not an enhancement — it is a baseline requirement. Every Cobalt component ships with proper ARIA attributes, keyboard navigation, and color contrast ratios that meet WCAG 2.1 AA.
 
 | Do                                                                | Don't                                        |
 | ----------------------------------------------------------------- | -------------------------------------------- |
@@ -60,10 +60,10 @@ Components should do one thing well and combine easily with other components. Av
 
 Users notice when an interface feels sluggish. Cobalt components are tree-shakable, lazy-loadable, and optimized for minimal runtime overhead. Design decisions should respect performance budgets.
 
-| Do                                                                | Don't                                                          |
-| ----------------------------------------------------------------- | -------------------------------------------------------------- |
-| Import only the components you use: `import '@cobalt/co-button'`. | Import the entire library: `import '@cobalt/cobalt'`.          |
-| Use `co-virtual-scroll` for lists with more than 100 items.       | Render thousands of DOM nodes and rely on the browser to cope. |
+| Do                                                                        | Don't                                                          |
+| ------------------------------------------------------------------------- | -------------------------------------------------------------- |
+| Import only the components you use: `import '@cobalt/components/button'`. | Import the entire library: `import '@cobalt/components'`.      |
+| Use `co-virtual-scroll` for lists with more than 100 items.               | Render thousands of DOM nodes and rely on the browser to cope. |
 
 > **Guiding question:** Does this decision keep the bundle under budget and the frame rate above 60 fps?
 

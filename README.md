@@ -4,8 +4,10 @@ A token-first design system built with [Lit](https://lit.dev/) with framework wr
 
 ## Prerequisites
 
-- **Node.js** >= 18
+- **Node.js** >= 20
 - **pnpm** >= 9
+
+> **Tip:** Node 20 is the local development baseline for this repo.
 
 ## Getting Started
 

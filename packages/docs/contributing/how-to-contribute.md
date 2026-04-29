@@ -8,7 +8,7 @@ If you've found a bug in a Cobalt component, please file an issue using the **Bu
 
 A good bug report includes:
 
-- **Component name and version** (e.g., `@cobalt/co-button@2.3.1`)
+- **Component name and package version** (e.g., `co-button` in `@cobalt/components@0.1.0`)
 - **Steps to reproduce** the issue
 - **Expected behavior** versus **actual behavior**
 - **Browser and OS** information
@@ -72,14 +72,14 @@ For broader conversations or open-ended questions, use [GitHub Discussions](%GIT
 
 ### Pull Request Checklist
 
-| Requirement           | Details                                               |
-| --------------------- | ----------------------------------------------------- |
-| Tests pass            | `pnpm test` completes with no failures                |
-| Lint passes           | `pnpm lint` reports no errors                         |
-| Changeset added       | Run `pnpm changeset` for any user-facing changes      |
-| Documentation updated | Update or add docs for new or changed behavior        |
-| Accessibility tested  | Run `pnpm test:a11y` and verify no regressions        |
-| Visual review         | Confirm the component renders correctly across themes |
+| Requirement            | Details                                                                                                        |
+| ---------------------- | -------------------------------------------------------------------------------------------------------------- |
+| Tests pass             | `pnpm test` completes with no failures                                                                         |
+| Lint passes            | `pnpm lint` reports no errors                                                                                  |
+| Changeset added        | Run `pnpm changeset` for any user-facing changes                                                               |
+| Documentation updated  | Update or add docs for new or changed behavior                                                                 |
+| Accessibility reviewed | For UI changes, run `pnpm test` (or the relevant package test command) and verify no accessibility regressions |
+| Visual review          | Confirm the component renders correctly across themes                                                          |
 
 ## Code Review Process
 
@@ -111,6 +111,6 @@ If this is your first contribution, welcome! Here's how to get started:
 1. Look for issues labeled **`good first issue`** — these are scoped, well-documented tasks
 2. Comment on the issue to let others know you're working on it
 3. Follow the [Development Setup](./development-setup.md) guide to configure your environment
-4. Don't hesitate to ask questions in `#cobalt-contributors`
+4. If you get blocked, use [GitHub Discussions](%GITHUB_URL%/discussions) or the [Contact](/resources/contact) path instead of guessing
 
 We're here to help you succeed with your first pull request.

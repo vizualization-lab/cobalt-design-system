@@ -122,6 +122,21 @@ export const navigation: NavGroup[] = [
     ],
   },
   {
+    label: 'FAQs',
+    railLabel: 'FAQs',
+    icon: 'quiz',
+    defaultOpen: false,
+    items: [
+      { text: 'Overview', link: '/faqs/' },
+      { text: 'Installation & Setup', link: '/faqs/installation-and-setup' },
+      { text: 'Figma & Design Access', link: '/faqs/figma-and-design-access' },
+      { text: 'Tokens & Theming', link: '/faqs/tokens-and-theming' },
+      { text: 'Utilities & Styling', link: '/faqs/utilities-and-styling' },
+      { text: 'Help, Feedback & Support', link: '/faqs/help-feedback-and-support' },
+      { text: 'Contributing & Roadmap', link: '/faqs/contributing-and-roadmap' },
+    ],
+  },
+  {
     label: 'Contributing',
     railLabel: 'Contribute',
     icon: 'person-add',
@@ -207,7 +222,7 @@ export function toVitePressSidebar(): { text: string; items: SidebarItem[] }[] {
  * Derive the VitePress `themeConfig.nav` array from the navigation data.
  * Picks the groups that make sense as top-level nav entries (skips Overview and Changelog).
  */
-const topNavGroups = ['Get Started', 'Foundations', 'Components', 'Patterns', 'Guidance'];
+const topNavGroups = ['Get Started', 'Foundations', 'Components', 'Patterns', 'Guidance', 'FAQs'];
 
 export function toVitePressNav(): { text: string; link: string }[] {
   return navigation

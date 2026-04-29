@@ -10,7 +10,7 @@ Before submitting a proposal, verify that:
 - No existing Cobalt component can be extended to cover the use case
 - The pattern is **stable enough** that its API is unlikely to change significantly after release
 
-> **Tip:** If you're unsure whether your idea warrants a new component, start a discussion in `#cobalt-contributors` or open a GitHub Discussion. The team can help you determine the right path.
+> **Tip:** If you're unsure whether your idea warrants a new component, start in [GitHub Discussions](%GITHUB_URL%/discussions). The team can help you determine the right path before you formalize a proposal.
 
 ## RFC Template
 
@@ -66,7 +66,7 @@ Document other approaches you evaluated and explain why the proposed solution is
 
 ### 4. Accessibility Plan
 
-Outline how the component will meet WCAG 2.2 AA requirements:
+Outline how the component will meet WCAG 2.1 AA requirements:
 
 - Keyboard navigation pattern (e.g., arrow keys, Enter, Escape)
 - ARIA roles and attributes

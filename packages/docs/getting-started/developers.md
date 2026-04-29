@@ -12,7 +12,7 @@ This guide covers everything you need to start building with Cobalt — from set
 | pnpm    | 9.x             | `pnpm --version` |
 | Git     | 2.x             | `git --version`  |
 
-> **Tip:** We recommend using [nvm](https://github.com/nvm-sh/nvm) to manage Node versions. The repository includes an `.nvmrc` file.
+> **Tip:** Node 20.x is the contributor baseline. We recommend using [nvm](https://github.com/nvm-sh/nvm) to manage Node versions, and the repository includes an `.nvmrc` file.
 
 ### Browser support
 
@@ -37,7 +37,7 @@ Framework wrappers are optional but recommended for better DX (typed props, nati
 
 ## Environment Setup
 
-First, configure the private npm registry so you can install Cobalt packages:
+If your environment publishes or mirrors `@cobalt` packages through a private registry, configure that scope before installing. If your npm config already knows the correct registry, you can skip this step.
 
 ```bash
 pnpm config set @cobalt:registry %REGISTRY_URL%
@@ -83,6 +83,12 @@ Import the token stylesheet and the component module. No build step required.
 </script>
 
 <co-button variant="primary">Save Changes</co-button>
+```
+
+When you are using a bundler, prefer the package import path in your global CSS instead:
+
+```css
+@import '@cobalt/tokens/css';
 ```
 
 ### React
@@ -243,7 +249,7 @@ pnpm add -D vitest @open-wc/testing
 
 ```js
 import { html, fixture, expect } from '@open-wc/testing';
-import '@cobalt/components/co-button';
+import '@cobalt/components/button';
 
 describe('co-button', () => {
   it('renders with the correct label', async () => {

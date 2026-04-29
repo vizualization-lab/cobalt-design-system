@@ -9,15 +9,15 @@ Helpful links, tools, and references for designers working with the Cobalt Desig
 - **Cobalt Components** — The production-ready component library. Enable it via **Assets > Team Library** in any Figma file.
 - **Cobalt Icons** — The full icon set, available as a separate library.
 - **Cobalt Tokens** — Color, spacing, and typography styles synced with the codebase.
+- **Access** — If you still need library access, start with the [Contact](/resources/contact) page.
 
 For setup instructions, see the [Getting Started for Designers](/getting-started/designers) guide.
 
 ## Recommended Figma Plugins
 
-- **Cobalt Design System** — Inspect token values, check contrast ratios, and sync with the latest token updates
-- **Contrast** — Quick WCAG contrast ratio checks for any color pairing
-- **Able** — Accessibility annotations and focus order documentation
-- **[Tokens Studio](https://www.figma.com/community/plugin/843461159747178978/tokens-studio-for-figma)** - Load, update, and export tokens managed by Cobalt
+- **[Tokens Studio](https://www.figma.com/community/plugin/843461159747178978/tokens-studio-for-figma)** — The documented plugin for token import, export, and sync workflows
+- **Contrast** — Optional WCAG contrast checks for quick reviews
+- **Able** — Optional accessibility annotations and focus-order documentation
 
 ## Handoff Workflow
 
