@@ -197,7 +197,7 @@ function onKey(event: KeyboardEvent, i: number) {
   line-height: var(--co-typography-eyebrow-line-height);
   text-transform: uppercase;
   color: var(--co-color-primary-base);
-  background: var(--co-color-interactive-subtle-selected);
+  background: var(--co-component-nav-rail-item-background-active);
   padding: 2px 7px;
   border-radius: var(--co-shape-radius-sm);
 }
