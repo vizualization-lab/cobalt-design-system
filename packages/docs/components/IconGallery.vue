@@ -1,55 +1,107 @@
 <script setup lang="ts">
-import { ref, computed, onMounted, onUnmounted, watch } from 'vue';
-import { iconNames, getIcon, customIconNames, overrideIconNames } from '@cobalt/icons';
+import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue';
+import { customIconNames, getIcon, iconNames, overrideIconNames } from '@cobalt/icons';
 
 const pngSizes = [16, 20, 24, 32, 48, 96, 192];
+const snippetTabs = ['Web Component', 'React', 'Vue', 'Angular'];
+const browseBuckets = ['0-9', ...'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('')];
+const iconCountFormatter = new Intl.NumberFormat('en-US');
 
 const searchQuery = ref('');
 const fillToggle = ref(false);
+const activeBucket = ref<string | null>(null);
 const selectedIcon = ref<string | null>(null);
-const visibleCount = ref(120);
-const sentinelRef = ref<HTMLElement | null>(null);
-const detailRef = ref<HTMLElement | null>(null);
+const resultsPaneRef = ref<HTMLElement | null>(null);
 const pngSize = ref(32);
 const activeSnippetTab = ref(0);
+const isMobile = ref(false);
+const copyLabel = ref('Copy SVG');
 
-const snippetTabs = ['Web Component', 'React', 'Vue', 'Angular'];
+const trimmedSearchQuery = computed(() => searchQuery.value.toLowerCase().trim());
+const isSearching = computed(() => trimmedSearchQuery.value.length > 0);
+const totalIconCount = iconNames.length;
 
-const filteredIcons = computed(() => {
-  const q = searchQuery.value.toLowerCase().trim();
-  if (!q) return iconNames;
-  const terms = q.split(/\s+/);
-  return iconNames.filter((name) => {
-    return terms.every((term) => name.includes(term));
-  });
+function bucketForIcon(name: string): string {
+  const first = name[0]?.toUpperCase() ?? '';
+  if (first >= 'A' && first <= 'Z') return first;
+  return '0-9';
+}
+
+const bucketedIcons = computed(() => {
+  const buckets = new Map<string, string[]>();
+  for (const bucket of browseBuckets) {
+    buckets.set(bucket, []);
+  }
+
+  for (const name of iconNames) {
+    buckets.get(bucketForIcon(name))?.push(name);
+  }
+
+  return buckets;
 });
 
-const visibleIcons = computed(() => filteredIcons.value.slice(0, visibleCount.value));
+const filteredIcons = computed(() => {
+  if (isSearching.value) {
+    const terms = trimmedSearchQuery.value.split(/\s+/);
+    return iconNames.filter((name) => terms.every((term) => name.includes(term)));
+  }
+
+  if (activeBucket.value) {
+    return bucketedIcons.value.get(activeBucket.value) ?? [];
+  }
+
+  return [];
+});
+
+const showPromptState = computed(() => !isSearching.value && activeBucket.value === null);
 const totalCount = computed(() => filteredIcons.value.length);
+
+const resultsSummary = computed(() => {
+  if (isSearching.value) {
+    const label = totalCount.value === 1 ? 'match' : 'matches';
+    return `${iconCountFormatter.format(totalCount.value)} ${label}`;
+  }
+
+  if (activeBucket.value) {
+    const label = totalCount.value === 1 ? 'icon' : 'icons';
+    return `${iconCountFormatter.format(totalCount.value)} ${label} in ${activeBucket.value}`;
+  }
+
+  return `${iconCountFormatter.format(totalIconCount)} total icons`;
+});
+
+const searchModeHint = computed(() => {
+  if (!isSearching.value) return '';
+  if (activeBucket.value) {
+    return `Search is matching across all icons. Clear the field to return to the ${activeBucket.value} bucket.`;
+  }
+
+  return 'Search is matching across all icons. Clear the field to browse by starting character.';
+});
 
 function getSvgForGrid(name: string): string {
   const content = getIcon(name, 'rounded', fillToggle.value);
   if (!content) return '';
+
   const viewBox =
     customIconNames.has(name) || overrideIconNames.has(name) ? '0 0 24 24' : '0 -960 960 960';
+
   return `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="${viewBox}" fill="currentColor">${content}</svg>`;
 }
 
 function getRenderedSvg(size: number, fill?: boolean): string {
   if (!selectedIcon.value) return '';
+
   const content = getIcon(selectedIcon.value, 'rounded', fill ?? fillToggle.value);
   if (!content) return '';
+
   const viewBox =
     customIconNames.has(selectedIcon.value) || overrideIconNames.has(selectedIcon.value)
       ? '0 0 24 24'
       : '0 -960 960 960';
+
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="${viewBox}" fill="currentColor">${content}</svg>`;
 }
-
-// Infinite scroll
-let observer: IntersectionObserver | null = null;
-
-const isMobile = ref(false);
 
 function checkMobile() {
   isMobile.value = window.innerWidth < 768;
@@ -58,35 +110,43 @@ function checkMobile() {
 onMounted(() => {
   checkMobile();
   window.addEventListener('resize', checkMobile);
-
-  observer = new IntersectionObserver(
-    (entries) => {
-      if (entries[0]?.isIntersecting && visibleCount.value < filteredIcons.value.length) {
-        visibleCount.value += 60;
-      }
-    },
-    { rootMargin: '200px' },
-  );
-  if (sentinelRef.value) observer.observe(sentinelRef.value);
 });
 
 onUnmounted(() => {
-  observer?.disconnect();
   window.removeEventListener('resize', checkMobile);
   document.body.style.overflow = '';
 });
 
-watch(sentinelRef, (el) => {
-  if (el && observer) observer.observe(el);
+watch(isMobile, (mobile) => {
+  document.body.style.overflow = mobile && selectedIcon.value ? 'hidden' : '';
 });
 
-// Reset visible count on filter change
-watch([searchQuery, fillToggle], () => {
-  visibleCount.value = 120;
+watch([searchQuery, activeBucket], async () => {
+  await nextTick();
+  resultsPaneRef.value?.scrollTo({ top: 0, behavior: 'auto' });
 });
+
+watch(filteredIcons, (icons) => {
+  if (selectedIcon.value && !icons.includes(selectedIcon.value)) {
+    closeDetail();
+  }
+});
+
+function selectBucket(bucket: string) {
+  if (isSearching.value) {
+    searchQuery.value = '';
+    activeBucket.value = bucket;
+    return;
+  }
+
+  activeBucket.value = activeBucket.value === bucket ? null : bucket;
+}
 
 function selectIcon(name: string) {
   selectedIcon.value = name;
+  activeSnippetTab.value = 0;
+  copyLabel.value = 'Copy SVG';
+
   if (isMobile.value) {
     document.body.style.overflow = 'hidden';
   }
@@ -97,20 +157,22 @@ function closeDetail() {
   document.body.style.overflow = '';
 }
 
-const copyLabel = ref('Copy SVG');
-
 async function copySvg() {
   if (!selectedIcon.value) return;
+
   const svg = getRenderedSvg(24, fillToggle.value);
   if (svg) {
     await navigator.clipboard.writeText(svg);
     copyLabel.value = 'Copied!';
-    setTimeout(() => (copyLabel.value = 'Copy SVG'), 1500);
+    setTimeout(() => {
+      copyLabel.value = 'Copy SVG';
+    }, 1500);
   }
 }
 
 async function downloadPng() {
   if (!selectedIcon.value) return;
+
   const size = pngSize.value;
   const svg = getRenderedSvg(size, fillToggle.value);
   if (!svg) return;
@@ -136,6 +198,7 @@ async function downloadPng() {
     link.href = canvas.toDataURL('image/png');
     link.click();
   };
+
   img.src = url;
 }
 
@@ -177,134 +240,180 @@ function getSnippet(name: string, tabIndex: number): string {
 
 <template>
   <div class="icon-gallery">
-    <!-- Toolbar -->
-    <div class="gallery-toolbar">
-      <div class="search-wrap">
-        <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-          <path
-            d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"
-          />
-        </svg>
-        <input
-          v-model="searchQuery"
-          type="text"
-          class="search-input"
-          placeholder="Search icons…"
-          aria-label="Search icons"
-        />
-        <span class="search-count">{{ totalCount }} of {{ iconNames.length }}</span>
-      </div>
-      <label class="fill-toggle">
-        <input v-model="fillToggle" type="checkbox" class="fill-checkbox" />
-        <span class="fill-label">Fill</span>
-      </label>
-    </div>
-
-    <!-- Main content -->
-    <div class="gallery-content" :class="{ 'has-detail': selectedIcon && !isMobile }">
-      <!-- Icon grid -->
-      <div class="icon-grid-wrap">
-        <div class="icon-grid">
-          <button
-            v-for="name in visibleIcons"
-            :key="name"
-            class="icon-cell"
-            :class="{ selected: selectedIcon === name }"
-            :title="name"
-            @click="selectIcon(name)"
-          >
-            <span class="icon-svg" v-html="getSvgForGrid(name)" />
-            <span class="icon-label">{{ name }}</span>
-          </button>
+    <div class="gallery-shell">
+      <div class="gallery-toolbar">
+        <div class="toolbar-top-row">
+          <div class="search-wrap">
+            <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"
+              />
+            </svg>
+            <input
+              v-model="searchQuery"
+              type="text"
+              class="search-input"
+              placeholder="Search all icons…"
+              aria-label="Search icons"
+            />
+          </div>
+          <label class="fill-toggle">
+            <input v-model="fillToggle" type="checkbox" class="fill-checkbox" />
+            <span class="fill-label">Fill</span>
+          </label>
         </div>
-        <div ref="sentinelRef" class="sentinel" />
-        <p v-if="filteredIcons.length === 0" class="no-results">
-          No icons match "<strong>{{ searchQuery }}</strong
-          >"
-        </p>
-      </div>
 
-      <!-- Detail panel — desktop sidebar (stays in grid, scoped styles apply) -->
-      <Transition v-if="!isMobile" name="detail-panel">
-        <div v-if="selectedIcon" ref="detailRef" class="detail-panel">
-          <div class="detail-header">
-            <h3 class="detail-title">{{ selectedIcon }}</h3>
-            <button class="detail-close" aria-label="Close" @click="closeDetail">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                <path
-                  d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
-                />
-              </svg>
+        <div class="browse-toolbar">
+          <div class="browse-header">
+            <div>
+              <div class="browse-label">Browse by prefix</div>
+              <p class="browse-help">Search all icons or jump straight to a starting character.</p>
+            </div>
+            <span class="browse-summary">{{ resultsSummary }}</span>
+          </div>
+
+          <div class="bucket-row" role="toolbar" aria-label="Browse icons by starting character">
+            <button
+              v-for="bucket in browseBuckets"
+              :key="bucket"
+              type="button"
+              class="bucket-chip"
+              :class="{ active: !isSearching && activeBucket === bucket }"
+              :aria-pressed="!isSearching && activeBucket === bucket"
+              @click="selectBucket(bucket)"
+            >
+              {{ bucket }}
             </button>
           </div>
-          <div class="detail-section">
-            <div class="detail-label">Preview</div>
-            <div class="detail-sizes">
-              <span
-                v-for="s in [16, 20, 24, 32, 48]"
-                :key="s"
-                class="size-preview"
-                :title="`${s}px`"
+
+          <p v-if="isSearching" class="browse-note">{{ searchModeHint }}</p>
+        </div>
+      </div>
+
+      <div
+        class="gallery-content"
+        :class="{ 'is-mobile': isMobile, 'has-detail': selectedIcon && !isMobile }"
+      >
+        <div class="icon-browser">
+          <div ref="resultsPaneRef" class="icon-results">
+            <div v-if="showPromptState" class="gallery-empty-state">
+              <h3 class="gallery-state-title">Search all icons or browse by starting character</h3>
+              <p class="gallery-state-copy">
+                The icon library contains {{ iconCountFormatter.format(totalIconCount) }} rounded
+                symbols. Type a name like <code>arrow</code> or <code>account</code>, or choose a
+                prefix above to browse one slice at a time.
+              </p>
+            </div>
+
+            <p v-else-if="filteredIcons.length === 0" class="no-results">
+              No icons match "<strong>{{ searchQuery }}</strong
+              >"
+            </p>
+
+            <div v-else class="icon-grid">
+              <button
+                v-for="name in filteredIcons"
+                :key="name"
+                type="button"
+                class="icon-cell"
+                :class="{ selected: selectedIcon === name }"
+                :title="name"
+                @click="selectIcon(name)"
               >
-                <span v-html="getRenderedSvg(s)" />
-                <span class="size-label">{{ s }}</span>
-              </span>
-            </div>
-          </div>
-          <div class="detail-section">
-            <div class="detail-label">Export</div>
-            <div class="detail-actions">
-              <button class="action-btn" @click="copySvg">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                  <path
-                    d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"
-                  />
-                </svg>
-                {{ copyLabel }}
+                <span class="icon-svg" v-html="getSvgForGrid(name)" />
+                <span class="icon-label">{{ name }}</span>
               </button>
-              <div class="png-export">
-                <select v-model="pngSize" class="size-select" aria-label="PNG size">
-                  <option v-for="s in pngSizes" :key="s" :value="s">{{ s }}px</option>
-                </select>
-                <button class="action-btn" @click="downloadPng">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z" />
-                  </svg>
-                  Download PNG
-                </button>
-              </div>
-            </div>
-          </div>
-          <div class="detail-section">
-            <div class="detail-label">Code</div>
-            <div class="code-snippets">
-              <div class="snippet-tabs">
-                <button
-                  v-for="(tab, i) in snippetTabs"
-                  :key="tab"
-                  class="snippet-tab"
-                  :class="{ active: activeSnippetTab === i }"
-                  @click="activeSnippetTab = i"
-                >
-                  {{ tab }}
-                </button>
-              </div>
-              <div class="snippet">
-                <code class="snippet-code">{{ getSnippet(selectedIcon, activeSnippetTab) }}</code>
-              </div>
             </div>
           </div>
         </div>
-      </Transition>
+
+        <Transition v-if="!isMobile" name="detail-panel">
+          <div v-if="selectedIcon" class="detail-slot">
+            <div class="detail-panel">
+              <div class="detail-header">
+                <h3 class="detail-title">{{ selectedIcon }}</h3>
+                <button class="detail-close" aria-label="Close" @click="closeDetail">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                    <path
+                      d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                    />
+                  </svg>
+                </button>
+              </div>
+
+              <div class="detail-section">
+                <div class="detail-label">Preview</div>
+                <div class="detail-sizes">
+                  <span
+                    v-for="s in [16, 20, 24, 32, 48]"
+                    :key="s"
+                    class="size-preview"
+                    :title="`${s}px`"
+                  >
+                    <span v-html="getRenderedSvg(s)" />
+                    <span class="size-label">{{ s }}</span>
+                  </span>
+                </div>
+              </div>
+
+              <div class="detail-section">
+                <div class="detail-label">Export</div>
+                <div class="detail-actions">
+                  <button class="action-btn" @click="copySvg">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                      <path
+                        d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"
+                      />
+                    </svg>
+                    {{ copyLabel }}
+                  </button>
+                  <div class="png-export">
+                    <select v-model="pngSize" class="size-select" aria-label="PNG size">
+                      <option v-for="s in pngSizes" :key="s" :value="s">{{ s }}px</option>
+                    </select>
+                    <button class="action-btn" @click="downloadPng">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z" />
+                      </svg>
+                      Download PNG
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="detail-section">
+                <div class="detail-label">Code</div>
+                <div class="code-snippets">
+                  <div class="snippet-tabs">
+                    <button
+                      v-for="(tab, i) in snippetTabs"
+                      :key="tab"
+                      class="snippet-tab"
+                      :class="{ active: activeSnippetTab === i }"
+                      @click="activeSnippetTab = i"
+                    >
+                      {{ tab }}
+                    </button>
+                  </div>
+                  <div class="snippet">
+                    <code class="snippet-code">{{
+                      getSnippet(selectedIcon, activeSnippetTab)
+                    }}</code>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </Transition>
+      </div>
     </div>
 
-    <!-- Mobile bottom sheet — teleported to body to escape VitePress transform containing block -->
     <Teleport to="body">
       <Transition name="ig-backdrop">
         <div v-if="isMobile && selectedIcon" class="ig-detail-backdrop" @click.self="closeDetail" />
       </Transition>
       <Transition name="ig-sheet">
-        <div v-if="isMobile && selectedIcon" ref="detailRef" class="ig-detail-sheet">
+        <div v-if="isMobile && selectedIcon" class="ig-detail-sheet">
           <div class="ig-sheet-header">
             <h3 class="ig-sheet-title">{{ selectedIcon }}</h3>
             <button class="ig-sheet-close" aria-label="Close" @click="closeDetail">
@@ -385,6 +494,7 @@ function getSnippet(name: string, tabIndex: number): string {
   --gallery-radius: 10px;
   --gallery-border: var(--vp-c-divider);
   --gallery-surface: var(--vp-c-bg-soft);
+  --gallery-surface-strong: var(--vp-c-bg);
   --gallery-text: var(--vp-c-text-1);
   --gallery-text-secondary: var(--vp-c-text-2);
   --gallery-text-muted: var(--vp-c-text-3);
@@ -393,32 +503,46 @@ function getSnippet(name: string, tabIndex: number): string {
   font-size: 0.875rem;
 }
 
-/* Toolbar */
+.gallery-shell {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px;
+  border: 1px solid var(--gallery-border);
+  border-radius: 16px;
+  background: var(--gallery-surface-strong);
+}
+
 .gallery-toolbar {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   gap: 12px;
-  margin-bottom: 16px;
+}
+
+.toolbar-top-row {
+  display: flex;
+  gap: 12px;
+  align-items: center;
 }
 
 .search-wrap {
   flex: 1;
   min-width: 220px;
   position: relative;
-  display: flex;
-  align-items: center;
 }
 
 .search-icon {
   position: absolute;
   left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
   color: var(--gallery-text-muted);
   pointer-events: none;
 }
 
 .search-input {
   width: 100%;
-  padding: 8px 80px 8px 36px;
+  padding: 9px 12px 9px 36px;
   border: 1px solid var(--gallery-border);
   border-radius: var(--gallery-radius);
   background: var(--gallery-surface);
@@ -436,59 +560,17 @@ function getSnippet(name: string, tabIndex: number): string {
   color: var(--gallery-text-muted);
 }
 
-.search-count {
-  position: absolute;
-  right: 12px;
-  font-size: 0.75rem;
-  color: var(--gallery-text-muted);
-  pointer-events: none;
-  white-space: nowrap;
-}
-
-.weight-selector {
-  display: flex;
-  gap: 2px;
-  border: 1px solid var(--gallery-border);
-  border-radius: var(--gallery-radius);
-  padding: 2px;
-  background: var(--gallery-surface);
-}
-
-.weight-btn {
-  padding: 6px 10px;
-  border: none;
-  border-radius: calc(var(--gallery-radius) - 2px);
-  background: transparent;
-  color: var(--gallery-text-secondary);
-  font-size: 0.75rem;
-  font-weight: 500;
-  cursor: pointer;
-  text-transform: capitalize;
-  transition: all 0.15s;
-  white-space: nowrap;
-}
-
-.weight-btn:hover {
-  color: var(--gallery-text);
-  background: var(--gallery-accent-soft);
-}
-
-.weight-btn.active {
-  background: var(--gallery-accent);
-  color: #fff;
-}
-
 .fill-toggle {
   display: flex;
   align-items: center;
   gap: 6px;
-  padding: 6px 10px;
+  padding: 8px 12px;
   border: 1px solid var(--gallery-border);
   border-radius: var(--gallery-radius);
   background: var(--gallery-surface);
   cursor: pointer;
   font-size: 0.75rem;
-  font-weight: 500;
+  font-weight: 600;
   color: var(--gallery-text-secondary);
   white-space: nowrap;
   transition: all 0.15s;
@@ -508,27 +590,145 @@ function getSnippet(name: string, tabIndex: number): string {
   user-select: none;
 }
 
-/* Content layout */
+.browse-toolbar {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.browse-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: end;
+}
+
+.browse-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gallery-text-secondary);
+}
+
+.browse-help {
+  margin: 4px 0 0;
+  color: var(--gallery-text-muted);
+  font-size: 0.8rem;
+}
+
+.browse-summary {
+  color: var(--gallery-text-secondary);
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.bucket-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.bucket-chip {
+  min-width: 38px;
+  padding: 6px 10px;
+  border: 1px solid var(--gallery-border);
+  border-radius: 999px;
+  background: var(--gallery-surface);
+  color: var(--gallery-text-secondary);
+  cursor: pointer;
+  font-size: 0.75rem;
+  font-weight: 600;
+  transition:
+    background-color 0.15s,
+    border-color 0.15s,
+    color 0.15s;
+}
+
+.bucket-chip:hover {
+  background: var(--gallery-accent-soft);
+  color: var(--gallery-text);
+}
+
+.bucket-chip.active {
+  background: var(--gallery-accent);
+  border-color: var(--gallery-accent);
+  color: #fff;
+}
+
+.browse-note {
+  margin: 0;
+  color: var(--gallery-text-muted);
+  font-size: 0.78rem;
+}
+
 .gallery-content {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: minmax(0, 1fr);
   gap: 16px;
-  transition: grid-template-columns 0.2s;
+  height: clamp(520px, 68vh, 720px);
 }
 
 .gallery-content.has-detail {
-  grid-template-columns: 1fr 320px;
+  grid-template-columns: minmax(0, 1fr) 320px;
 }
 
-/* Icon grid */
-.icon-grid-wrap {
-  min-width: 0;
+.icon-browser,
+.detail-slot {
+  min-height: 0;
+}
+
+.icon-results,
+.detail-panel {
+  height: 100%;
+  min-height: 0;
+  border: 1px solid var(--gallery-border);
+  border-radius: 14px;
+  background: var(--gallery-surface);
+}
+
+.icon-results {
+  overflow-y: auto;
+  padding: 14px;
+}
+
+.gallery-empty-state,
+.no-results {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 100%;
+  box-sizing: border-box;
+}
+
+.gallery-empty-state {
+  align-items: flex-start;
+  gap: 10px;
+  padding: 24px;
+}
+
+.gallery-state-title {
+  margin: 0;
+  color: var(--gallery-text);
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.gallery-state-copy {
+  margin: 0;
+  color: var(--gallery-text-secondary);
+  line-height: 1.6;
+}
+
+.gallery-state-copy code {
+  white-space: nowrap;
 }
 
 .icon-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-  gap: 2px;
+  gap: 6px;
 }
 
 .icon-cell {
@@ -580,25 +780,15 @@ function getSnippet(name: string, tabIndex: number): string {
   line-height: 1.3;
 }
 
-.sentinel {
-  height: 1px;
-}
-
 .no-results {
-  text-align: center;
+  align-items: center;
   padding: 48px 16px;
   color: var(--gallery-text-muted);
+  text-align: center;
 }
 
-/* Detail panel — desktop sidebar */
 .detail-panel {
-  border: 1px solid var(--gallery-border);
-  border-radius: var(--gallery-radius);
-  background: var(--gallery-surface);
   padding: 20px;
-  position: sticky;
-  top: 80px;
-  max-height: calc(100vh - 100px);
   overflow-y: auto;
 }
 
@@ -645,7 +835,6 @@ function getSnippet(name: string, tabIndex: number): string {
   margin-bottom: 8px;
 }
 
-/* Size previews */
 .detail-sizes {
   display: flex;
   align-items: flex-end;
@@ -670,48 +859,6 @@ function getSnippet(name: string, tabIndex: number): string {
   color: var(--gallery-text-muted);
 }
 
-/* Style comparison */
-.detail-weights {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 6px;
-}
-
-.weight-preview {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-  padding: 10px 4px 6px;
-  border: 1px solid var(--gallery-border);
-  border-radius: 8px;
-  background: transparent;
-  color: var(--gallery-text);
-  cursor: pointer;
-  transition: all 0.12s;
-}
-
-.weight-preview :deep(svg) {
-  width: 32px;
-  height: 32px;
-}
-
-.weight-preview:hover {
-  background: var(--gallery-accent-soft);
-}
-
-.weight-preview.active {
-  border-color: var(--gallery-accent);
-  background: var(--gallery-accent-soft);
-}
-
-.weight-label {
-  font-size: 0.65rem;
-  color: var(--gallery-text-muted);
-  text-transform: capitalize;
-}
-
-/* Actions */
 .detail-actions {
   display: flex;
   flex-direction: column;
@@ -760,7 +907,6 @@ function getSnippet(name: string, tabIndex: number): string {
   border-color: var(--gallery-accent);
 }
 
-/* Code snippets */
 .code-snippets {
   border: 1px solid var(--gallery-border);
   border-radius: 8px;
@@ -814,26 +960,47 @@ function getSnippet(name: string, tabIndex: number): string {
   border: none;
 }
 
-/* Transitions — desktop detail panel */
 .detail-panel-enter-active,
 .detail-panel-leave-active {
   transition:
     opacity 0.15s,
     transform 0.15s;
 }
+
 .detail-panel-enter-from,
 .detail-panel-leave-to {
   opacity: 0;
   transform: translateX(12px);
 }
 
+@media (max-width: 959px) {
+  .gallery-content.has-detail {
+    grid-template-columns: minmax(0, 1fr) 280px;
+  }
+}
+
 @media (max-width: 767px) {
-  .gallery-toolbar {
-    flex-direction: column;
+  .gallery-shell {
+    padding: 14px;
   }
 
-  .weight-selector {
-    flex-wrap: wrap;
+  .toolbar-top-row,
+  .browse-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .browse-summary {
+    white-space: normal;
+  }
+
+  .gallery-content {
+    display: block;
+    height: auto;
+  }
+
+  .icon-results {
+    height: min(56vh, 520px);
   }
 
   .icon-grid {
@@ -943,46 +1110,6 @@ function getSnippet(name: string, tabIndex: number): string {
   color: var(--ig-text-muted);
 }
 
-.ig-sheet-weights {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 6px;
-}
-
-.ig-weight-preview {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-  padding: 10px 4px 6px;
-  border: 1px solid var(--ig-border);
-  border-radius: 8px;
-  background: transparent;
-  color: var(--ig-text);
-  cursor: pointer;
-  transition: all 0.12s;
-}
-
-.ig-weight-preview svg {
-  width: 32px;
-  height: 32px;
-}
-
-.ig-weight-preview:hover {
-  background: var(--ig-accent-soft);
-}
-
-.ig-weight-preview.active {
-  border-color: var(--ig-accent);
-  background: var(--ig-accent-soft);
-}
-
-.ig-weight-label {
-  font-size: 0.65rem;
-  color: var(--ig-text-muted);
-  text-transform: capitalize;
-}
-
 .ig-sheet-actions {
   display: flex;
   flex-direction: column;
@@ -1084,26 +1211,26 @@ function getSnippet(name: string, tabIndex: number): string {
   border: none;
 }
 
-/* Transitions — backdrop */
 .ig-backdrop-enter-active,
 .ig-backdrop-leave-active {
-  transition: opacity 0.2s;
+  transition: opacity 0.16s ease;
 }
+
 .ig-backdrop-enter-from,
 .ig-backdrop-leave-to {
   opacity: 0;
 }
 
-/* Transitions — bottom sheet */
 .ig-sheet-enter-active,
 .ig-sheet-leave-active {
   transition:
-    opacity 0.2s,
-    transform 0.25s ease-out;
+    transform 0.18s ease,
+    opacity 0.18s ease;
 }
+
 .ig-sheet-enter-from,
 .ig-sheet-leave-to {
+  transform: translateY(16px);
   opacity: 0;
-  transform: translateY(100%);
 }
 </style>

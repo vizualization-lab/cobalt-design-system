@@ -4,7 +4,7 @@ Cobalt uses [Material Symbols](https://fonts.google.com/icons) — 2,500+ icons 
 
 ## Icon Gallery
 
-Browse, search, and export any icon. Click an icon to see all styles, copy SVG, or download PNG.
+Search the full library or browse by starting character, then preview, copy, and export any icon.
 
 <ClientOnly>
   <IconGallery />
