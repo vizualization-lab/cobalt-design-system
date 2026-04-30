@@ -4,7 +4,7 @@
 import { data } from './tokens.data';
 </script>
 
-Browse and search all Cobalt design tokens. Click any token name to copy it to your clipboard. Use the category pills or the search bar to narrow down tokens — search works across names, values, categories, and tiers.
+Browse and search Cobalt design tokens in a contained browser. `Main` focuses on semantic tokens and direct-use primitives, `Color Palettes` holds the primitive color scales, and global search lets you jump straight to a token before opening its full details.
 
 Need a quick explanation of how the token system is organized? Start with [Token Structure](./structure.md).
 

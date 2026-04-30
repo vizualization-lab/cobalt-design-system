@@ -21,12 +21,17 @@ const CATEGORY_MAP: Record<string, string> = {
   space: 'Space',
   color: 'Color',
   font: 'Font',
+  typography: 'Typography',
   shape: 'Shape',
   elevation: 'Elevation',
   motion: 'Motion',
   sizing: 'Sizing',
   opacity: 'Opacity',
   breakpoint: 'Breakpoint',
+  focus: 'Focus',
+  control: 'Control',
+  layout: 'Layout',
+  component: 'Component',
 };
 
 function deriveCategory(name: string): string {
