@@ -138,6 +138,7 @@ export default withMermaid(
     },
     themeConfig: {
       cobaltVersion: pkg.version,
+      cobaltVersionState: 'alpha',
       github: {
         url: githubUrl,
         org: githubOrg,

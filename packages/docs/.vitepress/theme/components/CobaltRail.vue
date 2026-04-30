@@ -70,7 +70,7 @@ function onKey(event: KeyboardEvent, i: number) {
 
     <div class="rail-footer">
       <span class="rail-version">v{{ theme.cobaltVersion }}</span>
-      <span class="rail-badge">alpha</span>
+      <span class="rail-badge">{{ theme.cobaltVersionState }}</span>
     </div>
   </aside>
 </template>
