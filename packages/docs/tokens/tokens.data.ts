@@ -11,6 +11,7 @@ export interface TokenEntry {
   resolvedValue: string | null;
   category: string;
   tier: 'primitive' | 'semantic';
+  description: string | null;
 }
 
 export interface TokensData {
@@ -40,6 +41,36 @@ function deriveCategory(name: string): string {
   return CATEGORY_MAP[firstSegment] ?? firstSegment;
 }
 
+function buildDescriptionMap(tokensDir: string): Record<string, string> {
+  const descriptions: Record<string, string> = {};
+  const files = fs.readdirSync(tokensDir).filter((f) => f.endsWith('.json') && !f.startsWith('$'));
+
+  function walk(obj: Record<string, unknown>, segments: string[]) {
+    for (const [key, val] of Object.entries(obj)) {
+      if (key.startsWith('$')) continue;
+      const node = val as Record<string, unknown>;
+      const path = [...segments, key];
+
+      if (typeof node.$value !== 'undefined') {
+        // Leaf token node
+        if (typeof node.$description === 'string' && node.$description) {
+          const cssName = `--${path.join('-')}`;
+          descriptions[cssName] = node.$description;
+        }
+      } else {
+        walk(node, path);
+      }
+    }
+  }
+
+  for (const file of files) {
+    const content = JSON.parse(fs.readFileSync(path.join(tokensDir, file), 'utf-8'));
+    walk(content, []);
+  }
+
+  return descriptions;
+}
+
 function deriveTier(name: string, value: string): 'primitive' | 'semantic' {
   const withoutPrefix = name.replace(/^--co-/, '');
   // Color primitives have "primitive" in the name
@@ -51,7 +82,7 @@ function deriveTier(name: string, value: string): 'primitive' | 'semantic' {
 }
 
 export default {
-  watch: ['../../tokens/dist/css/tokens.css'],
+  watch: ['../../tokens/dist/css/tokens.css', '../../tokens/tokens/*.json'],
   load(): TokensData {
     const css = fs.readFileSync(tokensCssPath, 'utf-8');
     const re = /--(co-[\w-]+)\s*:\s*([^;]+);/g;
@@ -83,12 +114,16 @@ export default {
       return refValue;
     }
 
+    const tokenSourceDir = path.resolve(__dirname, '../../tokens/tokens');
+    const descriptions = buildDescriptionMap(tokenSourceDir);
+
     const tokens: TokenEntry[] = rawTokens.map(({ name, value }) => ({
       name,
       value,
       resolvedValue: resolve(value),
       category: deriveCategory(name),
       tier: deriveTier(name, value),
+      description: descriptions[name] ?? null,
     }));
 
     return { tokens };

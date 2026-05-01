@@ -52,6 +52,7 @@ const countFormatter = new Intl.NumberFormat('en-US');
 
 const query = ref('');
 const activeCategory = ref<string | null>(null);
+const activeTier = ref<'semantic' | 'primitive' | null>(null);
 const activeTab = ref<BrowserTab>('main');
 const copiedName = ref<string | null>(null);
 const selectedTokenName = ref<string | null>(null);
@@ -306,9 +307,59 @@ const categoryEntries = computed(() => {
     }));
 });
 
+const semanticCategoryEntries = computed(() => {
+  const counts = new Map<string, number>();
+
+  for (const token of allMainTokens.value) {
+    if (token.tier === 'semantic') {
+      counts.set(token.category, (counts.get(token.category) ?? 0) + 1);
+    }
+  }
+
+  return [...counts.entries()]
+    .sort(([a], [b]) => compareCategories(a, b))
+    .map(([id, count]) => ({
+      id,
+      label: displayCategory(id),
+      count,
+    }));
+});
+
+const primitiveCategoryEntries = computed(() => {
+  const counts = new Map<string, number>();
+
+  for (const token of allMainTokens.value) {
+    if (token.tier === 'primitive') {
+      counts.set(token.category, (counts.get(token.category) ?? 0) + 1);
+    }
+  }
+
+  return [...counts.entries()]
+    .sort(([a], [b]) => compareCategories(a, b))
+    .map(([id, count]) => ({
+      id,
+      label: displayCategory(id),
+      count,
+    }));
+});
+
+const semanticTokenCount = computed(
+  () => allMainTokens.value.filter((t) => t.tier === 'semantic').length,
+);
+
+const primitiveTokenCount = computed(
+  () => allMainTokens.value.filter((t) => t.tier === 'primitive').length,
+);
+
 const scopedMainBrowseTokens = computed(() => {
-  if (!activeCategory.value) return allMainTokens.value;
-  return allMainTokens.value.filter((token) => token.category === activeCategory.value);
+  let tokens = allMainTokens.value;
+  if (activeTier.value) {
+    tokens = tokens.filter((token) => token.tier === activeTier.value);
+  }
+  if (activeCategory.value) {
+    tokens = tokens.filter((token) => token.category === activeCategory.value);
+  }
+  return tokens;
 });
 
 const mainTreeRoots = computed(() => {
@@ -340,7 +391,8 @@ const countSummary = computed(() => {
   }
 
   if (activeCategory.value) {
-    return `${countFormatter.format(scopedMainBrowseTokens.value.length)} ${displayCategory(activeCategory.value)} tokens`;
+    const tierSuffix = activeTier.value ? ` ${activeTier.value}` : '';
+    return `${countFormatter.format(scopedMainBrowseTokens.value.length)}${tierSuffix} ${displayCategory(activeCategory.value)} tokens`;
   }
 
   return `${countFormatter.format(browseCount.value)} tokens in Main`;
@@ -366,9 +418,13 @@ const paneTitle = computed(() => {
 const paneDescription = computed(() => {
   if (isSearching.value) return countSummary.value;
   if (activeTab.value === 'advanced') return 'Palette families and modes';
-  return activeCategory.value
-    ? `${displayCategory(activeCategory.value)} category`
-    : 'All Main tokens';
+  if (activeCategory.value) {
+    const tierPrefix = activeTier.value
+      ? `${activeTier.value === 'semantic' ? 'Semantic' : 'Primitive'} `
+      : '';
+    return `${tierPrefix}${displayCategory(activeCategory.value)} category`;
+  }
+  return 'All Main tokens';
 });
 
 const selectedTokenVisible = computed(() => {
@@ -385,7 +441,8 @@ const selectedTokenVisible = computed(() => {
 
   return (
     !isPrimitiveColorToken(token) &&
-    (!activeCategory.value || token.category === activeCategory.value)
+    (!activeCategory.value || token.category === activeCategory.value) &&
+    (!activeTier.value || token.tier === activeTier.value)
   );
 });
 
@@ -410,7 +467,7 @@ onUnmounted(() => {
   document.body.style.overflow = '';
 });
 
-watch([query, activeTab, activeCategory], async () => {
+watch([query, activeTab, activeCategory, activeTier], async () => {
   await nextTick();
   navPaneRef.value?.scrollTo({ top: 0, behavior: 'auto' });
 });
@@ -429,8 +486,14 @@ function setActiveTab(tab: BrowserTab) {
   activeTab.value = tab;
 }
 
-function toggleCategory(category: string) {
-  activeCategory.value = activeCategory.value === category ? null : category;
+function toggleCategory(category: string, tier: 'semantic' | 'primitive' | null = null) {
+  if (activeCategory.value === category && activeTier.value === tier) {
+    activeCategory.value = null;
+    activeTier.value = null;
+  } else {
+    activeCategory.value = category;
+    activeTier.value = tier;
+  }
 }
 
 function toggleExpanded(id: string) {
@@ -508,27 +571,60 @@ async function copyToken(name: string) {
             </button>
           </div>
 
-          <div v-if="activeTab === 'main' && !isSearching" class="category-filters">
-            <button
-              type="button"
-              class="filter-pill"
-              :class="{ active: activeCategory === null }"
-              @click="activeCategory = null"
-            >
-              All
-              <span class="pill-count">{{ allMainTokens.length }}</span>
-            </button>
-            <button
-              v-for="category in categoryEntries"
-              :key="category.id"
-              type="button"
-              class="filter-pill"
-              :class="{ active: activeCategory === category.id }"
-              @click="toggleCategory(category.id)"
-            >
-              {{ category.label }}
-              <span class="pill-count">{{ category.count }}</span>
-            </button>
+          <button
+            v-if="activeTab === 'main' && !isSearching"
+            type="button"
+            class="filter-pill"
+            :class="{ active: activeCategory === null && activeTier === null }"
+            @click="
+              activeCategory = null;
+              activeTier = null;
+            "
+          >
+            All
+            <span class="pill-count">{{ allMainTokens.length }}</span>
+          </button>
+        </div>
+
+        <div v-if="activeTab === 'main' && !isSearching" class="tier-sections">
+          <div v-if="semanticCategoryEntries.length" class="filter-tier-group">
+            <div class="tier-header">
+              <span class="tier-label">Semantic</span>
+              <span class="tier-count">{{ semanticTokenCount }}</span>
+            </div>
+            <div class="tier-pills">
+              <button
+                v-for="category in semanticCategoryEntries"
+                :key="'semantic-' + category.id"
+                type="button"
+                class="filter-pill"
+                :class="{ active: activeCategory === category.id && activeTier === 'semantic' }"
+                @click="toggleCategory(category.id, 'semantic')"
+              >
+                {{ category.label }}
+                <span class="pill-count">{{ category.count }}</span>
+              </button>
+            </div>
+          </div>
+
+          <div v-if="primitiveCategoryEntries.length" class="filter-tier-group">
+            <div class="tier-header">
+              <span class="tier-label">Primitive</span>
+              <span class="tier-count">{{ primitiveTokenCount }}</span>
+            </div>
+            <div class="tier-pills">
+              <button
+                v-for="category in primitiveCategoryEntries"
+                :key="'primitive-' + category.id"
+                type="button"
+                class="filter-pill"
+                :class="{ active: activeCategory === category.id && activeTier === 'primitive' }"
+                @click="toggleCategory(category.id, 'primitive')"
+              >
+                {{ category.label }}
+                <span class="pill-count">{{ category.count }}</span>
+              </button>
+            </div>
           </div>
         </div>
 
@@ -626,6 +722,10 @@ async function copyToken(name: string) {
 
               <code class="detail-name">{{ selectedToken.name }}</code>
               <p class="detail-path">{{ detailPath }}</p>
+
+              <p v-if="selectedToken.description" class="detail-description">
+                {{ selectedToken.description }}
+              </p>
 
               <div v-if="tokenSwatchColor(selectedToken)" class="detail-swatch-card">
                 <span
@@ -840,11 +940,50 @@ async function copyToken(name: string) {
   box-shadow: 0 1px 3px color-mix(in srgb, var(--co-color-surface-overlay) 16%, transparent);
 }
 
-.category-filters {
+.tier-sections {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.filter-tier-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+  min-width: 0;
+  padding: 10px 12px;
+  border-radius: var(--co-shape-radius-lg);
+  background: var(--co-color-surface-sunken);
+  border: 1px solid var(--co-color-border-subtle);
+}
+
+.tier-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.tier-label {
+  font-size: 0.68rem;
+  font-weight: var(--co-font-weight-semibold);
+  color: var(--co-color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+
+.tier-count {
+  font-size: 0.65rem;
+  color: var(--co-color-text-tertiary);
+  font-weight: var(--co-font-weight-regular);
+}
+
+.tier-pills {
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
-  flex: 1;
 }
 
 .filter-pill {
@@ -1131,6 +1270,13 @@ async function copyToken(name: string) {
   overflow-wrap: anywhere;
 }
 
+.detail-description {
+  margin: 12px 0 0;
+  color: var(--co-color-text-default);
+  font-size: var(--co-font-size-small);
+  line-height: var(--co-font-line-height-normal);
+}
+
 .detail-swatch-card {
   display: flex;
   align-items: center;
@@ -1283,6 +1429,20 @@ async function copyToken(name: string) {
   transform: translateY(18px);
 }
 
+@media (max-width: 960px) {
+  .tier-sections {
+    grid-template-columns: 1fr;
+  }
+
+  .browser-body.has-detail {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .browser-body.has-detail .browser-pane-nav {
+    display: none;
+  }
+}
+
 @media (max-width: 767px) {
   .browser-toolbar {
     padding: 16px 16px 12px;
@@ -1295,10 +1455,6 @@ async function copyToken(name: string) {
   .toolbar-secondary-row {
     flex-direction: column;
     align-items: stretch;
-  }
-
-  .category-filters {
-    width: 100%;
   }
 
   .browser-scroll {

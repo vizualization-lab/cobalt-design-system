@@ -6,28 +6,43 @@ import { data } from './tokens.data';
 
 Browse and search Cobalt design tokens in a contained browser. `Main` focuses on semantic tokens and direct-use primitives, `Color Palettes` holds the primitive color scales, and global search lets you jump straight to a token before opening its full details.
 
-Need a quick explanation of how the token system is organized? Start with [Token Structure](./structure.md).
+> Need a quick explanation of how the token system is organized? Start with [Token Structure](./structure.md).
 
 <TokenTable :tokens="data.tokens" />
 
 ## Categories
 
-| Category       | Prefix                          | What it covers                                                                                                             |
-| -------------- | ------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
-| **Color**      | <nobr>`--co-color-`</nobr>      | Primitive palettes and hues, semantic roles (primary, neutral, ...), and contextual usage (surface, interactive, feedback) |
-| **Space**      | <nobr>`--co-space-`</nobr>      | Base spacing scale and semantic aliases for gaps, insets, section, and page margins                                        |
-| **Font**       | <nobr>`--co-font-`</nobr>       | Font families (sans, mono), size scale, weights, line-heights, and letter-spacing (tracking)                               |
-| **Typography** | <nobr>`--co-typography-`</nobr> | Semantic role presets (display, heading, title, subtitle, eyebrow, body-lg, body, body-sm, label, caption)                 |
-| **Shape**      | <nobr>`--co-shape-`</nobr>      | Border-radius scale and border-width values                                                                                |
-| **Elevation**  | <nobr>`--co-elevation-`</nobr>  | Box-shadow depths (sm–xl) and z-index layers for stacking contexts (dropdown through tooltip)                              |
-| **Motion**     | <nobr>`--co-motion-`</nobr>     | Transition durations and easing curves                                                                                     |
-| **Sizing**     | <nobr>`--co-sizing-`</nobr>     | Fixed dimensions for icons across four sizes                                                                               |
-| **Opacity**    | <nobr>`--co-opacity-`</nobr>    | Alpha values for disabled elements, overlays, and placeholder text                                                         |
-| **Breakpoint** | <nobr>`--co-breakpoint-`</nobr> | Responsive viewport widths for media queries                                                                               |
-| **Focus**      | <nobr>`--co-focus-`</nobr>      | Shared focus ring width and offset                                                                                         |
-| **Control**    | <nobr>`--co-control-`</nobr>    | Shared control sizing values such as height and radius                                                                     |
-| **Layout**     | <nobr>`--co-layout-`</nobr>     | Shared layout constraints such as content max widths                                                                       |
-| **Component**  | <nobr>`--co-component-`</nobr>  | Component-specific contracts such as avatar sizes and nav rail layout or state tokens                                      |
+### Semantic
+
+Semantic tokens reference other tokens via `var()` and express design intent — use these in product code for theme-safe, self-documenting styles.
+
+| Category       | Prefix                          | What it covers                                                                                             |
+| -------------- | ------------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| **Color**      | <nobr>`--co-color-`</nobr>      | Semantic roles (primary, neutral, ...) and contextual usage (surface, interactive, feedback)               |
+| **Space**      | <nobr>`--co-space-`</nobr>      | Semantic aliases for gaps, insets, section, and page margins                                               |
+| **Typography** | <nobr>`--co-typography-`</nobr> | Semantic role presets (display, heading, title, subtitle, eyebrow, body-lg, body, body-sm, label, caption) |
+| **Focus**      | <nobr>`--co-focus-`</nobr>      | Shared focus ring width and offset                                                                         |
+| **Control**    | <nobr>`--co-control-`</nobr>    | Shared control radius referencing shape tokens                                                             |
+| **Layout**     | <nobr>`--co-layout-`</nobr>     | Shared layout constraints such as content max widths                                                       |
+| **Component**  | <nobr>`--co-component-`</nobr>  | Component-specific contracts such as avatar sizes and nav rail state tokens                                |
+
+### Primitive
+
+Primitive tokens hold raw, hard-coded values — the foundational scales that semantic tokens reference. Prefer semantic tokens in product code; use primitives only for building new semantic mappings.
+
+| Category       | Prefix                          | What it covers                                                                    |
+| -------------- | ------------------------------- | --------------------------------------------------------------------------------- |
+| **Color**      | <nobr>`--co-color-`</nobr>      | Direct color values not covered by the Color Palettes tab                         |
+| **Space**      | <nobr>`--co-space-`</nobr>      | Base spacing scale (`--co-space-0` through `--co-space-24`)                       |
+| **Font**       | <nobr>`--co-font-`</nobr>       | Font families (sans, mono), size scale, weights, line-heights, and letter-spacing |
+| **Shape**      | <nobr>`--co-shape-`</nobr>      | Border-radius scale and border-width values                                       |
+| **Elevation**  | <nobr>`--co-elevation-`</nobr>  | Box-shadow depths (sm–xl) and z-index layers for stacking contexts                |
+| **Motion**     | <nobr>`--co-motion-`</nobr>     | Transition durations and easing curves                                            |
+| **Sizing**     | <nobr>`--co-sizing-`</nobr>     | Fixed dimensions for icons across four sizes                                      |
+| **Opacity**    | <nobr>`--co-opacity-`</nobr>    | Alpha values for disabled elements, overlays, and placeholder text                |
+| **Breakpoint** | <nobr>`--co-breakpoint-`</nobr> | Responsive viewport widths for media queries                                      |
+| **Control**    | <nobr>`--co-control-`</nobr>    | Shared control height values (sm through xl)                                      |
+| **Component**  | <nobr>`--co-component-`</nobr>  | Component-specific hard-coded values such as avatar sizes and nav rail dimensions |
 
 ## Available Formats
 

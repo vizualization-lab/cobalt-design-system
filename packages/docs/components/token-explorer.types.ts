@@ -4,6 +4,7 @@ export interface TokenEntry {
   resolvedValue: string | null;
   category: string;
   tier: 'primitive' | 'semantic';
+  description: string | null;
 }
 
 export interface TokenLeafNode {
