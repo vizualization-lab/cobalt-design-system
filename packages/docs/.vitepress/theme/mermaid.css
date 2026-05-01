@@ -12,10 +12,10 @@
 
 .cobalt-mermaid {
   margin: var(--co-space-6) 0;
-  padding: var(--co-space-6);
-  background: var(--co-color-surface-default);
-  border: 1px solid var(--co-color-border-default);
-  border-radius: var(--co-shape-radius-lg);
+  padding: var(--co-space-4) 0;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
   overflow-x: auto;
 }
 
@@ -34,36 +34,54 @@
 
 /* ── Flowchart nodes ───────────────────────────────────────── */
 
-.cobalt-mermaid .node rect,
-.cobalt-mermaid .node polygon,
-.cobalt-mermaid .node circle {
-  fill: var(--co-color-primary-subtle) !important;
+.cobalt-mermaid .flowchart .node > .label-container {
+  fill: var(--co-color-interactive-subtle-selected) !important;
   stroke: var(--co-color-primary-base) !important;
+  stroke-width: 1px !important;
+  filter: drop-shadow(0 4px 10px color-mix(in srgb, var(--co-color-text-default) 12%, transparent))
+    drop-shadow(0 1px 0 color-mix(in srgb, var(--co-color-surface-default) 50%, transparent));
 }
 
-.cobalt-mermaid .node .label {
+.cobalt-mermaid .flowchart .node .label rect {
+  fill: var(--co-color-interactive-subtle-selected) !important;
+  stroke: var(--co-color-primary-base) !important;
+  stroke-width: 1px !important;
+}
+
+.cobalt-mermaid .flowchart .node .label,
+.cobalt-mermaid .flowchart .node .label text,
+.cobalt-mermaid .flowchart-label text {
   color: var(--co-color-text-default) !important;
+  fill: var(--co-color-text-default) !important;
 }
 
 /* ── Flowchart edges / links ───────────────────────────────── */
 
+.cobalt-mermaid .flowchart-link,
 .cobalt-mermaid .edgePath .path {
-  stroke: var(--co-color-text-secondary) !important;
+  stroke: var(--co-color-border-strong) !important;
+  stroke-width: 1.25px !important;
 }
 
 .cobalt-mermaid .edgeLabel {
-  background-color: var(--co-color-surface-default) !important;
+  background-color: var(--co-color-surface-page) !important;
   color: var(--co-color-text-secondary) !important;
 }
 
+.cobalt-mermaid .edgeLabel rect,
+.cobalt-mermaid .labelBkg {
+  fill: var(--co-color-surface-page) !important;
+  stroke: var(--co-color-border-subtle) !important;
+}
+
 .cobalt-mermaid marker path {
-  fill: var(--co-color-text-secondary) !important;
+  fill: var(--co-color-border-strong) !important;
 }
 
 /* ── Flowchart subgraphs / clusters ────────────────────────── */
 
 .cobalt-mermaid .cluster rect {
-  fill: var(--co-color-surface-page) !important;
+  fill: var(--co-color-surface-raised) !important;
   stroke: var(--co-color-border-default) !important;
   rx: var(--co-shape-radius-lg) !important;
   ry: var(--co-shape-radius-lg) !important;
@@ -178,5 +196,5 @@
 /* ── Background ────────────────────────────────────────────── */
 
 .cobalt-mermaid .mermaid-main-bg {
-  fill: var(--co-color-surface-default) !important;
+  fill: transparent !important;
 }
