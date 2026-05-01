@@ -8,19 +8,7 @@ Browse and search Cobalt design tokens in a contained browser. `Main` focuses on
 
 Need a quick explanation of how the token system is organized? Start with [Token Structure](./structure.md).
 
-## Authoring vs Export Files
-
-Cobalt maintains a distinction between **authoring files** and **export artifacts**.
-
-- `packages/tokens/tokens/*.json` are the source token files. These stay intentionally simple so they round-trip cleanly through Tokens Studio.
-- `dist/tokens-merged.json` is the Token Studio export/import artifact. It preserves the authoring shape and includes `$themes` and `$metadata`.
-- `dist/tokens-dtcg.json` is a generated DTCG-style export. It normalizes values into a more standards-friendly structure for downstream tooling, but it is not the primary authoring or Token Studio sync file.
-
-Use this rule:
-
-- edit the source files in `packages/tokens/tokens`
-- use `tokens-merged.json` for Token Studio workflows
-- use `tokens-dtcg.json` when a consumer needs a more DTCG-aligned JSON export
+<TokenTable :tokens="data.tokens" />
 
 ## Categories
 
@@ -40,8 +28,6 @@ Use this rule:
 | **Control**    | <nobr>`--co-control-`</nobr>    | Shared control sizing values such as height and radius                                                                     |
 | **Layout**     | <nobr>`--co-layout-`</nobr>     | Shared layout constraints such as content max widths                                                                       |
 | **Component**  | <nobr>`--co-component-`</nobr>  | Component-specific contracts such as avatar sizes and nav rail layout or state tokens                                      |
-
-<TokenTable :tokens="data.tokens" />
 
 ## Available Formats
 
@@ -114,3 +100,17 @@ export default {
   presets: [cobaltPreset],
 };
 ```
+
+## Authoring vs Export Files
+
+Cobalt maintains a distinction between **authoring files** and **export artifacts**.
+
+- `packages/tokens/tokens/*.json` are the source token files. These stay intentionally simple so they round-trip cleanly through Tokens Studio.
+- `dist/tokens-merged.json` is the Token Studio export/import artifact. It preserves the authoring shape and includes `$themes` and `$metadata`.
+- `dist/tokens-dtcg.json` is a generated DTCG-style export. It normalizes values into a more standards-friendly structure for downstream tooling, but it is not the primary authoring or Token Studio sync file.
+
+Use this rule:
+
+- edit the source files in `packages/tokens/tokens`
+- use `tokens-merged.json` for Token Studio workflows
+- use `tokens-dtcg.json` when a consumer needs a more DTCG-aligned JSON export
