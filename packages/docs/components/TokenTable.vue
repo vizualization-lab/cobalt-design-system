@@ -487,10 +487,10 @@ async function copyToken(name: string) {
         </div>
 
         <div class="toolbar-secondary-row">
-          <div class="browser-tabs" role="tablist" aria-label="Token browser mode">
+          <div class="browser-toggle" role="tablist" aria-label="Token browser mode">
             <button
               type="button"
-              class="browser-tab"
+              class="browser-toggle-btn"
               :class="{ active: activeTab === 'main' }"
               :aria-selected="activeTab === 'main'"
               @click="setActiveTab('main')"
@@ -499,7 +499,7 @@ async function copyToken(name: string) {
             </button>
             <button
               type="button"
-              class="browser-tab"
+              class="browser-toggle-btn"
               :class="{ active: activeTab === 'advanced' }"
               :aria-selected="activeTab === 'advanced'"
               @click="setActiveTab('advanced')"
@@ -802,37 +802,42 @@ async function copyToken(name: string) {
   flex-wrap: wrap;
 }
 
-.browser-tabs {
+.browser-toggle {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  border: 1px solid var(--co-color-border-default);
+  border-radius: var(--co-shape-radius-lg);
+  background: var(--co-color-surface-sunken);
+  padding: 3px;
+  gap: 2px;
 }
 
-.browser-tab {
-  border: 1px solid var(--co-color-border-subtle);
-  border-radius: var(--co-shape-radius-full);
-  padding: 7px 12px;
-  background: var(--co-color-surface-raised);
+.browser-toggle-btn {
+  border: none;
+  border-radius: var(--co-shape-radius-md);
+  padding: 7px 14px;
+  background: transparent;
   color: var(--co-color-text-secondary);
   font-family: var(--co-font-family-sans);
   font-size: var(--co-font-size-xsmall);
   font-weight: var(--co-font-weight-medium);
   cursor: pointer;
   transition:
-    border-color 0.15s,
     background-color 0.15s,
-    color 0.15s;
+    color 0.15s,
+    box-shadow 0.15s;
 }
 
-.browser-tab:hover {
-  border-color: var(--co-color-border-active);
-  color: var(--co-color-text-link);
+.browser-toggle-btn:hover:not(.active) {
+  color: var(--co-color-text-default);
+  background: color-mix(in srgb, var(--co-color-surface-default) 50%, transparent);
 }
 
-.browser-tab.active {
-  background: color-mix(in srgb, var(--co-color-interactive-primary-default) 12%, transparent);
-  border-color: var(--co-color-border-selected);
-  color: var(--co-color-text-link);
+.browser-toggle-btn.active {
+  background: var(--co-color-interactive-primary-default);
+  color: var(--co-color-text-on-primary);
+  font-weight: var(--co-font-weight-semibold);
+  box-shadow: 0 1px 3px color-mix(in srgb, var(--co-color-surface-overlay) 16%, transparent);
 }
 
 .category-filters {
