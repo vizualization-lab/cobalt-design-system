@@ -41,40 +41,39 @@ The shell deliberately stops at one flexible `body` region. Keep page-specific s
 
 Example body composition:
 
+```css
+.docs-body {
+  display: grid;
+  gap: var(--co-space-gap-lg);
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.docs-article {
+  padding: var(--co-space-inset-lg);
+  background: var(--co-color-surface-default);
+  border: var(--co-shape-border-width-thin) solid var(--co-color-border-default);
+  border-radius: var(--co-shape-radius-lg);
+}
+
+.docs-aside {
+  padding: var(--co-space-inset-lg);
+  background: var(--co-color-surface-raised);
+  border: var(--co-shape-border-width-thin) solid var(--co-color-border-default);
+  border-radius: var(--co-shape-radius-lg);
+}
+```
+
 ```html
-<main
-  slot="body"
-  style="
-    display: grid;
-    gap: 24px;
-    grid-template-columns: minmax(0, 1fr);
-  "
->
-  <article
-    style="
-      padding: 24px;
-      background: var(--co-color-surface-default);
-      border: 1px solid var(--co-color-border-default);
-      border-radius: 16px;
-    "
-  >
-    <header style="margin-bottom: 16px;">
-      <p style="margin: 0 0 8px; color: var(--co-color-text-secondary);">Pattern guidance</p>
-      <h1 style="margin: 0;">Compose local layout here</h1>
+<main slot="body" class="docs-body">
+  <article class="docs-article">
+    <header>
+      <p>Pattern guidance</p>
+      <h1>Compose local layout here</h1>
     </header>
     <section>Body content</section>
   </article>
 
-  <aside
-    style="
-      padding: 16px;
-      background: var(--co-color-surface-raised);
-      border: 1px solid var(--co-color-border-default);
-      border-radius: 16px;
-    "
-  >
-    Optional secondary content
-  </aside>
+  <aside class="docs-aside">Optional secondary content</aside>
 </main>
 ```
 

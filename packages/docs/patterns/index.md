@@ -19,18 +19,6 @@ Patterns are reusable solutions to common design problems. Unlike individual com
 
 Layout patterns for forms, inline and summary validation, error messaging, required field indicators, and submission handling.
 
-### [Navigation](./navigation.md)
-
-Top navigation, sidebar navigation, breadcrumbs, tabs, pagination, and mobile-responsive navigation strategies.
-
-### [Data Display](./data-display.md)
-
-Tables, lists, card grids, empty states, loading skeletons, and formatting conventions for dates, numbers, and currency.
-
-### [Feedback & Status](./feedback.md)
-
-Toast notifications, inline alerts, progress indicators, loading states, success and error messaging, and confirmation dialogs.
-
 ### [Layout](./layout.md)
 
 Page structure, grid system, responsive breakpoints, sidebar layouts, content areas, and spacing rhythm.
@@ -57,18 +45,10 @@ Patterns are documented collaboratively. To propose a new pattern:
 
 Patterns are not shipped as installable packages. Instead, use them as reference implementations:
 
-```html
-<!-- Example: composing a feedback pattern with Cobalt components -->
-<co-alert type="success" dismissible>
-  <co-icon name="check-circle" slot="icon"></co-icon>
-  Your changes have been saved successfully.
-</co-alert>
-```
-
 Adapt the documented markup to fit your product's specific requirements while preserving the interaction and accessibility conventions described in each pattern.
 
 ## Resources
 
-- [Component Library](/components/button) -- Full reference for all `co-` components
+- [Component Library](/components/) -- Full reference for all `co-` components
 - [Design Tokens](/tokens/) -- Spacing, color, and typography tokens used in patterns
 - [Foundations](/foundations/) -- Core principles behind Cobalt's design decisions

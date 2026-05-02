@@ -104,9 +104,6 @@ export const navigation: NavGroup[] = [
     items: [
       { text: 'Overview', link: '/patterns/' },
       { text: 'Forms & Validation', link: '/patterns/forms' },
-      { text: 'Navigation', link: '/patterns/navigation' },
-      { text: 'Data Display', link: '/patterns/data-display' },
-      { text: 'Feedback & Status', link: '/patterns/feedback' },
       { text: 'Layout', link: '/patterns/layout' },
     ],
   },
