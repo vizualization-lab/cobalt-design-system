@@ -92,7 +92,10 @@ function toggleBranch() {
 .branch-toggle,
 .token-leaf {
   width: 100%;
-  padding-left: calc(var(--node-depth) * 14px + 14px);
+  /* Depth step matches the chevron column (16px icon + 8px gap) so leaves
+     and branch chevrons share a column at the same depth, and nested
+     children sit under the parent's label. */
+  padding-left: calc(var(--node-depth) * 24px + 14px);
 }
 
 .branch-toggle {
@@ -184,7 +187,7 @@ function toggleBranch() {
 @media (max-width: 767px) {
   .branch-toggle,
   .token-leaf {
-    padding-left: calc(var(--node-depth) * 12px + 12px);
+    padding-left: calc(var(--node-depth) * 20px + 12px);
   }
 }
 </style>

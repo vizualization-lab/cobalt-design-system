@@ -50,6 +50,49 @@ const CATEGORY_LABELS: Record<string, string> = {
 const collator = new Intl.Collator('en-US', { numeric: true, sensitivity: 'base' });
 const countFormatter = new Intl.NumberFormat('en-US');
 
+// Designer-meaningful orderings for tree groups whose labels follow a known
+// scale. When a group's labels match a scale, sort by that scale instead of
+// alphabetically; unknowns within the same group sort alphabetically after.
+const SCALE_ORDERS: readonly (readonly string[])[] = [
+  // T-shirt with extremes
+  ['none', '2xs', 'xs', 'sm', 'md', 'lg', 'xl', '2xl', '3xl', '4xl', '5xl', '6xl', '7xl', 'full'],
+  // Semantic font-size hierarchy: smallest -> largest
+  ['xsmall', 'small', 'p', 'h6', 'h5', 'h4', 'h3', 'h2', 'h1'],
+  // Font-weight: light -> heavy
+  ['regular', 'medium', 'semibold', 'bold'],
+  // Tracking: tightest -> widest
+  ['tighter', 'tight', 'normal', 'wide', 'widest'],
+  // Line-height: tightest -> loosest
+  ['display', 'tight', 'normal', 'relaxed'],
+  // Motion duration: fast -> slow
+  ['fast', 'normal', 'slow'],
+  // Border width: thin -> thicker
+  ['thin', 'thick', 'thicker'],
+];
+
+function findGroupScale(labels: string[]): readonly string[] | null {
+  let best: { scale: readonly string[]; matches: number } | null = null;
+  for (const scale of SCALE_ORDERS) {
+    const matches = labels.reduce((n, label) => (scale.includes(label) ? n + 1 : n), 0);
+    // Require >=2 matches so a single coincidence (e.g. "normal") doesn't trigger.
+    if (matches >= 2 && (!best || matches > best.matches)) {
+      best = { scale, matches };
+    }
+  }
+  return best?.scale ?? null;
+}
+
+function compareLabels(a: string, b: string, scale: readonly string[] | null): number {
+  if (scale) {
+    const ai = scale.indexOf(a);
+    const bi = scale.indexOf(b);
+    if (ai !== -1 && bi !== -1) return ai - bi;
+    if (ai !== -1) return -1;
+    if (bi !== -1) return 1;
+  }
+  return collator.compare(a, b);
+}
+
 const query = ref('');
 const activeCategory = ref<string | null>(null);
 const activeTier = ref<'semantic' | 'primitive' | null>(null);
@@ -135,6 +178,7 @@ function tokenSwatchColor(token: TokenEntry): string | null {
   const candidate = token.resolvedValue ?? token.value;
   if (/^#[0-9a-f]{3,8}$/i.test(candidate)) return candidate;
   if (candidate.startsWith('rgb') || candidate.startsWith('hsl')) return candidate;
+  if (candidate.startsWith('color-mix(')) return candidate;
   return null;
 }
 
@@ -192,8 +236,10 @@ function finalizeNodes(nodes: ExplorerNode[]): ExplorerNode[] {
     }
   }
 
-  branches.sort((a, b) => collator.compare(a.label, b.label));
-  leaves.sort((a, b) => collator.compare(a.label, b.label));
+  const branchScale = findGroupScale(branches.map((b) => b.label));
+  const leafScale = findGroupScale(leaves.map((l) => l.label));
+  branches.sort((a, b) => compareLabels(a.label, b.label, branchScale));
+  leaves.sort((a, b) => compareLabels(a.label, b.label, leafScale));
 
   return [...branches, ...leaves];
 }
