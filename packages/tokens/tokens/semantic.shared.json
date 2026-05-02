@@ -4,7 +4,7 @@
       "ring": {
         "width": {
           "$type": "dimension",
-          "$value": "{co.shape.border.width.lg}",
+          "$value": "{co.shape.border.width.thicker}",
           "$description": "Width of the visible focus ring used for keyboard focus states."
         },
         "offset": {
@@ -310,6 +310,252 @@
             "$value": "{co.font.line.height.normal}",
             "$description": "Line height for the caption typography role."
           }
+        }
+      }
+    },
+    "font": {
+      "size": {
+        "xsmall": {
+          "$type": "dimension",
+          "$value": "{co.font.size.50}",
+          "$description": "Extra small font size of 12px for captions and fine print."
+        },
+        "small": {
+          "$type": "dimension",
+          "$value": "{co.font.size.75}",
+          "$description": "Small font size of 14px for labels and secondary text."
+        },
+        "p": {
+          "$type": "dimension",
+          "$value": "{co.font.size.100}",
+          "$description": "Paragraph baseline font size of 16px (body text)."
+        },
+        "h6": {
+          "$type": "dimension",
+          "$value": "{co.font.size.200}",
+          "$description": "Heading 6 font size of 18px."
+        },
+        "h5": {
+          "$type": "dimension",
+          "$value": "{co.font.size.300}",
+          "$description": "Heading 5 font size of 20px."
+        },
+        "h4": {
+          "$type": "dimension",
+          "$value": "{co.font.size.400}",
+          "$description": "Heading 4 font size of 24px."
+        },
+        "h3": {
+          "$type": "dimension",
+          "$value": "{co.font.size.500}",
+          "$description": "Heading 3 font size of 30px."
+        },
+        "h2": {
+          "$type": "dimension",
+          "$value": "{co.font.size.600}",
+          "$description": "Heading 2 font size of 36px."
+        },
+        "h1": {
+          "$type": "dimension",
+          "$value": "{co.font.size.700}",
+          "$description": "Heading 1 font size of 48px."
+        }
+      },
+      "tracking": {
+        "tighter": {
+          "$type": "dimension",
+          "$value": "{co.font.tracking.50}",
+          "$description": "Tighter letter spacing for large display text."
+        },
+        "tight": {
+          "$type": "dimension",
+          "$value": "{co.font.tracking.75}",
+          "$description": "Tight letter spacing for headings and titles."
+        },
+        "normal": {
+          "$type": "dimension",
+          "$value": "{co.font.tracking.100}",
+          "$description": "Default letter spacing for body text and controls."
+        },
+        "wide": {
+          "$type": "dimension",
+          "$value": "{co.font.tracking.200}",
+          "$description": "Wide letter spacing for compact uppercase text."
+        },
+        "widest": {
+          "$type": "dimension",
+          "$value": "{co.font.tracking.300}",
+          "$description": "Widest letter spacing for eyebrow and metadata text."
+        }
+      },
+      "line": {
+        "height": {
+          "display": {
+            "$type": "lineHeights",
+            "$value": "{co.font.line.height.110}",
+            "$description": "Compact line-height ratio for display typography."
+          },
+          "tight": {
+            "$type": "lineHeights",
+            "$value": "{co.font.line.height.125}",
+            "$description": "Tight line-height ratio for headings, labels, and controls."
+          },
+          "normal": {
+            "$type": "lineHeights",
+            "$value": "{co.font.line.height.150}",
+            "$description": "Default line-height ratio for readable body text."
+          },
+          "relaxed": {
+            "$type": "lineHeights",
+            "$value": "{co.font.line.height.175}",
+            "$description": "Relaxed line-height ratio for long-form text."
+          }
+        }
+      }
+    },
+    "elevation": {
+      "z": {
+        "dropdown": {
+          "$type": "number",
+          "$value": "{co.elevation.z.1000}",
+          "$description": "Stacking index for dropdown layers."
+        },
+        "sticky": {
+          "$type": "number",
+          "$value": "{co.elevation.z.1100}",
+          "$description": "Stacking index for sticky interface regions."
+        },
+        "fixed": {
+          "$type": "number",
+          "$value": "{co.elevation.z.1200}",
+          "$description": "Stacking index for fixed interface regions."
+        },
+        "modal-backdrop": {
+          "$type": "number",
+          "$value": "{co.elevation.z.1300}",
+          "$description": "Stacking index for modal backdrop layers."
+        },
+        "modal": {
+          "$type": "number",
+          "$value": "{co.elevation.z.1400}",
+          "$description": "Stacking index for modal dialog layers."
+        },
+        "popover": {
+          "$type": "number",
+          "$value": "{co.elevation.z.1500}",
+          "$description": "Stacking index for popover layers."
+        },
+        "tooltip": {
+          "$type": "number",
+          "$value": "{co.elevation.z.1600}",
+          "$description": "Stacking index for tooltip layers."
+        }
+      }
+    },
+    "opacity": {
+      "disabled": {
+        "$type": "opacity",
+        "$value": "{co.opacity.50}",
+        "$description": "Opacity applied to disabled content and controls."
+      },
+      "overlay": {
+        "$type": "opacity",
+        "$value": "{co.opacity.40}",
+        "$description": "Opacity used for modal and page overlays."
+      },
+      "placeholder": {
+        "$type": "opacity",
+        "$value": "{co.opacity.60}",
+        "$description": "Opacity used for placeholder text and inactive hints."
+      }
+    },
+    "space": {
+      "gap": {
+        "xs": {
+          "$type": "dimension",
+          "$value": "{co.space.1}",
+          "$description": "Extra small gap between related layout items."
+        },
+        "sm": {
+          "$type": "dimension",
+          "$value": "{co.space.2}",
+          "$description": "Small gap between related layout items."
+        },
+        "md": {
+          "$type": "dimension",
+          "$value": "{co.space.4}",
+          "$description": "Medium gap between related layout items."
+        },
+        "lg": {
+          "$type": "dimension",
+          "$value": "{co.space.6}",
+          "$description": "Large gap between related layout items."
+        },
+        "xl": {
+          "$type": "dimension",
+          "$value": "{co.space.8}",
+          "$description": "Extra large gap between related layout items."
+        }
+      },
+      "inset": {
+        "xs": {
+          "$type": "dimension",
+          "$value": "{co.space.1}",
+          "$description": "Extra small inset padding inside components and containers."
+        },
+        "sm": {
+          "$type": "dimension",
+          "$value": "{co.space.2}",
+          "$description": "Small inset padding inside components and containers."
+        },
+        "md": {
+          "$type": "dimension",
+          "$value": "{co.space.4}",
+          "$description": "Medium inset padding inside components and containers."
+        },
+        "lg": {
+          "$type": "dimension",
+          "$value": "{co.space.6}",
+          "$description": "Large inset padding inside components and containers."
+        },
+        "xl": {
+          "$type": "dimension",
+          "$value": "{co.space.8}",
+          "$description": "Extra large inset padding inside components and containers."
+        }
+      },
+      "section": {
+        "$type": "dimension",
+        "$value": "{co.space.16}",
+        "$description": "Default vertical spacing between major page sections."
+      },
+      "page": {
+        "$type": "dimension",
+        "$value": "{co.space.24}",
+        "$description": "Default outer page padding for broad layouts."
+      }
+    },
+    "motion": {
+      "easing": {
+        "default": {
+          "$type": "cubicBezier",
+          "$value": "{co.motion.easing.standard}",
+          "$description": "Default easing curve for standard UI transitions."
+        },
+        "in": {
+          "$type": "cubicBezier",
+          "$value": "{co.motion.easing.accelerate}",
+          "$description": "Easing curve for elements entering from rest."
+        },
+        "out": {
+          "$type": "cubicBezier",
+          "$value": "{co.motion.easing.decelerate}",
+          "$description": "Easing curve for elements exiting to rest."
+        },
+        "in-out": {
+          "$type": "cubicBezier",
+          "$value": "{co.motion.easing.standard}",
+          "$description": "Easing curve for transitions with both acceleration and deceleration."
         }
       }
     }

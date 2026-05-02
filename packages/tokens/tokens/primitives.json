@@ -65,70 +65,6 @@
         "$type": "dimension",
         "$value": "96px",
         "$description": "Raw spacing step 24 used as the base scale for gaps, margins, and padding."
-      },
-      "gap": {
-        "xs": {
-          "$type": "dimension",
-          "$value": "{co.space.1}",
-          "$description": "Extra small gap between related layout items."
-        },
-        "sm": {
-          "$type": "dimension",
-          "$value": "{co.space.2}",
-          "$description": "Small gap between related layout items."
-        },
-        "md": {
-          "$type": "dimension",
-          "$value": "{co.space.4}",
-          "$description": "Medium gap between related layout items."
-        },
-        "lg": {
-          "$type": "dimension",
-          "$value": "{co.space.6}",
-          "$description": "Large gap between related layout items."
-        },
-        "xl": {
-          "$type": "dimension",
-          "$value": "{co.space.8}",
-          "$description": "Extra large gap between related layout items."
-        }
-      },
-      "inset": {
-        "xs": {
-          "$type": "dimension",
-          "$value": "{co.space.1}",
-          "$description": "Extra small inset padding inside components and containers."
-        },
-        "sm": {
-          "$type": "dimension",
-          "$value": "{co.space.2}",
-          "$description": "Small inset padding inside components and containers."
-        },
-        "md": {
-          "$type": "dimension",
-          "$value": "{co.space.4}",
-          "$description": "Medium inset padding inside components and containers."
-        },
-        "lg": {
-          "$type": "dimension",
-          "$value": "{co.space.6}",
-          "$description": "Large inset padding inside components and containers."
-        },
-        "xl": {
-          "$type": "dimension",
-          "$value": "{co.space.8}",
-          "$description": "Extra large inset padding inside components and containers."
-        }
-      },
-      "section": {
-        "$type": "dimension",
-        "$value": "{co.space.16}",
-        "$description": "Default vertical spacing between major page sections."
-      },
-      "page": {
-        "$type": "dimension",
-        "$value": "{co.space.24}",
-        "$description": "Default outer page padding for broad layouts."
       }
     },
     "font": {
@@ -145,50 +81,50 @@
         }
       },
       "size": {
-        "xsmall": {
+        "50": {
           "$type": "dimension",
           "$value": "0.75rem",
-          "$description": "Extra small font size of 12px for captions and fine print."
+          "$description": "Raw font size step at 12px."
         },
-        "small": {
+        "75": {
           "$type": "dimension",
           "$value": "0.875rem",
-          "$description": "Small font size of 14px for labels and secondary text."
+          "$description": "Raw font size step at 14px."
         },
-        "p": {
+        "100": {
           "$type": "dimension",
           "$value": "1rem",
-          "$description": "Paragraph baseline font size of 16px (body text)."
+          "$description": "Raw font size baseline at 16px (1rem)."
         },
-        "h6": {
+        "200": {
           "$type": "dimension",
           "$value": "1.125rem",
-          "$description": "Heading 6 font size of 18px."
+          "$description": "Raw font size step at 18px."
         },
-        "h5": {
+        "300": {
           "$type": "dimension",
           "$value": "1.25rem",
-          "$description": "Heading 5 font size of 20px."
+          "$description": "Raw font size step at 20px."
         },
-        "h4": {
+        "400": {
           "$type": "dimension",
           "$value": "1.5rem",
-          "$description": "Heading 4 font size of 24px."
+          "$description": "Raw font size step at 24px."
         },
-        "h3": {
+        "500": {
           "$type": "dimension",
           "$value": "1.875rem",
-          "$description": "Heading 3 font size of 30px."
+          "$description": "Raw font size step at 30px."
         },
-        "h2": {
+        "600": {
           "$type": "dimension",
           "$value": "2.25rem",
-          "$description": "Heading 2 font size of 36px."
+          "$description": "Raw font size step at 36px."
         },
-        "h1": {
+        "700": {
           "$type": "dimension",
           "$value": "3rem",
-          "$description": "Heading 1 font size of 48px."
+          "$description": "Raw font size step at 48px."
         }
       },
       "weight": {
@@ -214,53 +150,53 @@
         }
       },
       "tracking": {
-        "tighter": {
+        "50": {
           "$type": "dimension",
           "$value": "-0.025em",
-          "$description": "Tighter letter spacing for large display text."
+          "$description": "Raw letter spacing step at -0.025em."
         },
-        "tight": {
+        "75": {
           "$type": "dimension",
           "$value": "-0.015em",
-          "$description": "Tight letter spacing for headings and titles."
+          "$description": "Raw letter spacing step at -0.015em."
         },
-        "normal": {
+        "100": {
           "$type": "dimension",
           "$value": "0",
-          "$description": "Default letter spacing for body text and controls."
+          "$description": "Raw letter spacing baseline at 0."
         },
-        "wide": {
+        "200": {
           "$type": "dimension",
           "$value": "0.05em",
-          "$description": "Wide letter spacing for compact uppercase text."
+          "$description": "Raw letter spacing step at 0.05em."
         },
-        "widest": {
+        "300": {
           "$type": "dimension",
           "$value": "0.08em",
-          "$description": "Widest letter spacing for eyebrow and metadata text."
+          "$description": "Raw letter spacing step at 0.08em."
         }
       },
       "line": {
         "height": {
-          "display": {
+          "110": {
             "$type": "lineHeights",
             "$value": 1.1,
-            "$description": "Compact line-height ratio for display typography."
+            "$description": "Raw line-height ratio of 1.1."
           },
-          "tight": {
+          "125": {
             "$type": "lineHeights",
             "$value": 1.25,
-            "$description": "Tight line-height ratio for headings, labels, and controls."
+            "$description": "Raw line-height ratio of 1.25."
           },
-          "normal": {
+          "150": {
             "$type": "lineHeights",
             "$value": 1.5,
-            "$description": "Default line-height ratio for readable body text."
+            "$description": "Raw line-height ratio of 1.5."
           },
-          "relaxed": {
+          "175": {
             "$type": "lineHeights",
             "$value": 1.75,
-            "$description": "Relaxed line-height ratio for long-form text."
+            "$description": "Raw line-height ratio of 1.75."
           }
         }
       }
@@ -316,40 +252,40 @@
         }
       },
       "z": {
-        "dropdown": {
+        "1000": {
           "$type": "number",
           "$value": 1000,
-          "$description": "Stacking index for dropdown layers."
+          "$description": "Raw stacking index step 1000."
         },
-        "sticky": {
+        "1100": {
           "$type": "number",
-          "$value": 1020,
-          "$description": "Stacking index for sticky interface regions."
+          "$value": 1100,
+          "$description": "Raw stacking index step 1100."
         },
-        "fixed": {
+        "1200": {
           "$type": "number",
-          "$value": 1030,
-          "$description": "Stacking index for fixed interface regions."
+          "$value": 1200,
+          "$description": "Raw stacking index step 1200."
         },
-        "modal-backdrop": {
+        "1300": {
           "$type": "number",
-          "$value": 1040,
-          "$description": "Stacking index for modal backdrop layers."
+          "$value": 1300,
+          "$description": "Raw stacking index step 1300."
         },
-        "modal": {
+        "1400": {
           "$type": "number",
-          "$value": 1050,
-          "$description": "Stacking index for modal dialog layers."
+          "$value": 1400,
+          "$description": "Raw stacking index step 1400."
         },
-        "popover": {
+        "1500": {
           "$type": "number",
-          "$value": 1060,
-          "$description": "Stacking index for popover layers."
+          "$value": 1500,
+          "$description": "Raw stacking index step 1500."
         },
-        "tooltip": {
+        "1600": {
           "$type": "number",
-          "$value": 1070,
-          "$description": "Stacking index for tooltip layers."
+          "$value": 1600,
+          "$description": "Raw stacking index step 1600."
         }
       }
     },
@@ -372,25 +308,20 @@
         }
       },
       "easing": {
-        "default": {
+        "standard": {
           "$type": "cubicBezier",
           "$value": "cubic-bezier(0.4, 0, 0.2, 1)",
-          "$description": "Default easing curve for standard UI transitions."
+          "$description": "Raw cubic-bezier for symmetric ease-in-out curves."
         },
-        "in": {
+        "accelerate": {
           "$type": "cubicBezier",
           "$value": "cubic-bezier(0.4, 0, 1, 1)",
-          "$description": "Easing curve for elements entering from rest."
+          "$description": "Raw cubic-bezier for accelerating curves."
         },
-        "out": {
+        "decelerate": {
           "$type": "cubicBezier",
           "$value": "cubic-bezier(0, 0, 0.2, 1)",
-          "$description": "Easing curve for elements exiting to rest."
-        },
-        "in-out": {
-          "$type": "cubicBezier",
-          "$value": "cubic-bezier(0.4, 0, 0.2, 1)",
-          "$description": "Easing curve for transitions with both acceleration and deceleration."
+          "$description": "Raw cubic-bezier for decelerating curves."
         }
       }
     },
@@ -444,29 +375,29 @@
             "$value": "2px",
             "$description": "Thick border width for emphasized outlines."
           },
-          "lg": {
+          "thicker": {
             "$type": "dimension",
             "$value": "4px",
-            "$description": "Large border width for focus rings highly emphasized outlines."
+            "$description": "Thicker border width for focus rings and highly emphasized outlines."
           }
         }
       }
     },
     "opacity": {
-      "disabled": {
-        "$type": "opacity",
-        "$value": 0.5,
-        "$description": "Opacity applied to disabled content and controls."
-      },
-      "overlay": {
+      "40": {
         "$type": "opacity",
         "$value": 0.4,
-        "$description": "Opacity used for modal and page overlays."
+        "$description": "Raw opacity step at 0.4 (40%)."
       },
-      "placeholder": {
+      "50": {
+        "$type": "opacity",
+        "$value": 0.5,
+        "$description": "Raw opacity step at 0.5 (50%)."
+      },
+      "60": {
         "$type": "opacity",
         "$value": 0.6,
-        "$description": "Opacity used for placeholder text and inactive hints."
+        "$description": "Raw opacity step at 0.6 (60%)."
       }
     },
     "sizing": {
