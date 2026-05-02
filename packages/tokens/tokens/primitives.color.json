@@ -2,7 +2,7 @@
   "co": {
     "color": {
       "primitive": {
-        "gray": {
+        "neutral": {
           "50": {
             "$type": "color",
             "$value": "#fcfcfc"
@@ -50,9 +50,10 @@
           "950": {
             "$type": "color",
             "$value": "#202020"
-          }
+          },
+          "$description": "Neutral grayscale palette used by light-mode semantic themes for surfaces, borders, dividers, and text."
         },
-        "gray-dark": {
+        "neutral-dark": {
           "50": {
             "$type": "color",
             "$value": "#111111"
@@ -100,107 +101,8 @@
           "950": {
             "$type": "color",
             "$value": "#eeeeee"
-          }
-        },
-        "neutral": {
-          "50": {
-            "$type": "color",
-            "$value": "{co.color.primitive.gray.50}"
           },
-          "75": {
-            "$type": "color",
-            "$value": "{co.color.primitive.gray.75}"
-          },
-          "100": {
-            "$type": "color",
-            "$value": "{co.color.primitive.gray.100}"
-          },
-          "200": {
-            "$type": "color",
-            "$value": "{co.color.primitive.gray.200}"
-          },
-          "300": {
-            "$type": "color",
-            "$value": "{co.color.primitive.gray.300}"
-          },
-          "400": {
-            "$type": "color",
-            "$value": "{co.color.primitive.gray.400}"
-          },
-          "500": {
-            "$type": "color",
-            "$value": "{co.color.primitive.gray.500}"
-          },
-          "600": {
-            "$type": "color",
-            "$value": "{co.color.primitive.gray.600}"
-          },
-          "700": {
-            "$type": "color",
-            "$value": "{co.color.primitive.gray.700}"
-          },
-          "800": {
-            "$type": "color",
-            "$value": "{co.color.primitive.gray.800}"
-          },
-          "900": {
-            "$type": "color",
-            "$value": "{co.color.primitive.gray.900}"
-          },
-          "950": {
-            "$type": "color",
-            "$value": "{co.color.primitive.gray.950}"
-          }
-        },
-        "neutral-dark": {
-          "50": {
-            "$type": "color",
-            "$value": "{co.color.primitive.gray-dark.50}"
-          },
-          "75": {
-            "$type": "color",
-            "$value": "{co.color.primitive.gray-dark.75}"
-          },
-          "100": {
-            "$type": "color",
-            "$value": "{co.color.primitive.gray-dark.100}"
-          },
-          "200": {
-            "$type": "color",
-            "$value": "{co.color.primitive.gray-dark.200}"
-          },
-          "300": {
-            "$type": "color",
-            "$value": "{co.color.primitive.gray-dark.300}"
-          },
-          "400": {
-            "$type": "color",
-            "$value": "{co.color.primitive.gray-dark.400}"
-          },
-          "500": {
-            "$type": "color",
-            "$value": "{co.color.primitive.gray-dark.500}"
-          },
-          "600": {
-            "$type": "color",
-            "$value": "{co.color.primitive.gray-dark.600}"
-          },
-          "700": {
-            "$type": "color",
-            "$value": "{co.color.primitive.gray-dark.700}"
-          },
-          "800": {
-            "$type": "color",
-            "$value": "{co.color.primitive.gray-dark.800}"
-          },
-          "900": {
-            "$type": "color",
-            "$value": "{co.color.primitive.gray-dark.900}"
-          },
-          "950": {
-            "$type": "color",
-            "$value": "{co.color.primitive.gray-dark.950}"
-          }
+          "$description": "Inverted neutral scale used by dark-mode semantic themes. Each stop maps to the equivalent dark-mode role of the same-numbered stop in the light `neutral` scale."
         },
         "blue": {
           "50": {
@@ -300,107 +202,8 @@
           "950": {
             "$type": "color",
             "$value": "#dde7ff"
-          }
-        },
-        "cobalt": {
-          "50": {
-            "$type": "color",
-            "$value": "{co.color.primitive.blue.50}"
           },
-          "75": {
-            "$type": "color",
-            "$value": "{co.color.primitive.blue.75}"
-          },
-          "100": {
-            "$type": "color",
-            "$value": "{co.color.primitive.blue.100}"
-          },
-          "200": {
-            "$type": "color",
-            "$value": "{co.color.primitive.blue.200}"
-          },
-          "300": {
-            "$type": "color",
-            "$value": "{co.color.primitive.blue.300}"
-          },
-          "400": {
-            "$type": "color",
-            "$value": "{co.color.primitive.blue.400}"
-          },
-          "500": {
-            "$type": "color",
-            "$value": "{co.color.primitive.blue.500}"
-          },
-          "600": {
-            "$type": "color",
-            "$value": "{co.color.primitive.blue.600}"
-          },
-          "700": {
-            "$type": "color",
-            "$value": "{co.color.primitive.blue.700}"
-          },
-          "800": {
-            "$type": "color",
-            "$value": "{co.color.primitive.blue.800}"
-          },
-          "900": {
-            "$type": "color",
-            "$value": "{co.color.primitive.blue.900}"
-          },
-          "950": {
-            "$type": "color",
-            "$value": "{co.color.primitive.blue.950}"
-          }
-        },
-        "cobalt-dark": {
-          "50": {
-            "$type": "color",
-            "$value": "{co.color.primitive.blue-dark.50}"
-          },
-          "75": {
-            "$type": "color",
-            "$value": "{co.color.primitive.blue-dark.75}"
-          },
-          "100": {
-            "$type": "color",
-            "$value": "{co.color.primitive.blue-dark.100}"
-          },
-          "200": {
-            "$type": "color",
-            "$value": "{co.color.primitive.blue-dark.200}"
-          },
-          "300": {
-            "$type": "color",
-            "$value": "{co.color.primitive.blue-dark.300}"
-          },
-          "400": {
-            "$type": "color",
-            "$value": "{co.color.primitive.blue-dark.400}"
-          },
-          "500": {
-            "$type": "color",
-            "$value": "{co.color.primitive.blue-dark.500}"
-          },
-          "600": {
-            "$type": "color",
-            "$value": "{co.color.primitive.blue-dark.600}"
-          },
-          "700": {
-            "$type": "color",
-            "$value": "{co.color.primitive.blue-dark.700}"
-          },
-          "800": {
-            "$type": "color",
-            "$value": "{co.color.primitive.blue-dark.800}"
-          },
-          "900": {
-            "$type": "color",
-            "$value": "{co.color.primitive.blue-dark.900}"
-          },
-          "950": {
-            "$type": "color",
-            "$value": "{co.color.primitive.blue-dark.950}"
-          }
+          "$description": "Inverted blue scale used by dark-mode semantic themes. Each stop maps to the equivalent dark-mode role of the same-numbered stop in the light `blue` scale."
         },
         "purple": {
           "50": {
@@ -500,7 +303,8 @@
           "950": {
             "$type": "color",
             "$value": "#f2d3ff"
-          }
+          },
+          "$description": "Inverted purple scale used by dark-mode semantic themes. Each stop maps to the equivalent dark-mode role of the same-numbered stop in the light `purple` scale."
         },
         "red": {
           "50": {
@@ -600,7 +404,8 @@
           "950": {
             "$type": "color",
             "$value": "#ffd1d9"
-          }
+          },
+          "$description": "Inverted red scale used by dark-mode semantic themes. Each stop maps to the equivalent dark-mode role of the same-numbered stop in the light `red` scale."
         },
         "brick": {
           "50": {
@@ -700,7 +505,8 @@
           "950": {
             "$type": "color",
             "$value": "#ffd0c8"
-          }
+          },
+          "$description": "Inverted brick scale used by dark-mode semantic themes. Each stop maps to the equivalent dark-mode role of the same-numbered stop in the light `brick` scale."
         },
         "green": {
           "50": {
@@ -800,7 +606,8 @@
           "950": {
             "$type": "color",
             "$value": "#b1f1cb"
-          }
+          },
+          "$description": "Inverted green scale used by dark-mode semantic themes. Each stop maps to the equivalent dark-mode role of the same-numbered stop in the light `green` scale."
         },
         "forest": {
           "50": {
@@ -900,7 +707,8 @@
           "950": {
             "$type": "color",
             "$value": "#c1ebd3"
-          }
+          },
+          "$description": "Inverted forest scale used by dark-mode semantic themes. Each stop maps to the equivalent dark-mode role of the same-numbered stop in the light `forest` scale."
         },
         "amber": {
           "50": {
@@ -1000,107 +808,8 @@
           "950": {
             "$type": "color",
             "$value": "#ffe7b3"
-          }
-        },
-        "orange": {
-          "50": {
-            "$type": "color",
-            "$value": "{co.color.primitive.amber.50}"
           },
-          "75": {
-            "$type": "color",
-            "$value": "{co.color.primitive.amber.75}"
-          },
-          "100": {
-            "$type": "color",
-            "$value": "{co.color.primitive.amber.100}"
-          },
-          "200": {
-            "$type": "color",
-            "$value": "{co.color.primitive.amber.200}"
-          },
-          "300": {
-            "$type": "color",
-            "$value": "{co.color.primitive.amber.300}"
-          },
-          "400": {
-            "$type": "color",
-            "$value": "{co.color.primitive.amber.400}"
-          },
-          "500": {
-            "$type": "color",
-            "$value": "{co.color.primitive.amber.500}"
-          },
-          "600": {
-            "$type": "color",
-            "$value": "{co.color.primitive.amber.600}"
-          },
-          "700": {
-            "$type": "color",
-            "$value": "{co.color.primitive.amber.700}"
-          },
-          "800": {
-            "$type": "color",
-            "$value": "{co.color.primitive.amber.800}"
-          },
-          "900": {
-            "$type": "color",
-            "$value": "{co.color.primitive.amber.900}"
-          },
-          "950": {
-            "$type": "color",
-            "$value": "{co.color.primitive.amber.950}"
-          }
-        },
-        "orange-dark": {
-          "50": {
-            "$type": "color",
-            "$value": "{co.color.primitive.amber-dark.50}"
-          },
-          "75": {
-            "$type": "color",
-            "$value": "{co.color.primitive.amber-dark.75}"
-          },
-          "100": {
-            "$type": "color",
-            "$value": "{co.color.primitive.amber-dark.100}"
-          },
-          "200": {
-            "$type": "color",
-            "$value": "{co.color.primitive.amber-dark.200}"
-          },
-          "300": {
-            "$type": "color",
-            "$value": "{co.color.primitive.amber-dark.300}"
-          },
-          "400": {
-            "$type": "color",
-            "$value": "{co.color.primitive.amber-dark.400}"
-          },
-          "500": {
-            "$type": "color",
-            "$value": "{co.color.primitive.amber-dark.500}"
-          },
-          "600": {
-            "$type": "color",
-            "$value": "{co.color.primitive.amber-dark.600}"
-          },
-          "700": {
-            "$type": "color",
-            "$value": "{co.color.primitive.amber-dark.700}"
-          },
-          "800": {
-            "$type": "color",
-            "$value": "{co.color.primitive.amber-dark.800}"
-          },
-          "900": {
-            "$type": "color",
-            "$value": "{co.color.primitive.amber-dark.900}"
-          },
-          "950": {
-            "$type": "color",
-            "$value": "{co.color.primitive.amber-dark.950}"
-          }
+          "$description": "Inverted amber scale used by dark-mode semantic themes. Each stop maps to the equivalent dark-mode role of the same-numbered stop in the light `amber` scale."
         },
         "white": {
           "$type": "color",
@@ -1109,6 +818,11 @@
         "black": {
           "$type": "color",
           "$value": "#000000"
+        },
+        "transparent": {
+          "$type": "color",
+          "$value": "transparent",
+          "$description": "Fully transparent color (alpha 0). Use for default-state surfaces and outlines that should disappear into their background."
         }
       }
     }

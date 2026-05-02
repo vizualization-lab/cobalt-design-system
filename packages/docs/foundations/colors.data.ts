@@ -23,8 +23,11 @@ const SHADE_MAP = [
 ] as const;
 
 const PALETTE_LABELS: Record<string, { name: string; description: string }> = {
-  gray: { name: 'Gray', description: 'Neutral foundation shared across themes.' },
-  'gray-dark': { name: 'Gray', description: 'Neutral foundation shared across themes.' },
+  neutral: { name: 'Neutral', description: 'Neutral foundation shared across themes.' },
+  'neutral-dark': {
+    name: 'Neutral',
+    description: 'Neutral foundation shared across themes.',
+  },
   blue: { name: 'Blue', description: 'Default brand accent built from the custom blue scale.' },
   'blue-dark': {
     name: 'Blue',
@@ -270,8 +273,8 @@ export default {
       const accentLabel = familyLabel(accentFamily).name;
       const paletteFamilies =
         mode === 'light'
-          ? ['gray', accentFamily, 'red', 'green', 'amber']
-          : ['gray-dark', accentFamily, 'red-dark', 'green-dark', 'amber-dark'];
+          ? ['neutral', accentFamily, 'red', 'green', 'amber']
+          : ['neutral-dark', accentFamily, 'red-dark', 'green-dark', 'amber-dark'];
 
       const palettes = paletteFamilies.map((family) => {
         const meta = familyLabel(family);
@@ -325,11 +328,11 @@ export default {
     const themes = [...themesById.values()].map((theme) => {
       const modes = theme.modes.sort((a, b) => (a.id === 'light' ? -1 : 1));
       const lightAccent = theme.accentFamily.replace(/-dark$/, '');
-      const baseFamilies = ['gray', lightAccent, 'red', 'green', 'amber'];
+      const baseFamilies = ['neutral', lightAccent, 'red', 'green', 'amber'];
 
       const palettes: ThemePalette[] = baseFamilies.map((baseFamily) => {
         const lightFamily = baseFamily;
-        const darkFamily = baseFamily === 'gray' ? 'gray-dark' : `${baseFamily}-dark`;
+        const darkFamily = baseFamily === 'neutral' ? 'neutral-dark' : `${baseFamily}-dark`;
         const meta = familyLabel(baseFamily);
 
         return {
