@@ -310,6 +310,10 @@ Use the built-in `label` API for most selects. Reach for [`co-label`](/component
 
 ## Accessibility
 
+<ClientOnly>
+<A11yReport component="co-select" />
+</ClientOnly>
+
 `co-select` follows the WAI-ARIA [Listbox button pattern](https://www.w3.org/WAI/ARIA/apg/patterns/listbox/): a button with `aria-haspopup="listbox"` opens a `role="listbox"` overlay, and DOM focus moves to the listbox while the dropdown is open.
 
 ### Keyboard interaction
