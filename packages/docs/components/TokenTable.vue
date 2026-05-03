@@ -208,12 +208,45 @@ function tokenTierLabel(token: TokenEntry): string {
   return token.tier === 'primitive' ? 'Primitive' : 'Semantic';
 }
 
-function tokenSwatchColor(token: TokenEntry): string | null {
+function isColorToken(token: TokenEntry): boolean {
   const candidate = token.resolvedValue ?? token.value;
-  if (/^#[0-9a-f]{3,8}$/i.test(candidate)) return candidate;
-  if (candidate.startsWith('rgb') || candidate.startsWith('hsl')) return candidate;
-  if (candidate.startsWith('color-mix(')) return candidate;
-  return null;
+  return (
+    /^#[0-9a-f]{3,8}$/i.test(candidate) ||
+    candidate.startsWith('rgb') ||
+    candidate.startsWith('hsl') ||
+    candidate.startsWith('color-mix(')
+  );
+}
+
+// CSS expression to use as `background:` on a swatch. Returning `var(...)` so
+// the browser resolves through the active theme cascade — swatch updates live
+// when the user switches theme/mode.
+function tokenSwatchBackground(token: TokenEntry): string | null {
+  return isColorToken(token) ? `var(${token.name})` : null;
+}
+
+function readLiveColor(varName: string): string | null {
+  if (typeof document === 'undefined') return null;
+  const probe = document.createElement('span');
+  probe.style.color = `var(${varName})`;
+  probe.style.position = 'absolute';
+  probe.style.visibility = 'hidden';
+  document.body.appendChild(probe);
+  const rgb = getComputedStyle(probe).color;
+  probe.remove();
+  return rgbToDisplay(rgb);
+}
+
+function rgbToDisplay(value: string): string {
+  // Browsers normalize colors to `rgb(R, G, B)` or `rgba(R, G, B, A)`. Convert
+  // fully-opaque colors to hex for compactness; keep rgba(...) when alpha < 1.
+  const m = value.match(/^rgba?\((\d+)[,\s]+(\d+)[,\s]+(\d+)(?:[,\s/]+([\d.]+))?\)$/);
+  if (!m) return value;
+  const [, r, g, b, a] = m;
+  const alpha = a === undefined ? 1 : parseFloat(a);
+  if (alpha < 1) return value;
+  const toHex = (n: string) => Number(n).toString(16).padStart(2, '0');
+  return `#${toHex(r)}${toHex(g)}${toHex(b)}`;
 }
 
 function escapeHtml(value: string): string {
@@ -455,6 +488,20 @@ const selectedToken = computed(
   () => props.tokens.find((token) => token.name === selectedTokenName.value) ?? null,
 );
 
+// Bumped whenever the active theme/mode changes. `liveResolvedColor` reads
+// this so it re-runs through the DOM probe each time the cascade shifts.
+const themeRevision = ref(0);
+
+const liveResolvedColor = computed<string | null>(() => {
+  themeRevision.value;
+  const token = selectedToken.value;
+  if (!token || !isColorToken(token)) return null;
+  if (typeof window === 'undefined') {
+    return token.resolvedValue ?? token.value;
+  }
+  return readLiveColor(token.name) ?? token.resolvedValue ?? token.value;
+});
+
 const browseCount = computed(() => {
   if (activeTab.value === 'advanced') return allAdvancedTokens.value.length;
   return scopedMainBrowseTokens.value.length;
@@ -537,14 +584,27 @@ function checkMobile() {
   isMobile.value = window.innerWidth < 768;
 }
 
+let themeObserver: MutationObserver | null = null;
+
 onMounted(() => {
   checkMobile();
   window.addEventListener('resize', checkMobile);
+
+  themeObserver = new MutationObserver(() => {
+    themeRevision.value += 1;
+  });
+  themeObserver.observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ['data-theme', 'data-mode'],
+  });
+  themeRevision.value += 1;
 });
 
 onUnmounted(() => {
   window.removeEventListener('resize', checkMobile);
   document.body.style.overflow = '';
+  themeObserver?.disconnect();
+  themeObserver = null;
 });
 
 watch([query, activeTab, activeCategory, activeTier], async () => {
@@ -742,9 +802,9 @@ async function copyToken(name: string) {
                     <div class="result-meta">
                       <span class="result-path">{{ breadcrumbForToken(token).join(' / ') }}</span>
                       <span
-                        v-if="tokenSwatchColor(token)"
+                        v-if="tokenSwatchBackground(token)"
                         class="result-swatch"
-                        :style="{ background: tokenSwatchColor(token)! }"
+                        :style="{ background: tokenSwatchBackground(token)! }"
                       ></span>
                     </div>
                   </button>
@@ -807,14 +867,16 @@ async function copyToken(name: string) {
                 {{ selectedToken.description }}
               </p>
 
-              <div v-if="tokenSwatchColor(selectedToken)" class="detail-swatch-card">
+              <div v-if="tokenSwatchBackground(selectedToken)" class="detail-swatch-card">
                 <span
                   class="detail-swatch"
-                  :style="{ background: tokenSwatchColor(selectedToken)! }"
+                  :style="{ background: tokenSwatchBackground(selectedToken)! }"
                 ></span>
                 <div>
                   <div class="detail-swatch-label">Resolved color</div>
-                  <code>{{ tokenSwatchColor(selectedToken) }}</code>
+                  <code>{{
+                    liveResolvedColor ?? selectedToken.resolvedValue ?? selectedToken.value
+                  }}</code>
                 </div>
               </div>
 
@@ -874,14 +936,16 @@ async function copyToken(name: string) {
             <code class="detail-name">{{ selectedToken.name }}</code>
             <p class="detail-path">{{ detailPath }}</p>
 
-            <div v-if="tokenSwatchColor(selectedToken)" class="detail-swatch-card">
+            <div v-if="tokenSwatchBackground(selectedToken)" class="detail-swatch-card">
               <span
                 class="detail-swatch"
-                :style="{ background: tokenSwatchColor(selectedToken)! }"
+                :style="{ background: tokenSwatchBackground(selectedToken)! }"
               ></span>
               <div>
                 <div class="detail-swatch-label">Resolved color</div>
-                <code>{{ tokenSwatchColor(selectedToken) }}</code>
+                <code>{{
+                  liveResolvedColor ?? selectedToken.resolvedValue ?? selectedToken.value
+                }}</code>
               </div>
             </div>
 
