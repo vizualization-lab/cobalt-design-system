@@ -71,6 +71,16 @@ export class CoOption extends LionOption {
     super.updated(changedProperties);
     this._syncMultipleAttribute();
     this.toggleAttribute('data-no-indicator', !this._shouldRenderIndicator);
+    // slotchange doesn't fire reliably for slots whose content is
+    // already assigned at first paint, so check manually too.
+    this._syncPrefixSlotState();
+  }
+
+  private _syncPrefixSlotState(): void {
+    const slot = this.shadowRoot?.querySelector('slot[name="prefix"]') as HTMLSlotElement | null;
+    if (!slot) return;
+    const hasAssigned = slot.assignedNodes({ flatten: true }).length > 0;
+    this.toggleAttribute('data-has-prefix-slot', hasAssigned);
   }
 
   private get _indicatorIconName(): string {
