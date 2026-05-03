@@ -173,11 +173,12 @@ export const cobaltSelectStyles = css`
   }
 
   [part='overlay'] {
-    inline-size: 100%;
-    min-inline-size: min(20rem, 100vw);
-    /* Cap overlay width so very wide hosts don't produce unwieldy menus */
-    max-inline-size: min(100vw, 32rem);
-    /* Allow vertical scrolling when option list overflows the viewport */
+    /* Width is set by Lion's inheritsReferenceWidth: 'full' (writes
+       style="width: <invoker>px" inline). We don't constrain inline-size
+       here — fighting Lion's value produces an overlay much wider than
+       the trigger, which contradicts the standard select pattern (Radix,
+       Material, Polaris, native <select>). Cap height so very long lists
+       get a scrollbar instead of running off-screen. */
     max-block-size: min(60vh, 24rem);
     overflow-y: auto;
     border: var(--co-border-width-panel) solid var(--co-color-border-default);
