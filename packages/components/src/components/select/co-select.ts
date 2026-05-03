@@ -73,11 +73,31 @@ export class CoSelect extends LionSelectRich {
     super.disconnectedCallback();
     this.removeEventListener('model-value-changed', this._handleModelValueChanged);
     this.removeEventListener('opened-changed', this._syncChevronRotation);
+    const invoker = this.querySelector('[slot="invoker"]') as HTMLElement | null;
+    if (invoker) {
+      invoker.removeEventListener('focus', this._handleInvokerFocus);
+      invoker.removeEventListener('blur', this._handleInvokerBlur);
+    }
   }
 
   override firstUpdated(changedProperties: PropertyValues<this>): void {
     super.firstUpdated(changedProperties);
     this._syncRequiredValidator();
+    this._wireInvokerFocusEvents();
+  }
+
+  /**
+   * Listen for focus/blur on the invoker directly. The invoker is a custom
+   * element with shadow DOM that's slotted into co-select's shadow DOM, so
+   * focus events retarget twice on their way to the host listener (which
+   * makes target/composedPath unusable for filtering). Attaching to the
+   * invoker bypasses that.
+   */
+  private _wireInvokerFocusEvents(): void {
+    const invoker = this.querySelector('[slot="invoker"]') as HTMLElement | null;
+    if (!invoker) return;
+    invoker.addEventListener('focus', this._handleInvokerFocus);
+    invoker.addEventListener('blur', this._handleInvokerBlur);
   }
 
   override updated(changedProperties: PropertyValues<this>): void {
@@ -223,6 +243,15 @@ export class CoSelect extends LionSelectRich {
   private _onOverlayMousedown(e: Event) {
     e.preventDefault();
   }
+
+  /** Re-emit invoker focus as a composed `co-focus` event on the host. */
+  private _handleInvokerFocus = () => {
+    this.dispatchEvent(new CustomEvent('co-focus', { bubbles: true, composed: true }));
+  };
+
+  private _handleInvokerBlur = () => {
+    this.dispatchEvent(new CustomEvent('co-blur', { bubbles: true, composed: true }));
+  };
 
   private _handleModelValueChanged = (event: Event) => {
     const customEvent = event as CustomEvent<{ initialize?: boolean }>;
