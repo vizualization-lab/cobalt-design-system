@@ -147,15 +147,49 @@ function leafCount(nodes: ExplorerNode[]): number {
   return nodes.reduce((total, node) => total + node.count, 0);
 }
 
+// Multi-word phrases that should render as one tree segment instead of
+// splitting on the dashes inside them. Add to this list rather than renaming
+// tokens when the source-of-truth name is canonical CSS.
+const COMPOUND_SEGMENTS: readonly string[] = [
+  'line-height',
+  'modal-backdrop',
+  'body-sm',
+  'body-lg',
+];
+
+function joinCompoundSegments(segments: string[]): string[] {
+  const out: string[] = [];
+  let i = 0;
+  while (i < segments.length) {
+    let merged = false;
+    for (const compound of COMPOUND_SEGMENTS) {
+      const parts = compound.split('-');
+      if (parts.every((p, j) => segments[i + j] === p)) {
+        out.push(compound);
+        i += parts.length;
+        merged = true;
+        break;
+      }
+    }
+    if (!merged) {
+      out.push(segments[i]);
+      i += 1;
+    }
+  }
+  return out;
+}
+
 function mainTreeSegments(token: TokenEntry): string[] {
-  return token.name
-    .replace(/^--co-/, '')
-    .split('-')
-    .slice(1);
+  return joinCompoundSegments(
+    token.name
+      .replace(/^--co-/, '')
+      .split('-')
+      .slice(1),
+  );
 }
 
 function primitiveTreeSegments(token: TokenEntry): string[] {
-  return token.name.replace(/^--co-color-primitive-/, '').split('-');
+  return joinCompoundSegments(token.name.replace(/^--co-color-primitive-/, '').split('-'));
 }
 
 function breadcrumbForToken(token: TokenEntry): string[] {
