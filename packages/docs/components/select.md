@@ -193,22 +193,21 @@ Use the built-in `label` API for most selects. Reach for [`co-label`](/component
 
 ### When to use
 
-- **Predefined choices** — use when the user must pick from a fixed set of options
-- **Space-constrained forms** — compact alternative to radio groups or list boxes
-- **Single selection** — when only one value can be chosen at a time
+`co-select` is a **single-select dropdown** for fixed predefined options. Pick the right component for the job:
 
-### When NOT to use
-
-- **Searchable options** — use [Combo Box](/components/combobox) when users need to filter/search
-- **Few options (2-3)** — consider radio buttons for better visibility
-- **Multiple selection** — use [List Box](/components/listbox) with `multiple-choice`
-- **Free-text input** — use [Input](/components/input) or [Text Area](/components/textarea)
+| Component                                   | Use when                                                         |
+| ------------------------------------------- | ---------------------------------------------------------------- |
+| **`co-select`**                             | Single value, fixed predefined options, compact form             |
+| [`co-combobox`](/components/combobox)       | User needs to type to filter, or custom values are allowed       |
+| [`co-listbox`](/components/listbox)         | Multiple values, or always-visible options                       |
+| [`co-radio-group`](/components/radio-group) | 2–5 mutually exclusive options that benefit from full visibility |
 
 ### Content guidelines
 
 - Keep option labels concise and scannable
 - Order options logically (alphabetical, frequency, or semantic grouping)
-- Use a placeholder or `has-no-default-selected` when no default makes sense
+- Use `has-no-default-selected` when no default makes sense — the invoker shows a placeholder until the user picks
+- The option list inside `co-select` reads like a native `<select>`: no radio/checkbox indicators are shown next to options. Slot custom `prefix` content per option only when meaningful (e.g. a country flag, a status icon)
 
 ## API
 
@@ -254,26 +253,30 @@ Use the built-in `label` API for most selects. Reach for [`co-label`](/component
 
 ## Accessibility
 
+`co-select` follows the WAI-ARIA [Listbox button pattern](https://www.w3.org/WAI/ARIA/apg/patterns/listbox/): a button with `aria-haspopup="listbox"` opens a `role="listbox"` overlay, and DOM focus moves to the listbox while the dropdown is open.
+
 ### Keyboard interaction
 
-| Key               | Action                                           |
-| ----------------- | ------------------------------------------------ |
-| `Enter` / `Space` | Opens dropdown or selects focused option         |
-| `ArrowDown`       | Opens dropdown or moves to next option           |
-| `ArrowUp`         | Opens dropdown or moves to previous option       |
-| `Escape`          | Closes dropdown, returns focus to invoker        |
-| `Tab`             | Closes dropdown, moves to next focusable element |
-| `Home`            | Moves to first option                            |
-| `End`             | Moves to last option                             |
+| Key                     | Action                                               |
+| ----------------------- | ---------------------------------------------------- |
+| `ArrowDown` / `ArrowUp` | Opens the dropdown when closed; navigates options    |
+| `Home` / `End`          | Moves to the first / last option (when open)         |
+| `Escape`                | Closes the dropdown and returns focus to the invoker |
+| `Tab`                   | Closes the dropdown and moves to the next focusable  |
+| Printable characters    | Type-ahead — jump to the matching option (when open) |
+
+> **Note:** Lion's underlying implementation does not currently open the dropdown on `Enter` or `Space` (only `ArrowDown`/`ArrowUp` and type-ahead). Tracked as a residual gap in the [co-select audit](https://github.com/anthropics/cobalt/blob/main/audits/2026-05-co-select-audit.md).
 
 ### ARIA notes
 
 - The invoker has `role="button"` with `aria-haspopup="listbox"` and `aria-expanded`
+- The invoker is wired to the listbox via `aria-controls` (set by Cobalt; not provided by Lion)
 - The listbox has `role="listbox"` with `aria-orientation`
 - Options have `role="option"` with `aria-selected` managed by Lion
 - `aria-labelledby` and `aria-describedby` are connected automatically
 - External native label layouts are supported through [`co-label`](/components/label) plus the select `id`
 - Disabled state is reflected via `aria-disabled`
+- The option list omits the default radio indicator (a single-select dropdown isn't aided by a redundant marker); the same `co-option` element shows radio/checkbox indicators when used inside [`co-listbox`](/components/listbox) or a multi-select [`co-combobox`](/components/combobox)
 
 ## Changelog
 
