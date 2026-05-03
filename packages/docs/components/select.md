@@ -11,7 +11,7 @@ The `co-select` component provides a themed, accessible dropdown select built on
   :defaults="{ size: 'md' }"
   :options="{ size: ['sm', 'md', 'lg', 'xl'] }"
   :booleans="['disabled', 'danger', 'required']"
-  :slotHtml="'<co-option value=&quot;apple&quot;>Apple</co-option><co-option value=&quot;banana&quot;>Banana</co-option><co-option value=&quot;cherry&quot;>Cherry</co-option>'"
+  :slotHtml="'<co-option value=&quot;apple&quot;>Apple</co-option><co-option value=&quot;banana&quot;>Banana</co-option>'"
 />
 
 ## Sizes
@@ -21,18 +21,22 @@ The `co-select` component provides a themed, accessible dropdown select built on
   <co-select label="Small" name="demo-sm" size="sm">
     <co-option value="apple">Apple</co-option>
     <co-option value="banana">Banana</co-option>
+    <co-option value="cherry">Cherry</co-option>
   </co-select>
   <co-select label="Medium (default)" name="demo-md" size="md">
     <co-option value="apple">Apple</co-option>
     <co-option value="banana">Banana</co-option>
+    <co-option value="cherry">Cherry</co-option>
   </co-select>
   <co-select label="Large" name="demo-lg" size="lg">
     <co-option value="apple">Apple</co-option>
     <co-option value="banana">Banana</co-option>
+    <co-option value="cherry">Cherry</co-option>
   </co-select>
   <co-select label="Extra large" name="demo-xl" size="xl">
     <co-option value="apple">Apple</co-option>
     <co-option value="banana">Banana</co-option>
+    <co-option value="cherry">Cherry</co-option>
   </co-select>
 </div>
 </ClientOnly>
@@ -44,14 +48,17 @@ The `co-select` component provides a themed, accessible dropdown select built on
   <co-select label="Default" name="state-default">
     <co-option value="apple">Apple</co-option>
     <co-option value="banana">Banana</co-option>
+    <co-option value="cherry">Cherry</co-option>
   </co-select>
   <co-select label="Disabled" name="state-disabled" disabled>
     <co-option value="apple">Apple</co-option>
     <co-option value="banana">Banana</co-option>
+    <co-option value="cherry">Cherry</co-option>
   </co-select>
   <co-select label="Danger" name="state-danger" danger>
     <co-option value="apple">Apple</co-option>
     <co-option value="banana">Banana</co-option>
+    <co-option value="cherry">Cherry</co-option>
   </co-select>
 </div>
 </ClientOnly>
@@ -91,6 +98,10 @@ The `co-select` component provides a themed, accessible dropdown select built on
   <co-option value="banana">
     <co-icon slot="prefix" name="star" size="xs"></co-icon>
     Banana
+  </co-option>
+  <co-option value="cherry">
+    <co-icon slot="prefix" name="circle" size="xs"></co-icon>
+    Cherry
   </co-option>
 </co-select>
 ```
@@ -133,6 +144,7 @@ The prefix wrapper is marked `aria-hidden="true"`, so use icons that are decorat
 <co-select id="my-select" label="Fruit">
   <co-option value="apple">Apple</co-option>
   <co-option value="banana">Banana</co-option>
+  <co-option value="cherry">Cherry</co-option>
 </co-select>
 <script>
   document.getElementById('my-select').addEventListener('co-change', (e) => {
@@ -155,6 +167,7 @@ function App() {
       <CoSelect label="Favorite fruit" name="fruit">
         <CoOption value="apple">Apple</CoOption>
         <CoOption value="banana">Banana</CoOption>
+        <CoOption value="cherry">Cherry</CoOption>
       </CoSelect>
 
       {/* Events */}
@@ -180,6 +193,7 @@ import { CoSelect, CoOption } from '@cobalt/vue';
   <CoSelect label="Favorite fruit" name="fruit">
     <CoOption value="apple">Apple</CoOption>
     <CoOption value="banana">Banana</CoOption>
+    <CoOption value="cherry">Cherry</CoOption>
   </CoSelect>
 
   <!-- Events -->
@@ -217,6 +231,7 @@ export class AppComponent {
 <co-select label="Favorite fruit" name="fruit">
   <co-option value="apple">Apple</co-option>
   <co-option value="banana">Banana</co-option>
+  <co-option value="cherry">Cherry</co-option>
 </co-select>
 
 <co-select label="Fruit" (coChange)="onChange($event)">

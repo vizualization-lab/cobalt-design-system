@@ -9,6 +9,9 @@ const props = defineProps<{
   options?: Record<string, string[]>;
   booleans?: string[];
   textInputs?: string[];
+  /** Override the preview area minimum height (default 100px). Useful for
+   *  components that open content below — selects, comboboxes, popovers. */
+  previewMinHeight?: number | string;
 }>();
 
 const state = ref<Record<string, string | boolean>>({
@@ -34,6 +37,15 @@ const previewHtml = computed(() => {
   const attrs = attrString.value ? ' ' + attrString.value : '';
   const text = props.slotHtml || props.label || 'Button';
   return `<${props.tag}${attrs}>${text}</${props.tag}>`;
+});
+
+const previewStyle = computed(() => {
+  if (props.previewMinHeight == null) return undefined;
+  const value =
+    typeof props.previewMinHeight === 'number'
+      ? `${props.previewMinHeight}px`
+      : props.previewMinHeight;
+  return { minHeight: value };
 });
 
 // Force re-render key when state changes
@@ -66,7 +78,7 @@ watch(state, () => renderKey.value++, { deep: true });
         </label>
       </div>
     </div>
-    <div class="demo-preview">
+    <div class="demo-preview" :style="previewStyle">
       <ClientOnly>
         <div :key="renderKey" v-html="previewHtml"></div>
       </ClientOnly>
