@@ -8,7 +8,7 @@ export const cobaltNavSeparatorStyles = css`
 
   .separator {
     border: none;
-    border-top: var(--co-shape-border-width-thin) solid var(--co-color-border-default);
+    border-top: var(--co-border-width-divider) solid var(--co-color-border-default);
     margin: var(--co-space-2) 0;
   }
 `;

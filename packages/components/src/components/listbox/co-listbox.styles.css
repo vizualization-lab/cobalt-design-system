@@ -69,7 +69,7 @@ slot[name='input']::slotted([role='listbox']) {
   overflow: auto;
   gap: var(--co-space-1);
   padding: var(--co-space-1);
-  border: var(--co-shape-border-width-thin) solid var(--co-color-border-default);
+  border: var(--co-border-width-default) solid var(--co-color-border-default);
   border-radius: var(--co-control-radius);
   background: var(--co-color-surface-default);
   color: var(--co-color-text-default);

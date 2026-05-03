@@ -58,7 +58,7 @@ export const cobaltTextareaStyles = css`
     min-block-size: calc(var(--co-control-height-md) * 2);
     gap: var(--co-space-gap-sm);
     padding: var(--co-space-inset-md);
-    border: var(--co-shape-border-width-thin) solid var(--co-color-border-default);
+    border: var(--co-border-width-default) solid var(--co-color-border-default);
     border-radius: var(--co-control-radius);
     background: var(--co-color-surface-default);
     color: var(--co-color-text-default);

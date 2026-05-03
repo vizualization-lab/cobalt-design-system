@@ -20,7 +20,7 @@
 }
 
 .app-shell__banner {
-  border-bottom: var(--co-shape-border-width-thin) solid var(--co-color-border-default);
+  border-bottom: var(--co-border-width-divider) solid var(--co-color-border-default);
 }
 
 .app-shell__footer-inner {
@@ -28,7 +28,7 @@
 }
 
 .app-shell__topnav {
-  border-bottom: var(--co-shape-border-width-thin) solid var(--co-color-border-default);
+  border-bottom: var(--co-border-width-divider) solid var(--co-color-border-default);
 }
 
 .app-shell__topnav-inner {
@@ -47,7 +47,7 @@
   flex: 0 0 auto;
   min-block-size: var(--co-control-height-md);
   padding: var(--co-space-2) var(--co-space-3);
-  border: var(--co-shape-border-width-thin) solid var(--co-color-border-default);
+  border: var(--co-border-width-action) solid var(--co-color-border-default);
   border-radius: var(--co-control-radius);
   background: var(--co-color-surface-default);
   color: var(--co-color-text-default);
@@ -90,7 +90,7 @@
 }
 
 .app-shell__footer {
-  border-top: var(--co-shape-border-width-thin) solid var(--co-color-border-default);
+  border-top: var(--co-border-width-divider) solid var(--co-color-border-default);
 }
 
 .app-shell__overlay {
@@ -121,7 +121,7 @@
   block-size: 100dvh;
   overflow: auto;
   background: var(--co-color-surface-default);
-  border-inline-end: var(--co-shape-border-width-thin) solid var(--co-color-border-default);
+  border-inline-end: var(--co-border-width-panel) solid var(--co-color-border-default);
   box-shadow: var(--co-elevation-shadow-lg);
   outline: none;
   transform: translateX(calc(-100% - var(--co-space-3)));
@@ -140,14 +140,14 @@
 }
 
 .app-shell__overlay-section + .app-shell__overlay-section {
-  border-block-start: var(--co-shape-border-width-thin) solid var(--co-color-border-default);
+  border-block-start: var(--co-border-width-divider) solid var(--co-color-border-default);
 }
 
 .app-shell__overlay-panel[data-overlay-layout='split']
   .app-shell__overlay-section
   + .app-shell__overlay-section {
   border-block-start: 0;
-  border-inline-start: var(--co-shape-border-width-thin) solid var(--co-color-border-default);
+  border-inline-start: var(--co-border-width-divider) solid var(--co-color-border-default);
 }
 
 .app-shell__backdrop {

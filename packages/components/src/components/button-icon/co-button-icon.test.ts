@@ -39,7 +39,7 @@ describe('co-button-icon', () => {
     );
     el.style.setProperty('--co-color-interactive-secondary-default', 'rgb(245 247 255)');
     el.style.setProperty('--co-color-interactive-primary-default', 'rgb(33 55 77)');
-    el.style.setProperty('--co-shape-border-width-thin', '2px');
+    el.style.setProperty('--co-border-width-action', '2px');
 
     await el.updateComplete;
 

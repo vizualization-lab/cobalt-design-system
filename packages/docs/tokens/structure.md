@@ -42,7 +42,7 @@ Semantic-->Components
 | ------------------------------------ | -------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------------- |
 | `primitives.json`                    | Raw foundational values                                  | Spacing scale, radius scale, type scale, motion values, breakpoints | `space.4`, `shape.radius.sm`, `font.size.md`                              |
 | `primitives.color.json`              | Raw color palette                                        | Numeric hue families organized as `50`–`950` scales                 | `gray.100`, `blue.700`, `blue.900`                                        |
-| `semantic.shared.json`               | Shared design decisions that stay the same across themes | Control sizing, focus rules, shared layout values                   | `control.height.md`, `control.radius`, `focus.ring.width`                 |
+| `semantic.shared.json`               | Shared design decisions that stay the same across themes | Control sizing, border intent, focus rules, shared layout values    | `control.height.md`, `border.width.default`, `focus.ring.width`           |
 | `semantic.theme.<theme>.<mode>.json` | Semantic tokens that change by theme or mode             | Mostly color behavior today                                         | `color.text.default`, `color.surface.default`, `color.primary.base`       |
 | `components.json`                    | Component-specific tokens                                | Public component contracts or intentional exceptions                | `component.avatar.size.md`, `component.nav.rail.item.background.selected` |
 
@@ -84,6 +84,8 @@ Examples:
 
 - `focus.ring.width`
 - `focus.ring.offset`
+- `border.width.default`
+- `border.width.divider`
 - `control.height.md`
 - `control.radius`
 - `layout.content.max.width.lg`
@@ -91,6 +93,7 @@ Examples:
 These tokens answer questions like:
 
 - How tall is a medium control?
+- What border width should a field or divider use?
 - What radius should standard controls use?
 - How wide should shared content containers be?
 
@@ -146,6 +149,7 @@ Example:
 
 - default control height
 - default control radius
+- field outline width
 - focus ring width
 - content max width
 
@@ -175,6 +179,7 @@ Example:
 
 | Need                            | Best location                 | Why                                       |
 | ------------------------------- | ----------------------------- | ----------------------------------------- |
+| Default field outline width     | `semantic.shared`             | It is a shared border intent              |
 | Focus ring width                | `semantic.shared`             | It is a shared interaction rule           |
 | Primary text color in dark mode | `semantic.theme.default.dark` | It changes by theme                       |
 | Button and input height         | `semantic.shared`             | It is a shared control rule               |
@@ -208,6 +213,24 @@ This section should **not** be used for:
 - icons
 - cards
 - layout containers
+
+## About The `border` Section
+
+The `border` section in `semantic.shared.json` is for shared border-width intent roles.
+
+Examples:
+
+- field outlines
+- outlined actions
+- dividers and separators
+- framed containers
+- raised panels
+
+This section should **not** be used for:
+
+- raw width scale values
+- theme-specific border colors
+- focus ring width
 
 ## Recommended Figma Mindset
 

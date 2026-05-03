@@ -21,6 +21,7 @@ export interface TokensData {
 const CATEGORY_MAP: Record<string, string> = {
   space: 'Space',
   color: 'Color',
+  border: 'Border',
   font: 'Font',
   typography: 'Typography',
   shape: 'Shape',

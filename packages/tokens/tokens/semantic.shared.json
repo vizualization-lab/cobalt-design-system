@@ -1,5 +1,39 @@
 {
   "co": {
+    "border": {
+      "width": {
+        "default": {
+          "$type": "dimension",
+          "$value": "{co.shape.border.width.thin}",
+          "$description": "Default border width for standard field outlines and general border treatments."
+        },
+        "action": {
+          "$type": "dimension",
+          "$value": "{co.shape.border.width.thin}",
+          "$description": "Default border width for outlined actions such as secondary buttons and icon buttons."
+        },
+        "divider": {
+          "$type": "dimension",
+          "$value": "{co.shape.border.width.thin}",
+          "$description": "Default border width for separators, section rules, and other divider treatments."
+        },
+        "container": {
+          "$type": "dimension",
+          "$value": "{co.shape.border.width.thin}",
+          "$description": "Default border width for persistent framed surfaces and layout chrome."
+        },
+        "panel": {
+          "$type": "dimension",
+          "$value": "{co.shape.border.width.thin}",
+          "$description": "Default border width for raised or transient panels such as menus, drawers, and overlays."
+        },
+        "emphasis": {
+          "$type": "dimension",
+          "$value": "{co.shape.border.width.thick}",
+          "$description": "Stronger border width reserved for emphasized frames and keylines."
+        }
+      }
+    },
     "focus": {
       "ring": {
         "width": {

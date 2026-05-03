@@ -29,7 +29,7 @@ describe('co-button', () => {
     const el = await fixture<CoButton>(html`<co-button variant="secondary">Secondary</co-button>`);
     el.style.setProperty('--co-color-interactive-secondary-default', 'rgb(250 251 252)');
     el.style.setProperty('--co-color-interactive-primary-default', 'rgb(12 34 56)');
-    el.style.setProperty('--co-shape-border-width-thin', '2px');
+    el.style.setProperty('--co-border-width-action', '2px');
 
     await el.updateComplete;
 

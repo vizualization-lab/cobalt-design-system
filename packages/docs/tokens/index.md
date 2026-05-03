@@ -16,15 +16,16 @@ Browse and search Cobalt design tokens in a contained browser. `Main` focuses on
 
 Semantic tokens reference other tokens via `var()` and express design intent — use these in product code for theme-safe, self-documenting styles.
 
-| Category       | Prefix                          | What it covers                                                                                             |
-| -------------- | ------------------------------- | ---------------------------------------------------------------------------------------------------------- |
-| **Color**      | <nobr>`--co-color-`</nobr>      | Semantic roles (primary, neutral, ...) and contextual usage (surface, interactive, feedback)               |
-| **Space**      | <nobr>`--co-space-`</nobr>      | Semantic aliases for gaps, insets, section, and page margins                                               |
-| **Typography** | <nobr>`--co-typography-`</nobr> | Semantic role presets (display, heading, title, subtitle, eyebrow, body-lg, body, body-sm, label, caption) |
-| **Focus**      | <nobr>`--co-focus-`</nobr>      | Shared focus ring width and offset                                                                         |
-| **Control**    | <nobr>`--co-control-`</nobr>    | Shared control radius referencing shape tokens                                                             |
-| **Layout**     | <nobr>`--co-layout-`</nobr>     | Shared layout constraints such as content max widths                                                       |
-| **Component**  | <nobr>`--co-component-`</nobr>  | Component-specific contracts such as avatar sizes and nav rail state tokens                                |
+| Category       | Prefix                            | What it covers                                                                                             |
+| -------------- | --------------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| **Color**      | <nobr>`--co-color-`</nobr>        | Semantic roles (primary, neutral, ...) and contextual usage (surface, interactive, feedback)               |
+| **Border**     | <nobr>`--co-border-width-`</nobr> | Semantic border-width intents for default, action, divider, container, panel, and emphasized frames        |
+| **Space**      | <nobr>`--co-space-`</nobr>        | Semantic aliases for gaps, insets, section, and page margins                                               |
+| **Typography** | <nobr>`--co-typography-`</nobr>   | Semantic role presets (display, heading, title, subtitle, eyebrow, body-lg, body, body-sm, label, caption) |
+| **Focus**      | <nobr>`--co-focus-`</nobr>        | Shared focus ring width and offset                                                                         |
+| **Control**    | <nobr>`--co-control-`</nobr>      | Shared control radius referencing shape tokens                                                             |
+| **Layout**     | <nobr>`--co-layout-`</nobr>       | Shared layout constraints such as content max widths                                                       |
+| **Component**  | <nobr>`--co-component-`</nobr>    | Component-specific contracts such as avatar sizes and nav rail state tokens                                |
 
 ### Primitive
 
@@ -35,7 +36,7 @@ Primitive tokens hold raw, hard-coded values — the foundational scales that se
 | **Color**      | <nobr>`--co-color-`</nobr>      | Direct color values not covered by the Color Palettes tab                         |
 | **Space**      | <nobr>`--co-space-`</nobr>      | Base spacing scale (`--co-space-0` through `--co-space-24`)                       |
 | **Font**       | <nobr>`--co-font-`</nobr>       | Font families (sans, mono), size scale, weights, line-heights, and letter-spacing |
-| **Shape**      | <nobr>`--co-shape-`</nobr>      | Border-radius scale and border-width values                                       |
+| **Shape**      | <nobr>`--co-shape-`</nobr>      | Border-radius scale and raw border-width values                                   |
 | **Elevation**  | <nobr>`--co-elevation-`</nobr>  | Box-shadow depths (sm–xl) and z-index layers for stacking contexts                |
 | **Motion**     | <nobr>`--co-motion-`</nobr>     | Transition durations and easing curves                                            |
 | **Sizing**     | <nobr>`--co-sizing-`</nobr>     | Fixed dimensions for icons across four sizes                                      |
@@ -94,6 +95,7 @@ Per-mode imports are also available at `@cobalt/tokens/css/themes/<theme>-<mode>
 ```css
 .card {
   padding: var(--co-space-inset-md);
+  border: var(--co-border-width-container) solid var(--co-color-border-default);
   border-radius: var(--co-shape-radius-md);
   background: var(--co-color-surface-raised);
 }
@@ -102,7 +104,7 @@ Per-mode imports are also available at `@cobalt/tokens/css/themes/<theme>-<mode>
 ### JavaScript / TypeScript
 
 ```js
-import { CoSpaceInsetMd, CoShapeRadiusMd } from '@cobalt/tokens';
+import { CoBorderWidthDefault, CoSpaceInsetMd, CoShapeRadiusMd } from '@cobalt/tokens';
 ```
 
 ### Tailwind

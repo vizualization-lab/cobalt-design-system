@@ -59,7 +59,7 @@ export const cobaltComboboxStyles = css`
     min-block-size: var(--co-control-height-md);
     gap: var(--co-space-gap-sm);
     padding-inline: var(--co-space-inset-md);
-    border: var(--co-shape-border-width-thin) solid var(--co-color-border-default);
+    border: var(--co-border-width-default) solid var(--co-color-border-default);
     border-radius: var(--co-control-radius);
     background: var(--co-color-surface-default);
     color: var(--co-color-text-default);
@@ -77,7 +77,7 @@ export const cobaltComboboxStyles = css`
   :host(:focus-within) .input-group__container {
     border-color: var(--co-color-border-focus);
     outline: var(--co-focus-ring-width) solid var(--co-color-border-focus);
-    outline-offset: calc(-1 * var(--co-shape-border-width-thin));
+    outline-offset: calc(-1 * var(--co-border-width-default));
   }
 
   :host([danger]) .input-group__container,
@@ -91,7 +91,7 @@ export const cobaltComboboxStyles = css`
   :host([shows-feedback-for~='error']:focus-within) .input-group__container {
     border-color: var(--co-color-border-danger);
     outline: var(--co-focus-ring-width) solid var(--co-color-border-danger);
-    outline-offset: calc(-1 * var(--co-shape-border-width-thin));
+    outline-offset: calc(-1 * var(--co-border-width-default));
   }
 
   :host([readonly]) .input-group__container {
@@ -197,7 +197,7 @@ export const cobaltComboboxStyles = css`
     inline-size: 100%;
     min-inline-size: min(20rem, 100vw);
     /* Gap between input and dropdown is controlled by Popper offset in _defineOverlayConfig */
-    border: var(--co-shape-border-width-thin) solid var(--co-color-border-default);
+    border: var(--co-border-width-panel) solid var(--co-color-border-default);
     border-radius: var(--co-control-radius);
     background: var(--co-color-surface-default);
     box-shadow: var(--co-shadow-lg, 0 12px 24px rgb(15 23 42 / 18%));

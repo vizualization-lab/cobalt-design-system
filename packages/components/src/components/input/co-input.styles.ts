@@ -58,7 +58,7 @@ export const cobaltInputStyles = css`
     min-block-size: var(--co-control-height-md);
     gap: var(--co-space-gap-sm);
     padding-inline: var(--co-space-inset-md);
-    border: var(--co-shape-border-width-thin) solid var(--co-color-border-default);
+    border: var(--co-border-width-default) solid var(--co-color-border-default);
     border-radius: var(--co-control-radius);
     background: var(--co-color-surface-default);
     color: var(--co-color-text-default);

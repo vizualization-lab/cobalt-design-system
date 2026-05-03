@@ -15,6 +15,7 @@ const props = defineProps<{
 
 const CATEGORY_ORDER = [
   'Color',
+  'Border',
   'Space',
   'Font',
   'Typography',
@@ -32,6 +33,7 @@ const CATEGORY_ORDER = [
 
 const CATEGORY_LABELS: Record<string, string> = {
   color: 'Color',
+  border: 'Border',
   space: 'Space',
   font: 'Font',
   typography: 'Typography',

@@ -13,7 +13,7 @@
   min-block-size: var(--co-component-nav-header-bar-height, 64px);
   box-sizing: border-box;
   background: var(--co-component-nav-header-bar-background, var(--co-color-surface-default));
-  border-block-end: var(--co-shape-border-width-thin) solid
+  border-block-end: var(--co-border-width-divider) solid
     var(--co-component-nav-header-bar-border-color, var(--co-color-border-subtle));
 }
 
