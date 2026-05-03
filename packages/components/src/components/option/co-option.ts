@@ -1,13 +1,21 @@
-import { html, type PropertyValues } from 'lit';
+import { html, nothing, type PropertyValues } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { LionOption } from '@lion/ui/listbox.js';
 import type { IconSize } from '../icon/co-icon.js';
 import { cobaltOptionStyles } from './co-option.styles.js';
 import '../icon/co-icon.js';
 
+type OptionParentTag = 'co-select' | 'co-listbox' | 'co-combobox';
+
 /**
  * @tag co-option
- * @summary A shared option component for Cobalt listbox and combobox controls.
+ * @summary A shared option component for Cobalt listbox, select, and combobox controls.
+ *
+ * The default radio/checkbox indicator is rendered only when the option lives
+ * inside a context where it adds value: `co-listbox` (always visible options),
+ * or a multi-select `co-combobox`. Inside `co-select` and single-select
+ * `co-combobox`, the indicator is suppressed so the option list reads like a
+ * traditional dropdown. Slotted `prefix` content is always honored.
  *
  * @slot - Option label content
  * @slot prefix - Custom prefix indicator (replaces default radio/checkbox icon)
@@ -62,6 +70,7 @@ export class CoOption extends LionOption {
   override updated(changedProperties: PropertyValues<this>): void {
     super.updated(changedProperties);
     this._syncMultipleAttribute();
+    this.toggleAttribute('data-no-indicator', !this._shouldRenderIndicator);
   }
 
   private get _indicatorIconName(): string {
@@ -72,22 +81,47 @@ export class CoOption extends LionOption {
     return this.checked ? 'radio-button-checked' : 'radio-button-unchecked';
   }
 
+  private get _parentTag(): OptionParentTag | null {
+    const parent = this.closest('co-select, co-listbox, co-combobox') as HTMLElement | null;
+    return (parent?.localName as OptionParentTag) ?? null;
+  }
+
+  /**
+   * The default indicator only adds value where selection clarity matters:
+   * always-visible listboxes and multi-select comboboxes. Single-select
+   * dropdowns (co-select, single-mode co-combobox) read better without it.
+   */
+  private get _shouldRenderIndicator(): boolean {
+    const tag = this._parentTag;
+    const isMulti = this.hasAttribute('multiple');
+    if (tag === 'co-select') return false;
+    if (tag === 'co-combobox' && !isMulti) return false;
+    return true;
+  }
+
   private get _iconSize(): IconSize {
-    const parent = this.closest('co-listbox, co-combobox') as HTMLElement | null;
+    const parent = this.closest('co-select, co-listbox, co-combobox') as HTMLElement | null;
     const parentSize = parent?.getAttribute('size') ?? 'md';
     return ({ sm: 'xs', md: 'sm', lg: 'md', xl: 'lg' }[parentSize] ?? 'sm') as IconSize;
   }
+
+  private _onPrefixSlotChange = (event: Event) => {
+    const slot = event.target as HTMLSlotElement;
+    this.toggleAttribute('data-has-prefix-slot', slot.assignedNodes({ flatten: true }).length > 0);
+  };
 
   override render() {
     return html`
       <div part="base" class="option">
         <span part="prefix" class="option__prefix" aria-hidden="true">
-          <slot name="prefix">
-            <co-icon
-              name=${this._indicatorIconName}
-              size=${this._iconSize}
-              ?fill=${this.checked}
-            ></co-icon>
+          <slot name="prefix" @slotchange=${this._onPrefixSlotChange}>
+            ${this._shouldRenderIndicator
+              ? html`<co-icon
+                  name=${this._indicatorIconName}
+                  size=${this._iconSize}
+                  ?fill=${this.checked}
+                ></co-icon>`
+              : nothing}
           </slot>
         </span>
         <span part="label" class="option__label">

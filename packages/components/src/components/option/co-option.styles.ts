@@ -54,6 +54,12 @@ export const cobaltOptionStyles = css`
     flex: 0 0 auto;
   }
 
+  /* Collapse the prefix when there is neither a default indicator nor slotted
+     content — keeps single-select dropdowns visually clean. */
+  :host([data-no-indicator]:not([data-has-prefix-slot])) .option__prefix {
+    display: none;
+  }
+
   /* ── Label ── */
 
   .option__label {

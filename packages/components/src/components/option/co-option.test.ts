@@ -1,6 +1,8 @@
 import { fixture, html, expect } from '@open-wc/testing';
 import { runA11yAudit } from '../../test-utils/a11y.js';
 import '../listbox/co-listbox.js';
+import '../select/co-select.js';
+import '../combobox/co-combobox.js';
 import './co-option.js';
 import type { CoOption } from './co-option.js';
 
@@ -8,8 +10,39 @@ import type { CoOption } from './co-option.js';
  * Helper: render options inside a listbox so Lion's registration and
  * role plumbing works correctly.
  */
-async function fixtureInListbox(optionsHtml: ReturnType<typeof html>) {
-  const el = await fixture(html` <co-listbox label="Test">${optionsHtml}</co-listbox> `);
+async function fixtureInListbox(
+  optionsHtml: ReturnType<typeof html>,
+  attrs: { multipleChoice?: boolean } = {},
+) {
+  const el = await fixture(html`
+    <co-listbox label="Test" ?multiple-choice=${attrs.multipleChoice}>${optionsHtml}</co-listbox>
+  `);
+  await (el as any).updateComplete;
+  return el as HTMLElement;
+}
+
+async function fixtureInSelect(
+  optionsHtml: ReturnType<typeof html>,
+  attrs: { size?: string } = {},
+) {
+  const el = await fixture(html`
+    <co-select label="Test" size=${attrs.size ?? 'md'}>${optionsHtml}</co-select>
+  `);
+  await (el as any).updateComplete;
+  // Allow Lion form-group registration to complete before reading
+  // option state (which depends on _parentFormGroup).
+  await (el as any).updateComplete;
+  return el as HTMLElement;
+}
+
+async function fixtureInCombobox(
+  optionsHtml: ReturnType<typeof html>,
+  attrs: { multiple?: boolean } = {},
+) {
+  const el = await fixture(html`
+    <co-combobox label="Test" ?multiple=${attrs.multiple}>${optionsHtml}</co-combobox>
+  `);
+  await (el as any).updateComplete;
   await (el as any).updateComplete;
   return el as HTMLElement;
 }
@@ -160,5 +193,102 @@ describe('co-option', () => {
     `);
 
     await runA11yAudit(listbox, { component: 'co-option', state: 'default' });
+  });
+
+  // ── Context-aware indicator ──────────────────────
+
+  describe('context-aware indicator', () => {
+    it('does not render the default indicator inside co-select', async () => {
+      const select = await fixtureInSelect(html`
+        <co-option value="apple">Apple</co-option>
+        <co-option value="banana">Banana</co-option>
+      `);
+
+      const option = select.querySelector<CoOption>('co-option')!;
+      const icon = option.shadowRoot!.querySelector('co-icon');
+      expect(icon).to.be.null;
+      expect(option.hasAttribute('data-no-indicator')).to.be.true;
+    });
+
+    it('does not render the default indicator inside single-mode co-combobox', async () => {
+      const combobox = await fixtureInCombobox(html` <co-option value="apple">Apple</co-option> `);
+
+      const option = combobox.querySelector<CoOption>('co-option')!;
+      const icon = option.shadowRoot!.querySelector('co-icon');
+      expect(icon).to.be.null;
+      expect(option.hasAttribute('data-no-indicator')).to.be.true;
+    });
+
+    it('renders a checkbox indicator inside multi-mode co-combobox', async () => {
+      const combobox = await fixtureInCombobox(
+        html`
+          <co-option value="apple">Apple</co-option>
+          <co-option value="banana">Banana</co-option>
+        `,
+        { multiple: true },
+      );
+
+      const option = combobox.querySelector<CoOption>('co-option')!;
+      const icon = option.shadowRoot!.querySelector('co-icon');
+      expect(icon).to.exist;
+      expect(icon!.getAttribute('name')).to.be.oneOf(['check-box', 'check-box-outline-blank']);
+      expect(option.hasAttribute('data-no-indicator')).to.be.false;
+    });
+
+    it('renders a checkbox indicator inside multi-choice co-listbox', async () => {
+      const listbox = await fixtureInListbox(
+        html`
+          <co-option value="apple">Apple</co-option>
+          <co-option value="banana">Banana</co-option>
+        `,
+        { multipleChoice: true },
+      );
+
+      const option = listbox.querySelector<CoOption>('co-option')!;
+      const icon = option.shadowRoot!.querySelector('co-icon');
+      expect(icon).to.exist;
+      expect(icon!.getAttribute('name')).to.be.oneOf(['check-box', 'check-box-outline-blank']);
+    });
+
+    it('keeps rendering the radio indicator inside single-mode co-listbox', async () => {
+      // Regression: listbox is the "always-visible options" pattern, so the
+      // selection indicator stays even in single-select mode.
+      const listbox = await fixtureInListbox(html` <co-option value="apple">Apple</co-option> `);
+
+      const option = listbox.querySelector<CoOption>('co-option')!;
+      const icon = option.shadowRoot!.querySelector('co-icon');
+      expect(icon).to.exist;
+      expect(icon!.getAttribute('name')).to.be.oneOf([
+        'radio-button-unchecked',
+        'radio-button-checked',
+      ]);
+    });
+
+    it('still renders custom slotted prefix content inside co-select', async () => {
+      const select = await fixtureInSelect(html`
+        <co-option value="apple">
+          <co-icon slot="prefix" name="star" size="xs"></co-icon>
+          Apple
+        </co-option>
+      `);
+
+      const option = select.querySelector<CoOption>('co-option')!;
+      const slotted = option.querySelector('[slot="prefix"]');
+      expect(slotted).to.exist;
+      expect(option.hasAttribute('data-has-prefix-slot')).to.be.true;
+    });
+
+    it('resolves _iconSize from a co-select parent', async () => {
+      const select = await fixtureInSelect(html` <co-option value="apple">Apple</co-option> `, {
+        size: 'lg',
+      });
+
+      // Slot a custom prefix icon so we can read the size lookup output.
+      const option = select.querySelector<CoOption>('co-option')!;
+      // _iconSize is private, but we can verify the mapping indirectly via
+      // a scoped helper. Just assert _iconSize maps lg → md per the table.
+      const computed = (option as unknown as { _iconSize: string })._iconSize;
+      expect(computed).to.equal('md');
+    });
   });
 });
