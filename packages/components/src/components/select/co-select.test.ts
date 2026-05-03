@@ -292,6 +292,44 @@ describe('co-select', () => {
     expect(invokerIcon, 'invoker should mirror the selected option prefix').to.exist;
   });
 
+  it('mirrors the option prefix into the invoker on initial render (no explicit checked)', async () => {
+    // Mirrors the docs scenario where Lion auto-selects the first option
+    // without an explicit checked attribute. Regression: if Lion's invoker
+    // cloned childNodes BEFORE co-icon was registered/connected, the cloned
+    // icon would render empty.
+    const el = await fixture<CoSelect>(html`
+      <co-select label="Fruit">
+        <co-option value="apple">
+          <co-icon slot="prefix" name="favorite" size="xs"></co-icon>
+          Apple
+        </co-option>
+        <co-option value="banana">
+          <co-icon slot="prefix" name="star" size="xs"></co-icon>
+          Banana
+        </co-option>
+      </co-select>
+    `);
+    await el.updateComplete;
+    await el.updateComplete;
+
+    const invoker = el.querySelector('[slot="invoker"]') as HTMLElement;
+    const invokerIcon = invoker.shadowRoot?.querySelector(
+      'co-icon[name="favorite"]',
+    ) as HTMLElement | null;
+    expect(invokerIcon, 'invoker should mirror the auto-selected first option prefix').to.exist;
+    // Wait for the cloned icon to render its own shadow DOM, then verify
+    // the SVG actually drew (path content, not an empty <svg>).
+    if (invokerIcon && 'updateComplete' in invokerIcon) {
+      await (invokerIcon as unknown as { updateComplete: Promise<unknown> }).updateComplete;
+    }
+    const svg = invokerIcon?.shadowRoot?.querySelector('svg');
+    expect(svg, 'cloned co-icon should render an svg').to.exist;
+    expect(
+      svg?.innerHTML.trim().length ?? 0,
+      'cloned svg should have path content',
+    ).to.be.greaterThan(0);
+  });
+
   // ── Option indicator regression (cross-component) ──
 
   it('options inside co-select do not render the default radio indicator', async () => {

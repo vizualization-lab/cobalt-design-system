@@ -84,6 +84,28 @@ export class CoSelect extends LionSelectRich {
     super.firstUpdated(changedProperties);
     this._syncRequiredValidator();
     this._wireInvokerFocusEvents();
+    this._refreshInvokerIcons();
+  }
+
+  /**
+   * Lion's invoker mirrors the selected option by `cloneNode(true)`-ing the
+   * option's child nodes into its content wrapper. cloneNode does not copy
+   * shadow DOM, so a cloned `<co-icon>` lands shadow-less and only renders
+   * once Lit schedules its first update — which can race with VitePress
+   * hydration and leave the invoker iconless on initial paint.
+   *
+   * Force any co-icon clones currently in the invoker to re-evaluate their
+   * render. We schedule on the next animation frame so the clones have a
+   * chance to upgrade and connect before we nudge them.
+   */
+  private _refreshInvokerIcons(): void {
+    const invoker = this.querySelector('[slot="invoker"]') as HTMLElement | null;
+    if (!invoker?.shadowRoot) return;
+    requestAnimationFrame(() => {
+      invoker.shadowRoot?.querySelectorAll('co-icon').forEach((icon) => {
+        (icon as unknown as { requestUpdate?: () => void }).requestUpdate?.();
+      });
+    });
   }
 
   /**
@@ -108,6 +130,7 @@ export class CoSelect extends LionSelectRich {
     }
 
     this._syncChevronRotation();
+    this._refreshInvokerIcons();
     this._syncAriaControls();
   }
 
