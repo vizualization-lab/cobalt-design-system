@@ -176,12 +176,19 @@ export class CoSelect extends LionSelectRich {
   }
 
   protected override _inputGroupTemplate() {
+    // The id "overlay-content-node-wrapper" is required by Lion's OverlayMixin,
+    // which queries it via _overlayContentWrapperNode to wire up the portal.
+    // Renaming this id breaks dropdown positioning entirely.
     return html`
       <div part="input-group" class="input-group">
         <div part="invoker" class="input-group__container">
           <slot name="invoker"></slot>
         </div>
-        <div id=${this._overlayId} part="overlay" @mousedown=${this._onOverlayMousedown}>
+        <div
+          id="overlay-content-node-wrapper"
+          part="overlay"
+          @mousedown=${this._onOverlayMousedown}
+        >
           <slot name="input"></slot>
           <slot id="options-outlet"></slot>
         </div>
