@@ -6,7 +6,7 @@ This is the central place for all Cobalt support channels. Whether you have a qu
 
 - **Issues** — Use the [GitHub issue templates](%GITHUB_URL%/issues/new/choose) for bug reports, feature requests, migration help, and structured support requests.
 - **Discussions** — Use [GitHub Discussions](%GITHUB_URL%/discussions) for open-ended questions, design decisions, RFCs, and community conversations.
-- **Email** - You can also reach us by our [email](mailto:%CONTACT_EMAL%) alias, but we recommend GitHub for the best tracking and visibility.
+- **Email** - You can also reach us by our [email](mailto:%CONTACT_EMAIL%) alias, but we recommend GitHub for the best tracking and visibility.
 
 If you are requesting Figma access, registry help, or migration guidance, include your team or product context in the request so the Cobalt team can route you faster.
 
