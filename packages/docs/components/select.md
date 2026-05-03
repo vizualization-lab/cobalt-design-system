@@ -56,6 +56,47 @@ The `co-select` component provides a themed, accessible dropdown select built on
 </div>
 </ClientOnly>
 
+## Option icons
+
+`co-option` exposes a `prefix` slot so you can add a leading icon (or any other content) to each option. The default radio indicator is suppressed inside `co-select` so the slot starts empty — anything you slot in shows in two places:
+
+1. Next to the option in the dropdown list.
+2. Inside the invoker, mirrored from the selected option (Lion clones the option's child nodes into the invoker, so a single source of truth drives both).
+
+<ClientOnly>
+<div style="display: grid; gap: 16px; max-width: 320px; margin: 16px 0 24px;">
+  <co-select label="Fruit with icons" name="fruit-icons">
+    <co-option value="apple">
+      <co-icon slot="prefix" name="favorite" size="xs"></co-icon>
+      Apple
+    </co-option>
+    <co-option value="banana">
+      <co-icon slot="prefix" name="star" size="xs"></co-icon>
+      Banana
+    </co-option>
+    <co-option value="cherry">
+      <co-icon slot="prefix" name="circle" size="xs"></co-icon>
+      Cherry
+    </co-option>
+  </co-select>
+</div>
+</ClientOnly>
+
+```html
+<co-select label="Fruit">
+  <co-option value="apple">
+    <co-icon slot="prefix" name="favorite" size="xs"></co-icon>
+    Apple
+  </co-option>
+  <co-option value="banana">
+    <co-icon slot="prefix" name="star" size="xs"></co-icon>
+    Banana
+  </co-option>
+</co-select>
+```
+
+The prefix wrapper is marked `aria-hidden="true"`, so use icons that are decorative or whose meaning is also conveyed by the option label.
+
 ## Usage
 
 <CodeTabs :tabs="['Web Component', 'React', 'Vue', 'Angular']">

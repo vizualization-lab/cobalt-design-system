@@ -253,6 +253,45 @@ describe('co-select', () => {
     expect(chevron.style.transform).to.not.include('180deg');
   });
 
+  // ── Custom prefix on options + invoker mirroring ──
+
+  it('renders a custom co-icon prefix slotted onto an option', async () => {
+    const el = await fixture<CoSelect>(html`
+      <co-select label="Fruit">
+        <co-option value="apple">
+          <co-icon slot="prefix" name="star" size="xs"></co-icon>
+          Apple
+        </co-option>
+      </co-select>
+    `);
+
+    const option = el.querySelector<CoOption>('co-option[value="apple"]')!;
+    const slotted = option.querySelector('[slot="prefix"]');
+    expect(slotted).to.exist;
+    expect(slotted!.tagName.toLowerCase()).to.equal('co-icon');
+    // The wrapper attr drives our :empty CSS and signals "render the slot"
+    expect(option.hasAttribute('data-has-prefix-slot')).to.be.true;
+  });
+
+  it('mirrors the option prefix into the invoker when the option is selected', async () => {
+    const el = await fixture<CoSelect>(html`
+      <co-select label="Fruit">
+        <co-option value="apple" checked>
+          <co-icon slot="prefix" name="star" size="xs"></co-icon>
+          Apple
+        </co-option>
+      </co-select>
+    `);
+    await el.updateComplete;
+    await el.updateComplete;
+
+    const invoker = el.querySelector('[slot="invoker"]') as HTMLElement;
+    // Lion's _contentTemplate clones the selected option's childNodes into
+    // the invoker's content wrapper — that includes our slotted co-icon.
+    const invokerIcon = invoker.shadowRoot?.querySelector('co-icon[name="star"]');
+    expect(invokerIcon, 'invoker should mirror the selected option prefix').to.exist;
+  });
+
   // ── Option indicator regression (cross-component) ──
 
   it('options inside co-select do not render the default radio indicator', async () => {
