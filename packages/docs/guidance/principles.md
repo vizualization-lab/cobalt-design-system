@@ -34,10 +34,10 @@ Reuse the same patterns, tokens, and language throughout the product. Consistent
 
 Accessibility is not an enhancement — it is a baseline requirement. Every Cobalt component ships with proper ARIA attributes, keyboard navigation, and color contrast ratios that meet WCAG 2.1 AA.
 
-| Do                                                                | Don't                                        |
-| ----------------------------------------------------------------- | -------------------------------------------- |
-| Rely on Cobalt's built-in focus management in `co-dialog`.        | Remove focus outlines for aesthetic reasons. |
-| Provide visible labels for all form fields using `co-form-field`. | Use placeholder text as the only label.      |
+| Do                                                                                  | Don't                                        |
+| ----------------------------------------------------------------------------------- | -------------------------------------------- |
+| Rely on Cobalt's built-in focus management in `co-dialog`.                          | Remove focus outlines for aesthetic reasons. |
+| Provide visible labels for all form fields using a field `label` API or `co-label`. | Use placeholder text as the only label.      |
 
 > **Guiding question:** Can every user — regardless of ability or device — complete this task?
 

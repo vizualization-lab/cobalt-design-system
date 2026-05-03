@@ -144,6 +144,10 @@ export default defineConfig({
         replacement: resolve(componentsDir, 'src/components/input/co-input.ts'),
       },
       {
+        find: '@cobalt/components/label',
+        replacement: resolve(componentsDir, 'src/components/label/co-label.ts'),
+      },
+      {
         find: '@cobalt/components/button',
         replacement: resolve(componentsDir, 'src/components/button/co-button.ts'),
       },

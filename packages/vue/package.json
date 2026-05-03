@@ -72,6 +72,10 @@
       "import": "./dist/components/input.js",
       "types": "./dist/components/input.d.ts"
     },
+    "./label": {
+      "import": "./dist/components/label.js",
+      "types": "./dist/components/label.d.ts"
+    },
     "./nav-header-bar": {
       "import": "./dist/components/nav-header-bar.js",
       "types": "./dist/components/nav-header-bar.d.ts"

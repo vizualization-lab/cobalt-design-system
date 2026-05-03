@@ -119,6 +119,18 @@
     "angular": "pending",
     "browsers": "pending"
   },
+  "co-label": {
+    "figma": "pending",
+    "artDirector": "pending",
+    "tokens": "pass",
+    "unitTests": "pass",
+    "a11y": "pending",
+    "docs": "pass",
+    "react": "pass",
+    "vue": "pass",
+    "angular": "pass",
+    "browsers": "pending"
+  },
   "co-input-pill": {
     "figma": "pending",
     "artDirector": "pending",

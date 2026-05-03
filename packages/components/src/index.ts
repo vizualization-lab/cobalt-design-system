@@ -14,6 +14,7 @@ export { CoCombobox } from './components/combobox/co-combobox.js';
 export { CoForm } from './components/form/co-form.js';
 export { CoIcon } from './components/icon/co-icon.js';
 export { CoInput } from './components/input/co-input.js';
+export { CoLabel } from './components/label/co-label.js';
 export { CoListbox } from './components/listbox/co-listbox.js';
 export { CoOption } from './components/option/co-option.js';
 export { CoRadio } from './components/radio/co-radio.js';

@@ -189,6 +189,8 @@ export class AppComponent {
 
 ## Best Practices
 
+Use the built-in `label` API for most selects. Reach for [`co-label`](/components/label) only when the visible label needs to be a separate native element in the layout.
+
 ### When to use
 
 - **Predefined choices** — use when the user must pick from a fixed set of options
@@ -270,6 +272,7 @@ export class AppComponent {
 - The listbox has `role="listbox"` with `aria-orientation`
 - Options have `role="option"` with `aria-selected` managed by Lion
 - `aria-labelledby` and `aria-describedby` are connected automatically
+- External native label layouts are supported through [`co-label`](/components/label) plus the select `id`
 - Disabled state is reflected via `aria-disabled`
 
 ## Changelog

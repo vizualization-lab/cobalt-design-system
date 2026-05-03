@@ -1,8 +1,8 @@
 # Component Status
 
-This page tracks the verification status of every Cobalt component across design, development, and testing phases.
+This page tracks the verification status of every Cobalt component across design, development, and testing phases, including foundational form primitives such as `co-label`.
 
-> **NOTE:** Status include: `fail`, `pending`, `pass`, and `na`. The statuses are stored and can be updated in the JSON file named `component-status.json`.
+> **NOTE:** Status values include `fail`, `pending`, `pass`, and `na`. Add new components such as `co-label` to `component-status.json` so they appear in the matrix below.
 
 ## Status Matrix
 

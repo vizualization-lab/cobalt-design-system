@@ -259,6 +259,8 @@ export class AppComponent {
 
 </CodeTabs>
 
+Use the built-in `label` and `help-text` APIs for most text areas. If the label needs to live in a separate layout column or stack, omit the field's visible label and pair the control with [`co-label`](/components/label).
+
 ## Best Practices
 
 ### When to use
@@ -365,6 +367,7 @@ export class AppComponent {
 ### ARIA notes
 
 - Lion connects `label`, `help-text`, and `feedback` content to the native text area through ARIA relationships.
+- External native label layouts are supported through [`co-label`](/components/label) plus the text area's `id`.
 - Lion sets `aria-invalid` when validation feedback is visible.
 - The `danger` property is visual only and does not set `aria-invalid`.
 - The character counter is connected through `aria-describedby` when `maxlength` is set.

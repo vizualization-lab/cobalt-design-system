@@ -73,6 +73,10 @@
       "import": "./dist/components/input/co-input.js",
       "types": "./dist/components/input/co-input.d.ts"
     },
+    "./label": {
+      "import": "./dist/components/label/co-label.js",
+      "types": "./dist/components/label/co-label.d.ts"
+    },
     "./nav-header-bar": {
       "import": "./dist/components/nav-header-bar/co-nav-header-bar.js",
       "types": "./dist/components/nav-header-bar/co-nav-header-bar.d.ts"

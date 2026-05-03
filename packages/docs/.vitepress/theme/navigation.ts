@@ -86,8 +86,9 @@ export const navigation: NavGroup[] = [
         children: [
           { text: 'Checkbox Group', link: '/components/checkbox-group' },
           { text: 'Combo Box', link: '/components/combobox' },
-          { text: 'Input', link: '/components/input' },
           { text: 'Form', link: '/components/form' },
+          { text: 'Input', link: '/components/input' },
+          { text: 'Label', link: '/components/label' },
           { text: 'List Box', link: '/components/listbox' },
           { text: 'Option', link: '/components/option' },
           { text: 'Radio Group', link: '/components/radio-group' },

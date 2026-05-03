@@ -95,14 +95,14 @@ Material UI (MUI) is a React component library, so migration involves replacing 
 
 ### Mapping MUI components to Cobalt
 
-| MUI component | Cobalt component                   | Notes                                                |
-| ------------- | ---------------------------------- | ---------------------------------------------------- |
-| `<Button>`    | `<CoButton>` (via `@cobalt/react`) | Use `variant` prop for visual style.                 |
-| `<TextField>` | `<CoInput>`                        | Cobalt handles label and helper text via attributes. |
-| `<Dialog>`    | `<CoDialog>`                       | Replace `open` state with the `open` attribute.      |
-| `<Snackbar>`  | `<CoToast>`                        | Use `co-toast-service` for imperative API.           |
-| `<Select>`    | `<CoSelect>`                       | Options passed via `<co-option>` children.           |
-| `<DataGrid>`  | `<CoTable>`                        | Supports sorting, pagination, and virtual scroll.    |
+| MUI component | Cobalt component                   | Notes                                                                                                             |
+| ------------- | ---------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
+| `<Button>`    | `<CoButton>` (via `@cobalt/react`) | Use `variant` prop for visual style.                                                                              |
+| `<TextField>` | `<CoInput>`                        | Use the field `label` prop by default, or pair with `<CoLabel>` when the label must be a separate native element. |
+| `<Dialog>`    | `<CoDialog>`                       | Replace `open` state with the `open` attribute.                                                                   |
+| `<Snackbar>`  | `<CoToast>`                        | Use `co-toast-service` for imperative API.                                                                        |
+| `<Select>`    | `<CoSelect>`                       | Options passed via `<co-option>` children.                                                                        |
+| `<DataGrid>`  | `<CoTable>`                        | Supports sorting, pagination, and virtual scroll.                                                                 |
 
 ### Step-by-step
 

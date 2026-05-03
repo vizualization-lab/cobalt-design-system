@@ -27,6 +27,19 @@ The `co-form` component wraps Lion's `LionForm` to provide form-level features: 
 </div>
 </ClientOnly>
 
+## Field Labels
+
+For most Cobalt forms, let each field render its own visible label with the field `label` prop or slot. Use [`co-label`](/components/label) only when the layout needs a separate native label element.
+
+```html
+<co-form label="Billing details">
+  <co-input label="Account name" name="accountName"></co-input>
+
+  <co-label for="billing-code" required>Billing code</co-label>
+  <co-input id="billing-code" name="billingCode"></co-input>
+</co-form>
+```
+
 ## Form with Validation
 
 When the form is submitted, Lion validates all child fields. If any field has errors, the first erroneous field receives focus automatically.
@@ -405,6 +418,7 @@ export class AppComponent {
 
 - Lion removes the `role` attribute from the form wrapper so the native `<form>` element provides semantics.
 - Lion connects `label`, `help-text`, and `feedback` content through ARIA relationships.
+- External native label layouts can use [`co-label`](/components/label) for individual fields while `co-form` continues to manage form-level semantics.
 - On submit with validation errors, focus moves to the first erroneous field automatically.
 - `disabled` cascades to all child form elements, preventing interaction.
 

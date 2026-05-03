@@ -218,12 +218,14 @@ export class AppComponent {
 
 </CodeTabs>
 
+Use the built-in `label` and `help-text` APIs for most forms. If your layout needs the label to live outside the field, omit `co-input`'s visible label and pair the control with [`co-label`](/components/label) instead.
+
 ## Best Practices
 
 ### When to use
 
 - **Single-line text entry** - names, emails, URLs, search terms, and short identifiers
-- **Structured forms** - pair with `label`, `help-text`, and validation feedback
+- **Structured forms** - pair with the built-in `label`, `help-text`, and validation feedback, or use [`co-label`](/components/label) when the label must sit outside the field
 - **Search and filters** - use prefix icons for scanability when space is tight
 - **Readonly identifiers** - show generated values that can be selected but not edited
 
@@ -317,6 +319,7 @@ export class AppComponent {
 ### ARIA notes
 
 - Lion connects `label`, `help-text`, and `feedback` content to the native input through ARIA relationships.
+- External native label layouts are supported through [`co-label`](/components/label) plus the field `id`.
 - Lion sets `aria-invalid` when validation feedback is visible.
 - The `danger` property is visual only and does not set `aria-invalid`.
 - `readonly` inputs remain focusable; `disabled` inputs do not participate in normal interaction.

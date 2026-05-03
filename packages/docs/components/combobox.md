@@ -239,6 +239,8 @@ export class AppComponent {
 
 </CodeTabs>
 
+Use the built-in `label` and `help-text` APIs for most comboboxes. If the label needs to live outside the control, omit the combobox's visible label and pair it with [`co-label`](/components/label).
+
 ## Best Practices
 
 ### When to use
@@ -354,6 +356,7 @@ export class AppComponent {
 
 - Lion applies the WAI-ARIA combo box and list box relationships.
 - Lion connects `label`, `help-text`, and `feedback` content to the native input.
+- External native label layouts are supported through [`co-label`](/components/label) plus the combobox `id`.
 - `multiple` updates `aria-multiselectable` on the internal list box.
 - `required` adds required validation and `aria-required`.
 - The `danger` property is visual only and does not set `aria-invalid`.
