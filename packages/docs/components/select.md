@@ -11,6 +11,7 @@ The `co-select` component provides a themed, accessible dropdown select built on
   :defaults="{ size: 'md' }"
   :options="{ size: ['sm', 'md', 'lg', 'xl'] }"
   :booleans="['disabled', 'danger', 'required']"
+  :preview-min-height="320"
   :slotHtml="'<co-option value=&quot;apple&quot;>Apple</co-option><co-option value=&quot;banana&quot;>Banana</co-option>'"
 />
 
