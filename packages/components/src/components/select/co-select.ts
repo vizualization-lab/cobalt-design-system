@@ -42,6 +42,8 @@ export class CoSelect extends LionSelectRich {
     return [...super.styles, cobaltSelectStyles];
   }
 
+  private static _instances = 0;
+
   /** Controls field height, padding, and font size. */
   @property({ reflect: true })
   size: SelectSize = 'md';
@@ -53,6 +55,9 @@ export class CoSelect extends LionSelectRich {
   /** Marks the select as required for validation. */
   @property({ type: Boolean, reflect: true })
   required = false;
+
+  /** Stable id for the overlay node, referenced by the invoker's aria-controls. */
+  private readonly _overlayId = `co-select-overlay-${++CoSelect._instances}`;
 
   private readonly _requiredValidator = new Required(undefined, {
     getMessage: async () => 'Please select an option.',
@@ -83,6 +88,28 @@ export class CoSelect extends LionSelectRich {
     }
 
     this._syncChevronRotation();
+    this._syncAriaControls();
+  }
+
+  /**
+   * Wire the invoker's aria-controls to the listbox's id so screen readers
+   * announce the relationship. Lion sets aria-haspopup, aria-expanded, and
+   * aria-labelledby on the invoker — but not aria-controls. The listbox
+   * lives in light DOM (slotted as [slot="input"] by Lion), so the IDREF
+   * is resolvable from the invoker (also light DOM).
+   */
+  private _syncAriaControls(): void {
+    const invoker = this.querySelector('[slot="invoker"]') as HTMLElement | null;
+    const listbox = this.querySelector('[slot="input"]') as HTMLElement | null;
+    if (!invoker || !listbox) return;
+
+    if (!listbox.id) {
+      listbox.id = this._overlayId;
+    }
+
+    if (invoker.getAttribute('aria-controls') !== listbox.id) {
+      invoker.setAttribute('aria-controls', listbox.id);
+    }
   }
 
   private _syncChevronRotation = () => {
@@ -134,11 +161,7 @@ export class CoSelect extends LionSelectRich {
         <div part="invoker" class="input-group__container">
           <slot name="invoker"></slot>
         </div>
-        <div
-          id="overlay-content-node-wrapper"
-          part="overlay"
-          @mousedown=${this._onOverlayMousedown}
-        >
+        <div id=${this._overlayId} part="overlay" @mousedown=${this._onOverlayMousedown}>
           <slot name="input"></slot>
           <slot id="options-outlet"></slot>
         </div>

@@ -27,6 +27,13 @@ export interface A11yAuditResult {
 export interface A11yAuditOptions {
   component?: string;
   state?: string;
+  /**
+   * Axe rules to disable for this run. Use sparingly — only for violations
+   * caused by upstream library implementation details that cannot be fixed
+   * from consumer code (e.g. Lion's overlay system applying role="none" to
+   * a <dialog> element).
+   */
+  disabledRules?: string[];
 }
 
 /**
@@ -44,7 +51,12 @@ export async function runA11yAudit(
   if (!axe?.run) {
     throw new Error('axe-core did not load correctly');
   }
-  const results = await axe.run(el as HTMLElement);
+  const axeOptions = options?.disabledRules?.length
+    ? {
+        rules: Object.fromEntries(options.disabledRules.map((id) => [id, { enabled: false }])),
+      }
+    : undefined;
+  const results = await axe.run(el as HTMLElement, axeOptions);
 
   const result: A11yAuditResult = {
     component: options?.component ?? 'unknown',

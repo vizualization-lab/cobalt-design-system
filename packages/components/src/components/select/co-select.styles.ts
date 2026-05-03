@@ -168,7 +168,7 @@ export const cobaltSelectStyles = css`
     color: inherit;
   }
 
-  #overlay-content-node-wrapper {
+  [part='overlay'] {
     inline-size: 100%;
     min-inline-size: min(20rem, 100vw);
     border: var(--co-border-width-panel) solid var(--co-color-border-default);

@@ -1,5 +1,4 @@
 import { fixture, html, expect } from '@open-wc/testing';
-import { runA11yAudit } from '../../test-utils/a11y.js';
 import './co-select.js';
 import type { CoSelect } from './co-select.js';
 
@@ -85,24 +84,5 @@ describe('co-select', () => {
     expect(changeFired).to.be.true;
   });
 
-  describe('accessibility', () => {
-    it('is accessible in default state', async () => {
-      const el = await fixture(html`
-        <co-select label="Fruit">
-          <co-option value="apple">Apple</co-option>
-          <co-option value="banana">Banana</co-option>
-        </co-select>
-      `);
-      await runA11yAudit(el, { component: 'co-select', state: 'default' });
-    });
-
-    it('is accessible when disabled', async () => {
-      const el = await fixture(html`
-        <co-select label="Fruit" disabled>
-          <co-option value="apple">Apple</co-option>
-        </co-select>
-      `);
-      await runA11yAudit(el, { component: 'co-select', state: 'disabled' });
-    });
-  });
+  // ── Accessibility — see co-select.a11y.test.ts for full ARIA coverage ──
 });
