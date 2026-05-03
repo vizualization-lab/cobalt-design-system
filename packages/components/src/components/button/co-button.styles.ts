@@ -80,8 +80,7 @@ export const cobaltButtonStyles = css`
   :host([variant='secondary']) {
     background: var(--co-color-interactive-secondary-default);
     color: var(--co-color-interactive-primary-default);
-    box-shadow: inset 0 0 0 var(--co-border-width-action)
-      var(--co-color-interactive-primary-default);
+    box-shadow: inset 0 0 0 var(--co-border-width-action) var(--co-color-interactive-primary-default);
   }
   :host([variant='secondary']:hover) {
     background: var(--co-color-interactive-secondary-hover);

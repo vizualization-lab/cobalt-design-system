@@ -65,6 +65,9 @@ export const cobaltOptionStyles = css`
   .option__label {
     flex: 1 1 auto;
     min-inline-size: 0;
+    /* Long labels wrap rather than overflow the menu */
+    overflow-wrap: anywhere;
+    hyphens: auto;
   }
 
   /* ── Suffix ── */

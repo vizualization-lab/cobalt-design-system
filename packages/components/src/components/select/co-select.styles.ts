@@ -136,6 +136,10 @@ export const cobaltSelectStyles = css`
     padding: 0;
     cursor: pointer;
     text-align: start;
+    /* Keep selected text on a single line in narrow containers */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   /* ── Chevron ── */
@@ -171,11 +175,15 @@ export const cobaltSelectStyles = css`
   [part='overlay'] {
     inline-size: 100%;
     min-inline-size: min(20rem, 100vw);
+    /* Cap overlay width so very wide hosts don't produce unwieldy menus */
+    max-inline-size: min(100vw, 32rem);
+    /* Allow vertical scrolling when option list overflows the viewport */
+    max-block-size: min(60vh, 24rem);
+    overflow-y: auto;
     border: var(--co-border-width-panel) solid var(--co-color-border-default);
     border-radius: var(--co-control-radius);
     background: var(--co-color-surface-default);
     box-shadow: var(--co-shadow-lg, 0 12px 24px rgb(15 23 42 / 18%));
-    overflow: hidden;
   }
 
   /* ── Feedback ── */
