@@ -63,6 +63,7 @@ export const cobaltFormStyles = css`
   ::slotted(form) {
     display: flex;
     flex-direction: column;
+    align-items: flex-start;
     gap: var(--co-space-4);
   }
 `;

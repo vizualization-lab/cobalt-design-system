@@ -28,6 +28,7 @@ export const cobaltButtonStyles = css`
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    inline-size: 100%;
     gap: var(--co-space-gap-sm);
     padding: var(--co-space-2) var(--co-space-4);
     /* Reset UA anchor defaults when rendered as a link (href variant) */
