@@ -205,6 +205,11 @@ function validateContrast(tokensDir, discovery, errors) {
       minimum: 4.5,
     },
     {
+      foreground: 'co.color.interactive.primary.default',
+      background: 'co.color.interactive.secondary.default',
+      minimum: 4.5,
+    },
+    {
       foreground: 'co.color.primary.contrast',
       background: 'co.color.primary.base',
       minimum: 4.5,

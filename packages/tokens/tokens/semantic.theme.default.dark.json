@@ -23,6 +23,28 @@
           "$value": "{co.color.primitive.white}"
         }
       },
+      "secondary": {
+        "base": {
+          "$type": "color",
+          "$value": "{co.color.primary.contrast}"
+        },
+        "light": {
+          "$type": "color",
+          "$value": "{co.color.primary.light}"
+        },
+        "dark": {
+          "$type": "color",
+          "$value": "{co.color.primary.dark}"
+        },
+        "subtle": {
+          "$type": "color",
+          "$value": "{co.color.primary.subtle}"
+        },
+        "contrast": {
+          "$type": "color",
+          "$value": "{co.color.primary.base}"
+        }
+      },
       "neutral": {
         "base": {
           "$type": "color",
@@ -236,6 +258,20 @@
           "selected": {
             "$type": "color",
             "$value": "{co.color.primitive.neutral-dark.300}"
+          }
+        },
+        "secondary": {
+          "default": {
+            "$type": "color",
+            "$value": "{co.color.secondary.base}"
+          },
+          "hover": {
+            "$type": "color",
+            "$value": "{co.color.secondary.subtle}"
+          },
+          "active": {
+            "$type": "color",
+            "$value": "{co.color.secondary.light}"
           }
         },
         "subtle": {

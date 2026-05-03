@@ -33,6 +33,22 @@ describe('co-button-icon', () => {
     expect(el.getAttribute('size')).to.equal('lg');
   });
 
+  it('applies themed secondary colors on the host', async () => {
+    const el = await fixture<CoButtonIcon>(
+      html`<co-button-icon name="star" variant="secondary" aria-label="Star"></co-button-icon>`,
+    );
+    el.style.setProperty('--co-color-interactive-secondary-default', 'rgb(245 247 255)');
+    el.style.setProperty('--co-color-interactive-primary-default', 'rgb(33 55 77)');
+    el.style.setProperty('--co-shape-border-width-thin', '2px');
+
+    await el.updateComplete;
+
+    const styles = getComputedStyle(el);
+    expect(styles.backgroundColor).to.equal('rgb(245, 247, 255)');
+    expect(styles.color).to.equal('rgb(33, 55, 77)');
+    expect(styles.boxShadow).to.include('rgb(33, 55, 77)');
+  });
+
   it('renders co-icon in shadow DOM with correct name', async () => {
     const el = await fixture<CoButtonIcon>(
       html`<co-button-icon name="delete" aria-label="Delete"></co-button-icon>`,

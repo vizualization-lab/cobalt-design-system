@@ -91,16 +91,22 @@
 
 /* ── Secondary variant ── */
 :host([variant='secondary']) {
-  background: var(--co-color-surface-default);
-  color: var(--co-color-text-default);
-  box-shadow: inset 0 0 0 var(--co-shape-border-width-thin) var(--co-color-border-default);
+  background: var(--co-color-interactive-secondary-default);
+  color: var(--co-color-interactive-primary-default);
+  box-shadow: inset 0 0 0 var(--co-shape-border-width-thin)
+    var(--co-color-interactive-primary-default);
 }
 :host([variant='secondary']:hover) {
-  background: var(--co-color-surface-raised);
-  box-shadow: inset 0 0 0 var(--co-shape-border-width-thin) var(--co-color-border-strong);
+  background: var(--co-color-interactive-secondary-hover);
+  color: var(--co-color-interactive-primary-hover);
+  box-shadow: inset 0 0 0 var(--co-shape-border-width-thin)
+    var(--co-color-interactive-primary-hover);
 }
 :host([variant='secondary']:active) {
-  background: var(--co-color-surface-sunken);
+  background: var(--co-color-interactive-secondary-active);
+  color: var(--co-color-interactive-primary-active);
+  box-shadow: inset 0 0 0 var(--co-shape-border-width-thin)
+    var(--co-color-interactive-primary-active);
 }
 
 /* ── Danger variant ── */

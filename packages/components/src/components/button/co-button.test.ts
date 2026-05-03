@@ -25,6 +25,20 @@ describe('co-button', () => {
     expect(el.getAttribute('variant')).to.equal('success');
   });
 
+  it('applies themed secondary colors on the host', async () => {
+    const el = await fixture<CoButton>(html`<co-button variant="secondary">Secondary</co-button>`);
+    el.style.setProperty('--co-color-interactive-secondary-default', 'rgb(250 251 252)');
+    el.style.setProperty('--co-color-interactive-primary-default', 'rgb(12 34 56)');
+    el.style.setProperty('--co-shape-border-width-thin', '2px');
+
+    await el.updateComplete;
+
+    const styles = getComputedStyle(el);
+    expect(styles.backgroundColor).to.equal('rgb(250, 251, 252)');
+    expect(styles.color).to.equal('rgb(12, 34, 56)');
+    expect(styles.boxShadow).to.include('rgb(12, 34, 56)');
+  });
+
   it('reflects size attribute', async () => {
     const el = await fixture<CoButton>(html`<co-button size="lg">Large</co-button>`);
     expect(el.size).to.equal('lg');
