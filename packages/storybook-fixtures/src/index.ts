@@ -79,6 +79,7 @@ export function titleCase(value: string) {
 export * from './api-metadata.js';
 export * from './component-registry.js';
 export * from './controls.js';
+export * from './scenarios.js';
 export * from './story-overrides.js';
 export * from './wrapper-story-controls.js';
 export * from './wrapper-story-source.js';

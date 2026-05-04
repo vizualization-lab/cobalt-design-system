@@ -19,6 +19,48 @@ export const commonIconOptions = [
 
 export const storybookComponentDefinitions = [
   {
+    id: 'appShell',
+    title: 'App Shell',
+    tagName: 'co-app-shell',
+    className: 'CoAppShell',
+    importName: 'CoAppShell',
+    componentPath: 'app-shell',
+    componentSource: 'packages/components/src/components/app-shell/co-app-shell.ts',
+    angularSource: 'packages/angular/src/components/app-shell.ts',
+    webComponentImports: [
+      'app-shell',
+      'banner',
+      'button',
+      'card',
+      'icon',
+      'nav-drawer',
+      'nav-drawer-item',
+      'nav-header-bar',
+      'nav-rail-bar',
+      'nav-rail-item',
+      'nav-separator',
+    ],
+    storybook: {
+      management: 'generated',
+      overviewPreset: 'starter',
+    },
+  },
+  {
+    id: 'banner',
+    title: 'Banner',
+    tagName: 'co-banner',
+    className: 'CoBanner',
+    importName: 'CoBanner',
+    componentPath: 'banner',
+    componentSource: 'packages/components/src/components/banner/co-banner.ts',
+    angularSource: 'packages/angular/src/components/banner.ts',
+    webComponentImports: ['banner'],
+    storybook: {
+      management: 'generated',
+      overviewPreset: 'starter',
+    },
+  },
+  {
     id: 'button',
     title: 'Button',
     tagName: 'co-button',
@@ -45,6 +87,21 @@ export const storybookComponentDefinitions = [
     webComponentImports: ['button-icon'],
     storybook: {
       management: 'manual',
+      overviewPreset: 'starter',
+    },
+  },
+  {
+    id: 'card',
+    title: 'Card',
+    tagName: 'co-card',
+    className: 'CoCard',
+    importName: 'CoCard',
+    componentPath: 'card',
+    componentSource: 'packages/components/src/components/card/co-card.ts',
+    angularSource: 'packages/angular/src/components/card.ts',
+    webComponentImports: ['card', 'button'],
+    storybook: {
+      management: 'generated',
       overviewPreset: 'starter',
     },
   },
@@ -125,6 +182,36 @@ export const storybookComponentDefinitions = [
     },
   },
   {
+    id: 'inputPill',
+    title: 'Input Pill',
+    tagName: 'co-input-pill',
+    className: 'CoInputPill',
+    importName: 'CoInputPill',
+    componentPath: 'input-pill',
+    componentSource: 'packages/components/src/components/input-pill/co-input-pill.ts',
+    angularSource: 'packages/angular/src/components/input-pill.ts',
+    webComponentImports: ['input-pill', 'icon'],
+    storybook: {
+      management: 'generated',
+      overviewPreset: 'starter',
+    },
+  },
+  {
+    id: 'label',
+    title: 'Label',
+    tagName: 'co-label',
+    className: 'CoLabel',
+    importName: 'CoLabel',
+    componentPath: 'label',
+    componentSource: 'packages/components/src/components/label/co-label.ts',
+    angularSource: 'packages/angular/src/components/label.ts',
+    webComponentImports: ['label', 'icon'],
+    storybook: {
+      management: 'generated',
+      overviewPreset: 'starter',
+    },
+  },
+  {
     id: 'textarea',
     title: 'Textarea',
     tagName: 'co-textarea',
@@ -151,6 +238,96 @@ export const storybookComponentDefinitions = [
     webComponentImports: ['listbox', 'option', 'icon'],
     storybook: {
       management: 'manual',
+      overviewPreset: 'starter',
+    },
+  },
+  {
+    id: 'navDrawer',
+    title: 'Nav Drawer',
+    tagName: 'co-nav-drawer',
+    className: 'CoNavDrawer',
+    importName: 'CoNavDrawer',
+    componentPath: 'nav-drawer',
+    componentSource: 'packages/components/src/components/nav-drawer/co-nav-drawer.ts',
+    angularSource: 'packages/angular/src/components/nav-drawer.ts',
+    webComponentImports: ['nav-drawer', 'nav-drawer-item', 'nav-separator'],
+    storybook: {
+      management: 'generated',
+      overviewPreset: 'starter',
+    },
+  },
+  {
+    id: 'navDrawerItem',
+    title: 'Nav Drawer Item',
+    tagName: 'co-nav-drawer-item',
+    className: 'CoNavDrawerItem',
+    importName: 'CoNavDrawerItem',
+    componentPath: 'nav-drawer-item',
+    componentSource: 'packages/components/src/components/nav-drawer-item/co-nav-drawer-item.ts',
+    angularSource: 'packages/angular/src/components/nav-drawer-item.ts',
+    webComponentImports: ['nav-drawer', 'nav-drawer-item', 'icon'],
+    storybook: {
+      management: 'generated',
+      overviewPreset: 'starter',
+    },
+  },
+  {
+    id: 'navHeaderBar',
+    title: 'Nav Header Bar',
+    tagName: 'co-nav-header-bar',
+    className: 'CoNavHeaderBar',
+    importName: 'CoNavHeaderBar',
+    componentPath: 'nav-header-bar',
+    componentSource: 'packages/components/src/components/nav-header-bar/co-nav-header-bar.ts',
+    angularSource: 'packages/angular/src/components/nav-header-bar.ts',
+    webComponentImports: ['nav-header-bar', 'button', 'button-icon', 'icon', 'input-pill'],
+    storybook: {
+      management: 'generated',
+      overviewPreset: 'starter',
+    },
+  },
+  {
+    id: 'navRailBar',
+    title: 'Nav Rail Bar',
+    tagName: 'co-nav-rail-bar',
+    className: 'CoNavRailBar',
+    importName: 'CoNavRailBar',
+    componentPath: 'nav-rail-bar',
+    componentSource: 'packages/components/src/components/nav-rail-bar/co-nav-rail-bar.ts',
+    angularSource: 'packages/angular/src/components/nav-rail-bar.ts',
+    webComponentImports: ['nav-rail-bar', 'nav-rail-item'],
+    storybook: {
+      management: 'generated',
+      overviewPreset: 'starter',
+    },
+  },
+  {
+    id: 'navRailItem',
+    title: 'Nav Rail Item',
+    tagName: 'co-nav-rail-item',
+    className: 'CoNavRailItem',
+    importName: 'CoNavRailItem',
+    componentPath: 'nav-rail-item',
+    componentSource: 'packages/components/src/components/nav-rail-item/co-nav-rail-item.ts',
+    angularSource: 'packages/angular/src/components/nav-rail-item.ts',
+    webComponentImports: ['nav-rail-bar', 'nav-rail-item', 'icon'],
+    storybook: {
+      management: 'generated',
+      overviewPreset: 'starter',
+    },
+  },
+  {
+    id: 'navSeparator',
+    title: 'Nav Separator',
+    tagName: 'co-nav-separator',
+    className: 'CoNavSeparator',
+    importName: 'CoNavSeparator',
+    componentPath: 'nav-separator',
+    componentSource: 'packages/components/src/components/nav-separator/co-nav-separator.ts',
+    angularSource: 'packages/angular/src/components/nav-separator.ts',
+    webComponentImports: ['nav-drawer', 'nav-drawer-item', 'nav-separator'],
+    storybook: {
+      management: 'generated',
       overviewPreset: 'starter',
     },
   },
@@ -256,9 +433,40 @@ export const storybookPropOverrides = {
   input: {
     type: { options: ['text', 'email', 'password', 'search', 'tel', 'url'] },
   },
+  inputPill: {
+    type: { options: ['text', 'email', 'password', 'search', 'tel', 'url'] },
+    actionIcon: { options: commonIconOptions },
+    prefixIcon: { options: commonIconOptions },
+  },
+  navDrawerItem: {
+    icon: { options: commonIconOptions },
+  },
+  navRailItem: {
+    icon: { options: commonIconOptions },
+  },
 };
 
 export const storybookSlotControls = {
+  appShell: [
+    { name: 'banner', argName: 'slotBanner', label: 'Banner', defaultValue: 'Alpha release' },
+    {
+      name: 'topnav',
+      argName: 'slotTopnav',
+      label: 'Top navigation',
+      defaultValue: 'Cobalt Console',
+    },
+    { name: 'body', argName: 'slotBody', label: 'Body', defaultValue: 'Dashboard content' },
+    { name: 'footer', argName: 'slotFooter', label: 'Footer', defaultValue: 'Status: operational' },
+  ],
+  banner: [
+    { name: 'title', argName: 'slotTitle', label: 'Title', defaultValue: 'Alpha release' },
+    {
+      name: '',
+      argName: 'slotDefault',
+      label: 'Content',
+      defaultValue: 'The component library is still evolving.',
+    },
+  ],
   button: [
     { name: '', argName: 'slotDefault', label: 'Content', defaultValue: 'Save changes' },
     { name: 'prefix', argName: 'slotPrefix', label: 'Prefix icon', defaultValue: 'add' },
@@ -283,6 +491,25 @@ export const storybookSlotControls = {
     { name: 'suffix', argName: 'slotSuffix', label: 'Suffix icon', defaultValue: '' },
     { name: 'feedback', argName: 'slotFeedback', label: 'Feedback', defaultValue: '' },
   ],
+  inputPill: [
+    { name: 'prefix', argName: 'slotPrefix', label: 'Prefix icon', defaultValue: '' },
+    { name: 'suffix', argName: 'slotSuffix', label: 'Suffix icon', defaultValue: '' },
+  ],
+  label: [
+    { name: 'prefix', argName: 'slotPrefix', label: 'Prefix icon', defaultValue: '' },
+    { name: '', argName: 'slotDefault', label: 'Content', defaultValue: 'Email address' },
+    { name: 'suffix', argName: 'slotSuffix', label: 'Suffix icon', defaultValue: '' },
+  ],
+  card: [
+    { name: 'header', argName: 'slotHeader', label: 'Header', defaultValue: 'Account summary' },
+    {
+      name: '',
+      argName: 'slotDefault',
+      label: 'Body',
+      defaultValue: 'Review account health, usage, and recent updates.',
+    },
+    { name: 'footer', argName: 'slotFooter', label: 'Footer', defaultValue: 'Updated today' },
+  ],
   textarea: [
     { name: 'prefix', argName: 'slotPrefix', label: 'Prefix icon', defaultValue: '' },
     { name: 'suffix', argName: 'slotSuffix', label: 'Suffix icon', defaultValue: '' },
@@ -298,6 +525,27 @@ export const storybookSlotControls = {
     },
     { name: 'indicator', argName: 'slotIndicator', label: 'Indicator', defaultValue: '' },
   ],
+  navDrawer: [],
+  navDrawerItem: [
+    { name: '', argName: 'slotDefault', label: 'Label', defaultValue: 'Dashboard' },
+    { name: 'prefix', argName: 'slotPrefix', label: 'Prefix icon', defaultValue: '' },
+  ],
+  navHeaderBar: [
+    { name: 'logo', argName: 'slotLogo', label: 'Logo', defaultValue: 'Cobalt' },
+    {
+      name: '',
+      argName: 'slotDefault',
+      label: 'Content',
+      defaultValue: 'Overview  Reports  Settings',
+    },
+    { name: 'avatar', argName: 'slotAvatar', label: 'Avatar', defaultValue: 'LG' },
+  ],
+  navRailBar: [],
+  navRailItem: [
+    { name: '', argName: 'slotDefault', label: 'Label', defaultValue: 'Dashboard' },
+    { name: 'icon', argName: 'slotIcon', label: 'Custom icon', defaultValue: '' },
+  ],
+  navSeparator: [],
   radio: [{ name: '', argName: 'slotDefault', label: 'Label', defaultValue: 'Standard' }],
   radioGroup: [
     { name: 'label', argName: 'slotLabel', label: 'Label', defaultValue: 'Plan' },
@@ -329,6 +577,19 @@ export const storybookSlotControls = {
 };
 
 export const storybookPlaygroundDefaults = {
+  appShell: {
+    railWidth: '88px',
+    drawerWidth: '260px',
+    selectedValues: 'overview',
+    optionItems: [
+      { value: 'overview', label: 'Overview', icon: 'home' },
+      { value: 'analytics', label: 'Analytics', icon: 'search' },
+      { value: 'settings', label: 'Settings', icon: 'settings' },
+    ],
+  },
+  banner: {
+    label: 'Product announcement',
+  },
   button: {
     slotDefault: 'Save changes',
   },
@@ -369,6 +630,20 @@ export const storybookPlaygroundDefaults = {
     placeholder: 'name@example.com',
     value: '',
   },
+  inputPill: {
+    variant: 'search',
+    size: 'md',
+    name: 'global-search',
+    placeholder: 'Search docs',
+    value: '',
+  },
+  label: {
+    htmlFor: 'email',
+    required: true,
+  },
+  card: {
+    label: 'Account summary',
+  },
   textarea: {
     label: 'Comment',
     helpText: 'Keep it short and specific.',
@@ -383,6 +658,44 @@ export const storybookPlaygroundDefaults = {
     value: 'apple',
     checked: true,
   },
+  navDrawer: {
+    value: 'overview',
+    label: 'Primary navigation',
+    selectedValues: 'overview',
+    optionItems: [
+      { value: 'overview', label: 'Overview', icon: 'home' },
+      { value: 'projects', label: 'Projects', icon: 'star' },
+      { value: 'settings', label: 'Settings', icon: 'settings' },
+    ],
+  },
+  navDrawerItem: {
+    value: 'dashboard',
+    icon: 'home',
+    href: '#',
+    selected: true,
+    slotDefault: 'Dashboard',
+  },
+  navHeaderBar: {
+    label: 'Application header',
+  },
+  navRailBar: {
+    value: 'overview',
+    label: 'Primary navigation',
+    selectedValues: 'overview',
+    optionItems: [
+      { value: 'overview', label: 'Overview', icon: 'home' },
+      { value: 'search', label: 'Search', icon: 'search' },
+      { value: 'settings', label: 'Settings', icon: 'settings' },
+    ],
+  },
+  navRailItem: {
+    value: 'dashboard',
+    icon: 'home',
+    href: '#',
+    selected: true,
+    slotDefault: 'Dashboard',
+  },
+  navSeparator: {},
   radio: {
     value: 'standard',
     checked: true,

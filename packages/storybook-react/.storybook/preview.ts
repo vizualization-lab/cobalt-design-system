@@ -15,6 +15,7 @@ type CobaltSourceContext = {
   parameters: {
     cobaltSource?: {
       componentId?: WrapperStoryComponentId;
+      scenarioId?: string;
     };
   };
   args: WrapperStoryArgs;

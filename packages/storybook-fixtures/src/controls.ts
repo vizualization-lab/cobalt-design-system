@@ -3,6 +3,7 @@ import {
   type CobaltApiProp,
   type CobaltComponentMetadata,
 } from './api-metadata.js';
+import { getStorybookScenario } from './scenarios.js';
 
 export type CobaltComponentId = keyof typeof cobaltComponentMetadata;
 export type CobaltStoryArgs = Record<string, unknown>;
@@ -10,6 +11,7 @@ export type CobaltOptionItem = {
   value: string;
   label: string;
   disabled?: boolean;
+  icon?: string;
 };
 
 const noop = () => {};
@@ -37,6 +39,18 @@ export function getPlaygroundArgs(componentId: CobaltComponentId): CobaltStoryAr
   return {
     ...args,
     ...metadata.playgroundDefaults,
+  };
+}
+
+export function getScenarioArgs(
+  componentId: CobaltComponentId,
+  scenarioId: string,
+): CobaltStoryArgs {
+  const scenario = getStorybookScenario(componentId, scenarioId);
+
+  return {
+    ...getPlaygroundArgs(componentId),
+    ...(scenario?.args ?? {}),
   };
 }
 
@@ -156,6 +170,7 @@ export function getOptionItems(
       value: candidate.value,
       label: candidate.label,
       disabled: candidate.disabled === true,
+      icon: typeof candidate.icon === 'string' ? candidate.icon : undefined,
     });
   }
 
@@ -218,10 +233,16 @@ function getPropArgType(prop: CobaltApiProp) {
 
 function createWebComponent(componentId: CobaltComponentId, args: CobaltStoryArgs): HTMLElement {
   switch (componentId) {
+    case 'appShell':
+      return createAppShell(args);
+    case 'banner':
+      return createBanner(args);
     case 'button':
       return createButton(args);
     case 'buttonIcon':
       return configureElement(document.createElement('co-button-icon'), componentId, args);
+    case 'card':
+      return createCard(args);
     case 'checkbox':
       return createChoice('co-checkbox', componentId, args);
     case 'checkboxGroup':
@@ -232,10 +253,26 @@ function createWebComponent(componentId: CobaltComponentId, args: CobaltStoryArg
       return configureElement(document.createElement('co-icon'), componentId, args);
     case 'input':
       return createField('co-input', componentId, args);
+    case 'inputPill':
+      return createInputPill(args);
+    case 'label':
+      return createLabel(args);
     case 'textarea':
       return createField('co-textarea', componentId, args);
     case 'option':
       return createOptionPreview(args);
+    case 'navDrawer':
+      return createNavDrawer(args);
+    case 'navDrawerItem':
+      return createNavDrawerItemPreview(args);
+    case 'navHeaderBar':
+      return createNavHeaderBar(args);
+    case 'navRailBar':
+      return createNavRailBar(args);
+    case 'navRailItem':
+      return createNavRailItemPreview(args);
+    case 'navSeparator':
+      return createNavSeparatorPreview();
     case 'radio':
       return createChoice('co-radio', componentId, args);
     case 'radioGroup':
@@ -251,12 +288,52 @@ function createWebComponent(componentId: CobaltComponentId, args: CobaltStoryArg
   }
 }
 
+function createAppShell(args: CobaltStoryArgs): HTMLElement {
+  const shell = configureElement(document.createElement('co-app-shell'), 'appShell', args);
+  shell.style.blockSize = '620px';
+  shell.append(createBannerSlot(args));
+  shell.append(createHeaderSlot(args));
+  shell.append(createRailBar(args));
+  shell.append(createDrawer(args));
+
+  const body = document.createElement('co-card');
+  body.slot = 'body';
+  setElementProperty(body, 'label', 'Dashboard content');
+  appendTextSlot(body, 'header', getSlotValue('appShell', 'body', args));
+
+  const content = document.createElement('div');
+  content.className = 'cobalt-stack';
+  content.textContent =
+    'Use the shell to compose persistent navigation, responsive drawer behavior, and page content.';
+  body.append(content);
+  shell.append(body);
+
+  appendTextSlot(shell, 'footer', getSlotValue('appShell', 'footer', args));
+  return shell;
+}
+
+function createBanner(args: CobaltStoryArgs): HTMLElement {
+  const banner = configureElement(document.createElement('co-banner'), 'banner', args);
+  appendTextSlot(banner, 'title', getSlotValue('banner', 'title', args));
+  appendTextSlot(banner, '', getSlotValue('banner', '', args));
+  return banner;
+}
+
 function createButton(args: CobaltStoryArgs): HTMLElement {
   const button = configureElement(document.createElement('co-button'), 'button', args);
   appendIconSlot(button, 'prefix', getSlotValue('button', 'prefix', args));
   button.append(getSlotValue('button', '', args) || 'Button');
   appendIconSlot(button, 'suffix', getSlotValue('button', 'suffix', args));
   return button;
+}
+
+function createCard(args: CobaltStoryArgs): HTMLElement {
+  const card = configureElement(document.createElement('co-card'), 'card', args);
+  card.className = 'cobalt-panel';
+  appendTextSlot(card, 'header', getSlotValue('card', 'header', args));
+  appendTextSlot(card, '', getSlotValue('card', '', args));
+  appendTextSlot(card, 'footer', getSlotValue('card', 'footer', args));
+  return card;
 }
 
 function createChoice(
@@ -343,6 +420,21 @@ function createField(
   return field;
 }
 
+function createInputPill(args: CobaltStoryArgs): HTMLElement {
+  const input = configureElement(document.createElement('co-input-pill'), 'inputPill', args);
+  appendIconSlot(input, 'prefix', getSlotValue('inputPill', 'prefix', args));
+  appendIconSlot(input, 'suffix', getSlotValue('inputPill', 'suffix', args));
+  return input;
+}
+
+function createLabel(args: CobaltStoryArgs): HTMLElement {
+  const label = configureElement(document.createElement('co-label'), 'label', args);
+  appendIconSlot(label, 'prefix', getSlotValue('label', 'prefix', args));
+  label.append(getSlotValue('label', '', args) || 'Label');
+  appendIconSlot(label, 'suffix', getSlotValue('label', 'suffix', args));
+  return label;
+}
+
 function createOptionPreview(args: CobaltStoryArgs): HTMLElement {
   const listbox = document.createElement('co-listbox');
   setElementProperty(listbox, 'label', 'Option preview');
@@ -422,6 +514,149 @@ function createForm(args: CobaltStoryArgs): HTMLElement {
   stack.append(name, message, actions);
   form.append(stack);
   return form;
+}
+
+function createNavDrawer(args: CobaltStoryArgs): HTMLElement {
+  return createDrawer(args);
+}
+
+function createNavDrawerItemPreview(args: CobaltStoryArgs): HTMLElement {
+  const drawer = document.createElement('co-nav-drawer');
+  setElementProperty(drawer, 'label', 'Drawer item preview');
+  drawer.append(createNavDrawerItem(args));
+  return drawer;
+}
+
+function createNavHeaderBar(args: CobaltStoryArgs): HTMLElement {
+  const header = configureElement(
+    document.createElement('co-nav-header-bar'),
+    'navHeaderBar',
+    args,
+  );
+  appendTextSlot(header, 'logo', getSlotValue('navHeaderBar', 'logo', args));
+
+  const content = document.createElement('div');
+  content.className = 'cobalt-form-row';
+  for (const label of ['Overview', 'Reports', 'Settings']) {
+    const button = document.createElement('co-button');
+    setElementProperty(button, 'variant', 'ghost');
+    setElementProperty(button, 'size', 'sm');
+    button.append(label);
+    content.append(button);
+  }
+  header.append(content);
+
+  appendTextSlot(header, 'avatar', getSlotValue('navHeaderBar', 'avatar', args));
+  return header;
+}
+
+function createNavRailBar(args: CobaltStoryArgs): HTMLElement {
+  return createRailBar(args);
+}
+
+function createNavRailItemPreview(args: CobaltStoryArgs): HTMLElement {
+  const rail = document.createElement('co-nav-rail-bar');
+  setElementProperty(rail, 'label', 'Rail item preview');
+  rail.append(createNavRailItem(args));
+  return rail;
+}
+
+function createNavSeparatorPreview(): HTMLElement {
+  const drawer = document.createElement('co-nav-drawer');
+  setElementProperty(drawer, 'label', 'Separator preview');
+  drawer.append(createDrawerItem('overview', 'Overview', 'home', true));
+  drawer.append(document.createElement('co-nav-separator'));
+  drawer.append(createDrawerItem('settings', 'Settings', 'settings', false));
+  return drawer;
+}
+
+function createBannerSlot(args: CobaltStoryArgs): HTMLElement {
+  const banner = document.createElement('co-banner');
+  banner.slot = 'banner';
+  appendTextSlot(banner, 'title', getSlotValue('appShell', 'banner', args));
+  appendTextSlot(banner, '', 'Previewing the responsive application frame.');
+  return banner;
+}
+
+function createHeaderSlot(args: CobaltStoryArgs): HTMLElement {
+  const header = document.createElement('co-nav-header-bar');
+  header.slot = 'topnav';
+  setElementProperty(header, 'label', 'Application header');
+  appendTextSlot(header, 'logo', getSlotValue('appShell', 'topnav', args));
+
+  const search = document.createElement('co-input-pill');
+  setElementProperty(search, 'variant', 'search');
+  setElementProperty(search, 'placeholder', 'Search');
+  header.append(search);
+  return header;
+}
+
+function createDrawer(args: CobaltStoryArgs): HTMLElement {
+  const drawer = configureElement(document.createElement('co-nav-drawer'), 'navDrawer', args);
+  for (const item of getOptionItems('navDrawer', args)) {
+    drawer.append(
+      createDrawerItem(
+        item.value,
+        item.label,
+        item.icon ?? 'home',
+        isSelectedValue(item.value, args),
+      ),
+    );
+  }
+  drawer.append(document.createElement('co-nav-separator'));
+  drawer.append(createDrawerItem('help', 'Help', 'info', false));
+  return drawer;
+}
+
+function createRailBar(args: CobaltStoryArgs): HTMLElement {
+  const rail = configureElement(document.createElement('co-nav-rail-bar'), 'navRailBar', args);
+  for (const item of getOptionItems('navRailBar', args)) {
+    rail.append(
+      createRailItem(
+        item.value,
+        item.label,
+        item.icon ?? 'home',
+        isSelectedValue(item.value, args),
+      ),
+    );
+  }
+  return rail;
+}
+
+function createNavDrawerItem(args: CobaltStoryArgs): HTMLElement {
+  const item = configureElement(
+    document.createElement('co-nav-drawer-item'),
+    'navDrawerItem',
+    args,
+  );
+  appendIconSlot(item, 'prefix', getSlotValue('navDrawerItem', 'prefix', args));
+  item.append(getSlotValue('navDrawerItem', '', args) || 'Navigation item');
+  return item;
+}
+
+function createNavRailItem(args: CobaltStoryArgs): HTMLElement {
+  const item = configureElement(document.createElement('co-nav-rail-item'), 'navRailItem', args);
+  appendIconSlot(item, 'icon', getSlotValue('navRailItem', 'icon', args));
+  item.append(getSlotValue('navRailItem', '', args) || 'Navigation item');
+  return item;
+}
+
+function createDrawerItem(value: string, label: string, icon: string, selected: boolean) {
+  const item = document.createElement('co-nav-drawer-item');
+  setElementProperty(item, 'value', value);
+  setElementProperty(item, 'icon', icon);
+  setElementProperty(item, 'selected', selected);
+  item.append(label);
+  return item;
+}
+
+function createRailItem(value: string, label: string, icon: string, selected: boolean) {
+  const item = document.createElement('co-nav-rail-item');
+  setElementProperty(item, 'value', value);
+  setElementProperty(item, 'icon', icon);
+  setElementProperty(item, 'selected', selected);
+  item.append(label);
+  return item;
 }
 
 function configureElement<T extends HTMLElement>(

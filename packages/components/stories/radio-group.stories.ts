@@ -3,7 +3,7 @@
 
 import '@cobalt/components/radio-group';
 import '@cobalt/components/radio';
-import { createWebPlaygroundStory, createWebStarterOverviewStory } from './playground.js';
+import { createWebPlaygroundStory, createWebScenarioStory } from './playground.js';
 
 export default {
   title: 'Components/Radio Group',
@@ -13,4 +13,6 @@ const componentId = 'radioGroup' as const;
 
 export const Playground = createWebPlaygroundStory(componentId);
 
-export const Overview = createWebStarterOverviewStory(componentId);
+export const Overview = createWebScenarioStory(componentId, 'overview');
+
+export const WithDisabledOption = createWebScenarioStory(componentId, 'withDisabledOption');

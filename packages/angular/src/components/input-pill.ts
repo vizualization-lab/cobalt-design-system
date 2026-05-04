@@ -14,6 +14,11 @@ export class CoInputPill implements OnInit {
   readonly prefixIcon = input<string | undefined>();
   readonly size = input<InputSize>('md');
   readonly disabled = input(false);
+  readonly name = input<string | undefined>();
+  readonly type = input('text');
+  readonly placeholder = input<string | undefined>();
+  readonly value = input('');
+  readonly modelValue = input<string | undefined>();
 
   readonly coAction = output<CustomEvent>();
   readonly coFocus = output<CustomEvent>();
@@ -27,10 +32,18 @@ export class CoInputPill implements OnInit {
       el.variant = this.variant();
       el.size = this.size();
       el.disabled = this.disabled();
+      el.type = this.type();
+      el.value = this.value();
       const ai = this.actionIcon();
       if (ai !== undefined) el.actionIcon = ai;
       const pi = this.prefixIcon();
       if (pi !== undefined) el.prefixIcon = pi;
+      const name = this.name();
+      if (name !== undefined) el.name = name;
+      const placeholder = this.placeholder();
+      if (placeholder !== undefined) el.placeholder = placeholder;
+      const modelValue = this.modelValue();
+      if (modelValue !== undefined) el.modelValue = modelValue;
     });
   }
 

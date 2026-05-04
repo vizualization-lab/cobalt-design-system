@@ -1,6 +1,9 @@
 import {
+  CoAppShell,
+  CoBanner,
   CoButton,
   CoButtonIcon,
+  CoCard,
   CoCheckbox,
   CoCheckboxGroup,
   CoCheckboxIndeterminate,
@@ -8,7 +11,15 @@ import {
   CoForm,
   CoIcon,
   CoInput,
+  CoInputPill,
+  CoLabel,
   CoListbox,
+  CoNavDrawer,
+  CoNavDrawerItem,
+  CoNavHeaderBar,
+  CoNavRailBar,
+  CoNavRailItem,
+  CoNavSeparator,
   CoOption,
   CoRadio,
   CoRadioGroup,
@@ -21,6 +32,7 @@ import {
   getWrapperStoryComponentProps,
   getWrapperStoryEventProps,
   getWrapperStoryOptionItems,
+  getWrapperStoryScenarioArgs,
   getWrapperStorySelectedValues,
   getWrapperStorySlotValue,
   type WrapperStoryArgs,
@@ -40,13 +52,14 @@ export function createReactPlaygroundStory(componentId: WrapperStoryComponentId)
   };
 }
 
-export function createReactStarterOverviewStory(componentId: WrapperStoryComponentId) {
+export function createReactScenarioStory(componentId: WrapperStoryComponentId, scenarioId: string) {
   return {
-    args: getWrapperStoryArgs(componentId),
+    args: getWrapperStoryScenarioArgs(componentId, scenarioId),
     parameters: {
       controls: { disable: true },
       cobaltSource: {
         componentId,
+        scenarioId,
       },
     },
     render: (args: WrapperStoryArgs) => renderReactPlayground(componentId, args),
@@ -74,6 +87,40 @@ export function renderReactPlayground(
 
 function renderComponent(componentId: WrapperStoryComponentId, args: WrapperStoryArgs) {
   switch (componentId) {
+    case 'appShell':
+      return (
+        <CoAppShell
+          style={{ blockSize: '620px' }}
+          {...getWrapperStoryComponentProps('appShell', args)}
+          {...getWrapperStoryEventProps('appShell', args)}
+        >
+          <CoBanner slot="banner">
+            {slotText('title', getWrapperStorySlotValue('appShell', 'banner', args))}
+            Previewing the responsive application frame.
+          </CoBanner>
+          <CoNavHeaderBar slot="topnav" label="Application header">
+            {slotText('logo', getWrapperStorySlotValue('appShell', 'topnav', args))}
+            <CoInputPill variant="search" placeholder="Search" />
+          </CoNavHeaderBar>
+          {railBar('rail', args)}
+          {drawer('drawer', args)}
+          <CoCard slot="body" label="Dashboard content">
+            {slotText('header', getWrapperStorySlotValue('appShell', 'body', args))}
+            <div className="cobalt-stack">
+              Use the shell to compose persistent navigation, responsive drawer behavior, and page
+              content.
+            </div>
+          </CoCard>
+          {slotText('footer', getWrapperStorySlotValue('appShell', 'footer', args))}
+        </CoAppShell>
+      );
+    case 'banner':
+      return (
+        <CoBanner {...getWrapperStoryComponentProps('banner', args)}>
+          {slotText('title', getWrapperStorySlotValue('banner', 'title', args))}
+          {getWrapperStorySlotValue('banner', '', args)}
+        </CoBanner>
+      );
     case 'button':
       return (
         <CoButton
@@ -91,6 +138,14 @@ function renderComponent(componentId: WrapperStoryComponentId, args: WrapperStor
           {...getWrapperStoryComponentProps('buttonIcon', args)}
           {...getWrapperStoryEventProps('buttonIcon', args)}
         />
+      );
+    case 'card':
+      return (
+        <CoCard className="cobalt-panel" {...getWrapperStoryComponentProps('card', args)}>
+          {slotText('header', getWrapperStorySlotValue('card', 'header', args))}
+          {getWrapperStorySlotValue('card', '', args)}
+          {slotText('footer', getWrapperStorySlotValue('card', 'footer', args))}
+        </CoCard>
       );
     case 'checkbox':
       return (
@@ -130,6 +185,24 @@ function renderComponent(componentId: WrapperStoryComponentId, args: WrapperStor
           {slotText('feedback', getWrapperStorySlotValue('input', 'feedback', args))}
         </CoInput>
       );
+    case 'inputPill':
+      return (
+        <CoInputPill
+          {...getWrapperStoryComponentProps('inputPill', args)}
+          {...getWrapperStoryEventProps('inputPill', args)}
+        >
+          {slotIcon('prefix', getWrapperStorySlotValue('inputPill', 'prefix', args))}
+          {slotIcon('suffix', getWrapperStorySlotValue('inputPill', 'suffix', args))}
+        </CoInputPill>
+      );
+    case 'label':
+      return (
+        <CoLabel {...getWrapperStoryComponentProps('label', args)}>
+          {slotIcon('prefix', getWrapperStorySlotValue('label', 'prefix', args))}
+          {getWrapperStorySlotValue('label', '', args)}
+          {slotIcon('suffix', getWrapperStorySlotValue('label', 'suffix', args))}
+        </CoLabel>
+      );
     case 'textarea':
       return (
         <CoTextarea
@@ -150,6 +223,58 @@ function renderComponent(componentId: WrapperStoryComponentId, args: WrapperStor
             {getWrapperStorySlotValue('option', '', args)}
           </CoOption>
         </CoListbox>
+      );
+    case 'navDrawer':
+      return drawer(undefined, args);
+    case 'navDrawerItem':
+      return (
+        <CoNavDrawer label="Drawer item preview">
+          <CoNavDrawerItem {...getWrapperStoryComponentProps('navDrawerItem', args)}>
+            {slotIcon('prefix', getWrapperStorySlotValue('navDrawerItem', 'prefix', args))}
+            {getWrapperStorySlotValue('navDrawerItem', '', args)}
+          </CoNavDrawerItem>
+        </CoNavDrawer>
+      );
+    case 'navHeaderBar':
+      return (
+        <CoNavHeaderBar {...getWrapperStoryComponentProps('navHeaderBar', args)}>
+          {slotText('logo', getWrapperStorySlotValue('navHeaderBar', 'logo', args))}
+          <div className="cobalt-form-row">
+            <CoButton variant="ghost" size="sm">
+              Overview
+            </CoButton>
+            <CoButton variant="ghost" size="sm">
+              Reports
+            </CoButton>
+            <CoButton variant="ghost" size="sm">
+              Settings
+            </CoButton>
+          </div>
+          {slotText('avatar', getWrapperStorySlotValue('navHeaderBar', 'avatar', args))}
+        </CoNavHeaderBar>
+      );
+    case 'navRailBar':
+      return railBar(undefined, args);
+    case 'navRailItem':
+      return (
+        <CoNavRailBar label="Rail item preview">
+          <CoNavRailItem {...getWrapperStoryComponentProps('navRailItem', args)}>
+            {slotIcon('icon', getWrapperStorySlotValue('navRailItem', 'icon', args))}
+            {getWrapperStorySlotValue('navRailItem', '', args)}
+          </CoNavRailItem>
+        </CoNavRailBar>
+      );
+    case 'navSeparator':
+      return (
+        <CoNavDrawer label="Separator preview">
+          <CoNavDrawerItem value="overview" icon="home" selected>
+            Overview
+          </CoNavDrawerItem>
+          <CoNavSeparator />
+          <CoNavDrawerItem value="settings" icon="settings">
+            Settings
+          </CoNavDrawerItem>
+        </CoNavDrawer>
       );
     case 'radio':
       return (
@@ -226,6 +351,58 @@ function renderComponent(componentId: WrapperStoryComponentId, args: WrapperStor
         </CoForm>
       );
   }
+}
+
+function drawer(slot: string | undefined, args: WrapperStoryArgs) {
+  const selectedValues = getWrapperStorySelectedValues(args);
+
+  return (
+    <CoNavDrawer
+      slot={slot}
+      {...getWrapperStoryComponentProps('navDrawer', args)}
+      {...getWrapperStoryEventProps('navDrawer', args)}
+    >
+      {getWrapperStoryOptionItems('navDrawer', args).map((item) => (
+        <CoNavDrawerItem
+          key={item.value}
+          value={item.value}
+          icon={item.icon ?? 'home'}
+          selected={selectedValues.includes(item.value)}
+          disabled={item.disabled}
+        >
+          {item.label}
+        </CoNavDrawerItem>
+      ))}
+      <CoNavSeparator />
+      <CoNavDrawerItem value="help" icon="info">
+        Help
+      </CoNavDrawerItem>
+    </CoNavDrawer>
+  );
+}
+
+function railBar(slot: string | undefined, args: WrapperStoryArgs) {
+  const selectedValues = getWrapperStorySelectedValues(args);
+
+  return (
+    <CoNavRailBar
+      slot={slot}
+      {...getWrapperStoryComponentProps('navRailBar', args)}
+      {...getWrapperStoryEventProps('navRailBar', args)}
+    >
+      {getWrapperStoryOptionItems('navRailBar', args).map((item) => (
+        <CoNavRailItem
+          key={item.value}
+          value={item.value}
+          icon={item.icon ?? 'home'}
+          selected={selectedValues.includes(item.value)}
+          disabled={item.disabled}
+        >
+          {item.label}
+        </CoNavRailItem>
+      ))}
+    </CoNavRailBar>
+  );
 }
 
 function checkboxChildren(

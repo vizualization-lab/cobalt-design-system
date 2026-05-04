@@ -2,6 +2,7 @@ import {
   createWebComponentPlayground,
   getPlaygroundArgs,
   getPlaygroundArgTypes,
+  getScenarioArgs,
   type CobaltComponentId,
   type CobaltStoryArgs,
 } from '@cobalt/storybook-fixtures';
@@ -14,9 +15,9 @@ export function createWebPlaygroundStory(componentId: CobaltComponentId) {
   };
 }
 
-export function createWebStarterOverviewStory(componentId: CobaltComponentId) {
+export function createWebScenarioStory(componentId: CobaltComponentId, scenarioId: string) {
   return {
-    args: getPlaygroundArgs(componentId),
+    args: getScenarioArgs(componentId, scenarioId),
     parameters: {
       controls: { disable: true },
     },

@@ -1,7 +1,10 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import {
+  CoAppShell,
+  CoBanner,
   CoButton,
   CoButtonIcon,
+  CoCard,
   CoCheckbox,
   CoCheckboxGroup,
   CoCheckboxIndeterminate,
@@ -9,7 +12,15 @@ import {
   CoForm,
   CoIcon,
   CoInput,
+  CoInputPill,
+  CoLabel,
   CoListbox,
+  CoNavDrawer,
+  CoNavDrawerItem,
+  CoNavHeaderBar,
+  CoNavRailBar,
+  CoNavRailItem,
+  CoNavSeparator,
   CoOption,
   CoRadio,
   CoRadioGroup,
@@ -21,6 +32,7 @@ import {
   getWrapperStoryArgTypes,
   getWrapperStoryEventProps,
   getWrapperStoryOptionItems,
+  getWrapperStoryScenarioArgs,
   getWrapperStorySelectedValues,
   type WrapperStoryArgs,
   type WrapperStoryComponentId,
@@ -28,8 +40,11 @@ import {
 
 const moduleMetadata = {
   imports: [
+    CoAppShell,
+    CoBanner,
     CoButton,
     CoButtonIcon,
+    CoCard,
     CoCheckbox,
     CoCheckboxGroup,
     CoCheckboxIndeterminate,
@@ -37,7 +52,15 @@ const moduleMetadata = {
     CoForm,
     CoIcon,
     CoInput,
+    CoInputPill,
+    CoLabel,
     CoListbox,
+    CoNavDrawer,
+    CoNavDrawerItem,
+    CoNavHeaderBar,
+    CoNavRailBar,
+    CoNavRailItem,
+    CoNavSeparator,
     CoOption,
     CoRadio,
     CoRadioGroup,
@@ -60,13 +83,17 @@ export function createAngularPlaygroundStory(componentId: WrapperStoryComponentI
   };
 }
 
-export function createAngularStarterOverviewStory(componentId: WrapperStoryComponentId) {
+export function createAngularScenarioStory(
+  componentId: WrapperStoryComponentId,
+  scenarioId: string,
+) {
   return {
-    args: getWrapperStoryArgs(componentId),
+    args: getWrapperStoryScenarioArgs(componentId, scenarioId),
     parameters: {
       controls: { disable: true },
       cobaltSource: {
         componentId,
+        scenarioId,
       },
     },
     render: (args: WrapperStoryArgs) => renderAngularPlayground(componentId, args),
@@ -91,6 +118,83 @@ export function renderAngularPlayground(
 
 function getTemplate(componentId: WrapperStoryComponentId): string {
   switch (componentId) {
+    case 'appShell':
+      return frame(
+        'cobalt-grid',
+        `
+          <co-app-shell
+            style="block-size: 620px;"
+            [drawerOpen]="drawerOpen"
+            [railWidth]="railWidth"
+            [drawerWidth]="drawerWidth"
+            (coDrawerOpen)="onCoDrawerOpen($event)"
+            (coDrawerClose)="onCoDrawerClose($event)"
+            (coDrawerToggle)="onCoDrawerToggle($event)"
+          >
+            <co-banner slot="banner">
+              @if (slotBanner) {
+                <span slot="title">{{ slotBanner }}</span>
+              }
+              Previewing the responsive application frame.
+            </co-banner>
+            <co-nav-header-bar slot="topnav" label="Application header">
+              @if (slotTopnav) {
+                <span slot="logo">{{ slotTopnav }}</span>
+              }
+              <co-input-pill variant="search" placeholder="Search"></co-input-pill>
+            </co-nav-header-bar>
+            <co-nav-rail-bar slot="rail" [value]="selectedValues[0]" label="Primary navigation">
+              @for (item of optionItems; track item.value) {
+                <co-nav-rail-item
+                  [value]="item.value"
+                  [icon]="item.icon || 'home'"
+                  [selected]="selectedValues.includes(item.value)"
+                  [disabled]="item.disabled"
+                >
+                  {{ item.label }}
+                </co-nav-rail-item>
+              }
+            </co-nav-rail-bar>
+            <co-nav-drawer slot="drawer" [value]="selectedValues[0]" label="Primary navigation">
+              @for (item of optionItems; track item.value) {
+                <co-nav-drawer-item
+                  [value]="item.value"
+                  [icon]="item.icon || 'home'"
+                  [selected]="selectedValues.includes(item.value)"
+                  [disabled]="item.disabled"
+                >
+                  {{ item.label }}
+                </co-nav-drawer-item>
+              }
+              <co-nav-separator></co-nav-separator>
+              <co-nav-drawer-item value="help" icon="info">Help</co-nav-drawer-item>
+            </co-nav-drawer>
+            <co-card slot="body" label="Dashboard content">
+              @if (slotBody) {
+                <span slot="header">{{ slotBody }}</span>
+              }
+              <div class="cobalt-stack">
+                Use the shell to compose persistent navigation, responsive drawer behavior, and page content.
+              </div>
+            </co-card>
+            @if (slotFooter) {
+              <span slot="footer">{{ slotFooter }}</span>
+            }
+          </co-app-shell>
+        `,
+      );
+    case 'banner':
+      return frame(
+        'cobalt-grid',
+        `
+          <co-banner [label]="label">
+            @if (slotTitle) {
+              <span slot="title">{{ slotTitle }}</span>
+            }
+            {{ slotDefault }}
+          </co-banner>
+        `,
+      );
     case 'button':
       return frame(
         'cobalt-row',
@@ -131,6 +235,21 @@ function getTemplate(componentId: WrapperStoryComponentId): string {
             (coFocus)="onCoFocus($event)"
             (coBlur)="onCoBlur($event)"
           ></co-button-icon>
+        `,
+      );
+    case 'card':
+      return frame(
+        'cobalt-grid',
+        `
+          <co-card class="cobalt-panel" [label]="label">
+            @if (slotHeader) {
+              <span slot="header">{{ slotHeader }}</span>
+            }
+            {{ slotDefault }}
+            @if (slotFooter) {
+              <span slot="footer">{{ slotFooter }}</span>
+            }
+          </co-card>
         `,
       );
     case 'checkbox':
@@ -246,6 +365,54 @@ function getTemplate(componentId: WrapperStoryComponentId): string {
           </co-input>
         `,
       );
+    case 'inputPill':
+      return frame(
+        'cobalt-grid',
+        `
+          <co-input-pill
+            [variant]="variant"
+            [actionIcon]="actionIcon"
+            [prefixIcon]="prefixIcon"
+            [size]="size"
+            [disabled]="disabled"
+            [name]="name"
+            [type]="type"
+            [placeholder]="placeholder"
+            [value]="value"
+            [modelValue]="modelValue"
+            (coAction)="onCoAction($event)"
+            (coFocus)="onCoFocus($event)"
+            (coBlur)="onCoBlur($event)"
+          >
+            @if (slotPrefix) {
+              <co-icon slot="prefix" [name]="slotPrefix" size="sm"></co-icon>
+            }
+            @if (slotSuffix) {
+              <co-icon slot="suffix" [name]="slotSuffix" size="sm"></co-icon>
+            }
+          </co-input-pill>
+        `,
+      );
+    case 'label':
+      return frame(
+        'cobalt-grid',
+        `
+          <co-label
+            [htmlFor]="htmlFor"
+            [required]="required"
+            [optional]="optional"
+            [optionalLabel]="optionalLabel"
+          >
+            @if (slotPrefix) {
+              <co-icon slot="prefix" [name]="slotPrefix" size="sm"></co-icon>
+            }
+            {{ slotDefault }}
+            @if (slotSuffix) {
+              <co-icon slot="suffix" [name]="slotSuffix" size="sm"></co-icon>
+            }
+          </co-label>
+        `,
+      );
     case 'textarea':
       return frame(
         'cobalt-grid',
@@ -305,6 +472,121 @@ function getTemplate(componentId: WrapperStoryComponentId): string {
               {{ slotDefault }}
             </co-option>
           </co-listbox>
+        `,
+      );
+    case 'navDrawer':
+      return frame(
+        'cobalt-grid',
+        `
+          <co-nav-drawer
+            [open]="open"
+            [value]="value"
+            [label]="label"
+            (coChange)="onCoChange($event)"
+          >
+            @for (item of optionItems; track item.value) {
+              <co-nav-drawer-item
+                [value]="item.value"
+                [icon]="item.icon || 'home'"
+                [selected]="selectedValues.includes(item.value)"
+                [disabled]="item.disabled"
+              >
+                {{ item.label }}
+              </co-nav-drawer-item>
+            }
+            <co-nav-separator></co-nav-separator>
+            <co-nav-drawer-item value="help" icon="info">Help</co-nav-drawer-item>
+          </co-nav-drawer>
+        `,
+      );
+    case 'navDrawerItem':
+      return frame(
+        'cobalt-grid',
+        `
+          <co-nav-drawer label="Drawer item preview">
+            <co-nav-drawer-item
+              [value]="value"
+              [icon]="icon"
+              [href]="href"
+              [selected]="selected"
+              [disabled]="disabled"
+            >
+              @if (slotPrefix) {
+                <co-icon slot="prefix" [name]="slotPrefix" size="sm"></co-icon>
+              }
+              {{ slotDefault }}
+            </co-nav-drawer-item>
+          </co-nav-drawer>
+        `,
+      );
+    case 'navHeaderBar':
+      return frame(
+        'cobalt-grid',
+        `
+          <co-nav-header-bar [label]="label">
+            @if (slotLogo) {
+              <span slot="logo">{{ slotLogo }}</span>
+            }
+            <div class="cobalt-form-row">
+              <co-button variant="ghost" size="sm">Overview</co-button>
+              <co-button variant="ghost" size="sm">Reports</co-button>
+              <co-button variant="ghost" size="sm">Settings</co-button>
+            </div>
+            @if (slotAvatar) {
+              <span slot="avatar">{{ slotAvatar }}</span>
+            }
+          </co-nav-header-bar>
+        `,
+      );
+    case 'navRailBar':
+      return frame(
+        'cobalt-grid',
+        `
+          <co-nav-rail-bar [value]="value" [label]="label" (coChange)="onCoChange($event)">
+            @for (item of optionItems; track item.value) {
+              <co-nav-rail-item
+                [value]="item.value"
+                [icon]="item.icon || 'home'"
+                [selected]="selectedValues.includes(item.value)"
+                [disabled]="item.disabled"
+              >
+                {{ item.label }}
+              </co-nav-rail-item>
+            }
+          </co-nav-rail-bar>
+        `,
+      );
+    case 'navRailItem':
+      return frame(
+        'cobalt-grid',
+        `
+          <co-nav-rail-bar label="Rail item preview">
+            <co-nav-rail-item
+              [value]="value"
+              [icon]="icon"
+              [href]="href"
+              [target]="target"
+              [label]="label"
+              [selected]="selected"
+              [disabled]="disabled"
+            >
+              @if (slotIcon) {
+                <co-icon slot="icon" [name]="slotIcon" size="sm"></co-icon>
+              }
+              {{ slotDefault }}
+            </co-nav-rail-item>
+          </co-nav-rail-bar>
+        `,
+      );
+    case 'navSeparator':
+      return frame(
+        'cobalt-grid',
+        `
+          <co-nav-drawer label="Separator preview">
+            <co-nav-drawer-item value="overview" icon="home" [selected]="true">Overview</co-nav-drawer-item>
+            <co-nav-separator></co-nav-separator>
+            <co-nav-drawer-item value="settings" icon="settings">Settings</co-nav-drawer-item>
+          </co-nav-drawer>
         `,
       );
     case 'radio':

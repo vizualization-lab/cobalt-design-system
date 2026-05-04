@@ -3,6 +3,7 @@ import {
   type CobaltApiProp,
   type CobaltComponentMetadata,
 } from './api-metadata.js';
+import { getStorybookScenario } from './scenarios.js';
 
 export type WrapperStoryComponentId = keyof typeof cobaltComponentMetadata;
 export type WrapperStoryArgs = Record<string, unknown>;
@@ -10,6 +11,7 @@ export type WrapperStoryOptionItem = {
   value: string;
   label: string;
   disabled?: boolean;
+  icon?: string;
 };
 
 const noop = () => {};
@@ -39,6 +41,18 @@ export function getWrapperStoryArgs(componentId: WrapperStoryComponentId): Wrapp
   return {
     ...args,
     ...metadata.playgroundDefaults,
+  };
+}
+
+export function getWrapperStoryScenarioArgs(
+  componentId: WrapperStoryComponentId,
+  scenarioId: string,
+): WrapperStoryArgs {
+  const scenario = getStorybookScenario(componentId, scenarioId);
+
+  return {
+    ...getWrapperStoryArgs(componentId),
+    ...(scenario?.args ?? {}),
   };
 }
 
@@ -161,6 +175,7 @@ export function getWrapperStoryOptionItems(
       value: candidate.value,
       label: candidate.label,
       disabled: candidate.disabled === true,
+      icon: typeof candidate.icon === 'string' ? candidate.icon : undefined,
     });
   }
 

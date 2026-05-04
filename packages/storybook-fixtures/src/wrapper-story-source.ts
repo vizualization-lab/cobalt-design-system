@@ -34,6 +34,40 @@ export function getAngularWrapperStorySource(
   args: WrapperStoryArgs,
 ): string {
   switch (componentId) {
+    case 'appShell':
+      return renderAngularElement('co-app-shell', getAngularPropLines(componentId, args), [
+        renderAngularElement(
+          'co-banner',
+          ['slot="banner"'],
+          [
+            renderAngularTextSlot('title', getWrapperStorySlotValue('appShell', 'banner', args)),
+            'Previewing the responsive application frame.',
+          ],
+        ),
+        renderAngularElement(
+          'co-nav-header-bar',
+          ['slot="topnav"', 'label="Application header"'],
+          [
+            renderAngularTextSlot('logo', getWrapperStorySlotValue('appShell', 'topnav', args)),
+            '<co-input-pill variant="search" placeholder="Search"></co-input-pill>',
+          ],
+        ),
+        ...getAngularAppNav(args),
+        renderAngularElement(
+          'co-card',
+          ['slot="body"', 'label="Dashboard content"'],
+          [
+            renderAngularTextSlot('header', getWrapperStorySlotValue('appShell', 'body', args)),
+            '<div class="cobalt-stack">Use the shell to compose persistent navigation.</div>',
+          ],
+        ),
+        renderAngularTextSlot('footer', getWrapperStorySlotValue('appShell', 'footer', args)),
+      ]);
+    case 'banner':
+      return renderAngularElement('co-banner', getAngularPropLines(componentId, args), [
+        renderAngularTextSlot('title', getWrapperStorySlotValue('banner', 'title', args)),
+        getWrapperStorySlotValue('banner', '', args),
+      ]);
     case 'button':
       return renderAngularElement('co-button', getAngularPropLines(componentId, args), [
         renderAngularIconSlot('prefix', getWrapperStorySlotValue('button', 'prefix', args)),
@@ -42,6 +76,16 @@ export function getAngularWrapperStorySource(
       ]);
     case 'buttonIcon':
       return renderAngularElement('co-button-icon', getAngularPropLines(componentId, args));
+    case 'card':
+      return renderAngularElement(
+        'co-card',
+        ['class="cobalt-panel"', ...getAngularPropLines(componentId, args)],
+        [
+          renderAngularTextSlot('header', getWrapperStorySlotValue('card', 'header', args)),
+          getWrapperStorySlotValue('card', '', args),
+          renderAngularTextSlot('footer', getWrapperStorySlotValue('card', 'footer', args)),
+        ],
+      );
     case 'checkbox':
       return renderAngularElement('co-checkbox', getAngularPropLines(componentId, args), [
         getWrapperStorySlotValue('checkbox', '', args),
@@ -79,6 +123,17 @@ export function getAngularWrapperStorySource(
         renderAngularIconSlot('suffix', getWrapperStorySlotValue('input', 'suffix', args)),
         renderAngularTextSlot('feedback', getWrapperStorySlotValue('input', 'feedback', args)),
       ]);
+    case 'inputPill':
+      return renderAngularElement('co-input-pill', getAngularPropLines(componentId, args), [
+        renderAngularIconSlot('prefix', getWrapperStorySlotValue('inputPill', 'prefix', args)),
+        renderAngularIconSlot('suffix', getWrapperStorySlotValue('inputPill', 'suffix', args)),
+      ]);
+    case 'label':
+      return renderAngularElement('co-label', getAngularPropLines(componentId, args), [
+        renderAngularIconSlot('prefix', getWrapperStorySlotValue('label', 'prefix', args)),
+        getWrapperStorySlotValue('label', '', args),
+        renderAngularIconSlot('suffix', getWrapperStorySlotValue('label', 'suffix', args)),
+      ]);
     case 'textarea':
       return renderAngularElement('co-textarea', getAngularPropLines(componentId, args), [
         renderAngularIconSlot('prefix', getWrapperStorySlotValue('textarea', 'prefix', args)),
@@ -101,6 +156,57 @@ export function getAngularWrapperStorySource(
             ),
             getWrapperStorySlotValue('option', '', args),
           ]),
+        ],
+      );
+    case 'navDrawer':
+      return renderAngularElement('co-nav-drawer', getAngularPropLines(componentId, args), [
+        ...getAngularNavDrawerChildren('navDrawer', args),
+        '<co-nav-separator></co-nav-separator>',
+        '<co-nav-drawer-item value="help" icon="info">Help</co-nav-drawer-item>',
+      ]);
+    case 'navDrawerItem':
+      return renderAngularElement(
+        'co-nav-drawer',
+        ['label="Drawer item preview"'],
+        [
+          renderAngularElement('co-nav-drawer-item', getAngularPropLines(componentId, args), [
+            renderAngularIconSlot(
+              'prefix',
+              getWrapperStorySlotValue('navDrawerItem', 'prefix', args),
+            ),
+            getWrapperStorySlotValue('navDrawerItem', '', args),
+          ]),
+        ],
+      );
+    case 'navHeaderBar':
+      return renderAngularElement('co-nav-header-bar', getAngularPropLines(componentId, args), [
+        renderAngularTextSlot('logo', getWrapperStorySlotValue('navHeaderBar', 'logo', args)),
+        '<div class="cobalt-form-row"><co-button variant="ghost" size="sm">Overview</co-button><co-button variant="ghost" size="sm">Reports</co-button><co-button variant="ghost" size="sm">Settings</co-button></div>',
+        renderAngularTextSlot('avatar', getWrapperStorySlotValue('navHeaderBar', 'avatar', args)),
+      ]);
+    case 'navRailBar':
+      return renderAngularElement('co-nav-rail-bar', getAngularPropLines(componentId, args), [
+        ...getAngularNavRailChildren('navRailBar', args),
+      ]);
+    case 'navRailItem':
+      return renderAngularElement(
+        'co-nav-rail-bar',
+        ['label="Rail item preview"'],
+        [
+          renderAngularElement('co-nav-rail-item', getAngularPropLines(componentId, args), [
+            renderAngularIconSlot('icon', getWrapperStorySlotValue('navRailItem', 'icon', args)),
+            getWrapperStorySlotValue('navRailItem', '', args),
+          ]),
+        ],
+      );
+    case 'navSeparator':
+      return renderAngularElement(
+        'co-nav-drawer',
+        ['label="Separator preview"'],
+        [
+          '<co-nav-drawer-item value="overview" icon="home" [selected]="true">Overview</co-nav-drawer-item>',
+          '<co-nav-separator></co-nav-separator>',
+          '<co-nav-drawer-item value="settings" icon="settings">Settings</co-nav-drawer-item>',
         ],
       );
     case 'radio':
@@ -164,6 +270,76 @@ function getWrapperFrameworkSource(
   const tag = getWrapperStoryMetadata(componentId).importName;
 
   switch (componentId) {
+    case 'appShell':
+      return renderWrapperElement(
+        framework,
+        tag,
+        getWrapperPropLines(framework, componentId, args),
+        [
+          renderWrapperElement(
+            framework,
+            getWrapperStoryMetadata('banner').importName,
+            ['slot="banner"'],
+            [
+              renderWrapperTextSlot(
+                framework,
+                'title',
+                getWrapperStorySlotValue('appShell', 'banner', args),
+              ),
+              'Previewing the responsive application frame.',
+            ],
+          ),
+          renderWrapperElement(
+            framework,
+            getWrapperStoryMetadata('navHeaderBar').importName,
+            ['slot="topnav"', 'label="Application header"'],
+            [
+              renderWrapperTextSlot(
+                framework,
+                'logo',
+                getWrapperStorySlotValue('appShell', 'topnav', args),
+              ),
+              renderWrapperElement(framework, getWrapperStoryMetadata('inputPill').importName, [
+                'variant="search"',
+                'placeholder="Search"',
+              ]),
+            ],
+          ),
+          ...getWrapperAppNav(framework, args),
+          renderWrapperElement(
+            framework,
+            getWrapperStoryMetadata('card').importName,
+            ['slot="body"', 'label="Dashboard content"'],
+            [
+              renderWrapperTextSlot(
+                framework,
+                'header',
+                getWrapperStorySlotValue('appShell', 'body', args),
+              ),
+              '<div class="cobalt-stack">Use the shell to compose persistent navigation.</div>',
+            ],
+          ),
+          renderWrapperTextSlot(
+            framework,
+            'footer',
+            getWrapperStorySlotValue('appShell', 'footer', args),
+          ),
+        ],
+      );
+    case 'banner':
+      return renderWrapperElement(
+        framework,
+        tag,
+        getWrapperPropLines(framework, componentId, args),
+        [
+          renderWrapperTextSlot(
+            framework,
+            'title',
+            getWrapperStorySlotValue('banner', 'title', args),
+          ),
+          getWrapperStorySlotValue('banner', '', args),
+        ],
+      );
     case 'button':
       return renderWrapperElement(
         framework,
@@ -188,6 +364,30 @@ function getWrapperFrameworkSource(
         framework,
         tag,
         getWrapperPropLines(framework, componentId, args),
+      );
+    case 'card':
+      return renderWrapperElement(
+        framework,
+        tag,
+        [
+          ...serializeFixedProps([
+            { name: framework === 'react' ? 'className' : 'class', value: 'cobalt-panel' },
+          ]),
+          ...getWrapperPropLines(framework, componentId, args),
+        ],
+        [
+          renderWrapperTextSlot(
+            framework,
+            'header',
+            getWrapperStorySlotValue('card', 'header', args),
+          ),
+          getWrapperStorySlotValue('card', '', args),
+          renderWrapperTextSlot(
+            framework,
+            'footer',
+            getWrapperStorySlotValue('card', 'footer', args),
+          ),
+        ],
       );
     case 'checkbox':
       return renderWrapperElement(
@@ -263,6 +463,43 @@ function getWrapperFrameworkSource(
           ),
         ],
       );
+    case 'inputPill':
+      return renderWrapperElement(
+        framework,
+        tag,
+        getWrapperPropLines(framework, componentId, args),
+        [
+          renderWrapperIconSlot(
+            framework,
+            'prefix',
+            getWrapperStorySlotValue('inputPill', 'prefix', args),
+          ),
+          renderWrapperIconSlot(
+            framework,
+            'suffix',
+            getWrapperStorySlotValue('inputPill', 'suffix', args),
+          ),
+        ],
+      );
+    case 'label':
+      return renderWrapperElement(
+        framework,
+        tag,
+        getWrapperPropLines(framework, componentId, args),
+        [
+          renderWrapperIconSlot(
+            framework,
+            'prefix',
+            getWrapperStorySlotValue('label', 'prefix', args),
+          ),
+          getWrapperStorySlotValue('label', '', args),
+          renderWrapperIconSlot(
+            framework,
+            'suffix',
+            getWrapperStorySlotValue('label', 'suffix', args),
+          ),
+        ],
+      );
     case 'textarea':
       return renderWrapperElement(
         framework,
@@ -310,6 +547,101 @@ function getWrapperFrameworkSource(
             ),
             getWrapperStorySlotValue('option', '', args),
           ]),
+        ],
+      );
+    case 'navDrawer':
+      return renderWrapperElement(
+        framework,
+        tag,
+        getWrapperPropLines(framework, componentId, args),
+        [
+          ...getWrapperNavDrawerChildren(framework, 'navDrawer', args),
+          renderWrapperElement(framework, getWrapperStoryMetadata('navSeparator').importName, []),
+          renderWrapperElement(
+            framework,
+            getWrapperStoryMetadata('navDrawerItem').importName,
+            ['value="help"', 'icon="info"'],
+            ['Help'],
+          ),
+        ],
+      );
+    case 'navDrawerItem':
+      return renderWrapperElement(
+        framework,
+        getWrapperStoryMetadata('navDrawer').importName,
+        ['label="Drawer item preview"'],
+        [
+          renderWrapperElement(framework, tag, getWrapperPropLines(framework, componentId, args), [
+            renderWrapperIconSlot(
+              framework,
+              'prefix',
+              getWrapperStorySlotValue('navDrawerItem', 'prefix', args),
+            ),
+            getWrapperStorySlotValue('navDrawerItem', '', args),
+          ]),
+        ],
+      );
+    case 'navHeaderBar':
+      return renderWrapperElement(
+        framework,
+        tag,
+        getWrapperPropLines(framework, componentId, args),
+        [
+          renderWrapperTextSlot(
+            framework,
+            'logo',
+            getWrapperStorySlotValue('navHeaderBar', 'logo', args),
+          ),
+          '<div class="cobalt-form-row">...</div>',
+          renderWrapperTextSlot(
+            framework,
+            'avatar',
+            getWrapperStorySlotValue('navHeaderBar', 'avatar', args),
+          ),
+        ],
+      );
+    case 'navRailBar':
+      return renderWrapperElement(
+        framework,
+        tag,
+        getWrapperPropLines(framework, componentId, args),
+        [...getWrapperNavRailChildren(framework, 'navRailBar', args)],
+      );
+    case 'navRailItem':
+      return renderWrapperElement(
+        framework,
+        getWrapperStoryMetadata('navRailBar').importName,
+        ['label="Rail item preview"'],
+        [
+          renderWrapperElement(framework, tag, getWrapperPropLines(framework, componentId, args), [
+            renderWrapperIconSlot(
+              framework,
+              'icon',
+              getWrapperStorySlotValue('navRailItem', 'icon', args),
+            ),
+            getWrapperStorySlotValue('navRailItem', '', args),
+          ]),
+        ],
+      );
+    case 'navSeparator':
+      return renderWrapperElement(
+        framework,
+        getWrapperStoryMetadata('navDrawer').importName,
+        ['label="Separator preview"'],
+        [
+          renderWrapperElement(
+            framework,
+            getWrapperStoryMetadata('navDrawerItem').importName,
+            ['value="overview"', 'icon="home"', 'selected'],
+            ['Overview'],
+          ),
+          renderWrapperElement(framework, tag, []),
+          renderWrapperElement(
+            framework,
+            getWrapperStoryMetadata('navDrawerItem').importName,
+            ['value="settings"', 'icon="settings"'],
+            ['Settings'],
+          ),
         ],
       );
     case 'radio':
@@ -596,6 +928,141 @@ function getAngularOptionChildren(
       [
         `value="${escapeAttribute(item.value)}"`,
         ...(selectedValues.includes(item.value) ? ['[checked]="true"'] : []),
+        ...(item.disabled ? ['[disabled]="true"'] : []),
+      ],
+      [item.label],
+    ),
+  );
+}
+
+function getWrapperAppNav(framework: WrapperFramework, args: WrapperStoryArgs): string[] {
+  return [
+    renderWrapperElement(
+      framework,
+      getWrapperStoryMetadata('navRailBar').importName,
+      ['slot="rail"', 'label="Primary navigation"'],
+      getWrapperNavRailChildren(framework, 'appShell', args),
+    ),
+    renderWrapperElement(
+      framework,
+      getWrapperStoryMetadata('navDrawer').importName,
+      ['slot="drawer"', 'label="Primary navigation"'],
+      [
+        ...getWrapperNavDrawerChildren(framework, 'appShell', args),
+        renderWrapperElement(framework, getWrapperStoryMetadata('navSeparator').importName, []),
+        renderWrapperElement(
+          framework,
+          getWrapperStoryMetadata('navDrawerItem').importName,
+          ['value="help"', 'icon="info"'],
+          ['Help'],
+        ),
+      ],
+    ),
+  ];
+}
+
+function getWrapperNavDrawerChildren(
+  framework: WrapperFramework,
+  componentId: WrapperStoryComponentId,
+  args: WrapperStoryArgs,
+): string[] {
+  const itemTag = getWrapperStoryMetadata('navDrawerItem').importName;
+  const selectedValues = getWrapperStorySelectedValues(args);
+
+  return getWrapperStoryOptionItems(componentId, args).map((item) =>
+    renderWrapperElement(
+      framework,
+      itemTag,
+      [
+        ...serializeFixedProps([
+          { name: 'value', value: item.value },
+          { name: 'icon', value: item.icon ?? 'home' },
+        ]),
+        ...(selectedValues.includes(item.value) ? ['selected'] : []),
+        ...(item.disabled ? ['disabled'] : []),
+      ],
+      [item.label],
+    ),
+  );
+}
+
+function getWrapperNavRailChildren(
+  framework: WrapperFramework,
+  componentId: WrapperStoryComponentId,
+  args: WrapperStoryArgs,
+): string[] {
+  const itemTag = getWrapperStoryMetadata('navRailItem').importName;
+  const selectedValues = getWrapperStorySelectedValues(args);
+
+  return getWrapperStoryOptionItems(componentId, args).map((item) =>
+    renderWrapperElement(
+      framework,
+      itemTag,
+      [
+        ...serializeFixedProps([
+          { name: 'value', value: item.value },
+          { name: 'icon', value: item.icon ?? 'home' },
+        ]),
+        ...(selectedValues.includes(item.value) ? ['selected'] : []),
+        ...(item.disabled ? ['disabled'] : []),
+      ],
+      [item.label],
+    ),
+  );
+}
+
+function getAngularAppNav(args: WrapperStoryArgs): string[] {
+  return [
+    renderAngularElement(
+      'co-nav-rail-bar',
+      ['slot="rail"', 'label="Primary navigation"'],
+      [...getAngularNavRailChildren('appShell', args)],
+    ),
+    renderAngularElement(
+      'co-nav-drawer',
+      ['slot="drawer"', 'label="Primary navigation"'],
+      [
+        ...getAngularNavDrawerChildren('appShell', args),
+        '<co-nav-separator></co-nav-separator>',
+        '<co-nav-drawer-item value="help" icon="info">Help</co-nav-drawer-item>',
+      ],
+    ),
+  ];
+}
+
+function getAngularNavDrawerChildren(
+  componentId: WrapperStoryComponentId,
+  args: WrapperStoryArgs,
+): string[] {
+  const selectedValues = getWrapperStorySelectedValues(args);
+
+  return getWrapperStoryOptionItems(componentId, args).map((item) =>
+    renderAngularElement(
+      'co-nav-drawer-item',
+      [
+        `value="${escapeAttribute(item.value)}"`,
+        `icon="${escapeAttribute(item.icon ?? 'home')}"`,
+        ...(selectedValues.includes(item.value) ? ['[selected]="true"'] : []),
+        ...(item.disabled ? ['[disabled]="true"'] : []),
+      ],
+      [item.label],
+    ),
+  );
+}
+
+function getAngularNavRailChildren(
+  componentId: WrapperStoryComponentId,
+  args: WrapperStoryArgs,
+): string[] {
+  const selectedValues = getWrapperStorySelectedValues(args);
+
+  return getWrapperStoryOptionItems(componentId, args).map((item) =>
+    renderAngularElement(
+      'co-nav-rail-item',
+      [
+        `value="${escapeAttribute(item.value)}"`,
+        `icon="${escapeAttribute(item.icon ?? 'home')}"`,
+        ...(selectedValues.includes(item.value) ? ['[selected]="true"'] : []),
         ...(item.disabled ? ['[disabled]="true"'] : []),
       ],
       [item.label],

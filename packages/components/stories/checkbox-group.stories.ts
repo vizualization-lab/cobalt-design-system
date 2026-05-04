@@ -3,7 +3,7 @@
 
 import '@cobalt/components/checkbox-group';
 import '@cobalt/components/checkbox';
-import { createWebPlaygroundStory, createWebStarterOverviewStory } from './playground.js';
+import { createWebPlaygroundStory, createWebScenarioStory } from './playground.js';
 
 export default {
   title: 'Components/Checkbox Group',
@@ -13,4 +13,6 @@ const componentId = 'checkboxGroup' as const;
 
 export const Playground = createWebPlaygroundStory(componentId);
 
-export const Overview = createWebStarterOverviewStory(componentId);
+export const Overview = createWebScenarioStory(componentId, 'overview');
+
+export const WithDisabledOption = createWebScenarioStory(componentId, 'withDisabledOption');

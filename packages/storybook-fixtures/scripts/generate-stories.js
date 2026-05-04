@@ -6,6 +6,7 @@ import {
   storybookComponentDefinitions,
   storybookManagedComponentDefinitions,
 } from '../src/component-registry.js';
+import { getStorybookScenarios } from '../src/scenarios.js';
 import { storybookOverviewOverrides } from '../src/story-overrides.js';
 
 const scriptDir = dirname(fileURLToPath(import.meta.url));
@@ -26,49 +27,55 @@ const frameworkConfigs = [
           (componentPath) => `import '@cobalt/components/${componentPath}';`,
         ),
       ),
-      "import { createWebPlaygroundStory, createWebStarterOverviewStory } from './playground.js';",
+      "import { createWebPlaygroundStory, createWebScenarioStory } from './playground.js';",
     ],
     playgroundFactory: 'createWebPlaygroundStory',
-    overviewFactory: 'createWebStarterOverviewStory',
+    scenarioFactory: 'createWebScenarioStory',
   },
   {
     id: 'react',
     filePath: (definition) =>
       resolve(repoRoot, `packages/react/stories/${definition.componentPath}.stories.tsx`),
     imports: () => [
-      "import { createReactPlaygroundStory, createReactStarterOverviewStory } from './playground.js';",
+      "import { createReactPlaygroundStory, createReactScenarioStory } from './playground.js';",
     ],
     playgroundFactory: 'createReactPlaygroundStory',
-    overviewFactory: 'createReactStarterOverviewStory',
+    scenarioFactory: 'createReactScenarioStory',
   },
   {
     id: 'vue',
     filePath: (definition) =>
       resolve(repoRoot, `packages/vue/stories/${definition.componentPath}.stories.ts`),
     imports: () => [
-      "import { createVuePlaygroundStory, createVueStarterOverviewStory } from './playground.js';",
+      "import { createVuePlaygroundStory, createVueScenarioStory } from './playground.js';",
     ],
     playgroundFactory: 'createVuePlaygroundStory',
-    overviewFactory: 'createVueStarterOverviewStory',
+    scenarioFactory: 'createVueScenarioStory',
   },
   {
     id: 'angular',
     filePath: (definition) =>
       resolve(repoRoot, `packages/angular/stories/${definition.componentPath}.stories.ts`),
     imports: () => [
-      "import { createAngularPlaygroundStory, createAngularStarterOverviewStory } from './playground.js';",
+      "import { createAngularPlaygroundStory, createAngularScenarioStory } from './playground.js';",
     ],
     playgroundFactory: 'createAngularPlaygroundStory',
-    overviewFactory: 'createAngularStarterOverviewStory',
+    scenarioFactory: 'createAngularScenarioStory',
   },
 ];
 
 function renderStoryFile(definition, frameworkConfig) {
   const override = storybookOverviewOverrides[definition.id]?.[frameworkConfig.id];
   const imports = [...frameworkConfig.imports(definition), ...(override?.imports ?? [])];
-  const overview =
-    override?.overview ??
-    `export const Overview = ${frameworkConfig.overviewFactory}(componentId);`;
+  const scenarioExports = getStorybookScenarios(definition.id)
+    .map((scenario) => {
+      if (scenario.exportName === 'Overview' && override?.overview) {
+        return override.overview;
+      }
+
+      return `export const ${scenario.exportName} = ${frameworkConfig.scenarioFactory}(componentId, '${scenario.id}');`;
+    })
+    .join('\n\n');
 
   return `${generatedHeader}
 ${imports.join('\n')}
@@ -81,7 +88,7 @@ const componentId = '${definition.id}' as const;
 
 export const Playground = ${frameworkConfig.playgroundFactory}(componentId);
 
-${overview}
+${scenarioExports}
 `;
 }
 

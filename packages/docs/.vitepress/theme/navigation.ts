@@ -144,6 +144,7 @@ export const navigation: NavGroup[] = [
       { text: 'How to Contribute', link: '/contributing/how-to-contribute' },
       { text: 'Component Proposals', link: '/contributing/component-proposal' },
       { text: 'Development Setup', link: '/contributing/development-setup' },
+      { text: 'Storybook Stories', link: '/contributing/storybook-stories' },
       { text: 'Coding Standards', link: '/contributing/coding-standards' },
       { text: 'Design Contributions', link: '/contributing/design-contribution' },
       { text: 'Figma Handoff', link: '/contributing/figma-handoff' },
