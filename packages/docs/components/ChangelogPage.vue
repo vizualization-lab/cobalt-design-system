@@ -12,25 +12,44 @@ const TYPE_BADGES: Record<string, { label: string; color: string }> = {
   'Major Changes': { label: 'Major', color: '#f87171' },
 };
 
-function extractSections(content: string): { type: string; items: string[] }[] {
+interface ParsedItem {
+  head: string;
+  subItems: string[];
+}
+
+function extractSections(content: string): { type: string; items: ParsedItem[] }[] {
   if (!content) return [];
-  const sections: { type: string; items: string[] }[] = [];
+  const sections: { type: string; items: ParsedItem[] }[] = [];
   let currentType = '';
-  let currentItems: string[] = [];
+  let currentItems: ParsedItem[] = [];
+  let currentItem: ParsedItem | null = null;
 
   for (const line of content.split('\n')) {
     const headingMatch = line.match(/^### (.+)/);
     if (headingMatch) {
       if (currentType && currentItems.length) {
-        sections.push({ type: currentType, items: [...currentItems] });
+        sections.push({ type: currentType, items: currentItems });
       }
       currentType = headingMatch[1].trim();
       currentItems = [];
+      currentItem = null;
       continue;
     }
     const itemMatch = line.match(/^- (.+)/);
     if (itemMatch) {
-      currentItems.push(itemMatch[1].trim());
+      currentItem = { head: itemMatch[1].trim(), subItems: [] };
+      currentItems.push(currentItem);
+      continue;
+    }
+    // Indented continuation — sub-bullet under the previous item.
+    // Mirrors the aggregator's continuation handling so multi-line changeset
+    // bodies (e.g. a list-formatted changeset) render with their nested
+    // bullets intact instead of getting silently dropped.
+    if (currentItem) {
+      const subMatch = line.match(/^\s+-\s+(.+)/);
+      if (subMatch) {
+        currentItem.subItems.push(subMatch[1].trim());
+      }
     }
   }
 
@@ -79,7 +98,12 @@ function extractSections(content: string): { type: string; items: string[] }[] {
             {{ section.type }}
           </span>
           <ul class="section-items">
-            <li v-for="(item, i) in section.items" :key="i">{{ item }}</li>
+            <li v-for="(item, i) in section.items" :key="i">
+              {{ item.head }}
+              <ul v-if="item.subItems.length" class="section-sub-items">
+                <li v-for="(sub, j) in item.subItems" :key="j">{{ sub }}</li>
+              </ul>
+            </li>
           </ul>
         </div>
       </div>
@@ -176,5 +200,13 @@ function extractSections(content: string): { type: string; items: string[] }[] {
   color: var(--co-text-secondary);
   font-size: 0.88rem;
   line-height: 1.7;
+}
+
+.section-sub-items {
+  margin: 4px 0 0;
+  padding-left: 18px;
+  list-style: circle;
+  color: var(--co-text-secondary);
+  font-size: 0.88rem;
 }
 </style>
