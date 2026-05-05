@@ -4,6 +4,7 @@ import type {
   ComboboxMatchMode,
   ComboboxSize,
 } from '@cobalt/components/combobox';
+import type { Validator } from '@cobalt/components/validation';
 import '@cobalt/components/combobox';
 
 export { CoOption } from './option.js';
@@ -22,6 +23,9 @@ export class CoCombobox implements OnInit {
   readonly disabled = input(false);
   readonly readOnly = input(false);
   readonly required = input(false);
+  readonly requiredMessage = input<string | undefined>();
+  readonly pattern = input<string | undefined>();
+  readonly patternMessage = input<string | undefined>();
   readonly label = input<string | undefined>();
   readonly helpText = input<string | undefined>();
   readonly name = input<string | undefined>();
@@ -37,6 +41,7 @@ export class CoCombobox implements OnInit {
   readonly multipleChoice = input(false);
   readonly allowCustomChoice = input(false);
   readonly requireOptionMatch = input<boolean | undefined>();
+  readonly validators = input<Validator[] | undefined>();
 
   readonly coFocus = output<CustomEvent>();
   readonly coBlur = output<CustomEvent>();
@@ -63,6 +68,12 @@ export class CoCombobox implements OnInit {
       el.multipleChoice = this.multipleChoice();
       el.allowCustomChoice = this.allowCustomChoice();
 
+      const requiredMessage = this.requiredMessage();
+      if (requiredMessage !== undefined) el.requiredMessage = requiredMessage;
+      const pattern = this.pattern();
+      if (pattern !== undefined) el.pattern = pattern;
+      const patternMessage = this.patternMessage();
+      if (patternMessage !== undefined) el.patternMessage = patternMessage;
       const label = this.label();
       if (label !== undefined) el.label = label;
       const helpText = this.helpText();
@@ -75,6 +86,8 @@ export class CoCombobox implements OnInit {
       if (modelValue !== undefined) el.modelValue = modelValue;
       const requireOptionMatch = this.requireOptionMatch();
       if (requireOptionMatch !== undefined) el.requireOptionMatch = requireOptionMatch;
+      const validators = this.validators();
+      if (validators !== undefined) el.validators = validators;
     });
   }
 

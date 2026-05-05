@@ -1,5 +1,6 @@
 import { defineComponent, h, ref, onMounted, onUnmounted, type PropType } from 'vue';
 import type { SelectSize } from '@cobalt/components/select';
+import type { Validator } from '@cobalt/components/validation';
 import '@cobalt/components/select';
 
 export type CoSelectProps = {
@@ -8,7 +9,9 @@ export type CoSelectProps = {
   disabled?: boolean;
   readOnly?: boolean;
   required?: boolean;
+  requiredMessage?: string;
   hasNoDefaultSelected?: boolean;
+  validators?: Validator[];
 };
 
 export const CoSelect = defineComponent({
@@ -34,9 +37,17 @@ export const CoSelect = defineComponent({
       type: Boolean,
       default: false,
     },
+    requiredMessage: {
+      type: String,
+      default: undefined,
+    },
     hasNoDefaultSelected: {
       type: Boolean,
       default: false,
+    },
+    validators: {
+      type: Array as PropType<Validator[]>,
+      default: undefined,
     },
   },
   emits: ['co-change', 'co-focus', 'co-blur'],
@@ -75,7 +86,9 @@ export const CoSelect = defineComponent({
           disabled: props.disabled || undefined,
           readOnly: props.readOnly || undefined,
           required: props.required || undefined,
+          requiredMessage: props.requiredMessage,
           'has-no-default-selected': props.hasNoDefaultSelected || undefined,
+          validators: props.validators,
         },
         slots.default?.(),
       );

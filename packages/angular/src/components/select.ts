@@ -1,5 +1,6 @@
 import { Directive, ElementRef, effect, inject, input, output, type OnInit } from '@angular/core';
 import type { SelectSize } from '@cobalt/components/select';
+import type { Validator } from '@cobalt/components/validation';
 import '@cobalt/components/select';
 
 @Directive({
@@ -13,7 +14,9 @@ export class CoSelect implements OnInit {
   readonly disabled = input(false);
   readonly readOnly = input(false);
   readonly required = input(false);
+  readonly requiredMessage = input<string | undefined>();
   readonly hasNoDefaultSelected = input(false);
+  readonly validators = input<Validator[] | undefined>();
 
   readonly coChange = output<CustomEvent>();
   readonly coFocus = output<CustomEvent>();
@@ -30,6 +33,10 @@ export class CoSelect implements OnInit {
       el.readOnly = this.readOnly();
       el.required = this.required();
       el.hasNoDefaultSelected = this.hasNoDefaultSelected();
+      const requiredMessage = this.requiredMessage();
+      if (requiredMessage !== undefined) el.requiredMessage = requiredMessage;
+      const validators = this.validators();
+      if (validators !== undefined) el.validators = validators;
     });
   }
 

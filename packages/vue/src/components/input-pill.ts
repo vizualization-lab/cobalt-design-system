@@ -1,6 +1,7 @@
 import { defineComponent, h, ref, onMounted, onUnmounted, type PropType } from 'vue';
 import type { InputPillVariant } from '@cobalt/components/input-pill';
 import type { InputSize } from '@cobalt/components/input';
+import type { Validator } from '@cobalt/components/validation';
 import '@cobalt/components/input-pill';
 
 export type CoInputPillProps = {
@@ -10,6 +11,11 @@ export type CoInputPillProps = {
   placeholder?: string;
   size?: InputSize;
   disabled?: boolean;
+  required?: boolean;
+  requiredMessage?: string;
+  pattern?: string;
+  patternMessage?: string;
+  validators?: Validator[];
 };
 
 export const CoInputPill = defineComponent({
@@ -21,6 +27,11 @@ export const CoInputPill = defineComponent({
     placeholder: { type: String, default: '' },
     size: { type: String as PropType<InputSize>, default: 'md' },
     disabled: { type: Boolean, default: false },
+    required: { type: Boolean, default: false },
+    requiredMessage: { type: String, default: undefined },
+    pattern: { type: String, default: undefined },
+    patternMessage: { type: String, default: undefined },
+    validators: { type: Array as PropType<Validator[]>, default: undefined },
   },
   emits: ['co-action', 'co-focus', 'co-blur', 'co-input', 'co-change'],
   setup(props, { emit, slots }) {
@@ -53,6 +64,11 @@ export const CoInputPill = defineComponent({
           placeholder: props.placeholder,
           size: props.size,
           disabled: props.disabled || undefined,
+          required: props.required || undefined,
+          requiredMessage: props.requiredMessage,
+          pattern: props.pattern,
+          patternMessage: props.patternMessage,
+          validators: props.validators,
         },
         slots.default?.(),
       );

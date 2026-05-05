@@ -1,5 +1,6 @@
 import { defineComponent, h, onMounted, onUnmounted, ref, type PropType } from 'vue';
 import type { InputSize } from '@cobalt/components/input';
+import type { Validator } from '@cobalt/components/validation';
 import '@cobalt/components/input';
 
 export type CoInputProps = {
@@ -8,6 +9,14 @@ export type CoInputProps = {
   disabled?: boolean;
   readOnly?: boolean;
   required?: boolean;
+  requiredMessage?: string;
+  emailMessage?: string;
+  pattern?: string;
+  patternMessage?: string;
+  minLength?: number;
+  minLengthMessage?: string;
+  maxLength?: number;
+  maxLengthMessage?: string;
   label?: string;
   helpText?: string;
   name?: string;
@@ -15,6 +24,7 @@ export type CoInputProps = {
   placeholder?: string;
   value?: string;
   modelValue?: unknown;
+  validators?: Validator[];
 };
 
 export const CoInput = defineComponent({
@@ -39,6 +49,38 @@ export const CoInput = defineComponent({
     required: {
       type: Boolean,
       default: false,
+    },
+    requiredMessage: {
+      type: String,
+      default: undefined,
+    },
+    emailMessage: {
+      type: String,
+      default: undefined,
+    },
+    pattern: {
+      type: String,
+      default: undefined,
+    },
+    patternMessage: {
+      type: String,
+      default: undefined,
+    },
+    minLength: {
+      type: Number,
+      default: undefined,
+    },
+    minLengthMessage: {
+      type: String,
+      default: undefined,
+    },
+    maxLength: {
+      type: Number,
+      default: undefined,
+    },
+    maxLengthMessage: {
+      type: String,
+      default: undefined,
     },
     label: {
       type: String,
@@ -66,6 +108,10 @@ export const CoInput = defineComponent({
     },
     modelValue: {
       type: null,
+      default: undefined,
+    },
+    validators: {
+      type: Array as PropType<Validator[]>,
       default: undefined,
     },
   },
@@ -112,6 +158,14 @@ export const CoInput = defineComponent({
           disabled: props.disabled || undefined,
           readOnly: props.readOnly || undefined,
           required: props.required || undefined,
+          requiredMessage: props.requiredMessage,
+          emailMessage: props.emailMessage,
+          pattern: props.pattern,
+          patternMessage: props.patternMessage,
+          minLength: props.minLength,
+          minLengthMessage: props.minLengthMessage,
+          maxLength: props.maxLength,
+          maxLengthMessage: props.maxLengthMessage,
           label: props.label,
           helpText: props.helpText,
           name: props.name,
@@ -119,6 +173,7 @@ export const CoInput = defineComponent({
           placeholder: props.placeholder,
           value: props.value,
           modelValue: props.modelValue,
+          validators: props.validators,
         },
         slots.default?.(),
       );

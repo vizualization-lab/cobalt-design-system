@@ -77,6 +77,23 @@ The counter is visual guidance and is also attached to the text area description
 
 Use `danger` for visual emphasis that does not change validity. Use Lion validation feedback for invalid/error states so assistive technology receives the right `aria-invalid` and feedback relationships.
 
+## Validation
+
+`co-textarea` supports `required`, `pattern`, `minlength`, `maxlength`, custom messages, and the Lion `validators` property. See the [Form validation guide](/components/form#validation) for rule details, feedback timing, custom validators, and submit-time error summaries.
+
+```html
+<co-textarea
+  label="Release note"
+  name="releaseNote"
+  required
+  minlength="20"
+  maxlength="240"
+  required-message="Enter a release note."
+  minlength-message="Enter at least 20 characters."
+  maxlength-message="Enter no more than 240 characters."
+></co-textarea>
+```
+
 ## Slots
 
 Use `prefix` and `suffix` slots for compact context around the text value.
@@ -295,24 +312,30 @@ Use the built-in `label` and `help-text` APIs for most text areas. If the label 
 
 ### Properties
 
-| Property      | Type                             | Default  | Description                                                        |
-| ------------- | -------------------------------- | -------- | ------------------------------------------------------------------ |
-| `size`        | `'sm' \| 'md' \| 'lg' \| 'xl'`   | `'md'`   | Controls field padding and font size                               |
-| `resize`      | `'auto' \| 'none' \| 'vertical'` | `'auto'` | Controls automatic or browser-native resizing                      |
-| `danger`      | `boolean`                        | `false`  | Applies danger styling without changing validity or `aria-invalid` |
-| `label`       | `string`                         | `''`     | Label text for the text area                                       |
-| `helpText`    | `string`                         | `''`     | Help text shown below the label                                    |
-| `placeholder` | `string`                         | `''`     | Placeholder text for the native text area                          |
-| `value`       | `string`                         | `''`     | Current view value                                                 |
-| `modelValue`  | `unknown`                        | `''`     | Lion form model value                                              |
-| `name`        | `string`                         | `''`     | Form field name                                                    |
-| `rows`        | `number`                         | `2`      | Initial visible text rows                                          |
-| `maxRows`     | `number`                         | `6`      | Maximum auto-resize rows when `resize="auto"`                      |
-| `maxLength`   | `number`                         | -        | Native maximum character count and counter value                   |
-| `minLength`   | `number`                         | -        | Native minimum character count                                     |
-| `required`    | `boolean`                        | `false`  | Marks the text area as required                                    |
-| `disabled`    | `boolean`                        | `false`  | Prevents interaction and removes the field from submission         |
-| `readOnly`    | `boolean`                        | `false`  | Prevents editing while keeping the field focusable                 |
+| Property           | Type                             | Default  | Description                                                        |
+| ------------------ | -------------------------------- | -------- | ------------------------------------------------------------------ |
+| `size`             | `'sm' \| 'md' \| 'lg' \| 'xl'`   | `'md'`   | Controls field padding and font size                               |
+| `resize`           | `'auto' \| 'none' \| 'vertical'` | `'auto'` | Controls automatic or browser-native resizing                      |
+| `danger`           | `boolean`                        | `false`  | Applies danger styling without changing validity or `aria-invalid` |
+| `label`            | `string`                         | `''`     | Label text for the text area                                       |
+| `helpText`         | `string`                         | `''`     | Help text shown below the label                                    |
+| `placeholder`      | `string`                         | `''`     | Placeholder text for the native text area                          |
+| `value`            | `string`                         | `''`     | Current view value                                                 |
+| `modelValue`       | `unknown`                        | `''`     | Lion form model value                                              |
+| `name`             | `string`                         | `''`     | Form field name                                                    |
+| `rows`             | `number`                         | `2`      | Initial visible text rows                                          |
+| `maxRows`          | `number`                         | `6`      | Maximum auto-resize rows when `resize="auto"`                      |
+| `maxLength`        | `number`                         | -        | Native maximum character count and maximum length validation       |
+| `maxLengthMessage` | `string`                         | -        | Custom message for maximum length validation                       |
+| `minLength`        | `number`                         | -        | Native minimum character count and minimum length validation       |
+| `minLengthMessage` | `string`                         | -        | Custom message for minimum length validation                       |
+| `required`         | `boolean`                        | `false`  | Marks the text area as required                                    |
+| `requiredMessage`  | `string`                         | -        | Custom message for required validation                             |
+| `pattern`          | `string`                         | -        | Whole-value regular expression validation                          |
+| `patternMessage`   | `string`                         | -        | Custom message for pattern validation                              |
+| `validators`       | `Validator[]`                    | -        | Custom Lion validators appended after Cobalt validators            |
+| `disabled`         | `boolean`                        | `false`  | Prevents interaction and removes the field from submission         |
+| `readOnly`         | `boolean`                        | `false`  | Prevents editing while keeping the field focusable                 |
 
 ### Events
 

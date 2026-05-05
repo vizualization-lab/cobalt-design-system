@@ -28,16 +28,17 @@ export const CoForm = defineComponent({
       default: undefined,
     },
   },
-  emits: ['co-submit', 'co-reset'],
+  emits: ['co-submit', 'co-invalid-submit', 'co-reset'],
   setup(props, { emit, slots }) {
     const elRef = ref<HTMLElement | null>(null);
 
-    const forward = (name: 'co-submit' | 'co-reset') => (event: Event) => {
+    const forward = (name: 'co-submit' | 'co-invalid-submit' | 'co-reset') => (event: Event) => {
       emit(name, event);
     };
 
     const listeners = {
       'co-submit': forward('co-submit'),
+      'co-invalid-submit': forward('co-invalid-submit'),
       'co-reset': forward('co-reset'),
     };
 

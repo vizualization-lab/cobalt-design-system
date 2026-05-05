@@ -32,7 +32,9 @@
           const preview = await import(`./previews/${component}.ts`);
           document.title = `${preview.title} — Cobalt Workbench`;
           document.getElementById('title').textContent = preview.title;
-          document.getElementById('content').innerHTML = preview.html;
+          const content = document.getElementById('content');
+          content.innerHTML = preview.html;
+          await preview.setup?.(content);
         } catch (err) {
           document.getElementById('title').textContent = 'Preview not found';
           document.getElementById('content').innerHTML =

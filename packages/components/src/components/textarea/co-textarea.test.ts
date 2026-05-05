@@ -1,10 +1,22 @@
 import { fixture, html, expect, oneEvent } from '@open-wc/testing';
+import { Validator } from '@lion/ui/form-core.js';
 import { runA11yAudit } from '../../test-utils/a11y.js';
 import './co-textarea.js';
 import type { CoTextarea } from './co-textarea.js';
 
 function getNativeTextarea(el: CoTextarea) {
   return el.querySelector('textarea[slot="input"]') as HTMLTextAreaElement;
+}
+
+function validatorNames(el: CoTextarea) {
+  return (el.validators as Validator[]).map(
+    (validator) => (validator.constructor as typeof Validator).validatorName,
+  );
+}
+
+function firstFeedbackMessage(el: CoTextarea) {
+  return (el as unknown as { _feedbackNode: { feedbackData?: Array<{ message?: string | Node }> } })
+    ._feedbackNode.feedbackData?.[0]?.message;
 }
 
 describe('co-textarea', () => {
@@ -171,6 +183,39 @@ describe('co-textarea', () => {
     `);
     expect(el.querySelector('[slot="feedback"]')!.textContent).to.equal('Add more detail.');
     expect(el.shadowRoot!.querySelector('[part="feedback"]')).to.exist;
+  });
+
+  it('adds required, pattern, and length validators in stable order', async () => {
+    const el = await fixture<CoTextarea>(html`
+      <co-textarea
+        label="Comment"
+        required
+        pattern="[a-z ]+"
+        minlength="5"
+        maxlength="80"
+      ></co-textarea>
+    `);
+
+    expect(validatorNames(el)).to.deep.equal(['Required', 'Pattern', 'MinLength', 'MaxLength']);
+  });
+
+  it('validates minlength with a custom message', async () => {
+    const el = await fixture<CoTextarea>(html`
+      <co-textarea
+        label="Comment"
+        minlength="10"
+        minlength-message="Enter at least ten characters."
+        .modelValue=${'short'}
+      ></co-textarea>
+    `);
+
+    el.submitted = true;
+    await el.validateComplete;
+    await el.updateComplete;
+    await el.feedbackComplete;
+
+    expect(el.validationStates.error.MinLength).to.equal(true);
+    expect(firstFeedbackMessage(el)).to.equal('Enter at least ten characters.');
   });
 
   describe('accessibility', () => {

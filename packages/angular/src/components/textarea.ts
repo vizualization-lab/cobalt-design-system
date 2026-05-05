@@ -1,5 +1,6 @@
 import { Directive, ElementRef, effect, inject, input, output, type OnInit } from '@angular/core';
 import type { TextareaResize, TextareaSize } from '@cobalt/components/textarea';
+import type { Validator } from '@cobalt/components/validation';
 import '@cobalt/components/textarea';
 
 /**
@@ -22,6 +23,9 @@ export class CoTextarea implements OnInit {
   readonly disabled = input(false);
   readonly readOnly = input(false);
   readonly required = input(false);
+  readonly requiredMessage = input<string | undefined>();
+  readonly pattern = input<string | undefined>();
+  readonly patternMessage = input<string | undefined>();
   readonly label = input<string | undefined>();
   readonly helpText = input<string | undefined>();
   readonly name = input<string | undefined>();
@@ -31,7 +35,10 @@ export class CoTextarea implements OnInit {
   readonly rows = input<number | undefined>();
   readonly maxRows = input<number | undefined>();
   readonly maxLength = input<number | undefined>();
+  readonly maxLengthMessage = input<string | undefined>();
   readonly minLength = input<number | undefined>();
+  readonly minLengthMessage = input<string | undefined>();
+  readonly validators = input<Validator[] | undefined>();
 
   readonly coFocus = output<CustomEvent>();
   readonly coBlur = output<CustomEvent>();
@@ -50,6 +57,12 @@ export class CoTextarea implements OnInit {
       el.readOnly = this.readOnly();
       el.required = this.required();
 
+      const requiredMessage = this.requiredMessage();
+      if (requiredMessage !== undefined) el.requiredMessage = requiredMessage;
+      const pattern = this.pattern();
+      if (pattern !== undefined) el.pattern = pattern;
+      const patternMessage = this.patternMessage();
+      if (patternMessage !== undefined) el.patternMessage = patternMessage;
       const label = this.label();
       if (label !== undefined) el.label = label;
       const helpText = this.helpText();
@@ -68,8 +81,14 @@ export class CoTextarea implements OnInit {
       if (maxRows !== undefined) el.maxRows = maxRows;
       const maxLength = this.maxLength();
       if (maxLength !== undefined) el.maxLength = maxLength;
+      const maxLengthMessage = this.maxLengthMessage();
+      if (maxLengthMessage !== undefined) el.maxLengthMessage = maxLengthMessage;
       const minLength = this.minLength();
       if (minLength !== undefined) el.minLength = minLength;
+      const minLengthMessage = this.minLengthMessage();
+      if (minLengthMessage !== undefined) el.minLengthMessage = minLengthMessage;
+      const validators = this.validators();
+      if (validators !== undefined) el.validators = validators;
     });
   }
 

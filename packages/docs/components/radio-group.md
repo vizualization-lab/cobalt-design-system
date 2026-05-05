@@ -44,6 +44,17 @@ The `co-radio-group` and `co-radio` components provide a themed, accessible radi
 </div>
 </ClientOnly>
 
+## Validation
+
+Validate radios at the `co-radio-group` level with `required`, `required-message`, and the Lion `validators` property. See the [Form validation guide](/components/form#validation) for feedback timing, custom validators, and submit-time error summaries.
+
+```html
+<co-radio-group label="Plan" name="plan" required required-message="Select a plan.">
+  <co-radio label="Basic" value="basic"></co-radio>
+  <co-radio label="Pro" value="pro"></co-radio>
+</co-radio-group>
+```
+
 ## Usage
 
 <CodeTabs :tabs="['Web Component', 'React', 'Vue', 'Angular']">
@@ -188,11 +199,13 @@ export class AppComponent {
 
 #### co-radio-group Properties
 
-| Property   | Type      | Default | Description               |
-| ---------- | --------- | ------- | ------------------------- |
-| `name`     | `string`  | `''`    | Form field name           |
-| `disabled` | `boolean` | `false` | Disables all child radios |
-| `required` | `boolean` | `false` | Adds required validation  |
+| Property          | Type          | Default | Description                  |
+| ----------------- | ------------- | ------- | ---------------------------- |
+| `name`            | `string`      | `''`    | Form field name              |
+| `disabled`        | `boolean`     | `false` | Disables all child radios    |
+| `required`        | `boolean`     | `false` | Adds required validation     |
+| `requiredMessage` | `string`      | -       | Custom required message      |
+| `validators`      | `Validator[]` | -       | Custom Lion group validators |
 
 #### co-radio Properties
 

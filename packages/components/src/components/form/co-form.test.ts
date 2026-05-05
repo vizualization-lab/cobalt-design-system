@@ -24,6 +24,7 @@ describe('co-form', () => {
     const form = getInternalForm(el);
     expect(form).to.exist;
     expect(form.tagName).to.equal('FORM');
+    expect(form.noValidate).to.be.true;
   });
 
   it('projects child form elements into the form', async () => {
@@ -48,6 +49,7 @@ describe('co-form', () => {
     `);
     const forms = el.querySelectorAll('form');
     expect(forms.length).to.equal(1);
+    expect(forms[0].noValidate).to.be.true;
   });
 
   it('returns modelValue as an object of named field values', async () => {
@@ -86,6 +88,31 @@ describe('co-form', () => {
     const event = (await oneEvent(el, 'co-submit')) as CustomEvent;
     expect(event.detail.modelValue).to.have.property('name', 'Ada');
     expect(event.detail.serializedValue).to.have.property('name', 'Ada');
+  });
+
+  it('dispatches co-invalid-submit and blocks co-submit when validation fails', async () => {
+    const el = await fixture<CoForm>(html`
+      <co-form label="My form">
+        <co-input label="Name" name="name" required></co-input>
+      </co-form>
+    `);
+    await el.updateComplete;
+
+    let submitted = false;
+    el.addEventListener('co-submit', () => {
+      submitted = true;
+    });
+
+    setTimeout(() => el.submit());
+    const event = (await oneEvent(el, 'co-invalid-submit')) as CustomEvent;
+
+    expect(submitted).to.be.false;
+    expect(event.detail.modelValue).to.have.property('name', '');
+    expect(event.detail.serializedValue).to.have.property('name', '');
+    expect(event.detail.errors).to.have.length(1);
+    expect(event.detail.errors[0].name).to.equal('name');
+    expect(event.detail.errors[0].fieldName).to.equal('Name');
+    expect(event.detail.errors[0].validationStates.error.Required).to.equal(true);
   });
 
   it('prevents default form submission', async () => {

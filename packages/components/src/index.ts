@@ -27,3 +27,4 @@ export { CoNavRailBar } from './components/nav-rail-bar/co-nav-rail-bar.js';
 export type { NavRailBarChangeDetail } from './components/nav-rail-bar/co-nav-rail-bar.js';
 export { CoSelect } from './components/select/co-select.js';
 export { CoTextarea } from './components/textarea/co-textarea.js';
+export * from './validation.js';

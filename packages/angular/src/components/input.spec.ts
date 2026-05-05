@@ -2,7 +2,14 @@ import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { TestBed, type ComponentFixture } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { Validator } from '@cobalt/components/validation';
 import { CoInput } from './input.js';
+
+class AlwaysValid extends Validator {
+  override execute() {
+    return false;
+  }
+}
 
 @Component({
   standalone: true,
@@ -15,12 +22,21 @@ import { CoInput } from './input.js';
       [disabled]="disabled"
       [readOnly]="readOnly"
       [required]="required"
+      [requiredMessage]="requiredMessage"
+      [emailMessage]="emailMessage"
+      [pattern]="pattern"
+      [patternMessage]="patternMessage"
+      [minLength]="minLength"
+      [minLengthMessage]="minLengthMessage"
+      [maxLength]="maxLength"
+      [maxLengthMessage]="maxLengthMessage"
       [label]="label"
       [helpText]="helpText"
       [name]="name"
       [type]="type"
       [placeholder]="placeholder"
       [value]="value"
+      [validators]="validators"
       (coFocus)="onFocus($event)"
       (coBlur)="onBlur($event)"
       (coInput)="onInput($event)"
@@ -34,12 +50,21 @@ class TestHostComponent {
   disabled = false;
   readOnly = false;
   required = false;
+  requiredMessage = '';
+  emailMessage = '';
+  pattern = '';
+  patternMessage = '';
+  minLength?: number;
+  minLengthMessage = '';
+  maxLength?: number;
+  maxLengthMessage = '';
   label = 'Email';
   helpText = '';
   name = '';
   type = 'text';
   placeholder = '';
   value = '';
+  validators?: Validator[];
   focusEvent?: CustomEvent;
   blurEvent?: CustomEvent;
   inputEvent?: CustomEvent;
@@ -112,6 +137,30 @@ describe('Angular CoInput', () => {
     fixture.detectChanges();
     expect(el.placeholder).toBe('name@example.com');
     expect(el.name).toBe('email');
+  });
+
+  it('syncs validation properties to the element', () => {
+    const validators = [new AlwaysValid()];
+    host.requiredMessage = 'Enter a value.';
+    host.emailMessage = 'Enter an email.';
+    host.pattern = '[a-z]+';
+    host.patternMessage = 'Use lowercase letters.';
+    host.minLength = 2;
+    host.minLengthMessage = 'Too short.';
+    host.maxLength = 8;
+    host.maxLengthMessage = 'Too long.';
+    host.validators = validators;
+    fixture.detectChanges();
+
+    expect(el.requiredMessage).toBe('Enter a value.');
+    expect(el.emailMessage).toBe('Enter an email.');
+    expect(el.pattern).toBe('[a-z]+');
+    expect(el.patternMessage).toBe('Use lowercase letters.');
+    expect(el.minLength).toBe(2);
+    expect(el.minLengthMessage).toBe('Too short.');
+    expect(el.maxLength).toBe(8);
+    expect(el.maxLengthMessage).toBe('Too long.');
+    expect(el.validators).toContain(validators[0]);
   });
 
   it('emits coInput when co-input event fires', () => {

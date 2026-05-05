@@ -1,10 +1,32 @@
 import { fixture, html, expect, oneEvent } from '@open-wc/testing';
+import { Validator } from '@lion/ui/form-core.js';
 import { runA11yAudit } from '../../test-utils/a11y.js';
 import './co-input.js';
 import type { CoInput } from './co-input.js';
 
 function getNativeInput(el: CoInput) {
   return el.querySelector('input[slot="input"]') as HTMLInputElement;
+}
+
+class AlwaysValid extends Validator {
+  static override get validatorName() {
+    return 'AlwaysValid';
+  }
+
+  override execute() {
+    return false;
+  }
+}
+
+function validatorNames(el: CoInput) {
+  return (el.validators as Validator[]).map(
+    (validator) => (validator.constructor as typeof Validator).validatorName,
+  );
+}
+
+function firstFeedbackMessage(el: CoInput) {
+  return (el as unknown as { _feedbackNode: { feedbackData?: Array<{ message?: string | Node }> } })
+    ._feedbackNode.feedbackData?.[0]?.message;
 }
 
 describe('co-input', () => {
@@ -38,6 +60,15 @@ describe('co-input', () => {
     const input = getNativeInput(el);
     expect(input.type).to.equal('email');
     expect(input.placeholder).to.equal('name@example.com');
+  });
+
+  it('delegates minlength and maxlength to the native input', async () => {
+    const el = await fixture<CoInput>(
+      html`<co-input minlength="2" maxlength="8" label="Code"></co-input>`,
+    );
+    const input = getNativeInput(el);
+    expect(input.minLength).to.equal(2);
+    expect(input.maxLength).to.equal(8);
   });
 
   it('delegates disabled and readonly to the native input', async () => {
@@ -121,6 +152,102 @@ describe('co-input', () => {
     `);
     expect(el.querySelector('[slot="feedback"]')!.textContent).to.equal('Enter an email address.');
     expect(el.shadowRoot!.querySelector('[part="feedback"]')).to.exist;
+  });
+
+  it('merges Cobalt validators before user supplied validators', async () => {
+    const el = await fixture<CoInput>(html`
+      <co-input
+        label="Email code"
+        required
+        type="email"
+        pattern="[a-z]+"
+        minlength="2"
+        maxlength="8"
+      ></co-input>
+    `);
+    const customValidator = new AlwaysValid();
+
+    el.validators = [customValidator];
+    await el.updateComplete;
+    await el.updateComplete;
+
+    expect(validatorNames(el)).to.deep.equal([
+      'Required',
+      'IsEmail',
+      'Pattern',
+      'MinLength',
+      'MaxLength',
+      'AlwaysValid',
+    ]);
+  });
+
+  it('does not run non-required validators for optional empty values', async () => {
+    const el = await fixture<CoInput>(html`
+      <co-input label="Email" type="email" pattern="[a-z]+" minlength="2"></co-input>
+    `);
+
+    await el.validate({ clearCurrentResult: true });
+    expect(el.hasFeedbackFor).to.not.include('error');
+  });
+
+  it('validates email inputs with a custom message', async () => {
+    const el = await fixture<CoInput>(html`
+      <co-input
+        label="Email"
+        type="email"
+        email-message="Enter a work email address."
+        .modelValue=${'not-email'}
+      ></co-input>
+    `);
+
+    el.submitted = true;
+    await el.validateComplete;
+    await el.updateComplete;
+    await el.feedbackComplete;
+
+    expect(el.validationStates.error.IsEmail).to.equal(true);
+    expect(el.hasFeedbackFor).to.include('error');
+    expect(firstFeedbackMessage(el)).to.equal('Enter a work email address.');
+  });
+
+  it('validates pattern against the complete value', async () => {
+    const el = await fixture<CoInput>(
+      html`<co-input label="Code" pattern="[0-9]{3}" .modelValue=${'1234'}></co-input>`,
+    );
+
+    el.submitted = true;
+    await el.validateComplete;
+
+    expect(el.validationStates.error.Pattern).to.equal(true);
+
+    el.modelValue = '123';
+    await el.updateComplete;
+    await el.validateComplete;
+
+    expect(el.validationStates.error.Pattern).to.be.undefined;
+  });
+
+  it('clears generated validators when props are removed', async () => {
+    const el = await fixture<CoInput>(
+      html`<co-input label="Email" required type="email" pattern="[a-z]+"></co-input>`,
+    );
+
+    el.required = false;
+    el.type = 'text';
+    el.pattern = '';
+    await el.updateComplete;
+    await el.updateComplete;
+
+    expect(validatorNames(el)).to.deep.equal([]);
+  });
+
+  it('does not validate disabled inputs', async () => {
+    const el = await fixture<CoInput>(html`<co-input label="Name" required disabled></co-input>`);
+
+    el.submitted = true;
+    await el.validate({ clearCurrentResult: true });
+
+    expect(el.hasFeedbackFor).to.not.include('error');
   });
 
   describe('accessibility', () => {

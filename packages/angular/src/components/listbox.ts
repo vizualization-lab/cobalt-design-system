@@ -1,5 +1,6 @@
 import { Directive, ElementRef, effect, inject, input, output, type OnInit } from '@angular/core';
 import type { ListboxOrientation } from '@cobalt/components/listbox';
+import type { Validator } from '@cobalt/components/validation';
 import '@cobalt/components/listbox';
 
 /**
@@ -16,12 +17,14 @@ export class CoListbox implements OnInit {
   readonly name = input<string | undefined>();
   readonly disabled = input(false);
   readonly required = input(false);
+  readonly requiredMessage = input<string | undefined>();
   readonly multipleChoice = input(false);
   readonly orientation = input<ListboxOrientation>('vertical');
   readonly selectionFollowsFocus = input(false);
   readonly rotateKeyboardNavigation = input(false);
   readonly hasNoDefaultSelected = input(false);
   readonly modelValue = input<unknown>();
+  readonly validators = input<Validator[] | undefined>();
 
   readonly coChange = output<CustomEvent>();
 
@@ -38,6 +41,8 @@ export class CoListbox implements OnInit {
       el.rotateKeyboardNavigation = this.rotateKeyboardNavigation();
       el.hasNoDefaultSelected = this.hasNoDefaultSelected();
 
+      const requiredMessage = this.requiredMessage();
+      if (requiredMessage !== undefined) el.requiredMessage = requiredMessage;
       const label = this.label();
       if (label !== undefined) el.label = label;
       const helpText = this.helpText();
@@ -46,6 +51,8 @@ export class CoListbox implements OnInit {
       if (name !== undefined) el.name = name;
       const modelValue = this.modelValue();
       if (modelValue !== undefined) el.modelValue = modelValue;
+      const validators = this.validators();
+      if (validators !== undefined) el.validators = validators;
     });
   }
 

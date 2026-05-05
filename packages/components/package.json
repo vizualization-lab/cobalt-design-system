@@ -65,6 +65,10 @@
       "import": "./dist/components/form/co-form.js",
       "types": "./dist/components/form/co-form.d.ts"
     },
+    "./validation": {
+      "import": "./dist/validation.js",
+      "types": "./dist/validation.d.ts"
+    },
     "./icon": {
       "import": "./dist/components/icon/co-icon.js",
       "types": "./dist/components/icon/co-icon.d.ts"

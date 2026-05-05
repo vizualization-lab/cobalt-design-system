@@ -1,5 +1,6 @@
 import { defineComponent, h, onMounted, onUnmounted, ref, type PropType } from 'vue';
 import type { ListboxOrientation } from '@cobalt/components/listbox';
+import type { Validator } from '@cobalt/components/validation';
 import '@cobalt/components/listbox';
 
 export type CoListboxProps = {
@@ -8,12 +9,14 @@ export type CoListboxProps = {
   name?: string;
   disabled?: boolean;
   required?: boolean;
+  requiredMessage?: string;
   multipleChoice?: boolean;
   orientation?: ListboxOrientation;
   selectionFollowsFocus?: boolean;
   rotateKeyboardNavigation?: boolean;
   hasNoDefaultSelected?: boolean;
   modelValue?: unknown;
+  validators?: Validator[];
 };
 
 export type CoOptionProps = {
@@ -47,6 +50,10 @@ export const CoListbox = defineComponent({
       type: Boolean,
       default: false,
     },
+    requiredMessage: {
+      type: String,
+      default: undefined,
+    },
     multipleChoice: {
       type: Boolean,
       default: false,
@@ -69,6 +76,10 @@ export const CoListbox = defineComponent({
     },
     modelValue: {
       type: null,
+      default: undefined,
+    },
+    validators: {
+      type: Array as PropType<Validator[]>,
       default: undefined,
     },
   },
@@ -95,12 +106,14 @@ export const CoListbox = defineComponent({
           name: props.name,
           disabled: props.disabled || undefined,
           required: props.required || undefined,
+          requiredMessage: props.requiredMessage,
           multipleChoice: props.multipleChoice || undefined,
           orientation: props.orientation,
           selectionFollowsFocus: props.selectionFollowsFocus || undefined,
           rotateKeyboardNavigation: props.rotateKeyboardNavigation || undefined,
           hasNoDefaultSelected: props.hasNoDefaultSelected || undefined,
           modelValue: props.modelValue,
+          validators: props.validators,
         },
         slots.default?.(),
       );

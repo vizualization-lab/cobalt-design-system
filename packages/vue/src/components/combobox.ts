@@ -4,6 +4,7 @@ import type {
   ComboboxMatchMode,
   ComboboxSize,
 } from '@cobalt/components/combobox';
+import type { Validator } from '@cobalt/components/validation';
 import '@cobalt/components/combobox';
 import { CoOption, type CoOptionProps } from './option.js';
 
@@ -15,6 +16,9 @@ export type CoComboboxProps = {
   disabled?: boolean;
   readOnly?: boolean;
   required?: boolean;
+  requiredMessage?: string;
+  pattern?: string;
+  patternMessage?: string;
   label?: string;
   helpText?: string;
   name?: string;
@@ -30,6 +34,7 @@ export type CoComboboxProps = {
   multipleChoice?: boolean;
   allowCustomChoice?: boolean;
   requireOptionMatch?: boolean;
+  validators?: Validator[];
 };
 
 export const CoCombobox = defineComponent({
@@ -54,6 +59,18 @@ export const CoCombobox = defineComponent({
     required: {
       type: Boolean,
       default: false,
+    },
+    requiredMessage: {
+      type: String,
+      default: undefined,
+    },
+    pattern: {
+      type: String,
+      default: undefined,
+    },
+    patternMessage: {
+      type: String,
+      default: undefined,
     },
     label: {
       type: String,
@@ -115,6 +132,10 @@ export const CoCombobox = defineComponent({
       type: Boolean as PropType<boolean | undefined>,
       default: undefined,
     },
+    validators: {
+      type: Array as PropType<Validator[]>,
+      default: undefined,
+    },
   },
   emits: ['co-focus', 'co-blur', 'co-input', 'co-change'],
   setup(props, { emit, slots }) {
@@ -159,6 +180,9 @@ export const CoCombobox = defineComponent({
           disabled: props.disabled || undefined,
           readOnly: props.readOnly || undefined,
           required: props.required || undefined,
+          requiredMessage: props.requiredMessage,
+          pattern: props.pattern,
+          patternMessage: props.patternMessage,
           label: props.label,
           helpText: props.helpText,
           name: props.name,
@@ -176,6 +200,7 @@ export const CoCombobox = defineComponent({
           ...(props.requireOptionMatch === undefined
             ? {}
             : { requireOptionMatch: props.requireOptionMatch }),
+          validators: props.validators,
         },
         slots.default?.(),
       );

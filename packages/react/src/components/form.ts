@@ -8,6 +8,7 @@ export const CoForm = createComponent({
   react: React,
   events: {
     onCoSubmit: 'co-submit',
+    onCoInvalidSubmit: 'co-invalid-submit',
     onCoReset: 'co-reset',
   },
 });

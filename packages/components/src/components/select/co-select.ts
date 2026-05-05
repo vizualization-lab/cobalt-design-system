@@ -1,10 +1,14 @@
 import { html, type PropertyValues } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { LionSelectRich } from '@lion/ui/select-rich.js';
-import { Required, type Validator } from '@lion/ui/form-core.js';
 import { CoSpaceGapXs } from '@cobalt/tokens';
 import { cobaltSelectStyles } from './co-select.styles.js';
 import '../icon/co-icon.js';
+import {
+  CobaltValidationController,
+  createRequiredValidator,
+  ensureValidatorsArray,
+} from '../../utils/validation.js';
 
 export { CoOption } from '../option/co-option.js';
 
@@ -56,12 +60,14 @@ export class CoSelect extends LionSelectRich {
   @property({ type: Boolean, reflect: true })
   required = false;
 
+  /** Custom message shown when required validation fails. */
+  @property({ attribute: 'required-message' })
+  requiredMessage = '';
+
   /** Stable id for the overlay node, referenced by the invoker's aria-controls. */
   private readonly _overlayId = `co-select-overlay-${++CoSelect._instances}`;
 
-  private readonly _requiredValidator = new Required(undefined, {
-    getMessage: async () => 'Please select an option.',
-  });
+  private readonly _validation = new CobaltValidationController(this);
 
   override connectedCallback(): void {
     super.connectedCallback();
@@ -81,8 +87,9 @@ export class CoSelect extends LionSelectRich {
   }
 
   override firstUpdated(changedProperties: PropertyValues<this>): void {
+    ensureValidatorsArray(this);
     super.firstUpdated(changedProperties);
-    this._syncRequiredValidator();
+    this._syncValidation(true, true);
     this._wireInvokerFocusEvents();
     this._refreshInvokerIcons();
   }
@@ -123,10 +130,18 @@ export class CoSelect extends LionSelectRich {
   }
 
   override updated(changedProperties: PropertyValues<this>): void {
+    ensureValidatorsArray(this);
     super.updated(changedProperties);
 
-    if (changedProperties.has('required')) {
-      this._syncRequiredValidator();
+    if (
+      changedProperties.has('validators') ||
+      changedProperties.has('required') ||
+      changedProperties.has('requiredMessage')
+    ) {
+      this._syncValidation(
+        changedProperties.has('validators'),
+        changedProperties.has('required') || changedProperties.has('requiredMessage'),
+      );
     }
 
     this._syncChevronRotation();
@@ -300,18 +315,13 @@ export class CoSelect extends LionSelectRich {
     );
   };
 
-  private _syncRequiredValidator() {
-    const validators = this.validators as Validator[];
-    const hasRequiredValidator = validators.includes(this._requiredValidator);
-
-    if (this.required && !hasRequiredValidator) {
-      this.validators = [...validators, this._requiredValidator];
-      return;
-    }
-
-    if (!this.required && hasRequiredValidator) {
-      this.validators = validators.filter((validator) => validator !== this._requiredValidator);
-    }
+  private _syncValidation(userValidatorsChanged = false, validationRulesChanged = false) {
+    this._validation.sync(
+      () =>
+        this.required ? [createRequiredValidator(this.requiredMessage, 'Select an option.')] : [],
+      userValidatorsChanged,
+      validationRulesChanged,
+    );
   }
 }
 

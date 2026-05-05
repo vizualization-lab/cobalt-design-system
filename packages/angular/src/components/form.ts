@@ -23,6 +23,7 @@ export class CoForm implements OnInit {
   readonly name = input<string | undefined>();
 
   readonly coSubmit = output<CustomEvent>();
+  readonly coInvalidSubmit = output<CustomEvent>();
   readonly coReset = output<CustomEvent>();
 
   private el = inject(ElementRef).nativeElement;
@@ -44,6 +45,9 @@ export class CoForm implements OnInit {
   ngOnInit(): void {
     this.el.addEventListener('co-submit', (e: Event) => {
       this.coSubmit.emit(e as CustomEvent);
+    });
+    this.el.addEventListener('co-invalid-submit', (e: Event) => {
+      this.coInvalidSubmit.emit(e as CustomEvent);
     });
     this.el.addEventListener('co-reset', (e: Event) => {
       this.coReset.emit(e as CustomEvent);

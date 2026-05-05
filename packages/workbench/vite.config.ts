@@ -183,6 +183,10 @@ export default defineConfig({
         replacement: resolve(componentsDir, 'src/components/form/co-form.ts'),
       },
       {
+        find: '@cobalt/components/validation',
+        replacement: resolve(componentsDir, 'src/validation.ts'),
+      },
+      {
         find: '@cobalt/components/icon',
         replacement: resolve(componentsDir, 'src/components/icon/co-icon.ts'),
       },

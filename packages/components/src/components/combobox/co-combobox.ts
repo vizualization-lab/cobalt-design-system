@@ -1,11 +1,17 @@
 import { html, nothing, type PropertyValues, type TemplateResult } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { LionCombobox, MatchesOption } from '@lion/ui/combobox.js';
-import { Required, Validator } from '@lion/ui/form-core.js';
+import type { Validator } from '@lion/ui/form-core.js';
 import type { OverlayConfig } from '@lion/ui/types/overlays.js';
 import { CoSpaceGapXs } from '@cobalt/tokens';
 import { cobaltComboboxStyles } from './co-combobox.styles.js';
 import '../icon/co-icon.js';
+import {
+  CobaltValidationController,
+  createPatternValidator,
+  createRequiredValidator,
+  ensureValidatorsArray,
+} from '../../utils/validation.js';
 
 class CobaltMatchesOption extends MatchesOption {
   static async getMessage(data: { config: { getMessage?: () => string } }) {
@@ -114,6 +120,18 @@ export class CoCombobox extends LionCombobox {
   @property({ type: Boolean, reflect: true })
   required = false;
 
+  /** Custom message shown when required validation fails. */
+  @property({ attribute: 'required-message' })
+  requiredMessage = '';
+
+  /** Regular expression pattern the complete value must match. */
+  @property({ reflect: true })
+  pattern = '';
+
+  /** Custom message shown when pattern validation fails. */
+  @property({ attribute: 'pattern-message' })
+  patternMessage = '';
+
   /** Custom error message shown when the entered value does not match any option. */
   @property({ attribute: 'match-error' })
   matchError = '';
@@ -128,9 +146,7 @@ export class CoCombobox extends LionCombobox {
     super.requireOptionMatch = value;
   }
 
-  private readonly _requiredValidator = new Required(undefined, {
-    getMessage: async () => 'Please select an option.',
-  });
+  private readonly _validation = new CobaltValidationController(this);
   private readonly _matchesOptionValidator = new CobaltMatchesOption();
 
   override connectedCallback(): void {
@@ -151,17 +167,22 @@ export class CoCombobox extends LionCombobox {
   }
 
   override firstUpdated(changedProperties: PropertyValues<this>): void {
+    ensureValidatorsArray(this);
     super.firstUpdated(changedProperties);
     this._syncMultipleAlias();
-    this._syncRequiredValidator();
+    this._syncValidation(true, true);
   }
 
   override updated(changedProperties: PropertyValues<this>): void {
     this._syncMultipleAlias(changedProperties);
+    ensureValidatorsArray(this);
     super.updated(changedProperties);
 
-    if (changedProperties.has('required')) {
-      this._syncRequiredValidator();
+    if (this._validationPropsChanged(changedProperties)) {
+      this._syncValidation(
+        changedProperties.has('validators'),
+        this._validationRulesChanged(changedProperties),
+      );
     }
 
     if (changedProperties.has('allowCustomChoice')) {
@@ -441,18 +462,24 @@ export class CoCombobox extends LionCombobox {
     }
   }
 
-  private _syncRequiredValidator() {
-    const validators = this.validators as Validator[];
-    const hasRequiredValidator = validators.includes(this._requiredValidator);
+  private _syncValidation(userValidatorsChanged = false, validationRulesChanged = false) {
+    this._validation.sync(
+      () => {
+        const validators: Validator[] = [];
 
-    if (this.required && !hasRequiredValidator) {
-      this.validators = [...validators, this._requiredValidator];
-      return;
-    }
+        if (this.required) {
+          validators.push(createRequiredValidator(this.requiredMessage, 'Select an option.'));
+        }
 
-    if (!this.required && hasRequiredValidator) {
-      this.validators = validators.filter((validator) => validator !== this._requiredValidator);
-    }
+        if (this.pattern) {
+          validators.push(createPatternValidator(this.pattern, this.patternMessage));
+        }
+
+        return validators;
+      },
+      userValidatorsChanged,
+      validationRulesChanged,
+    );
   }
 
   private _replaceMatchesOptionValidator() {
@@ -481,6 +508,27 @@ export class CoCombobox extends LionCombobox {
     } else {
       listboxNode.removeAttribute('aria-required');
     }
+  }
+
+  private _validationPropsChanged(changedProperties: PropertyValues<this>) {
+    const validationProperties: Array<keyof CoCombobox> = [
+      'validators',
+      'required',
+      'requiredMessage',
+      'pattern',
+      'patternMessage',
+    ];
+    return validationProperties.some((property) => changedProperties.has(property));
+  }
+
+  private _validationRulesChanged(changedProperties: PropertyValues<this>) {
+    const validationProperties: Array<keyof CoCombobox> = [
+      'required',
+      'requiredMessage',
+      'pattern',
+      'patternMessage',
+    ];
+    return validationProperties.some((property) => changedProperties.has(property));
   }
 }
 

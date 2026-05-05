@@ -2,11 +2,35 @@ import { html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { LionForm } from '@lion/ui/form.js';
 import { cobaltFormStyles } from './co-form.styles.js';
+import { hasOwnValidationError } from '../../utils/validation.js';
 
 export interface FormSubmitDetail {
   modelValue: Record<string, unknown>;
   serializedValue: Record<string, unknown>;
 }
+
+export interface FormValidationError {
+  element: HTMLElement;
+  name: string;
+  fieldName: string;
+  messages: string[];
+  validationStates: Record<string, Record<string, unknown>>;
+}
+
+export interface FormInvalidSubmitDetail extends FormSubmitDetail {
+  errors: FormValidationError[];
+}
+
+type FeedbackData = Array<{ message?: string | Node; type?: string }>;
+
+type CobaltFormControl = HTMLElement & {
+  fieldName?: string;
+  formElements?: Iterable<CobaltFormControl>;
+  feedbackComplete?: Promise<unknown>;
+  hasFeedbackFor?: string[];
+  validationStates?: Record<string, Record<string, unknown>>;
+  _feedbackNode?: { feedbackData?: FeedbackData };
+};
 
 /**
  * @tag co-form
@@ -22,7 +46,8 @@ export interface FormSubmitDetail {
  * @csspart fields - The fields container
  * @csspart feedback - The validation feedback wrapper
  *
- * @fires co-submit - Emitted when the form is submitted (after validation)
+ * @fires co-submit - Emitted when the form is submitted with no validation errors
+ * @fires co-invalid-submit - Emitted when a submit attempt contains validation errors
  * @fires co-reset - Emitted when the form is reset
  */
 @customElement('co-form')
@@ -47,6 +72,8 @@ export class CoForm extends LionForm {
       this.appendChild(form);
       this._createdInternalForm = true;
     }
+
+    this._syncNoValidate();
     super.connectedCallback();
   }
 
@@ -89,14 +116,32 @@ export class CoForm extends LionForm {
     `;
   }
 
-  protected override _submit(ev: Event) {
+  protected override async _submit(ev: Event) {
     super._submit(ev);
+
+    const baseDetail = {
+      modelValue: this.modelValue as Record<string, unknown>,
+      serializedValue: this.serializedValue as Record<string, unknown>,
+    };
+
+    if (this.hasFeedbackFor?.includes('error')) {
+      await this._waitForFeedback();
+      this.dispatchEvent(
+        new CustomEvent<FormInvalidSubmitDetail>('co-invalid-submit', {
+          detail: {
+            ...baseDetail,
+            errors: this._collectValidationErrors(),
+          },
+          bubbles: true,
+          composed: true,
+        }),
+      );
+      return;
+    }
+
     this.dispatchEvent(
       new CustomEvent<FormSubmitDetail>('co-submit', {
-        detail: {
-          modelValue: this.modelValue as Record<string, unknown>,
-          serializedValue: this.serializedValue as Record<string, unknown>,
-        },
+        detail: baseDetail,
         bubbles: true,
         composed: true,
       }),
@@ -127,6 +172,65 @@ export class CoForm extends LionForm {
         composed: true,
       }),
     );
+  }
+
+  private _syncNoValidate() {
+    const form = this.querySelector('form');
+    if (form) {
+      form.setAttribute('novalidate', '');
+      form.noValidate = true;
+    }
+  }
+
+  private async _waitForFeedback() {
+    await Promise.all(
+      this._collectFormControls()
+        .map((element) => element.feedbackComplete)
+        .filter(Boolean),
+    );
+  }
+
+  private _collectValidationErrors(): FormValidationError[] {
+    return this._collectFormControls()
+      .filter((element) => element.hasFeedbackFor?.includes('error'))
+      .filter((element) => hasOwnValidationError(element))
+      .map((element) => ({
+        element,
+        name: element.getAttribute('name') ?? '',
+        fieldName: element.fieldName ?? element.getAttribute('label') ?? '',
+        messages: this._getFeedbackMessages(element),
+        validationStates: element.validationStates ?? {},
+      }));
+  }
+
+  private _collectFormControls() {
+    const controls: CobaltFormControl[] = [];
+    const visit = (element: CobaltFormControl) => {
+      controls.push(element);
+      for (const child of Array.from(element.formElements ?? [])) {
+        visit(child);
+      }
+    };
+
+    for (const child of Array.from(this.formElements ?? []) as CobaltFormControl[]) {
+      visit(child);
+    }
+
+    return controls;
+  }
+
+  private _getFeedbackMessages(element: CobaltFormControl) {
+    return (
+      element._feedbackNode?.feedbackData
+        ?.filter((feedback) => feedback.type === 'error')
+        .map((feedback) => this._messageToText(feedback.message))
+        .filter((message) => message.length > 0) ?? []
+    );
+  }
+
+  private _messageToText(message: string | Node | undefined) {
+    if (typeof message === 'string') return message;
+    return message?.textContent?.trim() ?? '';
   }
 }
 

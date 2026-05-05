@@ -109,6 +109,17 @@ The `co-select` component provides a themed, accessible dropdown select built on
 
 The prefix wrapper is marked `aria-hidden="true"`, so use icons that are decorative or whose meaning is also conveyed by the option label.
 
+## Validation
+
+`co-select` supports group-level `required`, `required-message`, and the Lion `validators` property. See the [Form validation guide](/components/form#validation) for feedback timing, custom validators, and submit-time error summaries.
+
+```html
+<co-select label="Department" name="department" required required-message="Select a department.">
+  <co-option value="engineering">Engineering</co-option>
+  <co-option value="design">Design</co-option>
+</co-select>
+```
+
 ## Usage
 
 <CodeTabs :tabs="['Web Component', 'React', 'Vue', 'Angular']">
@@ -277,6 +288,8 @@ Use the built-in `label` API for most selects. Reach for [`co-label`](/component
 | `disabled`             | `boolean`                            | `false`  | Prevents interaction                    |
 | `readOnly`             | `boolean`                            | `false`  | Prevents changes but allows focus       |
 | `required`             | `boolean`                            | `false`  | Adds required validation                |
+| `requiredMessage`      | `string`                             | -        | Custom message for required validation  |
+| `validators`           | `Validator[]`                        | -        | Custom Lion validators                  |
 | `hasNoDefaultSelected` | `boolean`                            | `false`  | No option is pre-selected               |
 | `interactionMode`      | `'auto' \| 'windows/linux' \| 'mac'` | `'auto'` | Keyboard behavior mode                  |
 

@@ -1,8 +1,12 @@
 import { html, nothing, type PropertyValues, type TemplateResult } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { LionListbox } from '@lion/ui/listbox.js';
-import { Required, type Validator } from '@lion/ui/form-core.js';
 import { cobaltListboxStyles } from './co-listbox.styles.js';
+import {
+  CobaltValidationController,
+  createRequiredValidator,
+  ensureValidatorsArray,
+} from '../../utils/validation.js';
 
 export { CoOption } from '../option/co-option.js';
 
@@ -64,9 +68,11 @@ export class CoListbox extends LionListbox {
   @property({ type: Boolean, reflect: true })
   required = false;
 
-  private readonly _requiredValidator = new Required(undefined, {
-    getMessage: async () => 'Please select an option.',
-  });
+  /** Custom message shown when required validation fails. */
+  @property({ attribute: 'required-message' })
+  requiredMessage = '';
+
+  private readonly _validation = new CobaltValidationController(this);
 
   override connectedCallback(): void {
     super.connectedCallback();
@@ -79,15 +85,24 @@ export class CoListbox extends LionListbox {
   }
 
   override firstUpdated(changedProperties: PropertyValues<this>): void {
+    ensureValidatorsArray(this);
     super.firstUpdated(changedProperties);
-    this._syncRequiredValidator();
+    this._syncValidation(true, true);
   }
 
   override updated(changedProperties: PropertyValues<this>): void {
+    ensureValidatorsArray(this);
     super.updated(changedProperties);
 
-    if (changedProperties.has('required')) {
-      this._syncRequiredValidator();
+    if (
+      changedProperties.has('validators') ||
+      changedProperties.has('required') ||
+      changedProperties.has('requiredMessage')
+    ) {
+      this._syncValidation(
+        changedProperties.has('validators'),
+        changedProperties.has('required') || changedProperties.has('requiredMessage'),
+      );
     }
   }
 
@@ -159,18 +174,13 @@ export class CoListbox extends LionListbox {
     );
   };
 
-  private _syncRequiredValidator() {
-    const validators = this.validators as Validator[];
-    const hasRequiredValidator = validators.includes(this._requiredValidator);
-
-    if (this.required && !hasRequiredValidator) {
-      this.validators = [...validators, this._requiredValidator];
-      return;
-    }
-
-    if (!this.required && hasRequiredValidator) {
-      this.validators = validators.filter((validator) => validator !== this._requiredValidator);
-    }
+  private _syncValidation(userValidatorsChanged = false, validationRulesChanged = false) {
+    this._validation.sync(
+      () =>
+        this.required ? [createRequiredValidator(this.requiredMessage, 'Select an option.')] : [],
+      userValidatorsChanged,
+      validationRulesChanged,
+    );
   }
 }
 

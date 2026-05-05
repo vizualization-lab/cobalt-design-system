@@ -50,32 +50,47 @@ Mark required fields with an asterisk and provide a legend at the top of the for
 
 ## Validation States
 
+For API details, supported rules, custom Lion validators, and event detail shapes, use the canonical [Form validation guide](/components/form#validation).
+
 ### Inline Validation
 
-Validate fields on blur, not on every keystroke. Display error messages directly below the invalid field.
+Cobalt follows Lion's default feedback timing: prefilled invalid fields may show feedback immediately, fields show feedback after users change and leave them, and submit attempts show all current errors. Use inline feedback for errors that can be fixed in one field, especially required, email, pattern, and length rules.
 
 ```html
-<co-label for="password" required>Password</co-label>
-<co-input id="password" type="password" required shows-feedback-for="error">
-  <span slot="feedback">Password must be at least 8 characters.</span>
-</co-input>
+<co-input
+  label="Password"
+  name="password"
+  type="password"
+  required
+  minlength="8"
+  required-message="Enter a password."
+  minlength-message="Enter at least 8 characters."
+></co-input>
 ```
 
-> **Warning:** Never rely solely on color to indicate errors. Always pair the red border with an icon and descriptive text.
+> **Warning:** Never rely solely on color to indicate errors. Always pair the error state with descriptive text.
 
 ### Validation Summary
 
-For complex forms, display a summary of all errors at the top of the form after a failed submission. Each error should link to the corresponding field.
+For complex forms, display a summary of all errors at the top of the form after a failed submission. Listen for `co-invalid-submit` to collect current field errors; `co-submit` only fires when the form is valid. Each summary item should link to the corresponding field and use the same wording as the inline message.
 
 ```html
-<div class="co-form-summary" role="alert">
-  <strong>Please fix the following errors:</strong>
-  <ul>
-    <li><a href="#name">Full name is required</a></li>
-    <li><a href="#email">Enter a valid email address</a></li>
-  </ul>
-</div>
+<co-form id="account-form">
+  <co-input id="name" label="Full name" name="name" required></co-input>
+  <co-input id="email" label="Email" name="email" type="email" required></co-input>
+  <co-button type="submit" variant="primary">Submit</co-button>
+</co-form>
+
+<script>
+  const form = document.getElementById('account-form');
+
+  form.addEventListener('co-invalid-submit', (event) => {
+    renderErrorSummary(event.detail.errors);
+  });
+</script>
 ```
+
+Use inline feedback alone for short forms with one or two fields. Add a submit-time summary when the form is long, spans sections, or errors may be out of view after submit.
 
 ## Error Message Guidelines
 

@@ -1,8 +1,12 @@
 import { html, type PropertyValues } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { LionCheckboxGroup } from '@lion/ui/checkbox-group.js';
-import { Required, type Validator } from '@lion/ui/form-core.js';
 import { cobaltCheckboxGroupStyles } from './co-checkbox-group.styles.js';
+import {
+  CobaltValidationController,
+  createRequiredValidator,
+  ensureValidatorsArray,
+} from '../../utils/validation.js';
 
 export { CoCheckbox } from '../checkbox/co-checkbox.js';
 export { CoCheckboxIndeterminate } from '../checkbox-indeterminate/co-checkbox-indeterminate.js';
@@ -38,9 +42,11 @@ export class CoCheckboxGroup extends LionCheckboxGroup {
   @property({ type: Boolean, reflect: true })
   required = false;
 
-  private readonly _requiredValidator = new Required(undefined, {
-    getMessage: async () => 'Please select at least one option.',
-  });
+  /** Custom message shown when required validation fails. */
+  @property({ attribute: 'required-message' })
+  requiredMessage = '';
+
+  private readonly _validation = new CobaltValidationController(this);
 
   override connectedCallback(): void {
     super.connectedCallback();
@@ -53,15 +59,24 @@ export class CoCheckboxGroup extends LionCheckboxGroup {
   }
 
   override firstUpdated(changedProperties: PropertyValues<this>): void {
+    ensureValidatorsArray(this);
     super.firstUpdated(changedProperties);
-    this._syncRequiredValidator();
+    this._syncValidation(true, true);
   }
 
   override updated(changedProperties: PropertyValues<this>): void {
+    ensureValidatorsArray(this);
     super.updated(changedProperties);
 
-    if (changedProperties.has('required')) {
-      this._syncRequiredValidator();
+    if (
+      changedProperties.has('validators') ||
+      changedProperties.has('required') ||
+      changedProperties.has('requiredMessage')
+    ) {
+      this._syncValidation(
+        changedProperties.has('validators'),
+        changedProperties.has('required') || changedProperties.has('requiredMessage'),
+      );
     }
   }
 
@@ -98,18 +113,15 @@ export class CoCheckboxGroup extends LionCheckboxGroup {
     );
   };
 
-  private _syncRequiredValidator() {
-    const validators = this.validators as Validator[];
-    const hasRequiredValidator = validators.includes(this._requiredValidator);
-
-    if (this.required && !hasRequiredValidator) {
-      this.validators = [...validators, this._requiredValidator];
-      return;
-    }
-
-    if (!this.required && hasRequiredValidator) {
-      this.validators = validators.filter((validator) => validator !== this._requiredValidator);
-    }
+  private _syncValidation(userValidatorsChanged = false, validationRulesChanged = false) {
+    this._validation.sync(
+      () =>
+        this.required
+          ? [createRequiredValidator(this.requiredMessage, 'Select at least one option.')]
+          : [],
+      userValidatorsChanged,
+      validationRulesChanged,
+    );
   }
 }
 

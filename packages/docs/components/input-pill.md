@@ -68,6 +68,10 @@ Override the default icons with `prefix-icon` and `action-icon` properties.
 </div>
 </ClientOnly>
 
+## Validation
+
+`co-input-pill` inherits `co-input` validation, including `required`, `pattern`, custom messages, and the Lion `validators` property. It intentionally hides label, help text, and feedback, so use [`co-input`](/components/input) inside [`co-form`](/components/form) when users need visible inline validation. See the [Form validation guide](/components/form#validation) for the full validation API.
+
 ## Usage
 
 <CodeTabs :tabs="['Web Component', 'React', 'Vue', 'Angular']">
@@ -193,14 +197,19 @@ export class AppComponent {
 
 ### Properties
 
-| Property      | Type                              | Default     | Description                             |
-| ------------- | --------------------------------- | ----------- | --------------------------------------- |
-| `variant`     | `'default' \| 'search' \| 'chat'` | `'default'` | Configures default prefix/action icons  |
-| `action-icon` | `string`                          | —           | Override the action button icon         |
-| `prefix-icon` | `string`                          | —           | Override the prefix icon                |
-| `placeholder` | `string`                          | `''`        | Input placeholder text                  |
-| `size`        | `'sm' \| 'md' \| 'lg' \| 'xl'`    | `'md'`      | Controls height, padding, and icon size |
-| `disabled`    | `boolean`                         | `false`     | Prevents interaction                    |
+| Property          | Type                              | Default     | Description                             |
+| ----------------- | --------------------------------- | ----------- | --------------------------------------- |
+| `variant`         | `'default' \| 'search' \| 'chat'` | `'default'` | Configures default prefix/action icons  |
+| `action-icon`     | `string`                          | —           | Override the action button icon         |
+| `prefix-icon`     | `string`                          | —           | Override the prefix icon                |
+| `placeholder`     | `string`                          | `''`        | Input placeholder text                  |
+| `size`            | `'sm' \| 'md' \| 'lg' \| 'xl'`    | `'md'`      | Controls height, padding, and icon size |
+| `disabled`        | `boolean`                         | `false`     | Prevents interaction                    |
+| `required`        | `boolean`                         | `false`     | Inherited required validation           |
+| `requiredMessage` | `string`                          | -           | Custom required message                 |
+| `pattern`         | `string`                          | -           | Whole-value regular expression          |
+| `patternMessage`  | `string`                          | -           | Custom pattern message                  |
+| `validators`      | `Validator[]`                     | -           | Custom Lion validators                  |
 
 ### Events
 

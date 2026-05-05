@@ -98,6 +98,22 @@ Use `multiple` for Cobalt code. `multiple-choice` remains available for Lion com
 
 Use `danger` for visual emphasis that does not change validity. Use Lion validation feedback for invalid/error states so assistive technology receives the right `aria-invalid` and feedback relationships.
 
+## Validation
+
+`co-combobox` supports `required`, `pattern`, custom messages, and the Lion `validators` property. `pattern` applies to custom values and checks the complete value. See the [Form validation guide](/components/form#validation) for rule details, feedback timing, custom validators, and submit-time error summaries.
+
+```html
+<co-combobox
+  label="Project code"
+  name="projectCode"
+  allow-custom-choice
+  required
+  pattern="[A-Z]{3}-[0-9]{4}"
+  required-message="Enter a project code."
+  pattern-message="Use the format ABC-1234."
+></co-combobox>
+```
+
 ## Usage
 
 <CodeTabs :tabs="['Web Component', 'React', 'Vue', 'Angular']">
@@ -295,6 +311,10 @@ Use the built-in `label` and `help-text` APIs for most comboboxes. If the label 
 | `rotateKeyboardNavigation` | `boolean`                                | `true`   | Wraps keyboard navigation from last to first option             |
 | `hasNoDefaultSelected`     | `boolean`                                | `false`  | Prevents Lion from selecting a default option on initialization |
 | `required`                 | `boolean`                                | `false`  | Marks the combobox as required for validation and ARIA          |
+| `requiredMessage`          | `string`                                 | -        | Custom message for required validation                          |
+| `pattern`                  | `string`                                 | -        | Whole-value regular expression validation for custom values     |
+| `patternMessage`           | `string`                                 | -        | Custom message for pattern validation                           |
+| `validators`               | `Validator[]`                            | -        | Custom Lion validators appended after Cobalt validators         |
 | `disabled`                 | `boolean`                                | `false`  | Prevents interaction and removes the field from submission      |
 | `readOnly`                 | `boolean`                                | `false`  | Prevents editing while keeping the field focusable              |
 

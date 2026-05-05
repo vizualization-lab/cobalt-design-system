@@ -48,6 +48,19 @@ The `co-input` component provides a themed, accessible text input built on top o
 
 Use `danger` for visual emphasis that does not change validity. Use Lion validation feedback for invalid/error states so assistive technology receives the right `aria-invalid` and feedback relationships.
 
+## Validation
+
+`co-input` supports common validation attributes directly: `required`, `type="email"`, `pattern`, `minlength`, and `maxlength`. For custom rules, set the Lion `validators` property. See the [Form validation guide](/components/form#validation) for complete examples, custom validators, invalid submit handling, and message guidance.
+
+```html
+<co-input
+  label="Invite code"
+  name="inviteCode"
+  pattern="[A-Z0-9]{6}"
+  pattern-message="Enter a 6-character uppercase invite code."
+></co-input>
+```
+
 ## Slots
 
 Use `prefix` and `suffix` slots for icons or compact affordances around the text value.
@@ -254,20 +267,29 @@ Use the built-in `label` and `help-text` APIs for most forms. If your layout nee
 
 ### Properties
 
-| Property      | Type                           | Default  | Description                                                        |
-| ------------- | ------------------------------ | -------- | ------------------------------------------------------------------ |
-| `size`        | `'sm' \| 'md' \| 'lg' \| 'xl'` | `'md'`   | Controls field height, padding, and font size                      |
-| `danger`      | `boolean`                      | `false`  | Applies danger styling without changing validity or `aria-invalid` |
-| `label`       | `string`                       | `''`     | Label text for the input                                           |
-| `helpText`    | `string`                       | `''`     | Help text shown below the label                                    |
-| `placeholder` | `string`                       | `''`     | Placeholder text for the native input                              |
-| `value`       | `string`                       | `''`     | Current view value                                                 |
-| `modelValue`  | `unknown`                      | `''`     | Lion form model value                                              |
-| `name`        | `string`                       | `''`     | Form field name                                                    |
-| `type`        | `string`                       | `'text'` | Native input type                                                  |
-| `required`    | `boolean`                      | `false`  | Marks the input as required                                        |
-| `disabled`    | `boolean`                      | `false`  | Prevents interaction and removes the field from submission         |
-| `readOnly`    | `boolean`                      | `false`  | Prevents editing while keeping the field focusable                 |
+| Property           | Type                           | Default  | Description                                                        |
+| ------------------ | ------------------------------ | -------- | ------------------------------------------------------------------ |
+| `size`             | `'sm' \| 'md' \| 'lg' \| 'xl'` | `'md'`   | Controls field height, padding, and font size                      |
+| `danger`           | `boolean`                      | `false`  | Applies danger styling without changing validity or `aria-invalid` |
+| `label`            | `string`                       | `''`     | Label text for the input                                           |
+| `helpText`         | `string`                       | `''`     | Help text shown below the label                                    |
+| `placeholder`      | `string`                       | `''`     | Placeholder text for the native input                              |
+| `value`            | `string`                       | `''`     | Current view value                                                 |
+| `modelValue`       | `unknown`                      | `''`     | Lion form model value                                              |
+| `name`             | `string`                       | `''`     | Form field name                                                    |
+| `type`             | `string`                       | `'text'` | Native input type                                                  |
+| `required`         | `boolean`                      | `false`  | Marks the input as required                                        |
+| `requiredMessage`  | `string`                       | `''`     | Message shown when required validation fails                       |
+| `emailMessage`     | `string`                       | `''`     | Message shown when `type="email"` validation fails                 |
+| `pattern`          | `string`                       | `''`     | Regular expression the complete value must match                   |
+| `patternMessage`   | `string`                       | `''`     | Message shown when pattern validation fails                        |
+| `minLength`        | `number`                       | -        | Minimum character count validated by Lion and delegated natively   |
+| `minLengthMessage` | `string`                       | `''`     | Message shown when minlength validation fails                      |
+| `maxLength`        | `number`                       | -        | Maximum character count validated by Lion and delegated natively   |
+| `maxLengthMessage` | `string`                       | `''`     | Message shown when maxlength validation fails                      |
+| `validators`       | `Validator[]`                  | `[]`     | Custom Lion validators merged after Cobalt-generated validators    |
+| `disabled`         | `boolean`                      | `false`  | Prevents interaction and removes the field from submission         |
+| `readOnly`         | `boolean`                      | `false`  | Prevents editing while keeping the field focusable                 |
 
 ### Events
 

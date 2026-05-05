@@ -42,6 +42,21 @@ The `co-checkbox-group` and `co-checkbox` components provide a themed, accessibl
 </div>
 </ClientOnly>
 
+## Validation
+
+Validate checkbox selections at the `co-checkbox-group` level with `required`, `required-message`, and the Lion `validators` property. For a required single checkbox such as terms acceptance, use a one-item `co-checkbox-group required`. See the [Form validation guide](/components/form#validation) for feedback timing, custom validators, and submit-time error summaries.
+
+```html
+<co-checkbox-group
+  label="Terms"
+  name="terms"
+  required
+  required-message="Accept the terms to continue."
+>
+  <co-checkbox label="I accept the terms." value="accepted"></co-checkbox>
+</co-checkbox-group>
+```
+
 ## Indeterminate (Select All)
 
 Use `co-checkbox-indeterminate` as a parent checkbox that manages nested child checkboxes. It automatically tracks the state of its children:
@@ -263,11 +278,13 @@ export class AppComponent {
 
 #### co-checkbox-group Properties
 
-| Property   | Type      | Default | Description                   |
-| ---------- | --------- | ------- | ----------------------------- |
-| `name`     | `string`  | `''`    | Form field name               |
-| `disabled` | `boolean` | `false` | Disables all child checkboxes |
-| `required` | `boolean` | `false` | Adds required validation      |
+| Property          | Type          | Default | Description                   |
+| ----------------- | ------------- | ------- | ----------------------------- |
+| `name`            | `string`      | `''`    | Form field name               |
+| `disabled`        | `boolean`     | `false` | Disables all child checkboxes |
+| `required`        | `boolean`     | `false` | Adds required validation      |
+| `requiredMessage` | `string`      | -       | Custom required message       |
+| `validators`      | `Validator[]` | -       | Custom Lion group validators  |
 
 #### co-checkbox Properties
 

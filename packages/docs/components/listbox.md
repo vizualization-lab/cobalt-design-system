@@ -83,6 +83,17 @@ Use vertical orientation for most lists. Use horizontal orientation for short, c
 
 Use validation feedback for invalid/error states so assistive technology receives the right `aria-invalid` and feedback relationships.
 
+## Validation
+
+`co-listbox` supports group-level `required`, `required-message`, and the Lion `validators` property. See the [Form validation guide](/components/form#validation) for feedback timing, custom validators, and submit-time error summaries.
+
+```html
+<co-listbox label="Role" name="role" required required-message="Select a role.">
+  <co-option value="developer">Developer</co-option>
+  <co-option value="designer">Designer</co-option>
+</co-listbox>
+```
+
 ## Usage
 
 <CodeTabs :tabs="['Web Component', 'React', 'Vue', 'Angular']">
@@ -289,6 +300,8 @@ export class AppComponent {
 | `name`                     | `string`                     | `''`         | Form field name                                                 |
 | `disabled`                 | `boolean`                    | `false`      | Prevents interaction and disables registered options            |
 | `required`                 | `boolean`                    | `false`      | Marks the list box as required for validation and ARIA          |
+| `requiredMessage`          | `string`                     | -            | Custom message for required validation                          |
+| `validators`               | `Validator[]`                | -            | Custom Lion validators                                          |
 | `multipleChoice`           | `boolean`                    | `false`      | Allows multiple options to be selected                          |
 | `orientation`              | `'vertical' \| 'horizontal'` | `'vertical'` | Controls arrow-key direction and `aria-orientation`             |
 | `selectionFollowsFocus`    | `boolean`                    | `false`      | Selects the active option while arrowing through options        |

@@ -1,8 +1,18 @@
 import { html, nothing, type PropertyValues } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { LionTextarea } from '@lion/ui/textarea.js';
+import type { Validator } from '@lion/ui/form-core.js';
 import autosize from 'autosize';
 import { cobaltTextareaStyles } from './co-textarea.styles.js';
+import {
+  CobaltValidationController,
+  createMaxLengthValidator,
+  createMinLengthValidator,
+  createPatternValidator,
+  createRequiredValidator,
+  ensureValidatorsArray,
+  isUsableLength,
+} from '../../utils/validation.js';
 
 export type TextareaSize = 'sm' | 'md' | 'lg' | 'xl';
 export type TextareaResize = 'auto' | 'none' | 'vertical';
@@ -53,9 +63,25 @@ export class CoTextarea extends LionTextarea {
   @property({ type: Boolean, reflect: true })
   danger = false;
 
+  /** Marks the textarea as required for validation and assistive technology. */
+  @property({ type: Boolean, reflect: true })
+  required = false;
+
+  /** Custom message shown when required validation fails. */
+  @property({ attribute: 'required-message' })
+  requiredMessage = '';
+
   /** Controls automatic or manual resizing behavior. */
   @property({ reflect: true })
   resize: TextareaResize = 'auto';
+
+  /** Regular expression pattern the complete value must match. */
+  @property({ reflect: true })
+  pattern = '';
+
+  /** Custom message shown when pattern validation fails. */
+  @property({ attribute: 'pattern-message' })
+  patternMessage = '';
 
   /** Maximum number of characters allowed by the native textarea. */
   @property({ type: Number, attribute: 'maxlength', reflect: true })
@@ -64,6 +90,16 @@ export class CoTextarea extends LionTextarea {
   /** Minimum number of characters expected by the native textarea. */
   @property({ type: Number, attribute: 'minlength', reflect: true })
   minLength?: number;
+
+  /** Custom message shown when minlength validation fails. */
+  @property({ attribute: 'minlength-message' })
+  minLengthMessage = '';
+
+  /** Custom message shown when maxlength validation fails. */
+  @property({ attribute: 'maxlength-message' })
+  maxLengthMessage = '';
+
+  private readonly _validation = new CobaltValidationController(this);
 
   private _counterNode?: HTMLElement;
 
@@ -111,13 +147,16 @@ export class CoTextarea extends LionTextarea {
   }
 
   override firstUpdated(changedProperties: PropertyValues<this>): void {
+    ensureValidatorsArray(this);
     super.firstUpdated(changedProperties);
     this._syncNativeLengthAttributes();
     this._applyResizeMode();
     this._syncCounterDescription();
+    this._syncValidation(true, true);
   }
 
   override updated(changedProperties: PropertyValues<this>): void {
+    ensureValidatorsArray(this);
     super.updated(changedProperties);
 
     if (changedProperties.has('maxLength') || changedProperties.has('minLength')) {
@@ -134,6 +173,13 @@ export class CoTextarea extends LionTextarea {
 
     if (changedProperties.has('maxLength')) {
       this._syncCounterDescription();
+    }
+
+    if (this._validationPropsChanged(changedProperties)) {
+      this._syncValidation(
+        changedProperties.has('validators'),
+        this._validationRulesChanged(changedProperties),
+      );
     }
   }
 
@@ -264,9 +310,7 @@ export class CoTextarea extends LionTextarea {
   }
 
   private _hasMaxLength() {
-    return (
-      typeof this.maxLength === 'number' && Number.isFinite(this.maxLength) && this.maxLength >= 0
-    );
+    return isUsableLength(this.maxLength);
   }
 
   private _currentLength() {
@@ -283,11 +327,7 @@ export class CoTextarea extends LionTextarea {
       textarea.removeAttribute('maxlength');
     }
 
-    if (
-      typeof this.minLength === 'number' &&
-      Number.isFinite(this.minLength) &&
-      this.minLength >= 0
-    ) {
+    if (isUsableLength(this.minLength)) {
       textarea.minLength = this.minLength;
     } else {
       textarea.removeAttribute('minlength');
@@ -337,6 +377,63 @@ export class CoTextarea extends LionTextarea {
       this.addToAriaDescribedBy(counter, { idPrefix: 'counter', reorder: true });
       this._counterNode = counter;
     }
+  }
+
+  private _syncValidation(userValidatorsChanged = false, validationRulesChanged = false) {
+    this._validation.sync(
+      () => {
+        const validators: Validator[] = [];
+
+        if (this.required) {
+          validators.push(createRequiredValidator(this.requiredMessage, 'Enter a value.'));
+        }
+
+        if (this.pattern) {
+          validators.push(createPatternValidator(this.pattern, this.patternMessage));
+        }
+
+        if (isUsableLength(this.minLength)) {
+          validators.push(createMinLengthValidator(this.minLength, this.minLengthMessage));
+        }
+
+        if (isUsableLength(this.maxLength)) {
+          validators.push(createMaxLengthValidator(this.maxLength, this.maxLengthMessage));
+        }
+
+        return validators;
+      },
+      userValidatorsChanged,
+      validationRulesChanged,
+    );
+  }
+
+  private _validationPropsChanged(changedProperties: PropertyValues<this>) {
+    const validationProperties: Array<keyof CoTextarea> = [
+      'validators',
+      'required',
+      'requiredMessage',
+      'pattern',
+      'patternMessage',
+      'minLength',
+      'minLengthMessage',
+      'maxLength',
+      'maxLengthMessage',
+    ];
+    return validationProperties.some((property) => changedProperties.has(property));
+  }
+
+  private _validationRulesChanged(changedProperties: PropertyValues<this>) {
+    const validationProperties: Array<keyof CoTextarea> = [
+      'required',
+      'requiredMessage',
+      'pattern',
+      'patternMessage',
+      'minLength',
+      'minLengthMessage',
+      'maxLength',
+      'maxLengthMessage',
+    ];
+    return validationProperties.some((property) => changedProperties.has(property));
   }
 }
 

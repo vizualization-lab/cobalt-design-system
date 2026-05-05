@@ -40,19 +40,155 @@ For most Cobalt forms, let each field render its own visible label with the fiel
 </co-form>
 ```
 
-## Form with Validation
+## Validation
 
-When the form is submitted, Lion validates all child fields. If any field has errors, the first erroneous field receives focus automatically.
+`co-form` uses Lion's validation system for every Cobalt form control. Use Cobalt's declarative attributes for common rules and the Lion `validators` property for custom, async, or cross-field checks.
+
+Validation feedback follows Lion's default interaction timing:
+
+- Prefilled invalid fields can show feedback immediately.
+- Fields show feedback after the user changes the value and leaves the field.
+- Submit attempts show all current errors and focus the first erroneous field.
+
+The internal `<form>` uses `novalidate` so browser-native validation bubbles do not conflict with Cobalt feedback.
+
+### Common validation rules
 
 <ClientOnly>
 <div style="max-width: 420px; margin: 16px 0 24px;">
   <co-form label="Required fields">
-    <co-input label="Username" name="username" required></co-input>
-    <co-input label="Email" name="email" type="email" required></co-input>
+    <co-input
+      label="Username"
+      name="username"
+      required
+      minlength="3"
+      required-message="Enter a username."
+      minlength-message="Enter at least 3 characters."
+    ></co-input>
+    <co-input
+      label="Email"
+      name="email"
+      type="email"
+      required
+      email-message="Enter an email address."
+    ></co-input>
     <co-button type="submit" variant="primary">Submit</co-button>
   </co-form>
 </div>
 </ClientOnly>
+
+```html
+<co-form label="Account">
+  <co-input
+    label="Email"
+    name="email"
+    type="email"
+    required
+    required-message="Enter an email address."
+    email-message="Enter an email address."
+  ></co-input>
+
+  <co-input
+    label="Invite code"
+    name="inviteCode"
+    pattern="[A-Z0-9]{6}"
+    pattern-message="Enter a 6-character uppercase invite code."
+  ></co-input>
+
+  <co-textarea
+    label="Summary"
+    name="summary"
+    minlength="20"
+    maxlength="240"
+    minlength-message="Enter at least 20 characters."
+    maxlength-message="Enter no more than 240 characters."
+  ></co-textarea>
+</co-form>
+```
+
+Supported declarative rules:
+
+| Rule           | Components                                                                                                 | Message property                                       |
+| -------------- | ---------------------------------------------------------------------------------------------------------- | ------------------------------------------------------ |
+| `required`     | `co-input`, `co-textarea`, `co-select`, `co-combobox`, `co-listbox`, groups                                | `required-message`                                     |
+| `type="email"` | `co-input`                                                                                                 | `email-message`                                        |
+| `pattern`      | `co-input`, `co-textarea`, `co-combobox`                                                                   | `pattern-message`                                      |
+| `minlength`    | `co-input`, `co-textarea`                                                                                  | `minlength-message`                                    |
+| `maxlength`    | `co-input`, `co-textarea`                                                                                  | `maxlength-message`                                    |
+| `validators`   | `co-input`, `co-textarea`, `co-select`, `co-combobox`, `co-listbox`, `co-radio-group`, `co-checkbox-group` | Provided by the validator's `getMessage` configuration |
+
+`pattern` is a complete-value check. A pattern like `[0-9]{3}` accepts `123` and rejects `1234`.
+
+### Choice validation
+
+Validate radio and checkbox selections at the group level so the label, feedback, and ARIA relationships describe the full question.
+
+```html
+<co-radio-group name="plan" required required-message="Select a plan.">
+  <span slot="label">Plan</span>
+  <co-radio value="basic">Basic</co-radio>
+  <co-radio value="pro">Pro</co-radio>
+</co-radio-group>
+
+<co-checkbox-group name="terms" required required-message="Accept the terms to continue.">
+  <span slot="label">Terms</span>
+  <co-checkbox value="accepted">I accept the terms.</co-checkbox>
+</co-checkbox-group>
+```
+
+### Custom Lion validators
+
+Import validators from `@cobalt/components/validation`. Cobalt-generated validators are merged before user validators, so required/email/pattern checks run first and custom business rules run after.
+
+```js
+import { Validator } from '@cobalt/components/validation';
+
+class ReservedName extends Validator {
+  static get validatorName() {
+    return 'ReservedName';
+  }
+
+  execute(value) {
+    return ['admin', 'root'].includes(String(value).toLowerCase());
+  }
+}
+
+const username = document.querySelector('co-input[name="username"]');
+username.validators = [
+  new ReservedName(undefined, {
+    getMessage: () => 'Choose a username that is not reserved.',
+  }),
+];
+```
+
+Use async validators for server-backed checks such as username availability. Keep server validation as the source of truth and mirror the same rules client-side only when it helps users recover faster.
+
+### Invalid submit handling
+
+`co-submit` fires only when the form has no current validation errors. `co-invalid-submit` fires when a submit attempt fails validation.
+
+```js
+const form = document.querySelector('co-form');
+
+form.addEventListener('co-submit', (event) => {
+  save(event.detail.serializedValue);
+});
+
+form.addEventListener('co-invalid-submit', (event) => {
+  console.log(event.detail.errors);
+  // [{ name, fieldName, messages, validationStates, element }]
+});
+```
+
+For longer forms, use `co-invalid-submit` to render an error summary above the form. Each summary item should link to the corresponding field, and inline field feedback should use the same language as the summary item.
+
+### Message guidelines
+
+- Tell users how to fix the value: "Enter a 6-character invite code."
+- Keep messages short, specific, and sentence case.
+- Do not rely on color alone; Cobalt pairs error borders with feedback text and ARIA state.
+- Keep the user's entered value in place after validation fails.
+- Do not disable submit buttons just to avoid validation errors in longer forms.
 
 ## Form Serialization
 
@@ -371,10 +507,11 @@ export class AppComponent {
 
 ### Events
 
-| Event       | Detail                                                                              | Description                                       |
-| ----------- | ----------------------------------------------------------------------------------- | ------------------------------------------------- |
-| `co-submit` | `{ modelValue: Record<string, unknown>; serializedValue: Record<string, unknown> }` | Fired when the form is submitted after validation |
-| `co-reset`  | —                                                                                   | Fired when the form is reset                      |
+| Event               | Detail                                                                                                             | Description                                                |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------- |
+| `co-submit`         | `{ modelValue: Record<string, unknown>; serializedValue: Record<string, unknown> }`                                | Fired when the form is submitted with no validation errors |
+| `co-invalid-submit` | `{ errors: FormValidationError[]; modelValue: Record<string, unknown>; serializedValue: Record<string, unknown> }` | Fired when a submit attempt has validation errors          |
+| `co-reset`          | —                                                                                                                  | Fired when the form is reset                               |
 
 ### Slots
 

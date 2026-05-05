@@ -1,7 +1,18 @@
-import { html, nothing } from 'lit';
+import { html, nothing, type PropertyValues } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { LionInput } from '@lion/ui/input.js';
+import type { Validator } from '@lion/ui/form-core.js';
 import { cobaltInputStyles } from './co-input.styles.js';
+import {
+  CobaltValidationController,
+  createEmailValidator,
+  createMaxLengthValidator,
+  createMinLengthValidator,
+  createPatternValidator,
+  createRequiredValidator,
+  ensureValidatorsArray,
+  isUsableLength,
+} from '../../utils/validation.js';
 
 export type InputSize = 'sm' | 'md' | 'lg' | 'xl';
 
@@ -49,6 +60,44 @@ export class CoInput extends LionInput {
   @property({ type: Boolean, reflect: true })
   danger = false;
 
+  /** Marks the input as required for validation and assistive technology. */
+  @property({ type: Boolean, reflect: true })
+  required = false;
+
+  /** Custom message shown when required validation fails. */
+  @property({ attribute: 'required-message' })
+  requiredMessage = '';
+
+  /** Custom message shown when email validation fails. */
+  @property({ attribute: 'email-message' })
+  emailMessage = '';
+
+  /** Regular expression pattern the complete value must match. */
+  @property({ reflect: true })
+  pattern = '';
+
+  /** Custom message shown when pattern validation fails. */
+  @property({ attribute: 'pattern-message' })
+  patternMessage = '';
+
+  /** Maximum number of characters allowed by the native input. */
+  @property({ type: Number, attribute: 'maxlength', reflect: true })
+  maxLength?: number;
+
+  /** Minimum number of characters expected by validation. */
+  @property({ type: Number, attribute: 'minlength', reflect: true })
+  minLength?: number;
+
+  /** Custom message shown when minlength validation fails. */
+  @property({ attribute: 'minlength-message' })
+  minLengthMessage = '';
+
+  /** Custom message shown when maxlength validation fails. */
+  @property({ attribute: 'maxlength-message' })
+  maxLengthMessage = '';
+
+  private readonly _validation = new CobaltValidationController(this);
+
   connectedCallback(): void {
     super.connectedCallback();
     this.addEventListener('focusin', this._handleFocusIn);
@@ -63,6 +112,29 @@ export class CoInput extends LionInput {
     this.removeEventListener('focusout', this._handleFocusOut);
     this.removeEventListener('input', this._handleNativeInput);
     this.removeEventListener('change', this._handleNativeChange);
+  }
+
+  override firstUpdated(changedProperties: PropertyValues<this>): void {
+    ensureValidatorsArray(this);
+    super.firstUpdated(changedProperties);
+    this._syncNativeLengthAttributes();
+    this._syncValidation(true, true);
+  }
+
+  override updated(changedProperties: PropertyValues<this>): void {
+    ensureValidatorsArray(this);
+    super.updated(changedProperties);
+
+    if (changedProperties.has('maxLength') || changedProperties.has('minLength')) {
+      this._syncNativeLengthAttributes();
+    }
+
+    if (this._validationPropsChanged(changedProperties)) {
+      this._syncValidation(
+        changedProperties.has('validators'),
+        this._validationRulesChanged(changedProperties),
+      );
+    }
   }
 
   protected _labelTemplate() {
@@ -159,6 +231,88 @@ export class CoInput extends LionInput {
         composed: true,
       }),
     );
+  }
+
+  private _syncValidation(userValidatorsChanged = false, validationRulesChanged = false) {
+    this._validation.sync(
+      () => {
+        const validators: Validator[] = [];
+
+        if (this.required) {
+          validators.push(createRequiredValidator(this.requiredMessage, 'Enter a value.'));
+        }
+
+        if (this.type === 'email') {
+          validators.push(createEmailValidator(this.emailMessage));
+        }
+
+        if (this.pattern) {
+          validators.push(createPatternValidator(this.pattern, this.patternMessage));
+        }
+
+        if (isUsableLength(this.minLength)) {
+          validators.push(createMinLengthValidator(this.minLength, this.minLengthMessage));
+        }
+
+        if (isUsableLength(this.maxLength)) {
+          validators.push(createMaxLengthValidator(this.maxLength, this.maxLengthMessage));
+        }
+
+        return validators;
+      },
+      userValidatorsChanged,
+      validationRulesChanged,
+    );
+  }
+
+  private _validationPropsChanged(changedProperties: PropertyValues<this>) {
+    const validationProperties: Array<keyof CoInput> = [
+      'validators',
+      'required',
+      'requiredMessage',
+      'emailMessage',
+      'type',
+      'pattern',
+      'patternMessage',
+      'minLength',
+      'minLengthMessage',
+      'maxLength',
+      'maxLengthMessage',
+    ];
+    return validationProperties.some((property) => changedProperties.has(property));
+  }
+
+  private _validationRulesChanged(changedProperties: PropertyValues<this>) {
+    const validationProperties: Array<keyof CoInput> = [
+      'required',
+      'requiredMessage',
+      'emailMessage',
+      'type',
+      'pattern',
+      'patternMessage',
+      'minLength',
+      'minLengthMessage',
+      'maxLength',
+      'maxLengthMessage',
+    ];
+    return validationProperties.some((property) => changedProperties.has(property));
+  }
+
+  private _syncNativeLengthAttributes() {
+    const input = this._inputNode;
+    if (!input) return;
+
+    if (isUsableLength(this.maxLength)) {
+      input.maxLength = this.maxLength;
+    } else {
+      input.removeAttribute('maxlength');
+    }
+
+    if (isUsableLength(this.minLength)) {
+      input.minLength = this.minLength;
+    } else {
+      input.removeAttribute('minlength');
+    }
   }
 }
 

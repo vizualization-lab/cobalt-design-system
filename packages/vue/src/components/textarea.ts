@@ -1,5 +1,6 @@
 import { defineComponent, h, onMounted, onUnmounted, ref, type PropType } from 'vue';
 import type { TextareaResize, TextareaSize } from '@cobalt/components/textarea';
+import type { Validator } from '@cobalt/components/validation';
 import '@cobalt/components/textarea';
 
 export type CoTextareaProps = {
@@ -9,6 +10,9 @@ export type CoTextareaProps = {
   disabled?: boolean;
   readOnly?: boolean;
   required?: boolean;
+  requiredMessage?: string;
+  pattern?: string;
+  patternMessage?: string;
   label?: string;
   helpText?: string;
   name?: string;
@@ -18,7 +22,10 @@ export type CoTextareaProps = {
   rows?: number;
   maxRows?: number;
   maxLength?: number;
+  maxLengthMessage?: string;
   minLength?: number;
+  minLengthMessage?: string;
+  validators?: Validator[];
 };
 
 export const CoTextarea = defineComponent({
@@ -47,6 +54,18 @@ export const CoTextarea = defineComponent({
     required: {
       type: Boolean,
       default: false,
+    },
+    requiredMessage: {
+      type: String,
+      default: undefined,
+    },
+    pattern: {
+      type: String,
+      default: undefined,
+    },
+    patternMessage: {
+      type: String,
+      default: undefined,
     },
     label: {
       type: String,
@@ -84,8 +103,20 @@ export const CoTextarea = defineComponent({
       type: Number,
       default: undefined,
     },
+    maxLengthMessage: {
+      type: String,
+      default: undefined,
+    },
     minLength: {
       type: Number,
+      default: undefined,
+    },
+    minLengthMessage: {
+      type: String,
+      default: undefined,
+    },
+    validators: {
+      type: Array as PropType<Validator[]>,
       default: undefined,
     },
   },
@@ -133,6 +164,9 @@ export const CoTextarea = defineComponent({
           disabled: props.disabled || undefined,
           readOnly: props.readOnly || undefined,
           required: props.required || undefined,
+          requiredMessage: props.requiredMessage,
+          pattern: props.pattern,
+          patternMessage: props.patternMessage,
           label: props.label,
           helpText: props.helpText,
           name: props.name,
@@ -142,7 +176,10 @@ export const CoTextarea = defineComponent({
           rows: props.rows,
           maxRows: props.maxRows,
           maxLength: props.maxLength,
+          maxLengthMessage: props.maxLengthMessage,
           minLength: props.minLength,
+          minLengthMessage: props.minLengthMessage,
+          validators: props.validators,
         },
         slots.default?.(),
       );
