@@ -1177,7 +1177,10 @@ async function copyToken(name: string) {
 .browser-body {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
-  height: clamp(420px, 68vh, 720px);
+  /* dvh keeps the body inside the viewport when mobile browsers' URL bar
+     animates in/out. Lower max than before (640 vs 720) so the browser
+     stays above the fold on shorter laptops too. */
+  height: clamp(380px, 60dvh, 640px);
 }
 
 .browser-body.has-detail {
@@ -1575,9 +1578,24 @@ async function copyToken(name: string) {
   transform: translateY(18px);
 }
 
+/* On smaller screens — narrow OR short — the Semantic/Primitive category
+   cards and the toolbar hint text below the tree are the biggest
+   space-eaters (~380px combined). Hide them so the search + tabs + tree
+   fit above the fold. The same filters are reachable by scrolling the
+   tree. The height clause covers small laptops (e.g. 1366x768) where the
+   width is fine but the viewport is short. */
+@media (max-width: 960px), (max-height: 820px) {
+  .tier-sections,
+  .toolbar-note {
+    display: none;
+  }
+}
+
 @media (max-width: 960px) {
-  .tier-sections {
-    grid-template-columns: 1fr;
+  .browser-body {
+    /* Tablet / small-laptop range: tighter cap so the body plus the toolbar
+       above it fit in the visible viewport without forcing a scroll. */
+    height: clamp(340px, 56dvh, 520px);
   }
 
   .browser-body.has-detail {
@@ -1595,7 +1613,9 @@ async function copyToken(name: string) {
   }
 
   .browser-body {
-    height: clamp(360px, 62vh, 560px);
+    /* Phone range: keep the browser short enough to stay above the fold
+       once the toolbar above it is accounted for. */
+    height: clamp(280px, 50dvh, 420px);
   }
 
   .toolbar-secondary-row {
