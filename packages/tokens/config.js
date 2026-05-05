@@ -3,6 +3,7 @@ import { copyFileSync, existsSync, mkdirSync, readFileSync, writeFileSync } from
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 import { exportDtcgTokens } from './scripts/export-dtcg.js';
+import { generateScss } from './scripts/generate-scss.js';
 import { generateTailwindPreset } from './scripts/generate-tailwind-preset.js';
 import { generateUtilitiesCss } from './scripts/generate-utilities-css.js';
 import { mergeTokens } from './scripts/merge-tokens.js';
@@ -73,17 +74,6 @@ function createDefaultLightBuild(sharedSources, defaultLightTheme) {
               selector: ':root',
               outputReferences: true,
             },
-          },
-        ],
-      },
-      scss: {
-        transformGroup: 'scss',
-        buildPath: 'dist/scss/',
-        files: [
-          {
-            destination: '_tokens.scss',
-            format: 'scss/variables',
-            options: { outputReferences: true },
           },
         ],
       },
@@ -207,6 +197,9 @@ async function build() {
       console.log(`  → themes/${themeId}.css`);
     }
   }
+
+  console.log('Generating SCSS modules...');
+  generateScss(__dirname, discovery);
 
   console.log('Copying base element styles...');
   copyFileSync(join(__dirname, 'src/base.css'), join(__dirname, 'dist/css/base.css'));

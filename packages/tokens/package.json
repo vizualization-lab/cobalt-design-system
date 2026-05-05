@@ -25,7 +25,26 @@
     "./css/fonts": "./dist/css/fonts.css",
     "./css/fonts-international": "./dist/css/fonts-international.css",
     "./css/utilities": "./dist/css/utilities.css",
-    "./scss": "./dist/scss/_tokens.scss",
+    "./scss": {
+      "sass": "./dist/scss/index.scss",
+      "default": "./dist/scss/index.scss"
+    },
+    "./scss/css": {
+      "sass": "./dist/scss/css.scss",
+      "default": "./dist/scss/css.scss"
+    },
+    "./scss/css/dark": {
+      "sass": "./dist/scss/css/dark.scss",
+      "default": "./dist/scss/css/dark.scss"
+    },
+    "./scss/themes/*": {
+      "sass": "./dist/scss/themes/*.scss",
+      "default": "./dist/scss/themes/*.scss"
+    },
+    "./scss/css/themes/*": {
+      "sass": "./dist/scss/css/themes/*.scss",
+      "default": "./dist/scss/css/themes/*.scss"
+    },
     "./json": "./dist/tokens.json",
     "./dtcg": "./dist/tokens-dtcg.json",
     "./tailwind": {
@@ -36,6 +55,8 @@
   },
   "scripts": {
     "build": "node config.js",
+    "test": "pnpm run build && pnpm run test:scss",
+    "test:scss": "node scripts/validate-scss.js",
     "validate": "node scripts/validate-tokens.js",
     "merge-tokens": "node scripts/merge-tokens.js",
     "export-dtcg": "node scripts/export-dtcg.js",
@@ -47,6 +68,7 @@
     "@fontsource-variable/noto-sans": "^5.2.10"
   },
   "devDependencies": {
+    "sass": "^1.99.0",
     "style-dictionary": "^4.0.0"
   },
   "license": "MIT"

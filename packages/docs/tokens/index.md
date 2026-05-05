@@ -49,19 +49,21 @@ Primitive tokens hold raw, hard-coded values — the foundational scales that se
 
 Tokens are available in multiple formats via the `@cobalt/tokens` package:
 
-| Format                      | Import                          |
-| --------------------------- | ------------------------------- |
-| CSS Custom Properties       | `@cobalt/tokens/css`            |
-| Base Element Styles + Reset | `@cobalt/tokens/css/base`       |
-| Theme Bundle (light + dark) | `@cobalt/tokens/themes/<theme>` |
-| Self-Hosted Fonts           | `@cobalt/tokens/css/fonts`      |
-| Utility Classes             | `@cobalt/tokens/css/utilities`  |
-| SCSS Variables              | `@cobalt/tokens/scss`           |
-| JS/TS Constants             | `@cobalt/tokens`                |
-| Flat JSON                   | `@cobalt/tokens/json`           |
-| DTCG Export                 | `@cobalt/tokens/dtcg`           |
-| Tailwind Preset             | `@cobalt/tokens/tailwind`       |
-| Tailwind Theme CSS          | `@cobalt/tokens/tailwind/css`   |
+| Format                      | Import                               |
+| --------------------------- | ------------------------------------ |
+| CSS Custom Properties       | `@cobalt/tokens/css`                 |
+| Base Element Styles + Reset | `@cobalt/tokens/css/base`            |
+| Theme Bundle (light + dark) | `@cobalt/tokens/themes/<theme>`      |
+| Self-Hosted Fonts           | `@cobalt/tokens/css/fonts`           |
+| Utility Classes             | `@cobalt/tokens/css/utilities`       |
+| SCSS Helpers + Variables    | `@cobalt/tokens/scss`                |
+| SCSS Token CSS              | `@cobalt/tokens/scss/css`            |
+| SCSS Theme Bundle           | `@cobalt/tokens/scss/themes/<theme>` |
+| JS/TS Constants             | `@cobalt/tokens`                     |
+| Flat JSON                   | `@cobalt/tokens/json`                |
+| DTCG Export                 | `@cobalt/tokens/dtcg`                |
+| Tailwind Preset             | `@cobalt/tokens/tailwind`            |
+| Tailwind Theme CSS          | `@cobalt/tokens/tailwind/css`        |
 
 ### CSS
 
@@ -106,6 +108,33 @@ Per-mode imports are also available at `@cobalt/tokens/css/themes/<theme>-<mode>
 ```js
 import { CoBorderWidthDefault, CoSpaceInsetMd, CoShapeRadiusMd } from '@cobalt/tokens';
 ```
+
+### SCSS
+
+The SCSS API provides theme-safe authoring helpers. Helpers and variables emit `var(--co-*)`, so compiled Sass responds to the same runtime theme changes as plain CSS.
+
+```scss
+@use '@cobalt/tokens/scss' as co;
+@use '@cobalt/tokens/scss/css';
+@use '@cobalt/tokens/scss/themes/purple';
+
+.card {
+  padding: co.space('inset.md');
+  color: co.color('text.default');
+  background: co.color('surface.raised');
+  border-radius: co.$co-shape-radius-md;
+
+  @include co.type('body');
+}
+
+@include co.media-up('lg') {
+  .card {
+    padding: co.space('inset.lg');
+  }
+}
+```
+
+See [SCSS Integration](../foundations/scss.md) for helper details and theming guidance.
 
 ### Tailwind
 

@@ -16,6 +16,7 @@ Each foundation category provides a set of **design tokens** — named values th
 | [Breakpoints](./breakpoints.md)     | Responsive viewport breakpoints for layout adaptation                             |
 | [Iconography](./iconography.md)     | Icon sizing, usage patterns, and accessibility                                    |
 | [Accessibility](./accessibility.md) | WCAG 2.1 AA standards, focus management, and ARIA patterns                        |
+| [SCSS Integration](./scss.md)       | Sass helpers, mixins, and theme-safe token authoring                              |
 
 ## Using tokens
 
@@ -43,6 +44,18 @@ Then reference any token in your styles:
 ```
 
 > **Tip:** Prefer semantic tokens (e.g. `--co-color-primary-base`, `--co-control-height-md`) over raw values where they exist. This ensures your UI adapts correctly to theme changes and shared system rules.
+
+If your project uses Sass, import the SCSS helper module and keep runtime theming through CSS custom properties:
+
+```scss
+@use '@cobalt/tokens/scss' as co;
+
+.card {
+  padding: co.space('inset.md');
+  background: co.color('surface.default');
+  @include co.type('body');
+}
+```
 
 ## Guiding principles
 

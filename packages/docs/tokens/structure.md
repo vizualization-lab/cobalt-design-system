@@ -60,6 +60,32 @@ This split is intentional:
 - the source token files optimize for stable Tokens Studio authoring and import/export
 - the DTCG export optimizes for interoperability without forcing extra complexity into the authoring files
 
+## Runtime Developer Outputs
+
+The source token files also generate runtime developer outputs for CSS, SCSS, JavaScript, Tailwind, and JSON consumers. CSS custom properties are the runtime contract for theming. The SCSS API is a Sass authoring layer over that same contract, not a separate compile-time theme system.
+
+| Output                 | Import                               | Theme behavior                                            |
+| ---------------------- | ------------------------------------ | --------------------------------------------------------- |
+| CSS tokens             | `@cobalt/tokens/css`                 | Defines default light `--co-*` custom properties          |
+| CSS theme bundle       | `@cobalt/tokens/themes/<theme>`      | Emits light and dark selectors for a theme                |
+| SCSS helpers           | `@cobalt/tokens/scss`                | Emits `var(--co-*)` from functions, mixins, and variables |
+| SCSS token CSS shim    | `@cobalt/tokens/scss/css`            | Same CSS output as `@cobalt/tokens/css`                   |
+| SCSS theme bundle shim | `@cobalt/tokens/scss/themes/<theme>` | Same CSS output as `@cobalt/tokens/themes/<theme>`        |
+
+Example SCSS usage:
+
+```scss
+@use '@cobalt/tokens/scss' as co;
+
+.panel {
+  padding: co.space('inset.md');
+  color: co.color('text.default');
+  background: co.color('surface.raised');
+
+  @include co.type('body');
+}
+```
+
 ## What This Means In Practice
 
 ### 1. Primitives are not design decisions

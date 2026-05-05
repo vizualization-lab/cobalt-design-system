@@ -115,9 +115,24 @@ This monorepo is managed with [pnpm workspaces](https://pnpm.io/workspaces). All
 Design tokens — the single source of truth for colors, typography, spacing, elevation, motion, and breakpoints. Built with [Style Dictionary](https://amzn.github.io/style-dictionary/) and output in multiple formats:
 
 - **CSS** custom properties (light and dark themes)
-- **SCSS** variables
+- **SCSS** helpers, variables, and CSS/theme shims
 - **JavaScript/TypeScript** module
 - **JSON**
+
+SCSS consumers can author against the same runtime token contract:
+
+```scss
+@use '@cobalt/tokens/scss' as co;
+@use '@cobalt/tokens/scss/css';
+@use '@cobalt/tokens/scss/themes/purple';
+
+.card {
+  padding: co.space('inset.md');
+  color: co.color('text.default');
+  background: co.color('surface.raised');
+  @include co.type('body');
+}
+```
 
 The token package intentionally publishes two different JSON-shaped artifacts for different workflows:
 

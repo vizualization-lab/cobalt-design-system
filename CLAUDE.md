@@ -41,7 +41,9 @@ Tokens live in `packages/tokens/` and are built to multiple formats:
 | Base element styles    | `dist/css/base.css`        | `@cobalt/tokens/css/base`            |
 | Self-hosted fonts      | `dist/css/fonts.css`       | `@cobalt/tokens/css/fonts`           |
 | Dark theme overrides   | `dist/css/tokens-dark.css` | `@cobalt/tokens/css/tokens-dark.css` |
-| SCSS variables         | `dist/scss/_tokens.scss`   | `@cobalt/tokens/scss/_tokens.scss`   |
+| SCSS helpers           | `dist/scss/index.scss`     | `@cobalt/tokens/scss`                |
+| SCSS token CSS shim    | `dist/scss/css.scss`       | `@cobalt/tokens/scss/css`            |
+| SCSS theme shim        | `dist/scss/themes/*.scss`  | `@cobalt/tokens/scss/themes/<theme>` |
 | JS/TS exports          | `dist/js/tokens.js`        | `@cobalt/tokens`                     |
 | Flat JSON (all tokens) | `dist/tokens.json`         | Machine-readable reference           |
 
@@ -159,6 +161,8 @@ import '@cobalt/components/co-button'; // Good — registers only co-button
 ## Theming
 
 Use `setTheme` from `@cobalt/tokens/theme` to switch themes and modes. Import a theme bundle (e.g. `@cobalt/tokens/themes/purple`) then call `setTheme('purple', 'dark')`. This sets `data-theme` and `data-mode` attributes on `<html>`.
+
+SCSS consumers use the same runtime theme contract. Import `@cobalt/tokens/scss` for helper functions and mixins, then import token CSS through `@cobalt/tokens/scss/css` and theme bundles through `@cobalt/tokens/scss/themes/<theme>` when a Sass entrypoint owns style loading. Helpers such as `co.color('text.default')`, `co.space('inset.md')`, and `@include co.type('body')` compile to `var(--co-*)` references, not static theme values.
 
 ### CSS Cascade Layers
 
