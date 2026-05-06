@@ -38,17 +38,17 @@ slot[name='input']::slotted(*) {
 }
 
 :host(:hover:not([disabled])) .checkbox__icon {
-  color: var(--co-color-interactive-primary-default);
+  color: var(--co-color-surface-interactive-primary-default);
 }
 
 :host([checked]) .checkbox__icon {
-  color: var(--co-color-interactive-primary-default);
+  color: var(--co-color-surface-interactive-primary-default);
 }
 
 :host([_keyboard-focus]) .checkbox__icon {
   outline: var(--co-focus-ring-width) solid var(--co-color-border-focus);
   outline-offset: calc(-1 * var(--co-shape-border-width-thin));
-  border-radius: var(--co-shape-radius-sm);
+  border-radius: var(--co-control-radius-interactive);
 }
 
 .checkbox__label {

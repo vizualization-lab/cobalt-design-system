@@ -70,6 +70,8 @@ const SCALE_ORDERS: readonly (readonly string[])[] = [
   ['fast', 'normal', 'slow'],
   // Border width: thin -> thicker
   ['thin', 'thick', 'thicker'],
+  // Primitive color modes
+  ['light', 'dark'],
 ];
 
 function findGroupScale(labels: string[]): readonly string[] | null {
@@ -191,7 +193,21 @@ function mainTreeSegments(token: TokenEntry): string[] {
 }
 
 function primitiveTreeSegments(token: TokenEntry): string[] {
-  return joinCompoundSegments(token.name.replace(/^--co-color-primitive-/, '').split('-'));
+  const segments = token.name.replace(/^--co-color-primitive-/, '').split('-');
+  const lastSegment = segments[segments.length - 1];
+
+  if (!/^\d+$/.test(lastSegment)) {
+    return joinCompoundSegments(segments);
+  }
+
+  const familySegments = segments.slice(0, -1);
+  const mode = familySegments[familySegments.length - 1] === 'dark' ? 'dark' : 'light';
+
+  if (mode === 'dark') {
+    familySegments.pop();
+  }
+
+  return [...joinCompoundSegments(familySegments), mode, lastSegment];
 }
 
 function breadcrumbForToken(token: TokenEntry): string[] {
@@ -994,14 +1010,14 @@ async function copyToken(name: string) {
 .token-browser-shell {
   border: 1px solid var(--co-color-border-default);
   border-radius: var(--co-shape-radius-2xl);
-  background: var(--co-color-surface-default);
+  background: var(--co-color-surface-static-default);
   overflow: hidden;
 }
 
 .browser-toolbar {
   padding: 18px 18px 14px;
   border-bottom: 1px solid var(--co-color-border-subtle);
-  background: var(--co-color-surface-default);
+  background: var(--co-color-surface-static-default);
 }
 
 .toolbar-top-row {
@@ -1020,7 +1036,7 @@ async function copyToken(name: string) {
   font-size: var(--co-font-size-small);
   font-family: var(--co-font-family-sans);
   line-height: var(--co-font-line-height-tight);
-  background: var(--co-color-surface-raised);
+  background: var(--co-color-surface-static-raised);
   color: var(--co-color-text-default);
   outline: none;
   transition: border-color 0.2s;
@@ -1053,7 +1069,7 @@ async function copyToken(name: string) {
   align-items: center;
   border: 1px solid var(--co-color-border-default);
   border-radius: var(--co-shape-radius-lg);
-  background: var(--co-color-surface-sunken);
+  background: var(--co-color-surface-static-sunken);
   padding: 3px;
   gap: 2px;
 }
@@ -1076,14 +1092,14 @@ async function copyToken(name: string) {
 
 .browser-toggle-btn:hover:not(.active) {
   color: var(--co-color-text-default);
-  background: color-mix(in srgb, var(--co-color-surface-default) 50%, transparent);
+  background: color-mix(in srgb, var(--co-color-surface-static-default) 50%, transparent);
 }
 
 .browser-toggle-btn.active {
-  background: var(--co-color-interactive-primary-default);
+  background: var(--co-color-surface-interactive-primary-default);
   color: var(--co-color-text-on-primary);
   font-weight: var(--co-font-weight-semibold);
-  box-shadow: 0 1px 3px color-mix(in srgb, var(--co-color-surface-overlay) 16%, transparent);
+  box-shadow: 0 1px 3px color-mix(in srgb, var(--co-color-surface-static-overlay) 16%, transparent);
 }
 
 .tier-sections {
@@ -1101,7 +1117,7 @@ async function copyToken(name: string) {
   min-width: 0;
   padding: 10px 12px;
   border-radius: var(--co-shape-radius-lg);
-  background: var(--co-color-surface-sunken);
+  background: var(--co-color-surface-static-sunken);
   border: 1px solid var(--co-color-border-subtle);
 }
 
@@ -1139,7 +1155,7 @@ async function copyToken(name: string) {
   padding: 5px 12px;
   border: 1px solid var(--co-color-border-subtle);
   border-radius: var(--co-shape-radius-full);
-  background: var(--co-color-surface-raised);
+  background: var(--co-color-surface-static-raised);
   color: var(--co-color-text-secondary);
   font-size: var(--co-font-size-xsmall);
   font-family: var(--co-font-family-sans);
@@ -1157,7 +1173,11 @@ async function copyToken(name: string) {
 }
 
 .filter-pill.active {
-  background: color-mix(in srgb, var(--co-color-interactive-primary-default) 12%, transparent);
+  background: color-mix(
+    in srgb,
+    var(--co-color-surface-interactive-primary-default) 12%,
+    transparent
+  );
   border-color: var(--co-color-border-selected);
   color: var(--co-color-text-link);
 }
@@ -1206,7 +1226,7 @@ async function copyToken(name: string) {
 .pane-header {
   padding: 16px 18px 12px;
   border-bottom: 1px solid var(--co-color-border-subtle);
-  background: var(--co-color-surface-default);
+  background: var(--co-color-surface-static-default);
 }
 
 .pane-title {
@@ -1230,13 +1250,13 @@ async function copyToken(name: string) {
 
 .browser-scroll {
   padding: 16px 18px 18px;
-  background: var(--co-color-surface-page);
+  background: var(--co-color-surface-static-page);
 }
 
 .tree-surface {
   border: 1px solid var(--co-color-border-subtle);
   border-radius: var(--co-shape-radius-2xl);
-  background: var(--co-color-surface-raised);
+  background: var(--co-color-surface-static-raised);
   overflow: hidden;
 }
 
@@ -1249,7 +1269,7 @@ async function copyToken(name: string) {
   padding: 28px 18px;
   border: 1px dashed var(--co-color-border-default);
   border-radius: var(--co-shape-radius-2xl);
-  background: var(--co-color-surface-raised);
+  background: var(--co-color-surface-static-raised);
   color: var(--co-color-text-secondary);
   text-align: center;
 }
@@ -1268,7 +1288,7 @@ async function copyToken(name: string) {
   padding: 10px;
   border: 1px solid var(--co-color-border-subtle);
   border-radius: var(--co-shape-radius-xl);
-  background: var(--co-color-surface-raised);
+  background: var(--co-color-surface-static-raised);
 }
 
 .result-row.selected {
@@ -1315,7 +1335,11 @@ async function copyToken(name: string) {
   align-items: center;
   padding: 2px 8px;
   border-radius: var(--co-shape-radius-full);
-  background: color-mix(in srgb, var(--co-color-interactive-primary-default) 12%, transparent);
+  background: color-mix(
+    in srgb,
+    var(--co-color-surface-interactive-primary-default) 12%,
+    transparent
+  );
   color: var(--co-color-text-link);
   font-size: 0.68rem;
   font-weight: var(--co-font-weight-semibold);
@@ -1323,7 +1347,7 @@ async function copyToken(name: string) {
 }
 
 .result-badge.subtle {
-  background: var(--co-color-surface-sunken);
+  background: var(--co-color-surface-static-sunken);
   color: var(--co-color-text-secondary);
 }
 
@@ -1352,7 +1376,7 @@ async function copyToken(name: string) {
 .detail-copy {
   border: 1px solid var(--co-color-border-default);
   border-radius: var(--co-shape-radius-lg);
-  background: var(--co-color-surface-raised);
+  background: var(--co-color-surface-static-raised);
   color: var(--co-color-text-default);
   font-family: var(--co-font-family-sans);
   font-size: var(--co-font-size-xsmall);
@@ -1376,7 +1400,7 @@ async function copyToken(name: string) {
 }
 
 .browser-pane-detail {
-  background: var(--co-color-surface-raised);
+  background: var(--co-color-surface-static-raised);
 }
 
 .detail-scroll {
@@ -1398,7 +1422,7 @@ async function copyToken(name: string) {
   height: 34px;
   border: 1px solid var(--co-color-border-default);
   border-radius: var(--co-shape-radius-full);
-  background: var(--co-color-surface-raised);
+  background: var(--co-color-surface-static-raised);
   color: var(--co-color-text-secondary);
   cursor: pointer;
 }
@@ -1435,7 +1459,7 @@ async function copyToken(name: string) {
   padding: 14px;
   border: 1px solid var(--co-color-border-subtle);
   border-radius: var(--co-shape-radius-2xl);
-  background: var(--co-color-surface-sunken);
+  background: var(--co-color-surface-static-sunken);
 }
 
 .detail-swatch {
@@ -1474,13 +1498,14 @@ async function copyToken(name: string) {
   padding: 12px 14px;
   border: 1px solid var(--co-color-border-subtle);
   border-radius: var(--co-shape-radius-xl);
-  background: var(--co-color-surface-bold);
+  background: var(--co-color-surface-static-contrast);
   font-family: var(--co-font-family-mono);
   font-size: var(--co-font-size-small);
   color: var(--co-color-text-default);
   line-height: var(--co-font-line-height-normal);
   overflow-wrap: anywhere;
-  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--co-color-surface-overlay) 6%, transparent);
+  box-shadow: inset 0 1px 0
+    color-mix(in srgb, var(--co-color-surface-static-overlay) 6%, transparent);
 }
 
 .detail-value--syntax :deep(.syntax-fn) {
@@ -1488,19 +1513,19 @@ async function copyToken(name: string) {
 }
 
 .detail-value--syntax :deep(.syntax-var) {
-  color: var(--co-color-primary-base);
+  color: var(--co-color-state-primary-base);
 }
 
 .detail-value--syntax :deep(.syntax-color) {
-  color: var(--co-color-warning-base);
+  color: var(--co-color-state-warning-base);
 }
 
 .detail-value--syntax :deep(.syntax-keyword) {
-  color: var(--co-color-danger-base);
+  color: var(--co-color-state-danger-base);
 }
 
 .detail-value--syntax :deep(.syntax-number) {
-  color: var(--co-color-success-base);
+  color: var(--co-color-state-success-base);
 }
 
 .detail-value--syntax :deep(.syntax-punc) {
@@ -1518,7 +1543,7 @@ async function copyToken(name: string) {
   padding: 14px;
   border: 1px solid var(--co-color-border-subtle);
   border-radius: var(--co-shape-radius-xl);
-  background: var(--co-color-surface-sunken);
+  background: var(--co-color-surface-static-sunken);
 }
 
 .detail-meta-item dt {
@@ -1551,7 +1576,7 @@ async function copyToken(name: string) {
   width: 100%;
   max-height: 82vh;
   border-radius: var(--co-shape-radius-2xl) var(--co-shape-radius-2xl) 0 0;
-  background: var(--co-color-surface-raised);
+  background: var(--co-color-surface-static-raised);
   box-shadow: 0 -12px 32px rgba(0, 0, 0, 0.18);
   overflow: hidden;
 }

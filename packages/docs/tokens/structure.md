@@ -38,13 +38,13 @@ Primitives-->Semantic
 Semantic-->Components
 ```
 
-| Token File                           | What it means                                            | Use it for                                                          | Examples                                                                  |
-| ------------------------------------ | -------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------------- |
-| `primitives.json`                    | Raw foundational values                                  | Spacing scale, radius scale, type scale, motion values, breakpoints | `space.4`, `shape.radius.sm`, `font.size.md`                              |
-| `primitives.color.json`              | Raw color palette                                        | Numeric hue families organized as `50`–`950` scales                 | `gray.100`, `blue.700`, `blue.900`                                        |
-| `semantic.shared.json`               | Shared design decisions that stay the same across themes | Control sizing, border intent, focus rules, shared layout values    | `control.height.md`, `border.width.default`, `focus.ring.width`           |
-| `semantic.theme.<theme>.<mode>.json` | Semantic tokens that change by theme or mode             | Mostly color behavior today                                         | `color.text.default`, `color.surface.default`, `color.primary.base`       |
-| `components.json`                    | Component-specific tokens                                | Public component contracts or intentional exceptions                | `component.avatar.size.md`, `component.nav.rail.item.background.selected` |
+| Token File                           | What it means                                            | Use it for                                                          | Examples                                                                         |
+| ------------------------------------ | -------------------------------------------------------- | ------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
+| `primitives.json`                    | Raw foundational values                                  | Spacing scale, radius scale, type scale, motion values, breakpoints | `space.4`, `shape.radius.sm`, `font.size.md`                                     |
+| `primitives.color.json`              | Raw color palette                                        | Numeric hue families organized as `50`–`950` scales                 | `gray.100`, `blue.700`, `blue.900`                                               |
+| `semantic.shared.json`               | Shared design decisions that stay the same across themes | Control sizing, border intent, focus rules, shared layout values    | `control.height.md`, `border.width.default`, `focus.ring.width`                  |
+| `semantic.theme.<theme>.<mode>.json` | Semantic tokens that change by theme or mode             | Mostly color behavior today                                         | `color.text.default`, `color.surface.static.default`, `color.state.primary.base` |
+| `components.json`                    | Component-specific tokens                                | Public component contracts or intentional exceptions                | `component.avatar.size.md`, `component.nav.rail.item.background.selected`        |
 
 ## Export Artifacts
 
@@ -80,7 +80,7 @@ Example SCSS usage:
 .panel {
   padding: co.space('inset.md');
   color: co.color('text.default');
-  background: co.color('surface.raised');
+  background: co.color('surface.static.raised');
 
   @include co.type('body');
 }
@@ -113,14 +113,15 @@ Examples:
 - `border.width.default`
 - `border.width.divider`
 - `control.height.md`
-- `control.radius`
+- `control.radius.interactive`
+- `control.radius.container`
 - `layout.content.max.width.lg`
 
 These tokens answer questions like:
 
 - How tall is a medium control?
 - What border width should a field or divider use?
-- What radius should standard controls use?
+- What radius should standard controls and containers use?
 - How wide should shared content containers be?
 
 ### 3. Theme files only hold what changes by theme
@@ -132,9 +133,9 @@ Today, that is mostly color.
 Examples:
 
 - `color.text.default`
-- `color.surface.raised`
+- `color.surface.static.raised`
 - `color.border.focus`
-- `color.interactive.primary.default`
+- `color.surface.interactive.primary.default`
 
 This keeps theme files focused and prevents shared rules like typography or spacing from being repeated in every theme.
 

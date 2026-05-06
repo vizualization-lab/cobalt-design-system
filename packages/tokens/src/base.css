@@ -172,13 +172,13 @@
   [data-co-base] code {
     font-family: var(--co-font-family-mono);
     font-size: var(--co-font-size-small);
-    background: var(--co-color-surface-raised);
+    background: var(--co-color-surface-static-raised);
     padding: 0.125em 0.375em;
     border-radius: var(--co-shape-radius-sm);
   }
 
   [data-co-base] pre {
-    background: var(--co-color-surface-raised);
+    background: var(--co-color-surface-static-raised);
     padding: var(--co-space-4);
     border-radius: var(--co-shape-radius-md);
     overflow-x: auto;
@@ -191,7 +191,7 @@
   }
 
   [data-co-base] blockquote {
-    border-left: 4px solid var(--co-color-primary-base);
+    border-left: 4px solid var(--co-color-state-primary-base);
     padding-left: var(--co-space-4);
     color: var(--co-color-text-secondary);
     font-style: italic;

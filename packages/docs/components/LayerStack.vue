@@ -30,12 +30,12 @@
         ry="8"
         :fill="
           layer.isFront
-            ? 'var(--co-color-interactive-subtle-active)'
-            : 'var(--co-color-surface-raised)'
+            ? 'var(--co-color-surface-interactive-subtle-active)'
+            : 'var(--co-color-surface-static-raised)'
         "
         :stroke="
           layer.isFront
-            ? 'var(--co-color-interactive-subtle-selected)'
+            ? 'var(--co-color-surface-interactive-subtle-selected)'
             : 'var(--co-color-border-subtle)'
         "
         stroke-width="1"
@@ -46,7 +46,7 @@
         font-family="var(--co-font-family-mono)"
         font-size="13"
         :font-weight="layer.isFront ? '600' : '500'"
-        :fill="layer.isFront ? 'var(--co-color-text-link)' : 'var(--co-color-primary-base)'"
+        :fill="layer.isFront ? 'var(--co-color-text-link)' : 'var(--co-color-state-primary-base)'"
       >
         @layer {{ layer.name }}
       </text>
@@ -70,9 +70,13 @@
           rx="10"
           ry="10"
           :fill="
-            layer.isFront ? 'var(--co-color-surface-default)' : 'var(--co-color-surface-sunken)'
+            layer.isFront
+              ? 'var(--co-color-surface-static-default)'
+              : 'var(--co-color-surface-static-sunken)'
           "
-          :stroke="layer.isFront ? 'var(--co-color-interactive-subtle-selected)' : 'transparent'"
+          :stroke="
+            layer.isFront ? 'var(--co-color-surface-interactive-subtle-selected)' : 'transparent'
+          "
         />
         <text
           :x="badgeX + badgeWidth / 2"

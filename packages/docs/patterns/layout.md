@@ -50,14 +50,14 @@ Example body composition:
 
 .docs-article {
   padding: var(--co-space-inset-lg);
-  background: var(--co-color-surface-default);
+  background: var(--co-color-surface-static-default);
   border: var(--co-border-width-container) solid var(--co-color-border-default);
   border-radius: var(--co-shape-radius-lg);
 }
 
 .docs-aside {
   padding: var(--co-space-inset-lg);
-  background: var(--co-color-surface-raised);
+  background: var(--co-color-surface-static-raised);
   border: var(--co-border-width-container) solid var(--co-color-border-default);
   border-radius: var(--co-shape-radius-lg);
 }

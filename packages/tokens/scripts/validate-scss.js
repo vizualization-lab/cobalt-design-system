@@ -45,7 +45,7 @@ function assertHelperOutput() {
     .example {
       padding: co.space('inset.md');
       color: co.color('text.default');
-      background: co.token('color.surface.default');
+      background: co.token('color.surface.static.default');
       font-family: co.font('family.sans');
       border-radius: co.$co-shape-radius-md;
 
@@ -62,7 +62,7 @@ function assertHelperOutput() {
 
   assert.match(css, /padding: var\(--co-space-inset-md\);/);
   assert.match(css, /color: var\(--co-color-text-default\);/);
-  assert.match(css, /background: var\(--co-color-surface-default\);/);
+  assert.match(css, /background: var\(--co-color-surface-static-default\);/);
   assert.match(css, /font-family: var\(--co-font-family-mono\);/);
   assert.match(css, /border-radius: var\(--co-shape-radius-md\);/);
   assert.match(css, /font-size: var\(--co-typography-body-size\);/);

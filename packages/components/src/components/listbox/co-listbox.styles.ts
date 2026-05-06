@@ -74,8 +74,8 @@ export const cobaltListboxStyles = css`
     gap: var(--co-space-1);
     padding: var(--co-space-1);
     border: var(--co-border-width-default) solid var(--co-color-border-default);
-    border-radius: var(--co-control-radius);
-    background: var(--co-color-surface-default);
+    border-radius: var(--co-control-radius-interactive);
+    background: var(--co-color-surface-static-default);
     color: var(--co-color-text-default);
     outline: 0;
     transition:
@@ -92,7 +92,7 @@ export const cobaltListboxStyles = css`
 
   :host(:hover:not([disabled])) slot[name='input']::slotted([role='listbox']) {
     border-color: var(--co-color-border-strong);
-    background: var(--co-color-surface-raised);
+    background: var(--co-color-surface-static-raised);
   }
 
   :host(:focus-within) slot[name='input']::slotted([role='listbox']) {

@@ -27,8 +27,8 @@ describe('co-button', () => {
 
   it('applies themed secondary colors on the host', async () => {
     const el = await fixture<CoButton>(html`<co-button variant="secondary">Secondary</co-button>`);
-    el.style.setProperty('--co-color-interactive-secondary-default', 'rgb(250 251 252)');
-    el.style.setProperty('--co-color-interactive-primary-default', 'rgb(12 34 56)');
+    el.style.setProperty('--co-color-surface-interactive-secondary-default', 'rgb(250 251 252)');
+    el.style.setProperty('--co-color-surface-interactive-primary-default', 'rgb(12 34 56)');
     el.style.setProperty('--co-border-width-action', '2px');
 
     await el.updateComplete;

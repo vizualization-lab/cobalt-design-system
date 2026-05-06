@@ -33,12 +33,12 @@
         },
         "radius": {
           "$type": "dimension",
-          "$value": "{co.shape.radius.lg}",
+          "$value": "{co.control.radius.container}",
           "$description": "Corner radius for the card."
         },
         "background": {
           "$type": "color",
-          "$value": "{co.color.surface.raised}",
+          "$value": "{co.color.surface.static.raised}",
           "$description": "Card background color."
         },
         "shadow": {
@@ -60,7 +60,7 @@
         },
         "background": {
           "$type": "color",
-          "$value": "{co.color.surface.raised}",
+          "$value": "{co.color.surface.static.raised}",
           "$description": "Banner background color."
         },
         "foreground": {
@@ -108,12 +108,12 @@
             },
             "radius": {
               "$type": "dimension",
-              "$value": "{co.shape.radius.lg}",
+              "$value": "{co.control.radius.container}",
               "$description": "Outer corner radius for the nav rail container."
             },
             "background": {
               "$type": "color",
-              "$value": "{co.color.surface.bold}",
+              "$value": "{co.color.surface.static.contrast}",
               "$description": "Container background for nav rail bars in both light and dark themes."
             }
           },
@@ -137,7 +137,7 @@
             },
             "radius": {
               "$type": "dimension",
-              "$value": "{co.shape.radius.sm}",
+              "$value": "{co.control.radius.interactive}",
               "$description": "Corner radius for nav rail item surfaces."
             },
             "icon": {
@@ -150,22 +150,22 @@
             "background": {
               "default": {
                 "$type": "color",
-                "$value": "{co.color.interactive.subtle.default}",
+                "$value": "{co.color.surface.interactive.subtle.default}",
                 "$description": "Resting surface for nav rail items."
               },
               "hover": {
                 "$type": "color",
-                "$value": "color-mix(in srgb, {co.color.interactive.primary.default} 8%, transparent)",
+                "$value": "color-mix(in srgb, {co.color.surface.interactive.primary.default} 8%, transparent)",
                 "$description": "Hover surface for nav rail items."
               },
               "active": {
                 "$type": "color",
-                "$value": "color-mix(in srgb, {co.color.interactive.primary.default} 20%, transparent)",
+                "$value": "color-mix(in srgb, {co.color.surface.interactive.primary.default} 20%, transparent)",
                 "$description": "Pressed surface for nav rail items."
               },
               "selected": {
                 "$type": "color",
-                "$value": "color-mix(in srgb, {co.color.interactive.primary.default} 12%, transparent)",
+                "$value": "color-mix(in srgb, {co.color.surface.interactive.primary.default} 12%, transparent)",
                 "$description": "Selected surface for the current nav rail destination."
               }
             },
@@ -205,17 +205,17 @@
             "background": {
               "hover": {
                 "$type": "color",
-                "$value": "color-mix(in srgb, {co.color.interactive.primary.default} 8%, transparent)",
+                "$value": "color-mix(in srgb, {co.color.surface.interactive.primary.default} 8%, transparent)",
                 "$description": "Hover surface for nav drawer items."
               },
               "active": {
                 "$type": "color",
-                "$value": "color-mix(in srgb, {co.color.interactive.primary.default} 20%, transparent)",
+                "$value": "color-mix(in srgb, {co.color.surface.interactive.primary.default} 20%, transparent)",
                 "$description": "Pressed surface for nav drawer items."
               },
               "selected": {
                 "$type": "color",
-                "$value": "color-mix(in srgb, {co.color.interactive.primary.default} 12%, transparent)",
+                "$value": "color-mix(in srgb, {co.color.surface.interactive.primary.default} 12%, transparent)",
                 "$description": "Selected surface for the current nav drawer destination."
               }
             },

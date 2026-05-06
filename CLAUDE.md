@@ -56,27 +56,27 @@ All CSS tokens use the `--co-` prefix. In JSON/JS they use `Co` prefix in camelC
 **Three-tier architecture:**
 
 - **Primitive:** `--co-color-primitive-blue-500` — raw palette values (avoid direct use)
-- **Semantic:** `--co-color-primary-base`, `--co-color-surface-default`, `--co-color-interactive-hover` — intent-based mappings
+- **Semantic:** `--co-color-state-primary-base`, `--co-color-surface-static-default`, `--co-color-surface-interactive-primary-hover` — intent-based mappings
 - **Component:** `--co-button-primary-background`, `--co-button-border-radius` — component-specific decisions referencing semantic tokens
 
 **Token categories and patterns:**
 
-| Category  | Pattern                                            | Examples                                                     |
-| --------- | -------------------------------------------------- | ------------------------------------------------------------ |
-| Color     | `--co-color-{group}-{variant}`                     | `--co-color-surface-default`, `--co-color-interactive-hover` |
-| Space     | `--co-space-{scale}` or `--co-space-{role}-{size}` | `--co-space-4`, `--co-space-gap-md`, `--co-space-inset-lg`   |
-| Shape     | `--co-shape-{property}-{size}`                     | `--co-shape-radius-md`, `--co-shape-border-width-thin`       |
-| Elevation | `--co-elevation-{type}-{size}`                     | `--co-elevation-shadow-lg`, `--co-elevation-z-modal`         |
-| Font      | `--co-font-{property}-{value}`                     | `--co-font-size-p`, `--co-font-weight-semibold`              |
-| Motion    | `--co-motion-{property}-{value}`                   | `--co-motion-duration-fast`, `--co-motion-easing-default`    |
-| Sizing    | `--co-sizing-{element}-{size}`                     | `--co-sizing-icon-md`                                        |
-| Opacity   | `--co-opacity-{role}`                              | `--co-opacity-disabled`, `--co-opacity-overlay`              |
+| Category  | Pattern                                            | Examples                                                                            |
+| --------- | -------------------------------------------------- | ----------------------------------------------------------------------------------- |
+| Color     | `--co-color-{group}-{role}-{variant}`              | `--co-color-surface-static-default`, `--co-color-surface-interactive-primary-hover` |
+| Space     | `--co-space-{scale}` or `--co-space-{role}-{size}` | `--co-space-4`, `--co-space-gap-md`, `--co-space-inset-lg`                          |
+| Shape     | `--co-shape-{property}-{size}`                     | `--co-shape-radius-md`, `--co-shape-border-width-thin`                              |
+| Elevation | `--co-elevation-{type}-{size}`                     | `--co-elevation-shadow-lg`, `--co-elevation-z-modal`                                |
+| Font      | `--co-font-{property}-{value}`                     | `--co-font-size-p`, `--co-font-weight-semibold`                                     |
+| Motion    | `--co-motion-{property}-{value}`                   | `--co-motion-duration-fast`, `--co-motion-easing-default`                           |
+| Sizing    | `--co-sizing-{element}-{size}`                     | `--co-sizing-icon-md`                                                               |
+| Opacity   | `--co-opacity-{role}`                              | `--co-opacity-disabled`, `--co-opacity-overlay`                                     |
 
 When writing CSS, always prefer contextual/semantic tokens over primitives:
 
 ```css
 /* Good — self-documenting, theme-safe */
-background: var(--co-color-interactive-default);
+background: var(--co-color-surface-interactive-primary-default);
 color: var(--co-color-text-on-primary);
 padding: var(--co-space-4);
 border-radius: var(--co-shape-radius-md);
@@ -186,7 +186,7 @@ All global CSS output uses `@layer` to provide a structured cascade hierarchy:
 ```css
 @layer co.overrides {
   :root {
-    --co-color-primary-base: #8b5cf6;
+    --co-color-state-primary-base: #8b5cf6;
   }
 }
 ```

@@ -138,7 +138,7 @@ function isGroupOpen(item: NavItem): boolean {
   z-index: 50;
   display: flex;
   flex-direction: column;
-  background: var(--co-color-surface-raised);
+  background: var(--co-color-surface-static-raised);
   border-radius: var(--co-shape-radius-lg);
   box-shadow: var(--co-elevation-shadow-sm, 0 1px 2px rgba(0, 0, 0, 0.08));
   overflow-y: auto;
@@ -244,7 +244,7 @@ function isGroupOpen(item: NavItem): boolean {
   color: var(--co-component-nav-drawer-item-foreground-hover, var(--co-color-text-link));
   background: var(
     --co-component-nav-drawer-item-background-hover,
-    color-mix(in srgb, var(--co-color-interactive-primary-default) 8%, transparent)
+    color-mix(in srgb, var(--co-color-surface-interactive-primary-default) 8%, transparent)
   );
 }
 
@@ -252,7 +252,7 @@ function isGroupOpen(item: NavItem): boolean {
   color: var(--co-component-nav-drawer-item-foreground-active, var(--co-color-text-link));
   background: var(
     --co-component-nav-drawer-item-background-active,
-    color-mix(in srgb, var(--co-color-interactive-primary-default) 20%, transparent)
+    color-mix(in srgb, var(--co-color-surface-interactive-primary-default) 20%, transparent)
   );
 }
 
@@ -269,7 +269,7 @@ function isGroupOpen(item: NavItem): boolean {
 .nav-item.is-active .nav-item-indicator {
   background: var(
     --co-component-nav-drawer-item-background-selected,
-    color-mix(in srgb, var(--co-color-interactive-primary-default) 12%, transparent)
+    color-mix(in srgb, var(--co-color-surface-interactive-primary-default) 12%, transparent)
   );
 }
 

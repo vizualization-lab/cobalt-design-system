@@ -92,12 +92,12 @@ watch(state, () => renderKey.value++, { deep: true });
   border-radius: 12px;
   margin: 16px 0 24px;
   overflow: hidden;
-  background: var(--co-color-surface-raised);
+  background: var(--co-color-surface-static-raised);
 }
 
 .demo-controls {
   padding: 14px 20px;
-  background: var(--co-color-surface-raised);
+  background: var(--co-color-surface-static-raised);
   border-bottom: 1px solid var(--co-border);
   display: flex;
   gap: 20px;
@@ -243,7 +243,7 @@ watch(state, () => renderKey.value++, { deep: true });
   justify-content: center;
   gap: 12px;
   min-height: 100px;
-  background-color: var(--co-color-surface-default);
+  background-color: var(--co-color-surface-static-default);
   color: var(--co-color-text-default);
 }
 </style>

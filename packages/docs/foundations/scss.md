@@ -55,7 +55,7 @@ Use helper functions when writing component or app SCSS:
 .card {
   padding: co.space('inset.md');
   color: co.color('text.default');
-  background: co.color('surface.raised');
+  background: co.color('surface.static.raised');
   border: co.token('border.width.container') solid co.color('border.default');
   border-radius: co.$co-shape-radius-md;
 }
@@ -63,14 +63,14 @@ Use helper functions when writing component or app SCSS:
 
 The helpers validate token names at compile time. Unknown tokens fail the Sass build instead of silently producing broken CSS.
 
-| Helper            | Example                          | Output                           |
-| ----------------- | -------------------------------- | -------------------------------- |
-| `co.token()`      | `co.token('color.text.default')` | `var(--co-color-text-default)`   |
-| `co.space()`      | `co.space('inset.md')`           | `var(--co-space-inset-md)`       |
-| `co.color()`      | `co.color('surface.raised')`     | `var(--co-color-surface-raised)` |
-| `co.font()`       | `co.font('family.sans')`         | `var(--co-font-family-sans)`     |
-| `co.breakpoint()` | `co.breakpoint('lg')`            | `1024px`                         |
-| `co.$co-*-*` vars | `co.$co-control-height-md`       | `var(--co-control-height-md)`    |
+| Helper            | Example                             | Output                                  |
+| ----------------- | ----------------------------------- | --------------------------------------- |
+| `co.token()`      | `co.token('color.text.default')`    | `var(--co-color-text-default)`          |
+| `co.space()`      | `co.space('inset.md')`              | `var(--co-space-inset-md)`              |
+| `co.color()`      | `co.color('surface.static.raised')` | `var(--co-color-surface-static-raised)` |
+| `co.font()`       | `co.font('family.sans')`            | `var(--co-font-family-sans)`            |
+| `co.breakpoint()` | `co.breakpoint('lg')`               | `1024px`                                |
+| `co.$co-*-*` vars | `co.$co-control-height-md`          | `var(--co-control-height-md)`           |
 
 ## Typography
 

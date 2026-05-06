@@ -50,9 +50,16 @@
     },
     "control": {
       "radius": {
-        "$type": "dimension",
-        "$value": "{co.shape.radius.sm}",
-        "$description": "Default corner radius for standard interactive controls."
+        "interactive": {
+          "$type": "dimension",
+          "$value": "{co.shape.radius.sm}",
+          "$description": "Default corner radius for standard interactive controls."
+        },
+        "container": {
+          "$type": "dimension",
+          "$value": "{co.shape.radius.lg}",
+          "$description": "Default corner radius for standard containers such as cards and framed panels."
+        }
       },
       "height": {
         "sm": {

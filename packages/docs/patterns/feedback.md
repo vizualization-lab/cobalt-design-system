@@ -26,12 +26,12 @@ Toasts appear at the top-right of the viewport and dismiss automatically. Use th
 
 ### Toast Variants
 
-| Variant   | Token                | Purpose                                |
-| --------- | -------------------- | -------------------------------------- |
-| `success` | `--co-color-success` | Action completed                       |
-| `info`    | `--co-color-info`    | Non-critical information               |
-| `warning` | `--co-color-warning` | Potential issue, action may be needed  |
-| `error`   | `--co-color-error`   | Reserved for inline alerts, not toasts |
+| Variant   | Token                           | Purpose                                |
+| --------- | ------------------------------- | -------------------------------------- |
+| `success` | `--co-color-state-success-base` | Action completed                       |
+| `info`    | `--co-color-info`               | Non-critical information               |
+| `warning` | `--co-color-state-warning-base` | Potential issue, action may be needed  |
+| `error`   | `--co-color-error`              | Reserved for inline alerts, not toasts |
 
 ## Inline Alerts
 

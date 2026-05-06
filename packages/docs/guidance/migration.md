@@ -41,13 +41,13 @@ This is the most straightforward path. Replace hand-written HTML elements with C
 3. Replace each hand-written element with its Cobalt counterpart.
 4. Replace hardcoded values in remaining custom CSS with token references.
 
-| Raw CSS value               | Cobalt token                    |
-| --------------------------- | ------------------------------- |
-| `#0066cc`                   | `var(--co-color-primary-base)`  |
-| `14px` font size            | `var(--co-font-size-200)`       |
-| `8px` padding               | `var(--co-space-200)`           |
-| `4px` border radius         | `var(--co-shape-radius-sm)`     |
-| `0 2px 4px rgba(0,0,0,0.1)` | `var(--co-elevation-shadow-sm)` |
+| Raw CSS value               | Cobalt token                         |
+| --------------------------- | ------------------------------------ |
+| `#0066cc`                   | `var(--co-color-state-primary-base)` |
+| `14px` font size            | `var(--co-font-size-small)`          |
+| `8px` padding               | `var(--co-space-2)`                  |
+| `4px` border radius         | `var(--co-shape-radius-sm)`          |
+| `0 2px 4px rgba(0,0,0,0.1)` | `var(--co-elevation-shadow-sm)`      |
 
 ---
 
@@ -83,7 +83,7 @@ Bootstrap and Cobalt can coexist because Cobalt components live inside Shadow DO
 
 /* After: Cobalt token */
 .my-section {
-  margin-top: var(--co-space-300);
+  margin-top: var(--co-space-4);
 }
 ```
 
@@ -129,15 +129,15 @@ import { CoButton } from '@cobalt/react';
 
 Use this table when replacing hardcoded values or framework-specific variables with Cobalt tokens.
 
-| Concept         | Bootstrap variable  | MUI theme key               | Cobalt token               |
-| --------------- | ------------------- | --------------------------- | -------------------------- |
-| Primary color   | `$primary`          | `palette.primary.main`      | `--co-color-primary-base`  |
-| Error color     | `$danger`           | `palette.error.main`        | `--co-color-danger-base`   |
-| Body font size  | `$font-size-base`   | `typography.body1.fontSize` | `--co-font-size-300`       |
-| Small radius    | `$border-radius-sm` | `shape.borderRadius`        | `--co-shape-radius-sm`     |
-| Base spacing    | `$spacer`           | `spacing(1)`                | `--co-space-200`           |
-| Shadow (small)  | `$box-shadow-sm`    | `shadows[2]`                | `--co-elevation-shadow-sm` |
-| Shadow (medium) | `$box-shadow`       | `shadows[4]`                | `--co-elevation-shadow-md` |
+| Concept         | Bootstrap variable  | MUI theme key               | Cobalt token                    |
+| --------------- | ------------------- | --------------------------- | ------------------------------- |
+| Primary color   | `$primary`          | `palette.primary.main`      | `--co-color-state-primary-base` |
+| Error color     | `$danger`           | `palette.error.main`        | `--co-color-state-danger-base`  |
+| Body font size  | `$font-size-base`   | `typography.body1.fontSize` | `--co-font-size-p`              |
+| Small radius    | `$border-radius-sm` | `shape.borderRadius`        | `--co-shape-radius-sm`          |
+| Base spacing    | `$spacer`           | `spacing(1)`                | `--co-space-4`                  |
+| Shadow (small)  | `$box-shadow-sm`    | `shadows[2]`                | `--co-elevation-shadow-sm`      |
+| Shadow (medium) | `$box-shadow`       | `shadows[4]`                | `--co-elevation-shadow-md`      |
 
 ---
 

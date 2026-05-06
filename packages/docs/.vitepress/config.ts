@@ -6,16 +6,16 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { loadEnv } from 'vite';
 import {
-  CoColorPrimarySubtle,
+  CoColorStatePrimarySubtle,
   CoColorTextDefault,
-  CoColorPrimaryBase,
+  CoColorStatePrimaryBase,
   CoColorTextSecondary,
-  CoColorSurfaceSunken,
+  CoColorSurfaceStaticSunken,
   CoColorBorderStrong,
-  CoColorSurfacePage,
+  CoColorSurfaceStaticPage,
   CoColorBorderDefault,
-  CoColorSurfaceDefault,
-  CoColorWarningSubtle,
+  CoColorSurfaceStaticDefault,
+  CoColorStateWarningSubtle,
 } from '@cobalt/tokens';
 import { toVitePressNav, toVitePressSidebar } from './theme/navigation';
 
@@ -83,38 +83,38 @@ export default withMermaid(
       theme: 'base',
       themeVariables: {
         // Core palette — light-mode token values as defaults
-        primaryColor: CoColorPrimarySubtle,
+        primaryColor: CoColorStatePrimarySubtle,
         primaryTextColor: CoColorTextDefault,
-        primaryBorderColor: CoColorPrimaryBase,
+        primaryBorderColor: CoColorStatePrimaryBase,
         lineColor: CoColorTextSecondary,
-        secondaryColor: CoColorSurfaceSunken,
+        secondaryColor: CoColorSurfaceStaticSunken,
         secondaryTextColor: CoColorTextDefault,
         secondaryBorderColor: CoColorBorderStrong,
-        tertiaryColor: CoColorSurfacePage,
+        tertiaryColor: CoColorSurfaceStaticPage,
         tertiaryTextColor: CoColorTextSecondary,
         tertiaryBorderColor: CoColorBorderDefault,
 
         // General
-        background: CoColorSurfaceDefault,
+        background: CoColorSurfaceStaticDefault,
 
         // Flowchart
-        nodeBorder: CoColorPrimaryBase,
-        clusterBkg: CoColorSurfacePage,
+        nodeBorder: CoColorStatePrimaryBase,
+        clusterBkg: CoColorSurfaceStaticPage,
         clusterBorder: CoColorBorderDefault,
         defaultLinkColor: CoColorTextSecondary,
-        edgeLabelBackground: CoColorSurfaceDefault,
+        edgeLabelBackground: CoColorSurfaceStaticDefault,
         nodeTextColor: CoColorTextDefault,
 
         // Sequence diagram
-        actorBkg: CoColorPrimarySubtle,
-        actorBorder: CoColorPrimaryBase,
+        actorBkg: CoColorStatePrimarySubtle,
+        actorBorder: CoColorStatePrimaryBase,
         actorTextColor: CoColorTextDefault,
         signalColor: CoColorTextSecondary,
-        activationBkgColor: CoColorPrimarySubtle,
-        activationBorderColor: CoColorPrimaryBase,
+        activationBkgColor: CoColorStatePrimarySubtle,
+        activationBorderColor: CoColorStatePrimaryBase,
 
         // Notes
-        noteBkgColor: CoColorWarningSubtle,
+        noteBkgColor: CoColorStateWarningSubtle,
         noteTextColor: CoColorTextDefault,
         noteBorderColor: CoColorBorderDefault,
 

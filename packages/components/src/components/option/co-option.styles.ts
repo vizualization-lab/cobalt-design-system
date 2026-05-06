@@ -20,24 +20,24 @@ export const cobaltOptionStyles = css`
     min-block-size: var(--co-control-height-sm);
     padding-block: var(--co-space-1);
     padding-inline: var(--co-space-inset-sm);
-    border-radius: var(--co-control-radius);
+    border-radius: var(--co-control-radius-interactive);
     color: inherit;
   }
 
   :host(:hover:not([disabled]):not([checked]):not([active])) .option {
-    background: var(--co-color-interactive-subtle-hover);
+    background: var(--co-color-surface-interactive-subtle-hover);
   }
 
   :host([active]:not([checked])) .option {
-    background: var(--co-color-interactive-subtle-active);
+    background: var(--co-color-surface-interactive-subtle-active);
   }
 
   :host([checked]) .option {
-    background: var(--co-color-interactive-subtle-selected);
+    background: var(--co-color-surface-interactive-subtle-selected);
   }
 
   :host([active][checked]) .option {
-    background: var(--co-color-interactive-subtle-selected);
+    background: var(--co-color-surface-interactive-subtle-selected);
   }
 
   :host([disabled]) {

@@ -13,7 +13,7 @@ export const cobaltButtonStyles = css`
     font-size: var(--co-font-size-p);
     font-weight: var(--co-font-weight-medium);
     line-height: var(--co-font-line-height-tight);
-    border-radius: var(--co-control-radius);
+    border-radius: var(--co-control-radius-interactive);
     border: none;
     cursor: pointer;
     transition:
@@ -64,57 +64,60 @@ export const cobaltButtonStyles = css`
   /* ── Primary variant (default) ── */
   :host,
   :host([variant='primary']) {
-    background: var(--co-color-interactive-primary-default);
+    background: var(--co-color-surface-interactive-primary-default);
     color: var(--co-color-text-on-primary);
   }
   :host([variant='primary']:hover),
   :host(:not([variant]):hover) {
-    background: var(--co-color-interactive-primary-hover);
+    background: var(--co-color-surface-interactive-primary-hover);
   }
   :host([variant='primary']:active),
   :host(:not([variant]):active) {
-    background: var(--co-color-interactive-primary-active);
+    background: var(--co-color-surface-interactive-primary-active);
   }
 
   /* ── Secondary variant ── */
   :host([variant='secondary']) {
-    background: var(--co-color-interactive-secondary-default);
-    color: var(--co-color-interactive-primary-default);
-    box-shadow: inset 0 0 0 var(--co-border-width-action) var(--co-color-interactive-primary-default);
+    background: var(--co-color-surface-interactive-secondary-default);
+    color: var(--co-color-surface-interactive-primary-default);
+    box-shadow: inset 0 0 0 var(--co-border-width-action)
+      var(--co-color-surface-interactive-primary-default);
   }
   :host([variant='secondary']:hover) {
-    background: var(--co-color-interactive-secondary-hover);
-    color: var(--co-color-interactive-primary-hover);
-    box-shadow: inset 0 0 0 var(--co-border-width-action) var(--co-color-interactive-primary-hover);
+    background: var(--co-color-surface-interactive-secondary-hover);
+    color: var(--co-color-surface-interactive-primary-hover);
+    box-shadow: inset 0 0 0 var(--co-border-width-action)
+      var(--co-color-surface-interactive-primary-hover);
   }
   :host([variant='secondary']:active) {
-    background: var(--co-color-interactive-secondary-active);
-    color: var(--co-color-interactive-primary-active);
-    box-shadow: inset 0 0 0 var(--co-border-width-action) var(--co-color-interactive-primary-active);
+    background: var(--co-color-surface-interactive-secondary-active);
+    color: var(--co-color-surface-interactive-primary-active);
+    box-shadow: inset 0 0 0 var(--co-border-width-action)
+      var(--co-color-surface-interactive-primary-active);
   }
 
   /* ── Danger variant ── */
   :host([variant='danger']) {
-    background: var(--co-color-interactive-danger-default);
+    background: var(--co-color-surface-interactive-danger-default);
     color: var(--co-color-text-on-danger);
   }
   :host([variant='danger']:hover) {
-    background: var(--co-color-interactive-danger-hover);
+    background: var(--co-color-surface-interactive-danger-hover);
   }
   :host([variant='danger']:active) {
-    background: var(--co-color-interactive-danger-active);
+    background: var(--co-color-surface-interactive-danger-active);
   }
 
   /* ── Success variant ── */
   :host([variant='success']) {
-    background: var(--co-color-interactive-success-default);
+    background: var(--co-color-surface-interactive-success-default);
     color: var(--co-color-text-on-success);
   }
   :host([variant='success']:hover) {
-    background: var(--co-color-interactive-success-hover);
+    background: var(--co-color-surface-interactive-success-hover);
   }
   :host([variant='success']:active) {
-    background: var(--co-color-interactive-success-active);
+    background: var(--co-color-surface-interactive-success-active);
   }
 
   /* ── Ghost variant ── */

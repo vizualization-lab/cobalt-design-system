@@ -191,37 +191,37 @@ function validateContrast(tokensDir, discovery, errors) {
   const checks = [
     {
       foreground: 'co.color.text.default',
-      background: 'co.color.surface.default',
+      background: 'co.color.surface.static.default',
       minimum: 4.5,
     },
     {
       foreground: 'co.color.text.placeholder',
-      background: 'co.color.surface.default',
+      background: 'co.color.surface.static.default',
       minimum: 4.5,
     },
     {
       foreground: 'co.color.text.on.primary',
-      background: 'co.color.primary.base',
+      background: 'co.color.state.primary.base',
       minimum: 4.5,
     },
     {
-      foreground: 'co.color.interactive.primary.default',
-      background: 'co.color.interactive.secondary.default',
+      foreground: 'co.color.surface.interactive.primary.default',
+      background: 'co.color.surface.interactive.secondary.default',
       minimum: 4.5,
     },
     {
-      foreground: 'co.color.primary.contrast',
-      background: 'co.color.primary.base',
+      foreground: 'co.color.state.primary.contrast',
+      background: 'co.color.state.primary.base',
       minimum: 4.5,
     },
     {
-      foreground: 'co.color.danger.contrast',
-      background: 'co.color.danger.base',
+      foreground: 'co.color.state.danger.contrast',
+      background: 'co.color.state.danger.base',
       minimum: 4.5,
     },
     {
-      foreground: 'co.color.success.contrast',
-      background: 'co.color.success.base',
+      foreground: 'co.color.state.success.contrast',
+      background: 'co.color.state.success.base',
       minimum: 4.5,
     },
     {

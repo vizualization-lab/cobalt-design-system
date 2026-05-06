@@ -8,9 +8,8 @@ export const cobaltInputPillStyles = css`
      border-radius: 9px, padding: 6px 6px 6px 16px, border: 1px */
   .input-group__container {
     border-radius: var(--co-shape-radius-full);
-    padding: var(--co-space-1-5, 6px) var(--co-space-1-5, 6px) var(--co-space-1-5, 6px)
-      var(--co-space-4);
-    /* padding: var(--co-space-1-5, 6px) var(--co-space-4); */
+    padding: 6px 6px 6px var(--co-space-4);
+    /* padding: 6px var(--co-space-4); */
   }
 
   :host(:focus-within) .input-group__container {
@@ -40,6 +39,6 @@ export const cobaltInputPillStyles = css`
     display: inline-flex;
     align-items: center;
     flex: 0 0 auto;
-    margin-inline-start: var(--co-space-1-5, 6px);
+    margin-inline-start: 6px;
   }
 `;

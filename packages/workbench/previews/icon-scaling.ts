@@ -184,23 +184,23 @@ export const html = `
     }
     .scaling-table th {
       font-weight: var(--co-font-weight-semibold);
-      font-size: var(--co-font-size-sm);
+      font-size: var(--co-font-size-small);
       color: var(--co-color-text-secondary);
     }
     .size-px {
       font-family: var(--co-font-family-mono);
-      font-size: var(--co-font-size-xs);
-      font-weight: var(--co-font-weight-normal);
+      font-size: var(--co-font-size-xsmall);
+      font-weight: var(--co-font-weight-regular);
     }
     .row-label {
       text-align: left !important;
-      font-size: var(--co-font-size-sm);
+      font-size: var(--co-font-size-small);
       font-weight: var(--co-font-weight-semibold);
       white-space: nowrap;
     }
     .source-label {
       text-align: left !important;
-      font-size: var(--co-font-size-xs);
+      font-size: var(--co-font-size-xsmall);
       font-family: var(--co-font-family-mono);
       color: var(--co-color-text-secondary);
       white-space: nowrap;
@@ -224,7 +224,7 @@ export const html = `
 
   <section class="wb-section">
     <h2 class="wb-heading">Custom / Override / Animated vs Material</h2>
-    <p style="margin-bottom: var(--co-space-4); font-size: var(--co-font-size-sm); color: var(--co-color-text-secondary)">
+    <p style="margin-bottom: var(--co-space-4); font-size: var(--co-font-size-small); color: var(--co-color-text-secondary)">
       Compare stroke weight and detail between custom icons (24×24 source) and Material Symbols (960×960 source) at each size.
     </p>
     <table class="scaling-table">
@@ -243,10 +243,10 @@ export const html = `
 
   <section class="wb-section" style="margin-top: var(--co-space-8)">
     <h2 class="wb-heading">Material-Only Baseline</h2>
-    <p style="margin-bottom: var(--co-space-4); font-size: var(--co-font-size-sm); color: var(--co-color-text-secondary)">
+    <p style="margin-bottom: var(--co-space-4); font-size: var(--co-font-size-small); color: var(--co-color-text-secondary)">
       Material icons at all sizes for reference — this is what "normal" scaling looks like.
     </p>
-    <p style="margin-bottom: var(--co-space-4); font-size: var(--co-font-size-xs); color: var(--co-color-text-tertiary)">
+    <p style="margin-bottom: var(--co-space-4); font-size: var(--co-font-size-xsmall); color: var(--co-color-text-tertiary)">
       <strong>Note:</strong> SVG icons use <code>@material-symbols/svg-300</code> (v0.43) while the font uses
       <code>@fontsource-variable/material-symbols-rounded</code> (upstream v327). The font is set to wght 200 rather
       than 300 to visually match the SVGs — newer Material Symbols releases render slightly heavier at the same

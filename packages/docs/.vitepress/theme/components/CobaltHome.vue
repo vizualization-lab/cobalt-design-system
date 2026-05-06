@@ -282,8 +282,8 @@ const features = [
 .title-accent {
   background: linear-gradient(
     135deg,
-    var(--co-color-primary-dark) 0%,
-    var(--co-color-primary-base) 100%
+    var(--co-color-state-primary-dark) 0%,
+    var(--co-color-state-primary-base) 100%
   );
   background-clip: text;
   -webkit-background-clip: text;
@@ -310,7 +310,7 @@ const features = [
   display: inline-flex;
   text-decoration: none;
   color: inherit;
-  border-radius: var(--co-control-radius, 10px);
+  border-radius: var(--co-control-radius-interactive, 10px);
 }
 
 .hero-action-link:hover,
@@ -322,15 +322,27 @@ const features = [
 
 /* Crystal */
 .hero-crystal {
-  --co-hero-crystal-fill-start: color-mix(in srgb, var(--co-color-primary-base) 12%, transparent);
-  --co-hero-crystal-fill-end: color-mix(in srgb, var(--co-color-primary-base) 3%, transparent);
+  --co-hero-crystal-fill-start: color-mix(
+    in srgb,
+    var(--co-color-state-primary-base) 12%,
+    transparent
+  );
+  --co-hero-crystal-fill-end: color-mix(
+    in srgb,
+    var(--co-color-state-primary-base) 3%,
+    transparent
+  );
   --co-hero-crystal-stroke-start: color-mix(in srgb, var(--co-color-text-link) 30%, transparent);
-  --co-hero-crystal-stroke-mid: color-mix(in srgb, var(--co-color-primary-base) 15%, transparent);
+  --co-hero-crystal-stroke-mid: color-mix(
+    in srgb,
+    var(--co-color-state-primary-base) 15%,
+    transparent
+  );
   --co-hero-crystal-stroke-end: color-mix(in srgb, var(--co-color-text-link) 5%, transparent);
   --co-hero-crystal-facet: color-mix(in srgb, var(--co-color-text-link) 8%, transparent);
   --co-hero-crystal-inner: color-mix(in srgb, var(--co-color-text-link) 10%, transparent);
-  --co-hero-crystal-dot: color-mix(in srgb, var(--co-color-primary-base) 40%, transparent);
-  --co-hero-crystal-pulse: color-mix(in srgb, var(--co-color-primary-base) 15%, transparent);
+  --co-hero-crystal-dot: color-mix(in srgb, var(--co-color-state-primary-base) 40%, transparent);
+  --co-hero-crystal-pulse: color-mix(in srgb, var(--co-color-state-primary-base) 15%, transparent);
   position: absolute;
   top: 10px;
   right: -40px;
@@ -389,7 +401,7 @@ const features = [
   align-items: center;
   justify-content: center;
   border-radius: 11px;
-  background: var(--co-color-surface-disabled);
+  background: var(--co-color-surface-static-sunken);
   color: var(--co-color-text-default);
   margin-bottom: 18px;
   transition: all var(--co-duration) var(--co-ease);
@@ -437,7 +449,7 @@ const features = [
   font-weight: var(--co-typography-label-weight);
   letter-spacing: var(--co-typography-label-tracking);
   line-height: var(--co-typography-label-line-height);
-  color: var(--co-color-primary-base);
+  color: var(--co-color-state-primary-base);
   transition: gap var(--co-duration) var(--co-ease);
 }
 

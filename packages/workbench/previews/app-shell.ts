@@ -27,7 +27,7 @@ export const html = `
       min-block-size: 0;
       max-inline-size: none;
       padding: 0;
-      background: var(--co-color-surface-page);
+      background: var(--co-color-surface-static-page);
     }
 
     .wb-app-shell-stage {
@@ -40,7 +40,7 @@ export const html = `
       inline-size: 100%;
       block-size: 100%;
       min-block-size: 0;
-      background: var(--co-color-surface-page);
+      background: var(--co-color-surface-static-page);
     }
 
     .wb-app-shell-preview::part(base) {
@@ -56,8 +56,8 @@ export const html = `
     }
 
     .wb-app-shell-banner {
-      --co-component-banner-background: var(--co-color-primary-subtle);
-      --co-component-banner-foreground: var(--co-color-primary-base);
+      --co-component-banner-background: var(--co-color-state-primary-subtle);
+      --co-component-banner-foreground: var(--co-color-state-primary-base);
       --co-component-banner-padding: 12px 16px;
     }
 
@@ -91,8 +91,8 @@ export const html = `
       inline-size: 36px;
       block-size: 36px;
       border-radius: 999px;
-      background: var(--co-color-primary-subtle);
-      color: var(--co-color-primary-base);
+      background: var(--co-color-state-primary-subtle);
+      color: var(--co-color-state-primary-base);
       font-size: 13px;
       font-weight: 600;
       letter-spacing: 0.02em;
@@ -172,16 +172,16 @@ export const html = `
         <co-nav-drawer-item value="approvals" icon="task-alt">Approvals</co-nav-drawer-item>
       </co-nav-drawer>
       <div slot="body" class="wb-app-shell-body">
-        <section style="padding: 20px; background: var(--co-color-surface-default); border: 1px solid var(--co-color-border-default); border-radius: 16px;">
+        <section style="padding: 20px; background: var(--co-color-surface-static-default); border: 1px solid var(--co-color-border-default); border-radius: 16px;">
           <p style="margin: 0 0 8px; color: var(--co-color-text-secondary);">Dashboard</p>
           <h1 style="margin: 0 0 12px;">Track live operational health</h1>
           <p style="margin: 0 0 16px;">Compose page-level structure inside the body slot.</p>
           <div style="display: grid; gap: 10px;">
-            <div style="padding: 14px 16px; background: var(--co-color-surface-page); border-radius: 12px;">Summary cards</div>
-            <div style="padding: 14px 16px; background: var(--co-color-surface-page); border-radius: 12px;">Activity feed</div>
+            <div style="padding: 14px 16px; background: var(--co-color-surface-static-page); border-radius: 12px;">Summary cards</div>
+            <div style="padding: 14px 16px; background: var(--co-color-surface-static-page); border-radius: 12px;">Activity feed</div>
           </div>
         </section>
-        <aside style="padding: 14px 16px; background: var(--co-color-surface-raised); border: 1px solid var(--co-color-border-default); border-radius: 16px; color: var(--co-color-text-secondary);">
+        <aside style="padding: 14px 16px; background: var(--co-color-surface-static-raised); border: 1px solid var(--co-color-border-default); border-radius: 16px; color: var(--co-color-text-secondary);">
           Optional TOC or reference content inside body
         </aside>
         <section class="wb-app-shell-log" aria-label="Operational timeline">

@@ -185,7 +185,7 @@ This sets `data-theme` and `data-mode` on `<html>`:
   <li><code>{{ themeAttributes.dark }}</code> for the selected dark theme</li>
 </ul>
 
-Component code should keep using semantic tokens such as `--co-color-primary-base` and `--co-color-interactive-primary-default`.
+Component code should keep using semantic tokens such as `--co-color-state-primary-base` and `--co-color-surface-interactive-primary-default`.
 
 ## How the Scale Works
 
@@ -236,7 +236,7 @@ These semantic token names stay stable across themes even as their resolved colo
 
 ## Practical Rules
 
-- Prefer semantic tokens such as `--co-color-surface-default` or `--co-color-interactive-primary-default` in components and app code.
+- Prefer semantic tokens such as `--co-color-surface-static-default` or `--co-color-surface-interactive-primary-default` in components and app code.
 - Reach for primitive tokens only when you are extending the system itself, building documentation, or deliberately creating a non-semantic illustration or data-vis palette.
 - Think in `50`–`950`: lower shades for backgrounds, middle shades for borders and subtle fills, `700`–`800` for solid accents, and `900`–`950` for readable same-hue text.
 
@@ -256,7 +256,7 @@ These semantic token names stay stable across themes even as their resolved colo
   padding: 16px 18px;
   border: 1px solid var(--co-color-border-subtle);
   border-radius: var(--co-shape-radius-md);
-  background: var(--co-color-surface-raised);
+  background: var(--co-color-surface-static-raised);
   z-index: 6;
 }
 
@@ -306,7 +306,7 @@ These semantic token names stay stable across themes even as their resolved colo
   padding: 4px 12px;
   border: 1px solid var(--co-color-border-default);
   border-radius: 999px;
-  background: var(--co-color-surface-default);
+  background: var(--co-color-surface-static-default);
   color: var(--co-color-text-secondary);
   cursor: pointer;
   font-size: 0.78rem;
@@ -328,12 +328,12 @@ These semantic token names stay stable across themes even as their resolved colo
 .color-theme-pill:focus-visible {
   outline: none;
   border-color: var(--co-color-border-focus);
-  box-shadow: 0 0 0 2px color-mix(in srgb, var(--co-color-primary-base) 15%, transparent);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--co-color-state-primary-base) 15%, transparent);
 }
 
 .color-theme-pill.is-active {
-  background: var(--co-color-interactive-primary-default);
-  border-color: var(--co-color-interactive-primary-default);
+  background: var(--co-color-surface-interactive-primary-default);
+  border-color: var(--co-color-surface-interactive-primary-default);
   color: var(--co-color-text-on-primary);
 }
 
@@ -361,7 +361,7 @@ These semantic token names stay stable across themes even as their resolved colo
 .color-mode-toggle:focus-visible {
   outline: none;
   border-color: var(--co-color-border-focus);
-  box-shadow: 0 0 0 2px color-mix(in srgb, var(--co-color-primary-base) 15%, transparent);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--co-color-state-primary-base) 15%, transparent);
 }
 
 .color-mode-option {
@@ -388,7 +388,7 @@ These semantic token names stay stable across themes even as their resolved colo
 }
 
 .color-mode-toggle.is-dark .color-mode-switch {
-  background: var(--co-color-interactive-primary-default);
+  background: var(--co-color-surface-interactive-primary-default);
 }
 
 .color-mode-thumb {
@@ -397,7 +397,7 @@ These semantic token names stay stable across themes even as their resolved colo
   left: 2px;
   width: 14px;
   height: 14px;
-  background: var(--co-color-surface-page);
+  background: var(--co-color-surface-static-page);
   border-radius: 999px;
   transition: transform 0.2s ease;
 }

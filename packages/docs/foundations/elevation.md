@@ -34,7 +34,7 @@ A special **none** token is also available for explicitly removing shadows:
 .co-card {
   box-shadow: var(--co-elevation-shadow-md);
   border-radius: var(--co-shape-radius-lg);
-  background: var(--co-color-surface-default);
+  background: var(--co-color-surface-static-default);
 }
 
 .co-card:hover {
@@ -50,7 +50,7 @@ A special **none** token is also available for explicitly removing shadows:
 .co-dialog {
   box-shadow: var(--co-elevation-shadow-xl);
   border-radius: var(--co-shape-radius-xl);
-  background: var(--co-color-surface-default);
+  background: var(--co-color-surface-static-default);
 }
 ```
 
@@ -60,8 +60,8 @@ In dark mode, shadows alone are not enough to communicate depth because the base
 
 ```css
 [data-mode='dark'] {
-  --co-color-surface-raised: var(--co-color-primitive-neutral-900);
-  --co-color-surface-overlay: var(--co-color-primitive-neutral-950);
+  --co-color-surface-static-raised: var(--co-color-primitive-neutral-900);
+  --co-color-surface-static-overlay: var(--co-color-primitive-neutral-950);
 }
 ```
 

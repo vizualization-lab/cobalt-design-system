@@ -95,7 +95,7 @@ const summary = computed(() => {
 
 <style scoped>
 .status-matrix {
-  background: var(--co-color-primary-subtle);
+  background: var(--co-color-state-primary-subtle);
   border-radius: var(--co-shape-radius-md);
   box-shadow: var(--co-elevation-shadow-sm);
   padding: var(--co-space-3);
@@ -145,7 +145,7 @@ const summary = computed(() => {
   font-weight: var(--co-typography-label-weight);
   position: sticky;
   left: 0;
-  background: var(--co-color-primary-subtle);
+  background: var(--co-color-state-primary-subtle);
   z-index: 1;
   white-space: nowrap;
 }
@@ -186,17 +186,17 @@ const summary = computed(() => {
 }
 
 .matrix-cell--pass {
-  background: var(--co-color-success-subtle);
-  color: var(--co-color-success-base);
+  background: var(--co-color-state-success-subtle);
+  color: var(--co-color-state-success-base);
 }
 
 .matrix-cell--fail {
-  background: var(--co-color-danger-subtle);
-  color: var(--co-color-danger-base);
+  background: var(--co-color-state-danger-subtle);
+  color: var(--co-color-state-danger-base);
 }
 
 .matrix-cell--pending {
-  background: var(--co-color-surface-raised);
+  background: var(--co-color-surface-static-raised);
   color: var(--co-color-text-tertiary);
 }
 

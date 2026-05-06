@@ -11,7 +11,7 @@ export const cobaltNavDrawerItemStyles = css`
     align-items: center;
     gap: var(--co-space-gap-sm);
     padding: var(--co-space-2);
-    border-radius: var(--co-shape-radius-md);
+    border-radius: var(--co-control-radius-interactive);
     color: var(--co-color-text-default);
     font-family: var(--co-font-family-sans);
     font-size: var(--co-font-size-p);
@@ -28,7 +28,7 @@ export const cobaltNavDrawerItemStyles = css`
   :host(:not([selected])) .item:hover {
     background: var(
       --co-component-nav-drawer-item-background-hover,
-      color-mix(in srgb, var(--co-color-interactive-primary-default) 8%, transparent)
+      color-mix(in srgb, var(--co-color-surface-interactive-primary-default) 8%, transparent)
     );
     color: var(--co-component-nav-drawer-item-foreground-hover, var(--co-color-text-link));
   }
@@ -36,7 +36,7 @@ export const cobaltNavDrawerItemStyles = css`
   :host(:not([selected]):not([disabled])) .item:active {
     background: var(
       --co-component-nav-drawer-item-background-active,
-      color-mix(in srgb, var(--co-color-interactive-primary-default) 20%, transparent)
+      color-mix(in srgb, var(--co-color-surface-interactive-primary-default) 20%, transparent)
     );
     color: var(--co-component-nav-drawer-item-foreground-active, var(--co-color-text-link));
   }
@@ -44,7 +44,7 @@ export const cobaltNavDrawerItemStyles = css`
   :host([selected]) .item {
     background: var(
       --co-component-nav-drawer-item-background-selected,
-      color-mix(in srgb, var(--co-color-interactive-primary-default) 12%, transparent)
+      color-mix(in srgb, var(--co-color-surface-interactive-primary-default) 12%, transparent)
     );
     color: var(--co-component-nav-drawer-item-foreground-selected, var(--co-color-text-link));
     font-weight: var(--co-font-weight-medium);

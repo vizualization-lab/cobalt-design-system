@@ -32,31 +32,44 @@ function buildMappings(tokens) {
   // ── Colors ──────────────────────────────────────────────────────────────────
   const colors = {};
 
-  // Semantic color roles: 5 functional variants per role
-  for (const role of ['primary', 'neutral', 'danger', 'success', 'warning']) {
-    colors[role] = {};
+  // Semantic state color roles: 5 functional variants per role
+  colors.state = {};
+  for (const role of ['primary', 'secondary', 'neutral', 'danger', 'success', 'warning']) {
+    colors.state[role] = {};
     for (const variant of ['base', 'light', 'dark', 'subtle', 'contrast']) {
-      const varName = `--co-color-${role}-${variant}`;
+      const varName = `--co-color-state-${role}-${variant}`;
       if (varName in tokens) {
-        colors[role][variant] = `var(${varName})`;
-        if (variant === 'base') colors[role].DEFAULT = `var(${varName})`;
+        colors.state[role][variant] = `var(${varName})`;
+        if (variant === 'base') colors.state[role].DEFAULT = `var(${varName})`;
       }
     }
   }
 
   // Surface colors
-  colors.surface = {};
-  for (const variant of ['default', 'raised', 'sunken', 'overlay']) {
-    const varName = `--co-color-surface-${variant}`;
+  colors.surface = { static: {}, interactive: {} };
+  for (const variant of ['page', 'default', 'raised', 'sunken', 'overlay', 'contrast']) {
+    const varName = `--co-color-surface-static-${variant}`;
     if (varName in tokens) {
-      colors.surface[variant] = `var(${varName})`;
-      if (variant === 'default') colors.surface.DEFAULT = `var(${varName})`;
+      colors.surface.static[variant] = `var(${varName})`;
+      if (variant === 'default') colors.surface.static.DEFAULT = `var(${varName})`;
     }
   }
 
   // Text colors
   colors.text = {};
-  for (const variant of ['default', 'secondary', 'disabled', 'inverse', 'on-primary', 'link']) {
+  for (const variant of [
+    'default',
+    'secondary',
+    'tertiary',
+    'placeholder',
+    'link',
+    'on-primary',
+    'on-secondary',
+    'on-danger',
+    'on-success',
+    'on-warning',
+    'on-contrast',
+  ]) {
     const varName = `--co-color-text-${variant}`;
     if (varName in tokens) {
       colors.text[variant] = `var(${varName})`;
@@ -66,7 +79,17 @@ function buildMappings(tokens) {
 
   // Border colors
   colors.border = {};
-  for (const variant of ['default', 'strong', 'subtle', 'focus']) {
+  for (const variant of [
+    'default',
+    'strong',
+    'subtle',
+    'active',
+    'danger',
+    'success',
+    'focus',
+    'selected',
+    'contrast',
+  ]) {
     const varName = `--co-color-border-${variant}`;
     if (varName in tokens) {
       colors.border[variant] = `var(${varName})`;
@@ -74,22 +97,23 @@ function buildMappings(tokens) {
     }
   }
 
-  // Interactive colors (role → state hierarchy)
-  colors.interactive = {};
+  // Interactive surface colors (role → state hierarchy)
   for (const [role, states] of [
-    ['primary', ['default', 'hover', 'active', 'disabled']],
-    ['subtle', ['default', 'hover', 'active', 'disabled', 'selected']],
-    ['bold', ['default', 'hover', 'active', 'disabled', 'selected']],
-    ['danger', ['default', 'hover', 'active', 'disabled']],
-    ['success', ['default', 'hover', 'active', 'disabled']],
+    ['primary', ['default', 'hover', 'active', 'selected']],
+    ['secondary', ['default', 'hover', 'active']],
+    ['subtle', ['default', 'hover', 'active', 'selected']],
+    ['contrast', ['default', 'hover', 'active', 'selected']],
+    ['danger', ['default', 'hover', 'active']],
+    ['success', ['default', 'hover', 'active']],
+    ['warning', ['default', 'hover', 'active']],
   ]) {
-    colors.interactive[role] = {};
+    colors.surface.interactive[role] = {};
     for (const state of states) {
-      const varName = `--co-color-interactive-${role}-${state}`;
+      const varName = `--co-color-surface-interactive-${role}-${state}`;
       if (varName in tokens) {
-        colors.interactive[role][state] = `var(${varName})`;
+        colors.surface.interactive[role][state] = `var(${varName})`;
         if (role === 'primary' && state === 'default') {
-          colors.interactive.DEFAULT = `var(${varName})`;
+          colors.surface.interactive.DEFAULT = `var(${varName})`;
         }
       }
     }

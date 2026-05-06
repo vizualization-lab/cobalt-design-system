@@ -35,16 +35,16 @@
 /* ── Flowchart nodes ───────────────────────────────────────── */
 
 .cobalt-mermaid .flowchart .node > .label-container {
-  fill: var(--co-color-interactive-subtle-selected) !important;
-  stroke: var(--co-color-primary-base) !important;
+  fill: var(--co-color-surface-interactive-subtle-selected) !important;
+  stroke: var(--co-color-state-primary-base) !important;
   stroke-width: 1px !important;
   filter: drop-shadow(0 4px 10px color-mix(in srgb, var(--co-color-text-default) 12%, transparent))
-    drop-shadow(0 1px 0 color-mix(in srgb, var(--co-color-surface-default) 50%, transparent));
+    drop-shadow(0 1px 0 color-mix(in srgb, var(--co-color-surface-static-default) 50%, transparent));
 }
 
 .cobalt-mermaid .flowchart .node .label rect {
-  fill: var(--co-color-interactive-subtle-selected) !important;
-  stroke: var(--co-color-primary-base) !important;
+  fill: var(--co-color-surface-interactive-subtle-selected) !important;
+  stroke: var(--co-color-state-primary-base) !important;
   stroke-width: 1px !important;
 }
 
@@ -64,13 +64,13 @@
 }
 
 .cobalt-mermaid .edgeLabel {
-  background-color: var(--co-color-surface-page) !important;
+  background-color: var(--co-color-surface-static-page) !important;
   color: var(--co-color-text-secondary) !important;
 }
 
 .cobalt-mermaid .edgeLabel rect,
 .cobalt-mermaid .labelBkg {
-  fill: var(--co-color-surface-page) !important;
+  fill: var(--co-color-surface-static-page) !important;
   stroke: var(--co-color-border-subtle) !important;
 }
 
@@ -81,7 +81,7 @@
 /* ── Flowchart subgraphs / clusters ────────────────────────── */
 
 .cobalt-mermaid .cluster rect {
-  fill: var(--co-color-surface-raised) !important;
+  fill: var(--co-color-surface-static-raised) !important;
   stroke: var(--co-color-border-default) !important;
   rx: var(--co-shape-radius-lg) !important;
   ry: var(--co-shape-radius-lg) !important;
@@ -100,8 +100,8 @@
 /* ── Sequence diagram actors ───────────────────────────────── */
 
 .cobalt-mermaid .actor {
-  fill: var(--co-color-primary-subtle) !important;
-  stroke: var(--co-color-primary-base) !important;
+  fill: var(--co-color-state-primary-subtle) !important;
+  stroke: var(--co-color-state-primary-base) !important;
 }
 
 .cobalt-mermaid text.actor > tspan {
@@ -122,14 +122,14 @@
 .cobalt-mermaid .activation0,
 .cobalt-mermaid .activation1,
 .cobalt-mermaid .activation2 {
-  fill: var(--co-color-primary-subtle) !important;
-  stroke: var(--co-color-primary-base) !important;
+  fill: var(--co-color-state-primary-subtle) !important;
+  stroke: var(--co-color-state-primary-base) !important;
 }
 
 /* ── Sequence diagram notes ────────────────────────────────── */
 
 .cobalt-mermaid .note {
-  fill: var(--co-color-warning-subtle) !important;
+  fill: var(--co-color-state-warning-subtle) !important;
   stroke: var(--co-color-border-default) !important;
 }
 
@@ -144,7 +144,7 @@
 }
 
 .cobalt-mermaid .labelBox {
-  fill: var(--co-color-surface-sunken) !important;
+  fill: var(--co-color-surface-static-sunken) !important;
   stroke: var(--co-color-border-default) !important;
 }
 
@@ -156,12 +156,12 @@
 /* ── State diagram states ──────────────────────────────────── */
 
 .cobalt-mermaid .stateGroup .composit {
-  fill: var(--co-color-surface-default) !important;
+  fill: var(--co-color-surface-static-default) !important;
 }
 
 .cobalt-mermaid .stateGroup rect {
-  fill: var(--co-color-primary-subtle) !important;
-  stroke: var(--co-color-primary-base) !important;
+  fill: var(--co-color-state-primary-subtle) !important;
+  stroke: var(--co-color-state-primary-base) !important;
 }
 
 .cobalt-mermaid .stateGroup .stateTitle {
@@ -182,15 +182,15 @@
 
 .cobalt-mermaid .start-state,
 .cobalt-mermaid .node circle.state-start {
-  fill: var(--co-color-neutral-base) !important;
+  fill: var(--co-color-state-neutral-base) !important;
 }
 
 .cobalt-mermaid .end-state-outer {
-  fill: var(--co-color-neutral-base) !important;
+  fill: var(--co-color-state-neutral-base) !important;
 }
 
 .cobalt-mermaid .end-state-inner {
-  fill: var(--co-color-surface-default) !important;
+  fill: var(--co-color-surface-static-default) !important;
 }
 
 /* ── Background ────────────────────────────────────────────── */

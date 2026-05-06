@@ -37,8 +37,8 @@ describe('co-button-icon', () => {
     const el = await fixture<CoButtonIcon>(
       html`<co-button-icon name="star" variant="secondary" aria-label="Star"></co-button-icon>`,
     );
-    el.style.setProperty('--co-color-interactive-secondary-default', 'rgb(245 247 255)');
-    el.style.setProperty('--co-color-interactive-primary-default', 'rgb(33 55 77)');
+    el.style.setProperty('--co-color-surface-interactive-secondary-default', 'rgb(245 247 255)');
+    el.style.setProperty('--co-color-surface-interactive-primary-default', 'rgb(33 55 77)');
     el.style.setProperty('--co-border-width-action', '2px');
 
     await el.updateComplete;

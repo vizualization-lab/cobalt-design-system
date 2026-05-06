@@ -93,7 +93,7 @@ const next = computed(() =>
 }
 
 .prev-next-link:hover .prev-next-title {
-  color: var(--co-text-link);
+  color: var(--co-color-text-link);
 }
 
 .prev-next-link:hover .prev-next-title svg {

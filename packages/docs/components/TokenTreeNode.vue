@@ -118,7 +118,7 @@ function toggleBranch() {
 }
 
 .branch-toggle:hover {
-  background: var(--co-color-surface-sunken);
+  background: var(--co-color-surface-static-sunken);
 }
 
 .branch-chevron {
@@ -169,12 +169,16 @@ function toggleBranch() {
 }
 
 .token-leaf:hover {
-  background: var(--co-color-surface-sunken);
+  background: var(--co-color-surface-static-sunken);
   color: var(--co-color-text-default);
 }
 
 .token-leaf.selected {
-  background: color-mix(in srgb, var(--co-color-interactive-primary-default) 12%, transparent);
+  background: color-mix(
+    in srgb,
+    var(--co-color-surface-interactive-primary-default) 12%,
+    transparent
+  );
   color: var(--co-color-text-link);
 }
 

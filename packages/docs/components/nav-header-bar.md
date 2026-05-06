@@ -8,7 +8,7 @@ A horizontal header bar for app-level navigation. Provides a structured layout w
 
 <ClientOnly>
 <co-nav-header-bar label="App Header" style="margin: 16px 0 24px;">
-  <svg slot="logo" width="32" height="32" viewBox="0 0 32 32" style="display: block;"><rect width="32" height="32" rx="6" fill="var(--co-color-primary-base)"/><text x="16" y="22" text-anchor="middle" fill="white" font-size="16" font-weight="700" font-family="var(--co-font-family-sans)">C</text></svg>
+  <svg slot="logo" width="32" height="32" viewBox="0 0 32 32" style="display: block;"><rect width="32" height="32" rx="6" fill="var(--co-color-state-primary-base)"/><text x="16" y="22" text-anchor="middle" fill="white" font-size="16" font-weight="700" font-family="var(--co-font-family-sans)">C</text></svg>
   <co-button variant="primary" size="sm">
     <co-icon slot="prefix" name="add" size="sm"></co-icon>
     Create

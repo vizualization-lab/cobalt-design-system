@@ -50,7 +50,7 @@ export const html = `
         style="
           padding: 10px 12px;
           border: 1px solid var(--co-color-border-default);
-          border-radius: var(--co-control-radius);
+          border-radius: var(--co-control-radius-interactive);
           font: inherit;
         "
       />
