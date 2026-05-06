@@ -1,9 +1,7 @@
-import React from 'react';
-import { createComponent } from '@lit/react';
-import { CoIcon as CoIconElement } from '@cobalt/components/icon';
+import '@cobalt/components/icon';
+import type { CoIcon as CoIconElement } from '@cobalt/components/icon';
+import { createCobaltComponent } from '../create-cobalt-component.js';
 
-export const CoIcon = createComponent({
+export const CoIcon = createCobaltComponent<CoIconElement>({
   tagName: 'co-icon',
-  elementClass: CoIconElement,
-  react: React,
 });

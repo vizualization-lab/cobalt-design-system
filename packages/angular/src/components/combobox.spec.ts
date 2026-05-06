@@ -80,9 +80,12 @@ describe('Angular CoCombobox', () => {
     fixture.detectChanges();
     combobox = fixture.nativeElement.querySelector('co-combobox');
     option = fixture.nativeElement.querySelector('co-option');
+    await combobox.updateComplete;
   });
 
-  afterEach(() => {
+  afterEach(async () => {
+    await combobox?.updateComplete;
+    fixture?.destroy();
     TestBed.resetTestingModule();
   });
 
@@ -95,13 +98,14 @@ describe('Angular CoCombobox', () => {
     expect(combobox.allowCustomChoice).toBe(false);
   });
 
-  it('syncs combobox behavior properties', () => {
+  it('syncs combobox behavior properties', async () => {
     host.autocomplete = 'list';
     host.matchMode = 'begin';
     host.multiple = true;
     host.allowCustomChoice = true;
     host.danger = true;
     fixture.detectChanges();
+    await combobox.updateComplete;
 
     expect(combobox.autocomplete).toBe('list');
     expect(combobox.matchMode).toBe('begin');
@@ -110,10 +114,11 @@ describe('Angular CoCombobox', () => {
     expect(combobox.danger).toBe(true);
   });
 
-  it('syncs option properties', () => {
+  it('syncs option properties', async () => {
     host.optionChecked = true;
     host.optionDisabled = true;
     fixture.detectChanges();
+    await option.updateComplete;
 
     expect(option.value).toBe('apple');
     expect(option.checked).toBe(true);
