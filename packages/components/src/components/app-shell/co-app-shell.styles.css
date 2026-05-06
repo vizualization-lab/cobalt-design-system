@@ -125,7 +125,7 @@
   box-shadow: var(--co-elevation-shadow-lg);
   outline: none;
   transform: translateX(calc(-100% - var(--co-space-3)));
-  transition: transform var(--co-motion-duration-fast, 0.2s) var(--co-motion-easing-default, ease);
+  transition: transform var(--co-motion-duration-fast) var(--co-motion-easing-default);
   will-change: transform;
 }
 

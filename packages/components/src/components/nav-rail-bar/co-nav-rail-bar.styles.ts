@@ -4,8 +4,8 @@ import { css } from 'lit';
 export const cobaltNavRailBarStyles = css`
   :host {
     display: block;
-    inline-size: min(100%, var(--co-component-nav-rail-bar-width, 115px));
-    max-inline-size: var(--co-component-nav-rail-bar-width-max, 200px);
+    inline-size: min(100%, var(--co-component-nav-rail-bar-width));
+    max-inline-size: var(--co-component-nav-rail-bar-width-max);
     block-size: 100%;
     box-sizing: border-box;
   }
@@ -18,7 +18,7 @@ export const cobaltNavRailBarStyles = css`
     block-size: 100%;
     padding: var(--co-component-nav-rail-bar-padding-y) var(--co-component-nav-rail-bar-padding-x);
     border-radius: var(--co-component-nav-rail-bar-radius);
-    background: var(--co-component-nav-rail-bar-background, var(--co-color-surface-static-sunken));
+    background: var(--co-component-nav-rail-bar-background);
     box-shadow: var(--co-elevation-shadow-md);
   }
 
@@ -26,6 +26,6 @@ export const cobaltNavRailBarStyles = css`
     display: flex;
     flex-direction: column;
     flex: 1 1 auto;
-    gap: var(--co-component-nav-rail-bar-gap, var(--co-space-2));
+    gap: var(--co-component-nav-rail-bar-gap);
   }
 `;

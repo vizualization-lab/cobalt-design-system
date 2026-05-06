@@ -34,7 +34,7 @@ export const cobaltComboboxStyles = css`
   }
 
   .form-field__help-text {
-    color: var(--co-color-text-tertiary);
+    color: var(--co-color-text-secondary);
     font-size: var(--co-typography-caption-size);
     line-height: var(--co-typography-caption-line-height);
   }
@@ -154,7 +154,7 @@ export const cobaltComboboxStyles = css`
     display: inline-flex;
     align-items: center;
     flex: 0 0 auto;
-    color: var(--co-color-text-tertiary);
+    color: var(--co-color-text-secondary);
   }
 
   /* ── Chevron indicator ── */
@@ -173,7 +173,7 @@ export const cobaltComboboxStyles = css`
     color: var(--co-color-feedback-danger-text);
     font-size: var(--co-typography-caption-size);
     line-height: var(--co-typography-caption-line-height);
-    min-block-size: var(--co-font-line-height-normal, 1.25em);
+    min-block-size: var(--co-font-line-height-normal);
   }
 
   [data-overlay-outer-wrapper] {
@@ -200,7 +200,7 @@ export const cobaltComboboxStyles = css`
     border: var(--co-border-width-panel) solid var(--co-color-border-default);
     border-radius: var(--co-control-radius-interactive);
     background: var(--co-color-surface-static-default);
-    box-shadow: var(--co-elevation-shadow-lg, 0 12px 24px rgb(15 23 42 / 18%));
+    box-shadow: var(--co-elevation-shadow-lg);
     overflow: hidden;
   }
 

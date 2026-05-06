@@ -1,7 +1,7 @@
 import { html, LitElement, nothing } from 'lit';
 import { styleMap } from 'lit/directives/style-map.js';
 import { customElement, property, query, state } from 'lit/decorators.js';
-import { CoBreakpointMd, CoComponentNavRailBarWidth } from '@cobalt/tokens';
+import { CoBreakpointMd } from '@cobalt/tokens';
 import { cobaltAppShellStyles } from './co-app-shell.styles.js';
 
 export interface AppShellDrawerDetail {
@@ -299,11 +299,11 @@ export class CoAppShell extends LitElement {
   }
 
   private get _resolvedRailWidth(): string {
-    return this.railWidth || `var(--co-app-shell-rail-width, ${CoComponentNavRailBarWidth})`;
+    return this.railWidth || 'var(--co-component-nav-rail-bar-width)';
   }
 
   private get _resolvedDrawerWidth(): string {
-    return this.drawerWidth || 'var(--co-app-shell-drawer-width, 260px)';
+    return this.drawerWidth || 'var(--co-component-nav-drawer-width)';
   }
 
   private get _contentColumns(): string {

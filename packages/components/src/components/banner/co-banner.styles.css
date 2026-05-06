@@ -10,20 +10,20 @@
   align-items: center;
   justify-content: center;
   inline-size: 100%;
-  min-block-size: var(--co-component-banner-height, 44px);
-  padding: var(--co-component-banner-padding, var(--co-space-1));
+  min-block-size: var(--co-component-banner-height);
+  padding: var(--co-component-banner-padding);
   box-sizing: border-box;
-  background: var(--co-component-banner-background, var(--co-color-surface-static-raised));
-  color: var(--co-component-banner-foreground, var(--co-color-text-default));
+  background: var(--co-component-banner-background);
+  color: var(--co-component-banner-foreground);
   font-family: var(--co-font-family-sans);
   font-size: var(--co-font-size-p);
   line-height: var(--co-font-line-height-normal);
 }
 
 .banner__title {
-  font-weight: var(--co-component-banner-title-weight, var(--co-font-weight-medium));
+  font-weight: var(--co-component-banner-title-weight);
   text-transform: uppercase;
-  letter-spacing: var(--co-font-tracking-wide, 0.04em);
+  letter-spacing: var(--co-font-tracking-wide);
 }
 
 .banner__content {
