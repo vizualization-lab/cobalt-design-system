@@ -1178,9 +1178,10 @@ async function copyToken(name: string) {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   /* dvh keeps the body inside the viewport when mobile browsers' URL bar
-     animates in/out. Lower max than before (640 vs 720) so the browser
-     stays above the fold on shorter laptops too. */
-  height: clamp(380px, 60dvh, 640px);
+     animates in/out. The dvh percentage and max are sized to leave room for
+     the toolbar above so the entire shell fits within a typical 900px-tall
+     viewport without scrolling. */
+  height: clamp(360px, 52dvh, 540px);
 }
 
 .browser-body.has-detail {
