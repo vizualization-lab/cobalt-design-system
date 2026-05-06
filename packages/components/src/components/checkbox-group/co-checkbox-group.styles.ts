@@ -17,7 +17,7 @@ export const cobaltCheckboxGroupStyles = css`
   }
 
   .form-field__help-text {
-    color: var(--co-color-text-tertiary);
+    color: var(--co-color-text-secondary);
     font-size: var(--co-typography-caption-size);
     line-height: var(--co-typography-caption-line-height);
   }
@@ -38,6 +38,6 @@ export const cobaltCheckboxGroupStyles = css`
     color: var(--co-color-feedback-danger-text);
     font-size: var(--co-typography-caption-size);
     line-height: var(--co-typography-caption-line-height);
-    min-block-size: var(--co-font-line-height-normal, 1.25em);
+    min-block-size: var(--co-font-line-height-normal);
   }
 `;

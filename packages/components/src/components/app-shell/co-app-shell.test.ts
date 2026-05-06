@@ -1,5 +1,5 @@
 import { fixture, html, expect, oneEvent } from '@open-wc/testing';
-import { CoBreakpointMd, CoComponentNavRailBarWidth } from '@cobalt/tokens';
+import { CoBreakpointMd } from '@cobalt/tokens';
 import { runA11yAudit } from '../../test-utils/a11y.js';
 import './co-app-shell.js';
 import '../nav-drawer/co-nav-drawer.js';
@@ -92,7 +92,7 @@ describe('co-app-shell', () => {
     expect(media.lastQuery).to.equal(`(min-width: ${CoBreakpointMd})`);
     const fallbackRow = fallback.shadowRoot?.querySelector<HTMLElement>('.app-shell__content-row');
     expect(fallbackRow?.style.gridTemplateColumns).to.equal(
-      `var(--co-app-shell-rail-width, ${CoComponentNavRailBarWidth}) minmax(0, 1fr)`,
+      'var(--co-component-nav-rail-bar-width) minmax(0, 1fr)',
     );
 
     stubMatchMedia(true);
@@ -234,7 +234,7 @@ describe('co-app-shell', () => {
     expect(el.shadowRoot?.querySelector('lion-drawer')).to.not.exist;
     expect(getComputedStyle(overlay!).position).to.equal('fixed');
     expect(panel?.dataset.overlayLayout).to.equal('split');
-    expect(panel?.style.gridTemplateColumns).to.contain('116px');
+    expect(panel?.style.gridTemplateColumns).to.contain('var(--co-component-nav-rail-bar-width)');
     expect(panel?.getAttribute('role')).to.equal('dialog');
   });
 

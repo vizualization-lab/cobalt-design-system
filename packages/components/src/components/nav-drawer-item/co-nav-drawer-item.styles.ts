@@ -26,27 +26,18 @@ export const cobaltNavDrawerItemStyles = css`
   }
 
   :host(:not([selected])) .item:hover {
-    background: var(
-      --co-component-nav-drawer-item-background-hover,
-      color-mix(in srgb, var(--co-color-surface-interactive-primary-default) 8%, transparent)
-    );
-    color: var(--co-component-nav-drawer-item-foreground-hover, var(--co-color-text-link));
+    background: var(--co-component-nav-drawer-item-background-hover);
+    color: var(--co-component-nav-drawer-item-foreground-hover);
   }
 
   :host(:not([selected]):not([disabled])) .item:active {
-    background: var(
-      --co-component-nav-drawer-item-background-active,
-      color-mix(in srgb, var(--co-color-surface-interactive-primary-default) 20%, transparent)
-    );
-    color: var(--co-component-nav-drawer-item-foreground-active, var(--co-color-text-link));
+    background: var(--co-component-nav-drawer-item-background-active);
+    color: var(--co-component-nav-drawer-item-foreground-active);
   }
 
   :host([selected]) .item {
-    background: var(
-      --co-component-nav-drawer-item-background-selected,
-      color-mix(in srgb, var(--co-color-surface-interactive-primary-default) 12%, transparent)
-    );
-    color: var(--co-component-nav-drawer-item-foreground-selected, var(--co-color-text-link));
+    background: var(--co-component-nav-drawer-item-background-selected);
+    color: var(--co-component-nav-drawer-item-foreground-selected);
     font-weight: var(--co-font-weight-medium);
   }
 
@@ -60,8 +51,7 @@ export const cobaltNavDrawerItemStyles = css`
   }
 
   .item:focus-visible {
-    outline: var(--co-focus-ring-width) solid
-      var(--co-component-nav-drawer-item-focus-ring, var(--co-color-border-focus));
+    outline: var(--co-focus-ring-width) solid var(--co-component-nav-drawer-item-focus-ring);
     outline-offset: calc(-1 * var(--co-shape-border-width-thin));
   }
 

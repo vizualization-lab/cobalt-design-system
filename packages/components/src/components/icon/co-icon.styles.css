@@ -19,28 +19,28 @@ svg {
 /* ── Sizes ── */
 :host,
 :host([size='md']) {
-  width: var(--co-sizing-icon-md, 24px);
-  height: var(--co-sizing-icon-md, 24px);
+  width: var(--co-sizing-icon-md);
+  height: var(--co-sizing-icon-md);
 }
 
 :host([size='xs']) {
-  width: var(--co-sizing-icon-xs, 16px);
-  height: var(--co-sizing-icon-xs, 16px);
+  width: var(--co-sizing-icon-xs);
+  height: var(--co-sizing-icon-xs);
 }
 
 :host([size='sm']) {
-  width: var(--co-sizing-icon-sm, 20px);
-  height: var(--co-sizing-icon-sm, 20px);
+  width: var(--co-sizing-icon-sm);
+  height: var(--co-sizing-icon-sm);
 }
 
 :host([size='lg']) {
-  width: var(--co-sizing-icon-lg, 32px);
-  height: var(--co-sizing-icon-lg, 32px);
+  width: var(--co-sizing-icon-lg);
+  height: var(--co-sizing-icon-lg);
 }
 
 :host([size='xl']) {
-  width: var(--co-sizing-icon-xl, 48px);
-  height: var(--co-sizing-icon-xl, 48px);
+  width: var(--co-sizing-icon-xl);
+  height: var(--co-sizing-icon-xl);
 }
 
 /* ── Animations ──
@@ -62,7 +62,7 @@ svg {
 :host([animated]) .co-anim-bell-body {
   transform-box: fill-box;
   transform-origin: center top;
-  animation: co-bell-ring 400ms var(--co-motion-easing-in-out, ease-in-out) 2;
+  animation: co-bell-ring 400ms var(--co-motion-easing-in-out) 2;
 }
 @keyframes co-bell-ring {
   0%,
@@ -102,7 +102,7 @@ svg {
 :host([animated]) .co-anim-check {
   transform-box: fill-box;
   transform-origin: center;
-  animation: co-check-in 300ms var(--co-motion-easing-out, ease-out) forwards;
+  animation: co-check-in 300ms var(--co-motion-easing-out) forwards;
 }
 @keyframes co-check-in {
   from {

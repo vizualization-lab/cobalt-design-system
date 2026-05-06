@@ -34,7 +34,7 @@ export const cobaltFormStyles = css`
   }
 
   .form-field__help-text {
-    color: var(--co-color-text-tertiary);
+    color: var(--co-color-text-secondary);
     font-size: var(--co-typography-caption-size);
     line-height: var(--co-typography-caption-line-height);
   }

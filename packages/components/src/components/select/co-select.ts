@@ -206,7 +206,7 @@ export class CoSelect extends LionSelectRich {
         icon.setAttribute('aria-hidden', 'true');
         icon.classList.add('select__chevron');
         icon.style.transition =
-          'transform var(--co-motion-duration-fast, 0.15s) var(--co-motion-easing-default, ease)';
+          'transform var(--co-motion-duration-fast) var(--co-motion-easing-default)';
         invoker.appendChild(icon);
         return invoker;
       },

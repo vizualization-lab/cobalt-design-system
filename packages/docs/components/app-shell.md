@@ -357,11 +357,11 @@ export class AppComponent {
 
 ### Properties
 
-| Property      | Type      | Default                                   | Description                     |
-| ------------- | --------- | ----------------------------------------- | ------------------------------- |
-| `drawerOpen`  | `boolean` | `false`                                   | Controlled mobile overlay state |
-| `railWidth`   | `string`  | `var(--co-app-shell-rail-width, 115px)`   | Desktop rail column width       |
-| `drawerWidth` | `string`  | `var(--co-app-shell-drawer-width, 260px)` | Desktop drawer column width     |
+| Property      | Type      | Default                                  | Description                     |
+| ------------- | --------- | ---------------------------------------- | ------------------------------- |
+| `drawerOpen`  | `boolean` | `false`                                  | Controlled mobile overlay state |
+| `railWidth`   | `string`  | `var(--co-component-nav-rail-bar-width)` | Desktop rail column width       |
+| `drawerWidth` | `string`  | `var(--co-component-nav-drawer-width)`   | Desktop drawer column width     |
 
 ### Methods
 
@@ -407,10 +407,10 @@ export class AppComponent {
 
 ### CSS Custom Properties
 
-| Custom Property               | Default | Description                  |
-| ----------------------------- | ------- | ---------------------------- |
-| `--co-app-shell-rail-width`   | `115px` | Default desktop rail width   |
-| `--co-app-shell-drawer-width` | `260px` | Default desktop drawer width |
+| Custom Property                     | Default | Description                  |
+| ----------------------------------- | ------- | ---------------------------- |
+| `--co-component-nav-rail-bar-width` | `116px` | Default desktop rail width   |
+| `--co-component-nav-drawer-width`   | `260px` | Default desktop drawer width |
 
 ## Accessibility
 

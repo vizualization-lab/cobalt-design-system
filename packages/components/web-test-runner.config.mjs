@@ -5,6 +5,17 @@ export default {
   files: 'dist/**/*.test.js',
   nodeResolve: true,
   browsers: [playwrightLauncher({ product: 'chromium' })],
+  testRunnerHtml: (testRunnerImport) => `
+    <!DOCTYPE html>
+    <html>
+      <head>
+        <link rel="stylesheet" href="/node_modules/@cobalt/tokens/dist/css/tokens.css" />
+      </head>
+      <body>
+        <script type="module" src="${testRunnerImport}"></script>
+      </body>
+    </html>
+  `,
   testFramework: {
     config: {
       timeout: 10000,

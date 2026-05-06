@@ -14,14 +14,11 @@ export const cobaltNavHeaderBarStyles = css`
     align-items: center;
     gap: var(--co-space-gap-md);
     inline-size: 100%;
-    min-block-size: var(--co-component-nav-header-bar-height, 64px);
+    min-block-size: var(--co-component-nav-header-bar-height);
     box-sizing: border-box;
-    background: var(
-      --co-component-nav-header-bar-background,
-      var(--co-color-surface-static-default)
-    );
+    background: var(--co-component-nav-header-bar-background);
     border-block-end: var(--co-border-width-divider) solid
-      var(--co-component-nav-header-bar-border-color, var(--co-color-border-subtle));
+      var(--co-component-nav-header-bar-border-color);
   }
 
   .nav-header-bar__logo {

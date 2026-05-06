@@ -77,6 +77,25 @@
         }
       },
       "nav": {
+        "header": {
+          "bar": {
+            "height": {
+              "$type": "dimension",
+              "$value": "64px",
+              "$description": "Minimum height for nav header bars."
+            },
+            "background": {
+              "$type": "color",
+              "$value": "{co.color.surface.static.default}",
+              "$description": "Container background for nav header bars."
+            },
+            "border-color": {
+              "$type": "color",
+              "$value": "{co.color.border.subtle}",
+              "$description": "Divider color for nav header bars."
+            }
+          }
+        },
         "rail": {
           "bar": {
             "width": {
@@ -201,6 +220,11 @@
           }
         },
         "drawer": {
+          "width": {
+            "$type": "dimension",
+            "$value": "260px",
+            "$description": "Default width for contextual navigation drawers."
+          },
           "item": {
             "background": {
               "hover": {
