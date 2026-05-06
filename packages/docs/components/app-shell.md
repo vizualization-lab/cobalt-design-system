@@ -63,7 +63,7 @@ This composition intentionally omits `drawer` and uses `footer` so you can see h
     <div
       slot="avatar"
       aria-label="Jordan Lee"
-      style="display: grid; place-items: center; width: 36px; height: 36px; border-radius: 999px; background: var(--co-color-primary-subtle); color: var(--co-color-primary-base); font-size: 13px; font-weight: 600;"
+      style="display: grid; place-items: center; width: 36px; height: 36px; border-radius: 999px; background: var(--co-color-state-primary-subtle); color: var(--co-color-state-primary-base); font-size: 13px; font-weight: 600;"
     >
       JL
     </div>
@@ -148,8 +148,8 @@ function App() {
             width: 36,
             height: 36,
             borderRadius: 999,
-            background: 'var(--co-color-primary-subtle)',
-            color: 'var(--co-color-primary-base)',
+            background: 'var(--co-color-state-primary-subtle)',
+            color: 'var(--co-color-state-primary-base)',
             fontSize: 13,
             fontWeight: 600,
           }}
@@ -225,7 +225,7 @@ function onToggle(event: CustomEvent) {
       <div
         slot="avatar"
         aria-label="Jordan Lee"
-        style="display: grid; place-items: center; width: 36px; height: 36px; border-radius: 999px; background: var(--co-color-primary-subtle); color: var(--co-color-primary-base); font-size: 13px; font-weight: 600;"
+        style="display: grid; place-items: center; width: 36px; height: 36px; border-radius: 999px; background: var(--co-color-state-primary-subtle); color: var(--co-color-state-primary-base); font-size: 13px; font-weight: 600;"
       >
         JL
       </div>
@@ -309,7 +309,7 @@ export class AppComponent {
     <div
       slot="avatar"
       aria-label="Jordan Lee"
-      style="display: grid; place-items: center; width: 36px; height: 36px; border-radius: 999px; background: var(--co-color-primary-subtle); color: var(--co-color-primary-base); font-size: 13px; font-weight: 600;"
+      style="display: grid; place-items: center; width: 36px; height: 36px; border-radius: 999px; background: var(--co-color-state-primary-subtle); color: var(--co-color-state-primary-base); font-size: 13px; font-weight: 600;"
     >
       JL
     </div>

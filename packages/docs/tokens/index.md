@@ -18,12 +18,12 @@ Semantic tokens reference other tokens via `var()` and express design intent —
 
 | Category       | Prefix                            | What it covers                                                                                             |
 | -------------- | --------------------------------- | ---------------------------------------------------------------------------------------------------------- |
-| **Color**      | <nobr>`--co-color-`</nobr>        | Semantic roles (primary, neutral, ...) and contextual usage (surface, interactive, feedback)               |
+| **Color**      | <nobr>`--co-color-`</nobr>        | Semantic state roles and contextual usage (surface, text, border, feedback)                                |
 | **Border**     | <nobr>`--co-border-width-`</nobr> | Semantic border-width intents for default, action, divider, container, panel, and emphasized frames        |
 | **Space**      | <nobr>`--co-space-`</nobr>        | Semantic aliases for gaps, insets, section, and page margins                                               |
 | **Typography** | <nobr>`--co-typography-`</nobr>   | Semantic role presets (display, heading, title, subtitle, eyebrow, body-lg, body, body-sm, label, caption) |
 | **Focus**      | <nobr>`--co-focus-`</nobr>        | Shared focus ring width and offset                                                                         |
-| **Control**    | <nobr>`--co-control-`</nobr>      | Shared control radius referencing shape tokens                                                             |
+| **Control**    | <nobr>`--co-control-`</nobr>      | Shared control radius roles and sizing                                                                     |
 | **Layout**     | <nobr>`--co-layout-`</nobr>       | Shared layout constraints such as content max widths                                                       |
 | **Component**  | <nobr>`--co-component-`</nobr>    | Component-specific contracts such as avatar sizes and nav rail state tokens                                |
 
@@ -99,7 +99,7 @@ Per-mode imports are also available at `@cobalt/tokens/css/themes/<theme>-<mode>
   padding: var(--co-space-inset-md);
   border: var(--co-border-width-container) solid var(--co-color-border-default);
   border-radius: var(--co-shape-radius-md);
-  background: var(--co-color-surface-raised);
+  background: var(--co-color-surface-static-raised);
 }
 ```
 
@@ -121,7 +121,7 @@ The SCSS API provides theme-safe authoring helpers. Helpers and variables emit `
 .card {
   padding: co.space('inset.md');
   color: co.color('text.default');
-  background: co.color('surface.raised');
+  background: co.color('surface.static.raised');
   border-radius: co.$co-shape-radius-md;
 
   @include co.type('body');

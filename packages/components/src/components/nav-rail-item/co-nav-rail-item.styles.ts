@@ -21,10 +21,10 @@ export const cobaltNavRailItemStyles = css`
       var(--co-component-nav-rail-item-padding-x, var(--co-space-2));
     gap: var(--co-component-nav-rail-item-gap, var(--co-space-3));
     border: none;
-    border-radius: var(--co-component-nav-rail-item-radius, var(--co-shape-radius-2xl));
+    border-radius: var(--co-component-nav-rail-item-radius, var(--co-control-radius-interactive));
     background: var(
       --co-component-nav-rail-item-background-default,
-      var(--co-color-interactive-subtle-default)
+      var(--co-color-surface-interactive-subtle-default)
     );
     appearance: none;
     -webkit-appearance: none;
@@ -66,24 +66,24 @@ export const cobaltNavRailItemStyles = css`
   :host(:not([selected]):not([disabled])) .nav-item:active {
     background: var(
       --co-component-nav-rail-item-background-active,
-      var(--co-color-interactive-subtle-active)
+      var(--co-color-surface-interactive-subtle-active)
     );
   }
 
   :host(:not([selected])) .nav-item:hover {
     background: var(
       --co-component-nav-rail-item-background-hover,
-      var(--co-color-interactive-subtle-hover)
+      var(--co-color-surface-interactive-subtle-hover)
     );
-    color: var(--co-color-interactive-primary-default);
+    color: var(--co-color-surface-interactive-primary-default);
   }
 
   :host([selected]) .nav-item {
     background: var(
       --co-component-nav-rail-item-background-selected,
-      var(--co-color-interactive-subtle-selected)
+      var(--co-color-surface-interactive-subtle-selected)
     );
-    color: var(--co-color-interactive-primary-default);
+    color: var(--co-color-surface-interactive-primary-default);
   }
 
   .nav-item:focus-visible {

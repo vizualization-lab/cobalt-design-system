@@ -63,7 +63,7 @@ function luminance(hex: string): number {
 }
 
 function chipIconColor(hex: string): string {
-  return luminance(hex) > 0.35 ? 'var(--co-color-text-on-bold)' : '#fff';
+  return luminance(hex) > 0.35 ? 'var(--co-color-text-on-contrast)' : '#fff';
 }
 
 function swatchTitle(palette: string, shade: ColorShade) {

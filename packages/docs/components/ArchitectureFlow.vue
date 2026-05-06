@@ -53,7 +53,7 @@ const steps: ArchStep[] = [
   display: flex;
   flex-direction: column;
   padding: 14px 20px;
-  background: var(--co-color-surface-raised);
+  background: var(--co-color-surface-static-raised);
   border: 1px solid var(--co-border);
   border-radius: 10px;
   flex: 1;

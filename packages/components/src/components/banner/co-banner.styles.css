@@ -13,7 +13,7 @@
   min-block-size: var(--co-component-banner-height, 44px);
   padding: var(--co-component-banner-padding, var(--co-space-1));
   box-sizing: border-box;
-  background: var(--co-component-banner-background, var(--co-color-surface-raised));
+  background: var(--co-component-banner-background, var(--co-color-surface-static-raised));
   color: var(--co-component-banner-foreground, var(--co-color-text-default));
   font-family: var(--co-font-family-sans);
   font-size: var(--co-font-size-p);

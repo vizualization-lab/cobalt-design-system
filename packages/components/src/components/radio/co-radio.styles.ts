@@ -42,11 +42,11 @@ export const cobaltRadioStyles = css`
   }
 
   :host(:hover:not([disabled])) .radio__icon {
-    color: var(--co-color-interactive-primary-default);
+    color: var(--co-color-surface-interactive-primary-default);
   }
 
   :host([checked]) .radio__icon {
-    color: var(--co-color-interactive-primary-default);
+    color: var(--co-color-surface-interactive-primary-default);
   }
 
   :host([_keyboard-focus]) .radio__icon {

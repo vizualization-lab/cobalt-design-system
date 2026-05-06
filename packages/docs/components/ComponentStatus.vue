@@ -107,7 +107,7 @@ const totalCount = computed(() => {
   gap: var(--co-space-2);
   margin: var(--co-space-2) 0 var(--co-space-5);
   padding: var(--co-space-3);
-  background: var(--co-color-primary-subtle);
+  background: var(--co-color-state-primary-subtle);
   border-radius: var(--co-shape-radius-md);
   box-shadow: var(--co-elevation-shadow-md);
 }
@@ -171,17 +171,17 @@ const totalCount = computed(() => {
 }
 
 .status-pill--pass {
-  background: var(--co-color-success-subtle);
-  color: var(--co-color-success-base);
+  background: var(--co-color-state-success-subtle);
+  color: var(--co-color-state-success-base);
 }
 
 .status-pill--fail {
-  background: var(--co-color-danger-subtle);
-  color: var(--co-color-danger-base);
+  background: var(--co-color-state-danger-subtle);
+  color: var(--co-color-state-danger-base);
 }
 
 .status-pill--pending {
-  background: var(--co-color-surface-raised);
+  background: var(--co-color-surface-static-raised);
   color: var(--co-color-text-tertiary);
 }
 
@@ -237,11 +237,11 @@ const totalCount = computed(() => {
 }
 
 .status-legend__icon--pass {
-  color: var(--co-color-success-base);
+  color: var(--co-color-state-success-base);
 }
 
 .status-legend__icon--fail {
-  color: var(--co-color-danger-base);
+  color: var(--co-color-state-danger-base);
 }
 
 .status-legend__icon--pending,

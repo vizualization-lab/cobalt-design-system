@@ -35,14 +35,14 @@ const activeTab = ref(props.tabs[0]);
   border-radius: 12px;
   margin: 16px 0 24px;
   overflow: hidden;
-  background: var(--co-color-surface-sunken);
+  background: var(--co-color-surface-static-sunken);
 }
 
 .code-tabs-bar {
   display: flex;
   gap: 0;
   border-bottom: 1px solid var(--co-border);
-  background: var(--co-color-surface-raised);
+  background: var(--co-color-surface-static-raised);
   overflow-x: auto;
 }
 

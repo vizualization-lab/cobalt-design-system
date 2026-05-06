@@ -61,7 +61,7 @@ Use `co-label` when the label must be a separate DOM element. Omit the field com
       id="native-email"
       type="email"
       placeholder="name@example.com"
-      style="padding: 10px 12px; border: 1px solid var(--co-color-border-default); border-radius: var(--co-control-radius); font: inherit;"
+      style="padding: 10px 12px; border: 1px solid var(--co-color-border-default); border-radius: var(--co-control-radius-interactive); font: inherit;"
     />
   </div>
 

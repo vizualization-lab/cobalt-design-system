@@ -54,13 +54,13 @@
 
       body {
         overflow: hidden;
-        background: var(--co-color-surface-page);
+        background: var(--co-color-surface-static-page);
       }
 
       .wb-app-shell-page {
         block-size: 100dvh;
         min-block-size: 100dvh;
-        background: var(--co-color-surface-page);
+        background: var(--co-color-surface-static-page);
       }
 
       .wb-app-shell-preview {
@@ -68,7 +68,7 @@
         inline-size: 100%;
         block-size: 100%;
         min-block-size: 0;
-        background: var(--co-color-surface-page);
+        background: var(--co-color-surface-static-page);
       }
 
       .wb-app-shell-preview::part(base) {
@@ -84,8 +84,8 @@
       }
 
       .wb-app-shell-banner {
-        --co-component-banner-background: var(--co-color-primary-subtle);
-        --co-component-banner-foreground: var(--co-color-primary-base);
+        --co-component-banner-background: var(--co-color-state-primary-subtle);
+        --co-component-banner-foreground: var(--co-color-state-primary-base);
         --co-component-banner-padding: 12px 16px;
       }
 
@@ -119,8 +119,8 @@
         inline-size: 36px;
         block-size: 36px;
         border-radius: 999px;
-        background: var(--co-color-primary-subtle);
-        color: var(--co-color-primary-base);
+        background: var(--co-color-state-primary-subtle);
+        color: var(--co-color-state-primary-base);
         font-size: 13px;
         font-weight: 600;
         letter-spacing: 0.02em;
@@ -243,12 +243,12 @@
             <h1 style="margin: 0 0 12px">Track live operational health</h1>
             <p style="margin: 0 0 16px">Compose page-level structure inside the body slot.</p>
             <div style="display: flex; gap: 10px">
-              <co-card style="--co-component-card-background: var(--co-color-surface-page)">
+              <co-card style="--co-component-card-background: var(--co-color-surface-static-page)">
                 <h4 slot="header">Health</h4>
                 <span style="font-size: 2.2rem">18</span>
                 <h5 slot="footer">Last 24 hours</h5>
               </co-card>
-              <co-card style="--co-component-card-background: var(--co-color-surface-page)">
+              <co-card style="--co-component-card-background: var(--co-color-surface-static-page)">
                 <h4 slot="header">Health</h4>
                 <span style="font-size: 2.2rem">42</span>
                 <h5 slot="footer">Last 30 Days</h5>

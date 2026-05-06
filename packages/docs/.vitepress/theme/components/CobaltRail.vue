@@ -86,8 +86,9 @@ function onKey(event: KeyboardEvent, i: number) {
   display: flex;
   flex-direction: column;
   gap: var(--co-component-nav-rail-bar-gap, var(--co-space-2));
-  padding: var(--co-component-nav-rail-bar-padding, var(--co-space-2));
-  background: var(--co-component-nav-rail-bar-background, var(--co-color-surface-sunken));
+  padding: var(--co-component-nav-rail-bar-padding-y, var(--co-space-3))
+    var(--co-component-nav-rail-bar-padding-x, var(--co-space-2));
+  background: var(--co-component-nav-rail-bar-background, var(--co-color-surface-static-sunken));
   border-radius: var(--co-component-nav-rail-bar-radius, var(--co-shape-radius-lg));
   box-shadow: var(--co-elevation-shadow-md, 0 4px 12px rgba(0, 0, 0, 0.12));
   overflow-y: auto;
@@ -106,7 +107,7 @@ function onKey(event: KeyboardEvent, i: number) {
   border: none;
   background: var(
     --co-component-nav-rail-item-background-default,
-    var(--co-color-interactive-subtle-default)
+    var(--co-color-surface-interactive-subtle-default)
   );
   border-radius: var(--co-component-nav-rail-item-radius, var(--co-shape-radius-2xl));
   cursor: pointer;
@@ -136,20 +137,20 @@ function onKey(event: KeyboardEvent, i: number) {
 .rail-item:hover {
   background: var(
     --co-component-nav-rail-item-background-hover,
-    var(--co-color-interactive-subtle-hover)
+    var(--co-color-surface-interactive-subtle-hover)
   );
 }
 
 .rail-item:hover co-icon,
 .rail-item:active co-icon,
 .rail-item.is-active co-icon {
-  color: var(--co-color-interactive-primary-default);
+  color: var(--co-color-surface-interactive-primary-default);
 }
 
 .rail-item:active {
   background: var(
     --co-component-nav-rail-item-background-active,
-    var(--co-color-interactive-subtle-active)
+    var(--co-color-surface-interactive-subtle-active)
   );
 }
 
@@ -161,7 +162,7 @@ function onKey(event: KeyboardEvent, i: number) {
 .rail-item.is-active {
   background: var(
     --co-component-nav-rail-item-background-selected,
-    var(--co-color-interactive-subtle-selected)
+    var(--co-color-surface-interactive-subtle-selected)
   );
 }
 
@@ -196,7 +197,7 @@ function onKey(event: KeyboardEvent, i: number) {
   letter-spacing: var(--co-typography-eyebrow-tracking);
   line-height: var(--co-typography-eyebrow-line-height);
   text-transform: uppercase;
-  color: var(--co-color-primary-base);
+  color: var(--co-color-state-primary-base);
   background: var(--co-component-nav-rail-item-background-active);
   padding: 2px 7px;
   border-radius: var(--co-shape-radius-sm);

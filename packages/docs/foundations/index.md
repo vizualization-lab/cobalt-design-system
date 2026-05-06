@@ -36,14 +36,14 @@ Then reference any token in your styles:
 
 ```css
 .card {
-  background: var(--co-color-surface-default);
+  background: var(--co-color-surface-static-default);
   padding: var(--co-space-inset-md);
   border-radius: var(--co-shape-radius-md);
   box-shadow: var(--co-elevation-shadow-md);
 }
 ```
 
-> **Tip:** Prefer semantic tokens (e.g. `--co-color-primary-base`, `--co-control-height-md`) over raw values where they exist. This ensures your UI adapts correctly to theme changes and shared system rules.
+> **Tip:** Prefer semantic tokens (e.g. `--co-color-state-primary-base`, `--co-control-height-md`) over raw values where they exist. This ensures your UI adapts correctly to theme changes and shared system rules.
 
 If your project uses Sass, import the SCSS helper module and keep runtime theming through CSS custom properties:
 
@@ -52,7 +52,7 @@ If your project uses Sass, import the SCSS helper module and keep runtime themin
 
 .card {
   padding: co.space('inset.md');
-  background: co.color('surface.default');
+  background: co.color('surface.static.default');
   @include co.type('body');
 }
 ```

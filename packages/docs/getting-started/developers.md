@@ -195,24 +195,24 @@ Import the main token stylesheet to make all tokens available as CSS custom prop
 
 ```css
 .card {
-  background: var(--co-color-surface-default);
+  background: var(--co-color-surface-static-default);
   padding: var(--co-space-inset-md);
   border-radius: var(--co-shape-radius-md);
 }
 ```
 
-| Category   | Example Token              | Default Value                                                      |
-| ---------- | -------------------------- | ------------------------------------------------------------------ |
-| Color      | `--co-color-primary-base`  | `#154bcc`                                                          |
-| Spacing    | `--co-space-inset-md`      | `16px`                                                             |
-| Typography | `--co-font-size-md`        | `1rem`                                                             |
-| Radius     | `--co-shape-radius-md`     | `6px`                                                              |
-| Shadow     | `--co-elevation-shadow-md` | `0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)` |
+| Category   | Example Token                   | Default Value                                                      |
+| ---------- | ------------------------------- | ------------------------------------------------------------------ |
+| Color      | `--co-color-state-primary-base` | `#154bcc`                                                          |
+| Spacing    | `--co-space-inset-md`           | `16px`                                                             |
+| Typography | `--co-font-size-md`             | `1rem`                                                             |
+| Radius     | `--co-shape-radius-md`          | `6px`                                                              |
+| Shadow     | `--co-elevation-shadow-md`      | `0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)` |
 
 Tokens are also available as JavaScript exports:
 
 ```js
-import { CoColorPrimaryBase } from '@cobalt/tokens';
+import { CoColorStatePrimaryBase } from '@cobalt/tokens';
 ```
 
 ## Theming
@@ -240,13 +240,13 @@ Override any token at the root level or scope overrides to a specific subtree:
 ```css
 /* Global override */
 :root {
-  --co-color-primary-base: #7c3aed;
+  --co-color-state-primary-base: #7c3aed;
 }
 
 /* Scoped override for a section */
 .marketing-hero {
-  --co-color-primary-base: #7c3aed;
-  --co-color-surface-default: #1a1025;
+  --co-color-state-primary-base: #7c3aed;
+  --co-color-surface-static-default: #1a1025;
 }
 ```
 

@@ -129,7 +129,7 @@ SCSS consumers can author against the same runtime token contract:
 .card {
   padding: co.space('inset.md');
   color: co.color('text.default');
-  background: co.color('surface.raised');
+  background: co.color('surface.static.raised');
   @include co.type('body');
 }
 ```

@@ -253,7 +253,7 @@ function toggleSidebar() {
         <!-- Lion-based controls rewrite light DOM during upgrade, so keep this picker client-only. -->
         <ClientOnly>
           <div class="topbar-theme-picker">
-            <co-icon name="colors" size="md" style="color: var(--co-color-primary-base)" />
+            <co-icon name="colors" size="md" style="color: var(--co-color-state-primary-base)" />
             <co-select
               :key="activeTheme"
               class="topbar-theme-select"
@@ -343,24 +343,24 @@ function toggleSidebar() {
 /* ── Reset & Globals ──────────────────────────────────────────── */
 :root {
   /* Surfaces — aliased onto real semantic tokens */
-  --co-midnight: var(--co-color-surface-page);
-  --co-deep: var(--co-color-surface-default);
-  --co-navy: var(--co-color-surface-raised);
-  --co-slate: var(--co-color-surface-sunken);
+  --co-midnight: var(--co-color-surface-static-page);
+  --co-deep: var(--co-color-surface-static-default);
+  --co-navy: var(--co-color-surface-static-raised);
+  --co-slate: var(--co-color-surface-static-sunken);
   --co-steel: var(--co-color-border-strong);
 
   /* Brand blues → interactive/primary semantics */
-  --co-blue-900: var(--co-color-primary-dark);
-  --co-blue-700: var(--co-color-primary-base);
-  --co-blue-600: var(--co-color-interactive-primary-default);
-  --co-blue-500: var(--co-color-interactive-primary-hover);
-  --co-blue-400: var(--co-color-interactive-primary-active);
-  --co-blue-300: var(--co-color-primary-light);
-  --co-blue-200: var(--co-color-primary-light);
-  --co-blue-100: var(--co-color-primary-subtle);
-  --co-electric: var(--co-color-interactive-primary-hover);
-  --co-glow: var(--co-color-interactive-primary-active);
-  --co-shimmer: color-mix(in srgb, var(--co-color-primary-base) 6%, transparent);
+  --co-blue-900: var(--co-color-state-primary-dark);
+  --co-blue-700: var(--co-color-state-primary-base);
+  --co-blue-600: var(--co-color-surface-interactive-primary-default);
+  --co-blue-500: var(--co-color-surface-interactive-primary-hover);
+  --co-blue-400: var(--co-color-surface-interactive-primary-active);
+  --co-blue-300: var(--co-color-state-primary-light);
+  --co-blue-200: var(--co-color-state-primary-light);
+  --co-blue-100: var(--co-color-state-primary-subtle);
+  --co-electric: var(--co-color-surface-interactive-primary-hover);
+  --co-glow: var(--co-color-surface-interactive-primary-active);
+  --co-shimmer: color-mix(in srgb, var(--co-color-state-primary-base) 6%, transparent);
 
   /* Text */
   --co-text-primary: var(--co-color-text-default);
@@ -374,49 +374,49 @@ function toggleSidebar() {
   /* Topbar/sidebar gradient backgrounds derived from page surface */
   --co-topbar-bg: linear-gradient(
     180deg,
-    color-mix(in srgb, var(--co-color-surface-page) 95%, transparent) 0%,
-    color-mix(in srgb, var(--co-color-surface-page) 85%, transparent) 100%
+    color-mix(in srgb, var(--co-color-surface-static-page) 95%, transparent) 0%,
+    color-mix(in srgb, var(--co-color-surface-static-page) 85%, transparent) 100%
   );
   --co-sidebar-bg: linear-gradient(
     180deg,
-    color-mix(in srgb, var(--co-color-surface-page) 70%, transparent) 0%,
-    color-mix(in srgb, var(--co-color-surface-page) 50%, transparent) 100%
+    color-mix(in srgb, var(--co-color-surface-static-page) 70%, transparent) 0%,
+    color-mix(in srgb, var(--co-color-surface-static-page) 50%, transparent) 100%
   );
 
   /* Alpha overlays derived from primary color */
-  --co-blue-alpha-8: color-mix(in srgb, var(--co-color-primary-base) 8%, transparent);
-  --co-blue-alpha-10: color-mix(in srgb, var(--co-color-primary-base) 10%, transparent);
-  --co-blue-alpha-12: color-mix(in srgb, var(--co-color-primary-base) 12%, transparent);
-  --co-blue-alpha-15: color-mix(in srgb, var(--co-color-primary-base) 15%, transparent);
-  --co-blue-alpha-18: color-mix(in srgb, var(--co-color-primary-base) 18%, transparent);
-  --co-blue-alpha-20: color-mix(in srgb, var(--co-color-primary-base) 20%, transparent);
-  --co-blue-alpha-25: color-mix(in srgb, var(--co-color-primary-base) 25%, transparent);
-  --co-blue-alpha-40: color-mix(in srgb, var(--co-color-primary-base) 40%, transparent);
-  --co-blue-alpha-50: color-mix(in srgb, var(--co-color-primary-base) 50%, transparent);
+  --co-blue-alpha-8: color-mix(in srgb, var(--co-color-state-primary-base) 8%, transparent);
+  --co-blue-alpha-10: color-mix(in srgb, var(--co-color-state-primary-base) 10%, transparent);
+  --co-blue-alpha-12: color-mix(in srgb, var(--co-color-state-primary-base) 12%, transparent);
+  --co-blue-alpha-15: color-mix(in srgb, var(--co-color-state-primary-base) 15%, transparent);
+  --co-blue-alpha-18: color-mix(in srgb, var(--co-color-state-primary-base) 18%, transparent);
+  --co-blue-alpha-20: color-mix(in srgb, var(--co-color-state-primary-base) 20%, transparent);
+  --co-blue-alpha-25: color-mix(in srgb, var(--co-color-state-primary-base) 25%, transparent);
+  --co-blue-alpha-40: color-mix(in srgb, var(--co-color-state-primary-base) 40%, transparent);
+  --co-blue-alpha-50: color-mix(in srgb, var(--co-color-state-primary-base) 50%, transparent);
 
   /* Code & link treatments */
-  --co-code-bg: color-mix(in srgb, var(--co-color-primary-base) 8%, transparent);
-  --co-code-border: color-mix(in srgb, var(--co-color-primary-base) 10%, transparent);
+  --co-code-bg: color-mix(in srgb, var(--co-color-state-primary-base) 8%, transparent);
+  --co-code-border: color-mix(in srgb, var(--co-color-state-primary-base) 10%, transparent);
   --co-code-color: var(--co-color-text-link);
   --co-inline-link: var(--co-color-text-link);
   --co-h3-color: var(--co-color-text-link);
 
   /* Selection */
-  --co-selection-bg: color-mix(in srgb, var(--co-color-primary-base) 30%, transparent);
-  --co-selection-color: var(--co-color-primary-contrast);
+  --co-selection-bg: color-mix(in srgb, var(--co-color-state-primary-base) 30%, transparent);
+  --co-selection-color: var(--co-color-state-primary-contrast);
 
   /* Ambient effects */
   --co-grain-opacity: 0.03;
   --co-hero-glow: radial-gradient(
     ellipse at center,
-    color-mix(in srgb, var(--co-color-primary-base) 12%, transparent) 0%,
-    color-mix(in srgb, var(--co-color-primary-base) 4%, transparent) 40%,
+    color-mix(in srgb, var(--co-color-state-primary-base) 12%, transparent) 0%,
+    color-mix(in srgb, var(--co-color-state-primary-base) 4%, transparent) 40%,
     transparent 70%
   );
 
   /* Scrollbar */
   --co-scrollbar-thumb: var(--co-color-border-strong);
-  --co-scrollbar-hover: var(--co-color-interactive-primary-default);
+  --co-scrollbar-hover: var(--co-color-surface-interactive-primary-default);
 
   /* Typography */
   --co-font-body: var(--co-font-family-sans);
@@ -435,14 +435,14 @@ function toggleSidebar() {
   --co-duration: var(--co-motion-duration-fast);
 
   /* VitePress local search — map to Cobalt semantic tokens */
-  --vp-local-search-bg: var(--co-color-surface-default);
-  --vp-local-search-result-bg: var(--co-color-surface-default);
+  --vp-local-search-bg: var(--co-color-surface-static-default);
+  --vp-local-search-result-bg: var(--co-color-surface-static-default);
   --vp-local-search-result-border: var(--co-color-border-default);
-  --vp-local-search-result-selected-bg: var(--co-color-surface-raised);
+  --vp-local-search-result-selected-bg: var(--co-color-surface-static-raised);
   --vp-local-search-result-selected-border: var(--co-color-border-focus);
-  --vp-local-search-highlight-bg: var(--co-color-primary-base);
-  --vp-local-search-highlight-text: var(--co-color-primary-contrast);
-  --vp-c-brand-1: var(--co-color-primary-base);
+  --vp-local-search-highlight-bg: var(--co-color-state-primary-base);
+  --vp-local-search-highlight-text: var(--co-color-state-primary-contrast);
+  --vp-c-brand-1: var(--co-color-state-primary-base);
   --vp-c-divider: var(--co-color-border-default);
 }
 
@@ -494,7 +494,7 @@ body {
   justify-content: center;
   height: var(--co-banner-height);
   padding: var(--co-space-1);
-  background: var(--co-color-surface-raised);
+  background: var(--co-color-surface-static-raised);
   color: var(--co-color-text-default);
   font-family: var(--co-font-family-sans);
   font-size: var(--co-typography-caption-size);
@@ -523,7 +523,7 @@ body {
   align-items: center;
   justify-content: space-between;
   padding: 0 24px;
-  background: var(--co-color-surface-default);
+  background: var(--co-color-surface-static-default);
   border-bottom: 1px solid var(--co-color-border-default);
 }
 
@@ -537,7 +537,7 @@ body {
 
 .brand-icon {
   display: flex;
-  color: var(--co-color-interactive-primary-default);
+  color: var(--co-color-surface-interactive-primary-default);
 }
 
 .brand-icon .gem-outline {
@@ -577,7 +577,7 @@ body {
 }
 
 .topbar-nav :deep(.DocSearch-Button) {
-  background: var(--co-color-surface-raised) !important;
+  background: var(--co-color-surface-static-raised) !important;
   border: 1px solid var(--co-border) !important;
   border-radius: 10px !important;
   color: var(--co-text-secondary);
@@ -587,7 +587,7 @@ body {
 
 .topbar-nav :deep(.DocSearch-Button:hover) {
   border-color: var(--co-border-strong) !important;
-  background: var(--co-color-surface-sunken) !important;
+  background: var(--co-color-surface-static-sunken) !important;
 }
 
 .topbar-nav :deep(.DocSearch-Search-Icon) {
@@ -610,12 +610,16 @@ body {
    Target elements via the unscoped root class + element/attribute
    selectors that pierce the scoped boundary. */
 .VPLocalSearchBox {
-  --vp-backdrop-bg-color: color-mix(in srgb, var(--co-color-surface-overlay) 50%, transparent);
+  --vp-backdrop-bg-color: color-mix(
+    in srgb,
+    var(--co-color-surface-static-overlay) 50%,
+    transparent
+  );
 }
 
 .VPLocalSearchBox > div:last-of-type {
   /* .shell */
-  background: var(--co-color-surface-default) !important;
+  background: var(--co-color-surface-static-default) !important;
   border: none !important;
   border-radius: 12px !important;
 }
@@ -623,7 +627,7 @@ body {
 .VPLocalSearchBox form {
   /* .search-bar */
   border: 1px solid var(--co-color-border-default) !important;
-  background: var(--co-color-surface-sunken) !important;
+  background: var(--co-color-surface-static-sunken) !important;
   border-radius: 8px !important;
 }
 
@@ -651,13 +655,13 @@ body {
 .VPLocalSearchBox a[href] {
   /* .result */
   border-color: var(--co-color-border-default) !important;
-  background: var(--co-color-surface-default) !important;
+  background: var(--co-color-surface-static-default) !important;
 }
 
 .VPLocalSearchBox a[aria-selected='true'] {
   /* .result.selected */
   border-color: var(--co-color-border-focus) !important;
-  background: var(--co-color-surface-raised) !important;
+  background: var(--co-color-surface-static-raised) !important;
 }
 
 .VPLocalSearchBox ul + div {
@@ -742,7 +746,7 @@ body {
 .topbar-theme-select::part(invoker) {
   min-block-size: 36px;
   border-radius: 10px;
-  background: var(--co-color-surface-raised);
+  background: var(--co-color-surface-static-raised);
 }
 
 .topbar-theme-picker--placeholder {
@@ -754,7 +758,7 @@ body {
   display: block;
   flex: 0 0 auto;
   border-radius: 10px;
-  background: var(--co-color-surface-raised);
+  background: var(--co-color-surface-static-raised);
   border: 1px solid var(--co-color-border-default);
 }
 
@@ -762,8 +766,8 @@ body {
   inline-size: 20px;
   block-size: 20px;
   border-radius: 999px;
-  background: color-mix(in srgb, var(--co-color-primary-base) 18%, transparent);
-  border-color: color-mix(in srgb, var(--co-color-primary-base) 18%, transparent);
+  background: color-mix(in srgb, var(--co-color-state-primary-base) 18%, transparent);
+  border-color: color-mix(in srgb, var(--co-color-state-primary-base) 18%, transparent);
 }
 
 .topbar-theme-picker__select-placeholder {
@@ -905,12 +909,12 @@ body {
 }
 
 .cobalt-article :is(h1, h2, h3) .header-anchor:hover::after {
-  color: var(--co-color-interactive-primary-default);
+  color: var(--co-color-surface-interactive-primary-default);
 }
 
 .cobalt-article .header-anchor[data-copied]::after {
   content: '✓';
-  color: var(--co-color-success-base);
+  color: var(--co-color-state-success-base);
 }
 
 .cobalt-article p {
@@ -944,7 +948,7 @@ body {
 }
 
 .cobalt-article pre {
-  background: var(--co-color-surface-sunken) !important;
+  background: var(--co-color-surface-static-sunken) !important;
   border: 1px solid var(--co-border);
   border-radius: 12px;
   padding: 20px 24px;
@@ -989,7 +993,7 @@ body {
   color: var(--co-text-secondary);
   padding: 10px 16px;
   border-bottom: 1px solid var(--co-border-strong);
-  background: var(--co-color-surface-raised);
+  background: var(--co-color-surface-static-raised);
 }
 
 .cobalt-article thead th:first-child {
@@ -1080,7 +1084,7 @@ body {
 }
 
 .edit-link a:hover {
-  color: var(--co-color-interactive-primary-default);
+  color: var(--co-color-surface-interactive-primary-default);
 }
 
 /* Demo containers — inline component previews */
@@ -1092,7 +1096,7 @@ body {
   align-items: center;
   padding: 24px;
   margin: 12px 0 20px;
-  background: var(--co-color-surface-raised);
+  background: var(--co-color-surface-static-raised);
   border: 1px solid var(--co-border);
   border-radius: 12px;
 }
@@ -1104,7 +1108,7 @@ body {
 }
 
 .vp-doc div[class*='language-'] {
-  background: var(--co-color-surface-sunken) !important;
+  background: var(--co-color-surface-static-sunken) !important;
   border: 1px solid var(--co-border) !important;
   border-radius: 12px !important;
   margin: 16px 0 24px !important;
@@ -1313,7 +1317,7 @@ div[class*='language-'] > button.copy.copied::before {
     position: fixed;
     inset: 0;
     z-index: 60;
-    background: color-mix(in srgb, var(--co-color-surface-overlay) 50%, transparent);
+    background: color-mix(in srgb, var(--co-color-surface-static-overlay) 50%, transparent);
     backdrop-filter: blur(4px);
   }
 }

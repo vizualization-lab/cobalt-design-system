@@ -194,13 +194,13 @@ export class AppComponent {}
 
 ### Design Tokens
 
-| Token                            | Default                          | Description          |
-| -------------------------------- | -------------------------------- | -------------------- |
-| `--co-component-card-padding`    | `var(--co-space-inset-lg)`       | Internal padding     |
-| `--co-component-card-gap`        | `var(--co-space-gap-sm)`         | Gap between sections |
-| `--co-component-card-radius`     | `var(--co-shape-radius-lg)`      | Corner radius        |
-| `--co-component-card-background` | `var(--co-color-surface-raised)` | Background color     |
-| `--co-component-card-shadow`     | `var(--co-elevation-shadow-sm)`  | Elevation shadow     |
+| Token                            | Default                                 | Description          |
+| -------------------------------- | --------------------------------------- | -------------------- |
+| `--co-component-card-padding`    | `var(--co-space-inset-lg)`              | Internal padding     |
+| `--co-component-card-gap`        | `var(--co-space-gap-sm)`                | Gap between sections |
+| `--co-component-card-radius`     | `var(--co-shape-radius-lg)`             | Corner radius        |
+| `--co-component-card-background` | `var(--co-color-surface-static-raised)` | Background color     |
+| `--co-component-card-shadow`     | `var(--co-elevation-shadow-sm)`         | Elevation shadow     |
 
 ## Accessibility
 

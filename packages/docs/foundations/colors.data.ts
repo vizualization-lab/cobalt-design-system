@@ -57,8 +57,16 @@ const PALETTE_LABELS: Record<string, { name: string; description: string }> = {
 };
 
 const SEMANTIC_EXAMPLE_ROWS = [
-  { path: 'co.color.primary.base', token: '--co-color-primary-base', usage: 'Core accent solid' },
-  { path: 'co.color.primary.subtle', token: '--co-color-primary-subtle', usage: 'Accent wash' },
+  {
+    path: 'co.color.state.primary.base',
+    token: '--co-color-state-primary-base',
+    usage: 'Core accent solid',
+  },
+  {
+    path: 'co.color.state.primary.subtle',
+    token: '--co-color-state-primary-subtle',
+    usage: 'Accent wash',
+  },
   {
     path: 'co.color.text.link',
     token: '--co-color-text-link',
@@ -66,16 +74,20 @@ const SEMANTIC_EXAMPLE_ROWS = [
   },
   { path: 'co.color.border.focus', token: '--co-color-border-focus', usage: 'Keyboard focus ring' },
   {
-    path: 'co.color.interactive.primary.hover',
-    token: '--co-color-interactive-primary-hover',
+    path: 'co.color.surface.interactive.primary.hover',
+    token: '--co-color-surface-interactive-primary-hover',
     usage: 'Hovered primary action',
   },
   {
-    path: 'co.color.interactive.subtle.selected',
-    token: '--co-color-interactive-subtle-selected',
+    path: 'co.color.surface.interactive.subtle.selected',
+    token: '--co-color-surface-interactive-subtle-selected',
     usage: 'Selected subtle surface',
   },
-  { path: 'co.color.surface.page', token: '--co-color-surface-page', usage: 'App canvas' },
+  {
+    path: 'co.color.surface.static.page',
+    token: '--co-color-surface-static-page',
+    usage: 'App canvas',
+  },
   { path: 'co.color.text.default', token: '--co-color-text-default', usage: 'Default body text' },
 ] as const;
 
@@ -268,7 +280,7 @@ export default {
     for (const fileName of themeFiles) {
       const [, , themeId, mode] = fileName.replace('.json', '').split('.');
       const themeRoot = readJson(path.join(tokensDir, fileName));
-      const primaryRef = rawTokenValue(themeRoot, 'co.color.primary.base');
+      const primaryRef = rawTokenValue(themeRoot, 'co.color.state.primary.base');
       const accentFamily = primaryRef.slice(1, -1).split('.')[3];
       const accentLabel = familyLabel(accentFamily).name;
       const paletteFamilies =

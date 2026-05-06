@@ -59,8 +59,8 @@ export const cobaltTextareaStyles = css`
     gap: var(--co-space-gap-sm);
     padding: var(--co-space-inset-md);
     border: var(--co-border-width-default) solid var(--co-color-border-default);
-    border-radius: var(--co-control-radius);
-    background: var(--co-color-surface-default);
+    border-radius: var(--co-control-radius-interactive);
+    background: var(--co-color-surface-static-default);
     color: var(--co-color-text-default);
     transition:
       background var(--co-motion-duration-fast) var(--co-motion-easing-default),
@@ -70,7 +70,7 @@ export const cobaltTextareaStyles = css`
 
   :host(:hover:not([disabled])) .input-group__container {
     border-color: var(--co-color-border-strong);
-    background: var(--co-color-surface-raised);
+    background: var(--co-color-surface-static-raised);
   }
 
   :host(:focus-within) .input-group__container {
@@ -92,7 +92,7 @@ export const cobaltTextareaStyles = css`
   }
 
   :host([readonly]) .input-group__container {
-    background: var(--co-color-surface-sunken);
+    background: var(--co-color-surface-static-sunken);
   }
 
   :host([disabled]) {

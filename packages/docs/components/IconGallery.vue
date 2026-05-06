@@ -1014,7 +1014,7 @@ function getSnippet(name: string, tabIndex: number): string {
 .ig-detail-backdrop {
   position: fixed;
   inset: 0;
-  background: color-mix(in srgb, var(--co-color-surface-overlay) 40%, transparent);
+  background: color-mix(in srgb, var(--co-color-surface-static-overlay) 40%, transparent);
   z-index: 100;
 }
 

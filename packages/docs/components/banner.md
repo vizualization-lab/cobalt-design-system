@@ -161,7 +161,7 @@ export class AppComponent {}
 
 - Keep the title short and scannable — uppercase transform makes long text harder to read
 - Use the default slot for supporting details when the title alone is not sufficient
-- Ensure links in the banner have sufficient contrast against the bold background
+- Ensure links in the banner have sufficient contrast against the banner background
 
 ## API
 
@@ -189,13 +189,13 @@ export class AppComponent {}
 
 ### Design Tokens
 
-| Token                                | Default                          | Description           |
-| ------------------------------------ | -------------------------------- | --------------------- |
-| `--co-component-banner-height`       | `44px`                           | Minimum banner height |
-| `--co-component-banner-padding`      | `var(--co-space-1)`              | Internal padding      |
-| `--co-component-banner-background`   | `var(--co-color-surface-raised)` | Background color      |
-| `--co-component-banner-foreground`   | `var(--co-color-text-default)`   | Text color            |
-| `--co-component-banner-title-weight` | `var(--co-font-weight-medium)`   | Title font weight     |
+| Token                                | Default                                 | Description           |
+| ------------------------------------ | --------------------------------------- | --------------------- |
+| `--co-component-banner-height`       | `44px`                                  | Minimum banner height |
+| `--co-component-banner-padding`      | `var(--co-space-1)`                     | Internal padding      |
+| `--co-component-banner-background`   | `var(--co-color-surface-static-raised)` | Background color      |
+| `--co-component-banner-foreground`   | `var(--co-color-text-default)`          | Text color            |
+| `--co-component-banner-title-weight` | `var(--co-font-weight-medium)`          | Title font weight     |
 
 ## Accessibility
 

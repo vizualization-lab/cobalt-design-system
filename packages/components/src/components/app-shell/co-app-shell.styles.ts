@@ -14,13 +14,13 @@ export const cobaltAppShellStyles = css`
     grid-template-rows: auto auto minmax(0, 1fr) auto;
     block-size: 100%;
     min-block-size: 0;
-    background: var(--co-color-surface-page);
+    background: var(--co-color-surface-static-page);
   }
 
   .app-shell__banner,
   .app-shell__topnav,
   .app-shell__footer {
-    background: var(--co-color-surface-default);
+    background: var(--co-color-surface-static-default);
   }
 
   .app-shell__banner {
@@ -52,8 +52,8 @@ export const cobaltAppShellStyles = css`
     min-block-size: var(--co-control-height-md);
     padding: var(--co-space-2) var(--co-space-3);
     border: var(--co-border-width-action) solid var(--co-color-border-default);
-    border-radius: var(--co-control-radius);
-    background: var(--co-color-surface-default);
+    border-radius: var(--co-control-radius-interactive);
+    background: var(--co-color-surface-static-default);
     color: var(--co-color-text-default);
     font: inherit;
     cursor: pointer;
@@ -124,7 +124,7 @@ export const cobaltAppShellStyles = css`
     max-inline-size: calc(100vw - var(--co-space-6));
     block-size: 100dvh;
     overflow: auto;
-    background: var(--co-color-surface-default);
+    background: var(--co-color-surface-static-default);
     border-inline-end: var(--co-border-width-panel) solid var(--co-color-border-default);
     box-shadow: var(--co-elevation-shadow-lg);
     outline: none;

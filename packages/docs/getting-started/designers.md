@@ -32,13 +32,13 @@ Figma should mirror the same token categories used in code. In code, tokens are 
 
 Examples:
 
-| Token Name                      | Value      | Usage                             |
-| ------------------------------- | ---------- | --------------------------------- |
-| `--co-color-primary-base`       | `#154bcc`  | Primary actions, key links        |
-| `--co-color-surface-raised`     | `#fcfcfc`  | Raised surfaces and subtle cards  |
-| `--co-space-inset-md`           | `16px`     | Default component padding         |
-| `--co-font-size-lg`             | `1.125rem` | Subheadings and emphasized labels |
-| `--co-component-avatar-size-md` | `32px`     | Default avatar size               |
+| Token Name                         | Value      | Usage                             |
+| ---------------------------------- | ---------- | --------------------------------- |
+| `--co-color-state-primary-base`    | `#154bcc`  | Primary actions, key links        |
+| `--co-color-surface-static-raised` | `#fcfcfc`  | Raised surfaces and subtle cards  |
+| `--co-space-inset-md`              | `16px`     | Default component padding         |
+| `--co-font-size-lg`                | `1.125rem` | Subheadings and emphasized labels |
+| `--co-component-avatar-size-md`    | `32px`     | Default avatar size               |
 
 ### Applying Tokens in Figma
 

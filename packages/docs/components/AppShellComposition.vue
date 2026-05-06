@@ -77,7 +77,7 @@
   overflow: hidden;
   border: 1px solid var(--co-color-border-default);
   border-radius: 16px;
-  background: var(--co-color-surface-page);
+  background: var(--co-color-surface-static-page);
   box-shadow: var(--co-elevation-shadow-sm);
   transform: translateZ(0);
 }
@@ -90,8 +90,8 @@
 }
 
 .app-shell-composition__banner {
-  --co-component-banner-background: var(--co-color-primary-subtle);
-  --co-component-banner-foreground: var(--co-color-primary-base);
+  --co-component-banner-background: var(--co-color-state-primary-subtle);
+  --co-component-banner-foreground: var(--co-color-state-primary-base);
   --co-component-banner-padding: 12px 16px;
 }
 
@@ -132,8 +132,8 @@
   inline-size: 36px;
   block-size: 36px;
   border-radius: 999px;
-  background: var(--co-color-primary-subtle);
-  color: var(--co-color-primary-base);
+  background: var(--co-color-state-primary-subtle);
+  color: var(--co-color-state-primary-base);
   font-size: 13px;
   font-weight: 600;
   letter-spacing: 0.02em;
@@ -146,7 +146,7 @@
 
 .app-shell-composition__panel {
   padding: 24px;
-  background: var(--co-color-surface-default);
+  background: var(--co-color-surface-static-default);
   border: 1px solid var(--co-color-border-default);
   border-radius: 16px;
 }
@@ -176,7 +176,7 @@
 
 .app-shell-composition__card {
   padding: 16px;
-  background: var(--co-color-surface-page);
+  background: var(--co-color-surface-static-page);
   border-radius: 12px;
 }
 

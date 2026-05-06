@@ -169,21 +169,21 @@ const viewportLabel = computed(() =>
                   <div class="app-shell-demo__stack">
                     <co-card
                       style="
-                        --co-component-card-background: var(--co-color-surface-page);
+                        --co-component-card-background: var(--co-color-surface-static-page);
                         --co-component-card-shadow: none;
                       "
                       >Introduction</co-card
                     >
                     <co-card
                       style="
-                        --co-component-card-background: var(--co-color-surface-page);
+                        --co-component-card-background: var(--co-color-surface-static-page);
                         --co-component-card-shadow: none;
                       "
                       >API summary</co-card
                     >
                     <co-card
                       style="
-                        --co-component-card-background: var(--co-color-surface-page);
+                        --co-component-card-background: var(--co-color-surface-static-page);
                         --co-component-card-shadow: none;
                       "
                       >Examples</co-card
@@ -211,12 +211,12 @@ const viewportLabel = computed(() =>
   border-radius: 12px;
   margin: 16px 0 24px;
   overflow: hidden;
-  background: var(--co-color-surface-raised);
+  background: var(--co-color-surface-static-raised);
 }
 
 .demo-controls {
   padding: 14px 20px;
-  background: var(--co-color-surface-raised);
+  background: var(--co-color-surface-static-raised);
   border-bottom: 1px solid var(--co-border);
   display: flex;
   gap: 20px;
@@ -276,7 +276,7 @@ const viewportLabel = computed(() =>
   padding: 3px;
   border: 1px solid var(--co-color-border-strong);
   border-radius: 999px;
-  background: var(--co-color-surface-default);
+  background: var(--co-color-surface-static-default);
   box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.35);
 }
 
@@ -298,7 +298,7 @@ const viewportLabel = computed(() =>
 }
 
 .demo-segmented-btn:hover {
-  background: var(--co-color-surface-raised);
+  background: var(--co-color-surface-static-raised);
 }
 
 .demo-segmented-btn:focus-visible {
@@ -307,7 +307,7 @@ const viewportLabel = computed(() =>
 }
 
 .demo-segmented-btn.is-active {
-  background: var(--co-color-interactive-default-primary);
+  background: var(--co-color-surface-interactive-primary-default);
   color: var(--co-color-text-on-primary);
   box-shadow: var(--co-elevation-shadow-sm);
 }
@@ -364,7 +364,7 @@ const viewportLabel = computed(() =>
   padding: 24px;
   display: flex;
   justify-content: center;
-  background-color: var(--co-color-surface-default);
+  background-color: var(--co-color-surface-static-default);
   color: var(--co-color-text-default);
 }
 
@@ -389,7 +389,7 @@ const viewportLabel = computed(() =>
   overflow: hidden;
   border: 1px solid var(--co-color-border-default);
   border-radius: 16px;
-  background: var(--co-color-surface-page);
+  background: var(--co-color-surface-static-page);
   box-shadow: var(--co-elevation-shadow-sm);
   transform: translateZ(0);
 }
@@ -406,8 +406,8 @@ const viewportLabel = computed(() =>
 }
 
 .app-shell-demo__banner {
-  --co-component-banner-background: var(--co-color-primary-subtle);
-  --co-component-banner-foreground: var(--co-color-primary-base);
+  --co-component-banner-background: var(--co-color-state-primary-subtle);
+  --co-component-banner-foreground: var(--co-color-state-primary-base);
   --co-component-banner-padding: 12px 16px;
 }
 
@@ -448,8 +448,8 @@ const viewportLabel = computed(() =>
   inline-size: 36px;
   block-size: 36px;
   border-radius: 999px;
-  background: var(--co-color-primary-subtle);
-  color: var(--co-color-primary-base);
+  background: var(--co-color-state-primary-subtle);
+  color: var(--co-color-state-primary-base);
   font-size: 13px;
   font-weight: 600;
   letter-spacing: 0.02em;
@@ -462,7 +462,7 @@ const viewportLabel = computed(() =>
 
 .app-shell-demo__panel {
   padding: 24px;
-  background: var(--co-color-surface-default);
+  background: var(--co-color-surface-static-default);
   border: 1px solid var(--co-color-border-default);
   border-radius: 16px;
 }
@@ -492,7 +492,7 @@ const viewportLabel = computed(() =>
 
 .app-shell-demo__card {
   padding: 16px;
-  background: var(--co-color-surface-page);
+  background: var(--co-color-surface-static-page);
   border-radius: 12px;
 }
 

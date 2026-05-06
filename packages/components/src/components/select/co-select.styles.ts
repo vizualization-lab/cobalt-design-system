@@ -50,8 +50,8 @@ export const cobaltSelectStyles = css`
     gap: var(--co-space-gap-sm);
     padding-inline: var(--co-space-inset-md);
     border: var(--co-border-width-default) solid var(--co-color-border-default);
-    border-radius: var(--co-control-radius);
-    background: var(--co-color-surface-default);
+    border-radius: var(--co-control-radius-interactive);
+    background: var(--co-color-surface-static-default);
     color: var(--co-color-text-default);
     cursor: pointer;
     transition:
@@ -62,7 +62,7 @@ export const cobaltSelectStyles = css`
 
   :host(:hover:not([disabled])) .input-group__container {
     border-color: var(--co-color-border-strong);
-    background: var(--co-color-surface-raised);
+    background: var(--co-color-surface-static-raised);
   }
 
   /* Suppress Lion's default focus ring on the invoker — we draw our own on the container */
@@ -94,7 +94,7 @@ export const cobaltSelectStyles = css`
   }
 
   :host([readonly]) .input-group__container {
-    background: var(--co-color-surface-sunken);
+    background: var(--co-color-surface-static-sunken);
     cursor: default;
   }
 
@@ -182,9 +182,9 @@ export const cobaltSelectStyles = css`
     max-block-size: min(60vh, 24rem);
     overflow-y: auto;
     border: var(--co-border-width-panel) solid var(--co-color-border-default);
-    border-radius: var(--co-control-radius);
-    background: var(--co-color-surface-default);
-    box-shadow: var(--co-shadow-lg, 0 12px 24px rgb(15 23 42 / 18%));
+    border-radius: var(--co-control-radius-interactive);
+    background: var(--co-color-surface-static-default);
+    box-shadow: var(--co-elevation-shadow-lg, 0 12px 24px rgb(15 23 42 / 18%));
   }
 
   /* ── Feedback ── */

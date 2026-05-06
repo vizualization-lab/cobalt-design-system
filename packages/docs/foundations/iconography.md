@@ -81,7 +81,7 @@ Icons inherit `currentColor`, so they match the surrounding text color automatic
 
 ```css
 .status-icon--success {
-  color: var(--co-color-success-base);
+  color: var(--co-color-state-success-base);
 }
 ```
 

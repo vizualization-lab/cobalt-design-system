@@ -60,8 +60,8 @@ export const cobaltComboboxStyles = css`
     gap: var(--co-space-gap-sm);
     padding-inline: var(--co-space-inset-md);
     border: var(--co-border-width-default) solid var(--co-color-border-default);
-    border-radius: var(--co-control-radius);
-    background: var(--co-color-surface-default);
+    border-radius: var(--co-control-radius-interactive);
+    background: var(--co-color-surface-static-default);
     color: var(--co-color-text-default);
     transition:
       background var(--co-motion-duration-fast) var(--co-motion-easing-default),
@@ -71,7 +71,7 @@ export const cobaltComboboxStyles = css`
 
   :host(:hover:not([disabled])) .input-group__container {
     border-color: var(--co-color-border-strong);
-    background: var(--co-color-surface-raised);
+    background: var(--co-color-surface-static-raised);
   }
 
   :host(:focus-within) .input-group__container {
@@ -95,7 +95,7 @@ export const cobaltComboboxStyles = css`
   }
 
   :host([readonly]) .input-group__container {
-    background: var(--co-color-surface-sunken);
+    background: var(--co-color-surface-static-sunken);
   }
 
   :host([disabled]) {
@@ -198,9 +198,9 @@ export const cobaltComboboxStyles = css`
     min-inline-size: min(20rem, 100vw);
     /* Gap between input and dropdown is controlled by Popper offset in _defineOverlayConfig */
     border: var(--co-border-width-panel) solid var(--co-color-border-default);
-    border-radius: var(--co-control-radius);
-    background: var(--co-color-surface-default);
-    box-shadow: var(--co-shadow-lg, 0 12px 24px rgb(15 23 42 / 18%));
+    border-radius: var(--co-control-radius-interactive);
+    background: var(--co-color-surface-static-default);
+    box-shadow: var(--co-elevation-shadow-lg, 0 12px 24px rgb(15 23 42 / 18%));
     overflow: hidden;
   }
 
@@ -244,7 +244,7 @@ export const cobaltComboboxStyles = css`
     overflow: auto;
     gap: var(--co-space-1);
     padding: var(--co-space-1);
-    background: var(--co-color-surface-default);
+    background: var(--co-color-surface-static-default);
     color: var(--co-color-text-default);
     outline: 0;
   }

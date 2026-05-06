@@ -199,7 +199,7 @@ export const html = `
         </div>
         <pre
           id="wb-validation-event-log"
-          style="min-height: 160px; margin: 16px 0 0; padding: 12px; overflow: auto; background: var(--co-color-surface-default); border: 1px solid var(--co-color-border-default); border-radius: 6px; font-size: 12px;"
+          style="min-height: 160px; margin: 16px 0 0; padding: 12px; overflow: auto; background: var(--co-color-surface-static-default); border: 1px solid var(--co-color-border-default); border-radius: 6px; font-size: 12px;"
         >Submit the form to inspect co-submit or co-invalid-submit details.</pre>
       </div>
     </div>

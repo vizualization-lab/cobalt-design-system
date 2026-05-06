@@ -14,29 +14,33 @@
 
   /* Remap VitePress variables to Cobalt tokens */
   :root {
-    --vp-c-bg: var(--co-color-surface-page);
-    --vp-c-bg-alt: var(--co-color-surface-default);
-    --vp-c-bg-soft: var(--co-color-surface-raised);
+    --vp-c-bg: var(--co-color-surface-static-page);
+    --vp-c-bg-alt: var(--co-color-surface-static-default);
+    --vp-c-bg-soft: var(--co-color-surface-static-raised);
     --vp-c-text-1: var(--co-color-text-default);
     --vp-c-text-2: var(--co-color-text-secondary);
     --vp-c-text-3: var(--co-color-text-tertiary);
     --vp-c-divider: var(--co-color-border-subtle);
-    --vp-c-brand-1: var(--co-color-primary-base);
-    --vp-c-brand-soft: color-mix(in srgb, var(--co-color-primary-base) 10%, transparent);
-    --vp-c-default-soft: var(--co-color-surface-raised);
+    --vp-c-brand-1: var(--co-color-state-primary-base);
+    --vp-c-brand-soft: color-mix(in srgb, var(--co-color-state-primary-base) 10%, transparent);
+    --vp-c-default-soft: var(--co-color-surface-static-raised);
     --vp-c-neutral-inverse: var(--co-color-text-on-primary);
     --vp-font-family-base: var(--co-font-family-sans);
     --vp-font-family-mono: var(--co-font-family-mono);
 
     /* Local search modal */
-    --vp-backdrop-bg-color: color-mix(in srgb, var(--co-color-surface-overlay) 60%, transparent);
-    --vp-local-search-bg: var(--co-color-surface-default);
-    --vp-local-search-result-bg: var(--co-color-surface-raised);
+    --vp-backdrop-bg-color: color-mix(
+      in srgb,
+      var(--co-color-surface-static-overlay) 60%,
+      transparent
+    );
+    --vp-local-search-bg: var(--co-color-surface-static-default);
+    --vp-local-search-result-bg: var(--co-color-surface-static-raised);
     --vp-local-search-result-border: var(--co-color-border-subtle);
-    --vp-local-search-result-selected-bg: var(--co-color-surface-sunken);
-    --vp-local-search-result-selected-border: var(--co-color-primary-base);
-    --vp-local-search-highlight-bg: var(--co-color-primary-base);
-    --vp-local-search-highlight-text: var(--co-color-primary-contrast);
+    --vp-local-search-result-selected-bg: var(--co-color-surface-static-sunken);
+    --vp-local-search-result-selected-border: var(--co-color-state-primary-base);
+    --vp-local-search-highlight-bg: var(--co-color-state-primary-base);
+    --vp-local-search-highlight-text: var(--co-color-state-primary-contrast);
   }
 
   /* Kill the default VitePress container width for doc pages */
@@ -79,7 +83,8 @@
     background: var(--vp-local-search-bg) !important;
     border: 1px solid var(--co-border-strong) !important;
     border-radius: 12px !important;
-    box-shadow: 0 24px 64px color-mix(in srgb, var(--co-color-surface-overlay) 30%, transparent) !important;
+    box-shadow: 0 24px 64px
+      color-mix(in srgb, var(--co-color-surface-static-overlay) 30%, transparent) !important;
   }
 
   .VPLocalSearchBox .backdrop {
@@ -90,7 +95,7 @@
   .VPLocalSearchBox .search-bar {
     border: 1px solid var(--co-border-strong) !important;
     border-radius: 8px !important;
-    background: var(--co-color-surface-raised) !important;
+    background: var(--co-color-surface-static-raised) !important;
     padding: 4px 8px !important;
     gap: 4px;
   }
@@ -148,7 +153,7 @@
   }
 
   .VPLocalSearchBox .search-keyboard-shortcuts kbd {
-    background: var(--co-color-surface-raised);
+    background: var(--co-color-surface-static-raised);
     border-color: var(--co-border);
     color: var(--co-text-secondary);
   }
@@ -200,76 +205,76 @@
   /* Info / Note */
   .custom-block.info,
   .custom-block.note {
-    border-color: var(--co-color-primary-light);
-    background: var(--co-color-primary-subtle);
+    border-color: var(--co-color-state-primary-light);
+    background: var(--co-color-state-primary-subtle);
     color: var(--co-color-text-default);
   }
 
   .custom-block.info .custom-block-title,
   .custom-block.note .custom-block-title {
-    color: var(--co-color-primary-base);
+    color: var(--co-color-state-primary-base);
   }
 
   .custom-block.info code,
   .custom-block.note code {
-    background: color-mix(in srgb, var(--co-color-primary-base) 10%, transparent);
+    background: color-mix(in srgb, var(--co-color-state-primary-base) 10%, transparent);
   }
 
   /* Tip */
   .custom-block.tip,
   .custom-block.important {
-    border-color: var(--co-color-success-light);
-    background: var(--co-color-success-subtle);
+    border-color: var(--co-color-state-success-light);
+    background: var(--co-color-state-success-subtle);
     color: var(--co-color-text-default);
   }
 
   .custom-block.tip .custom-block-title,
   .custom-block.important .custom-block-title {
-    color: var(--co-color-success-base);
+    color: var(--co-color-state-success-base);
   }
 
   .custom-block.tip code,
   .custom-block.important code {
-    background: color-mix(in srgb, var(--co-color-success-base) 10%, transparent);
+    background: color-mix(in srgb, var(--co-color-state-success-base) 10%, transparent);
   }
 
   /* Warning */
   .custom-block.warning,
   .custom-block.caution {
-    border-color: var(--co-color-warning-light);
-    background: var(--co-color-warning-subtle);
-    color: var(--co-color-warning-contrast);
+    border-color: var(--co-color-state-warning-light);
+    background: var(--co-color-state-warning-subtle);
+    color: var(--co-color-state-warning-contrast);
   }
 
   .custom-block.warning .custom-block-title,
   .custom-block.caution .custom-block-title {
-    color: var(--co-color-warning-base);
+    color: var(--co-color-state-warning-base);
   }
 
   .custom-block.warning code,
   .custom-block.caution code {
-    background: color-mix(in srgb, var(--co-color-warning-base) 10%, transparent);
+    background: color-mix(in srgb, var(--co-color-state-warning-base) 10%, transparent);
   }
 
   /* Danger */
   .custom-block.danger {
-    border-color: var(--co-color-danger-light);
-    background: var(--co-color-danger-subtle);
+    border-color: var(--co-color-state-danger-light);
+    background: var(--co-color-state-danger-subtle);
     color: var(--co-color-text-default);
   }
 
   .custom-block.danger .custom-block-title {
-    color: var(--co-color-danger-base);
+    color: var(--co-color-state-danger-base);
   }
 
   .custom-block.danger code {
-    background: color-mix(in srgb, var(--co-color-danger-base) 10%, transparent);
+    background: color-mix(in srgb, var(--co-color-state-danger-base) 10%, transparent);
   }
 
   /* Details (collapsible) */
   .custom-block.details {
     border-color: var(--co-color-border-strong);
-    background: var(--co-color-surface-raised);
+    background: var(--co-color-surface-static-raised);
     color: var(--co-color-text-default);
   }
 
@@ -279,6 +284,6 @@
   }
 
   .custom-block.details code {
-    background: var(--co-color-surface-sunken);
+    background: var(--co-color-surface-static-sunken);
   }
 }
