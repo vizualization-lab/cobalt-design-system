@@ -384,6 +384,11 @@
       }
     },
     "opacity": {
+      "25": {
+        "$type": "opacity",
+        "$value": 0.25,
+        "$description": "Raw opacity step at 0.25 (25%)."
+      },
       "40": {
         "$type": "opacity",
         "$value": 0.4,
@@ -398,6 +403,11 @@
         "$type": "opacity",
         "$value": 0.6,
         "$description": "Raw opacity step at 0.6 (60%)."
+      },
+      "75": {
+        "$type": "opacity",
+        "$value": 0.75,
+        "$description": "Raw opacity step at 0.75 (75%)."
       }
     },
     "sizing": {
