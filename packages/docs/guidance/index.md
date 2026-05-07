@@ -1,32 +1,35 @@
 # Guidance
 
-Cobalt Design System provides more than just components — it offers a set of guidelines, principles, and best practices to help your team build cohesive, high-quality experiences.
+Cobalt Design System provides more than components. It offers guidance for adopting tokens, mapping existing UI, migrating application slices, and building cohesive product experiences as the system matures.
 
 ## Overview
 
-These resources are intended for designers, developers, and content authors working with Cobalt. Whether you are starting a brand-new project or migrating an existing application, the guidance section will help you make informed decisions at every stage.
+These resources are primarily for application teams working with Cobalt in real products. Cobalt is currently in alpha, so existing applications should adopt it incrementally instead of planning a broad rewrite.
 
 ## Sections
 
-| Page                                                               | Description                                                                        |
-| ------------------------------------------------------------------ | ---------------------------------------------------------------------------------- |
-| [Design Principles](./principles.md)                               | The core values that drive every decision in Cobalt.                               |
-| [Content & Writing](./content.md)                                  | Voice, tone, capitalization, error messages, and formatting rules.                 |
-| [Getting Started for Developers](../getting-started/developers.md) | Environment setup, project structure, and first steps with Cobalt.                 |
-| [Migration Guides](./migration.md)                                 | Step-by-step instructions for moving from Bootstrap, Material UI, or raw HTML/CSS. |
+| Page                                                               | Description                                                                    |
+| ------------------------------------------------------------------ | ------------------------------------------------------------------------------ |
+| [Adoption Plan](./adoption.md)                                     | Staged adoption model for existing applications, including alpha guardrails.   |
+| [Element Mapping](./element-mapping.md)                            | How to progressively opt native HTML into Cobalt baseline styles.              |
+| [Migration Guide](./migration.md)                                  | A scoped migration flow for one application route, workflow, or product slice. |
+| [Design Principles](./principles.md)                               | The core values that drive every decision in Cobalt.                           |
+| [Content & Writing](./content.md)                                  | Voice, tone, capitalization, error messages, and formatting rules.             |
+| [Getting Started for Developers](../getting-started/developers.md) | Environment setup, project structure, and first steps with Cobalt.             |
 
 ## Who is this for?
 
-- **Designers** — Understand the reasoning behind component behavior and layout decisions.
-- **Developers** — Get up and running quickly, learn conventions, and avoid common pitfalls.
-- **Content authors** — Write clear, consistent copy that aligns with the Cobalt voice.
-- **Tech leads** — Plan migrations and evaluate Cobalt for your team's needs.
+- **Application teams** - Plan realistic adoption for existing products.
+- **Developers** - Install Cobalt, adopt tokens, and migrate scoped slices safely.
+- **Designers** - Align current UI with Cobalt patterns and identify design-system gaps.
+- **Tech leads** - Decide what can move now, what should stay local, and what needs roadmap support.
+- **Content authors** - Write clear, consistent copy that aligns with the Cobalt voice.
 
 ## How to use these guides
 
-Each page is self-contained. Start with [Design Principles](./principles.md) if you want to understand the philosophy behind the system, or jump straight to [Getting Started for Developers](../getting-started/developers.md) if you are ready to write code.
+For existing applications, start with the [Adoption Plan](./adoption.md), then use [Element Mapping](./element-mapping.md) to scope baseline styles before following the [Migration Guide](./migration.md). For new projects, start with [Getting Started for Developers](../getting-started/developers.md) and the [Design Principles](./principles.md).
 
-> **Tip:** Bookmark the [Content & Writing](./content.md) page — it is the most frequently referenced guide during design reviews.
+> **Tip:** Treat migration as a product-slice decision, not a full-application rewrite.
 
 ## Contributing
 
@@ -34,4 +37,4 @@ If you spot an error or want to propose a new guideline, open an issue in the Co
 
 ---
 
-_Last updated: March 2026_
+_Last updated: May 2026_

@@ -115,9 +115,11 @@ export const navigation: NavGroup[] = [
     defaultOpen: false,
     items: [
       { text: 'Overview', link: '/guidance/' },
+      { text: 'Adoption Plan', link: '/guidance/adoption' },
+      { text: 'Element Mapping', link: '/guidance/element-mapping' },
+      { text: 'Migration Guide', link: '/guidance/migration' },
       { text: 'Design Principles', link: '/guidance/principles' },
       { text: 'Content & Writing', link: '/guidance/content' },
-      { text: 'Migration Guides', link: '/guidance/migration' },
     ],
   },
   {
