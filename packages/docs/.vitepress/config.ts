@@ -73,6 +73,11 @@ export default withMermaid(
       },
     },
     head: [
+      // SVG favicon adapts to the OS color scheme (dark slate on light browsers,
+      // light surface on dark browsers). The .ico is a static dark-slate
+      // fallback for browsers without SVG-favicon support.
+      ['link', { rel: 'icon', type: 'image/svg+xml', href: '/cobalt-design-system/favicon.svg' }],
+      ['link', { rel: 'icon', sizes: 'any', href: '/cobalt-design-system/favicon.ico' }],
       [
         'script',
         {},
