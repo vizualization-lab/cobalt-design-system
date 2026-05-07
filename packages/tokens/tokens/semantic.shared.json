@@ -496,7 +496,7 @@
     "opacity": {
       "disabled": {
         "$type": "opacity",
-        "$value": "{co.opacity.50}",
+        "$value": "{co.opacity.25}",
         "$description": "Opacity applied to disabled content and controls."
       },
       "overlay": {
