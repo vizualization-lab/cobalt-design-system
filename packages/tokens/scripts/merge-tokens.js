@@ -39,6 +39,25 @@ function readJson(filePath) {
   return JSON.parse(readFileSync(filePath, 'utf-8'));
 }
 
+/**
+ * Tokens Studio only honors `$description` when it sits next to a `$value`
+ * on a leaf token. A `$description` placed at a group level (e.g. on a
+ * palette object that contains nested stops) breaks the import path and
+ * causes the whole set to be silently dropped. Strip any such stray
+ * group-level descriptions before writing the merged file.
+ */
+function stripGroupDescriptions(node) {
+  if (!node || typeof node !== 'object' || Array.isArray(node)) return node;
+  if (!('$value' in node) && '$description' in node) {
+    delete node.$description;
+  }
+  for (const key of Object.keys(node)) {
+    if (key.startsWith('$')) continue;
+    stripGroupDescriptions(node[key]);
+  }
+  return node;
+}
+
 function assertSupportedTokenSets(discovery) {
   if (discovery.uncategorized.length > 0) {
     const names = discovery.uncategorized.map((tokenSet) => tokenSet.name).join(', ');
@@ -54,7 +73,9 @@ export function mergeTokens() {
   const merged = {};
 
   for (const tokenSetName of getTokenSetOrder(discovery)) {
-    merged[tokenSetName] = readJson(join(tokensDir, `${tokenSetName}.json`));
+    merged[tokenSetName] = stripGroupDescriptions(
+      readJson(join(tokensDir, `${tokenSetName}.json`)),
+    );
   }
 
   merged.$themes = buildThemes(discovery);

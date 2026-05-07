@@ -50,8 +50,7 @@
           "950": {
             "$type": "color",
             "$value": "#202020"
-          },
-          "$description": "Neutral grayscale palette used by light-mode semantic themes for surfaces, borders, dividers, and text."
+          }
         },
         "neutral-dark": {
           "50": {
@@ -101,8 +100,7 @@
           "950": {
             "$type": "color",
             "$value": "#eeeeee"
-          },
-          "$description": "Inverted neutral scale used by dark-mode semantic themes. Each stop maps to the equivalent dark-mode role of the same-numbered stop in the light `neutral` scale."
+          }
         },
         "blue": {
           "50": {
@@ -202,8 +200,7 @@
           "950": {
             "$type": "color",
             "$value": "#dde7ff"
-          },
-          "$description": "Inverted blue scale used by dark-mode semantic themes. Each stop maps to the equivalent dark-mode role of the same-numbered stop in the light `blue` scale."
+          }
         },
         "purple": {
           "50": {
@@ -303,8 +300,7 @@
           "950": {
             "$type": "color",
             "$value": "#f2d3ff"
-          },
-          "$description": "Inverted purple scale used by dark-mode semantic themes. Each stop maps to the equivalent dark-mode role of the same-numbered stop in the light `purple` scale."
+          }
         },
         "red": {
           "50": {
@@ -404,8 +400,7 @@
           "950": {
             "$type": "color",
             "$value": "#ffd1d9"
-          },
-          "$description": "Inverted red scale used by dark-mode semantic themes. Each stop maps to the equivalent dark-mode role of the same-numbered stop in the light `red` scale."
+          }
         },
         "brick": {
           "50": {
@@ -505,8 +500,7 @@
           "950": {
             "$type": "color",
             "$value": "#ffd0c8"
-          },
-          "$description": "Inverted brick scale used by dark-mode semantic themes. Each stop maps to the equivalent dark-mode role of the same-numbered stop in the light `brick` scale."
+          }
         },
         "green": {
           "50": {
@@ -606,8 +600,7 @@
           "950": {
             "$type": "color",
             "$value": "#b1f1cb"
-          },
-          "$description": "Inverted green scale used by dark-mode semantic themes. Each stop maps to the equivalent dark-mode role of the same-numbered stop in the light `green` scale."
+          }
         },
         "forest": {
           "50": {
@@ -707,8 +700,7 @@
           "950": {
             "$type": "color",
             "$value": "#c1ebd3"
-          },
-          "$description": "Inverted forest scale used by dark-mode semantic themes. Each stop maps to the equivalent dark-mode role of the same-numbered stop in the light `forest` scale."
+          }
         },
         "amber": {
           "50": {
@@ -808,8 +800,7 @@
           "950": {
             "$type": "color",
             "$value": "#ffe7b3"
-          },
-          "$description": "Inverted amber scale used by dark-mode semantic themes. Each stop maps to the equivalent dark-mode role of the same-numbered stop in the light `amber` scale."
+          }
         },
         "white": {
           "$type": "color",
