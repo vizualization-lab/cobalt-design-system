@@ -37,7 +37,7 @@ Framework wrappers are optional but recommended for better DX (typed props, nati
 
 ## Environment Setup
 
-Cobalt packages are hosted on a private repository and you can you must configure npm to point to the private repository when installing packages with scoped with `@cobalt`. You can configure npm at the project level or globally. We recommend the project-level configuration however you use Cobalt across multiple projects, you can opt for the global option.
+Cobalt packages are hosted in a private npm registry. To install packages under the `@cobalt` scope, configure npm to use the Cobalt registry. We recommend project-level configuration so each application keeps its registry settings with its source code. Use global configuration only when you work across several Cobalt projects on the same machine.
 
 ### Project-level registry configuration
 
@@ -48,7 +48,7 @@ Add the following line to your project's `.npmrc` file:
 cafile=%CA_BUNDLE_PATH%
 ```
 
-> **NOTE:** If you are having issues with the CA bundle, you can add `strict-ssl=false` to your `.npmrc` file for debuging purposes, but this is not recommended for security reasons.
+> **NOTE:** If you are having issues with the CA bundle, you can add `strict-ssl=false` to your `.npmrc` file for debugging purposes, but this is not recommended for security reasons.
 
 ### Global registry configuration
 

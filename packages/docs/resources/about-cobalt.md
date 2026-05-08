@@ -8,11 +8,11 @@ Cobalt superalloys withstand the extreme heat inside jet engine turbine blades. 
 
 ## Rooted in craft
 
-Cobalt's signature blue pigment appears in Egyptian jewelry, the frescoes of Pompeii, and Chinese porcelain dating to the Tang Dynasty. Good design outlasts trends, and Cobalt is crafted with care and intetion to constuct thoughtful interfaces that stand the test of time.
+Cobalt's signature blue pigment appears in Egyptian jewelry, the frescoes of Pompeii, and Chinese porcelain dating to the Tang Dynasty. Good design outlasts trends, and Cobalt is crafted with care and intention to support thoughtful interfaces that stand the test of time.
 
 ## Atomic composition
 
-At its core, Cobalt is composed of atomic building blocks—small, reusable components that combine to form complex user experiences. This composability makes the system flexible, scalable, and adaptable to a wide range of product needs.
+At its core, Cobalt is composed of atomic building blocks: small, reusable components that combine to form complex user experiences. This composability makes the system flexible, scalable, and adaptable to a wide range of product needs.
 
 ## Woven into the system
 

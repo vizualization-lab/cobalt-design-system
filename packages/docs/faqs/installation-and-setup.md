@@ -32,9 +32,9 @@ See [Getting Started for Developers](/getting-started/developers) for the longer
 
 ## Do I need private registry access?
 
-The short answer is no. Cobalt packages are published to a private npm repository but you would only need specific access if you are a contributor that has publish access. In order to consume Colbalt packages, you can set your registry to `%REGISTRY_URL%` and install as normal.
+The short answer is no for standard package consumption. Cobalt packages are published to a private npm registry, but most consumers only need their project `.npmrc` to point at `%REGISTRY_URL%`. Contributor or publisher access is only needed for maintainers who publish packages.
 
-- We recommend that you configure the registy URL at the project level using `.npmrc` rather than globally, to avoid conflicts with other projects that may use different registries.
+- We recommend that you configure the registry URL at the project level using `.npmrc` rather than globally, to avoid conflicts with other projects that may use different registries.
 - For more information see the [environment set up guide](/getting-started/developers#environment-setup).
 - If you encounter difficulties, [contact](/resources/contact) us.
 

@@ -59,7 +59,31 @@
     "angular": "pending",
     "browsers": "pending"
   },
+  "co-checkbox": {
+    "figma": "pending",
+    "artDirector": "pending",
+    "tokens": "pending",
+    "unitTests": "pending",
+    "a11y": "pending",
+    "docs": "pending",
+    "react": "pending",
+    "vue": "pending",
+    "angular": "pending",
+    "browsers": "pending"
+  },
   "co-checkbox-group": {
+    "figma": "pending",
+    "artDirector": "pending",
+    "tokens": "pending",
+    "unitTests": "pending",
+    "a11y": "pending",
+    "docs": "pending",
+    "react": "pending",
+    "vue": "pending",
+    "angular": "pending",
+    "browsers": "pending"
+  },
+  "co-checkbox-indeterminate": {
     "figma": "pending",
     "artDirector": "pending",
     "tokens": "pending",
@@ -191,6 +215,18 @@
     "angular": "pending",
     "browsers": "pending"
   },
+  "co-nav-separator": {
+    "figma": "pending",
+    "artDirector": "pending",
+    "tokens": "pending",
+    "unitTests": "pending",
+    "a11y": "pending",
+    "docs": "pending",
+    "react": "pending",
+    "vue": "pending",
+    "angular": "pending",
+    "browsers": "pending"
+  },
   "co-nav-rail-bar": {
     "figma": "pending",
     "artDirector": "pending",
@@ -216,6 +252,18 @@
     "browsers": "pending"
   },
   "co-option": {
+    "figma": "pending",
+    "artDirector": "pending",
+    "tokens": "pending",
+    "unitTests": "pending",
+    "a11y": "pending",
+    "docs": "pending",
+    "react": "pending",
+    "vue": "pending",
+    "angular": "pending",
+    "browsers": "pending"
+  },
+  "co-radio": {
     "figma": "pending",
     "artDirector": "pending",
     "tokens": "pending",

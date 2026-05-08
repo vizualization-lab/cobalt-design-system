@@ -1,6 +1,6 @@
 # Adoption Plan for Existing Applications
 
-Cobalt is in alpha, and we are working with selected pilot groups as a first step to mature the design system. While the design system expands component soporte, testing, and verification coverage, existing applications should adopt it in small, visible stages instead of planning a full UI replacement. This plan identifies a realistic adoption path for application teams that are not a part of any Cobalt pilot efforts.
+Cobalt is in alpha, and selected pilot groups are helping mature the design system. While component support, testing, and verification coverage expand, existing applications should adopt Cobalt in small, visible stages instead of planning a full UI replacement. This plan identifies a realistic adoption path for application teams that are not part of a pilot effort.
 
 ## Approach
 

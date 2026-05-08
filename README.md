@@ -171,11 +171,11 @@ Angular directives that sync properties and forward custom events from the under
 
 ### `@cobalt/docs`
 
-The documentation site, built with [VitePress](https://vitepress.dev/). Includes interactive component demos, a design token reference, a Phosphor icon gallery, and guides for designers, developers, and contributors.
+The documentation site, built with [VitePress](https://vitepress.dev/). Includes interactive component demos, a design token reference, a Material Symbols icon browser, and guides for designers, developers, and contributors.
 
 ### `@cobalt/icons`
 
-Icon package (placeholder — not yet implemented).
+Material Symbols registry and Cobalt icon assets used by the `<co-icon>` component.
 
 ## Project Structure
 
@@ -187,7 +187,7 @@ packages/
   vue/           Vue wrapper components
   angular/       Angular wrapper directives
   docs/          VitePress documentation site
-  icons/         Icon package (placeholder)
+  icons/         Material Symbols registry and Cobalt icon assets
 ```
 
 ## License
