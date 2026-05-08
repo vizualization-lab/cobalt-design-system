@@ -80,7 +80,7 @@ This creates a markdown file in the `.changeset/` directory. Commit this file al
 | `pnpm changeset`     | Create a new changeset interactively          |
 | `pnpm version:bump`  | Apply pending changesets — bumps all packages |
 | `pnpm version:check` | Show pending changesets without applying them |
-| `pnpm release`       | Publish updated packages to npm               |
+| `pnpm release`       | Publish packages, tag the release, and push   |
 
 ### Changeset Summary Guidelines
 
@@ -114,7 +114,8 @@ Keep summaries:
 1. The Changesets GitHub Action opens a **Version Packages** PR automatically when changesets accumulate on `main`
 2. The core team reviews the PR, verifying version bumps and changelog entries
 3. Merging the PR triggers the publish pipeline, which publishes updated packages to npm
-4. Release notes are published with the GitHub release
+4. The release command creates Changesets package tags, creates a global `vX.Y.Z` tag, and pushes the current branch plus all tags
+5. Release notes are published with the GitHub release
 
 ## Pre-release Channels
 

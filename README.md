@@ -98,6 +98,8 @@ pnpm version:bump
 pnpm release
 ```
 
+This publishes updated packages through Changesets, creates the per-package tags, creates a global `vX.Y.Z` tag with the same message as the tag name, and pushes the current branch plus all tags.
+
 ### CI release flow
 
 1. Changesets accumulate on `main` as PRs are merged

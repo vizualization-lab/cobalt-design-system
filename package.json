@@ -18,7 +18,7 @@
     "changeset": "changeset",
     "version:bump": "changeset version && node scripts/aggregate-changelog.js",
     "version:check": "changeset status --verbose",
-    "release": "changeset publish",
+    "release": "node scripts/release.js",
     "prepare": "husky"
   },
   "lint-staged": {
