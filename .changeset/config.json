@@ -9,9 +9,8 @@
       "@cobalt/components",
       "@cobalt/react",
       "@cobalt/vue",
-      "@cobalt/angular",
-      "@cobalt/workbench",
-      "@cobalt/docs"
+      "@cobalt/docs",
+      "@cobalt/angular"
     ]
   ],
   "linked": [],
