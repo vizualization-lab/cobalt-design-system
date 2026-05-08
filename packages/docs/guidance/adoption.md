@@ -1,8 +1,6 @@
 # Adoption Plan for Existing Applications
 
-Cobalt is in alpha, so existing applications should adopt it in small, visible stages instead of planning a full UI replacement. The goal is to show progress now through tokens, baseline styles, and focused pilots while the design system expands component support, testing, and verification coverage.
-
-This plan is for application teams that need a realistic path forward under delivery pressure.
+Cobalt is in alpha, and we are working with selected pilot groups as a first step to mature the design system. While the design system expands component soporte, testing, and verification coverage, existing applications should adopt it in small, visible stages instead of planning a full UI replacement. This plan identifies a realistic adoption path for application teams that are not a part of any Cobalt pilot efforts.
 
 ## Approach
 
@@ -15,16 +13,18 @@ Use Cobalt in layers:
 
 This mirrors patterns used by mature systems such as [USWDS](https://designsystem.digital.gov/maturity-model/), [Atlassian](https://atlassian.design/foundations/tokens/migrate-to-tokens/), [Carbon](https://carbondesignsystem.com/migrating/guide/overview/), and [Polaris](https://polaris-react.shopify.com/version-guides/migrating-from-v11-to-v12): adoption is incremental, measurable, and validated.
 
+> **NOTE:** Encountering blockers or questions during adoption? Use [GitHub](%GITHUB_URL%/issues/new/choose) to report bugs, request features, or ask for migration help. Your feedback is crucial for improving Cobalt and prioritizing roadmap items.
+
 ## Adoption Stages
 
 | Stage                               | What changes                                             | Progress signal                                                        | Exit criteria                                                               |
 | ----------------------------------- | -------------------------------------------------------- | ---------------------------------------------------------------------- | --------------------------------------------------------------------------- |
-| 0. Choose a slice                   | Pick one route, workflow, or page region.                | A small target surface is named.                                       | Current UI stack, key elements, risks, and unsupported patterns are known.  |
-| 1. Add tokens                       | Install tokens and replace hard-coded values where safe. | The slice uses Cobalt token imports and semantic `--co-*` values.      | Import order is verified and key styles use tokens instead of raw values.   |
-| 2. Add baseline styles              | Scope `@cobalt/tokens/css/base` with `[data-co-base]`.   | Native headings, text, links, lists, tables, and code align locally.   | The scoped area passes visual review and does not regress adjacent UI.      |
-| 3. Pilot ready components           | Replace a few low-risk, documented components.           | A real workflow uses Cobalt tokens, baseline styles, and components.   | Visual, accessibility, framework, browser, and regression checks pass.      |
-| 4. Make Cobalt the new-work default | Use Cobalt for new UI where support is ready.            | New features start from Cobalt decisions instead of cleanup later.     | Team standards define when to use Cobalt, defer, or file a roadmap gap.     |
-| 5. Expand and retire legacy         | Move repeated patterns as Cobalt support matures.        | Legacy CSS or component dependencies decline by route, bundle, or app. | Migrated slices no longer depend on old UI systems except intentional gaps. |
+| 1. Choose a slice                   | Pick one route, workflow, or page region.                | A small target surface is named.                                       | Current UI stack, key elements, risks, and unsupported patterns are known.  |
+| 2. Add tokens                       | Install tokens and replace hard-coded values where safe. | The slice uses Cobalt token imports and semantic `--co-*` values.      | Import order is verified and key styles use tokens instead of raw values.   |
+| 3. Add baseline styles              | Scope `@cobalt/tokens/css/base` with `[data-co-base]`.   | Native headings, text, links, lists, tables, and code align locally.   | The scoped area passes visual review and does not regress adjacent UI.      |
+| 4. Pilot ready components           | Replace a few low-risk, documented components.           | A real workflow uses Cobalt tokens, baseline styles, and components.   | Visual, accessibility, framework, browser, and regression checks pass.      |
+| 5. Make Cobalt the new-work default | Use Cobalt for new UI where support is ready.            | New features start from Cobalt decisions instead of cleanup later.     | Team standards define when to use Cobalt, defer, or file a roadmap gap.     |
+| 6. Expand and retire legacy         | Move repeated patterns as Cobalt support matures.        | Legacy CSS or component dependencies decline by route, bundle, or app. | Migrated slices no longer depend on old UI systems except intentional gaps. |
 
 ## Readiness Checks
 
@@ -36,18 +36,6 @@ Before expanding beyond a pilot, confirm:
 - wrapper behavior works in the app framework
 - keyboard, focus, accessibility, browser, theme, and regression checks pass
 - unsupported patterns have a local fallback and a roadmap issue when repeated
-
-## What To Show Management
-
-| Milestone          | Evidence                                                                         |
-| ------------------ | -------------------------------------------------------------------------------- |
-| Foundation started | Tokens installed, import order verified, and one surface using semantic tokens.  |
-| Baseline adopted   | `[data-co-base]` applied to one scoped area and visually approved.               |
-| Pilot delivered    | One real workflow uses Cobalt foundations and selected ready components.         |
-| Standard active    | Team has a rule for when Cobalt is the default and when legacy remains in place. |
-| Legacy reduced     | Old styles or component dependencies are removed from migrated slices.           |
-
-The message is direct: Cobalt can make meaningful progress now, but broad adoption should wait for wider component coverage and stronger verification signals.
 
 ## Related
 
