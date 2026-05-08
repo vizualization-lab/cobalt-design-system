@@ -136,7 +136,15 @@
   }
 
   .VPLocalSearchBox .search-input::placeholder {
-    color: var(--co-color-text-tertiary);
+    color: var(--co-color-text-secondary);
+  }
+
+  .DocSearch-Button {
+    --docsearch-muted-color: var(--co-color-text-secondary);
+  }
+
+  .DocSearch-Button .DocSearch-Button-Placeholder {
+    color: var(--co-color-text-secondary) !important;
   }
 
   .VPLocalSearchBox .result {

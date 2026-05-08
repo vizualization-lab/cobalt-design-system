@@ -270,7 +270,7 @@ function wcagCriteriaCount(state: {
 
 .wcag-sc {
   font-size: 12px;
-  color: var(--vp-c-text-3);
+  color: var(--vp-c-text-2);
   margin-left: 4px;
 }
 

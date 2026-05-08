@@ -188,7 +188,7 @@ function onKey(event: KeyboardEvent, i: number) {
   font-weight: var(--co-typography-caption-weight);
   letter-spacing: var(--co-typography-caption-tracking);
   line-height: var(--co-typography-caption-line-height);
-  color: var(--co-color-text-tertiary);
+  color: var(--co-color-text-secondary);
 }
 
 .rail-badge {
@@ -197,8 +197,8 @@ function onKey(event: KeyboardEvent, i: number) {
   letter-spacing: var(--co-typography-eyebrow-tracking);
   line-height: var(--co-typography-eyebrow-line-height);
   text-transform: uppercase;
-  color: var(--co-color-state-primary-base);
-  background: var(--co-component-nav-rail-item-background-active);
+  color: var(--co-color-text-on-primary);
+  background: var(--co-color-surface-interactive-primary-default);
   padding: 2px 7px;
   border-radius: var(--co-shape-radius-sm);
 }

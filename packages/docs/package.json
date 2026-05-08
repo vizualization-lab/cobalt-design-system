@@ -9,7 +9,7 @@
     "dev": "vitepress dev",
     "build": "vitepress build",
     "preview": "vitepress preview",
-    "audit:contrast": "node scripts/audit-contrast.js"
+    "audit:contrast": "pnpm run build && node scripts/audit-contrast.js"
   },
   "devDependencies": {
     "@cobalt/components": "workspace:*",

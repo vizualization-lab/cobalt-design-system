@@ -577,6 +577,7 @@ body {
 }
 
 .topbar-nav :deep(.DocSearch-Button) {
+  --docsearch-muted-color: var(--co-color-text-secondary);
   background: var(--co-color-surface-static-raised) !important;
   border: 1px solid var(--co-border) !important;
   border-radius: 10px !important;
@@ -595,8 +596,12 @@ body {
 }
 
 .topbar-nav :deep(.DocSearch-Button-Placeholder) {
-  color: var(--co-color-text-tertiary) !important;
+  color: var(--co-color-text-secondary) !important;
   font-family: var(--co-font-body) !important;
+}
+
+:global(.DocSearch-Button-Placeholder) {
+  color: var(--co-color-text-secondary) !important;
 }
 
 .topbar-nav :deep(.DocSearch-Button-Key) {

@@ -18,14 +18,14 @@ const TYPE_LABELS: Record<string, string> = {
 };
 
 const TYPE_COLORS: Record<string, string> = {
-  feat: 'var(--co-blue-400)',
+  feat: 'var(--co-color-text-link)',
   fix: '#f59e0b',
   refactor: '#a78bfa',
   perf: '#34d399',
   test: '#60a5fa',
-  docs: 'var(--co-color-text-tertiary)',
-  style: 'var(--co-color-text-tertiary)',
-  chore: 'var(--co-color-text-tertiary)',
+  docs: 'var(--co-color-text-secondary)',
+  style: 'var(--co-color-text-secondary)',
+  chore: 'var(--co-color-text-secondary)',
 };
 
 interface GroupedEntries {
@@ -131,7 +131,7 @@ const grouped = computed<GroupedEntries[]>(() => {
 .entry-hash {
   font-family: var(--co-font-mono);
   font-size: 0.76rem;
-  color: var(--co-blue-400);
+  color: var(--co-color-text-link);
   background: var(--co-blue-alpha-8);
   padding: 1px 6px;
   border-radius: 4px;
@@ -146,7 +146,7 @@ const grouped = computed<GroupedEntries[]>(() => {
 .entry-date {
   font-family: var(--co-font-mono);
   font-size: 0.76rem;
-  color: var(--co-color-text-tertiary);
+  color: var(--co-color-text-secondary);
   flex-shrink: 0;
 }
 </style>

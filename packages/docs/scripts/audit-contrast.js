@@ -1,7 +1,9 @@
 import { chromium } from 'playwright';
+import { spawn } from 'node:child_process';
 
 const baseUrl =
   process.env.COBALT_DOCS_AUDIT_BASE_URL || 'http://localhost:5173/cobalt-design-system';
+const managesPreviewServer = !process.env.COBALT_DOCS_AUDIT_BASE_URL;
 const pages = [
   '/',
   '/foundations/colors',
@@ -138,26 +140,78 @@ function buildAuditScript() {
   };
 }
 
+async function waitForServer(url, timeoutMs = 15000) {
+  const deadline = Date.now() + timeoutMs;
+  let lastError;
+
+  while (Date.now() < deadline) {
+    try {
+      const response = await fetch(url);
+      if (response.ok) return;
+      lastError = new Error(`Unexpected ${response.status} from ${url}`);
+    } catch (error) {
+      lastError = error;
+    }
+
+    await new Promise((resolve) => setTimeout(resolve, 250));
+  }
+
+  throw lastError ?? new Error(`Timed out waiting for ${url}`);
+}
+
+async function startPreviewServer(baseRoot) {
+  try {
+    await waitForServer(`${baseRoot}/`, 1000);
+    return undefined;
+  } catch {
+    // No existing server. Start a local VitePress preview for this audit.
+  }
+
+  const command = process.platform === 'win32' ? 'pnpm.cmd' : 'pnpm';
+  const child = spawn(
+    command,
+    ['exec', 'vitepress', 'preview', '--host', '127.0.0.1', '--port', '5173'],
+    {
+      stdio: ['ignore', 'pipe', 'pipe'],
+    },
+  );
+
+  child.stdout.on('data', (chunk) => process.stdout.write(chunk));
+  child.stderr.on('data', (chunk) => process.stderr.write(chunk));
+
+  await waitForServer(`${baseRoot}/`);
+  return child;
+}
+
+const baseRoot = baseUrl.replace(/\/$/, '');
+const previewServer = managesPreviewServer ? await startPreviewServer(baseRoot) : undefined;
 const browser = await chromium.launch({ headless: true });
 const page = await browser.newPage({ viewport: { width: 1440, height: 1200 } });
 const audit = buildAuditScript();
 const results = [];
 
 try {
-  const baseRoot = baseUrl.replace(/\/$/, '');
   for (const currentPath of pages) {
     const url = `${baseRoot}${currentPath}`;
     await page.goto(url, { waitUntil: 'networkidle' });
     await page.evaluate(() => {
+      localStorage.setItem('cobalt-theme', 'default');
       localStorage.setItem('cobalt-mode', 'dark');
+      document.documentElement.setAttribute('data-theme', 'default');
       document.documentElement.setAttribute('data-mode', 'dark');
     });
     await page.reload({ waitUntil: 'networkidle' });
+    await page.evaluate(() => {
+      document.documentElement.setAttribute('data-theme', 'default');
+      document.documentElement.setAttribute('data-mode', 'dark');
+    });
+    await page.waitForTimeout(100);
     const failures = await page.evaluate(audit);
     results.push({ path: currentPath, failures });
   }
 } finally {
   await browser.close();
+  previewServer?.kill();
 }
 
 const failingPages = results.filter((result) => result.failures.length > 0);

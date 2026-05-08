@@ -143,7 +143,7 @@ const totalCount = computed(() => {
   letter-spacing: var(--co-typography-eyebrow-tracking);
   line-height: var(--co-typography-eyebrow-line-height);
   text-transform: uppercase;
-  color: var(--co-color-text-tertiary);
+  color: var(--co-color-text-secondary);
 }
 
 .status-group__pills {
@@ -215,7 +215,7 @@ const totalCount = computed(() => {
   background: none;
   font-family: var(--co-font-family-sans);
   font-size: var(--co-typography-caption-size);
-  color: var(--co-color-text-tertiary);
+  color: var(--co-color-text-secondary);
   cursor: pointer;
 }
 

@@ -307,7 +307,7 @@ These semantic token names stay stable across themes even as their resolved colo
   border: 1px solid var(--co-color-border-default);
   border-radius: 999px;
   background: var(--co-color-surface-static-default);
-  color: var(--co-color-text-secondary);
+  color: var(--co-color-text-on-primary);
   cursor: pointer;
   font-size: 0.78rem;
   font-weight: 600;

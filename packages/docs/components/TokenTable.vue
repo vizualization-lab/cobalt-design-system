@@ -1138,7 +1138,7 @@ async function copyToken(name: string) {
 
 .tier-count {
   font-size: 0.65rem;
-  color: var(--co-color-text-tertiary);
+  color: var(--co-color-text-secondary);
   font-weight: var(--co-font-weight-regular);
 }
 

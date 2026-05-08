@@ -228,7 +228,7 @@ async function copyToken(key: string, token: string) {
 
 .usage-description {
   font-size: 0.66rem;
-  color: var(--co-color-text-tertiary);
+  color: var(--co-color-text-secondary);
   line-height: 1.2;
 }
 

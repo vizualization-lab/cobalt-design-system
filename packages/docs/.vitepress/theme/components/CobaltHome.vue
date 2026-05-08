@@ -15,14 +15,14 @@ const features = [
     iconName: 'widgets',
     title: 'Web Components',
     description:
-      'Lit provides a structured foundation for components that abstract implementation. Components are shiped with token-driven Cobalt theming baked in.',
+      'Lit provides a structured foundation for components that abstract implementation. Components are shipped with token-driven Cobalt theming baked in.',
     link: '/components',
   },
   {
     iconName: 'code-blocks',
     title: 'Framework Wrappers',
     description:
-      'Thin wrappers for React, Vue, and Angular leverage shared web components while providing native developer experieces in each framework.',
+      'Thin wrappers for React, Vue, and Angular leverage shared web components while providing native developer experiences in each framework.',
     link: '/getting-started/developers',
   },
 ];
@@ -449,7 +449,7 @@ const features = [
   font-weight: var(--co-typography-label-weight);
   letter-spacing: var(--co-typography-label-tracking);
   line-height: var(--co-typography-label-line-height);
-  color: var(--co-color-state-primary-base);
+  color: var(--co-color-text-link);
   transition: gap var(--co-duration) var(--co-ease);
 }
 
