@@ -9,7 +9,9 @@ describe('React CoNavDrawer wrapper', () => {
   it('renders co-nav-drawer element', () => {
     const { container } = render(
       <CoNavDrawer label="Menu">
-        <CoNavDrawerItem value="home" icon="home">Home</CoNavDrawerItem>
+        <CoNavDrawerItem value="home" icon="home">
+          Home
+        </CoNavDrawerItem>
       </CoNavDrawer>,
     );
     expect(container.querySelector('co-nav-drawer')).toBeTruthy();

@@ -1,4 +1,4 @@
-import '@cobalt/components';
+import '@cobalt/components/nav-header-bar';
 import type { CoNavHeaderBar as CoNavHeaderBarElement } from '@cobalt/components';
 import { createCobaltComponent } from '../create-cobalt-component.js';
 

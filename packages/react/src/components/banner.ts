@@ -1,4 +1,4 @@
-import '@cobalt/components';
+import '@cobalt/components/banner';
 import type { CoBanner as CoBannerElement } from '@cobalt/components';
 import { createCobaltComponent } from '../create-cobalt-component.js';
 

@@ -1,5 +1,5 @@
 import { Directive, ElementRef, effect, inject, input } from '@angular/core';
-import '@cobalt/components';
+import '@cobalt/components/card';
 
 /**
  * Angular directive wrapping the `<co-card>` web component.

@@ -1,5 +1,5 @@
 import { Directive, ElementRef, effect, inject, input, type OnInit } from '@angular/core';
-import '@cobalt/components';
+import '@cobalt/components/nav-rail-item';
 
 type NavRailItemTarget = '_blank' | '_self' | '_parent' | '_top';
 

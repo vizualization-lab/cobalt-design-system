@@ -1,5 +1,5 @@
 import { defineComponent, h, ref, onMounted } from 'vue';
-import '@cobalt/components';
+import '@cobalt/components/banner';
 
 export type CoBannerProps = {
   label?: string;

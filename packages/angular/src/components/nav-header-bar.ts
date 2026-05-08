@@ -1,5 +1,5 @@
 import { Directive, ElementRef, effect, inject, input } from '@angular/core';
-import '@cobalt/components';
+import '@cobalt/components/nav-header-bar';
 
 /**
  * Angular directive wrapping the `<co-nav-header-bar>` web component.

@@ -1,4 +1,4 @@
-import '@cobalt/components';
+import '@cobalt/components/card';
 import type { CoCard as CoCardElement } from '@cobalt/components';
 import { createCobaltComponent } from '../create-cobalt-component.js';
 

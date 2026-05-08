@@ -1,5 +1,5 @@
 import { Directive, ElementRef, effect, inject, input } from '@angular/core';
-import '@cobalt/components';
+import '@cobalt/components/banner';
 
 /**
  * Angular directive wrapping the `<co-banner>` web component.

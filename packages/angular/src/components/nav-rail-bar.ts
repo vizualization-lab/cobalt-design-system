@@ -1,5 +1,5 @@
 import { Directive, ElementRef, effect, inject, input, output, type OnInit } from '@angular/core';
-import '@cobalt/components';
+import '@cobalt/components/nav-rail-bar';
 
 /**
  * Angular directive wrapping the `<co-nav-rail-bar>` web component.

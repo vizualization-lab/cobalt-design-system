@@ -1,4 +1,4 @@
-import '@cobalt/components';
+import '@cobalt/components/nav-rail-item';
 import type { CoNavRailItem as CoNavRailItemElement } from '@cobalt/components';
 import { createCobaltComponent } from '../create-cobalt-component.js';
 
