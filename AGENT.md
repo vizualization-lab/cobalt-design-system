@@ -245,12 +245,13 @@ Always reference design tokens rather than hard-coded values.
 ### Commits (Conventional Commits)
 
 ```
+type: description
 type(scope): description
 ```
 
-Types: `feat`, `fix`, `docs`, `style`, `refactor`, `test`, `chore`
-Examples: `feat(co-button): add ghost variant`, `fix(co-input): resolve focus ring`
-Validated by commitlint hook.
+Scope is optional, but every commit must use one of these types: `feat`, `fix`, `docs`, `style`, `refactor`, `test`, `chore`.
+Examples: `feat: add release tagging`, `feat(co-button): add ghost variant`, `fix(co-input): resolve focus ring`.
+Validated by the Husky `commit-msg` hook.
 
 ### Testing
 

@@ -82,12 +82,15 @@ All files use **kebab-case**. Do not use `PascalCase` or `camelCase` for file na
 We follow [Conventional Commits](https://www.conventionalcommits.org/). Every commit message must match this pattern:
 
 ```
+type: description
 type(scope): description
 
 [optional body]
 
 [optional footer]
 ```
+
+The scope is optional. The type and colon-separated description are required.
 
 | Type       | When to Use                                           |
 | ---------- | ----------------------------------------------------- |
@@ -108,4 +111,4 @@ docs(co-modal): add usage examples for nested modals
 chore(deps): update lit to 3.2.0
 ```
 
-> **Note:** Commit messages are validated by a `commitlint` hook. Commits that don't follow this format will be rejected automatically.
+> **Note:** Commit messages are validated by the Husky `commit-msg` hook. Commits that don't follow this format will be rejected automatically.
