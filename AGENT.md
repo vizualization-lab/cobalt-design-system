@@ -102,10 +102,10 @@ For the full machine-readable API (props, events, slots, CSS parts), read `packa
 
 ```html
 <script type="module">
-  import '@cobalt/components/co-button';
+  import '@cobalt/components/button';
 </script>
 <co-button variant="primary">Save</co-button>
-<co-button variant="error" loading>Deleting…</co-button>
+<co-button variant="danger" loading>Deleting…</co-button>
 ```
 
 ### React (`@cobalt/react`)
@@ -114,7 +114,7 @@ For the full machine-readable API (props, events, slots, CSS parts), read `packa
 import { CoButton } from '@cobalt/react';
 
 <CoButton variant="primary" onClick={handleSave}>Save</CoButton>
-<CoButton variant="error" onCoFocus={() => log('focused')}>Delete</CoButton>
+<CoButton variant="danger" onCoFocus={() => log('focused')}>Delete</CoButton>
 ```
 
 ### Vue (`@cobalt/vue`)
@@ -125,7 +125,7 @@ import { CoButton } from '@cobalt/vue';
 </script>
 <template>
   <CoButton variant="primary" @click="handleSave">Save</CoButton>
-  <CoButton variant="error" @co-focus="onFocus">Delete</CoButton>
+  <CoButton variant="danger" @co-focus="onFocus">Delete</CoButton>
 </template>
 ```
 
@@ -146,7 +146,7 @@ export class AppComponent {}
 
 ```html
 <co-button variant="primary" (click)="handleSave()">Save</co-button>
-<co-button variant="error" (coFocus)="onFocus($event)">Delete</co-button>
+<co-button variant="danger" (coFocus)="onFocus($event)">Delete</co-button>
 ```
 
 ### Import strategy
@@ -154,7 +154,7 @@ export class AppComponent {}
 Use per-component entry points for tree-shaking:
 
 ```js
-import '@cobalt/components/co-button'; // Good — registers only co-button
+import '@cobalt/components/button'; // Good — registers only co-button
 // import '@cobalt/components';          // Bad — registers everything
 ```
 
