@@ -25,6 +25,24 @@ describe('co-button', () => {
     expect(el.getAttribute('variant')).to.equal('success');
   });
 
+  it('reflects warning variant attribute', async () => {
+    const el = await fixture<CoButton>(html`<co-button variant="warning">Review</co-button>`);
+    expect(el.variant).to.equal('warning');
+    expect(el.getAttribute('variant')).to.equal('warning');
+  });
+
+  it('applies themed warning colors on the host', async () => {
+    const el = await fixture<CoButton>(html`<co-button variant="warning">Review</co-button>`);
+    el.style.setProperty('--co-color-surface-interactive-warning-default', 'rgb(255 193 7)');
+    el.style.setProperty('--co-color-text-on-warning', 'rgb(33 37 41)');
+
+    await el.updateComplete;
+
+    const styles = getComputedStyle(el);
+    expect(styles.backgroundColor).to.equal('rgb(255, 193, 7)');
+    expect(styles.color).to.equal('rgb(33, 37, 41)');
+  });
+
   it('applies themed secondary colors on the host', async () => {
     const el = await fixture<CoButton>(html`<co-button variant="secondary">Secondary</co-button>`);
     el.style.setProperty('--co-color-surface-interactive-secondary-default', 'rgb(250 251 252)');

@@ -15,6 +15,12 @@ describe('React CoButton wrapper', () => {
     expect(el?.getAttribute('aria-label')).toBe('Close dialog');
   });
 
+  it('passes warning variant to the custom element', () => {
+    const { container } = render(<CoButton variant="warning">Review</CoButton>);
+    const el = container.querySelector('co-button') as any;
+    expect(el?.variant).toBe('warning');
+  });
+
   it('passes aria-describedby to the custom element', () => {
     const { container } = render(<CoButton aria-describedby="help-text">Save</CoButton>);
     const el = container.querySelector('co-button');

@@ -1,11 +1,9 @@
-import React from 'react';
-import { createComponent } from '@lit/react';
-import { CoButton as CoButtonElement } from '@cobalt/components/button';
+import '@cobalt/components/button';
+import type { CoButton as CoButtonElement } from '@cobalt/components/button';
+import { createCobaltComponent } from '../create-cobalt-component.js';
 
-export const CoButton = createComponent({
+export const CoButton = createCobaltComponent<CoButtonElement>({
   tagName: 'co-button',
-  elementClass: CoButtonElement,
-  react: React,
   events: {
     onCoFocus: 'co-focus',
     onCoBlur: 'co-blur',

@@ -4,7 +4,7 @@ import { LionButtonSubmit } from '@lion/ui/button.js';
 import { cobaltButtonStyles } from './co-button.styles.js';
 import '../icon/co-icon.js';
 
-export type ButtonVariant = 'primary' | 'secondary' | 'danger' | 'success' | 'ghost';
+export type ButtonVariant = 'primary' | 'secondary' | 'danger' | 'warning' | 'success' | 'ghost';
 export type ButtonSize = 'sm' | 'md' | 'lg' | 'xl';
 
 /**
