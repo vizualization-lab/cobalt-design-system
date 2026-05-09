@@ -251,6 +251,7 @@ type(scope): description
 
 Scope is optional, but every commit must use one of these types: `feat`, `fix`, `docs`, `style`, `refactor`, `test`, `chore`.
 Examples: `feat: add release tagging`, `feat(co-button): add ghost variant`, `fix(co-input): resolve focus ring`.
+When a commit changes a component, use the full custom element name as the scope, including the `co-` prefix, so component changelogs attribute the change correctly.
 Validated by the Husky `commit-msg` hook.
 
 ### Testing

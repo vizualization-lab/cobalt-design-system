@@ -85,6 +85,24 @@ describe('co-select', () => {
     expect(changeFired).to.be.true;
   });
 
+  it('does not dispatch co-change when the selected value is unchanged', async () => {
+    const el = await fixture<CoSelect>(html`
+      <co-select label="Fruit">
+        <co-option value="apple" checked>Apple</co-option>
+        <co-option value="banana">Banana</co-option>
+      </co-select>
+    `);
+    await el.updateComplete;
+
+    let changeCount = 0;
+    el.addEventListener('co-change', () => {
+      changeCount += 1;
+    });
+
+    el.dispatchEvent(new Event('model-value-changed', { bubbles: true }));
+    expect(changeCount).to.equal(0);
+  });
+
   // ── Focus events ───────────────────────────────────
 
   it('dispatches co-focus when the invoker gains focus', async () => {

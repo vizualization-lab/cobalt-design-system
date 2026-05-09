@@ -68,6 +68,11 @@ export class CoSelect extends LionSelectRich {
   private readonly _overlayId = `co-select-overlay-${++CoSelect._instances}`;
 
   private readonly _validation = new CobaltValidationController(this);
+  // Lion can emit `model-value-changed` during internal sync even when the
+  // selected value did not change. Track the last value seen by Cobalt so
+  // `co-change` keeps native select semantics: emit only for real changes.
+  private _lastChangeModelValue: unknown;
+  private _hasLastChangeModelValue = false;
 
   override connectedCallback(): void {
     super.connectedCallback();
@@ -89,6 +94,9 @@ export class CoSelect extends LionSelectRich {
   override firstUpdated(changedProperties: PropertyValues<this>): void {
     ensureValidatorsArray(this);
     super.firstUpdated(changedProperties);
+    // Establish the initial value baseline after Lion has normalized default
+    // selection, so later same-value sync events do not look like changes.
+    this._rememberModelValue();
     this._syncValidation(true, true);
     this._wireInvokerFocusEvents();
     this._refreshInvokerIcons();
@@ -300,13 +308,26 @@ export class CoSelect extends LionSelectRich {
 
   private _handleModelValueChanged = (event: Event) => {
     const customEvent = event as CustomEvent<{ initialize?: boolean }>;
-    if (customEvent.target !== this || customEvent.detail?.initialize) return;
+    if (customEvent.target !== this) return;
+
+    const nextModelValue = this.modelValue;
+    if (customEvent.detail?.initialize) {
+      // Initialization is state setup, not user-visible selection change.
+      this._rememberModelValue(nextModelValue);
+      return;
+    }
+
+    if (this._hasLastChangeModelValue && Object.is(nextModelValue, this._lastChangeModelValue)) {
+      return;
+    }
+
+    this._rememberModelValue(nextModelValue);
 
     this.dispatchEvent(
       new CustomEvent<SelectChangeDetail>('co-change', {
         detail: {
-          value: this.modelValue,
-          modelValue: this.modelValue,
+          value: nextModelValue,
+          modelValue: nextModelValue,
           checkedIndex: this.checkedIndex as number,
         },
         bubbles: true,
@@ -314,6 +335,11 @@ export class CoSelect extends LionSelectRich {
       }),
     );
   };
+
+  private _rememberModelValue(modelValue: unknown = this.modelValue) {
+    this._lastChangeModelValue = modelValue;
+    this._hasLastChangeModelValue = true;
+  }
 
   private _syncValidation(userValidatorsChanged = false, validationRulesChanged = false) {
     this._validation.sync(
