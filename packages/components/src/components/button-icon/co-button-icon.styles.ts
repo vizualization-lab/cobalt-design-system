@@ -125,6 +125,18 @@ export const cobaltButtonIconStyles = css`
     background: var(--co-color-surface-interactive-danger-active);
   }
 
+  /* ── Warning variant ── */
+  :host([variant='warning']) {
+    background: var(--co-color-surface-interactive-warning-default);
+    color: var(--co-color-text-on-warning);
+  }
+  :host([variant='warning']:hover) {
+    background: var(--co-color-surface-interactive-warning-hover);
+  }
+  :host([variant='warning']:active) {
+    background: var(--co-color-surface-interactive-warning-active);
+  }
+
   /* ── Success variant ── */
   :host([variant='success']) {
     background: var(--co-color-surface-interactive-success-default);

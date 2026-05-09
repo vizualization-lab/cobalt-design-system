@@ -1,11 +1,11 @@
 import { defineComponent, h, ref, onMounted, onUnmounted, type PropType } from 'vue';
-import type { ButtonVariant, ButtonSize } from '@cobalt/components/button';
-import type { ButtonIconLabelPosition } from '@cobalt/components/button-icon';
+import type { ButtonSize } from '@cobalt/components/button';
+import type { ButtonIconLabelPosition, ButtonIconVariant } from '@cobalt/components/button-icon';
 import '@cobalt/components/button-icon';
 
 export type CoButtonIconProps = {
   name?: string;
-  variant?: ButtonVariant;
+  variant?: ButtonIconVariant;
   size?: ButtonSize;
   label?: string;
   labelPosition?: ButtonIconLabelPosition;
@@ -21,7 +21,7 @@ export const CoButtonIcon = defineComponent({
       default: '',
     },
     variant: {
-      type: String as PropType<ButtonVariant>,
+      type: String as PropType<ButtonIconVariant>,
       default: 'primary',
     },
     size: {

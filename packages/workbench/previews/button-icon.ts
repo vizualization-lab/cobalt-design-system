@@ -9,6 +9,7 @@ export const html = `
       <co-button-icon name="star" variant="primary" aria-label="Primary"></co-button-icon>
       <co-button-icon name="star" variant="secondary" aria-label="Secondary"></co-button-icon>
       <co-button-icon name="star" variant="danger" aria-label="Danger"></co-button-icon>
+      <co-button-icon name="warning" variant="warning" aria-label="Warning"></co-button-icon>
       <co-button-icon name="star" variant="success" aria-label="Success"></co-button-icon>
       <co-button-icon name="star" variant="ghost" aria-label="Ghost"></co-button-icon>
     </div>
@@ -29,6 +30,7 @@ export const html = `
     <div class="wb-row" style="align-items: center">
       <co-button-icon name="star" label="Favorite" variant="primary"></co-button-icon>
       <co-button-icon name="delete" label="Delete" variant="danger"></co-button-icon>
+      <co-button-icon name="warning" label="Review" variant="warning"></co-button-icon>
       <co-button-icon name="settings" label="Settings" variant="secondary"></co-button-icon>
       <co-button-icon name="add" label="Add" variant="success"></co-button-icon>
     </div>
@@ -49,6 +51,7 @@ export const html = `
       <co-button-icon name="star" circle variant="primary" aria-label="Primary"></co-button-icon>
       <co-button-icon name="star" circle variant="secondary" aria-label="Secondary"></co-button-icon>
       <co-button-icon name="star" circle variant="danger" aria-label="Danger"></co-button-icon>
+      <co-button-icon name="warning" circle variant="warning" aria-label="Warning"></co-button-icon>
       <co-button-icon name="star" circle variant="success" aria-label="Success"></co-button-icon>
       <co-button-icon name="star" circle variant="ghost" aria-label="Ghost"></co-button-icon>
     </div>

@@ -1,6 +1,6 @@
 import { Directive, ElementRef, effect, inject, input, output, type OnInit } from '@angular/core';
-import type { ButtonVariant, ButtonSize } from '@cobalt/components/button';
-import type { ButtonIconLabelPosition } from '@cobalt/components/button-icon';
+import type { ButtonSize } from '@cobalt/components/button';
+import type { ButtonIconLabelPosition, ButtonIconVariant } from '@cobalt/components/button-icon';
 import '@cobalt/components/button-icon';
 
 /**
@@ -19,7 +19,7 @@ import '@cobalt/components/button-icon';
 })
 export class CoButtonIcon implements OnInit {
   readonly name = input('');
-  readonly variant = input<ButtonVariant>('primary');
+  readonly variant = input<ButtonIconVariant>('primary');
   readonly size = input<ButtonSize>('md');
   readonly label = input<string | undefined>();
   readonly labelPosition = input<ButtonIconLabelPosition>('bottom');

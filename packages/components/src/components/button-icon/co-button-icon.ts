@@ -1,11 +1,18 @@
 import { html, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { LionButtonSubmit } from '@lion/ui/button.js';
-import type { ButtonVariant, ButtonSize } from '../button/co-button.js';
+import type { ButtonSize } from '../button/co-button.js';
 import type { IconSize } from '../icon/co-icon.js';
 import { cobaltButtonIconStyles } from './co-button-icon.styles.js';
 import '../icon/co-icon.js';
 
+export type ButtonIconVariant =
+  | 'primary'
+  | 'secondary'
+  | 'danger'
+  | 'warning'
+  | 'success'
+  | 'ghost';
 export type ButtonIconLabelPosition = 'top' | 'bottom';
 
 const iconSizeMap: Record<ButtonSize, IconSize> = {
@@ -38,7 +45,7 @@ export class CoButtonIcon extends LionButtonSubmit {
 
   /** The button variant. */
   @property({ reflect: true })
-  variant: ButtonVariant = 'primary';
+  variant: ButtonIconVariant = 'primary';
 
   /** The button size. */
   @property({ reflect: true })

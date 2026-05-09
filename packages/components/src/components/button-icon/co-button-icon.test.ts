@@ -25,6 +25,14 @@ describe('co-button-icon', () => {
     expect(el.getAttribute('variant')).to.equal('danger');
   });
 
+  it('reflects warning variant attribute', async () => {
+    const el = await fixture<CoButtonIcon>(
+      html`<co-button-icon name="star" variant="warning" aria-label="Review"></co-button-icon>`,
+    );
+    expect(el.variant).to.equal('warning');
+    expect(el.getAttribute('variant')).to.equal('warning');
+  });
+
   it('reflects size attribute', async () => {
     const el = await fixture<CoButtonIcon>(
       html`<co-button-icon name="star" size="lg" aria-label="Star"></co-button-icon>`,
@@ -47,6 +55,20 @@ describe('co-button-icon', () => {
     expect(styles.backgroundColor).to.equal('rgb(245, 247, 255)');
     expect(styles.color).to.equal('rgb(33, 55, 77)');
     expect(styles.boxShadow).to.include('rgb(33, 55, 77)');
+  });
+
+  it('applies themed warning colors on the host', async () => {
+    const el = await fixture<CoButtonIcon>(
+      html`<co-button-icon name="star" variant="warning" aria-label="Review"></co-button-icon>`,
+    );
+    el.style.setProperty('--co-color-surface-interactive-warning-default', 'rgb(255 193 7)');
+    el.style.setProperty('--co-color-text-on-warning', 'rgb(33 37 41)');
+
+    await el.updateComplete;
+
+    const styles = getComputedStyle(el);
+    expect(styles.backgroundColor).to.equal('rgb(255, 193, 7)');
+    expect(styles.color).to.equal('rgb(33, 37, 41)');
   });
 
   it('renders co-icon in shadow DOM with correct name', async () => {

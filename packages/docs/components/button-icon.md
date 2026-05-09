@@ -9,7 +9,7 @@ The `co-button-icon` component provides a button icon with an optional text labe
 <ComponentDemo
   tag="co-button-icon"
   :defaults="{ name: 'star', variant: 'primary', size: 'md', 'label-position': 'bottom' }"
-  :options="{ variant: ['primary', 'secondary', 'danger', 'success', 'ghost'], size: ['sm', 'md', 'lg', 'xl'], 'label-position': ['bottom', 'top'] }"
+  :options="{ variant: ['primary', 'secondary', 'danger', 'warning', 'success', 'ghost'], size: ['sm', 'md', 'lg', 'xl'], 'label-position': ['bottom', 'top'] }"
   :booleans="['disabled', 'circle']"
   :textInputs="['name', 'label']"
 />
@@ -21,6 +21,7 @@ The `co-button-icon` component provides a button icon with an optional text labe
   <co-button-icon name="star" variant="primary" aria-label="Primary"></co-button-icon>
   <co-button-icon name="star" variant="secondary" aria-label="Secondary"></co-button-icon>
   <co-button-icon name="star" variant="danger" aria-label="Danger"></co-button-icon>
+  <co-button-icon name="warning" variant="warning" aria-label="Warning"></co-button-icon>
   <co-button-icon name="star" variant="success" aria-label="Success"></co-button-icon>
   <co-button-icon name="star" variant="ghost" aria-label="Ghost"></co-button-icon>
 </div>
@@ -31,6 +32,7 @@ The `co-button-icon` component provides a button icon with an optional text labe
 | `primary`   | Main call-to-action button icons.                  |
 | `secondary` | Supporting actions alongside primary buttons.      |
 | `danger`    | Destructive actions like delete or remove.         |
+| `warning`   | Cautionary actions that need review.               |
 | `success`   | Confirmation or positive actions.                  |
 | `ghost`     | Low-emphasis actions with no background or border. |
 
@@ -53,6 +55,7 @@ Add a visible text label below (default) or above the icon using the `label` and
 <div style="display: flex; gap: 12px; flex-wrap: wrap; margin: 16px 0 24px;">
   <co-button-icon name="star" label="Favorite" variant="primary"></co-button-icon>
   <co-button-icon name="delete" label="Delete" variant="danger"></co-button-icon>
+  <co-button-icon name="warning" label="Review" variant="warning"></co-button-icon>
   <co-button-icon name="settings" label="Settings" variant="secondary"></co-button-icon>
   <co-button-icon name="add" label="Add" variant="success"></co-button-icon>
 </div>
@@ -91,6 +94,7 @@ Use the `circle` attribute for a fully rounded icon-only button. The `label` pro
   <co-button-icon name="star" circle variant="primary" aria-label="Primary"></co-button-icon>
   <co-button-icon name="star" circle variant="secondary" aria-label="Secondary"></co-button-icon>
   <co-button-icon name="star" circle variant="danger" aria-label="Danger"></co-button-icon>
+  <co-button-icon name="warning" circle variant="warning" aria-label="Warning"></co-button-icon>
   <co-button-icon name="star" circle variant="success" aria-label="Success"></co-button-icon>
   <co-button-icon name="star" circle variant="ghost" aria-label="Ghost"></co-button-icon>
 </div>
@@ -231,6 +235,7 @@ export class AppComponent {
 
 - **Toolbar actions** — compact button icons in toolbars or action bars
 - **Repeated row actions** — edit, delete, or expand actions in lists or tables
+- **Cautionary actions** that need review before proceeding
 - **Toggle controls** — favorite, bookmark, or pin actions
 - **Space-constrained UI** — when a full text button would take too much space
 
@@ -251,15 +256,15 @@ export class AppComponent {
 
 ### Properties
 
-| Property         | Type                                                           | Default     | Description                                |
-| ---------------- | -------------------------------------------------------------- | ----------- | ------------------------------------------ |
-| `name`           | `string`                                                       | `''`        | Icon name passed to internal co-icon       |
-| `variant`        | `'primary' \| 'secondary' \| 'danger' \| 'success' \| 'ghost'` | `'primary'` | Visual style of the button                 |
-| `size`           | `'sm' \| 'md' \| 'lg' \| 'xl'`                                 | `'md'`      | Controls dimensions and icon size          |
-| `label`          | `string`                                                       | —           | Optional visible text label                |
-| `label-position` | `'top' \| 'bottom'`                                            | `'bottom'`  | Position of the label relative to the icon |
-| `circle`         | `boolean`                                                      | `false`     | Renders as a circle; label is ignored      |
-| `disabled`       | `boolean`                                                      | `false`     | Prevents interaction                       |
+| Property         | Type                                                                        | Default     | Description                                |
+| ---------------- | --------------------------------------------------------------------------- | ----------- | ------------------------------------------ |
+| `name`           | `string`                                                                    | `''`        | Icon name passed to internal co-icon       |
+| `variant`        | `'primary' \| 'secondary' \| 'danger' \| 'warning' \| 'success' \| 'ghost'` | `'primary'` | Visual style of the button                 |
+| `size`           | `'sm' \| 'md' \| 'lg' \| 'xl'`                                              | `'md'`      | Controls dimensions and icon size          |
+| `label`          | `string`                                                                    | —           | Optional visible text label                |
+| `label-position` | `'top' \| 'bottom'`                                                         | `'bottom'`  | Position of the label relative to the icon |
+| `circle`         | `boolean`                                                                   | `false`     | Renders as a circle; label is ignored      |
+| `disabled`       | `boolean`                                                                   | `false`     | Prevents interaction                       |
 
 ### Events
 
