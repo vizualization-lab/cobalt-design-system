@@ -1,15 +1,27 @@
 <script setup lang="ts">
 import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue';
-import { customIconNames, getIcon, iconNames, overrideIconNames } from '@cobalt/icons';
+import {
+  animatedIconNames,
+  customIconNames,
+  getIcon,
+  iconCategories,
+  iconNames,
+  overrideIconNames,
+} from '@cobalt/icons';
 
 const pngSizes = [16, 20, 24, 32, 48, 96, 192];
 const snippetTabs = ['Web Component', 'React', 'Vue', 'Angular'];
-const browseBuckets = ['0-9', ...'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('')];
 const iconCountFormatter = new Intl.NumberFormat('en-US');
+const allCategoryId = 'all';
+const cobaltCustomIconCategoryId = 'cobalt';
+const microAnimationCategoryId = 'micro-animations';
+const microAnimationIconNames = Array.from(animatedIconNames).filter((name) =>
+  iconNames.includes(name),
+);
 
 const searchQuery = ref('');
 const fillToggle = ref(false);
-const activeBucket = ref<string | null>(null);
+const activeCategoryId = ref(allCategoryId);
 const selectedIcon = ref<string | null>(null);
 const resultsPaneRef = ref<HTMLElement | null>(null);
 const pngSize = ref(32);
@@ -20,25 +32,27 @@ const copyLabel = ref('Copy SVG');
 const trimmedSearchQuery = computed(() => searchQuery.value.toLowerCase().trim());
 const isSearching = computed(() => trimmedSearchQuery.value.length > 0);
 const totalIconCount = iconNames.length;
+const cobaltCustomIconCategory = computed(() =>
+  iconCategories.find((category) => category.id === cobaltCustomIconCategoryId),
+);
+const materialIconCategories = computed(() =>
+  iconCategories.filter((category) => category.id !== cobaltCustomIconCategoryId),
+);
 
-function bucketForIcon(name: string): string {
-  const first = name[0]?.toUpperCase() ?? '';
-  if (first >= 'A' && first <= 'Z') return first;
-  return '0-9';
-}
+const categoryOptions = computed(() => [
+  { id: allCategoryId, label: 'All', iconNames },
+  {
+    id: microAnimationCategoryId,
+    label: 'Micro animations',
+    iconNames: microAnimationIconNames,
+  },
+  ...(cobaltCustomIconCategory.value ? [cobaltCustomIconCategory.value] : []),
+  ...materialIconCategories.value,
+]);
 
-const bucketedIcons = computed(() => {
-  const buckets = new Map<string, string[]>();
-  for (const bucket of browseBuckets) {
-    buckets.set(bucket, []);
-  }
-
-  for (const name of iconNames) {
-    buckets.get(bucketForIcon(name))?.push(name);
-  }
-
-  return buckets;
-});
+const activeCategory = computed(
+  () => categoryOptions.value.find((category) => category.id === activeCategoryId.value) ?? null,
+);
 
 const filteredIcons = computed(() => {
   if (isSearching.value) {
@@ -46,14 +60,14 @@ const filteredIcons = computed(() => {
     return iconNames.filter((name) => terms.every((term) => name.includes(term)));
   }
 
-  if (activeBucket.value) {
-    return bucketedIcons.value.get(activeBucket.value) ?? [];
+  if (activeCategory.value) {
+    return activeCategory.value.iconNames;
   }
 
   return [];
 });
 
-const showPromptState = computed(() => !isSearching.value && activeBucket.value === null);
+const showPromptState = computed(() => !isSearching.value && activeCategory.value === null);
 const totalCount = computed(() => filteredIcons.value.length);
 
 const resultsSummary = computed(() => {
@@ -62,9 +76,13 @@ const resultsSummary = computed(() => {
     return `${iconCountFormatter.format(totalCount.value)} ${label}`;
   }
 
-  if (activeBucket.value) {
+  if (activeCategory.value) {
     const label = totalCount.value === 1 ? 'icon' : 'icons';
-    return `${iconCountFormatter.format(totalCount.value)} ${label} in ${activeBucket.value}`;
+    if (activeCategory.value.id === allCategoryId) {
+      return `${iconCountFormatter.format(totalCount.value)} total ${label}`;
+    }
+
+    return `${iconCountFormatter.format(totalCount.value)} ${label} in ${activeCategory.value.label}`;
   }
 
   return `${iconCountFormatter.format(totalIconCount)} total icons`;
@@ -72,11 +90,7 @@ const resultsSummary = computed(() => {
 
 const searchModeHint = computed(() => {
   if (!isSearching.value) return '';
-  if (activeBucket.value) {
-    return `Search is matching across all icons. Clear the field to return to the ${activeBucket.value} bucket.`;
-  }
-
-  return 'Search is matching across all icons. Clear the field to browse by starting character.';
+  return 'Search is matching across all icons. Clear the field to browse all icons.';
 });
 
 function getSvgForGrid(name: string): string {
@@ -121,9 +135,15 @@ watch(isMobile, (mobile) => {
   document.body.style.overflow = mobile && selectedIcon.value ? 'hidden' : '';
 });
 
-watch([searchQuery, activeBucket], async () => {
+watch([searchQuery, activeCategoryId], async () => {
   await nextTick();
   resultsPaneRef.value?.scrollTo({ top: 0, behavior: 'auto' });
+});
+
+watch(isSearching, (searching) => {
+  if (searching) {
+    activeCategoryId.value = allCategoryId;
+  }
 });
 
 watch(filteredIcons, (icons) => {
@@ -132,14 +152,14 @@ watch(filteredIcons, (icons) => {
   }
 });
 
-function selectBucket(bucket: string) {
-  if (isSearching.value) {
-    searchQuery.value = '';
-    activeBucket.value = bucket;
-    return;
-  }
+function handleCategoryChange(event: Event) {
+  const detail = (event as CustomEvent<{ value?: unknown; modelValue?: unknown }>).detail;
+  const nextCategoryId = String(detail?.value ?? detail?.modelValue ?? '');
+  if (!nextCategoryId) return;
+  if (nextCategoryId === activeCategoryId.value) return;
 
-  activeBucket.value = activeBucket.value === bucket ? null : bucket;
+  searchQuery.value = '';
+  activeCategoryId.value = nextCategoryId;
 }
 
 function selectIcon(name: string) {
@@ -266,25 +286,34 @@ function getSnippet(name: string, tabIndex: number): string {
         <div class="browse-toolbar">
           <div class="browse-header">
             <div>
-              <div class="browse-label">Browse by prefix</div>
-              <p class="browse-help">Search all icons or jump straight to a starting character.</p>
+              <div class="browse-label">Browse by category</div>
+              <p class="browse-help">Search all icons or jump straight to a category.</p>
             </div>
             <span class="browse-summary">{{ resultsSummary }}</span>
           </div>
 
-          <div class="bucket-row" role="toolbar" aria-label="Browse icons by starting character">
-            <button
-              v-for="bucket in browseBuckets"
-              :key="bucket"
-              type="button"
-              class="bucket-chip"
-              :class="{ active: !isSearching && activeBucket === bucket }"
-              :aria-pressed="!isSearching && activeBucket === bucket"
-              @click="selectBucket(bucket)"
+          <co-select
+            class="category-select"
+            label="Category"
+            name="icon-category"
+            size="md"
+            @co-change="handleCategoryChange"
+          >
+            <co-option
+              v-for="category in categoryOptions"
+              :key="category.id"
+              :value="category.id"
+              :checked="activeCategoryId === category.id"
             >
-              {{ bucket }}
-            </button>
-          </div>
+              <span class="category-option-label">{{ category.label }}</span>
+              <span
+                slot="suffix"
+                class="category-option-count"
+                :data-count="iconCountFormatter.format(category.iconNames.length)"
+                aria-hidden="true"
+              ></span>
+            </co-option>
+          </co-select>
 
           <p v-if="isSearching" class="browse-note">{{ searchModeHint }}</p>
         </div>
@@ -297,11 +326,11 @@ function getSnippet(name: string, tabIndex: number): string {
         <div class="icon-browser">
           <div ref="resultsPaneRef" class="icon-results">
             <div v-if="showPromptState" class="gallery-empty-state">
-              <h3 class="gallery-state-title">Search all icons or browse by starting character</h3>
+              <h3 class="gallery-state-title">Search all icons or browse by category</h3>
               <p class="gallery-state-copy">
                 The icon library contains {{ iconCountFormatter.format(totalIconCount) }} rounded
                 symbols. Type a name like <code>arrow</code> or <code>account</code>, or choose a
-                prefix above to browse one slice at a time.
+                category above to browse one set at a time.
               </p>
             </div>
 
@@ -500,6 +529,9 @@ function getSnippet(name: string, tabIndex: number): string {
   --gallery-text-muted: var(--vp-c-text-3);
   --gallery-accent: var(--vp-c-brand-1);
   --gallery-accent-soft: var(--vp-c-brand-soft);
+  --gallery-icon-size: clamp(20px, 1.8vw, 22px);
+  --gallery-icon-tile-min: clamp(82px, 9vw, 96px);
+  --gallery-icon-label-size: clamp(0.62rem, 1vw, 0.68rem);
   font-size: 0.875rem;
 }
 
@@ -624,37 +656,25 @@ function getSnippet(name: string, tabIndex: number): string {
   white-space: nowrap;
 }
 
-.bucket-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
+.category-select {
+  inline-size: min(100%, 22rem);
 }
 
-.bucket-chip {
-  min-width: 38px;
-  padding: 6px 10px;
-  border: 1px solid var(--gallery-border);
-  border-radius: 999px;
-  background: var(--gallery-surface);
-  color: var(--gallery-text-secondary);
-  cursor: pointer;
+.category-option-label {
+  min-inline-size: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.category-option-count {
+  color: var(--gallery-text-muted);
   font-size: 0.75rem;
-  font-weight: 600;
-  transition:
-    background-color 0.15s,
-    border-color 0.15s,
-    color 0.15s;
+  font-variant-numeric: tabular-nums;
 }
 
-.bucket-chip:hover {
-  background: var(--gallery-accent-soft);
-  color: var(--gallery-text);
-}
-
-.bucket-chip.active {
-  background: var(--gallery-accent);
-  border-color: var(--gallery-accent);
-  color: #fff;
+.category-option-count::before {
+  content: attr(data-count);
 }
 
 .browse-note {
@@ -727,7 +747,7 @@ function getSnippet(name: string, tabIndex: number): string {
 
 .icon-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(var(--gallery-icon-tile-min), 1fr));
   gap: 6px;
 }
 
@@ -760,18 +780,18 @@ function getSnippet(name: string, tabIndex: number): string {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 24px;
-  height: 24px;
+  width: var(--gallery-icon-size);
+  height: var(--gallery-icon-size);
   color: var(--vp-c-text-1, var(--gallery-text));
 }
 
 .icon-svg :deep(svg) {
-  width: 24px;
-  height: 24px;
+  width: var(--gallery-icon-size);
+  height: var(--gallery-icon-size);
 }
 
 .icon-label {
-  font-size: 0.68rem;
+  font-size: var(--gallery-icon-label-size);
   color: var(--gallery-text-muted);
   overflow: hidden;
   text-overflow: ellipsis;
@@ -1004,7 +1024,7 @@ function getSnippet(name: string, tabIndex: number): string {
   }
 
   .icon-grid {
-    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    --gallery-icon-tile-min: clamp(74px, 22vw, 84px);
   }
 }
 </style>

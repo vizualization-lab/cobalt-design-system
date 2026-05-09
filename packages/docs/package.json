@@ -5,7 +5,9 @@
   "private": true,
   "description": "Cobalt Design System documentation",
   "scripts": {
-    "prebuild": "node scripts/generate-component-changelogs.js",
+    "prepare:local-deps": "pnpm --filter @cobalt/icons build",
+    "predev": "pnpm run prepare:local-deps && node scripts/generate-component-changelogs.js",
+    "prebuild": "pnpm run prepare:local-deps && node scripts/generate-component-changelogs.js",
     "dev": "vitepress dev",
     "build": "vitepress build",
     "preview": "vitepress preview",

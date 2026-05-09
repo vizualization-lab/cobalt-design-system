@@ -19,7 +19,8 @@
   },
   "scripts": {
     "build": "node scripts/build-registry.js",
-    "clean": "rm -rf dist"
+    "clean": "rm -rf dist",
+    "refresh-categories": "node scripts/refresh-category-metadata.js"
   },
   "dependencies": {
     "@material-symbols/svg-300": "^0.43.0"
