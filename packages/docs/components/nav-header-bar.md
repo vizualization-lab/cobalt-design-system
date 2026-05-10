@@ -8,7 +8,7 @@ A horizontal header bar for app-level navigation. Provides a structured layout w
 
 <ClientOnly>
 <co-nav-header-bar label="App Header" style="margin: 16px 0 24px;">
-  <svg slot="logo" width="32" height="32" viewBox="0 0 32 32" style="display: block;"><rect width="32" height="32" rx="6" fill="var(--co-color-state-primary-base)"/><text x="16" y="22" text-anchor="middle" fill="white" font-size="16" font-weight="700" font-family="var(--co-font-family-sans)">C</text></svg>
+  <co-icon slot="logo" name="co-logo" size="lg" aria-hidden="true"></co-icon>
   <co-button variant="primary" size="sm">
     <co-icon slot="prefix" name="add" size="sm"></co-icon>
     Create
@@ -20,7 +20,7 @@ A horizontal header bar for app-level navigation. Provides a structured layout w
 
 ```html
 <co-nav-header-bar label="App Header">
-  <img slot="logo" src="logo.svg" alt="Logo" />
+  <co-icon slot="logo" name="co-logo" size="lg" aria-hidden="true"></co-icon>
   <co-button variant="primary" size="sm">
     <co-icon slot="prefix" name="add" size="sm"></co-icon>
     Create
@@ -51,10 +51,11 @@ The `logo` and `avatar` slots are optional. When omitted, the content area fills
 ```html
 <script type="module">
   import '@cobalt/components/nav-header-bar';
+  import '@cobalt/components/icon';
 </script>
 
 <co-nav-header-bar label="App Header">
-  <img slot="logo" src="logo.svg" alt="Logo" />
+  <co-icon slot="logo" name="co-logo" size="lg" aria-hidden="true"></co-icon>
   <nav>
     <a href="/dashboard">Dashboard</a>
     <a href="/settings">Settings</a>
@@ -70,12 +71,12 @@ The `logo` and `avatar` slots are optional. When omitted, the content area fills
 <template #react>
 
 ```tsx
-import { CoNavHeaderBar } from '@cobalt/react';
+import { CoIcon, CoNavHeaderBar } from '@cobalt/react';
 
 function App() {
   return (
     <CoNavHeaderBar label="App Header">
-      <img slot="logo" src="logo.svg" alt="Logo" />
+      <CoIcon slot="logo" name="co-logo" size="lg" aria-hidden="true" />
       <nav>
         <a href="/dashboard">Dashboard</a>
         <a href="/settings">Settings</a>
@@ -94,12 +95,12 @@ function App() {
 
 ```vue
 <script setup>
-import { CoNavHeaderBar } from '@cobalt/vue';
+import { CoIcon, CoNavHeaderBar } from '@cobalt/vue';
 </script>
 
 <template>
   <CoNavHeaderBar label="App Header">
-    <img slot="logo" src="logo.svg" alt="Logo" />
+    <CoIcon slot="logo" name="co-logo" size="lg" aria-hidden="true" />
     <nav>
       <a href="/dashboard">Dashboard</a>
       <a href="/settings">Settings</a>
@@ -115,12 +116,12 @@ import { CoNavHeaderBar } from '@cobalt/vue';
 
 ```typescript
 import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { CoNavHeaderBar } from '@cobalt/angular';
+import { CoIcon, CoNavHeaderBar } from '@cobalt/angular';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CoNavHeaderBar],
+  imports: [CoIcon, CoNavHeaderBar],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './app.component.html',
 })
@@ -130,7 +131,7 @@ export class AppComponent {}
 ```html
 <!-- app.component.html -->
 <co-nav-header-bar label="App Header">
-  <img slot="logo" src="logo.svg" alt="Logo" />
+  <co-icon slot="logo" name="co-logo" size="lg" aria-hidden="true"></co-icon>
   <nav>
     <a href="/dashboard">Dashboard</a>
     <a href="/settings">Settings</a>

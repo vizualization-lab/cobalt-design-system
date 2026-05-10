@@ -10,7 +10,7 @@ export const html = `
   <section class="wb-section">
     <h2 class="wb-heading">Default</h2>
     <co-nav-header-bar label="App Header">
-      <img slot="logo" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%233D63DD'/%3E%3C/svg%3E" alt="Logo" />
+      <co-icon slot="logo" name="co-logo" size="lg" aria-hidden="true"></co-icon>
       <co-button variant="primary" size="sm">
         <co-icon slot="prefix" name="add" size="sm"></co-icon>
         Create
@@ -31,7 +31,7 @@ export const html = `
   <section class="wb-section">
     <h2 class="wb-heading">With Navigation Links</h2>
     <co-nav-header-bar label="Site Header">
-      <img slot="logo" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%233D63DD'/%3E%3C/svg%3E" alt="Logo" />
+      <co-icon slot="logo" name="co-logo" size="lg" aria-hidden="true"></co-icon>
       <nav style="display: flex; gap: 16px; align-items: center;">
         <a href="#" style="text-decoration: none; color: inherit; font-weight: 500;">Dashboard</a>
         <a href="#" style="text-decoration: none; color: inherit;">Projects</a>
