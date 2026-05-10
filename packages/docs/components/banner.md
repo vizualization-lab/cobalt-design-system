@@ -159,7 +159,7 @@ export class AppComponent {}
 
 ### Content guidelines
 
-- Keep the title short and scannable — uppercase transform makes long text harder to read
+- Keep the title short and scannable
 - Use the default slot for supporting details when the title alone is not sufficient
 - Ensure links in the banner have sufficient contrast against the banner background
 
@@ -167,16 +167,16 @@ export class AppComponent {}
 
 ### Properties
 
-| Property | Type     | Default    | Description                            |
-| -------- | -------- | ---------- | -------------------------------------- |
-| `title`  | `string` | `''`       | Title text displayed in uppercase      |
-| `label`  | `string` | `'Banner'` | Accessible label for the banner region |
+| Property | Type     | Default    | Description                             |
+| -------- | -------- | ---------- | --------------------------------------- |
+| `title`  | `string` | `''`       | Title text displayed in the title style |
+| `label`  | `string` | `'Banner'` | Accessible label for the banner region  |
 
 ### Slots
 
 | Name        | Description                                           |
 | ----------- | ----------------------------------------------------- |
-| `title`     | Title text — uppercase transform, medium font weight  |
+| `title`     | Title text styled with the title typography role      |
 | _(default)_ | Additional content stacked vertically below the title |
 
 ### CSS Parts
@@ -186,16 +186,6 @@ export class AppComponent {}
 | `base`    | The banner container     |
 | `title`   | The title slot wrapper   |
 | `content` | The default slot wrapper |
-
-### Design Tokens
-
-| Token                                | Default                                 | Description           |
-| ------------------------------------ | --------------------------------------- | --------------------- |
-| `--co-component-banner-height`       | `44px`                                  | Minimum banner height |
-| `--co-component-banner-padding`      | `var(--co-space-1)`                     | Internal padding      |
-| `--co-component-banner-background`   | `var(--co-color-surface-static-raised)` | Background color      |
-| `--co-component-banner-foreground`   | `var(--co-color-text-default)`          | Text color            |
-| `--co-component-banner-title-weight` | `var(--co-font-weight-medium)`          | Title font weight     |
 
 ## Accessibility
 
@@ -219,7 +209,7 @@ export class AppComponent {}
 
 - [ ] Banner spans the full viewport width
 - [ ] Content is centered horizontally and vertically
-- [ ] Title renders in uppercase with medium font weight
+- [ ] Title uses the title typography role
 - [ ] Stacked content aligns vertically in the center
 - [ ] Minimum height of 44px is maintained with minimal content
 - [ ] Works in both light and dark modes

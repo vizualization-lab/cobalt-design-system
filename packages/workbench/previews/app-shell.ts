@@ -55,12 +55,6 @@ export const html = `
       border-block-end: 0;
     }
 
-    .wb-app-shell-banner {
-      --co-component-banner-background: var(--co-color-state-primary-subtle);
-      --co-component-banner-foreground: var(--co-color-state-primary-base);
-      --co-component-banner-padding: 12px 16px;
-    }
-
     .wb-app-shell-brand {
       display: inline-flex;
       align-items: center;

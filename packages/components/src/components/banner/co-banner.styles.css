@@ -10,20 +10,24 @@
   align-items: center;
   justify-content: center;
   inline-size: 100%;
-  min-block-size: var(--co-component-banner-height);
-  padding: var(--co-component-banner-padding);
+  min-block-size: 44px;
+  padding: var(--co-space-inset-sm);
   box-sizing: border-box;
-  background: var(--co-component-banner-background);
-  color: var(--co-component-banner-foreground);
+  background: var(--co-color-surface-static-default);
+  color: var(--co-color-text-secondary);
   font-family: var(--co-font-family-sans);
-  font-size: var(--co-font-size-p);
-  line-height: var(--co-font-line-height-normal);
+  font-size: var(--co-typography-body-sm-size);
+  font-weight: var(--co-typography-body-sm-weight);
+  letter-spacing: var(--co-typography-body-sm-tracking);
+  line-height: var(--co-typography-body-sm-line-height);
 }
 
 .banner__title {
-  font-weight: var(--co-component-banner-title-weight);
+  font-size: var(--co-typography-subtitle-size);
+  font-weight: var(--co-typography-subtitle-weight);
+  letter-spacing: var(--co-typography-subtitle-tracking);
+  line-height: var(--co-typography-subtitle-line-height);
   text-transform: uppercase;
-  letter-spacing: var(--co-font-tracking-wide);
 }
 
 .banner__content {

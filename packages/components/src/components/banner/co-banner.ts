@@ -6,7 +6,7 @@ import { cobaltBannerStyles } from './co-banner.styles.js';
  * @tag co-banner
  * @summary A persistent, full-width banner for announcements that sits above page content.
  *
- * @slot title - Title text styled with uppercase transform and medium font weight (overrides the title property)
+ * @slot title - Title text styled with the title typography role (overrides the title property)
  * @slot - Additional banner content stacked vertically below the title
  *
  * @csspart base - The banner container
@@ -21,7 +21,7 @@ export class CoBanner extends LitElement {
   @property({ reflect: true })
   label = 'Banner';
 
-  /** Title text displayed in uppercase. Can also be set via the title slot for rich content. */
+  /** Title text displayed in the title style. Can also be set via the title slot for rich content. */
   @property({ reflect: true })
   override set title(value: string) {
     const old = this._title;

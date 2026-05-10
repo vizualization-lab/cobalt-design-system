@@ -405,12 +405,6 @@ const viewportLabel = computed(() =>
   min-block-size: 100%;
 }
 
-.app-shell-demo__banner {
-  --co-component-banner-background: var(--co-color-state-primary-subtle);
-  --co-component-banner-foreground: var(--co-color-state-primary-base);
-  --co-component-banner-padding: 12px 16px;
-}
-
 .app-shell-demo__header::part(base) {
   min-block-size: 0;
   padding: 0;
