@@ -1,4 +1,5 @@
 import '@cobalt/components/nav-drawer';
+import '@cobalt/components/nav-drawer-group';
 import '@cobalt/components/nav-drawer-item';
 import '@cobalt/components/nav-separator';
 
@@ -18,6 +19,23 @@ export const html = `
         <co-nav-drawer-item value="profile" icon="person">Profile</co-nav-drawer-item>
         <co-nav-drawer-item value="settings" icon="settings">Settings</co-nav-drawer-item>
         <co-nav-drawer-item value="billing" icon="credit-card" disabled>Billing</co-nav-drawer-item>
+      </co-nav-drawer>
+    </div>
+  </section>
+
+  <section class="wb-section">
+    <h2 class="wb-heading">Nested Groups</h2>
+    <div style="height: 360px; position: relative; border: 1px solid var(--co-color-border-default); border-radius: 8px; overflow: hidden;">
+      <co-nav-drawer label="Documentation navigation" value="nav-drawer">
+        <h3 style="margin: 0 0 8px; font-size: 14px; font-weight: 600; padding: 0 4px;">Components</h3>
+        <co-nav-drawer-group label="Layout" value="layout">
+          <co-nav-drawer-item value="app-shell" href="#app-shell">App Shell</co-nav-drawer-item>
+          <co-nav-drawer-item value="card" href="#card">Card</co-nav-drawer-item>
+        </co-nav-drawer-group>
+        <co-nav-drawer-group label="Navigation" value="navigation" open>
+          <co-nav-drawer-item value="nav-drawer" href="#nav-drawer" selected>Navigation Drawer</co-nav-drawer-item>
+          <co-nav-drawer-item value="nav-rail" href="#nav-rail">Navigation Rail</co-nav-drawer-item>
+        </co-nav-drawer-group>
       </co-nav-drawer>
     </div>
   </section>

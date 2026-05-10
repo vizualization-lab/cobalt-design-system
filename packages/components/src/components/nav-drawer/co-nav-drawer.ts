@@ -56,7 +56,9 @@ export class CoNavDrawer extends LitElement {
   }
 
   private _getItems(): HTMLElement[] {
-    return Array.from(this.querySelectorAll('co-nav-drawer-item:not([disabled])'));
+    return Array.from(
+      this.querySelectorAll<HTMLElement>('co-nav-drawer-group, co-nav-drawer-item:not([disabled])'),
+    ).filter((item) => !item.parentElement?.closest('co-nav-drawer-group:not([open])'));
   }
 
   private _onSlotChange() {

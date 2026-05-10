@@ -23,6 +23,47 @@ describe('co-nav-drawer-item', () => {
     expect(icon!.getAttribute('name')).to.equal('home');
   });
 
+  it('renders prefix slot content without requiring an icon', async () => {
+    const el = await fixture<CoNavDrawerItem>(html`
+      <co-nav-drawer-item value="custom">
+        <span slot="prefix" data-testid="prefix">•</span>
+        Custom
+      </co-nav-drawer-item>
+    `);
+    await el.updateComplete;
+
+    const prefix = el.shadowRoot!.querySelector('[part="prefix"]')!;
+    const slot = el.shadowRoot!.querySelector('slot[name="prefix"]') as HTMLSlotElement;
+
+    expect(prefix.hasAttribute('hidden')).to.be.false;
+    expect(slot.assignedElements()[0].getAttribute('data-testid')).to.equal('prefix');
+  });
+
+  it('uses token-backed layout styles', async () => {
+    const el = await fixture<CoNavDrawerItem>(html`
+      <co-nav-drawer-item
+        value="custom"
+        style="
+          --co-component-nav-drawer-item-padding-x: 31px;
+          --co-component-nav-drawer-item-padding-y: 7px;
+          --co-component-nav-drawer-item-margin-block: 2px;
+          --co-component-nav-drawer-item-radius: 9px;
+        "
+      >
+        Custom
+      </co-nav-drawer-item>
+    `);
+    const base = el.shadowRoot!.querySelector<HTMLElement>('[part="base"]')!;
+    const styles = getComputedStyle(base);
+
+    expect(styles.paddingLeft).to.equal('31px');
+    expect(styles.paddingRight).to.equal('31px');
+    expect(styles.paddingTop).to.equal('7px');
+    expect(styles.paddingBottom).to.equal('7px');
+    expect(styles.marginTop).to.equal('2px');
+    expect(styles.borderTopLeftRadius).to.equal('9px');
+  });
+
   it('renders as link when href is set', async () => {
     const el = await fixture<CoNavDrawerItem>(html`
       <co-nav-drawer-item value="home" icon="home" href="/home">Home</co-nav-drawer-item>

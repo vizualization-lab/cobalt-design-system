@@ -1,5 +1,5 @@
 import { LitElement, html, nothing } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
+import { customElement, property, state } from 'lit/decorators.js';
 import { cobaltNavDrawerItemStyles } from './co-nav-drawer-item.styles.js';
 import '../icon/co-icon.js';
 
@@ -17,6 +17,9 @@ import '../icon/co-icon.js';
 @customElement('co-nav-drawer-item')
 export class CoNavDrawerItem extends LitElement {
   static override styles = [cobaltNavDrawerItemStyles];
+
+  @state()
+  private _hasPrefixSlot = false;
 
   /** Selection value tracked by the parent drawer. */
   @property({ reflect: true })
@@ -38,17 +41,20 @@ export class CoNavDrawerItem extends LitElement {
   @property({ type: Boolean, reflect: true })
   disabled = false;
 
+  override focus(options?: FocusOptions): void {
+    this.shadowRoot?.querySelector<HTMLElement>('[part="base"]')?.focus(options);
+  }
+
   override render() {
+    const showPrefix = this.icon || this._hasPrefixSlot;
     const content = html`
-      ${this.icon
-        ? html`
-            <span part="prefix" class="item__prefix">
-              <slot name="prefix">
-                <co-icon name=${this.icon} size="sm" aria-hidden="true"></co-icon>
-              </slot>
-            </span>
-          `
-        : nothing}
+      <span part="prefix" class="item__prefix" ?hidden=${!showPrefix}>
+        <slot name="prefix" @slotchange=${this._onPrefixSlotChange}>
+          ${this.icon
+            ? html`<co-icon name=${this.icon} size="sm" aria-hidden="true"></co-icon>`
+            : nothing}
+        </slot>
+      </span>
       <span part="label" class="item__label">
         <slot></slot>
       </span>
@@ -82,6 +88,11 @@ export class CoNavDrawerItem extends LitElement {
       </div>
     `;
   }
+
+  private _onPrefixSlotChange = (event: Event) => {
+    const slot = event.target as HTMLSlotElement;
+    this._hasPrefixSlot = slot.assignedNodes({ flatten: true }).length > 0;
+  };
 }
 
 declare global {

@@ -5,14 +5,18 @@
 .item {
   display: flex;
   align-items: center;
-  gap: var(--co-space-gap-sm);
-  padding: var(--co-space-2);
-  border-radius: var(--co-control-radius-interactive);
+  gap: var(--co-component-nav-drawer-item-gap);
+  box-sizing: border-box;
+  padding-block: var(--co-component-nav-drawer-item-padding-y);
+  padding-inline: var(--co-component-nav-drawer-item-padding-x);
+  margin-block: var(--co-component-nav-drawer-item-margin-block);
+  border-radius: var(--co-component-nav-drawer-item-radius);
   color: var(--co-color-text-default);
   font-family: var(--co-font-family-sans);
-  font-size: var(--co-font-size-p);
-  font-weight: var(--co-font-weight-regular);
-  line-height: var(--co-font-line-height-tight);
+  font-size: var(--co-component-nav-drawer-item-font-size);
+  font-weight: var(--co-component-nav-drawer-item-font-weight);
+  letter-spacing: var(--co-component-nav-drawer-item-font-tracking);
+  line-height: var(--co-component-nav-drawer-item-font-line-height);
   text-decoration: none;
   cursor: pointer;
   transition:
@@ -34,7 +38,7 @@
 :host([selected]) .item {
   background: var(--co-component-nav-drawer-item-background-selected);
   color: var(--co-component-nav-drawer-item-foreground-selected);
-  font-weight: var(--co-font-weight-medium);
+  font-weight: var(--co-component-nav-drawer-item-selected-font-weight);
 }
 
 :host([disabled]) .item {
@@ -56,6 +60,10 @@
   align-items: center;
   flex: 0 0 auto;
   color: inherit;
+}
+
+.item__prefix[hidden] {
+  display: none;
 }
 
 .item__label {
