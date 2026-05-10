@@ -15,6 +15,7 @@ export { CoInput } from './components/input.js';
 export { CoLabel } from './components/label.js';
 export { CoNavHeaderBar } from './components/nav-header-bar.js';
 export { CoNavDrawer } from './components/nav-drawer.js';
+export { CoNavDrawerGroup } from './components/nav-drawer-group.js';
 export { CoNavDrawerItem } from './components/nav-drawer-item.js';
 export { CoNavSeparator } from './components/nav-separator.js';
 export { CoListbox } from './components/listbox.js';

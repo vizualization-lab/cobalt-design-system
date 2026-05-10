@@ -128,6 +128,13 @@ export default defineConfig({
         replacement: resolve(componentsDir, 'src/components/nav-drawer-item/co-nav-drawer-item.ts'),
       },
       {
+        find: '@cobalt/components/nav-drawer-group',
+        replacement: resolve(
+          componentsDir,
+          'src/components/nav-drawer-group/co-nav-drawer-group.ts',
+        ),
+      },
+      {
         find: '@cobalt/components/nav-drawer',
         replacement: resolve(componentsDir, 'src/components/nav-drawer/co-nav-drawer.ts'),
       },

@@ -89,6 +89,10 @@
       "import": "./dist/components/nav-drawer/co-nav-drawer.js",
       "types": "./dist/components/nav-drawer/co-nav-drawer.d.ts"
     },
+    "./nav-drawer-group": {
+      "import": "./dist/components/nav-drawer-group/co-nav-drawer-group.js",
+      "types": "./dist/components/nav-drawer-group/co-nav-drawer-group.d.ts"
+    },
     "./nav-drawer-item": {
       "import": "./dist/components/nav-drawer-item/co-nav-drawer-item.js",
       "types": "./dist/components/nav-drawer-item/co-nav-drawer-item.d.ts"

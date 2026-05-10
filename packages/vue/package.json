@@ -84,6 +84,10 @@
       "import": "./dist/components/nav-drawer.js",
       "types": "./dist/components/nav-drawer.d.ts"
     },
+    "./nav-drawer-group": {
+      "import": "./dist/components/nav-drawer-group.js",
+      "types": "./dist/components/nav-drawer-group.d.ts"
+    },
     "./nav-drawer-item": {
       "import": "./dist/components/nav-drawer-item.js",
       "types": "./dist/components/nav-drawer-item.d.ts"

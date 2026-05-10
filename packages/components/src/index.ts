@@ -21,6 +21,8 @@ export { CoRadio } from './components/radio/co-radio.js';
 export { CoRadioGroup } from './components/radio-group/co-radio-group.js';
 export { CoNavHeaderBar } from './components/nav-header-bar/co-nav-header-bar.js';
 export { CoNavDrawer } from './components/nav-drawer/co-nav-drawer.js';
+export { CoNavDrawerGroup } from './components/nav-drawer-group/co-nav-drawer-group.js';
+export type { NavDrawerGroupToggleDetail } from './components/nav-drawer-group/co-nav-drawer-group.js';
 export { CoNavDrawerItem } from './components/nav-drawer-item/co-nav-drawer-item.js';
 export { CoNavSeparator } from './components/nav-separator/co-nav-separator.js';
 export { CoNavRailBar } from './components/nav-rail-bar/co-nav-rail-bar.js';

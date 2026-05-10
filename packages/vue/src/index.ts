@@ -18,6 +18,7 @@ export { CoInput, type CoInputProps } from './components/input.js';
 export { CoLabel, type CoLabelProps } from './components/label.js';
 export { CoNavHeaderBar, type CoNavHeaderBarProps } from './components/nav-header-bar.js';
 export { CoNavDrawer, type CoNavDrawerProps } from './components/nav-drawer.js';
+export { CoNavDrawerGroup, type CoNavDrawerGroupProps } from './components/nav-drawer-group.js';
 export { CoNavDrawerItem, type CoNavDrawerItemProps } from './components/nav-drawer-item.js';
 export { CoNavSeparator } from './components/nav-separator.js';
 export { CoListbox, type CoListboxProps } from './components/listbox.js';

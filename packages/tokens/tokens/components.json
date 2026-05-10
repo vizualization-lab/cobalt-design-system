@@ -197,6 +197,57 @@
             "$description": "Default width for contextual navigation drawers."
           },
           "item": {
+            "padding": {
+              "x": {
+                "$type": "dimension",
+                "$value": "{co.space.3}",
+                "$description": "Horizontal padding for each nav drawer item."
+              },
+              "y": {
+                "$type": "dimension",
+                "$value": "{co.space.2}",
+                "$description": "Vertical padding for each nav drawer item."
+              }
+            },
+            "margin": {
+              "block": {
+                "$type": "dimension",
+                "$value": "{co.border.width.divider}",
+                "$description": "Vertical margin around nav drawer item rows."
+              }
+            },
+            "gap": {
+              "$type": "dimension",
+              "$value": "{co.space.gap.sm}",
+              "$description": "Space between prefix content and label text within a nav drawer item."
+            },
+            "radius": {
+              "$type": "dimension",
+              "$value": "{co.control.radius.container}",
+              "$description": "Corner radius for nav drawer item surfaces."
+            },
+            "font": {
+              "size": {
+                "$type": "dimension",
+                "$value": "{co.typography.body-sm.size}",
+                "$description": "Font size for nav drawer item labels."
+              },
+              "weight": {
+                "$type": "fontWeight",
+                "$value": "{co.typography.body-sm.weight}",
+                "$description": "Font weight for nav drawer item labels."
+              },
+              "tracking": {
+                "$type": "dimension",
+                "$value": "{co.typography.body-sm.tracking}",
+                "$description": "Letter spacing for nav drawer item labels."
+              },
+              "line-height": {
+                "$type": "lineHeights",
+                "$value": "{co.typography.body-sm.line.height}",
+                "$description": "Line height for nav drawer item labels."
+              }
+            },
             "background": {
               "hover": {
                 "$type": "color",
@@ -236,6 +287,87 @@
                 "$type": "color",
                 "$value": "{co.color.border.focus}",
                 "$description": "Focus ring color for nav drawer item keyboard focus."
+              }
+            },
+            "selected": {
+              "font": {
+                "weight": {
+                  "$type": "fontWeight",
+                  "$value": "{co.font.weight.medium}",
+                  "$description": "Font weight for the selected nav drawer item label."
+                }
+              }
+            }
+          },
+          "group": {
+            "gap": {
+              "$type": "dimension",
+              "$value": "{co.space.1}",
+              "$description": "Vertical gap between a nav drawer group trigger and its content."
+            },
+            "margin": {
+              "block-start": {
+                "$type": "dimension",
+                "$value": "{co.space.1}",
+                "$description": "Top margin before a nav drawer group."
+              }
+            },
+            "trigger": {
+              "padding": {
+                "x": {
+                  "$type": "dimension",
+                  "$value": "{co.space.3}",
+                  "$description": "Horizontal padding for nav drawer group triggers."
+                },
+                "y": {
+                  "$type": "dimension",
+                  "$value": "{co.space.2}",
+                  "$description": "Vertical padding for nav drawer group triggers."
+                }
+              },
+              "gap": {
+                "$type": "dimension",
+                "$value": "{co.space.1}",
+                "$description": "Space between the disclosure icon and label within a nav drawer group trigger."
+              },
+              "radius": {
+                "$type": "dimension",
+                "$value": "{co.control.radius.container}",
+                "$description": "Corner radius for nav drawer group trigger surfaces."
+              },
+              "font": {
+                "size": {
+                  "$type": "dimension",
+                  "$value": "{co.typography.body-sm.size}",
+                  "$description": "Font size for nav drawer group trigger labels."
+                },
+                "weight": {
+                  "$type": "fontWeight",
+                  "$value": "{co.typography.label.weight}",
+                  "$description": "Font weight for nav drawer group trigger labels."
+                },
+                "tracking": {
+                  "$type": "dimension",
+                  "$value": "{co.typography.body-sm.tracking}",
+                  "$description": "Letter spacing for nav drawer group trigger labels."
+                },
+                "line-height": {
+                  "$type": "lineHeights",
+                  "$value": "{co.typography.body-sm.line.height}",
+                  "$description": "Line height for nav drawer group trigger labels."
+                }
+              }
+            },
+            "content": {
+              "gap": {
+                "$type": "dimension",
+                "$value": "{co.border.width.divider}",
+                "$description": "Vertical gap between nested nav drawer group content rows."
+              },
+              "indent": {
+                "$type": "dimension",
+                "$value": "{co.space.2}",
+                "$description": "Inline indentation applied to nested nav drawer group content."
               }
             }
           }

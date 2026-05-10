@@ -191,6 +191,18 @@
     "angular": "pending",
     "browsers": "pending"
   },
+  "co-nav-drawer-group": {
+    "figma": "pending",
+    "artDirector": "pending",
+    "tokens": "pending",
+    "unitTests": "pending",
+    "a11y": "pending",
+    "docs": "pending",
+    "react": "pending",
+    "vue": "pending",
+    "angular": "pending",
+    "browsers": "pending"
+  },
   "co-nav-drawer-item": {
     "figma": "pending",
     "artDirector": "pending",
