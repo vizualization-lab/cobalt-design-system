@@ -6,7 +6,9 @@ export const cobaltNavDrawerStyles = css`
     display: block;
     max-inline-size: 280px;
     inline-size: 280px;
-    block-size: 100%;
+    block-size: auto;
+    min-block-size: 0;
+    box-sizing: border-box;
     font-family: var(--co-font-family-sans);
     background: var(--co-color-surface-static-default);
     border-radius: var(--co-control-radius-container);
@@ -23,11 +25,15 @@ export const cobaltNavDrawerStyles = css`
   .drawer {
     display: flex;
     flex-direction: column;
+    box-sizing: border-box;
     block-size: 100%;
+    min-block-size: 100%;
+    max-block-size: 100%;
   }
 
   .drawer__content {
     flex: 1;
+    min-block-size: 0;
     overflow-y: auto;
     padding-block-start: var(--co-space-3);
     padding-inline: var(--co-space-3);

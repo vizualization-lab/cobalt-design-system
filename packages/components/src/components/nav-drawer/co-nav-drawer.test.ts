@@ -97,6 +97,23 @@ describe('co-nav-drawer', () => {
     );
   });
 
+  it('honors fixed block insets without overflowing the viewport', async () => {
+    const el = await fixture<CoNavDrawer>(html`
+      <co-nav-drawer style="position: fixed; top: 20px; bottom: 20px; inline-size: 200px;">
+        <co-nav-drawer-item value="overview">Overview</co-nav-drawer-item>
+        <co-nav-drawer-group label="Forms" value="forms" open>
+          <co-nav-drawer-item value="checkbox">Checkbox Group</co-nav-drawer-item>
+          <co-nav-drawer-item value="combo">Combo Box</co-nav-drawer-item>
+          <co-nav-drawer-item value="form">Form</co-nav-drawer-item>
+        </co-nav-drawer-group>
+      </co-nav-drawer>
+    `);
+
+    const rect = el.getBoundingClientRect();
+    expect(Math.round(rect.top)).to.equal(20);
+    expect(Math.round(window.innerHeight - rect.bottom)).to.equal(20);
+  });
+
   describe('accessibility', () => {
     it('is accessible in default state', async () => {
       const el = await fixture(html`
