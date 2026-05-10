@@ -76,7 +76,7 @@ export const cobaltNavRailItemStyles = css`
 
   .nav-item:focus-visible {
     outline: var(--co-focus-ring-width) solid var(--co-component-nav-rail-item-focus-ring);
-    outline-offset: var(--co-focus-ring-offset);
+    outline-offset: calc(-1 * var(--co-focus-ring-width));
   }
 
   :host([disabled]) .nav-item {

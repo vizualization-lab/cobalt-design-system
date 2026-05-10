@@ -57,6 +57,18 @@ describe('co-nav-rail-item', () => {
     expect(button.tabIndex).to.equal(0);
   });
 
+  it('draws the focus ring inside the item bounds', async () => {
+    const el = await fixture<CoNavRailItem>(
+      html`<co-nav-rail-item icon="home">Dashboard</co-nav-rail-item>`,
+    );
+    const styles = Array.from(el.shadowRoot!.adoptedStyleSheets[0].cssRules)
+      .map((rule) => rule.cssText)
+      .join('\n');
+
+    expect(styles).to.contain('.nav-item:focus-visible');
+    expect(styles).to.contain('outline-offset: calc(-1 * var(--co-focus-ring-width))');
+  });
+
   describe('accessibility', () => {
     it('is accessible as a link item', async () => {
       const el = await fixture(
