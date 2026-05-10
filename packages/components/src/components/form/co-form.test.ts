@@ -1,11 +1,12 @@
 import { fixture, html, expect, oneEvent } from '@open-wc/testing';
 import { runA11yAudit } from '../../test-utils/a11y.js';
+import '../button/co-button.js';
 import '../input/co-input.js';
 import './co-form.js';
 import type { CoForm } from './co-form.js';
 
 function getInternalForm(el: CoForm) {
-  return el.querySelector('form') as HTMLFormElement;
+  return (el as unknown as { _formNode: HTMLFormElement })._formNode;
 }
 
 describe('co-form', () => {
@@ -15,7 +16,7 @@ describe('co-form', () => {
     expect(el.disabled).to.be.false;
   });
 
-  it('creates an internal <form> element automatically', async () => {
+  it('creates an internal form target automatically without reparenting children', async () => {
     const el = await fixture<CoForm>(html`
       <co-form label="My form">
         <co-input label="Name" name="name"></co-input>
@@ -25,17 +26,18 @@ describe('co-form', () => {
     expect(form).to.exist;
     expect(form.tagName).to.equal('FORM');
     expect(form.noValidate).to.be.true;
+    expect(el.querySelector(':scope > co-input')).to.exist;
+    expect(el.querySelector('form')).to.equal(null);
   });
 
-  it('projects child form elements into the form', async () => {
+  it('leaves Vue or framework owned light DOM in place', async () => {
     const el = await fixture<CoForm>(html`
       <co-form label="My form">
         <co-input label="Name" name="name"></co-input>
         <co-input label="Email" name="email"></co-input>
       </co-form>
     `);
-    const form = getInternalForm(el);
-    const inputs = form.querySelectorAll('co-input');
+    const inputs = el.querySelectorAll(':scope > co-input');
     expect(inputs.length).to.equal(2);
   });
 
@@ -50,6 +52,21 @@ describe('co-form', () => {
     const forms = el.querySelectorAll('form');
     expect(forms.length).to.equal(1);
     expect(forms[0].noValidate).to.be.true;
+    expect(getInternalForm(el)).to.equal(forms[0]);
+  });
+
+  it('does not throw when unnamed controls are present', async () => {
+    const el = await fixture<CoForm>(html`
+      <co-form label="My form">
+        <co-input label="Name without serialization key"></co-input>
+        <co-input label="Email" name="email"></co-input>
+      </co-form>
+    `);
+    await el.updateComplete;
+
+    const modelValue = el.modelValue as Record<string, unknown>;
+    expect(modelValue).to.not.have.property('');
+    expect(modelValue).to.have.property('email');
   });
 
   it('returns modelValue as an object of named field values', async () => {
@@ -88,6 +105,20 @@ describe('co-form', () => {
     const event = (await oneEvent(el, 'co-submit')) as CustomEvent;
     expect(event.detail.modelValue).to.have.property('name', 'Ada');
     expect(event.detail.serializedValue).to.have.property('name', 'Ada');
+  });
+
+  it('dispatches co-submit when a submit co-button is clicked without a native form wrapper', async () => {
+    const el = await fixture<CoForm>(html`
+      <co-form label="My form">
+        <co-input label="Name" name="name" .modelValue=${'Ada'}></co-input>
+        <co-button type="submit">Submit</co-button>
+      </co-form>
+    `);
+    await el.updateComplete;
+
+    setTimeout(() => el.querySelector('co-button')!.click());
+    const event = (await oneEvent(el, 'co-submit')) as CustomEvent;
+    expect(event.detail.modelValue).to.have.property('name', 'Ada');
   });
 
   it('dispatches co-invalid-submit and blocks co-submit when validation fails', async () => {
@@ -144,6 +175,23 @@ describe('co-form', () => {
     setTimeout(() => el.reset());
     const event = await oneEvent(el, 'co-reset');
     expect(event).to.exist;
+  });
+
+  it('survives disconnect and reconnect without moving children', async () => {
+    const el = await fixture<CoForm>(html`
+      <co-form label="My form">
+        <co-input label="Name" name="name"></co-input>
+      </co-form>
+    `);
+    const parent = el.parentElement!;
+    const input = el.querySelector('co-input')!;
+
+    el.remove();
+    parent.appendChild(el);
+    await el.updateComplete;
+
+    expect(el.querySelector(':scope > co-input')).to.equal(input);
+    expect(el.querySelector('form')).to.equal(null);
   });
 
   it('renders Lion field structure in shadow DOM', async () => {

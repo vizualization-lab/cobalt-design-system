@@ -2,7 +2,7 @@
 
 <ComponentStatus component="co-label" />
 
-The `co-label` component provides a styled native `<label>` element for layouts where the label must live outside a field component. It is additive to Cobalt's built-in field `label` APIs and preserves browser-native click and focus behavior.
+The `co-label` component provides a styled external label for layouts where the label must live outside a field component. It is additive to Cobalt's built-in field `label` APIs and preserves click-to-focus behavior while keeping framework-owned light DOM stable.
 
 ## Interactive Demo
 
@@ -235,7 +235,7 @@ export class AppComponent {}
 
 - **External form layouts** - when labels need to sit in their own grid column, stack, or definition-list style layout
 - **Mixed native and Cobalt forms** - when one screen combines native controls with Cobalt fields
-- **Native label semantics** - when you want the browser's built-in `for` click and focus behavior
+- **External label associations** - when you want visible label copy to focus and name a separate control
 - **Label adornments** - when you need compact prefix or suffix icons around the label text
 
 ### When NOT to use
@@ -279,11 +279,11 @@ export class AppComponent {}
 
 ### Keyboard interaction
 
-`co-label` does not introduce custom keyboard behavior. It delegates interaction to the native label association for the target control.
+`co-label` does not introduce custom keyboard behavior. Click interaction focuses the target control, and keyboard interaction remains on the target control.
 
 ### ARIA notes
 
-- `co-label` relies on native `<label>` semantics instead of ARIA-only naming.
+- `co-label` uses `aria-labelledby` for external control naming and a shadow-DOM `<label>` for its visible label structure.
 - Use `htmlFor` or the `for` attribute with a native labelable control or a form-associated custom element.
 - Keep helper text and validation feedback on the target field component; `co-label` only owns the visible label.
 - Avoid extra interactive content inside the label flow because it makes the associated control harder to activate.

@@ -2,11 +2,9 @@ import { LitElement, html, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 
-type ContentBucket = 'prefix' | 'default' | 'suffix';
-
 /**
  * @tag co-label
- * @summary A native-label wrapper for external field layouts and form associations.
+ * @summary A styled label for external field layouts and form associations.
  *
  * @slot - The visible label content
  * @slot prefix - Optional content shown before the label text
@@ -14,6 +12,8 @@ type ContentBucket = 'prefix' | 'default' | 'suffix';
  */
 @customElement('co-label')
 export class CoLabel extends LitElement {
+  private static _nextGeneratedId = 0;
+
   @property({ attribute: 'for', reflect: true })
   htmlFor?: string;
 
@@ -26,46 +26,29 @@ export class CoLabel extends LitElement {
   @property({ attribute: 'optional-label' })
   optionalLabel = '(optional)';
 
-  private readonly _contentNodes: Record<ContentBucket, Node[]> = {
-    prefix: [],
-    default: [],
-    suffix: [],
-  };
-
-  private _observer?: MutationObserver;
-
-  override createRenderRoot() {
-    return this;
-  }
+  private _labelledTarget?: HTMLElement;
+  private _labelledTargetToken?: string;
+  private _addedLabelledByToken = false;
 
   override connectedCallback(): void {
     super.connectedCallback();
     this.addEventListener('click', this._handleClick);
-    this._collectDirectChildren();
-    this._observer = new MutationObserver((mutations) => {
-      const hasExternalChildren = mutations.some(({ addedNodes }) =>
-        Array.from(addedNodes).some((node) => this._isExternalChild(node)),
-      );
-
-      if (!hasExternalChildren) return;
-      this._collectDirectChildren();
-      this._attachContentNodes();
-    });
-    this._observer.observe(this, { childList: true });
   }
 
   override disconnectedCallback(): void {
     this.removeEventListener('click', this._handleClick);
-    this._observer?.disconnect();
+    this._clearTargetLabelling();
     super.disconnectedCallback();
   }
 
   override firstUpdated(): void {
-    this._attachContentNodes();
+    this._syncTargetLabelling();
   }
 
-  override updated(): void {
-    this._attachContentNodes();
+  override updated(changedProperties: Map<string, unknown>): void {
+    if (changedProperties.has('htmlFor')) {
+      this._syncTargetLabelling();
+    }
   }
 
   override render() {
@@ -131,18 +114,24 @@ export class CoLabel extends LitElement {
         <span
           data-co-label-internal="true"
           class="co-label__content co-label__content--prefix"
-        ></span>
+        >
+          <slot name="prefix"></slot>
+        </span>
         <span data-co-label-internal="true" class="co-label__text-group">
           <span
             data-co-label-internal="true"
             class="co-label__content co-label__content--default"
-          ></span>
+          >
+            <slot></slot>
+          </span>
           ${this._optionalTemplate()}
         </span>
         <span
           data-co-label-internal="true"
           class="co-label__content co-label__content--suffix"
-        ></span>
+        >
+          <slot name="suffix"></slot>
+        </span>
       </label>
     `;
   }
@@ -153,54 +142,6 @@ export class CoLabel extends LitElement {
     }
 
     return html`<span class="co-label__optional">${this.optionalLabel}</span>`;
-  }
-
-  private _collectDirectChildren() {
-    for (const node of Array.from(this.childNodes)) {
-      if (!this._isExternalChild(node)) continue;
-      const bucket = this._bucketForNode(node);
-      if (!this._contentNodes[bucket].includes(node)) {
-        this._contentNodes[bucket].push(node);
-      }
-    }
-  }
-
-  private _attachContentNodes() {
-    this._moveNodes(this.querySelector('.co-label__content--prefix'), this._contentNodes.prefix);
-    this._moveNodes(this.querySelector('.co-label__content--default'), this._contentNodes.default);
-    this._moveNodes(this.querySelector('.co-label__content--suffix'), this._contentNodes.suffix);
-  }
-
-  private _moveNodes(container: Element | null, nodes: Node[]) {
-    if (!container) return;
-
-    for (const node of nodes) {
-      if (node.parentNode !== container) {
-        container.appendChild(node);
-      }
-    }
-  }
-
-  private _bucketForNode(node: Node): ContentBucket {
-    if (node instanceof HTMLElement) {
-      const slot = node.getAttribute('slot');
-      if (slot === 'prefix') return 'prefix';
-      if (slot === 'suffix') return 'suffix';
-    }
-
-    return 'default';
-  }
-
-  private _isExternalChild(node: Node) {
-    if (node instanceof Text && !node.textContent?.trim()) {
-      return false;
-    }
-
-    if (!(node instanceof HTMLElement)) {
-      return true;
-    }
-
-    return node.dataset.coLabelInternal !== 'true';
   }
 
   private _handleClick = () => {
@@ -218,6 +159,62 @@ export class CoLabel extends LitElement {
       this._findFocusableDescendant(target)?.focus();
     });
   };
+
+  private _syncTargetLabelling() {
+    this._clearTargetLabelling();
+    if (!this.htmlFor) return;
+
+    const target = this.ownerDocument?.getElementById(this.htmlFor);
+    if (!(target instanceof HTMLElement)) return;
+
+    const token = this._labelId();
+    const tokens = this._ariaLabelledByTokens(target);
+    const alreadyPresent = tokens.includes(token);
+
+    if (!alreadyPresent) {
+      target.setAttribute('aria-labelledby', [...tokens, token].join(' '));
+    }
+
+    this._labelledTarget = target;
+    this._labelledTargetToken = token;
+    this._addedLabelledByToken = !alreadyPresent;
+  }
+
+  private _clearTargetLabelling() {
+    if (!this._labelledTarget || !this._labelledTargetToken || !this._addedLabelledByToken) {
+      this._labelledTarget = undefined;
+      this._labelledTargetToken = undefined;
+      this._addedLabelledByToken = false;
+      return;
+    }
+
+    const remainingTokens = this._ariaLabelledByTokens(this._labelledTarget).filter(
+      (token) => token !== this._labelledTargetToken,
+    );
+
+    if (remainingTokens.length > 0) {
+      this._labelledTarget.setAttribute('aria-labelledby', remainingTokens.join(' '));
+    } else {
+      this._labelledTarget.removeAttribute('aria-labelledby');
+    }
+
+    this._labelledTarget = undefined;
+    this._labelledTargetToken = undefined;
+    this._addedLabelledByToken = false;
+  }
+
+  private _labelId() {
+    if (!this.id) {
+      CoLabel._nextGeneratedId += 1;
+      this.id = `co-label-${CoLabel._nextGeneratedId}`;
+    }
+
+    return this.id;
+  }
+
+  private _ariaLabelledByTokens(target: HTMLElement) {
+    return (target.getAttribute('aria-labelledby') ?? '').split(/\s+/).filter(Boolean);
+  }
 
   private _hasFocusWithin(target: HTMLElement) {
     return target.matches(':focus-within') || this.ownerDocument?.activeElement === target;

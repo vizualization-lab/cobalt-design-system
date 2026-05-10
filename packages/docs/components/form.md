@@ -2,7 +2,7 @@
 
 <ComponentStatus component="co-form" />
 
-The `co-form` component wraps Lion's `LionForm` to provide form-level features: grouped validation, serialization (`modelValue` as an object of all field values), submit/reset handling, interaction state tracking, and automatic focus-on-first-error. It renders a `<form>` element internally so you can nest form fields directly.
+The `co-form` component wraps Lion's `LionForm` to provide form-level features: grouped validation, serialization (`modelValue` as an object of all field values), submit/reset handling, interaction state tracking, and automatic focus-on-first-error. It manages form submission without reparenting its light-DOM fields, so it remains safe inside framework-rendered pages.
 
 ## Interactive Demo
 
@@ -50,7 +50,7 @@ Validation feedback follows Lion's default interaction timing:
 - Fields show feedback after the user changes the value and leaves the field.
 - Submit attempts show all current errors and focus the first erroneous field.
 
-The internal `<form>` uses `novalidate` so browser-native validation bubbles do not conflict with Cobalt feedback.
+The managed form target uses `novalidate` so browser-native validation bubbles do not conflict with Cobalt feedback.
 
 ### Common validation rules
 

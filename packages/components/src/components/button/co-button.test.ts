@@ -1,4 +1,4 @@
-import { fixture, html, expect } from '@open-wc/testing';
+import { fixture, html, expect, aTimeout, oneEvent } from '@open-wc/testing';
 import { runA11yAudit } from '../../test-utils/a11y.js';
 import './co-button.js';
 import type { CoButton } from './co-button.js';
@@ -73,6 +73,25 @@ describe('co-button', () => {
     const el = await fixture<CoButton>(html`<co-button>Click</co-button>`);
     const base = el.shadowRoot!.querySelector('[part="base"]');
     expect(base).to.exist;
+  });
+
+  it('does not mutate host light DOM after connecting', async () => {
+    const el = document.createElement('co-button') as CoButton;
+    el.textContent = 'Click';
+    const mutations: MutationRecord[] = [];
+    const observer = new MutationObserver((records) => mutations.push(...records));
+    observer.observe(el, { childList: true });
+
+    const parent = document.createElement('div');
+    document.body.append(parent);
+    parent.append(el);
+    await el.updateComplete;
+    await aTimeout(0);
+    observer.disconnect();
+    parent.remove();
+
+    expect(mutations).to.have.length(0);
+    expect(el.textContent?.trim()).to.equal('Click');
   });
 
   it('applies disabled attribute to host', async () => {
@@ -150,6 +169,28 @@ describe('co-button', () => {
     const anchor = el.shadowRoot!.querySelector('a');
     expect(anchor).to.exist;
     expect(anchor!.getAttribute('href')).to.equal('https://example.com');
+  });
+
+  it('submits a containing native form without inserting helper nodes', async () => {
+    const container = await fixture<HTMLElement>(html`
+      <div>
+        <form>
+          <co-button type="submit">Submit</co-button>
+        </form>
+      </div>
+    `);
+    const form = container.querySelector('form')!;
+    const button = container.querySelector('co-button') as CoButton;
+    const mutations: MutationRecord[] = [];
+    const observer = new MutationObserver((records) => mutations.push(...records));
+    observer.observe(button, { childList: true });
+    form.addEventListener('submit', (event) => event.preventDefault());
+
+    setTimeout(() => button.click());
+    await oneEvent(form, 'submit');
+    observer.disconnect();
+
+    expect(mutations).to.have.length(0);
   });
 
   // WCAG 2.1 AA: automated via axe-core

@@ -24,12 +24,26 @@ export interface FormInvalidSubmitDetail extends FormSubmitDetail {
 type FeedbackData = Array<{ message?: string | Node; type?: string }>;
 
 type CobaltFormControl = HTMLElement & {
+  name?: string;
+  modelValue?: unknown;
+  serializedValue?: unknown;
+  disabled?: boolean;
   fieldName?: string;
   formElements?: Iterable<CobaltFormControl>;
   feedbackComplete?: Promise<unknown>;
   hasFeedbackFor?: string[];
   validationStates?: Record<string, Record<string, unknown>>;
   _feedbackNode?: { feedbackData?: FeedbackData };
+  makeRequestToBeDisabled?: () => void;
+};
+
+type FormGroupInternals = {
+  __storeAllDescriptionElementsInParentChain?: () => void;
+  __linkParentMessages?: (child: CobaltFormControl) => void;
+  __pendingValues?: {
+    modelValue?: Record<string, unknown>;
+    serializedValue?: Record<string, unknown>;
+  };
 };
 
 /**
@@ -54,42 +68,40 @@ type CobaltFormControl = HTMLElement & {
 export class CoForm extends LionForm {
   static get styles() {
     return [...super.styles, cobaltFormStyles];
-  }
+  };
 
   /** Whether the form is disabled. Cascades to all child form elements. */
   @property({ type: Boolean, reflect: true })
   override disabled = false;
 
-  private _createdInternalForm = false;
+  private readonly _internalForm = document.createElement('form');
+
+  override get _formNode(): HTMLFormElement {
+    return this.querySelector('form') ?? this._internalForm;
+  }
 
   override connectedCallback(): void {
-    if (!this.querySelector('form')) {
-      const form = document.createElement('form');
-      // Move all existing children into the form element
-      while (this.firstChild) {
-        form.appendChild(this.firstChild);
-      }
-      this.appendChild(form);
-      this._createdInternalForm = true;
-    }
-
     this._syncNoValidate();
     super.connectedCallback();
+    this.addEventListener('click', this._handleFormButtonClick);
   }
 
   override disconnectedCallback(): void {
+    this.removeEventListener('click', this._handleFormButtonClick);
     super.disconnectedCallback();
-    if (this._createdInternalForm) {
-      const form = this.querySelector('form');
-      if (form) {
-        // Move children back out before removing the form
-        while (form.firstChild) {
-          this.appendChild(form.firstChild);
-        }
-        form.remove();
-      }
-      this._createdInternalForm = false;
+  }
+
+  override addFormElement(
+    child: Parameters<LionForm['addFormElement']>[0],
+    indexToInsertAt?: Parameters<LionForm['addFormElement']>[1],
+  ): void {
+    const control = child as unknown as CobaltFormControl;
+    if (this._canUseLionFormRegistration(control)) {
+      super.addFormElement(child, indexToInsertAt);
+      return;
     }
+
+    this._addArrayOnlyFormElement(control, indexToInsertAt ?? -1);
   }
 
   protected override _labelTemplate() {
@@ -156,7 +168,7 @@ export class CoForm extends LionForm {
     // any native form controls that aren't managed by Lion.
     const form = this._formNode;
     if (form) {
-      for (const el of Array.from(form.elements)) {
+      for (const el of this._nativeFormControls()) {
         if ('resetGroup' in el) continue;
         if (el instanceof HTMLInputElement || el instanceof HTMLTextAreaElement) {
           el.value = el.defaultValue;
@@ -175,10 +187,66 @@ export class CoForm extends LionForm {
   }
 
   private _syncNoValidate() {
-    const form = this.querySelector('form');
-    if (form) {
-      form.setAttribute('novalidate', '');
-      form.noValidate = true;
+    const form = this._formNode;
+    form.setAttribute('novalidate', '');
+    form.noValidate = true;
+  }
+
+  private _canUseLionFormRegistration(child: CobaltFormControl): boolean {
+    const name = child.name ?? '';
+    if (!name) return false;
+    if (name === this.name) return false;
+    if (name.endsWith('[]')) return true;
+    return !this.formElements?.[name];
+  }
+
+  private _addArrayOnlyFormElement(child: CobaltFormControl, indexToInsertAt: number): void {
+    (child as unknown as { _parentFormGroup?: unknown })._parentFormGroup = this;
+
+    if (indexToInsertAt >= 0) {
+      this.formElements.splice(indexToInsertAt, 0, child);
+    } else {
+      this.formElements.push(child);
+    }
+
+    if (this.disabled) {
+      child.makeRequestToBeDisabled?.();
+    }
+
+    const internals = this as unknown as FormGroupInternals;
+    internals.__storeAllDescriptionElementsInParentChain?.();
+    internals.__linkParentMessages?.(child);
+    this.validate({ clearCurrentResult: true });
+  }
+
+  private _nativeFormControls(): Element[] {
+    const controls = Array.from(this._formNode.elements);
+    if (this._formNode === this._internalForm) {
+      controls.push(...Array.from(this.querySelectorAll('input, textarea, select')));
+    }
+    return controls;
+  }
+
+  private _handleFormButtonClick = (event: Event) => {
+    const button = event
+      .composedPath()
+      .find(
+        (target): target is HTMLElement =>
+          target instanceof HTMLElement &&
+          (target.localName === 'co-button' || target.localName === 'co-button-icon'),
+      );
+
+    if (!button || button.hasAttribute('href') || button.hasAttribute('disabled')) return;
+
+    const type = button.getAttribute('type') ?? 'submit';
+    if (type !== 'submit' && type !== 'reset') return;
+    if (button.closest('form')) return;
+
+    event.preventDefault();
+    if (type === 'reset') {
+      this.reset();
+    } else {
+      this.submit();
     }
   }
 

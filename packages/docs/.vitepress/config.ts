@@ -162,7 +162,8 @@ export default withMermaid(
     vue: {
       template: {
         compilerOptions: {
-          isCustomElement: (tag: string) => tag.startsWith('co-') || tag.startsWith('lion-'),
+          isCustomElement: (tag: string) =>
+            tag.startsWith('co-') || tag.startsWith('lion-') || tag === 'nobr',
         },
       },
     },

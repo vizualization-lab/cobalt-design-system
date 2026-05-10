@@ -1,6 +1,6 @@
 import { html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import { LionButtonSubmit } from '@lion/ui/button.js';
+import { LionButton } from '@lion/ui/button.js';
 import { cobaltButtonStyles } from './co-button.styles.js';
 import '../icon/co-icon.js';
 
@@ -25,7 +25,7 @@ export type ButtonSize = 'sm' | 'md' | 'lg' | 'xl';
  * @fires co-blur - Emitted when the button loses focus
  */
 @customElement('co-button')
-export class CoButton extends LionButtonSubmit {
+export class CoButton extends LionButton {
   static get styles() {
     return [...super.styles, cobaltButtonStyles];
   }
@@ -75,14 +75,42 @@ export class CoButton extends LionButtonSubmit {
     this.dispatchEvent(new CustomEvent('co-blur', { bubbles: true, composed: true }));
   };
 
-  private _handleClick = () => {
-    if (this.disabled || !this.href) return;
+  private _handleClick = (event: Event) => {
+    if (event.defaultPrevented) return;
+    if (this.disabled) return;
+
+    if (!this.href) {
+      this._handleNativeFormClick(event);
+      return;
+    }
+
     if (this.target && this.target !== '_self') {
       window.open(this.href, this.target, this.target === '_blank' ? 'noopener,noreferrer' : '');
     } else {
       window.location.href = this.href;
     }
   };
+
+  private _handleNativeFormClick(event: Event) {
+    if (this.type !== 'submit' && this.type !== 'reset') return;
+
+    const form = this.closest('form');
+    if (!form) return;
+
+    event.preventDefault();
+    if (this.type === 'reset') {
+      form.reset();
+      return;
+    }
+
+    const requestSubmit = (form as HTMLFormElement & { requestSubmit?: () => void }).requestSubmit;
+    if (typeof requestSubmit === 'function') {
+      requestSubmit.call(form);
+      return;
+    }
+
+    form.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
+  }
 
   render() {
     if (this.href) {

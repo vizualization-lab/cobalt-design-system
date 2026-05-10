@@ -1,4 +1,4 @@
-import { fixture, html, expect } from '@open-wc/testing';
+import { fixture, html, expect, aTimeout, oneEvent } from '@open-wc/testing';
 import { runA11yAudit } from '../../test-utils/a11y.js';
 import './co-button-icon.js';
 import type { CoButtonIcon } from './co-button-icon.js';
@@ -78,6 +78,47 @@ describe('co-button-icon', () => {
     const icon = el.shadowRoot!.querySelector('co-icon');
     expect(icon).to.exist;
     expect(icon!.getAttribute('name')).to.equal('delete');
+  });
+
+  it('does not mutate host light DOM after connecting', async () => {
+    const el = document.createElement('co-button-icon') as CoButtonIcon;
+    el.setAttribute('name', 'star');
+    el.setAttribute('aria-label', 'Star');
+    const mutations: MutationRecord[] = [];
+    const observer = new MutationObserver((records) => mutations.push(...records));
+    observer.observe(el, { childList: true });
+
+    const parent = document.createElement('div');
+    document.body.append(parent);
+    parent.append(el);
+    await el.updateComplete;
+    await aTimeout(0);
+    observer.disconnect();
+    parent.remove();
+
+    expect(mutations).to.have.length(0);
+  });
+
+  it('submits a containing native form without inserting helper nodes', async () => {
+    const container = await fixture<HTMLElement>(html`
+      <div>
+        <form>
+          <co-button-icon type="submit" name="check" aria-label="Submit"></co-button-icon>
+        </form>
+      </div>
+    `);
+    const form = container.querySelector('form')!;
+    const button = container.querySelector('co-button-icon') as CoButtonIcon;
+    const mutations: MutationRecord[] = [];
+    const observer = new MutationObserver((records) => mutations.push(...records));
+    observer.observe(button, { childList: true });
+    form.addEventListener('submit', (event) => event.preventDefault());
+
+    setTimeout(() => button.click());
+    await oneEvent(form, 'submit');
+    observer.disconnect();
+
+    expect(mutations).to.have.length(0);
   });
 
   it('maps icon size down one step from button size', async () => {

@@ -1,6 +1,6 @@
 import { html, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import { LionButtonSubmit } from '@lion/ui/button.js';
+import { LionButton } from '@lion/ui/button.js';
 import type { ButtonSize } from '../button/co-button.js';
 import type { IconSize } from '../icon/co-icon.js';
 import { cobaltButtonIconStyles } from './co-button-icon.styles.js';
@@ -34,7 +34,7 @@ const iconSizeMap: Record<ButtonSize, IconSize> = {
  * @fires co-blur - Emitted when the button loses focus
  */
 @customElement('co-button-icon')
-export class CoButtonIcon extends LionButtonSubmit {
+export class CoButtonIcon extends LionButton {
   static get styles() {
     return [...super.styles, cobaltButtonIconStyles];
   }
@@ -67,12 +67,14 @@ export class CoButtonIcon extends LionButtonSubmit {
     super.connectedCallback();
     this.addEventListener('focus', this._handleFocus);
     this.addEventListener('blur', this._handleBlur);
+    this.addEventListener('click', this._handleClick);
   }
 
   disconnectedCallback(): void {
     super.disconnectedCallback();
     this.removeEventListener('focus', this._handleFocus);
     this.removeEventListener('blur', this._handleBlur);
+    this.removeEventListener('click', this._handleClick);
   }
 
   private _handleFocus = () => {
@@ -81,6 +83,28 @@ export class CoButtonIcon extends LionButtonSubmit {
 
   private _handleBlur = () => {
     this.dispatchEvent(new CustomEvent('co-blur', { bubbles: true, composed: true }));
+  };
+
+  private _handleClick = (event: Event) => {
+    if (event.defaultPrevented || this.disabled) return;
+    if (this.type !== 'submit' && this.type !== 'reset') return;
+
+    const form = this.closest('form');
+    if (!form) return;
+
+    event.preventDefault();
+    if (this.type === 'reset') {
+      form.reset();
+      return;
+    }
+
+    const requestSubmit = (form as HTMLFormElement & { requestSubmit?: () => void }).requestSubmit;
+    if (typeof requestSubmit === 'function') {
+      requestSubmit.call(form);
+      return;
+    }
+
+    form.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
   };
 
   render() {
