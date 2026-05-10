@@ -4,6 +4,7 @@ import {
   customIconNames,
   animatedIconNames,
   iconSearchTermsByIconName,
+  getIcon,
 } from '@cobalt/icons';
 import { runA11yAudit } from '../../test-utils/a11y.js';
 import './co-icon.js';
@@ -124,6 +125,7 @@ describe('co-icon', () => {
 
     it('includes custom icon names in iconNames', () => {
       expect(iconNames).to.include('co-placeholder');
+      expect(iconNames).to.include('co-logo');
     });
 
     it('customIconNames contains only co- prefixed names', () => {
@@ -140,6 +142,15 @@ describe('co-icon', () => {
 
     it('includes custom icon search metadata', () => {
       expect(iconSearchTermsByIconName['co-placeholder']).to.include('empty state');
+      expect(iconSearchTermsByIconName['co-logo']).to.include('cobalt');
+    });
+
+    it('resolves the Cobalt logo outline and filled variants', () => {
+      expect(customIconNames.has('co-logo')).to.equal(true);
+      expect(getIcon('co-logo', 'rounded')).to.be.a('string').and.not.equal('');
+      expect(getIcon('co-logo', 'rounded', true))
+        .to.be.a('string')
+        .and.not.equal('');
     });
   });
 
