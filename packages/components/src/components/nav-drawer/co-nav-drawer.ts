@@ -61,6 +61,14 @@ export class CoNavDrawer extends LitElement {
     ).filter((item) => !item.parentElement?.closest('co-nav-drawer-group:not([open])'));
   }
 
+  private _getItemFromEvent(event: Event): HTMLElement | undefined {
+    return event.composedPath().find((node): node is HTMLElement => {
+      if (!(node instanceof HTMLElement)) return false;
+      const tagName = node.tagName.toLowerCase();
+      return tagName === 'co-nav-drawer-group' || tagName === 'co-nav-drawer-item';
+    });
+  }
+
   private _onSlotChange() {
     // Sync initial selection
     if (this.value) {
@@ -94,38 +102,22 @@ export class CoNavDrawer extends LitElement {
   };
 
   private _onKeyDown = (e: KeyboardEvent) => {
+    if (!['ArrowUp', 'ArrowDown', 'Home', 'End'].includes(e.key)) return;
+
     const items = this._getItems();
     if (!items.length) return;
 
-    const currentIndex = items.findIndex(
-      (item) => item === document.activeElement || item.contains(document.activeElement),
-    );
+    const currentItem = this._getItemFromEvent(e) ?? items[0];
+    const currentIndex = Math.max(0, items.indexOf(currentItem));
 
-    let nextIndex = -1;
-    switch (e.key) {
-      case 'ArrowDown':
-        e.preventDefault();
-        nextIndex = currentIndex < items.length - 1 ? currentIndex + 1 : 0;
-        break;
-      case 'ArrowUp':
-        e.preventDefault();
-        nextIndex = currentIndex > 0 ? currentIndex - 1 : items.length - 1;
-        break;
-      case 'Home':
-        e.preventDefault();
-        nextIndex = 0;
-        break;
-      case 'End':
-        e.preventDefault();
-        nextIndex = items.length - 1;
-        break;
-      default:
-        return;
-    }
+    let nextIndex = currentIndex;
+    if (e.key === 'Home') nextIndex = 0;
+    if (e.key === 'End') nextIndex = items.length - 1;
+    if (e.key === 'ArrowUp') nextIndex = Math.max(0, currentIndex - 1);
+    if (e.key === 'ArrowDown') nextIndex = Math.min(items.length - 1, currentIndex + 1);
 
-    if (nextIndex >= 0) {
-      items[nextIndex].focus();
-    }
+    e.preventDefault();
+    items[nextIndex].focus();
   };
 }
 

@@ -97,6 +97,101 @@ describe('co-nav-drawer', () => {
     );
   });
 
+  it('moves keyboard focus from shadow focus targets in document order', async () => {
+    const el = await fixture<CoNavDrawer>(html`
+      <co-nav-drawer>
+        <co-nav-drawer-item value="overview">Overview</co-nav-drawer-item>
+        <co-nav-drawer-group label="Navigation" value="navigation" open>
+          <co-nav-drawer-item value="drawer">Drawer</co-nav-drawer-item>
+          <co-nav-drawer-item value="rail">Rail</co-nav-drawer-item>
+        </co-nav-drawer-group>
+        <co-nav-drawer-group label="Closed" value="closed">
+          <co-nav-drawer-item value="hidden">Hidden</co-nav-drawer-item>
+        </co-nav-drawer-group>
+      </co-nav-drawer>
+    `);
+    const navigation = el.querySelector(
+      'co-nav-drawer-group[value="navigation"]',
+    ) as HTMLElement & {
+      shadowRoot: ShadowRoot;
+    };
+    const drawer = el.querySelector('co-nav-drawer-item[value="drawer"]') as HTMLElement & {
+      shadowRoot: ShadowRoot;
+    };
+    const rail = el.querySelector('co-nav-drawer-item[value="rail"]') as HTMLElement & {
+      shadowRoot: ShadowRoot;
+    };
+    const closed = el.querySelector('co-nav-drawer-group[value="closed"]') as HTMLElement & {
+      shadowRoot: ShadowRoot;
+    };
+
+    navigation.shadowRoot.querySelector<HTMLElement>('[part="trigger"]')!.focus();
+    navigation.shadowRoot
+      .querySelector<HTMLElement>('[part="trigger"]')!
+      .dispatchEvent(
+        new KeyboardEvent('keydown', { key: 'ArrowDown', bubbles: true, composed: true }),
+      );
+
+    expect(drawer.shadowRoot.activeElement).to.equal(
+      drawer.shadowRoot.querySelector('[part="base"]'),
+    );
+
+    drawer.shadowRoot
+      .querySelector<HTMLElement>('[part="base"]')!
+      .dispatchEvent(
+        new KeyboardEvent('keydown', { key: 'ArrowDown', bubbles: true, composed: true }),
+      );
+
+    expect(rail.shadowRoot.activeElement).to.equal(rail.shadowRoot.querySelector('[part="base"]'));
+
+    rail.shadowRoot
+      .querySelector<HTMLElement>('[part="base"]')!
+      .dispatchEvent(
+        new KeyboardEvent('keydown', { key: 'ArrowDown', bubbles: true, composed: true }),
+      );
+
+    expect(closed.shadowRoot.activeElement).to.equal(
+      closed.shadowRoot.querySelector('[part="trigger"]'),
+    );
+  });
+
+  it('does not wrap arrow navigation at drawer boundaries', async () => {
+    const el = await fixture<CoNavDrawer>(html`
+      <co-nav-drawer>
+        <co-nav-drawer-item value="overview">Overview</co-nav-drawer-item>
+        <co-nav-drawer-item value="drawer">Drawer</co-nav-drawer-item>
+      </co-nav-drawer>
+    `);
+    const overview = el.querySelector('co-nav-drawer-item[value="overview"]') as HTMLElement & {
+      shadowRoot: ShadowRoot;
+    };
+    const drawer = el.querySelector('co-nav-drawer-item[value="drawer"]') as HTMLElement & {
+      shadowRoot: ShadowRoot;
+    };
+
+    overview.shadowRoot.querySelector<HTMLElement>('[part="base"]')!.focus();
+    overview.shadowRoot
+      .querySelector<HTMLElement>('[part="base"]')!
+      .dispatchEvent(
+        new KeyboardEvent('keydown', { key: 'ArrowUp', bubbles: true, composed: true }),
+      );
+
+    expect(overview.shadowRoot.activeElement).to.equal(
+      overview.shadowRoot.querySelector('[part="base"]'),
+    );
+
+    drawer.shadowRoot.querySelector<HTMLElement>('[part="base"]')!.focus();
+    drawer.shadowRoot
+      .querySelector<HTMLElement>('[part="base"]')!
+      .dispatchEvent(
+        new KeyboardEvent('keydown', { key: 'ArrowDown', bubbles: true, composed: true }),
+      );
+
+    expect(drawer.shadowRoot.activeElement).to.equal(
+      drawer.shadowRoot.querySelector('[part="base"]'),
+    );
+  });
+
   it('honors fixed block insets without overflowing the viewport', async () => {
     const el = await fixture<CoNavDrawer>(html`
       <co-nav-drawer style="position: fixed; top: 20px; bottom: 20px; inline-size: 200px;">
