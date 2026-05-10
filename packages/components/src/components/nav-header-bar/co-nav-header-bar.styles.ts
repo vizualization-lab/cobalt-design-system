@@ -6,7 +6,6 @@ export const cobaltNavHeaderBarStyles = css`
     display: block;
     inline-size: 100%;
     box-sizing: border-box;
-    padding: var(--co-space-inset-sm) var(--co-space-inset-md);
   }
 
   .nav-header-bar {
@@ -16,6 +15,7 @@ export const cobaltNavHeaderBarStyles = css`
     inline-size: 100%;
     min-block-size: var(--co-component-nav-header-bar-height);
     box-sizing: border-box;
+    padding: var(--co-space-inset-md) var(--co-space-inset-md);
     background: var(--co-component-nav-header-bar-background);
     border-block-end: var(--co-border-width-divider) solid
       var(--co-component-nav-header-bar-border-color);
