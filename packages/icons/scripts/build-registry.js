@@ -6,6 +6,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = join(__dirname, '..');
 const outDir = join(root, 'dist');
 const categoryMetadataFile = join(root, 'src', 'icon-categories.json');
+const customSearchMetadataFile = join(root, 'custom', 'metadata.json');
 
 const STYLES = ['rounded'];
 const FALLBACK_CATEGORIES = [
@@ -43,6 +44,55 @@ function readCategoryMetadata() {
   }
 }
 
+function readCustomSearchMetadata() {
+  if (!existsSync(customSearchMetadataFile)) {
+    return {};
+  }
+
+  try {
+    return JSON.parse(readFileSync(customSearchMetadataFile, 'utf-8'));
+  } catch (error) {
+    throw new Error(
+      `Unable to read custom icon search metadata from ${customSearchMetadataFile}. ${error.message}`,
+    );
+  }
+}
+
+function iconCategoriesFor(entry) {
+  if (Array.isArray(entry)) {
+    return entry;
+  }
+
+  if (entry && Array.isArray(entry.categories)) {
+    return entry.categories;
+  }
+
+  return [];
+}
+
+function iconTagsFor(entry) {
+  if (entry && Array.isArray(entry.tags)) {
+    return entry.tags;
+  }
+
+  return [];
+}
+
+function normalizeSearchTerms(terms, source) {
+  if (!Array.isArray(terms)) {
+    throw new Error(`${source} must be an array of search term strings.`);
+  }
+
+  return [
+    ...new Set(
+      terms
+        .filter((term) => typeof term === 'string')
+        .map((term) => term.trim())
+        .filter(Boolean),
+    ),
+  ];
+}
+
 function buildCategoryExports(sortedNames, sortedCustomNames, metadata) {
   const customNames = new Set(sortedCustomNames);
   const categoryDefinitions = [...metadata.categories, ...FALLBACK_CATEGORIES];
@@ -51,11 +101,7 @@ function buildCategoryExports(sortedNames, sortedCustomNames, metadata) {
   const categoryByIconName = {};
 
   for (const name of sortedNames) {
-    let categoryIds = customNames.has(name) ? ['cobalt'] : metadata.icons[name];
-
-    if (!Array.isArray(categoryIds)) {
-      categoryIds = [];
-    }
+    let categoryIds = customNames.has(name) ? ['cobalt'] : iconCategoriesFor(metadata.icons[name]);
 
     categoryIds = categoryIds.filter((categoryId) => knownCategoryIds.has(categoryId));
     if (categoryIds.length === 0) {
@@ -80,6 +126,37 @@ function buildCategoryExports(sortedNames, sortedCustomNames, metadata) {
     categories,
     categoryByIconName,
   };
+}
+
+function buildSearchTermExports(sortedNames, sortedCustomNames, metadata, customSearchMetadata) {
+  const customNames = new Set(sortedCustomNames);
+  const searchTermsByIconName = {};
+
+  for (const [name, terms] of Object.entries(customSearchMetadata)) {
+    if (!customNames.has(name)) {
+      console.warn(`Warning: custom icon search metadata references unknown icon "${name}"`);
+      continue;
+    }
+
+    searchTermsByIconName[name] = normalizeSearchTerms(terms, `Search metadata for "${name}"`);
+  }
+
+  for (const name of sortedNames) {
+    if (customNames.has(name)) {
+      searchTermsByIconName[name] ??= [];
+      continue;
+    }
+
+    const terms = normalizeSearchTerms(
+      iconTagsFor(metadata.icons[name]),
+      `Search tags for "${name}"`,
+    );
+    if (terms.length > 0) {
+      searchTermsByIconName[name] = terms;
+    }
+  }
+
+  return searchTermsByIconName;
 }
 
 function build() {
@@ -229,10 +306,17 @@ function build() {
   const sortedOverrideNames = [...overrideBaseNames].sort();
   const sortedAnimatedNames = [...animatedBaseNames].sort();
   const categoryMetadata = readCategoryMetadata();
+  const customSearchMetadata = readCustomSearchMetadata();
   const { categories: iconCategories, categoryByIconName } = buildCategoryExports(
     sortedNames,
     sortedCustomNames,
     categoryMetadata,
+  );
+  const iconSearchTermsByIconName = buildSearchTermExports(
+    sortedNames,
+    sortedCustomNames,
+    categoryMetadata,
+    customSearchMetadata,
   );
 
   // Build the JS registry module
@@ -287,6 +371,13 @@ function build() {
   lines.push('');
   lines.push('/** Lookup from icon name to the category ids assigned to that icon. */');
   lines.push(`export const iconCategoryByIconName = ${JSON.stringify(categoryByIconName)};`);
+  lines.push('');
+  lines.push(
+    '/** Search terms from committed Material Symbols metadata and custom icon metadata. */',
+  );
+  lines.push(
+    `export const iconSearchTermsByIconName = ${JSON.stringify(iconSearchTermsByIconName)};`,
+  );
   lines.push('');
 
   // Animated registry
@@ -359,6 +450,9 @@ function build() {
     '',
     '/** Lookup from icon name to the category ids assigned to that icon. */',
     'export declare const iconCategoryByIconName: Record<string, string[]>;',
+    '',
+    '/** Search terms from committed Material Symbols metadata and custom icon metadata. */',
+    'export declare const iconSearchTermsByIconName: Record<string, string[]>;',
     '',
     '/**',
     ' * Get the animated SVG variant for an icon.',

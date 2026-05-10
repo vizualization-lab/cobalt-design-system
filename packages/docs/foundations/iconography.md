@@ -147,6 +147,18 @@ Each icon can have up to 2 variants (unfilled/filled). Custom icons use `viewBox
 
 After adding SVGs, run `pnpm build` in the icons package. Custom icons will appear in the icon gallery alongside Material Symbols.
 
+### Adding search metadata
+
+Add hidden search terms for each custom icon in `packages/icons/custom/metadata.json`, keyed by the base icon name without a `-fill` suffix:
+
+```json
+{
+  "co-chart": ["chart", "analytics", "data visualization"]
+}
+```
+
+Use terms people might search for, including synonyms, product vocabulary, and common object names. These terms are searchable in the icon gallery but are not displayed. Material Symbols search terms are captured in Cobalt's committed metadata snapshot; the upstream Google endpoint is used only when maintainers intentionally refresh that snapshot, never at runtime.
+
 ### Usage
 
 ```html

@@ -6,6 +6,7 @@ import {
   getIcon,
   iconCategories,
   iconNames,
+  iconSearchTermsByIconName,
   overrideIconNames,
 } from '@cobalt/icons';
 
@@ -53,11 +54,15 @@ const categoryOptions = computed(() => [
 const activeCategory = computed(
   () => categoryOptions.value.find((category) => category.id === activeCategoryId.value) ?? null,
 );
+const selectedIconSearchTerms = computed(() =>
+  selectedIcon.value ? (iconSearchTermsByIconName[selectedIcon.value] ?? []) : [],
+);
+const selectedIconSearchTermsText = computed(() => selectedIconSearchTerms.value.join(', '));
 
 const filteredIcons = computed(() => {
   if (isSearching.value) {
     const terms = trimmedSearchQuery.value.split(/\s+/);
-    return iconNames.filter((name) => terms.every((term) => name.includes(term)));
+    return iconNames.filter((name) => iconMatchesSearch(name, terms));
   }
 
   if (activeCategory.value) {
@@ -92,6 +97,20 @@ const searchModeHint = computed(() => {
   if (!isSearching.value) return '';
   return 'Search is matching across all icons. Clear the field to browse all icons.';
 });
+
+function normalizeSearchValue(value: string): string {
+  return value.toLowerCase().trim();
+}
+
+function iconMatchesSearch(name: string, terms: string[]): boolean {
+  const searchableValues = [
+    name,
+    name.replace(/-/g, ' '),
+    ...(iconSearchTermsByIconName[name] ?? []),
+  ].map(normalizeSearchValue);
+
+  return terms.every((term) => searchableValues.some((value) => value.includes(term)));
+}
 
 function getSvgForGrid(name: string): string {
   const content = getIcon(name, 'rounded', fillToggle.value);
@@ -431,6 +450,17 @@ function getSnippet(name: string, tabIndex: number): string {
                   </div>
                 </div>
               </div>
+
+              <div v-if="selectedIconSearchTerms.length > 0" class="detail-section">
+                <co-textarea
+                  class="search-terms-textarea"
+                  label="Search terms"
+                  readonly
+                  resize="none"
+                  rows="4"
+                  :value="selectedIconSearchTermsText"
+                ></co-textarea>
+              </div>
             </div>
           </div>
         </Transition>
@@ -511,6 +541,16 @@ function getSnippet(name: string, tabIndex: number): string {
                 }}</code>
               </div>
             </div>
+          </div>
+          <div v-if="selectedIconSearchTerms.length > 0" class="ig-sheet-section">
+            <co-textarea
+              class="ig-search-terms-textarea"
+              label="Search terms"
+              readonly
+              resize="none"
+              rows="4"
+              :value="selectedIconSearchTermsText"
+            ></co-textarea>
           </div>
         </div>
       </Transition>
@@ -980,6 +1020,11 @@ function getSnippet(name: string, tabIndex: number): string {
   border: none;
 }
 
+.search-terms-textarea {
+  display: block;
+  inline-size: 100%;
+}
+
 .detail-panel-enter-active,
 .detail-panel-leave-active {
   transition:
@@ -1229,6 +1274,11 @@ function getSnippet(name: string, tabIndex: number): string {
   white-space: pre;
   background: none;
   border: none;
+}
+
+.ig-search-terms-textarea {
+  display: block;
+  inline-size: 100%;
 }
 
 .ig-backdrop-enter-active,

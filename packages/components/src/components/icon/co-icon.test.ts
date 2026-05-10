@@ -1,5 +1,10 @@
 import { fixture, html, expect } from '@open-wc/testing';
-import { iconNames, customIconNames, animatedIconNames } from '@cobalt/icons';
+import {
+  iconNames,
+  customIconNames,
+  animatedIconNames,
+  iconSearchTermsByIconName,
+} from '@cobalt/icons';
 import { runA11yAudit } from '../../test-utils/a11y.js';
 import './co-icon.js';
 import type { CoIcon } from './co-icon.js';
@@ -131,6 +136,17 @@ describe('co-icon', () => {
       for (const name of customIconNames) {
         expect(iconNames).to.include(name);
       }
+    });
+
+    it('includes custom icon search metadata', () => {
+      expect(iconSearchTermsByIconName['co-placeholder']).to.include('empty state');
+    });
+  });
+
+  describe('search metadata', () => {
+    it('includes committed Material Symbols tags', () => {
+      expect(iconSearchTermsByIconName.person).to.include('avatar');
+      expect(iconSearchTermsByIconName.person).to.include('my account');
     });
   });
 

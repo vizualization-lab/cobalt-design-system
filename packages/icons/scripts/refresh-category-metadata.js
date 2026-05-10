@@ -73,10 +73,12 @@ async function refresh() {
       foundCategoryLabels.add(category);
     }
 
-    icons.set(
-      toKebab(icon.name),
-      categories.filter((category) => knownCategoryLabels.has(category)).map(categoryId),
-    );
+    icons.set(toKebab(icon.name), {
+      categories: categories
+        .filter((category) => knownCategoryLabels.has(category))
+        .map(categoryId),
+      tags: [...new Set((icon.tags ?? []).filter((tag) => typeof tag === 'string' && tag.trim()))],
+    });
   }
 
   const extraCategories = [...foundCategoryLabels]

@@ -13,6 +13,18 @@ custom/
 
 Each icon can have up to 2 variants (unfilled/filled). At minimum, provide the unfilled variant.
 
+## Search Metadata
+
+Add searchable terms for each custom icon in `custom/metadata.json` using the base icon name without a `-fill` suffix:
+
+```json
+{
+  "co-chart": ["chart", "analytics", "data visualization"]
+}
+```
+
+These terms are included in the generated `@cobalt/icons` metadata and make custom icons searchable in the docs icon gallery. They are not displayed in the UI.
+
 ## Naming Conventions
 
 - File names **must** start with `co-` (e.g., `co-chart.svg`, `co-brand-logo.svg`)
