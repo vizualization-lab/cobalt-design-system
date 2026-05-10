@@ -13,9 +13,11 @@ export interface NavRailBarChangeDetail {
  * @summary A vertical navigation container that manages selection across nested co-nav-rail-item children.
  *
  * @slot - co-nav-rail-item children rendered as the navigation destinations
+ * @slot footer - Optional content pinned below the navigation destinations
  *
  * @csspart base - The nav landmark wrapper
  * @csspart items - The items container
+ * @csspart footer - The footer container
  *
  * @fires co-change - Emitted when the selected nav item changes
  */
@@ -70,6 +72,9 @@ export class CoNavRailBar extends LitElement {
       <nav part="base" class="nav-rail-bar" aria-label=${this.label}>
         <div part="items" class="nav-rail-bar__items">
           <slot @slotchange=${this._handleSlotChange}></slot>
+        </div>
+        <div part="footer" class="nav-rail-bar__footer">
+          <slot name="footer"></slot>
         </div>
       </nav>
     `;

@@ -136,6 +136,38 @@ describe('co-nav-rail-bar', () => {
     expect(el.scrollWidth).to.equal(el.clientWidth);
   });
 
+  it('honors fixed block insets without overflowing the viewport', async () => {
+    const el = await fixture<CoNavRailBar>(html`
+      <co-nav-rail-bar style="position: fixed; top: 20px; bottom: 20px; inline-size: 200px;">
+        <co-nav-rail-item value="home" icon="home" selected>Home</co-nav-rail-item>
+        <co-nav-rail-item value="reports" icon="sync">Reports</co-nav-rail-item>
+      </co-nav-rail-bar>
+    `);
+
+    const rect = el.getBoundingClientRect();
+    expect(Math.round(rect.top)).to.equal(20);
+    expect(Math.round(window.innerHeight - rect.bottom)).to.equal(20);
+  });
+
+  it('keeps additional slotted content inside the rail bounds', async () => {
+    const el = await fixture<CoNavRailBar>(html`
+      <co-nav-rail-bar style="position: fixed; top: 20px; bottom: 20px; inline-size: 200px;">
+        <co-nav-rail-item value="home" icon="home" selected>Home</co-nav-rail-item>
+        <co-nav-rail-item value="reports" icon="sync">Reports</co-nav-rail-item>
+        <div slot="footer" class="rail-footer">v0.1.0</div>
+      </co-nav-rail-bar>
+    `);
+
+    const nav = el.shadowRoot?.querySelector<HTMLElement>('.nav-rail-bar');
+    const footer = el.querySelector<HTMLElement>('.rail-footer');
+    expect(nav).to.exist;
+    expect(footer).to.exist;
+
+    const navRect = nav!.getBoundingClientRect();
+    const footerRect = footer!.getBoundingClientRect();
+    expect(Math.round(footerRect.bottom)).to.be.at.most(Math.round(navRect.bottom));
+  });
+
   describe('accessibility', () => {
     it('is accessible as a vertical navigation landmark', async () => {
       const el = await fixture(

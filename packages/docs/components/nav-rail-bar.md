@@ -194,16 +194,18 @@ export class AppComponent {
 
 ### Slots
 
-| Slot | Description                        |
-| ---- | ---------------------------------- |
-| —    | Nested `co-nav-rail-item` children |
+| Slot     | Description                                      |
+| -------- | ------------------------------------------------ |
+| —        | Nested `co-nav-rail-item` children               |
+| `footer` | Optional content pinned below the rail item list |
 
 ### CSS Parts
 
-| Part    | Description               |
-| ------- | ------------------------- |
-| `base`  | The nav landmark wrapper  |
-| `items` | The items stack container |
+| Part     | Description               |
+| -------- | ------------------------- |
+| `base`   | The nav landmark wrapper  |
+| `items`  | The items stack container |
+| `footer` | The footer container      |
 
 ## Design Tokens
 
