@@ -1,5 +1,7 @@
 import { defineComponent, h, onMounted, onUnmounted, ref, type PropType } from 'vue';
-import '@cobalt/components/app-shell';
+import { registerElement } from '../register-element.js';
+
+registerElement(() => import('@cobalt/components/app-shell'));
 
 export type CoAppShellProps = {
   drawerOpen?: boolean;
@@ -24,8 +26,10 @@ export const CoAppShell = defineComponent({
     },
   },
   emits: ['co-drawer-open', 'co-drawer-close', 'co-drawer-toggle'],
-  setup(props, { emit, slots }) {
+  setup(props, { attrs, emit, expose, slots }) {
     const elRef = ref<HTMLElement | null>(null);
+
+    expose({ element: elRef });
 
     const listeners = {
       'co-drawer-open': (event: Event) => emit('co-drawer-open', event),
@@ -55,6 +59,7 @@ export const CoAppShell = defineComponent({
       h(
         'co-app-shell',
         {
+          ...attrs,
           ref: elRef,
           drawerOpen: props.drawerOpen,
           railWidth: props.railWidth,

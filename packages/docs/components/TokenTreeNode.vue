@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import type { PropType } from 'vue';
+import { CoIcon } from '@cobalt/vue/icon';
 import type { TokenBranchNode, TokenTreeNode } from './token-explorer.types';
 
 defineOptions({ name: 'TokenTreeNode' });
@@ -51,7 +52,7 @@ function toggleBranch() {
       :aria-expanded="expanded"
       @click="toggleBranch"
     >
-      <co-icon name="chevron-right" size="xs" class="branch-chevron" aria-hidden="true"></co-icon>
+      <CoIcon name="chevron-right" size="xs" class="branch-chevron" aria-hidden="true"></CoIcon>
       <span class="branch-label">{{ node.label }}</span>
       <span class="branch-count">{{ node.count }}</span>
     </button>

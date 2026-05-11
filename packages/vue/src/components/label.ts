@@ -1,5 +1,7 @@
 import { defineComponent, h } from 'vue';
-import '@cobalt/components/label';
+import { registerElement } from '../register-element.js';
+
+registerElement(() => import('@cobalt/components/label'));
 
 export type CoLabelProps = {
   htmlFor?: string;

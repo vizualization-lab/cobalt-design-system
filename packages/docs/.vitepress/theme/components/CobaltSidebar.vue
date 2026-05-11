@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useRoute, useRouter, withBase } from 'vitepress';
 import { computed, ref } from 'vue';
+import { CoNavDrawer } from '@cobalt/vue/nav-drawer';
 import type { NavGroup, NavItem } from '../navigation';
 import CobaltSidebarItems from './CobaltSidebarItems.vue';
 
@@ -64,7 +65,7 @@ function navigate(link: string, event: Event) {
 </script>
 
 <template>
-  <co-nav-drawer
+  <CoNavDrawer
     class="cobalt-sidebar"
     id="cobalt-subnav"
     :label="category.label"
@@ -81,7 +82,7 @@ function navigate(link: string, event: Event) {
       :toggle-group="onToggleGroup"
       :navigate="navigate"
     />
-  </co-nav-drawer>
+  </CoNavDrawer>
 </template>
 
 <style scoped>

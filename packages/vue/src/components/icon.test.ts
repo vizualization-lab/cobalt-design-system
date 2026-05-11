@@ -14,4 +14,16 @@ describe('Vue CoIcon wrapper', () => {
     expect(el.fill).toBe(true);
     expect(el.label).toBe('Home');
   });
+
+  it('preserves passthrough attrs', () => {
+    const wrapper = mount(CoIcon, {
+      props: { name: 'home' },
+      attrs: { slot: 'prefix', class: 'marker', 'aria-hidden': 'true' },
+    });
+    const el = wrapper.find('co-icon');
+
+    expect(el.attributes('slot')).toBe('prefix');
+    expect(el.classes()).toContain('marker');
+    expect(el.attributes('aria-hidden')).toBe('true');
+  });
 });

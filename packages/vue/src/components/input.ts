@@ -1,7 +1,9 @@
 import { defineComponent, h, onMounted, onUnmounted, ref, type PropType } from 'vue';
 import type { InputSize } from '@cobalt/components/input';
 import type { Validator } from '@cobalt/components/validation';
-import '@cobalt/components/input';
+import { registerElement } from '../register-element.js';
+
+registerElement(() => import('@cobalt/components/input'));
 
 export type CoInputProps = {
   size?: InputSize;

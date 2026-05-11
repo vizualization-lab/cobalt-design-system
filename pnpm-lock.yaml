@@ -130,6 +130,9 @@ importers:
       '@cobalt/tokens':
         specifier: workspace:*
         version: link:../tokens
+      '@cobalt/vue':
+        specifier: workspace:*
+        version: link:../vue
       markdown-it-task-lists:
         specifier: ^2.1.1
         version: 2.1.1

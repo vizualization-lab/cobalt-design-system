@@ -1,5 +1,14 @@
 <script setup lang="ts">
-import { computed, nextTick, onMounted, ref, watch } from 'vue';
+import { computed, nextTick, onMounted, ref, watch, type ComponentPublicInstance } from 'vue';
+import { CoAppShell } from '@cobalt/vue/app-shell';
+import { CoBanner } from '@cobalt/vue/banner';
+import { CoCard } from '@cobalt/vue/card';
+import { CoInputPill } from '@cobalt/vue/input-pill';
+import { CoNavDrawer } from '@cobalt/vue/nav-drawer';
+import { CoNavDrawerItem } from '@cobalt/vue/nav-drawer-item';
+import { CoNavHeaderBar } from '@cobalt/vue/nav-header-bar';
+import { CoNavRailBar } from '@cobalt/vue/nav-rail-bar';
+import { CoNavRailItem } from '@cobalt/vue/nav-rail-item';
 
 type ViewportMode = 'desktop' | 'mobile';
 
@@ -9,15 +18,26 @@ type AppShellElement = HTMLElement & {
   _desktop?: boolean;
 };
 
+type AppShellInstance = ComponentPublicInstance & {
+  element?: AppShellElement | { value: AppShellElement | null } | null;
+};
+
 const railWidth = ref('115px');
 const drawerWidth = ref('260px');
 const drawerOpen = ref(false);
 const viewport = ref<ViewportMode>('desktop');
-const shellEl = ref<AppShellElement | null>(null);
+const shellEl = ref<AppShellInstance | null>(null);
+
+function resolveShellElement(): AppShellElement | null {
+  const exposed = shellEl.value?.element;
+  if (!exposed) return null;
+  if (exposed instanceof HTMLElement) return exposed as AppShellElement;
+  return exposed.value;
+}
 
 async function syncShellViewport() {
   await nextTick();
-  const shell = shellEl.value;
+  const shell = resolveShellElement();
   if (!shell) return;
 
   shell._desktop = viewport.value === 'desktop';
@@ -114,17 +134,17 @@ const viewportLabel = computed(() =>
       <ClientOnly>
         <div class="app-shell-demo__viewport" :class="`app-shell-demo__viewport--${viewport}`">
           <div class="app-shell-demo__frame">
-            <co-app-shell
+            <CoAppShell
               ref="shellEl"
               class="app-shell-demo__shell"
               :rail-width="railWidth"
               :drawer-width="drawerWidth"
             >
-              <co-banner slot="banner" class="app-shell-demo__banner" label="Status banner">
+              <CoBanner slot="banner" class="app-shell-demo__banner" label="Status banner">
                 <span slot="title">Status banner</span>
-              </co-banner>
+              </CoBanner>
 
-              <co-nav-header-bar
+              <CoNavHeaderBar
                 slot="topnav"
                 class="app-shell-demo__header"
                 label="Docs workspace header"
@@ -133,33 +153,33 @@ const viewportLabel = computed(() =>
                   <div class="app-shell-demo__logo-mark" aria-hidden="true"></div>
                   <span>Docs workspace</span>
                 </div>
-                <co-input-pill
+                <CoInputPill
                   class="app-shell-demo__search"
                   variant="search"
                   placeholder="Search docs, patterns, tokens"
-                ></co-input-pill>
+                ></CoInputPill>
                 <div slot="avatar" class="app-shell-demo__avatar" aria-label="Avery Lane">AL</div>
-              </co-nav-header-bar>
+              </CoNavHeaderBar>
 
-              <co-nav-rail-bar slot="rail" label="Primary sections">
-                <co-nav-rail-item value="foundations" icon="stacks" selected
-                  >Foundations</co-nav-rail-item
+              <CoNavRailBar slot="rail" label="Primary sections">
+                <CoNavRailItem value="foundations" icon="stacks" selected
+                  >Foundations</CoNavRailItem
                 >
-                <co-nav-rail-item value="patterns" icon="grid-view">Patterns</co-nav-rail-item>
-              </co-nav-rail-bar>
+                <CoNavRailItem value="patterns" icon="grid-view">Patterns</CoNavRailItem>
+              </CoNavRailBar>
 
-              <co-nav-drawer slot="drawer" label="Section navigation">
-                <co-nav-drawer-item value="overview" icon="dashboard" selected
-                  >Overview</co-nav-drawer-item
+              <CoNavDrawer slot="drawer" label="Section navigation">
+                <CoNavDrawerItem value="overview" icon="dashboard" selected
+                  >Overview</CoNavDrawerItem
                 >
-                <co-nav-drawer-item value="tokens" icon="palette">Tokens</co-nav-drawer-item>
-                <co-nav-drawer-item value="accessibility" icon="universal-access"
-                  >Accessibility</co-nav-drawer-item
-                >
-              </co-nav-drawer>
+                <CoNavDrawerItem value="tokens" icon="palette">Tokens</CoNavDrawerItem>
+                <CoNavDrawerItem value="accessibility" icon="universal-access">
+                  Accessibility
+                </CoNavDrawerItem>
+              </CoNavDrawer>
 
               <div slot="body" class="app-shell-demo__body">
-                <co-card>
+                <CoCard>
                   <p class="app-shell-demo__eyebrow">Pattern guidance</p>
                   <h2 class="app-shell-demo__title">Compose article and TOC inside body</h2>
                   <p class="app-shell-demo__copy">
@@ -167,37 +187,40 @@ const viewportLabel = computed(() =>
                     right-side reference content inside the body region.
                   </p>
                   <div class="app-shell-demo__stack">
-                    <co-card
+                    <CoCard
                       style="
                         --co-component-card-background: var(--co-color-surface-static-page);
                         --co-component-card-shadow: none;
                       "
-                      >Introduction</co-card
                     >
-                    <co-card
+                      Introduction
+                    </CoCard>
+                    <CoCard
                       style="
                         --co-component-card-background: var(--co-color-surface-static-page);
                         --co-component-card-shadow: none;
                       "
-                      >API summary</co-card
                     >
-                    <co-card
+                      API summary
+                    </CoCard>
+                    <CoCard
                       style="
                         --co-component-card-background: var(--co-color-surface-static-page);
                         --co-component-card-shadow: none;
                       "
-                      >Examples</co-card
                     >
+                      Examples
+                    </CoCard>
                   </div>
-                </co-card>
+                </CoCard>
 
-                <co-card style="color: var(--co-color-text-secondary)">
+                <CoCard style="color: var(--co-color-text-secondary)">
                   Optional TOC or reference panel composed inside body
-                </co-card>
+                </CoCard>
               </div>
 
               <div slot="footer" style="padding: 12px 0">Footer content</div>
-            </co-app-shell>
+            </CoAppShell>
           </div>
         </div>
       </ClientOnly>

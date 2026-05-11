@@ -25,4 +25,12 @@ describe('Vue CoNavDrawerGroup wrapper', () => {
 
     expect(wrapper.emitted('co-toggle')).toHaveLength(1);
   });
+
+  it('preserves host attrs', () => {
+    const wrapper = mount(CoNavDrawerGroup, {
+      attrs: { class: 'docs-sidebar-group' },
+    });
+
+    expect(wrapper.find('co-nav-drawer-group').classes()).toContain('docs-sidebar-group');
+  });
 });

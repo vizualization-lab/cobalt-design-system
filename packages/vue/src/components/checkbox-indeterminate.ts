@@ -1,5 +1,7 @@
 import { defineComponent, h } from 'vue';
-import '@cobalt/components/checkbox-indeterminate';
+import { registerElement } from '../register-element.js';
+
+registerElement(() => import('@cobalt/components/checkbox-indeterminate'));
 
 export type CoCheckboxIndeterminateProps = {
   value?: string;

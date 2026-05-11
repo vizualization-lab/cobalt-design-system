@@ -5,7 +5,7 @@
   "private": true,
   "description": "Cobalt Design System documentation",
   "scripts": {
-    "prepare:local-deps": "pnpm --filter @cobalt/icons build",
+    "prepare:local-deps": "pnpm --filter @cobalt/icons build && pnpm --filter @cobalt/vue build",
     "predev": "pnpm run prepare:local-deps && node scripts/generate-component-changelogs.js",
     "prebuild": "pnpm run prepare:local-deps && node scripts/generate-component-changelogs.js",
     "dev": "vitepress dev",
@@ -17,6 +17,7 @@
     "@cobalt/components": "workspace:*",
     "@cobalt/icons": "workspace:*",
     "@cobalt/tokens": "workspace:*",
+    "@cobalt/vue": "workspace:*",
     "markdown-it-task-lists": "^2.1.1",
     "mermaid": "^11.14.0",
     "shiki": "^2.5.0",

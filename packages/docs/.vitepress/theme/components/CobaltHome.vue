@@ -1,5 +1,8 @@
 <script setup lang="ts">
 import { useData, withBase } from 'vitepress';
+import { CoButton } from '@cobalt/vue/button';
+import { CoCard } from '@cobalt/vue/card';
+import { CoIcon } from '@cobalt/vue/icon';
 
 const { theme } = useData();
 
@@ -55,14 +58,14 @@ const features = [
         </p>
 
         <div class="hero-actions">
-          <co-button :href="withBase('/getting-started')" variant="primary" size="md">
+          <CoButton :href="withBase('/getting-started')" variant="primary" size="md">
             Get Started
-            <co-icon slot="suffix" name="arrow-right-alt" size="md" aria-hidden="true"></co-icon>
-          </co-button>
-          <co-button :href="withBase('/foundations')" variant="secondary" size="md">
-            <co-icon slot="prefix" name="stacks" size="md" aria-hidden="true"></co-icon>
-            Explore Foundations</co-button
-          >
+            <CoIcon slot="suffix" name="arrow-right-alt" size="md" aria-hidden="true"></CoIcon>
+          </CoButton>
+          <CoButton :href="withBase('/foundations')" variant="secondary" size="md">
+            <CoIcon slot="prefix" name="stacks" size="md" aria-hidden="true"></CoIcon>
+            Explore Foundations
+          </CoButton>
         </div>
       </div>
 
@@ -150,9 +153,9 @@ const features = [
         class="feature-card"
         :style="{ animationDelay: `${200 + i * 100}ms` }"
       >
-        <co-card>
+        <CoCard>
           <div class="feature-icon" slot="header">
-            <co-icon :name="feature.iconName" size="md" aria-hidden="true"></co-icon>
+            <CoIcon :name="feature.iconName" size="md" aria-hidden="true"></CoIcon>
           </div>
           <h3 class="feature-title">{{ feature.title }}</h3>
           <p class="feature-desc">{{ feature.description }}</p>
@@ -172,7 +175,7 @@ const features = [
               <polyline points="9 4 13 8 9 12" />
             </svg>
           </span>
-        </co-card>
+        </CoCard>
       </a>
     </section>
   </div>

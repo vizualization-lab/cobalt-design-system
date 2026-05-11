@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue';
 import { withBase } from 'vitepress';
+import { CoIcon } from '@cobalt/vue/icon';
 import { data } from '../component-status.data';
 import type { PhaseStatus } from '../component-status.data';
 
@@ -57,7 +58,7 @@ const totalCount = computed(() => {
             :class="'status-pill--' + getStatus(phase.key)"
             :title="phase.description"
           >
-            <co-icon
+            <CoIcon
               class="status-pill__icon"
               :name="STATUS_META[getStatus(phase.key)].icon"
               size="xs"
@@ -65,7 +66,7 @@ const totalCount = computed(() => {
                 getStatus(phase.key) === 'pass' || getStatus(phase.key) === 'fail' || undefined
               "
               aria-hidden="true"
-            ></co-icon>
+            ></CoIcon>
             <span class="status-pill__label">{{ phase.label }}</span>
           </a>
         </div>
@@ -79,21 +80,21 @@ const totalCount = computed(() => {
         :aria-expanded="showLegend"
         @click="showLegend = !showLegend"
       >
-        <co-icon name="info" size="xs" aria-hidden="true"></co-icon>
+        <CoIcon name="info" size="xs" aria-hidden="true"></CoIcon>
         Legend
       </button>
     </div>
 
     <div v-if="showLegend" class="status-legend">
       <div v-for="(meta, key) in STATUS_META" :key="key" class="status-legend__item">
-        <co-icon
+        <CoIcon
           class="status-legend__icon"
           :class="'status-legend__icon--' + key"
           :name="meta.icon"
           size="xs"
           :fill="key === 'pass' || key === 'fail' || undefined"
           aria-hidden="true"
-        ></co-icon>
+        ></CoIcon>
         <span>{{ meta.label }}</span>
       </div>
     </div>

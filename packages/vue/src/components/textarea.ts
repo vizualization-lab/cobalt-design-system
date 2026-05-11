@@ -1,7 +1,9 @@
 import { defineComponent, h, onMounted, onUnmounted, ref, type PropType } from 'vue';
 import type { TextareaResize, TextareaSize } from '@cobalt/components/textarea';
 import type { Validator } from '@cobalt/components/validation';
-import '@cobalt/components/textarea';
+import { registerElement } from '../register-element.js';
+
+registerElement(() => import('@cobalt/components/textarea'));
 
 export type CoTextareaProps = {
   size?: TextareaSize;
@@ -121,7 +123,7 @@ export const CoTextarea = defineComponent({
     },
   },
   emits: ['co-focus', 'co-blur', 'co-input', 'co-change'],
-  setup(props, { emit, slots }) {
+  setup(props, { attrs, emit, slots }) {
     const elRef = ref<HTMLElement | null>(null);
 
     const forward = (name: 'co-focus' | 'co-blur' | 'co-input' | 'co-change') => (event: Event) => {
@@ -157,6 +159,7 @@ export const CoTextarea = defineComponent({
       h(
         'co-textarea',
         {
+          ...attrs,
           ref: elRef,
           size: props.size,
           resize: props.resize,

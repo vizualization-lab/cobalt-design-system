@@ -1,5 +1,8 @@
 <script setup lang="ts">
 import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue';
+import { CoOption } from '@cobalt/vue/option';
+import { CoSelect } from '@cobalt/vue/select';
+import { CoTextarea } from '@cobalt/vue/textarea';
 import {
   animatedIconNames,
   customIconNames,
@@ -311,14 +314,14 @@ function getSnippet(name: string, tabIndex: number): string {
             <span class="browse-summary">{{ resultsSummary }}</span>
           </div>
 
-          <co-select
+          <CoSelect
             class="category-select"
             label="Category"
             name="icon-category"
             size="md"
             @co-change="handleCategoryChange"
           >
-            <co-option
+            <CoOption
               v-for="category in categoryOptions"
               :key="category.id"
               :value="category.id"
@@ -331,8 +334,8 @@ function getSnippet(name: string, tabIndex: number): string {
                 :data-count="iconCountFormatter.format(category.iconNames.length)"
                 aria-hidden="true"
               ></span>
-            </co-option>
-          </co-select>
+            </CoOption>
+          </CoSelect>
 
           <p v-if="isSearching" class="browse-note">{{ searchModeHint }}</p>
         </div>
@@ -452,14 +455,14 @@ function getSnippet(name: string, tabIndex: number): string {
               </div>
 
               <div v-if="selectedIconSearchTerms.length > 0" class="detail-section">
-                <co-textarea
+                <CoTextarea
                   class="search-terms-textarea"
                   label="Search terms"
                   readonly
                   resize="none"
                   rows="4"
                   :value="selectedIconSearchTermsText"
-                ></co-textarea>
+                ></CoTextarea>
               </div>
             </div>
           </div>
@@ -543,14 +546,14 @@ function getSnippet(name: string, tabIndex: number): string {
             </div>
           </div>
           <div v-if="selectedIconSearchTerms.length > 0" class="ig-sheet-section">
-            <co-textarea
+            <CoTextarea
               class="ig-search-terms-textarea"
               label="Search terms"
               readonly
               resize="none"
               rows="4"
               :value="selectedIconSearchTermsText"
-            ></co-textarea>
+            ></CoTextarea>
           </div>
         </div>
       </Transition>

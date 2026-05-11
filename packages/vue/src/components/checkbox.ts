@@ -1,5 +1,7 @@
 import { defineComponent, h } from 'vue';
-import '@cobalt/components/checkbox';
+import { registerElement } from '../register-element.js';
+
+registerElement(() => import('@cobalt/components/checkbox'));
 
 export type CoCheckboxProps = {
   value?: string;

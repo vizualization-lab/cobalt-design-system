@@ -1,5 +1,8 @@
 <script setup lang="ts">
 import { withBase } from 'vitepress';
+import { CoIcon } from '@cobalt/vue/icon';
+import { CoNavDrawerGroup } from '@cobalt/vue/nav-drawer-group';
+import { CoNavDrawerItem } from '@cobalt/vue/nav-drawer-item';
 import type { NavItem } from '../navigation';
 
 defineOptions({ name: 'CobaltSidebarItems' });
@@ -30,7 +33,7 @@ function onGroupToggle(event: Event, key: string) {
 
 <template>
   <template v-for="(item, index) in items" :key="itemKey(item, index)">
-    <co-nav-drawer-group
+    <CoNavDrawerGroup
       v-if="item.children"
       class="cobalt-sidebar-group"
       :label="item.text"
@@ -46,9 +49,9 @@ function onGroupToggle(event: Event, key: string) {
         :toggle-group="toggleGroup"
         :navigate="navigate"
       />
-    </co-nav-drawer-group>
+    </CoNavDrawerGroup>
 
-    <co-nav-drawer-item
+    <CoNavDrawerItem
       v-else-if="item.link"
       class="cobalt-sidebar-item"
       :value="withBase(item.link)"
@@ -56,16 +59,16 @@ function onGroupToggle(event: Event, key: string) {
       :selected="isActive(item.link)"
       @click="navigate(item.link, $event)"
     >
-      <co-icon
+      <CoIcon
         slot="prefix"
         class="cobalt-sidebar-marker"
         name="fiber-manual-record"
         size="xs"
         :fill="isActive(item.link) || undefined"
         aria-hidden="true"
-      ></co-icon>
+      ></CoIcon>
       {{ item.text }}
-    </co-nav-drawer-item>
+    </CoNavDrawerItem>
   </template>
 </template>
 

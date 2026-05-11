@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { useData, useRoute, useRouter, withBase } from 'vitepress';
 import { ref, computed, onMounted, watch } from 'vue';
+import { CoIcon } from '@cobalt/vue/icon';
+import { CoOption } from '@cobalt/vue/option';
+import { CoSelect } from '@cobalt/vue/select';
 import CobaltRail from './CobaltRail.vue';
 import CobaltSidebar from './CobaltSidebar.vue';
 import CobaltHome from './CobaltHome.vue';
@@ -253,8 +256,8 @@ function toggleSidebar() {
         <!-- Lion-based controls rewrite light DOM during upgrade, so keep this picker client-only. -->
         <ClientOnly>
           <div class="topbar-theme-picker">
-            <co-icon name="colors" size="md" style="color: var(--co-color-state-primary-base)" />
-            <co-select
+            <CoIcon name="colors" size="md" style="color: var(--co-color-state-primary-base)" />
+            <CoSelect
               :key="activeTheme"
               class="topbar-theme-select"
               label="Theme"
@@ -262,15 +265,15 @@ function toggleSidebar() {
               size="sm"
               @co-change="onThemeChange"
             >
-              <co-option
+              <CoOption
                 v-for="themeOption in docsThemeOptions"
                 :key="themeOption.id"
                 :value="themeOption.id"
                 :checked="themeOption.id === activeTheme"
               >
                 {{ themeOption.label }}
-              </co-option>
-            </co-select>
+              </CoOption>
+            </CoSelect>
           </div>
           <template #fallback>
             <div class="topbar-theme-picker topbar-theme-picker--placeholder" aria-hidden="true">
@@ -318,14 +321,14 @@ function toggleSidebar() {
         <article class="cobalt-content cobalt-article vp-doc" v-else>
           <div class="edit-link edit-link--top" v-if="editUrl">
             <a :href="editUrl" target="_blank" rel="noopener noreferrer">
-              <co-icon name="edit" size="xs" aria-hidden="true"></co-icon>
+              <CoIcon name="edit" size="xs" aria-hidden="true"></CoIcon>
               Edit this page on GitHub
             </a>
           </div>
           <Content />
           <div class="edit-link edit-link--bottom" v-if="editUrl">
             <a :href="editUrl" target="_blank" rel="noopener noreferrer">
-              <co-icon name="edit" size="xs" aria-hidden="true"></co-icon>
+              <CoIcon name="edit" size="xs" aria-hidden="true"></CoIcon>
               Edit this page on GitHub
             </a>
           </div>

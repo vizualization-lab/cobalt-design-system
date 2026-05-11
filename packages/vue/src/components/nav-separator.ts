@@ -1,5 +1,7 @@
 import { defineComponent, h } from 'vue';
-import '@cobalt/components/nav-separator';
+import { registerElement } from '../register-element.js';
+
+registerElement(() => import('@cobalt/components/nav-separator'));
 
 export const CoNavSeparator = defineComponent({
   name: 'CoNavSeparator',

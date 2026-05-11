@@ -2,7 +2,9 @@ import { defineComponent, h, ref, onMounted, onUnmounted, type PropType } from '
 import type { InputPillVariant } from '@cobalt/components/input-pill';
 import type { InputSize } from '@cobalt/components/input';
 import type { Validator } from '@cobalt/components/validation';
-import '@cobalt/components/input-pill';
+import { registerElement } from '../register-element.js';
+
+registerElement(() => import('@cobalt/components/input-pill'));
 
 export type CoInputPillProps = {
   variant?: InputPillVariant;
@@ -34,7 +36,7 @@ export const CoInputPill = defineComponent({
     validators: { type: Array as PropType<Validator[]>, default: undefined },
   },
   emits: ['co-action', 'co-focus', 'co-blur', 'co-input', 'co-change'],
-  setup(props, { emit, slots }) {
+  setup(props, { attrs, emit, slots }) {
     const elRef = ref<HTMLElement | null>(null);
     const events: Array<[string, (e: Event) => void]> = [
       ['co-action', (e: Event) => emit('co-action', e)],
@@ -57,6 +59,7 @@ export const CoInputPill = defineComponent({
       h(
         'co-input-pill',
         {
+          ...attrs,
           ref: elRef,
           variant: props.variant,
           'action-icon': props.actionIcon,

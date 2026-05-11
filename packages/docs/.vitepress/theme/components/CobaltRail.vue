@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { useData } from 'vitepress';
+import { CoNavRailBar } from '@cobalt/vue/nav-rail-bar';
+import { CoNavRailItem } from '@cobalt/vue/nav-rail-item';
 import { navigation } from '../navigation';
 
 const { theme } = useData();
@@ -21,13 +23,8 @@ function onRailChange(event: Event) {
 </script>
 
 <template>
-  <co-nav-rail-bar
-    class="cobalt-rail"
-    label="Sections"
-    :value="activeValue"
-    @co-change="onRailChange"
-  >
-    <co-nav-rail-item
+  <CoNavRailBar class="cobalt-rail" label="Sections" :value="activeValue" @co-change="onRailChange">
+    <CoNavRailItem
       v-for="(group, i) in navigation"
       :key="group.label"
       :value="group.label"
@@ -35,13 +32,13 @@ function onRailChange(event: Event) {
       :selected="i === props.activeIndex || undefined"
     >
       {{ group.railLabel ?? group.label }}
-    </co-nav-rail-item>
+    </CoNavRailItem>
 
     <div slot="footer" class="rail-footer">
       <span class="rail-version">v{{ theme.cobaltVersion }}</span>
       <span class="rail-badge">{{ theme.cobaltVersionState }}</span>
     </div>
-  </co-nav-rail-bar>
+  </CoNavRailBar>
 </template>
 
 <style scoped>

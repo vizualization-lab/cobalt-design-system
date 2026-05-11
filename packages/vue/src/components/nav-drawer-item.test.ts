@@ -22,4 +22,16 @@ describe('Vue CoNavDrawerItem wrapper', () => {
     expect(el.selected).toBe(true);
     expect(el.disabled).toBe(true);
   });
+
+  it('preserves host attrs and prefix slot content', () => {
+    const wrapper = mount(CoNavDrawerItem, {
+      attrs: { class: 'docs-sidebar-item' },
+      slots: {
+        default: '<co-icon slot="prefix" name="fiber-manual-record"></co-icon>Forms',
+      },
+    });
+
+    expect(wrapper.find('co-nav-drawer-item').classes()).toContain('docs-sidebar-item');
+    expect(wrapper.find('co-icon[slot="prefix"]').exists()).toBe(true);
+  });
 });

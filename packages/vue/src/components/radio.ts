@@ -1,5 +1,7 @@
 import { defineComponent, h } from 'vue';
-import '@cobalt/components/radio';
+import { registerElement } from '../register-element.js';
+
+registerElement(() => import('@cobalt/components/radio'));
 
 export type CoRadioProps = {
   value?: string;

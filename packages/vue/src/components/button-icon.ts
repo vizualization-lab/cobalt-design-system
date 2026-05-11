@@ -1,7 +1,9 @@
 import { defineComponent, h, ref, onMounted, onUnmounted, type PropType } from 'vue';
 import type { ButtonSize } from '@cobalt/components/button';
 import type { ButtonIconLabelPosition, ButtonIconVariant } from '@cobalt/components/button-icon';
-import '@cobalt/components/button-icon';
+import { registerElement } from '../register-element.js';
+
+registerElement(() => import('@cobalt/components/button-icon'));
 
 export type CoButtonIconProps = {
   name?: string;

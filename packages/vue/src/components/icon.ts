@@ -1,6 +1,8 @@
 import { defineComponent, h, type PropType } from 'vue';
 import type { IconSize } from '@cobalt/components/icon';
-import '@cobalt/components/icon';
+import { registerElement } from '../register-element.js';
+
+registerElement(() => import('@cobalt/components/icon'));
 
 export type CoIconProps = {
   name?: string;
@@ -29,9 +31,10 @@ export const CoIcon = defineComponent({
       default: undefined,
     },
   },
-  setup(props) {
+  setup(props, { attrs }) {
     return () =>
       h('co-icon', {
+        ...attrs,
         name: props.name,
         size: props.size,
         fill: props.fill,

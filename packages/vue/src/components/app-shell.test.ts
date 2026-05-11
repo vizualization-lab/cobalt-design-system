@@ -17,6 +17,16 @@ describe('Vue CoAppShell wrapper', () => {
     expect(wrapper.find('[slot="body"]').text()).toBe('Body');
   });
 
+  it('preserves host attrs and exposes the underlying element', () => {
+    const wrapper = mount(CoAppShell, {
+      attrs: { class: 'docs-shell' },
+    });
+
+    const el = wrapper.find('co-app-shell').element;
+    expect(wrapper.find('co-app-shell').classes()).toContain('docs-shell');
+    expect((wrapper.vm as any).element).toBe(el);
+  });
+
   it('re-emits drawer events', async () => {
     const wrapper = mount(CoAppShell);
     const el = wrapper.find('co-app-shell').element;

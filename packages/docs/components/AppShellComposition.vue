@@ -1,13 +1,22 @@
+<script setup lang="ts">
+import { CoAppShell } from '@cobalt/vue/app-shell';
+import { CoBanner } from '@cobalt/vue/banner';
+import { CoInputPill } from '@cobalt/vue/input-pill';
+import { CoNavHeaderBar } from '@cobalt/vue/nav-header-bar';
+import { CoNavRailBar } from '@cobalt/vue/nav-rail-bar';
+import { CoNavRailItem } from '@cobalt/vue/nav-rail-item';
+</script>
+
 <template>
   <ClientOnly>
     <div class="app-shell-composition">
       <div class="app-shell-composition__frame">
-        <co-app-shell class="app-shell-composition__shell">
-          <co-banner slot="banner" class="app-shell-composition__banner" label="Docs notice">
+        <CoAppShell class="app-shell-composition__shell">
+          <CoBanner slot="banner" class="app-shell-composition__banner" label="Docs notice">
             <span slot="title">Docs navigation model</span>
-          </co-banner>
+          </CoBanner>
 
-          <co-nav-header-bar
+          <CoNavHeaderBar
             slot="topnav"
             class="app-shell-composition__header"
             label="Cobalt Docs header"
@@ -16,22 +25,20 @@
               <div class="app-shell-composition__logo-mark" aria-hidden="true"></div>
               <span>Cobalt Docs</span>
             </div>
-            <co-input-pill
+            <CoInputPill
               class="app-shell-composition__search"
               variant="search"
               placeholder="Search components, guidance, changelogs"
-            ></co-input-pill>
+            ></CoInputPill>
             <div slot="avatar" class="app-shell-composition__avatar" aria-label="Jordan Lee">
               JL
             </div>
-          </co-nav-header-bar>
+          </CoNavHeaderBar>
 
-          <co-nav-rail-bar slot="rail" label="Primary sections">
-            <co-nav-rail-item value="foundations" icon="stacks" selected
-              >Foundations</co-nav-rail-item
-            >
-            <co-nav-rail-item value="patterns" icon="grid-view">Patterns</co-nav-rail-item>
-          </co-nav-rail-bar>
+          <CoNavRailBar slot="rail" label="Primary sections">
+            <CoNavRailItem value="foundations" icon="stacks" selected>Foundations</CoNavRailItem>
+            <CoNavRailItem value="patterns" icon="grid-view">Patterns</CoNavRailItem>
+          </CoNavRailBar>
 
           <div slot="body" class="app-shell-composition__body">
             <section class="app-shell-composition__panel">
@@ -56,7 +63,7 @@
           <div slot="footer" class="app-shell-composition__footer">
             Footer content can sit outside the scrolling body region.
           </div>
-        </co-app-shell>
+        </CoAppShell>
       </div>
     </div>
   </ClientOnly>

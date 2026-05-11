@@ -5,8 +5,10 @@ import type {
   ComboboxSize,
 } from '@cobalt/components/combobox';
 import type { Validator } from '@cobalt/components/validation';
-import '@cobalt/components/combobox';
+import { registerElement } from '../register-element.js';
 import { CoOption, type CoOptionProps } from './option.js';
+
+registerElement(() => import('@cobalt/components/combobox'));
 
 export { CoOption, type CoOptionProps };
 

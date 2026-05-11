@@ -1,5 +1,7 @@
 import { defineComponent, h, ref, onMounted } from 'vue';
-import '@cobalt/components/nav-header-bar';
+import { registerElement } from '../register-element.js';
+
+registerElement(() => import('@cobalt/components/nav-header-bar'));
 
 export type CoNavHeaderBarProps = {
   label?: string;

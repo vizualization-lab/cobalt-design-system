@@ -1,5 +1,7 @@
 import { defineComponent, h, ref, onMounted, onUnmounted } from 'vue';
-import '@cobalt/components/nav-drawer';
+import { registerElement } from '../register-element.js';
+
+registerElement(() => import('@cobalt/components/nav-drawer'));
 
 export type CoNavDrawerProps = { open?: boolean; value?: string; label?: string };
 
@@ -11,16 +13,28 @@ export const CoNavDrawer = defineComponent({
     label: { type: String, default: 'Navigation' },
   },
   emits: ['co-change'],
-  setup(props, { emit, slots }) {
+  setup(props, { attrs, emit, slots }) {
     const elRef = ref<HTMLElement | null>(null);
+    const handler = (event: Event) => emit('co-change', event);
+
     onMounted(() => {
-      elRef.value?.addEventListener('co-change', (e: Event) => emit('co-change', e));
+      elRef.value?.addEventListener('co-change', handler);
     });
-    onUnmounted(() => {});
+
+    onUnmounted(() => {
+      elRef.value?.removeEventListener('co-change', handler);
+    });
+
     return () =>
       h(
         'co-nav-drawer',
-        { ref: elRef, open: props.open || undefined, value: props.value, label: props.label },
+        {
+          ...attrs,
+          ref: elRef,
+          open: props.open || undefined,
+          value: props.value,
+          label: props.label,
+        },
         slots.default?.(),
       );
   },

@@ -1,5 +1,7 @@
 import { defineComponent, h, onMounted, onUnmounted, ref } from 'vue';
-import '@cobalt/components/form';
+import { registerElement } from '../register-element.js';
+
+registerElement(() => import('@cobalt/components/form'));
 
 export type CoFormProps = {
   disabled?: boolean;

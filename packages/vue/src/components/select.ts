@@ -1,7 +1,9 @@
 import { defineComponent, h, ref, onMounted, onUnmounted, type PropType } from 'vue';
 import type { SelectSize } from '@cobalt/components/select';
 import type { Validator } from '@cobalt/components/validation';
-import '@cobalt/components/select';
+import { registerElement } from '../register-element.js';
+
+registerElement(() => import('@cobalt/components/select'));
 
 export type CoSelectProps = {
   size?: SelectSize;
@@ -51,7 +53,7 @@ export const CoSelect = defineComponent({
     },
   },
   emits: ['co-change', 'co-focus', 'co-blur'],
-  setup(props, { emit, slots }) {
+  setup(props, { attrs, emit, slots }) {
     const elRef = ref<HTMLElement | null>(null);
 
     const handlers: Array<[string, (e: Event) => void]> = [
@@ -80,6 +82,7 @@ export const CoSelect = defineComponent({
       h(
         'co-select',
         {
+          ...attrs,
           ref: elRef,
           size: props.size,
           danger: props.danger || undefined,

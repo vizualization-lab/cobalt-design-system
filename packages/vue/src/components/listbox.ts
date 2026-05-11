@@ -1,7 +1,9 @@
 import { defineComponent, h, onMounted, onUnmounted, ref, type PropType } from 'vue';
 import type { ListboxOrientation } from '@cobalt/components/listbox';
 import type { Validator } from '@cobalt/components/validation';
-import '@cobalt/components/listbox';
+import { registerElement } from '../register-element.js';
+
+registerElement(() => import('@cobalt/components/listbox'));
 
 export type CoListboxProps = {
   label?: string;

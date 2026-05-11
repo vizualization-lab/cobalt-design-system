@@ -1,6 +1,8 @@
-import { defineComponent, h, ref, onMounted, type PropType } from 'vue';
+import { defineComponent, h, ref, onMounted, onUnmounted, type PropType } from 'vue';
 import type { ButtonVariant, ButtonSize } from '@cobalt/components/button';
-import '@cobalt/components/button';
+import { registerElement } from '../register-element.js';
+
+registerElement(() => import('@cobalt/components/button'));
 
 export type CoButtonProps = {
   variant?: ButtonVariant;
@@ -45,25 +47,32 @@ export const CoButton = defineComponent({
     },
   },
   emits: ['co-focus', 'co-blur'],
-  setup(props, { emit, slots }) {
+  setup(props, { attrs, emit, slots }) {
     const elRef = ref<HTMLElement | null>(null);
+    const focusHandler = (event: Event) => emit('co-focus', event);
+    const blurHandler = (event: Event) => emit('co-blur', event);
 
     onMounted(() => {
       const el = elRef.value;
       if (!el) return;
 
-      el.addEventListener('co-focus', (e: Event) => {
-        emit('co-focus', e);
-      });
-      el.addEventListener('co-blur', (e: Event) => {
-        emit('co-blur', e);
-      });
+      el.addEventListener('co-focus', focusHandler);
+      el.addEventListener('co-blur', blurHandler);
+    });
+
+    onUnmounted(() => {
+      const el = elRef.value;
+      if (!el) return;
+
+      el.removeEventListener('co-focus', focusHandler);
+      el.removeEventListener('co-blur', blurHandler);
     });
 
     return () =>
       h(
         'co-button',
         {
+          ...attrs,
           ref: elRef,
           variant: props.variant,
           size: props.size,

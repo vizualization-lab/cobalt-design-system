@@ -1,5 +1,7 @@
 import { defineComponent, h } from 'vue';
-import '@cobalt/components/option';
+import { registerElement } from '../register-element.js';
+
+registerElement(() => import('@cobalt/components/option'));
 
 export type CoOptionProps = {
   value?: string;
@@ -33,11 +35,12 @@ export const CoOption = defineComponent({
       default: false,
     },
   },
-  setup(props, { slots }) {
+  setup(props, { attrs, slots }) {
     return () =>
       h(
         'co-option',
         {
+          ...attrs,
           value: props.value,
           choiceValue: props.choiceValue,
           checked: props.checked || undefined,

@@ -1,5 +1,7 @@
 import { defineComponent, h, ref, onMounted, onUnmounted, type PropType } from 'vue';
-import '@cobalt/components/nav-rail-item';
+import { registerElement } from '../register-element.js';
+
+registerElement(() => import('@cobalt/components/nav-rail-item'));
 
 type NavRailItemTarget = '_blank' | '_self' | '_parent' | '_top';
 

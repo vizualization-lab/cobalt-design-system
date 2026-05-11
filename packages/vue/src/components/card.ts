@@ -1,5 +1,7 @@
 import { defineComponent, h, ref, onMounted } from 'vue';
-import '@cobalt/components/card';
+import { registerElement } from '../register-element.js';
+
+registerElement(() => import('@cobalt/components/card'));
 
 export type CoCardProps = {
   label?: string;

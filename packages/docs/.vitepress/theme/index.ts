@@ -138,7 +138,11 @@ function navigateSafely(router: VitePressRouter, href: string) {
           navigationInFlight = false;
           const nextNavigation = queuedNavigation;
           queuedNavigation = undefined;
-          if (nextNavigation && nextNavigation !== `${window.location.pathname}${window.location.search}${window.location.hash}`) {
+          if (
+            nextNavigation &&
+            nextNavigation !==
+              `${window.location.pathname}${window.location.search}${window.location.hash}`
+          ) {
             navigateSafely(router, nextNavigation);
           }
         });
@@ -198,9 +202,11 @@ export default {
 
     installNextSiblingRecovery();
     installDocsRouter(router);
+
+    // Register Cobalt web components for markdown-authored web component examples.
     if (typeof window !== 'undefined') {
       window.requestAnimationFrame(() => {
-        void registerCobaltComponents();
+        void redisterCobaltComponents();
       });
     }
   },

@@ -1,5 +1,7 @@
 import { defineComponent, h, ref, onMounted, onUnmounted } from 'vue';
-import '@cobalt/components/nav-rail-bar';
+import { registerElement } from '../register-element.js';
+
+registerElement(() => import('@cobalt/components/nav-rail-bar'));
 
 export type CoNavRailBarProps = {
   value?: string;

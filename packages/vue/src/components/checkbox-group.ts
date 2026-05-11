@@ -1,7 +1,9 @@
 import { defineComponent, h, ref, onMounted, onUnmounted } from 'vue';
 import type { PropType } from 'vue';
 import type { Validator } from '@cobalt/components/validation';
-import '@cobalt/components/checkbox-group';
+import { registerElement } from '../register-element.js';
+
+registerElement(() => import('@cobalt/components/checkbox-group'));
 
 export type CoCheckboxGroupProps = {
   name?: string;
