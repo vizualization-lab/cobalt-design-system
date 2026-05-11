@@ -19,14 +19,14 @@
   padding-block: var(--co-component-nav-drawer-group-trigger-padding-y);
   padding-inline: var(--co-component-nav-drawer-group-trigger-padding-x);
   border: none;
-  border-radius: var(--co-component-nav-drawer-group-trigger-radius);
+  border-radius: var(--co-control-radius-container);
   background: transparent;
   color: var(--co-color-text-default);
   font: inherit;
-  font-size: var(--co-component-nav-drawer-group-trigger-font-size);
-  font-weight: var(--co-component-nav-drawer-group-trigger-font-weight);
-  letter-spacing: var(--co-component-nav-drawer-group-trigger-font-tracking);
-  line-height: var(--co-component-nav-drawer-group-trigger-font-line-height);
+  font-size: var(--co-typography-body-sm-size);
+  font-weight: var(--co-typography-label-weight);
+  letter-spacing: var(--co-typography-body-sm-tracking);
+  line-height: var(--co-typography-body-sm-line-height);
   text-align: start;
   cursor: pointer;
   transition:
@@ -35,17 +35,17 @@
 }
 
 .group__trigger:hover {
-  background: var(--co-component-nav-drawer-item-background-hover);
-  color: var(--co-component-nav-drawer-item-foreground-hover);
+  background: var(--co-color-surface-interactive-nav-hover);
+  color: var(--co-color-text-link);
 }
 
 .group__trigger:active {
-  background: var(--co-component-nav-drawer-item-background-active);
-  color: var(--co-component-nav-drawer-item-foreground-active);
+  background: var(--co-color-surface-interactive-nav-active);
+  color: var(--co-color-text-link);
 }
 
 .group__trigger:focus-visible {
-  outline: var(--co-focus-ring-width) solid var(--co-component-nav-drawer-item-focus-ring);
+  outline: var(--co-focus-ring-width) solid var(--co-color-border-focus);
   outline-offset: calc(-1 * var(--co-shape-border-width-thin));
 }
 

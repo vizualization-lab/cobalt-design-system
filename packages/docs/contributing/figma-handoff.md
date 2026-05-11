@@ -192,7 +192,8 @@ Before marking a design ready:
 | Different text color in dark mode | Theme semantic token  | It changes by mode                        |
 | New brand palette ramp            | Primitive color token | It is a raw palette input                 |
 | New avatar sizes                  | Component token       | It belongs to Avatar, not every control   |
-| Nav rail selected item treatment  | Component token       | It belongs to Nav Rail, not every control |
+| Nav item selected surface         | Theme semantic token  | It is shared navigation behavior          |
+| Nav drawer nested indent          | Component token       | It is a public nav drawer layout contract |
 | New default field height          | Shared semantic token | It affects standard controls              |
 | New content max width             | Shared semantic token | It affects shared layout behavior         |
 
@@ -203,7 +204,8 @@ Use notes like these:
 - "Uses existing font-size and semantic color tokens."
 - "Dark mode changes only the semantic color layer; spacing and typography stay the same."
 - "Avatar sizes are component-specific and should not become global control sizes."
-- "Nav rail selected and hover states are component-specific and should stay under the nav rail token family."
+- "Navigation selected and hover surfaces use the shared nav semantic color tokens."
+- "Nav drawer nested indentation is component-specific and stays under the nav drawer token family."
 - "Input uses shared control height and shared control radius."
 
 Avoid notes like these:

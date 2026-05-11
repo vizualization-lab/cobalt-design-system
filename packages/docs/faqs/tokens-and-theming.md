@@ -13,7 +13,7 @@ Use the highest-level token that accurately expresses the intent.
 
 - Use **semantic tokens** first for product and component styling
 - Use **primitive tokens** when you are extending the underlying scales or palette
-- Use **component tokens** only when a value truly belongs to one component family
+- Use **component tokens** only for public component contracts or true component-specific exceptions, such as sizing, density, layout, and indentation
 
 That rule keeps raw values out of app code and lets themes change behavior through semantic remapping.
 

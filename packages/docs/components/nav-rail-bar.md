@@ -209,13 +209,13 @@ export class AppComponent {
 
 ## Design Tokens
 
-`co-nav-rail-bar` consumes the `component.nav.rail.bar.*` token family. These values stay scoped to the rail container rather than becoming shared control tokens.
+`co-nav-rail-bar` consumes component tokens for rail sizing and density. Container shape and color come from semantic tokens.
 
 - `--co-component-nav-rail-bar-width`
-- `--co-component-nav-rail-bar-padding`
+- `--co-component-nav-rail-bar-width-max`
+- `--co-component-nav-rail-bar-padding-x`
+- `--co-component-nav-rail-bar-padding-y`
 - `--co-component-nav-rail-bar-gap`
-- `--co-component-nav-rail-bar-radius`
-- `--co-component-nav-rail-bar-background`
 
 ## Accessibility
 

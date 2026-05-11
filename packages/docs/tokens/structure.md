@@ -38,13 +38,13 @@ Primitives-->Semantic
 Semantic-->Components
 ```
 
-| Token File                           | What it means                                            | Use it for                                                          | Examples                                                                         |
-| ------------------------------------ | -------------------------------------------------------- | ------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
-| `primitives.json`                    | Raw foundational values                                  | Spacing scale, radius scale, type scale, motion values, breakpoints | `space.4`, `shape.radius.sm`, `font.size.md`                                     |
-| `primitives.color.json`              | Raw color palette                                        | Numeric hue families organized as `50`–`950` scales                 | `gray.100`, `blue.700`, `blue.900`                                               |
-| `semantic.shared.json`               | Shared design decisions that stay the same across themes | Control sizing, border intent, focus rules, shared layout values    | `control.height.md`, `border.width.default`, `focus.ring.width`                  |
-| `semantic.theme.<theme>.<mode>.json` | Semantic tokens that change by theme or mode             | Mostly color behavior today                                         | `color.text.default`, `color.surface.static.default`, `color.state.primary.base` |
-| `components.json`                    | Component-specific tokens                                | Public component contracts or intentional exceptions                | `component.avatar.size.md`, `component.nav.rail.item.background.selected`        |
+| Token File                           | What it means                                            | Use it for                                                          | Examples                                                                                   |
+| ------------------------------------ | -------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------------------------------ |
+| `primitives.json`                    | Raw foundational values                                  | Spacing scale, radius scale, type scale, motion values, breakpoints | `space.4`, `shape.radius.sm`, `font.size.md`                                               |
+| `primitives.color.json`              | Raw color palette                                        | Numeric hue families organized as `50`–`950` scales                 | `gray.100`, `blue.700`, `blue.900`                                                         |
+| `semantic.shared.json`               | Shared design decisions that stay the same across themes | Control sizing, border intent, focus rules, shared layout values    | `control.height.md`, `border.width.default`, `focus.ring.width`                            |
+| `semantic.theme.<theme>.<mode>.json` | Semantic tokens that change by theme or mode             | Mostly color behavior today                                         | `color.text.default`, `color.surface.interactive.nav.selected`, `color.state.primary.base` |
+| `components.json`                    | Component-specific tokens                                | Public component contracts or intentional exceptions                | `component.avatar.size.md`, `component.nav.rail.bar.width`                                 |
 
 ## Export Artifacts
 
@@ -149,8 +149,8 @@ Examples:
 
 - `component.avatar.size.md`
 - `component.nav.rail.bar.width`
-- `component.nav.rail.item.background.selected`
-- `component.nav.rail.item.foreground.selected`
+- `component.nav.rail.item.padding.x`
+- `component.nav.drawer.group.content.indent`
 
 This keeps component tokens useful without creating token bloat.
 
@@ -198,9 +198,8 @@ Example:
 
 - avatar size
 - nav rail bar width
-- nav rail item selected surface
 - a unique component-only spacing rule
-- a component shape that should not become a system-wide standard
+- nav drawer nested indentation
 
 ## Common Examples
 
@@ -211,7 +210,8 @@ Example:
 | Primary text color in dark mode | `semantic.theme.default.dark` | It changes by theme                       |
 | Button and input height         | `semantic.shared`             | It is a shared control rule               |
 | Avatar sizes                    | `components`                  | It belongs to Avatar, not every control   |
-| Nav rail selected item surface  | `components`                  | It belongs to Nav Rail, not every control |
+| Nav item hover surface          | `semantic.theme.*`            | It is shared navigation behavior          |
+| Nav drawer nested indent        | `components`                  | It is a public nav drawer layout contract |
 | New accent shade scale          | `primitives.color`            | It is a raw palette                       |
 | New radius scale step           | `primitives`                  | It is a foundational value                |
 

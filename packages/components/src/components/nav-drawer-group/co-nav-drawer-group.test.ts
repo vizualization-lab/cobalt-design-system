@@ -45,7 +45,6 @@ describe('co-nav-drawer-group', () => {
         style="
           --co-component-nav-drawer-group-trigger-padding-x: 31px;
           --co-component-nav-drawer-group-trigger-padding-y: 7px;
-          --co-component-nav-drawer-group-trigger-radius: 9px;
           --co-component-nav-drawer-group-content-indent: 19px;
           --co-component-nav-drawer-group-content-gap: 3px;
         "
@@ -60,7 +59,6 @@ describe('co-nav-drawer-group', () => {
 
     expect(triggerStyles.paddingLeft).to.equal('31px');
     expect(triggerStyles.paddingTop).to.equal('7px');
-    expect(triggerStyles.borderTopLeftRadius).to.equal('9px');
     expect(contentStyles.paddingLeft).to.equal('19px');
     expect(contentStyles.gap).to.equal('3px');
   });

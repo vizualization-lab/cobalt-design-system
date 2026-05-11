@@ -276,18 +276,13 @@ export class AppComponent {
 
 ## Design Tokens
 
-`co-nav-drawer-group` consumes the `component.nav.drawer.group.*` token family for trigger layout, typography, and nested content indentation.
+`co-nav-drawer-group` consumes component tokens for trigger density and nested content indentation. Typography, focus, shape, and navigation state colors come from semantic tokens.
 
 - `--co-component-nav-drawer-group-gap`
 - `--co-component-nav-drawer-group-margin-block-start`
 - `--co-component-nav-drawer-group-trigger-padding-x`
 - `--co-component-nav-drawer-group-trigger-padding-y`
 - `--co-component-nav-drawer-group-trigger-gap`
-- `--co-component-nav-drawer-group-trigger-radius`
-- `--co-component-nav-drawer-group-trigger-font-size`
-- `--co-component-nav-drawer-group-trigger-font-weight`
-- `--co-component-nav-drawer-group-trigger-font-tracking`
-- `--co-component-nav-drawer-group-trigger-font-line-height`
 - `--co-component-nav-drawer-group-content-gap`
 - `--co-component-nav-drawer-group-content-indent`
 

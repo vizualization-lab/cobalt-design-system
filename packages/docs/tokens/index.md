@@ -25,7 +25,7 @@ Semantic tokens reference other tokens via `var()` and express design intent —
 | **Focus**      | <nobr>`--co-focus-`</nobr>        | Shared focus ring width and offset                                                                         |
 | **Control**    | <nobr>`--co-control-`</nobr>      | Shared control radius roles and sizing                                                                     |
 | **Layout**     | <nobr>`--co-layout-`</nobr>       | Shared layout constraints such as content max widths                                                       |
-| **Component**  | <nobr>`--co-component-`</nobr>    | Component-specific contracts such as avatar sizes and nav rail state tokens                                |
+| **Component**  | <nobr>`--co-component-`</nobr>    | Component-specific contracts such as avatar sizes and nav layout/density tokens                            |
 
 ### Primitive
 

@@ -47,7 +47,6 @@ describe('co-nav-drawer-item', () => {
           --co-component-nav-drawer-item-padding-x: 31px;
           --co-component-nav-drawer-item-padding-y: 7px;
           --co-component-nav-drawer-item-margin-block: 2px;
-          --co-component-nav-drawer-item-radius: 9px;
         "
       >
         Custom
@@ -61,7 +60,6 @@ describe('co-nav-drawer-item', () => {
     expect(styles.paddingTop).to.equal('7px');
     expect(styles.paddingBottom).to.equal('7px');
     expect(styles.marginTop).to.equal('2px');
-    expect(styles.borderTopLeftRadius).to.equal('9px');
   });
 
   it('renders as link when href is set', async () => {

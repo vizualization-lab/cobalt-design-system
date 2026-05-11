@@ -66,7 +66,24 @@ describe('co-nav-rail-item', () => {
       .join('\n');
 
     expect(styles).to.contain('.nav-item:focus-visible');
+    expect(styles).to.contain(
+      'outline: var(--co-focus-ring-width) solid var(--co-color-border-focus)',
+    );
     expect(styles).to.contain('outline-offset: calc(-1 * var(--co-focus-ring-width))');
+  });
+
+  it('uses semantic nav surface tokens for item states', async () => {
+    const el = await fixture<CoNavRailItem>(
+      html`<co-nav-rail-item icon="home">Dashboard</co-nav-rail-item>`,
+    );
+    const styles = Array.from(el.shadowRoot!.adoptedStyleSheets[0].cssRules)
+      .map((rule) => rule.cssText)
+      .join('\n');
+
+    expect(styles).to.contain('var(--co-color-surface-interactive-nav-default)');
+    expect(styles).to.contain('var(--co-color-surface-interactive-nav-hover)');
+    expect(styles).to.contain('var(--co-color-surface-interactive-nav-active)');
+    expect(styles).to.contain('var(--co-color-surface-interactive-nav-selected)');
   });
 
   describe('accessibility', () => {

@@ -95,16 +95,6 @@
               "$type": "dimension",
               "$value": "{co.space.2}",
               "$description": "Vertical gap between nav rail items."
-            },
-            "radius": {
-              "$type": "dimension",
-              "$value": "{co.control.radius.container}",
-              "$description": "Outer corner radius for the nav rail container."
-            },
-            "background": {
-              "$type": "color",
-              "$value": "{co.color.surface.static.contrast}",
-              "$description": "Container background for nav rail bars in both light and dark themes."
             }
           },
           "item": {
@@ -125,67 +115,11 @@
               "$value": "{co.space.1}",
               "$description": "Space between the icon and label within a nav rail item."
             },
-            "radius": {
-              "$type": "dimension",
-              "$value": "{co.control.radius.interactive}",
-              "$description": "Corner radius for nav rail item surfaces."
-            },
             "icon": {
               "size": {
                 "$type": "dimension",
                 "$value": "22px",
                 "$description": "Default icon size for compact nav rail destinations."
-              }
-            },
-            "background": {
-              "default": {
-                "$type": "color",
-                "$value": "{co.color.surface.interactive.subtle.default}",
-                "$description": "Resting surface for nav rail items."
-              },
-              "hover": {
-                "$type": "color",
-                "$value": "color-mix(in srgb, {co.color.surface.interactive.primary.default} 8%, transparent)",
-                "$description": "Hover surface for nav rail items."
-              },
-              "active": {
-                "$type": "color",
-                "$value": "color-mix(in srgb, {co.color.surface.interactive.primary.default} 20%, transparent)",
-                "$description": "Pressed surface for nav rail items."
-              },
-              "selected": {
-                "$type": "color",
-                "$value": "color-mix(in srgb, {co.color.surface.interactive.primary.default} 12%, transparent)",
-                "$description": "Selected surface for the current nav rail destination."
-              }
-            },
-            "foreground": {
-              "default": {
-                "$type": "color",
-                "$value": "{co.color.text.secondary}",
-                "$description": "Default text and icon color for nav rail items."
-              },
-              "hover": {
-                "$type": "color",
-                "$value": "{co.color.text.link}",
-                "$description": "Hover text and icon color for nav rail items."
-              },
-              "active": {
-                "$type": "color",
-                "$value": "{co.color.text.link}",
-                "$description": "Pressed text and icon color for nav rail items."
-              },
-              "selected": {
-                "$type": "color",
-                "$value": "{co.color.text.link}",
-                "$description": "Selected text and icon color for the current nav rail destination."
-              }
-            },
-            "focus": {
-              "ring": {
-                "$type": "color",
-                "$value": "{co.color.border.focus}",
-                "$description": "Focus ring color for nav rail item keyboard focus."
               }
             }
           }
@@ -220,83 +154,6 @@
               "$type": "dimension",
               "$value": "{co.space.gap.sm}",
               "$description": "Space between prefix content and label text within a nav drawer item."
-            },
-            "radius": {
-              "$type": "dimension",
-              "$value": "{co.control.radius.container}",
-              "$description": "Corner radius for nav drawer item surfaces."
-            },
-            "font": {
-              "size": {
-                "$type": "dimension",
-                "$value": "{co.typography.body-sm.size}",
-                "$description": "Font size for nav drawer item labels."
-              },
-              "weight": {
-                "$type": "fontWeight",
-                "$value": "{co.typography.body-sm.weight}",
-                "$description": "Font weight for nav drawer item labels."
-              },
-              "tracking": {
-                "$type": "dimension",
-                "$value": "{co.typography.body-sm.tracking}",
-                "$description": "Letter spacing for nav drawer item labels."
-              },
-              "line-height": {
-                "$type": "lineHeights",
-                "$value": "{co.typography.body-sm.line.height}",
-                "$description": "Line height for nav drawer item labels."
-              }
-            },
-            "background": {
-              "hover": {
-                "$type": "color",
-                "$value": "color-mix(in srgb, {co.color.surface.interactive.primary.default} 8%, transparent)",
-                "$description": "Hover surface for nav drawer items."
-              },
-              "active": {
-                "$type": "color",
-                "$value": "color-mix(in srgb, {co.color.surface.interactive.primary.default} 20%, transparent)",
-                "$description": "Pressed surface for nav drawer items."
-              },
-              "selected": {
-                "$type": "color",
-                "$value": "color-mix(in srgb, {co.color.surface.interactive.primary.default} 12%, transparent)",
-                "$description": "Selected surface for the current nav drawer destination."
-              }
-            },
-            "foreground": {
-              "hover": {
-                "$type": "color",
-                "$value": "{co.color.text.link}",
-                "$description": "Hover text and icon color for nav drawer items."
-              },
-              "active": {
-                "$type": "color",
-                "$value": "{co.color.text.link}",
-                "$description": "Pressed text and icon color for nav drawer items."
-              },
-              "selected": {
-                "$type": "color",
-                "$value": "{co.color.text.link}",
-                "$description": "Selected text and icon color for the current nav drawer destination."
-              }
-            },
-            "focus": {
-              "ring": {
-                "$type": "color",
-                "$value": "{co.color.border.focus}",
-                "$description": "Focus ring color for nav drawer item keyboard focus."
-              }
-            },
-            "selected": {
-              "font": {
-                "weight": {
-                  "$type": "fontWeight",
-                  "$value": "{co.font.weight.medium}",
-                  "$description": "Font weight for the selected nav drawer item label."
-                }
-              }
             }
           },
           "group": {
@@ -329,33 +186,6 @@
                 "$type": "dimension",
                 "$value": "{co.space.1}",
                 "$description": "Space between the disclosure icon and label within a nav drawer group trigger."
-              },
-              "radius": {
-                "$type": "dimension",
-                "$value": "{co.control.radius.container}",
-                "$description": "Corner radius for nav drawer group trigger surfaces."
-              },
-              "font": {
-                "size": {
-                  "$type": "dimension",
-                  "$value": "{co.typography.body-sm.size}",
-                  "$description": "Font size for nav drawer group trigger labels."
-                },
-                "weight": {
-                  "$type": "fontWeight",
-                  "$value": "{co.typography.label.weight}",
-                  "$description": "Font weight for nav drawer group trigger labels."
-                },
-                "tracking": {
-                  "$type": "dimension",
-                  "$value": "{co.typography.body-sm.tracking}",
-                  "$description": "Letter spacing for nav drawer group trigger labels."
-                },
-                "line-height": {
-                  "$type": "lineHeights",
-                  "$value": "{co.typography.body-sm.line.height}",
-                  "$description": "Line height for nav drawer group trigger labels."
-                }
               }
             },
             "content": {

@@ -16,11 +16,11 @@
   padding: var(--co-component-nav-rail-item-padding-y) var(--co-component-nav-rail-item-padding-x);
   gap: var(--co-component-nav-rail-item-gap);
   border: none;
-  border-radius: var(--co-component-nav-rail-item-radius);
-  background: var(--co-component-nav-rail-item-background-default);
+  border-radius: var(--co-control-radius-interactive);
+  background: var(--co-color-surface-interactive-nav-default);
   appearance: none;
   -webkit-appearance: none;
-  color: var(--co-component-nav-rail-item-foreground-default);
+  color: var(--co-color-text-secondary);
   text-decoration: none;
   font: inherit;
   text-align: center;
@@ -56,22 +56,22 @@
 }
 
 :host(:not([selected]):not([disabled])) .nav-item:active {
-  background: var(--co-component-nav-rail-item-background-active);
-  color: var(--co-component-nav-rail-item-foreground-active);
+  background: var(--co-color-surface-interactive-nav-active);
+  color: var(--co-color-text-link);
 }
 
 :host(:not([selected])) .nav-item:hover {
-  background: var(--co-component-nav-rail-item-background-hover);
-  color: var(--co-component-nav-rail-item-foreground-hover);
+  background: var(--co-color-surface-interactive-nav-hover);
+  color: var(--co-color-text-link);
 }
 
 :host([selected]) .nav-item {
-  background: var(--co-component-nav-rail-item-background-selected);
-  color: var(--co-component-nav-rail-item-foreground-selected);
+  background: var(--co-color-surface-interactive-nav-selected);
+  color: var(--co-color-text-link);
 }
 
 .nav-item:focus-visible {
-  outline: var(--co-focus-ring-width) solid var(--co-component-nav-rail-item-focus-ring);
+  outline: var(--co-focus-ring-width) solid var(--co-color-border-focus);
   outline-offset: calc(-1 * var(--co-focus-ring-width));
 }
 

@@ -84,6 +84,11 @@ const SEMANTIC_EXAMPLE_ROWS = [
     usage: 'Selected subtle surface',
   },
   {
+    path: 'co.color.surface.interactive.nav.selected',
+    token: '--co-color-surface-interactive-nav-selected',
+    usage: 'Selected navigation surface',
+  },
+  {
     path: 'co.color.surface.static.page',
     token: '--co-color-surface-static-page',
     usage: 'App canvas',

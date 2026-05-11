@@ -14,13 +14,13 @@ export const cobaltNavDrawerItemStyles = css`
     padding-block: var(--co-component-nav-drawer-item-padding-y);
     padding-inline: var(--co-component-nav-drawer-item-padding-x);
     margin-block: var(--co-component-nav-drawer-item-margin-block);
-    border-radius: var(--co-component-nav-drawer-item-radius);
+    border-radius: var(--co-control-radius-container);
     color: var(--co-color-text-default);
     font-family: var(--co-font-family-sans);
-    font-size: var(--co-component-nav-drawer-item-font-size);
-    font-weight: var(--co-component-nav-drawer-item-font-weight);
-    letter-spacing: var(--co-component-nav-drawer-item-font-tracking);
-    line-height: var(--co-component-nav-drawer-item-font-line-height);
+    font-size: var(--co-typography-body-sm-size);
+    font-weight: var(--co-typography-body-sm-weight);
+    letter-spacing: var(--co-typography-body-sm-tracking);
+    line-height: var(--co-typography-body-sm-line-height);
     text-decoration: none;
     cursor: pointer;
     transition:
@@ -30,19 +30,19 @@ export const cobaltNavDrawerItemStyles = css`
   }
 
   :host(:not([selected])) .item:hover {
-    background: var(--co-component-nav-drawer-item-background-hover);
-    color: var(--co-component-nav-drawer-item-foreground-hover);
+    background: var(--co-color-surface-interactive-nav-hover);
+    color: var(--co-color-text-link);
   }
 
   :host(:not([selected]):not([disabled])) .item:active {
-    background: var(--co-component-nav-drawer-item-background-active);
-    color: var(--co-component-nav-drawer-item-foreground-active);
+    background: var(--co-color-surface-interactive-nav-active);
+    color: var(--co-color-text-link);
   }
 
   :host([selected]) .item {
-    background: var(--co-component-nav-drawer-item-background-selected);
-    color: var(--co-component-nav-drawer-item-foreground-selected);
-    font-weight: var(--co-component-nav-drawer-item-selected-font-weight);
+    background: var(--co-color-surface-interactive-nav-selected);
+    color: var(--co-color-text-link);
+    font-weight: var(--co-typography-label-weight);
   }
 
   :host([disabled]) .item {
@@ -55,7 +55,7 @@ export const cobaltNavDrawerItemStyles = css`
   }
 
   .item:focus-visible {
-    outline: var(--co-focus-ring-width) solid var(--co-component-nav-drawer-item-focus-ring);
+    outline: var(--co-focus-ring-width) solid var(--co-color-border-focus);
     outline-offset: calc(-1 * var(--co-shape-border-width-thin));
   }
 

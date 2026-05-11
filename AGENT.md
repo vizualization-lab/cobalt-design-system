@@ -56,21 +56,23 @@ All CSS tokens use the `--co-` prefix. In JSON/JS they use `Co` prefix in camelC
 **Three-tier architecture:**
 
 - **Primitive:** `--co-color-primitive-blue-500` — raw palette values (avoid direct use)
-- **Semantic:** `--co-color-state-primary-base`, `--co-color-surface-static-default`, `--co-color-surface-interactive-primary-hover` — intent-based mappings
-- **Component:** `--co-button-primary-background`, `--co-button-border-radius` — component-specific decisions referencing semantic tokens
+- **Semantic:** `--co-color-state-primary-base`, `--co-color-surface-static-default`, `--co-color-surface-interactive-nav-selected` — intent-based mappings
+- **Component:** `--co-component-avatar-size-md`, `--co-component-nav-drawer-width` — public component contracts or true component-specific exceptions
+
+Create component-level tokens only when an existing semantic token cannot express the design intent. Component tokens are appropriate for public component sizing, density, layout, or indentation contracts such as avatar sizes, nav rail width, nav drawer width, and nav item spacing. Do not create component tokens that only alias semantic color, typography, radius, or focus decisions.
 
 **Token categories and patterns:**
 
-| Category  | Pattern                                            | Examples                                                                            |
-| --------- | -------------------------------------------------- | ----------------------------------------------------------------------------------- |
-| Color     | `--co-color-{group}-{role}-{variant}`              | `--co-color-surface-static-default`, `--co-color-surface-interactive-primary-hover` |
-| Space     | `--co-space-{scale}` or `--co-space-{role}-{size}` | `--co-space-4`, `--co-space-gap-md`, `--co-space-inset-lg`                          |
-| Shape     | `--co-shape-{property}-{size}`                     | `--co-shape-radius-md`, `--co-shape-border-width-thin`                              |
-| Elevation | `--co-elevation-{type}-{size}`                     | `--co-elevation-shadow-lg`, `--co-elevation-z-modal`                                |
-| Font      | `--co-font-{property}-{value}`                     | `--co-font-size-p`, `--co-font-weight-semibold`                                     |
-| Motion    | `--co-motion-{property}-{value}`                   | `--co-motion-duration-fast`, `--co-motion-easing-default`                           |
-| Sizing    | `--co-sizing-{element}-{size}`                     | `--co-sizing-icon-md`                                                               |
-| Opacity   | `--co-opacity-{role}`                              | `--co-opacity-disabled`, `--co-opacity-overlay`                                     |
+| Category  | Pattern                                            | Examples                                                                        |
+| --------- | -------------------------------------------------- | ------------------------------------------------------------------------------- |
+| Color     | `--co-color-{group}-{role}-{variant}`              | `--co-color-surface-static-default`, `--co-color-surface-interactive-nav-hover` |
+| Space     | `--co-space-{scale}` or `--co-space-{role}-{size}` | `--co-space-4`, `--co-space-gap-md`, `--co-space-inset-lg`                      |
+| Shape     | `--co-shape-{property}-{size}`                     | `--co-shape-radius-md`, `--co-shape-border-width-thin`                          |
+| Elevation | `--co-elevation-{type}-{size}`                     | `--co-elevation-shadow-lg`, `--co-elevation-z-modal`                            |
+| Font      | `--co-font-{property}-{value}`                     | `--co-font-size-p`, `--co-font-weight-semibold`                                 |
+| Motion    | `--co-motion-{property}-{value}`                   | `--co-motion-duration-fast`, `--co-motion-easing-default`                       |
+| Sizing    | `--co-sizing-{element}-{size}`                     | `--co-sizing-icon-md`                                                           |
+| Opacity   | `--co-opacity-{role}`                              | `--co-opacity-disabled`, `--co-opacity-overlay`                                 |
 
 When writing CSS, always prefer contextual/semantic tokens over primitives:
 

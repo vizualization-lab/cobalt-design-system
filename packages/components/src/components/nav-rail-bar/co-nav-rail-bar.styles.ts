@@ -20,8 +20,8 @@ export const cobaltNavRailBarStyles = css`
     min-block-size: 100%;
     max-block-size: 100%;
     padding: var(--co-component-nav-rail-bar-padding-y) var(--co-component-nav-rail-bar-padding-x);
-    border-radius: var(--co-component-nav-rail-bar-radius);
-    background: var(--co-component-nav-rail-bar-background);
+    border-radius: var(--co-control-radius-container);
+    background: var(--co-color-surface-static-contrast);
     box-shadow: var(--co-elevation-shadow-md);
     overflow: hidden;
   }

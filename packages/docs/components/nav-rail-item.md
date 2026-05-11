@@ -212,24 +212,19 @@ export class AppComponent {}
 
 ## Design Tokens
 
-`co-nav-rail-item` consumes the `component.nav.rail.item.*` token family. This keeps item-specific sizing and state treatment aligned with the rail component instead of turning them into global interaction rules.
+`co-nav-rail-item` consumes component tokens for rail item density and icon sizing. Navigation state colors come from the semantic `co.color.surface.interactive.nav.*` token family.
 
 - `--co-component-nav-rail-item-padding-x`
 - `--co-component-nav-rail-item-padding-y`
 - `--co-component-nav-rail-item-gap`
-- `--co-component-nav-rail-item-radius`
 - `--co-component-nav-rail-item-icon-size`
-- `--co-component-nav-rail-item-background-default`
-- `--co-component-nav-rail-item-background-hover`
-- `--co-component-nav-rail-item-background-active`
-- `--co-component-nav-rail-item-background-selected`
-- `--co-component-nav-rail-item-background-disabled`
-- `--co-component-nav-rail-item-foreground-default`
-- `--co-component-nav-rail-item-foreground-hover`
-- `--co-component-nav-rail-item-foreground-active`
-- `--co-component-nav-rail-item-foreground-selected`
-- `--co-component-nav-rail-item-foreground-disabled`
-- `--co-component-nav-rail-item-focus-ring`
+
+Related semantic tokens:
+
+- `--co-color-surface-interactive-nav-default`
+- `--co-color-surface-interactive-nav-hover`
+- `--co-color-surface-interactive-nav-active`
+- `--co-color-surface-interactive-nav-selected`
 
 ## Accessibility
 
