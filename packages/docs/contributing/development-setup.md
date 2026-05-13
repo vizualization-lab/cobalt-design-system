@@ -63,9 +63,11 @@ Then uncomment and edit any values you need to override:
 | `COBALT_GITHUB_ORG`   | ``                                                            | GitHub organization name           |
 | `COBALT_GITHUB_REPO`  | `cobalt-design-system`                                        | GitHub repository name             |
 | `COBALT_GITHUB_URL`   | `https://github.com/{COBALT_GITHUB_ORG}/{COBALT_GITHUB_REPO}` | Full GitHub repository URL         |
+| `COBALT_DOCS_BASE`    | `/cobalt-design-system/`                                      | VitePress base path for docs URLs  |
 | `COBALT_REGISTRY_URL` | `https://registry.your-org.com`                               | npm registry URL for docs examples |
 
 If `COBALT_GITHUB_URL` is not set, it is derived automatically from `COBALT_GITHUB_ORG` and `COBALT_GITHUB_REPO`. The `.env` file is git-ignored.
+`COBALT_DOCS_BASE` is normalized with leading and trailing slashes, so `docs`, `/docs`, and `/docs/` all resolve to `/docs/`.
 
 ## Common Root Commands
 

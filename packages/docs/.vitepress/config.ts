@@ -34,6 +34,19 @@ const registryUrl = env.COBALT_REGISTRY_URL || 'https://registry.your-org.com';
 const caBundlePath = env.COBALT_CA_BUNDLE || './path/to/ca/bundle';
 const contactEmail = env.COBALT_CONTACT_EMAIL || 'DESIGN_SYSTEM';
 
+function normalizeBase(base: string): string {
+  const trimmed = base.trim();
+
+  if (!trimmed || trimmed === '/') {
+    return '/';
+  }
+
+  const withLeadingSlash = trimmed.startsWith('/') ? trimmed : `/${trimmed}`;
+  return withLeadingSlash.endsWith('/') ? withLeadingSlash : `${withLeadingSlash}/`;
+}
+
+const docsBase = normalizeBase(env.COBALT_DOCS_BASE || '/cobalt-design-system/');
+
 /**
  * Markdown-it plugin that replaces %GITHUB_URL% placeholders in the raw
  * markdown source before parsing, so replacements work everywhere — including
@@ -59,7 +72,7 @@ function replacePlaceholders(md: any) {
 
 export default withMermaid(
   defineConfig({
-    base: '/cobalt-design-system/',
+    base: docsBase,
     title: 'Cobalt Design System',
     description: 'A design system built with Lit + Lion',
     markdown: {
@@ -76,8 +89,8 @@ export default withMermaid(
       // SVG favicon adapts to the OS color scheme (dark slate on light browsers,
       // light surface on dark browsers). The .ico is a static dark-slate
       // fallback for browsers without SVG-favicon support.
-      ['link', { rel: 'icon', type: 'image/svg+xml', href: '/cobalt-design-system/favicon.svg' }],
-      ['link', { rel: 'icon', sizes: 'any', href: '/cobalt-design-system/favicon.ico' }],
+      ['link', { rel: 'icon', type: 'image/svg+xml', href: `${docsBase}favicon.svg` }],
+      ['link', { rel: 'icon', sizes: 'any', href: `${docsBase}favicon.ico` }],
       [
         'script',
         {},
