@@ -206,7 +206,7 @@ export default {
     // Register Cobalt web components for markdown-authored web component examples.
     if (typeof window !== 'undefined') {
       window.requestAnimationFrame(() => {
-        void redisterCobaltComponents();
+        void registerCobaltComponents();
       });
     }
   },
