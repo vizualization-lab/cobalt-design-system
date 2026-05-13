@@ -40,19 +40,22 @@
 }
 
 .nav-item__label {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+  display: block;
   max-inline-size: 100%;
   inline-size: 100%;
+  min-inline-size: 0;
+  overflow: hidden;
   color: currentColor;
   font-family: var(--co-font-family-sans);
   font-size: var(--co-font-size-xsmall);
   font-weight: var(--co-typography-body-sm-weight);
   letter-spacing: var(--co-typography-body-sm-tracking);
   line-height: var(--co-typography-body-sm-line-height);
+  text-align: center;
+  text-overflow: ellipsis;
   text-wrap: balance;
-  overflow-wrap: anywhere;
+  overflow-wrap: normal;
+  word-break: normal;
 }
 
 :host(:not([selected]):not([disabled])) .nav-item:active {

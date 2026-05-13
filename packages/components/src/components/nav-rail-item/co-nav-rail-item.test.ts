@@ -86,6 +86,19 @@ describe('co-nav-rail-item', () => {
     expect(styles).to.contain('var(--co-color-surface-interactive-nav-selected)');
   });
 
+  it('truncates labels at word boundaries when the rail is constrained', async () => {
+    const el = await fixture<CoNavRailItem>(
+      html`<co-nav-rail-item icon="layers">Foundations</co-nav-rail-item>`,
+    );
+    const label = el.shadowRoot!.querySelector('.nav-item__label') as HTMLElement;
+    const computed = getComputedStyle(label);
+
+    expect(computed.overflow).to.equal('hidden');
+    expect(computed.textOverflow).to.equal('ellipsis');
+    expect(computed.overflowWrap).to.equal('normal');
+    expect(computed.wordBreak).to.equal('normal');
+  });
+
   describe('accessibility', () => {
     it('is accessible as a link item', async () => {
       const el = await fixture(
