@@ -9,14 +9,14 @@ This section collects the questions your team may encounter when adopting Cobalt
 
 ## Categories
 
-| Category                                                   | What it covers                                                                                          | Typical questions                                                                       |
-| ---------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
-| [Installation & Setup](./installation-and-setup.md)        | Package installs, registries, framework choices, supported versions, and local testing                  | "Do I need private registry access?", "Can I use Cobalt without React?"                 |
-| [Figma & Design Access](./figma-and-design-access.md)      | Library access, supported design tooling, plugins, and handoff expectations                             | "How do I get the Figma library?", "Which plugins are required?"                        |
-| [Tokens & Theming](./tokens-and-theming.md)                | Token tiers, token files, theme bundles, dark mode, and token-request guidance                          | "Should I use semantic or primitive tokens?", "What is `tokens-merged.json`?"           |
-| [Utilities & Styling](./utilities-and-styling.md)          | Utility classes, Tailwind, import order, and common styling pitfalls                                    | "Should I use Cobalt utilities or Tailwind?", "Why are my tokens not applying?"         |
-| [Help, Feedback & Support](./help-feedback-and-support.md) | Where to ask questions, when to open Issues or Discussions, and current support channels                | "Where do I ask for migration help?", "What support channels are live today?"           |
-| [Contributing & Roadmap](./contributing-and-roadmap.md)    | Contribution entry points, design feedback, component proposals, release notes, and component readiness | "Can product teams contribute directly?", "How do I know whether a component is ready?" |
+| Category                                                   | What it covers                                                                                          | Typical questions                                                               |
+| ---------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
+| [Installation & Setup](./installation-and-setup.md)        | Package installs, registries, framework choices, supported versions, and local testing                  | "Do I need private registry access?", "Can I use Cobalt without React?"         |
+| [Figma & Design Access](./figma-and-design-access.md)      | Library access, supported design tooling, plugins, and handoff expectations                             | "How do I get the Figma library?", "Which plugins are required?"                |
+| [Tokens & Theming](./tokens-and-theming.md)                | Token tiers, token files, theme bundles, dark mode, and token-request guidance                          | "Should I use semantic or primitive tokens?", "What is `tokens-merged.json`?"   |
+| [Utilities & Styling](./utilities-and-styling.md)          | Utility classes, Tailwind, import order, and common styling pitfalls                                    | "Should I use Cobalt utilities or Tailwind?", "Why are my tokens not applying?" |
+| [Help, Feedback & Support](./help-feedback-and-support.md) | Where to ask questions, when to open Issues or Discussions, and current support channels                | "Where do I ask for migration help?", "What support channels are live today?"   |
+| [Contributing & Roadmap](./contributing-and-roadmap.md)    | Contribution entry points, design feedback, component proposals, release notes, and component readiness | "Can product teams contribute directly?", "Are we using Atomic Design?"         |
 
 ## How to use this section
 

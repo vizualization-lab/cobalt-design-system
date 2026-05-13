@@ -32,6 +32,16 @@ The current expectation is:
 - start the proposal in GitHub Discussions
 - document the problem, API shape, alternatives, and accessibility plan
 
+## Are we using Atomic Design to structure components?
+
+Yes and no. Cobalt follows Atomic Design in spirit, but not in formal terminology. We care deeply about the same underlying ideas of small reusable building blocks, predictable composition, and shared scalable system rules.
+
+In practice, Cobalt uses a **tokens → components → patterns** model. Tokens can be viewed as atoms and define shared design decisions. Components package accessible, reusable UI primitives and could be thought of as molecules. Patterns, or organisms in Atomic Design parlance, show how components combine into common product workflows. This language maps more directly to how Cobalt is built, shipped, and consumed in code.
+
+We avoid Atomic Design labels such as atoms, molecules, and organisms because those terms can blur ownership and implementation boundaries. A component should be composable regardless of whether someone would classify it as an atom or molecule.
+
+The key takeaway is that all components should have a clear API, use design tokens, and combine with other components without forking.
+
 ## How do I contribute design feedback?
 
 Design feedback usually starts in one of two places:
