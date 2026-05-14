@@ -282,6 +282,14 @@ function toggleSidebar() {
             </div>
           </template>
         </ClientOnly>
+        <a
+          :href="withBase('/resources/contact')"
+          class="topbar-link"
+          aria-label="Contact the Cobalt team"
+          title="Contact"
+        >
+          <CoIcon name="mail" size="sm" aria-hidden="true"></CoIcon>
+        </a>
         <a :href="theme.github.url" class="topbar-link" target="_blank" rel="noopener">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
             <path
