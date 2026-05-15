@@ -5,6 +5,7 @@ import '@cobalt/components/nav-drawer-item';
 import '@cobalt/components/nav-header-bar';
 import '@cobalt/components/nav-rail-bar';
 import '@cobalt/components/nav-rail-item';
+import '@cobalt/components/icon';
 import '@cobalt/components/input-pill';
 
 export const title = '<co-app-shell>';
@@ -64,14 +65,6 @@ export const html = `
       font-weight: 600;
       color: var(--co-color-text-default);
       white-space: nowrap;
-    }
-
-    .wb-app-shell-logo-mark {
-      inline-size: 28px;
-      block-size: 28px;
-      border-radius: 8px;
-      background: linear-gradient(135deg, #3d63dd 0%, #5c7cfa 100%);
-      box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.24);
     }
 
     .wb-app-shell-search {
@@ -145,7 +138,7 @@ export const html = `
         label="Operations workspace header"
       >
         <div slot="logo" class="wb-app-shell-brand">
-          <div class="wb-app-shell-logo-mark" aria-hidden="true"></div>
+          <co-icon name="co-logo" size="lg" aria-hidden="true"></co-icon>
           <span>Operations workspace</span>
         </div>
         <co-input-pill

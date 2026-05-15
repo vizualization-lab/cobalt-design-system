@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { CoAppShell } from '@cobalt/vue/app-shell';
 import { CoBanner } from '@cobalt/vue/banner';
+import { CoIcon } from '@cobalt/vue/icon';
 import { CoInputPill } from '@cobalt/vue/input-pill';
 import { CoNavHeaderBar } from '@cobalt/vue/nav-header-bar';
 import { CoNavRailBar } from '@cobalt/vue/nav-rail-bar';
@@ -22,7 +23,7 @@ import { CoNavRailItem } from '@cobalt/vue/nav-rail-item';
             label="Cobalt Docs header"
           >
             <div slot="logo" class="app-shell-composition__brand">
-              <div class="app-shell-composition__logo-mark" aria-hidden="true"></div>
+              <CoIcon name="co-logo" size="lg" aria-hidden="true" />
               <span>Cobalt Docs</span>
             </div>
             <CoInputPill
@@ -112,14 +113,6 @@ import { CoNavRailItem } from '@cobalt/vue/nav-rail-item';
   font-weight: 600;
   color: var(--co-color-text-default);
   white-space: nowrap;
-}
-
-.app-shell-composition__logo-mark {
-  inline-size: 28px;
-  block-size: 28px;
-  border-radius: 8px;
-  background: linear-gradient(135deg, #3d63dd 0%, #5c7cfa 100%);
-  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.24);
 }
 
 .app-shell-composition__search {

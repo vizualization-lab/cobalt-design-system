@@ -41,6 +41,7 @@ This composition intentionally omits `drawer` and uses `footer` so you can see h
   import '@cobalt/components/nav-drawer';
   import '@cobalt/components/nav-drawer-item';
   import '@cobalt/components/nav-header-bar';
+  import '@cobalt/components/icon';
 </script>
 
 <co-app-shell rail-width="115px" drawer-width="260px">
@@ -53,10 +54,7 @@ This composition intentionally omits `drawer` and uses `footer` so you can see h
       slot="logo"
       style="display: inline-flex; align-items: center; gap: 12px; font-weight: 600;"
     >
-      <div
-        aria-hidden="true"
-        style="width: 28px; height: 28px; border-radius: 8px; background: linear-gradient(135deg, #3d63dd 0%, #5c7cfa 100%);"
-      ></div>
+      <co-icon name="co-logo" size="lg" aria-hidden="true"></co-icon>
       <span>Operations workspace</span>
     </div>
     <co-input-pill variant="search" placeholder="Search services, incidents, teams"></co-input-pill>
@@ -103,6 +101,7 @@ This composition intentionally omits `drawer` and uses `footer` so you can see h
 import {
   CoAppShell,
   CoBanner,
+  CoIcon,
   CoInputPill,
   CoNavDrawer,
   CoNavDrawerItem,
@@ -127,15 +126,7 @@ function App() {
           slot="logo"
           style={{ display: 'inline-flex', alignItems: 'center', gap: 12, fontWeight: 600 }}
         >
-          <div
-            aria-hidden="true"
-            style={{
-              width: 28,
-              height: 28,
-              borderRadius: 8,
-              background: 'linear-gradient(135deg, #3d63dd 0%, #5c7cfa 100%)',
-            }}
-          />
+          <CoIcon name="co-logo" size="lg" aria-hidden="true" />
           <span>Operations workspace</span>
         </div>
         <CoInputPill variant="search" placeholder="Search services, incidents, teams"></CoInputPill>
@@ -191,6 +182,7 @@ function App() {
 import {
   CoAppShell,
   CoBanner,
+  CoIcon,
   CoInputPill,
   CoNavDrawer,
   CoNavDrawerItem,
@@ -215,10 +207,7 @@ function onToggle(event: CustomEvent) {
         slot="logo"
         style="display: inline-flex; align-items: center; gap: 12px; font-weight: 600;"
       >
-        <div
-          aria-hidden="true"
-          style="width: 28px; height: 28px; border-radius: 8px; background: linear-gradient(135deg, #3d63dd 0%, #5c7cfa 100%);"
-        ></div>
+        <CoIcon name="co-logo" size="lg" aria-hidden="true" />
         <span>Operations workspace</span>
       </div>
       <CoInputPill variant="search" placeholder="Search services, incidents, teams"></CoInputPill>
@@ -256,6 +245,7 @@ import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import {
   CoAppShell,
   CoBanner,
+  CoIcon,
   CoInputPill,
   CoNavDrawer,
   CoNavDrawerItem,
@@ -270,6 +260,7 @@ import {
   imports: [
     CoAppShell,
     CoBanner,
+    CoIcon,
     CoInputPill,
     CoNavHeaderBar,
     CoNavRailBar,
@@ -299,10 +290,7 @@ export class AppComponent {
       slot="logo"
       style="display: inline-flex; align-items: center; gap: 12px; font-weight: 600;"
     >
-      <div
-        aria-hidden="true"
-        style="width: 28px; height: 28px; border-radius: 8px; background: linear-gradient(135deg, #3d63dd 0%, #5c7cfa 100%);"
-      ></div>
+      <co-icon name="co-logo" size="lg" aria-hidden="true"></co-icon>
       <span>Operations workspace</span>
     </div>
     <co-input-pill variant="search" placeholder="Search services, incidents, teams"></co-input-pill>
