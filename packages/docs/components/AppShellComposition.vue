@@ -97,13 +97,6 @@ import { CoNavRailItem } from '@cobalt/vue/nav-rail-item';
   min-block-size: 100%;
 }
 
-.app-shell-composition__header::part(base) {
-  min-block-size: 0;
-  padding: 0;
-  background: transparent;
-  border-block-end: 0;
-}
-
 .app-shell-composition__brand {
   display: inline-flex;
   align-items: center;

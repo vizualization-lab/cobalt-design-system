@@ -429,13 +429,6 @@ const viewportLabel = computed(() =>
   min-block-size: 100%;
 }
 
-.app-shell-demo__header::part(base) {
-  min-block-size: 0;
-  padding: 0;
-  background: transparent;
-  border-block-end: 0;
-}
-
 .app-shell-demo__brand {
   display: inline-flex;
   align-items: center;
