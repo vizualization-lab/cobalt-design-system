@@ -2,6 +2,7 @@
 import { useData, useRoute, useRouter, withBase } from 'vitepress';
 import { ref, computed, onMounted, watch } from 'vue';
 import { CoIcon } from '@cobalt/vue/icon';
+import { CoModeToggle } from '@cobalt/vue/mode-toggle';
 import { CoOption } from '@cobalt/vue/option';
 import { CoSelect } from '@cobalt/vue/select';
 import CobaltRail from './CobaltRail.vue';
@@ -10,7 +11,7 @@ import CobaltHome from './CobaltHome.vue';
 import CobaltPrevNext from './CobaltPrevNext.vue';
 import CobaltToc from './CobaltToc.vue';
 import { navigation, type NavItem } from '../navigation';
-import { setTheme } from '@cobalt/tokens/theme';
+import { getStoredMode, setTheme, type CobaltModePreference } from '@cobalt/tokens/theme';
 import VPNavBarSearch from 'vitepress/dist/client/theme-default/components/VPNavBarSearch.vue';
 import {
   DEFAULT_DOCS_THEME,
@@ -27,7 +28,7 @@ interface ThemeChangeDetail {
   value?: unknown;
 }
 
-const MODE_STORAGE_KEY = 'cobalt-mode';
+const MODE_STORAGE_NAMESPACE = 'cobalt';
 const THEME_STORAGE_KEY = 'cobalt-theme';
 
 const editUrl = computed(() => {
@@ -41,23 +42,22 @@ function resolveStoredTheme(themeId: string | null): DocsThemeId {
   return isDocsThemeId(themeId) ? themeId : DEFAULT_DOCS_THEME;
 }
 
-function resolveStoredMode(mode: string | null): 'light' | 'dark' {
-  return mode === 'dark' ? 'dark' : 'light';
-}
-
 const isBrowser = typeof window !== 'undefined';
-const isDark = ref(
-  isBrowser ? resolveStoredMode(localStorage.getItem(MODE_STORAGE_KEY)) === 'dark' : false,
-);
 const activeTheme = ref<DocsThemeId>(
   isBrowser ? resolveStoredTheme(localStorage.getItem(THEME_STORAGE_KEY)) : DEFAULT_DOCS_THEME,
 );
 const sidebarOpen = ref(false);
 const docsThemeOptions = DOCS_THEME_OPTIONS;
 
-function applyThemePreferences(themeId: DocsThemeId, mode: 'light' | 'dark') {
+function getModePreference(): CobaltModePreference {
+  return getStoredMode({ storageNamespace: MODE_STORAGE_NAMESPACE }) ?? 'auto';
+}
+
+function applyThemePreferences(
+  themeId: DocsThemeId,
+  mode: CobaltModePreference = getModePreference(),
+) {
   activeTheme.value = themeId;
-  isDark.value = mode === 'dark';
   setTheme(themeId, mode);
 }
 
@@ -96,10 +96,8 @@ function selectCategory(i: number) {
 
 onMounted(() => {
   const savedTheme = resolveStoredTheme(localStorage.getItem(THEME_STORAGE_KEY));
-  const savedMode = resolveStoredMode(localStorage.getItem(MODE_STORAGE_KEY));
-  applyThemePreferences(savedTheme, savedMode);
+  applyThemePreferences(savedTheme);
   localStorage.setItem(THEME_STORAGE_KEY, savedTheme);
-  localStorage.setItem(MODE_STORAGE_KEY, savedMode);
 
   // Copy heading anchor URL to clipboard on click
   const article = document.querySelector('.cobalt-article');
@@ -130,19 +128,12 @@ watch(
   },
 );
 
-function toggleTheme() {
-  const mode = isDark.value ? 'light' : 'dark';
-  applyThemePreferences(activeTheme.value, mode);
-  localStorage.setItem(MODE_STORAGE_KEY, mode);
-}
-
 function onThemeChange(event: Event) {
   const detail = (event as CustomEvent<ThemeChangeDetail>).detail;
   const nextTheme = resolveStoredTheme(typeof detail?.value === 'string' ? detail.value : null);
   if (nextTheme === activeTheme.value) return;
 
-  const mode = isDark.value ? 'dark' : 'light';
-  applyThemePreferences(nextTheme, mode);
+  applyThemePreferences(nextTheme);
   localStorage.setItem(THEME_STORAGE_KEY, nextTheme);
 }
 
@@ -211,48 +202,7 @@ function toggleSidebar() {
       </a>
       <nav class="topbar-nav">
         <VPNavBarSearch />
-        <button
-          class="topbar-toggle"
-          @click="toggleTheme"
-          :aria-label="isDark ? 'Switch to light mode' : 'Switch to dark mode'"
-        >
-          <!-- Sun icon (shown in dark mode) -->
-          <svg
-            v-if="isDark"
-            width="18"
-            height="18"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="1.8"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
-            <circle cx="12" cy="12" r="5" />
-            <line x1="12" y1="1" x2="12" y2="3" />
-            <line x1="12" y1="21" x2="12" y2="23" />
-            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
-            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
-            <line x1="1" y1="12" x2="3" y2="12" />
-            <line x1="21" y1="12" x2="23" y2="12" />
-            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
-            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
-          </svg>
-          <!-- Moon icon (shown in light mode) -->
-          <svg
-            v-else
-            width="18"
-            height="18"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="1.8"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
-            <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" />
-          </svg>
-        </button>
+        <CoModeToggle persist :storage-namespace="MODE_STORAGE_NAMESPACE" size="sm" />
         <!-- Lion-based controls rewrite light DOM during upgrade, so keep this picker client-only. -->
         <ClientOnly>
           <div class="topbar-theme-picker">
@@ -708,25 +658,6 @@ body {
 }
 
 .topbar-link:hover {
-  color: var(--co-text-primary);
-  background: var(--co-shimmer);
-}
-
-.topbar-toggle {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 36px;
-  height: 36px;
-  border-radius: 10px;
-  border: none;
-  background: none;
-  color: var(--co-text-secondary);
-  cursor: pointer;
-  transition: all var(--co-duration) var(--co-ease);
-}
-
-.topbar-toggle:hover {
   color: var(--co-text-primary);
   background: var(--co-shimmer);
 }
