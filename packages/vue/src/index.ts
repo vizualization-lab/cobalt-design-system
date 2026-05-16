@@ -16,6 +16,7 @@ export { CoForm, type CoFormProps } from './components/form.js';
 export { CoIcon, type CoIconProps } from './components/icon.js';
 export { CoInput, type CoInputProps } from './components/input.js';
 export { CoLabel, type CoLabelProps } from './components/label.js';
+export { CoModeToggle, type CoModeToggleProps } from './components/mode-toggle.js';
 export { CoNavHeaderBar, type CoNavHeaderBarProps } from './components/nav-header-bar.js';
 export { CoNavDrawer, type CoNavDrawerProps } from './components/nav-drawer.js';
 export { CoNavDrawerGroup, type CoNavDrawerGroupProps } from './components/nav-drawer-group.js';

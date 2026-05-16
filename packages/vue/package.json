@@ -100,6 +100,10 @@
       "import": "./dist/components/listbox.js",
       "types": "./dist/components/listbox.d.ts"
     },
+    "./mode-toggle": {
+      "import": "./dist/components/mode-toggle.js",
+      "types": "./dist/components/mode-toggle.d.ts"
+    },
     "./radio": {
       "import": "./dist/components/radio.js",
       "types": "./dist/components/radio.d.ts"

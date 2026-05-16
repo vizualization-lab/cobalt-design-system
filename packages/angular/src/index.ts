@@ -13,6 +13,7 @@ export { CoForm } from './components/form.js';
 export { CoIcon } from './components/icon.js';
 export { CoInput } from './components/input.js';
 export { CoLabel } from './components/label.js';
+export { CoModeToggle } from './components/mode-toggle.js';
 export { CoNavHeaderBar } from './components/nav-header-bar.js';
 export { CoNavDrawer } from './components/nav-drawer.js';
 export { CoNavDrawerGroup } from './components/nav-drawer-group.js';

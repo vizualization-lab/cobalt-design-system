@@ -105,6 +105,10 @@
       "import": "./dist/components/listbox/co-listbox.js",
       "types": "./dist/components/listbox/co-listbox.d.ts"
     },
+    "./mode-toggle": {
+      "import": "./dist/components/mode-toggle/co-mode-toggle.js",
+      "types": "./dist/components/mode-toggle/co-mode-toggle.d.ts"
+    },
     "./radio": {
       "import": "./dist/components/radio/co-radio.js",
       "types": "./dist/components/radio/co-radio.d.ts"

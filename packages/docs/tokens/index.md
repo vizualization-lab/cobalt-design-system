@@ -83,6 +83,7 @@ import { setTheme } from '@cobalt/tokens/theme';
 setTheme('purple'); // purple light
 setTheme('purple', 'dark'); // purple dark
 setTheme('default', 'dark'); // default dark
+setTheme('default', 'auto'); // follows system preference
 ```
 
 For the default theme, use `@cobalt/tokens/themes/default` or import light and dark separately:

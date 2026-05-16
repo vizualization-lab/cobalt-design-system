@@ -16,6 +16,11 @@ export { CoIcon } from './components/icon/co-icon.js';
 export { CoInput } from './components/input/co-input.js';
 export { CoLabel } from './components/label/co-label.js';
 export { CoListbox } from './components/listbox/co-listbox.js';
+export { CoModeToggle } from './components/mode-toggle/co-mode-toggle.js';
+export type {
+  ModeToggleChangeDetail,
+  ModeToggleMode,
+} from './components/mode-toggle/co-mode-toggle.js';
 export { CoOption } from './components/option/co-option.js';
 export { CoRadio } from './components/radio/co-radio.js';
 export { CoRadioGroup } from './components/radio-group/co-radio-group.js';

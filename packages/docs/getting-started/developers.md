@@ -227,6 +227,7 @@ import { setTheme } from '@cobalt/tokens/theme';
 setTheme('default', 'dark'); // default dark
 setTheme('purple'); // purple light
 setTheme('purple', 'dark'); // purple dark
+setTheme('default', 'auto'); // follows system preference
 ```
 
 This sets `data-theme` and `data-mode` attributes on `<html>`:

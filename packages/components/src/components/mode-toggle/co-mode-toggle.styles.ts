@@ -1,0 +1,73 @@
+// Auto-generated from .styles.css — do not edit directly
+import { css } from 'lit';
+
+export const cobaltModeToggleStyles = css`
+  /* ── Base ── */
+  :host {
+    display: inline-flex;
+    box-sizing: border-box;
+    vertical-align: middle;
+    color: var(--co-color-text-secondary);
+    font-family: var(--co-font-family-sans);
+  }
+
+  :host([hidden]) {
+    display: none;
+  }
+
+  .mode-toggle {
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .mode-toggle__button {
+    box-sizing: border-box;
+    border: 0;
+    font: inherit;
+    color: inherit;
+    cursor: pointer;
+    transition:
+      background var(--co-motion-duration-fast) var(--co-motion-easing-default),
+      color var(--co-motion-duration-fast) var(--co-motion-easing-default),
+      box-shadow var(--co-motion-duration-fast) var(--co-motion-easing-default);
+  }
+
+  /* ── Compact ── */
+  .mode-toggle__button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    inline-size: var(--co-control-height-md);
+    block-size: var(--co-control-height-md);
+    min-inline-size: var(--co-control-height-md);
+    min-block-size: var(--co-control-height-md);
+    padding: 0;
+    border-radius: var(--co-control-radius-interactive);
+    background: transparent;
+  }
+
+  .mode-toggle__button:hover {
+    color: var(--co-color-text-default);
+    background: color-mix(in srgb, var(--co-color-state-primary-base) 8%, transparent);
+  }
+
+  .mode-toggle__button:active {
+    color: var(--co-color-text-default);
+    background: color-mix(in srgb, var(--co-color-state-primary-base) 12%, transparent);
+  }
+
+  .mode-toggle__button:focus-visible {
+    outline: var(--co-focus-ring-width) solid var(--co-color-border-focus);
+    outline-offset: var(--co-focus-ring-offset);
+  }
+
+  /* ── Disabled ── */
+  :host([disabled]) {
+    opacity: var(--co-opacity-disabled);
+  }
+
+  :host([disabled]) .mode-toggle__button {
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+`;

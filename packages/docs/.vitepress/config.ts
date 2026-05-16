@@ -94,7 +94,7 @@ export default withMermaid(
       [
         'script',
         {},
-        `(function(){var m=localStorage.getItem('cobalt-mode');if(m==='dark')document.documentElement.setAttribute('data-mode','dark')})()`,
+        `(function(){try{var m=localStorage.getItem('cobalt-mode')||'auto';var d=m==='dark'||(m==='auto'&&window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);document.documentElement.setAttribute('data-mode',d?'dark':'light')}catch(e){}})()`,
       ],
     ],
     mermaid: {

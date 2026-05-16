@@ -21,7 +21,7 @@ const state = ref<Record<string, string | boolean>>({
     {} as Record<string, string>,
   ),
   ...(props.booleans || []).reduce(
-    (acc, b) => ({ ...acc, [b]: false }),
+    (acc, b) => ({ ...acc, [b]: Boolean(props.defaults?.[b]) }),
     {} as Record<string, boolean>,
   ),
 });

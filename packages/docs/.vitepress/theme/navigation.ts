@@ -61,6 +61,7 @@ export const navigation: NavGroup[] = [
       { text: 'Button Icon', link: '/components/button-icon' },
       { text: 'Icon', link: '/components/icon' },
       { text: 'Input Pill', link: '/components/input-pill' },
+      { text: 'Mode Toggle', link: '/components/mode-toggle' },
       {
         text: 'Layout',
         defaultOpen: true,

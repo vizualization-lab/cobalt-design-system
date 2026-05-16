@@ -228,6 +228,7 @@ async function build() {
 
   console.log('Copying theme utility...');
   copyFileSync(join(__dirname, 'src/theme.js'), join(__dirname, 'dist/js/theme.js'));
+  copyFileSync(join(__dirname, 'src/theme.d.ts'), join(__dirname, 'dist/js/theme.d.ts'));
 
   console.log('Generating Tailwind preset...');
   await generateTailwindPreset(__dirname);

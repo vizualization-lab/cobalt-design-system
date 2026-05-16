@@ -161,6 +161,7 @@ import '@cobalt/tokens/themes/default'; // or any theme
 import { setTheme } from '@cobalt/tokens/theme';
 
 setTheme('default', 'dark');
+setTheme('default', 'auto'); // follows system preference
 ```
 
 Because the Tailwind preset references `var(--co-*)` values, when dark theme overrides those variables, every Tailwind utility updates. No `darkMode` configuration is needed in `tailwind.config.js`.

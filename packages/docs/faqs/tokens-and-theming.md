@@ -61,9 +61,10 @@ import { setTheme } from '@cobalt/tokens/theme';
 
 setTheme('default', 'dark');
 setTheme('purple');
+setTheme('default', 'auto');
 ```
 
-`setTheme()` updates `data-theme` and `data-mode` on `<html>`, which lets semantic color tokens swap without changing component code.
+`setTheme()` updates `data-theme` and `data-mode` on `<html>`, which lets semantic color tokens swap without changing component code. Use `auto` to resolve `data-mode` from the user's system color-scheme preference.
 
 ## When should I request a new token instead of reusing an existing one?
 
