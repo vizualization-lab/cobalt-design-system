@@ -1,6 +1,8 @@
 # Getting Started for Developers
 
-This guide covers everything you need to start building with Cobalt — from setting up your environment to rendering your first component, consuming design tokens, and writing tests.
+This guide walks through the first Cobalt integration milestone: installing the packages, loading the required styles, rendering a `Success` button, and confirming that Cobalt's `co-focus` event logs to the browser console.
+
+By the end, you should be able to focus a Cobalt button and see `Success` printed in DevTools. That confirms your package setup, token styles, component registration, and framework-specific event wiring are working correctly.
 
 ## Prerequisites
 
@@ -24,127 +26,134 @@ This guide covers everything you need to start building with Cobalt — from set
 
 ### Framework compatibility
 
-Framework wrappers are optional but recommended for better DX (typed props, native event binding, IDE autocompletion).
+Framework wrappers are optional but recommended for better developer experience: typed props, framework-friendly custom events, and IDE autocompletion.
 
-| Framework | Package              | Minimum Version                |
-| --------- | -------------------- | ------------------------------ |
-| React     | `@cobalt/react`      | React 18.0+ (supports 18 & 19) |
-| Vue       | `@cobalt/vue`        | Vue 3.4+                       |
-| Angular   | `@cobalt/angular`    | Angular 17.3+ (supports 17–21) |
-| None      | `@cobalt/components` | Any (standard web components)  |
+| Framework | Package              | Minimum Version                      |
+| --------- | -------------------- | ------------------------------------ |
+| React     | `@cobalt/react`      | React 18.0+ (supports 18 & 19)       |
+| Vue       | `@cobalt/vue`        | Vue 3.4+                             |
+| Angular   | `@cobalt/angular`    | Angular 17.3+ (supports 17–21)       |
+| None      | `@cobalt/components` | Any environment with custom elements |
 
-> **No framework?** Cobalt components are standard web components built with Lit. They work in any environment that supports custom elements — just import and use.
+> **No framework?** Cobalt components are standard web components built with Lit. They work in any environment that supports custom elements.
 
-## Environment Setup
+## Install Cobalt
 
-Cobalt packages are hosted in a private npm registry. To install packages under the `@cobalt` scope, configure npm to use the Cobalt registry. We recommend project-level configuration so each application keeps its registry settings with its source code. Use global configuration only when you work across several Cobalt projects on the same machine.
+Cobalt packages are hosted in a private npm registry. Configure npm to use the Cobalt registry for packages under the `@cobalt` scope.
 
 ### Project-level registry configuration
 
-Add the following line to your project's `.npmrc` file:
+Add the following lines to your project's `.npmrc` file:
 
 ```ini
 @cobalt:registry=%REGISTRY_URL%
 cafile=%CA_BUNDLE_PATH%
 ```
 
-> **NOTE:** If you are having issues with the CA bundle, you can add `strict-ssl=false` to your `.npmrc` file for debugging purposes, but this is not recommended for security reasons.
+> **Note:** If you are having issues with the CA bundle, you can add `strict-ssl=false` to your `.npmrc` file while debugging, but this is not recommended for ongoing use.
 
 ### Global registry configuration
 
-The following command sets the registry for all `@cobalt` scoped packages globally on your machine:
+If you work across several Cobalt projects on the same machine, you can configure the registry globally:
 
 ```bash
 npm config set @cobalt:registry %REGISTRY_URL%
 ```
 
-Once you have configured the registry, you can then install the core packages into your project:
+Install the core packages:
 
 ```bash
 npm install @cobalt/components @cobalt/tokens
 ```
 
-Add the wrapper for your framework:
+Then install the wrapper for your framework, if you use one:
 
 ```bash
-# Pick one (or none — vanilla web components work everywhere)
+# Pick one, or skip this step for vanilla web components
 npm install @cobalt/react
 npm install @cobalt/vue
 npm install @cobalt/angular
 ```
 
-Finally, import the design tokens stylesheet in your app's global CSS (e.g., `styles.css`):
+## Load Styles
 
-```css
-@import '@cobalt/tokens/css'; /* tokens (required) */
-@import '@cobalt/tokens/css/fonts'; /* self-hosted fonts (recommended) */
-@import '@cobalt/tokens/css/base'; /* global reset + opt-in base styles (recommended) */
-```
-
-The first import provides all `--co-*` CSS custom properties that components need for colors, spacing, typography, and more. Without it, components will render without visual styles. The second import loads self-hosted Inter, Noto Sans, and JetBrains Mono fonts — if omitted, the font-family tokens fall back to system fonts. The third import applies Cobalt's global reset and enables opt-in base element styles anywhere you add `data-co-base`.
-
-> **Contributing to Cobalt?** See the [Development Setup](/contributing/development-setup) guide for cloning the monorepo, building packages, and running the dev environment.
-
-## Framework Setup
-
-### Vanilla HTML
-
-Import the token stylesheet and the component module. No build step required.
-
-```html
-<link rel="stylesheet" href="node_modules/@cobalt/tokens/dist/css/tokens.css" />
-<script type="module">
-  import '@cobalt/components/button';
-</script>
-
-<co-button variant="primary">Save Changes</co-button>
-```
-
-When you are using a bundler, prefer the package import path in your global CSS instead:
+Import the required Cobalt token stylesheet in your app's global CSS:
 
 ```css
 @import '@cobalt/tokens/css';
 ```
 
-### React
+You can also load Cobalt's self-hosted fonts and base styles:
 
-The `@cobalt/react` package provides typed wrapper components with proper React event handling.
+```css
+@import '@cobalt/tokens/css/fonts';
+@import '@cobalt/tokens/css/base';
+```
+
+The token stylesheet defines the `--co-*` CSS custom properties that components need for color, spacing, typography, and other visual styles. Without it, components can render without the intended Cobalt appearance.
+
+## Render the Success Button
+
+Choose the example for your application stack. The milestone is the same in every framework: render a Cobalt button with the label `Success`, focus it, and confirm that the browser console logs `Success`.
+
+<CodeTabs :tabs="['Web Component', 'React', 'Vue', 'Angular']">
+
+<template #web-component>
+
+```html
+<!-- Import the component module before using `<co-button>`: -->
+<link rel="stylesheet" href="node_modules/@cobalt/tokens/dist/css/tokens.css" />
+
+<co-button id="success-button" variant="success">Success</co-button>
+
+<script type="module">
+  import '@cobalt/components/button';
+
+  document.querySelector('#success-button')?.addEventListener('co-focus', () => {
+    console.log('Success');
+  });
+</script>
+```
+
+</template>
+
+<template #react>
 
 ```tsx
 import { CoButton } from '@cobalt/react';
 
-function LoginForm() {
+export function App() {
   return (
-    <form>
-      <CoButton variant="primary" onCoFocus={() => console.log('focused')}>
-        Sign In
-      </CoButton>
-    </form>
+    <CoButton variant="success" onCoFocus={() => console.log('Success')}>
+      Success
+    </CoButton>
   );
 }
 ```
 
-React wrappers handle the web-component-to-React bridge automatically — no `ref` hacks or manual event listeners needed.
+</template>
 
-### Vue
-
-The `@cobalt/vue` package provides typed components with native Vue event handling.
+<template #vue>
 
 ```vue
 <script setup>
 import { CoButton } from '@cobalt/vue';
+
+function handleSuccess() {
+  console.log('Success');
+}
 </script>
 
 <template>
-  <CoButton variant="primary" @co-focus="onFocus"> Sign In </CoButton>
+  <CoButton variant="success" @co-focus="handleSuccess">Success</CoButton>
 </template>
 ```
 
-> **Tip:** You can also use `co-button` directly as a custom element in Vue — just configure `isCustomElement` in your Vite config to recognize `co-*` tags.
+> **Tip:** You can also use `co-button` directly as a custom element in Vue. Configure `isCustomElement` in your Vite config to recognize `co-*` tags.
 
-### Angular
+</template>
 
-The `@cobalt/angular` package provides standalone directives with Angular inputs and outputs.
+<template #angular>
 
 ```typescript
 // app.component.ts
@@ -158,139 +167,111 @@ import { CoButton } from '@cobalt/angular';
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './app.component.html',
 })
-export class AppComponent {}
+export class AppComponent {
+  handleSuccess() {
+    console.log('Success');
+  }
+}
 ```
 
 ```html
 <!-- app.component.html -->
-<co-button variant="primary" (coFocus)="onFocus($event)"> Sign In </co-button>
+<co-button variant="success" (coFocus)="handleSuccess()">Success</co-button>
 ```
 
 > **Why `CUSTOM_ELEMENTS_SCHEMA`?** Angular needs this schema to allow `<co-*>` tags in templates. Add it to any standalone component that uses Cobalt elements.
 
-Make sure your global `styles.css` imports the design tokens — Angular does not automatically process CSS imports from component libraries:
+</template>
+
+</CodeTabs>
+
+When you use a bundler, prefer the package import path in your global CSS:
 
 ```css
-/* styles.css */
 @import '@cobalt/tokens/css';
 ```
 
-## Importing Components
+## Confirm It Worked
+
+Open your app in a supported browser, then open DevTools and focus the Cobalt button. You can click the button or tab to it from the keyboard.
+
+You have completed the first Cobalt integration milestone when:
+
+- The button renders with Cobalt styling.
+- The button label reads `Success`.
+- Focusing the button prints `Success` in the browser console.
+
+If all three are true, your app can resolve Cobalt packages, load Cobalt styles, register a Cobalt component, and receive Cobalt custom events.
+
+## Importing More Components
 
 Cobalt uses per-component entry points for tree-shaking:
+
+<CodeTabs :tabs="['Web Component', 'React', 'Vue', 'Angular']">
+
+<template #web-component>
 
 ```js
 import '@cobalt/components/button';
 import '@cobalt/components/icon';
 ```
 
-Additional components follow the same `@cobalt/components/<name>` pattern as they are published.
+</template>
+
+<template #react>
+
+```tsx
+import { CoButton, CoIcon } from '@cobalt/react';
+```
+
+</template>
+
+<template #vue>
+
+```ts
+import { CoButton, CoIcon } from '@cobalt/vue';
+```
+
+</template>
+
+<template #angular>
+
+```typescript
+import { Component } from '@angular/core';
+import { CoButton, CoIcon } from '@cobalt/angular';
+
+@Component({
+  standalone: true,
+  imports: [CoButton, CoIcon],
+})
+export class AppComponent {}
+```
+
+</template>
+
+</CodeTabs>
+
+Additional web components follow the `@cobalt/components/<name>` pattern as they are published. Framework packages expose wrapper exports from their package entry point.
 
 > [!WARNING]
-> Avoid importing the barrel export (`@cobalt/components`) in production. It registers every component and increases bundle size significantly.
-
-## Using Design Tokens
-
-Import the main token stylesheet to make all tokens available as CSS custom properties on `:root`:
-
-```css
-.card {
-  background: var(--co-color-surface-static-default);
-  padding: var(--co-space-inset-md);
-  border-radius: var(--co-shape-radius-md);
-}
-```
-
-| Category   | Example Token                   | Default Value                                                      |
-| ---------- | ------------------------------- | ------------------------------------------------------------------ |
-| Color      | `--co-color-state-primary-base` | `#154bcc`                                                          |
-| Spacing    | `--co-space-inset-md`           | `16px`                                                             |
-| Typography | `--co-font-size-md`             | `1rem`                                                             |
-| Radius     | `--co-shape-radius-md`          | `6px`                                                              |
-| Shadow     | `--co-elevation-shadow-md`      | `0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)` |
-
-Tokens are also available as JavaScript exports:
-
-```js
-import { CoColorStatePrimaryBase } from '@cobalt/tokens';
-```
-
-## Theming
-
-Cobalt ships default light values in `@cobalt/tokens/css` and theme bundles that include both light and dark modes.
-
-Use the `setTheme` utility to switch themes and modes:
-
-```js
-import { setTheme } from '@cobalt/tokens/theme';
-
-setTheme('default', 'dark'); // default dark
-setTheme('purple'); // purple light
-setTheme('purple', 'dark'); // purple dark
-setTheme('default', 'auto'); // follows system preference
-```
-
-This sets `data-theme` and `data-mode` attributes on `<html>`:
-
-```html
-<html data-theme="default" data-mode="dark"></html>
-```
-
-Override any token at the root level or scope overrides to a specific subtree:
-
-```css
-/* Global override */
-:root {
-  --co-color-state-primary-base: #7c3aed;
-}
-
-/* Scoped override for a section */
-.marketing-hero {
-  --co-color-state-primary-base: #7c3aed;
-  --co-color-surface-static-default: #1a1025;
-}
-```
-
-> **Important:** Only override token values — never replace the token names themselves. This ensures forward compatibility when upgrading Cobalt.
-
-See the [Colors documentation](../foundations/colors) for the full theming guide.
-
-## Testing
-
-Cobalt uses **Vitest** with **@open-wc/testing** for component tests. To test Cobalt components in your own project:
-
-```bash
-pnpm add -D vitest @open-wc/testing
-```
-
-```js
-import { html, fixture, expect } from '@open-wc/testing';
-import '@cobalt/components/button';
-
-describe('co-button', () => {
-  it('renders with the correct label', async () => {
-    const el = await fixture(html`<co-button>Click me</co-button>`);
-    expect(el.shadowRoot.querySelector('button').textContent).to.equal('Click me');
-  });
-});
-```
-
-For running tests within the monorepo, see [Development Setup — Running Tests](/contributing/development-setup#running-tests).
+> Avoid importing the barrel export (`@cobalt/components`) in production. A barrel import is a single package entry point that re-exports the whole component library. It is convenient for quick experiments, but it registers every component and increases bundle size. Prefer per-component imports like `@cobalt/components/button` in application code.
 
 ## Troubleshooting
 
-| Problem                               | Solution                                                                          |
-| ------------------------------------- | --------------------------------------------------------------------------------- |
-| Component not rendering               | Ensure the import runs before the parser encounters the tag. Use `type="module"`. |
-| Styles missing                        | Verify `@cobalt/tokens/css` is imported and not stripped by your bundler.         |
-| Events not firing in React            | Use `@cobalt/react` wrappers or attach listeners via `ref`.                       |
-| FOUC on page load                     | Import component modules in your app entry point, not lazily in templates.        |
-| Bundle size too large                 | Use per-component imports instead of the barrel export.                           |
-| Angular unknown element error         | Add `CUSTOM_ELEMENTS_SCHEMA` to your standalone component's `schemas` array.      |
-| Styles leak into or out of components | Cobalt uses Shadow DOM. Use CSS custom properties (tokens) to style from outside. |
+| Problem                       | Solution                                                                                                                         |
+| ----------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
+| Component not rendering       | Ensure the component import runs before the parser encounters the tag. Use `type="module"` for vanilla HTML.                     |
+| Styles missing                | Verify `@cobalt/tokens/css` is imported in global CSS and not stripped by your bundler.                                          |
+| Focus handler not logging     | Confirm the framework-specific `co-focus` handler is attached to the Cobalt button and that DevTools is open to the Console tab. |
+| FOUC on page load             | Import component modules in your app entry point instead of lazily in templates.                                                 |
+| Bundle size too large         | Use per-component imports instead of the barrel export.                                                                          |
+| Angular unknown element error | Add `CUSTOM_ELEMENTS_SCHEMA` to your standalone component's `schemas` array.                                                     |
 
 ## Next Steps
 
-- Browse the [Component documentation](/components/button) for API details, demos, and best practices
-- Review the [Coding Standards](../contributing/coding-standards) before submitting a PR
-- Use [GitHub Discussions](%GITHUB_URL%/discussions) for questions and discussion
+- Browse the [Button documentation](/components/button) for API details, demos, variants, and accessibility notes.
+- Explore the [Token Reference](/tokens/) for available CSS custom properties and package outputs.
+- Read [Colors](/foundations/colors) for theming guidance and light/dark color behavior.
+- Use [SCSS Integration](/foundations/scss) if your app authors styles with Sass.
+- Review [Development Setup](/contributing/development-setup) for monorepo setup, local builds, and testing workflows.
+- Visit [Developer Resources](/resources/developers) for tools, extensions, and debugging references.
