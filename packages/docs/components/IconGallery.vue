@@ -65,7 +65,11 @@ const selectedIconSearchTermsText = computed(() => selectedIconSearchTerms.value
 const filteredIcons = computed(() => {
   if (isSearching.value) {
     const terms = trimmedSearchQuery.value.split(/\s+/);
-    return iconNames.filter((name) => iconMatchesSearch(name, terms));
+    return iconNames
+      .map((name) => ({ name, rank: getIconSearchRank(name, terms) }))
+      .filter((result): result is { name: string; rank: number } => result.rank !== null)
+      .sort((a, b) => a.rank - b.rank)
+      .map((result) => result.name);
   }
 
   if (activeCategory.value) {
@@ -105,14 +109,25 @@ function normalizeSearchValue(value: string): string {
   return value.toLowerCase().trim();
 }
 
-function iconMatchesSearch(name: string, terms: string[]): boolean {
-  const searchableValues = [
-    name,
-    name.replace(/-/g, ' '),
-    ...(iconSearchTermsByIconName[name] ?? []),
-  ].map(normalizeSearchValue);
+function getIconSearchRank(name: string, terms: string[]): number | null {
+  const normalizedName = normalizeSearchValue(name);
+  const readableName = normalizeSearchValue(name.replace(/-/g, ' '));
+  const normalizedSearchTerms = (iconSearchTermsByIconName[name] ?? []).map(normalizeSearchValue);
+  const searchableValues = [normalizedName, readableName, ...normalizedSearchTerms];
 
-  return terms.every((term) => searchableValues.some((value) => value.includes(term)));
+  if (!terms.every((term) => searchableValues.some((value) => value.includes(term)))) {
+    return null;
+  }
+
+  if (terms.length === 1 && normalizedName === terms[0]) {
+    return 0;
+  }
+
+  if (terms.every((term) => normalizedName.includes(term) || readableName.includes(term))) {
+    return 1;
+  }
+
+  return 2;
 }
 
 function getSvgForGrid(name: string): string {
