@@ -22,6 +22,8 @@ Cobalt is a unified design system that provides reusable components, design toke
 | **Available**     | Architected to be accessible where users may work.                                     |
 | **Accessible**    | All components meet WCAG 2.1 AA standards out of the box.                              |
 
+> For more context on how these principles shape design, and development decisions, see the [strategy document](/resources/strategy).
+
 ## Architecture Overview
 
 Cobalt flows from design tokens through themed web components into framework-native wrappers:

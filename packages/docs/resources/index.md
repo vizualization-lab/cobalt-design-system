@@ -6,6 +6,7 @@ Cobalt is more than a component library — it's part of a broader ecosystem of 
 
 | Resource       | Description                                                               | Link                                   |
 | -------------- | ------------------------------------------------------------------------- | -------------------------------------- |
+| Strategy       | Core principles, strategic direction, for the design sytem                | [Strategy](./strategy.md)              |
 | Contact        | Support channels, office hours, and how to reach the Cobalt team          | [Contact](./contact.md)                |
 | For Developers | Tools, extensions, and references for developing with Cobalt              | [Developer Resources](./developers.md) |
 | For Designers  | Figma resources, plugins, and workflows for designing with Cobalt         | [Designer Resources](./designers.md)   |
