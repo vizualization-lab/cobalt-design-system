@@ -134,6 +134,37 @@ describe('co-app-shell', () => {
     expect(body?.classList.contains('app-shell__body--offset')).to.equal(true);
   });
 
+  it('stretches slotted desktop rail and drawer content to the side regions', async () => {
+    stubMatchMedia(true);
+    const el = await fixture<CoAppShell>(html`
+      <co-app-shell style="block-size: 360px;">
+        <co-nav-rail-bar slot="rail" label="Sections">
+          <co-nav-rail-item value="home" icon="home" selected>Home</co-nav-rail-item>
+        </co-nav-rail-bar>
+        <co-nav-drawer slot="drawer" label="Navigation">
+          <co-nav-drawer-item value="overview" icon="dashboard" selected
+            >Overview</co-nav-drawer-item
+          >
+        </co-nav-drawer>
+        <div slot="body">Body</div>
+      </co-app-shell>
+    `);
+
+    const railRegion = el.shadowRoot?.querySelector<HTMLElement>('.app-shell__rail');
+    const drawerRegion = el.shadowRoot?.querySelector<HTMLElement>('.app-shell__drawer');
+    const rail = el.querySelector<HTMLElement>('co-nav-rail-bar');
+    const drawer = el.querySelector<HTMLElement>('co-nav-drawer');
+
+    expect(railRegion).to.exist;
+    expect(drawerRegion).to.exist;
+    expect(Math.round(rail!.getBoundingClientRect().height)).to.equal(
+      Math.round(railRegion!.getBoundingClientRect().height),
+    );
+    expect(Math.round(drawer!.getBoundingClientRect().height)).to.equal(
+      Math.round(drawerRegion!.getBoundingClientRect().height),
+    );
+  });
+
   it('renders correctly with optional banner and footer', async () => {
     stubMatchMedia(true);
     const el = await fixture<CoAppShell>(html`

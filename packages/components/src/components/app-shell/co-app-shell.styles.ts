@@ -164,6 +164,7 @@ export const cobaltAppShellStyles = css`
     cursor: pointer;
   }
 
+  /* All shell slots should fill their grid/flex column width without causing horizontal overflow. */
   .app-shell__banner-slot::slotted(*),
   .app-shell__topnav-slot-inner::slotted(*),
   .app-shell__footer-slot::slotted(*),
@@ -177,6 +178,16 @@ export const cobaltAppShellStyles = css`
     inline-size: 100%;
     max-inline-size: 100%;
     min-inline-size: 0;
+  }
+
+  /* Side navigation slots also need to fill the available shell height; their internals own scrolling. */
+  .app-shell__rail-slot::slotted(*),
+  .app-shell__drawer-slot::slotted(*),
+  .app-shell__overlay-rail-slot::slotted(*),
+  .app-shell__overlay-drawer-slot::slotted(*) {
+    block-size: 100%;
+    max-block-size: 100%;
+    min-block-size: 0;
   }
 
   @media (min-width: 768px) {
