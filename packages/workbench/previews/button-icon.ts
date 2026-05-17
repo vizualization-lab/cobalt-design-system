@@ -21,7 +21,6 @@ export const html = `
       <co-button-icon name="star" size="sm" aria-label="Small"></co-button-icon>
       <co-button-icon name="star" size="md" aria-label="Medium"></co-button-icon>
       <co-button-icon name="star" size="lg" aria-label="Large"></co-button-icon>
-      <co-button-icon name="star" size="xl" aria-label="Extra Large"></co-button-icon>
     </div>
   </section>
 
@@ -63,7 +62,6 @@ export const html = `
       <co-button-icon name="star" circle size="sm" aria-label="Small"></co-button-icon>
       <co-button-icon name="star" circle size="md" aria-label="Medium"></co-button-icon>
       <co-button-icon name="star" circle size="lg" aria-label="Large"></co-button-icon>
-      <co-button-icon name="star" circle size="xl" aria-label="Extra Large"></co-button-icon>
     </div>
   </section>
 

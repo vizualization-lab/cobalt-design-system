@@ -19,7 +19,6 @@ const iconSizeMap: Record<ButtonSize, IconSize> = {
   sm: 'xs',
   md: 'sm',
   lg: 'md',
-  xl: 'lg',
 };
 
 /**

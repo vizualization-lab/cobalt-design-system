@@ -9,7 +9,7 @@ The `co-button-icon` component provides a button icon with an optional text labe
 <ComponentDemo
   tag="co-button-icon"
   :defaults="{ name: 'star', variant: 'primary', size: 'md', 'label-position': 'bottom' }"
-  :options="{ variant: ['primary', 'secondary', 'danger', 'warning', 'success', 'ghost'], size: ['sm', 'md', 'lg', 'xl'], 'label-position': ['bottom', 'top'] }"
+  :options="{ variant: ['primary', 'secondary', 'danger', 'warning', 'success', 'ghost'], size: ['sm', 'md', 'lg'], 'label-position': ['bottom', 'top'] }"
   :booleans="['disabled', 'circle']"
   :textInputs="['name', 'label']"
 />
@@ -43,7 +43,6 @@ The `co-button-icon` component provides a button icon with an optional text labe
   <co-button-icon name="star" size="sm" aria-label="Small"></co-button-icon>
   <co-button-icon name="star" size="md" aria-label="Medium"></co-button-icon>
   <co-button-icon name="star" size="lg" aria-label="Large"></co-button-icon>
-  <co-button-icon name="star" size="xl" aria-label="Extra Large"></co-button-icon>
 </div>
 </ClientOnly>
 
@@ -107,7 +106,6 @@ Use the `circle` attribute for a fully rounded icon-only button. The `label` pro
   <co-button-icon name="star" circle size="sm" aria-label="Small"></co-button-icon>
   <co-button-icon name="star" circle size="md" aria-label="Medium"></co-button-icon>
   <co-button-icon name="star" circle size="lg" aria-label="Large"></co-button-icon>
-  <co-button-icon name="star" circle size="xl" aria-label="Extra Large"></co-button-icon>
 </div>
 </ClientOnly>
 
@@ -260,7 +258,7 @@ export class AppComponent {
 | ---------------- | --------------------------------------------------------------------------- | ----------- | ------------------------------------------ |
 | `name`           | `string`                                                                    | `''`        | Icon name passed to internal co-icon       |
 | `variant`        | `'primary' \| 'secondary' \| 'danger' \| 'warning' \| 'success' \| 'ghost'` | `'primary'` | Visual style of the button                 |
-| `size`           | `'sm' \| 'md' \| 'lg' \| 'xl'`                                              | `'md'`      | Controls dimensions and icon size          |
+| `size`           | `'sm' \| 'md' \| 'lg'`                                                      | `'md'`      | Controls dimensions and icon size          |
 | `label`          | `string`                                                                    | —           | Optional visible text label                |
 | `label-position` | `'top' \| 'bottom'`                                                         | `'bottom'`  | Position of the label relative to the icon |
 | `circle`         | `boolean`                                                                   | `false`     | Renders as a circle; label is ignored      |

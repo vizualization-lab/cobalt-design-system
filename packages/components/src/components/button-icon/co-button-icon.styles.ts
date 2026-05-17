@@ -67,17 +67,6 @@ export const cobaltButtonIconStyles = css`
     padding: var(--co-space-2) var(--co-space-4);
   }
 
-  :host([size='xl']) {
-    min-block-size: var(--co-control-height-xl);
-    min-inline-size: var(--co-control-height-xl);
-  }
-  :host([size='xl']) .button-icon {
-    padding: var(--co-space-4);
-  }
-  :host([size='xl']) .button-icon.has-label {
-    padding: var(--co-space-3) var(--co-space-6);
-  }
-
   /* ── Primary variant (default) ── */
   :host,
   :host([variant='primary']) {

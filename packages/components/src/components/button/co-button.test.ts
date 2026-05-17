@@ -63,12 +63,6 @@ describe('co-button', () => {
     expect(el.getAttribute('size')).to.equal('lg');
   });
 
-  it('reflects xl size attribute', async () => {
-    const el = await fixture<CoButton>(html`<co-button size="xl">Extra Large</co-button>`);
-    expect(el.size).to.equal('xl');
-    expect(el.getAttribute('size')).to.equal('xl');
-  });
-
   it('renders button structure in shadow DOM', async () => {
     const el = await fixture<CoButton>(html`<co-button>Click</co-button>`);
     const base = el.shadowRoot!.querySelector('[part="base"]');

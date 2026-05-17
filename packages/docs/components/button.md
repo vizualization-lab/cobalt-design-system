@@ -10,7 +10,7 @@ The `co-button` component provides a themed, accessible button built on top of L
   tag="co-button"
   label="Click me"
   :defaults="{ variant: 'primary', size: 'md' }"
-  :options="{ variant: ['primary', 'secondary', 'danger', 'warning', 'success', 'ghost'], size: ['sm', 'md', 'lg', 'xl'] }"
+  :options="{ variant: ['primary', 'secondary', 'danger', 'warning', 'success', 'ghost'], size: ['sm', 'md', 'lg'] }"
   :booleans="['disabled', 'loading']"
 />
 
@@ -43,7 +43,6 @@ The `co-button` component provides a themed, accessible button built on top of L
   <co-button size="sm">Small</co-button>
   <co-button size="md">Medium</co-button>
   <co-button size="lg">Large</co-button>
-  <co-button size="xl">Extra Large</co-button>
 </div>
 </ClientOnly>
 
@@ -264,7 +263,7 @@ export class AppComponent {
 | Property   | Type                                                                        | Default     | Description                                 |
 | ---------- | --------------------------------------------------------------------------- | ----------- | ------------------------------------------- |
 | `variant`  | `'primary' \| 'secondary' \| 'danger' \| 'warning' \| 'success' \| 'ghost'` | `'primary'` | Visual style of the button                  |
-| `size`     | `'sm' \| 'md' \| 'lg' \| 'xl'`                                              | `'md'`      | Controls min-height, padding, and font size |
+| `size`     | `'sm' \| 'md' \| 'lg'`                                                      | `'md'`      | Controls min-height, padding, and font size |
 | `disabled` | `boolean`                                                                   | `false`     | Prevents interaction                        |
 | `loading`  | `boolean`                                                                   | `false`     | Shows spinner, disables interaction         |
 | `type`     | `'submit' \| 'reset' \| 'button'`                                           | `'button'`  | HTML button type                            |

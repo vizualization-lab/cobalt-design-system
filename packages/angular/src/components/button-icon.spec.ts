@@ -25,7 +25,7 @@ import { CoButtonIcon } from './button-icon.js';
 class TestHostComponent {
   name = 'star';
   variant: 'primary' | 'secondary' | 'danger' | 'success' | 'ghost' = 'primary';
-  size: 'sm' | 'md' | 'lg' | 'xl' = 'md';
+  size: 'sm' | 'md' | 'lg' = 'md';
   disabled = false;
   label: string | undefined = undefined;
   labelPosition: 'top' | 'bottom' = 'bottom';

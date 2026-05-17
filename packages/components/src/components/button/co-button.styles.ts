@@ -53,14 +53,6 @@ export const cobaltButtonStyles = css`
     padding: var(--co-space-3) var(--co-space-6);
   }
 
-  :host([size='xl']) {
-    font-size: var(--co-font-size-h5);
-    min-block-size: var(--co-control-height-xl);
-  }
-  :host([size='xl']) .button {
-    padding: var(--co-space-4) var(--co-space-8);
-  }
-
   /* ── Primary variant (default) ── */
   :host,
   :host([variant='primary']) {
