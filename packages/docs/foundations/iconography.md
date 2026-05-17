@@ -159,6 +159,21 @@ Add hidden search terms for each custom icon in `packages/icons/custom/metadata.
 
 Use terms people might search for, including synonyms, product vocabulary, and common object names. These terms are searchable in the icon gallery but are not displayed. Material Symbols search terms are captured in Cobalt's committed metadata snapshot; the upstream Google endpoint is used only when maintainers intentionally refresh that snapshot, never at runtime.
 
+### Adding icons to the Core collection
+
+The icon gallery includes a **Core** category for recommended baseline action and navigation icons. Core membership and use-case descriptions are maintained in `packages/icons/src/core-icons.json`.
+
+Add a Core icon by adding an object with the base icon name and a short use-case description:
+
+```json
+{
+  "name": "edit",
+  "description": "Use for editing, modifying content, authoring, or opening source changes."
+}
+```
+
+Use descriptions that explain when to choose the icon, not what the icon looks like. Keep the list ordered intentionally; the icon gallery preserves the order from `core-icons.json`. After editing the file, run `pnpm --filter @cobalt/icons build` so the generated metadata exports are updated.
+
 ### Usage
 
 ```html

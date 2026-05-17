@@ -5,9 +5,11 @@ import { CoSelect } from '@cobalt/vue/select';
 import { CoTextarea } from '@cobalt/vue/textarea';
 import {
   animatedIconNames,
+  coreIconNames,
   customIconNames,
   getIcon,
   iconCategories,
+  iconDescriptionsByIconName,
   iconNames,
   iconSearchTermsByIconName,
   overrideIconNames,
@@ -17,8 +19,10 @@ const pngSizes = [16, 20, 24, 32, 48, 96, 192];
 const snippetTabs = ['Web Component', 'React', 'Vue', 'Angular'];
 const iconCountFormatter = new Intl.NumberFormat('en-US');
 const allCategoryId = 'all';
+const coreCategoryId = 'core';
 const cobaltCustomIconCategoryId = 'cobalt';
 const microAnimationCategoryId = 'micro-animations';
+const availableCoreIconNames = coreIconNames.filter((name) => iconNames.includes(name));
 const microAnimationIconNames = Array.from(animatedIconNames).filter((name) =>
   iconNames.includes(name),
 );
@@ -46,6 +50,11 @@ const materialIconCategories = computed(() =>
 const categoryOptions = computed(() => [
   { id: allCategoryId, label: 'All', iconNames },
   {
+    id: coreCategoryId,
+    label: 'Core',
+    iconNames: availableCoreIconNames,
+  },
+  {
     id: microAnimationCategoryId,
     label: 'Micro animations',
     iconNames: microAnimationIconNames,
@@ -61,6 +70,9 @@ const selectedIconSearchTerms = computed(() =>
   selectedIcon.value ? (iconSearchTermsByIconName[selectedIcon.value] ?? []) : [],
 );
 const selectedIconSearchTermsText = computed(() => selectedIconSearchTerms.value.join(', '));
+const selectedIconDescription = computed(() =>
+  selectedIcon.value ? (iconDescriptionsByIconName[selectedIcon.value] ?? '') : '',
+);
 
 const filteredIcons = computed(() => {
   if (isSearching.value) {
@@ -469,6 +481,11 @@ function getSnippet(name: string, tabIndex: number): string {
                 </div>
               </div>
 
+              <div v-if="selectedIconDescription" class="detail-section">
+                <div class="detail-label">Use case</div>
+                <p class="detail-description">{{ selectedIconDescription }}</p>
+              </div>
+
               <div v-if="selectedIconSearchTerms.length > 0" class="detail-section">
                 <CoTextarea
                   class="search-terms-textarea"
@@ -559,6 +576,10 @@ function getSnippet(name: string, tabIndex: number): string {
                 }}</code>
               </div>
             </div>
+          </div>
+          <div v-if="selectedIconDescription" class="ig-sheet-section">
+            <div class="ig-sheet-label">Use case</div>
+            <p class="ig-detail-description">{{ selectedIconDescription }}</p>
           </div>
           <div v-if="selectedIconSearchTerms.length > 0" class="ig-sheet-section">
             <CoTextarea
@@ -911,6 +932,13 @@ function getSnippet(name: string, tabIndex: number): string {
   letter-spacing: 0.06em;
   color: var(--gallery-text-muted);
   margin-bottom: 8px;
+}
+
+.detail-description {
+  margin: 0;
+  color: var(--gallery-text-secondary);
+  font-size: 0.8rem;
+  line-height: 1.5;
 }
 
 .detail-sizes {
@@ -1292,6 +1320,13 @@ function getSnippet(name: string, tabIndex: number): string {
   white-space: pre;
   background: none;
   border: none;
+}
+
+.ig-detail-description {
+  margin: 0;
+  color: var(--ig-text-secondary);
+  font-size: 0.8rem;
+  line-height: 1.5;
 }
 
 .ig-search-terms-textarea {

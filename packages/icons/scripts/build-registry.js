@@ -6,6 +6,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = join(__dirname, '..');
 const outDir = join(root, 'dist');
 const categoryMetadataFile = join(root, 'src', 'icon-categories.json');
+const coreIconMetadataFile = join(root, 'src', 'core-icons.json');
 const customSearchMetadataFile = join(root, 'custom', 'metadata.json');
 
 const STYLES = ['rounded'];
@@ -58,6 +59,16 @@ function readCustomSearchMetadata() {
   }
 }
 
+function readCoreIconMetadata() {
+  try {
+    return JSON.parse(readFileSync(coreIconMetadataFile, 'utf-8'));
+  } catch (error) {
+    throw new Error(
+      `Unable to read core icon metadata from ${coreIconMetadataFile}. ${error.message}`,
+    );
+  }
+}
+
 function iconCategoriesFor(entry) {
   if (Array.isArray(entry)) {
     return entry;
@@ -91,6 +102,52 @@ function normalizeSearchTerms(terms, source) {
         .filter(Boolean),
     ),
   ];
+}
+
+function buildCoreIconExports(sortedNames, coreIconMetadata) {
+  if (!Array.isArray(coreIconMetadata)) {
+    throw new Error(`${coreIconMetadataFile} must be an array of core icon metadata objects.`);
+  }
+
+  const availableNames = new Set(sortedNames);
+  const seenNames = new Set();
+  const coreIconNames = [];
+  const iconDescriptionsByIconName = {};
+
+  for (const [index, entry] of coreIconMetadata.entries()) {
+    const source = `Core icon metadata entry ${index + 1}`;
+    if (!entry || typeof entry !== 'object' || Array.isArray(entry)) {
+      throw new Error(`${source} must be an object with "name" and "description" fields.`);
+    }
+
+    const name = typeof entry.name === 'string' ? entry.name.trim() : '';
+    const description = typeof entry.description === 'string' ? entry.description.trim() : '';
+
+    if (!name) {
+      throw new Error(`${source} is missing a valid "name" field.`);
+    }
+
+    if (!description) {
+      throw new Error(`Core icon metadata for "${name}" is missing a valid "description" field.`);
+    }
+
+    if (!availableNames.has(name)) {
+      throw new Error(`Core icon metadata references unknown icon "${name}".`);
+    }
+
+    if (seenNames.has(name)) {
+      throw new Error(`Core icon metadata includes duplicate icon "${name}".`);
+    }
+
+    seenNames.add(name);
+    coreIconNames.push(name);
+    iconDescriptionsByIconName[name] = description;
+  }
+
+  return {
+    coreIconNames,
+    iconDescriptionsByIconName,
+  };
 }
 
 function buildCategoryExports(sortedNames, sortedCustomNames, metadata) {
@@ -306,7 +363,12 @@ function build() {
   const sortedOverrideNames = [...overrideBaseNames].sort();
   const sortedAnimatedNames = [...animatedBaseNames].sort();
   const categoryMetadata = readCategoryMetadata();
+  const coreIconMetadata = readCoreIconMetadata();
   const customSearchMetadata = readCustomSearchMetadata();
+  const { coreIconNames, iconDescriptionsByIconName } = buildCoreIconExports(
+    sortedNames,
+    coreIconMetadata,
+  );
   const { categories: iconCategories, categoryByIconName } = buildCategoryExports(
     sortedNames,
     sortedCustomNames,
@@ -366,6 +428,9 @@ function build() {
   );
   lines.push(`export const overrideIconNames = new Set(${JSON.stringify(sortedOverrideNames)});`);
   lines.push('');
+  lines.push('/** Curated core icons recommended for baseline actions and navigation. */');
+  lines.push(`export const coreIconNames = ${JSON.stringify(coreIconNames)};`);
+  lines.push('');
   lines.push('/** Ordered icon categories with the icon names available in each category. */');
   lines.push(`export const iconCategories = ${JSON.stringify(iconCategories)};`);
   lines.push('');
@@ -377,6 +442,11 @@ function build() {
   );
   lines.push(
     `export const iconSearchTermsByIconName = ${JSON.stringify(iconSearchTermsByIconName)};`,
+  );
+  lines.push('');
+  lines.push('/** Use-case descriptions for curated icons keyed by icon name. */');
+  lines.push(
+    `export const iconDescriptionsByIconName = ${JSON.stringify(iconDescriptionsByIconName)};`,
   );
   lines.push('');
 
@@ -445,6 +515,9 @@ function build() {
     '/** Set of icon names that are overrides of Material Symbols icons (24×24 viewBox). */',
     'export declare const overrideIconNames: Set<string>;',
     '',
+    '/** Curated core icons recommended for baseline actions and navigation. */',
+    'export declare const coreIconNames: string[];',
+    '',
     '/** Ordered icon categories with the icon names available in each category. */',
     'export declare const iconCategories: IconCategory[];',
     '',
@@ -453,6 +526,9 @@ function build() {
     '',
     '/** Search terms from committed Material Symbols metadata and custom icon metadata. */',
     'export declare const iconSearchTermsByIconName: Record<string, string[]>;',
+    '',
+    '/** Use-case descriptions for curated icons keyed by icon name. */',
+    'export declare const iconDescriptionsByIconName: Record<string, string>;',
     '',
     '/**',
     ' * Get the animated SVG variant for an icon.',

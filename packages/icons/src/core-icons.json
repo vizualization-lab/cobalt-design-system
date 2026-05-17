@@ -1,0 +1,42 @@
+[
+  {
+    "name": "rocket-launch",
+    "description": "Use for getting started, onboarding, launches, or entry points that help users begin a workflow."
+  },
+  {
+    "name": "grid-view",
+    "description": "Use for patterns, grid-based layouts, dashboards, or grouped visual arrangements."
+  },
+  {
+    "name": "info",
+    "description": "Use for guidance, informational messages, help content, or neutral context."
+  },
+  {
+    "name": "quiz",
+    "description": "Use for FAQs, questions, knowledge checks, or help topics organized as answers."
+  },
+  {
+    "name": "person-add",
+    "description": "Use for contribution, inviting people, adding users, or participation workflows."
+  },
+  {
+    "name": "auto-stories",
+    "description": "Use for resources, reading material, documentation libraries, or reference collections."
+  },
+  {
+    "name": "description",
+    "description": "Use for documents, release notes, file summaries, or written records."
+  },
+  {
+    "name": "colors",
+    "description": "Use for color, themes, appearance settings, or visual customization."
+  },
+  {
+    "name": "mail",
+    "description": "Use for contact, email, messages, or communication entry points."
+  },
+  {
+    "name": "edit",
+    "description": "Use for editing, modifying content, authoring, or opening source changes."
+  }
+]
