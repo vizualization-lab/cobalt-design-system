@@ -395,14 +395,6 @@ function toggleSidebar() {
   --co-ease: var(--co-motion-easing-default);
   --co-duration: var(--co-motion-duration-fast);
 
-  /* VitePress local search — map to Cobalt semantic tokens */
-  --vp-local-search-bg: var(--co-color-surface-static-default);
-  --vp-local-search-result-bg: var(--co-color-surface-static-default);
-  --vp-local-search-result-border: var(--co-color-border-default);
-  --vp-local-search-result-selected-bg: var(--co-color-surface-static-raised);
-  --vp-local-search-result-selected-border: var(--co-color-border-focus);
-  --vp-local-search-highlight-bg: var(--co-color-state-primary-base);
-  --vp-local-search-highlight-text: var(--co-color-state-primary-contrast);
   --vp-c-brand-1: var(--co-color-state-primary-base);
   --vp-c-divider: var(--co-color-border-default);
 }
@@ -569,74 +561,6 @@ body {
   border-color: var(--co-border) !important;
   color: var(--co-color-text-tertiary) !important;
   font-family: var(--co-font-body) !important;
-}
-
-/* ── Local Search Modal ──────────────────────────────────────
-   VitePress uses <style scoped> so class selectors won't match.
-   Target elements via the unscoped root class + element/attribute
-   selectors that pierce the scoped boundary. */
-.VPLocalSearchBox {
-  --vp-backdrop-bg-color: color-mix(
-    in srgb,
-    var(--co-color-surface-static-overlay) 50%,
-    transparent
-  );
-}
-
-.VPLocalSearchBox > div:last-of-type {
-  /* .shell */
-  background: var(--co-color-surface-static-default) !important;
-  border: none !important;
-  border-radius: 12px !important;
-}
-
-.VPLocalSearchBox form {
-  /* .search-bar */
-  border: 1px solid var(--co-color-border-default) !important;
-  background: var(--co-color-surface-static-sunken) !important;
-  border-radius: 8px !important;
-}
-
-.VPLocalSearchBox form:focus-within {
-  border-color: var(--co-color-border-focus) !important;
-}
-
-.VPLocalSearchBox input[type='search'] {
-  /* .search-input */
-  background: transparent !important;
-  border: none !important;
-  outline: none !important;
-  color: var(--co-color-text-default) !important;
-  font-family: var(--co-font-body) !important;
-}
-
-.VPLocalSearchBox input[type='search']::placeholder {
-  color: var(--co-color-text-tertiary) !important;
-}
-
-.VPLocalSearchBox label {
-  color: var(--co-color-text-tertiary) !important;
-}
-
-.VPLocalSearchBox a[href] {
-  /* .result */
-  border-color: var(--co-color-border-default) !important;
-  background: var(--co-color-surface-static-default) !important;
-}
-
-.VPLocalSearchBox a[aria-selected='true'] {
-  /* .result.selected */
-  border-color: var(--co-color-border-focus) !important;
-  background: var(--co-color-surface-static-raised) !important;
-}
-
-.VPLocalSearchBox ul + div {
-  /* .search-keyboard-shortcuts */
-  color: var(--co-color-text-tertiary) !important;
-}
-
-.VPLocalSearchBox button {
-  color: var(--co-color-text-tertiary) !important;
 }
 
 .topbar-nav {
