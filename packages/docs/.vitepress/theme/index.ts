@@ -44,7 +44,6 @@ let queuedNavigation: string | undefined;
 
 function registerCobaltComponents(): Promise<void> | undefined {
   if (typeof window === 'undefined') return undefined;
-  if (window.customElements.get('co-button')) return undefined;
   if (cobaltComponentsRegistration) return cobaltComponentsRegistration;
 
   cobaltComponentsRegistrationAttempts += 1;
