@@ -404,25 +404,17 @@ const features = [
   align-items: center;
   justify-content: center;
   border-radius: 11px;
-  background: var(--co-color-surface-static-sunken);
-  color: var(--co-color-text-default);
+  background: color-mix(in srgb, var(--co-color-state-primary-base) 14%, transparent);
+  border: 1px solid color-mix(in srgb, var(--co-color-state-primary-base) 18%, transparent);
+  color: var(--co-color-state-primary-base);
   margin-bottom: 18px;
   transition: all var(--co-duration) var(--co-ease);
 }
 
 .feature-card:hover .feature-icon {
-  background: var(--co-color-primitive-neutral-400);
-}
-
-/* Dark-mode tiles sit darker than the card (which is surface-raised /
-   neutral-800), recessing into the page neutral so the muted icon
-   reads as a quiet inset rather than a bright accent. */
-[data-mode='dark'] .feature-icon {
-  background: var(--co-color-primitive-neutral-900);
-}
-
-[data-mode='dark'] .feature-card:hover .feature-icon {
-  background: var(--co-color-primitive-neutral-950);
+  background: color-mix(in srgb, var(--co-color-state-primary-base) 20%, transparent);
+  border-color: color-mix(in srgb, var(--co-color-state-primary-base) 28%, transparent);
+  color: var(--co-color-state-primary-dark);
 }
 
 .feature-title {
