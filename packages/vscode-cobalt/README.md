@@ -1,8 +1,6 @@
-# Cobalt Design System for VS Code
+# Cobalt Tokens Explorer
 
-Use Cobalt design tokens and utility classes without leaving your editor.
-
-![Cobalt token browser in VS Code](resources/vscode-cobalt-screenshot.png)
+Use Cobalt's design tokens and utility classes without leaving your editor.
 
 ## What It Does
 

@@ -1,11 +1,10 @@
 {
-  "name": "cobalt-vscode",
-  "displayName": "Cobalt Design System",
+  "name": "cobalt-tokens-explorer",
+  "displayName": "Cobalt Tokens Explorer",
   "description": "VS Code assistance for Cobalt design tokens and utility classes.",
-  "version": "0.1.0",
+  "version": "0.0.1",
   "private": true,
   "publisher": "cobalt",
-  "license": "MIT",
   "engines": {
     "vscode": "^1.90.0"
   },
@@ -14,6 +13,7 @@
     "Other"
   ],
   "main": "./dist/extension.js",
+  "icon": "resources/cobalt-icon.png",
   "files": [
     "dist",
     "resources",
@@ -46,7 +46,7 @@
       }
     ],
     "configuration": {
-      "title": "Cobalt",
+      "title": "Cobalt Tokens Explorer",
       "properties": {
         "cobalt.metadataSource": {
           "type": "string",

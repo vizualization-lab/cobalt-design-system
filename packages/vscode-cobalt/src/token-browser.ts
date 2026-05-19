@@ -356,7 +356,7 @@ export class CobaltTokenBrowserProvider implements vscode.WebviewViewProvider {
   <body>
     <main class="shell">
       <header class="header">
-        <h1 class="title">Cobalt</h1>
+        <h1 class="title">Cobalt Tokens Explorer</h1>
         <div id="source" class="source"></div>
       </header>
       <nav class="tabs" aria-label="Cobalt browser">

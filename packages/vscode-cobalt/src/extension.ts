@@ -7,7 +7,9 @@ let outputChannel: vscode.OutputChannel | undefined;
 
 export function activate(context: vscode.ExtensionContext): void {
   outputChannel = vscode.window.createOutputChannel('Cobalt');
+  const extensionVersion = String(context.extension.packageJSON.version ?? 'unknown');
   outputChannel.appendLine('Activating Cobalt VS Code extension.');
+  outputChannel.appendLine(`Extension version: ${extensionVersion}`);
   outputChannel.appendLine(`Extension path: ${context.extensionUri.fsPath}`);
   context.subscriptions.push(outputChannel);
 
@@ -23,7 +25,7 @@ export function activate(context: vscode.ExtensionContext): void {
       await refreshMetadata(metadataStore, true);
     }),
     vscode.commands.registerCommand('cobalt.showStatus', () => {
-      showStatus(metadataStore);
+      showStatus(metadataStore, extensionVersion);
     }),
     vscode.workspace.onDidChangeConfiguration(async (event) => {
       if (!event.affectsConfiguration('cobalt.metadataSource')) return;
@@ -83,20 +85,23 @@ function reportMetadataError(prefix: string, error: unknown): void {
   vscode.window.showWarningMessage(`${prefix}. ${message}`);
 }
 
-function showStatus(metadataStore: CobaltMetadataStore): void {
+function showStatus(metadataStore: CobaltMetadataStore, extensionVersion: string): void {
   const snapshot = metadataStore.current;
   outputChannel?.show(true);
 
   if (!snapshot) {
-    outputChannel?.appendLine('Cobalt metadata is not loaded yet.');
+    outputChannel?.appendLine(
+      `Cobalt status\nExtension version: ${extensionVersion}\nMetadata is not loaded yet.`,
+    );
     vscode.window.showWarningMessage('Cobalt metadata is not loaded yet.');
     return;
   }
 
   const lines = [
     'Cobalt status',
+    `Extension version: ${extensionVersion}`,
     `Source: ${snapshot.source}`,
-    `Version: ${snapshot.manifest.cobaltVersion}`,
+    `Cobalt metadata version: ${snapshot.manifest.cobaltVersion}`,
     `Tokens: ${snapshot.manifest.tokens.length}`,
     `Utilities: ${snapshot.manifest.utilities.length}`,
     `URI: ${snapshot.uri ?? 'n/a'}`,
