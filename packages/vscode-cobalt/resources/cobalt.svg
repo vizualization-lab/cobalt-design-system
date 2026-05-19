@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28" fill="none" role="img" aria-label="Cobalt">
+  <path
+    d="M14 3.5L24 9.75V18.25L14 24.5L4 18.25V9.75L14 3.5Z"
+    fill="none"
+    stroke="#000"
+    stroke-width="1.8"
+    stroke-linejoin="round"
+  />
+  <path
+    d="M14 3.5V24.5M4 9.75L24 18.25M24 9.75L4 18.25"
+    fill="none"
+    stroke="#000"
+    stroke-width="1.1"
+    stroke-linecap="round"
+    opacity="0.72"
+  />
+</svg>

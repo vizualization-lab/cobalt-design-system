@@ -1,0 +1,110 @@
+{
+  "name": "cobalt-vscode",
+  "displayName": "Cobalt Design System",
+  "description": "VS Code assistance for Cobalt design tokens and utility classes.",
+  "version": "0.1.0",
+  "private": true,
+  "publisher": "cobalt",
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.90.0"
+  },
+  "categories": [
+    "Programming Languages",
+    "Other"
+  ],
+  "main": "./dist/extension.js",
+  "files": [
+    "dist",
+    "resources",
+    "LICENSE",
+    "README.md"
+  ],
+  "activationEvents": [
+    "onStartupFinished",
+    "onLanguage:css",
+    "onLanguage:scss",
+    "onLanguage:less",
+    "onLanguage:html",
+    "onLanguage:typescriptreact",
+    "onLanguage:javascriptreact",
+    "onLanguage:vue",
+    "onCommand:cobalt.refreshMetadata",
+    "onView:cobalt.tokenBrowser"
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "command": "cobalt.refreshMetadata",
+        "title": "Refresh Metadata",
+        "category": "Cobalt"
+      },
+      {
+        "command": "cobalt.showStatus",
+        "title": "Show Status",
+        "category": "Cobalt"
+      }
+    ],
+    "configuration": {
+      "title": "Cobalt",
+      "properties": {
+        "cobalt.metadataSource": {
+          "type": "string",
+          "enum": [
+            "auto",
+            "workspace",
+            "bundled"
+          ],
+          "default": "auto",
+          "description": "Controls whether Cobalt metadata is loaded from the active workspace, the extension bundle, or automatically from workspace with bundled fallback."
+        },
+        "cobalt.enableTokenCompletions": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable Cobalt design token completions and hovers."
+        },
+        "cobalt.enableUtilityCompletions": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable Cobalt CSS utility class completions and hovers."
+        }
+      }
+    },
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "cobalt",
+          "title": "Cobalt",
+          "icon": "resources/cobalt.svg"
+        }
+      ]
+    },
+    "views": {
+      "cobalt": [
+        {
+          "type": "webview",
+          "id": "cobalt.tokenBrowser",
+          "name": "Tokens"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "build": "pnpm run copy-manifest && pnpm run typecheck && pnpm run bundle",
+    "bundle": "node scripts/esbuild.mjs",
+    "copy-manifest": "node scripts/copy-manifest.mjs",
+    "clean": "rm -rf dist",
+    "package": "pnpm run build && rm -f dist/*.vsix && vsce package --allow-missing-repository --no-rewrite-relative-links --out dist/cobalt-vscode.vsix",
+    "test": "vitest run",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "devDependencies": {
+    "@cobalt/tokens": "workspace:*",
+    "@types/node": "^25.4.0",
+    "@types/vscode": "1.90.0",
+    "@vscode/vsce": "^3.6.0",
+    "esbuild": "^0.25.12",
+    "typescript": "~5.6.0",
+    "vitest": "^3.2.4"
+  }
+}

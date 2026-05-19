@@ -50,6 +50,7 @@
     },
     "./json": "./dist/tokens.json",
     "./dtcg": "./dist/tokens-dtcg.json",
+    "./tooling": "./dist/tooling/cobalt.manifest.json",
     "./tailwind": {
       "import": "./dist/tailwind/preset.js",
       "types": "./dist/tailwind/preset.d.ts"
@@ -60,6 +61,7 @@
     "build": "node config.js",
     "test": "pnpm run build && pnpm run test:scss",
     "test:scss": "node scripts/validate-scss.js",
+    "test:tooling": "node --test scripts/generate-tooling-manifest.test.js",
     "validate": "node scripts/validate-tokens.js",
     "merge-tokens": "node scripts/merge-tokens.js",
     "export-dtcg": "node scripts/export-dtcg.js",

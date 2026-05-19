@@ -1,0 +1,9 @@
+@import '@cobalt/tokens/css';
+@import '@cobalt/tokens/css/utilities';
+
+.card {
+  color: var(--co-color-text-default);
+  background: var(--co-color-surface-static-raised);
+  border-radius: var(--co-shape-radius-md);
+  padding: var(--co-space-inset-md);
+}
