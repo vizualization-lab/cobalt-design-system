@@ -12,20 +12,38 @@ const { spawnSync } = require('node:child_process');
 const root = path.resolve(__dirname, '..');
 const releaseArgs = process.argv.slice(2);
 const isDryRun = releaseArgs.includes('--dry-run');
+const changesetCliPath = require.resolve('@changesets/cli/bin.js', { paths: [root] });
+
+function formatCommand(command, args) {
+  return [command, ...args].join(' ');
+}
 
 function run(command, args, options = {}) {
+  // Keep shell execution disabled so arguments are passed directly on every
+  // platform. Windows .cmd shims need a shell, but this script only invokes
+  // executables directly: Node for Changesets and git.exe for Git commands.
   const result = spawnSync(command, args, {
     cwd: root,
     env: process.env,
     stdio: options.stdio ?? 'inherit',
     encoding: 'utf8',
+    shell: false,
+    windowsHide: true,
   });
 
+  if (result.error) {
+    throw new Error(`${formatCommand(command, args)} failed: ${result.error.message}`);
+  }
+
   if (result.status !== 0) {
-    throw new Error(`${command} ${args.join(' ')} failed with exit code ${result.status}`);
+    throw new Error(`${formatCommand(command, args)} failed with exit code ${result.status}`);
   }
 
   return result.stdout?.trim() ?? '';
+}
+
+function runNodeScript(scriptPath, args, options = {}) {
+  return run(process.execPath, [scriptPath, ...args], options);
 }
 
 function listPublishablePackages() {
@@ -74,7 +92,7 @@ function getBranchName() {
 }
 
 function main() {
-  run('changeset', ['publish', ...releaseArgs]);
+  runNodeScript(changesetCliPath, ['publish', ...releaseArgs]);
 
   const releaseVersion = getReleaseVersion();
   const tagName = `v${releaseVersion}`;
