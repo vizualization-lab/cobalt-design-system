@@ -5,6 +5,9 @@ await esbuild.build({
   entryPoints: ['src/extension.ts'],
   external: ['vscode'],
   format: 'cjs',
+  loader: {
+    '.html': 'text',
+  },
   outfile: 'dist/extension.js',
   platform: 'node',
   sourcemap: true,
