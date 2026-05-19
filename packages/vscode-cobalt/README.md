@@ -36,7 +36,7 @@ Reload VS Code after installing or updating the extension.
 3. Search or filter by category.
 4. Expand token groups to inspect nested tokens.
 5. Use the clipboard icon to copy a token or class name.
-6. Use the insert icon to add it at the active cursor.
+6. Use the insert icon to add it at the active cursor. Tokens are inserted as `var(--co-...)`; utility classes are inserted as class names.
 
 ## Use Completions
 
