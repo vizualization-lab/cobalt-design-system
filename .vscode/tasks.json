@@ -1,0 +1,39 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "cobalt: build tokens",
+      "type": "shell",
+      "command": "pnpm --filter @cobalt/tokens build",
+      "group": "build",
+      "problemMatcher": []
+    },
+    {
+      "label": "cobalt: build VS Code extension",
+      "type": "shell",
+      "command": "pnpm --filter cobalt-vscode build",
+      "dependsOn": ["cobalt: build tokens"],
+      "dependsOrder": "sequence",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": "$tsc"
+    },
+    {
+      "label": "cobalt: test VS Code extension",
+      "type": "shell",
+      "command": "pnpm --filter cobalt-vscode test",
+      "group": "test",
+      "problemMatcher": []
+    },
+    {
+      "label": "cobalt: package VSIX",
+      "type": "shell",
+      "command": "pnpm --filter cobalt-vscode package",
+      "dependsOn": ["cobalt: build VS Code extension"],
+      "dependsOrder": "sequence",
+      "problemMatcher": []
+    }
+  ]
+}

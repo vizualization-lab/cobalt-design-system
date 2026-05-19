@@ -5,6 +5,7 @@ import { fileURLToPath } from 'url';
 import { exportDtcgTokens } from './scripts/export-dtcg.js';
 import { generateScss } from './scripts/generate-scss.js';
 import { generateTailwindPreset } from './scripts/generate-tailwind-preset.js';
+import { generateToolingManifest } from './scripts/generate-tooling-manifest.js';
 import { generateUtilitiesCss } from './scripts/generate-utilities-css.js';
 import { mergeTokens } from './scripts/merge-tokens.js';
 import { discoverTokenSets, writeGeneratedTokenMetadata } from './scripts/token-set-utils.js';
@@ -239,6 +240,9 @@ async function build() {
   console.log('Generating DTCG export artifact...');
   const dtcg = exportDtcgTokens(tokensDir);
   writeFileSync(join(__dirname, 'dist/tokens-dtcg.json'), JSON.stringify(dtcg, null, 2) + '\n');
+
+  console.log('Generating tooling manifest...');
+  generateToolingManifest(__dirname, tokensDir);
 
   console.log('Token build complete!');
 }
