@@ -416,11 +416,12 @@ export class CobaltTokenBrowserProvider implements vscode.WebviewViewProvider {
         '</svg>';
       }
 
-      function renderActions(value) {
-        const escapedValue = escapeHtml(value);
+      function renderActions(copyValue, insertValue) {
+        const escapedCopyValue = escapeHtml(copyValue);
+        const escapedInsertValue = escapeHtml(insertValue);
         return '<div class="actions">' +
-          '<button class="icon-button" type="button" title="Copy" aria-label="Copy ' + escapedValue + '" data-copy="' + escapedValue + '">' + actionIcon('copy') + '</button>' +
-          '<button class="icon-button" type="button" title="Insert" aria-label="Insert ' + escapedValue + '" data-insert="' + escapedValue + '">' + actionIcon('insert') + '</button>' +
+          '<button class="icon-button" type="button" title="Copy" aria-label="Copy ' + escapedCopyValue + '" data-copy="' + escapedCopyValue + '">' + actionIcon('copy') + '</button>' +
+          '<button class="icon-button" type="button" title="Insert" aria-label="Insert ' + escapedInsertValue + '" data-insert="' + escapedInsertValue + '">' + actionIcon('insert') + '</button>' +
         '</div>';
       }
 
@@ -737,7 +738,7 @@ export class CobaltTokenBrowserProvider implements vscode.WebviewViewProvider {
             (token.resolvedValue ? '<div class="meta">Resolved · ' + escapeHtml(token.resolvedValue) + '</div>' : '') +
             (token.description ? '<div class="desc">' + escapeHtml(token.description) + '</div>' : '') +
           '</div>' +
-          renderActions(token.name) +
+          renderActions(token.name, 'var(' + token.name + ')') +
         '</article>';
       }
 
@@ -749,7 +750,7 @@ export class CobaltTokenBrowserProvider implements vscode.WebviewViewProvider {
             '<pre class="css">' + escapeHtml(utility.css) + '</pre>' +
             (utility.tokenRefs?.length ? '<div class="meta">' + utility.tokenRefs.map(escapeHtml).join(', ') + '</div>' : '') +
           '</div>' +
-          renderActions(utility.className) +
+          renderActions(utility.className, utility.className) +
         '</article>';
       }
 
