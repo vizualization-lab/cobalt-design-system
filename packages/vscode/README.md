@@ -15,7 +15,7 @@ Use Cobalt's design tokens and utility classes without leaving your editor.
 Install the internal VSIX package:
 
 ```sh
-code --install-extension cobalt-vscode.vsix
+code --install-extension cobalt-tokens-explorer.vsix
 ```
 
 You can also install it from VS Code:
@@ -23,7 +23,7 @@ You can also install it from VS Code:
 1. Open the Extensions view.
 2. Select the `...` menu.
 3. Choose `Install from VSIX...`.
-4. Select `cobalt-vscode.vsix`.
+4. Select `cobalt-tokens-explorer.vsix`.
 
 Reload VS Code after installing or updating the extension.
 
