@@ -324,7 +324,12 @@ export class CobaltTokenBrowserProvider implements vscode.WebviewViewProvider {
       .icon-button {
         width: 28px;
         height: 28px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
         border: 1px solid var(--vscode-button-border, transparent);
+        border-radius: 4px;
         color: var(--vscode-button-secondaryForeground);
         background: var(--vscode-button-secondaryBackground);
         cursor: pointer;
@@ -332,6 +337,13 @@ export class CobaltTokenBrowserProvider implements vscode.WebviewViewProvider {
 
       .icon-button:hover {
         background: var(--vscode-button-secondaryHoverBackground);
+      }
+
+      .button-icon {
+        width: 16px;
+        height: 16px;
+        pointer-events: none;
+        stroke: currentColor;
       }
 
       .empty {
@@ -387,6 +399,29 @@ export class CobaltTokenBrowserProvider implements vscode.WebviewViewProvider {
           .replaceAll('>', '&gt;')
           .replaceAll('"', '&quot;')
           .replaceAll("'", '&#39;');
+      }
+
+      function actionIcon(type) {
+        if (type === 'copy') {
+          return '<svg class="button-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">' +
+            '<rect x="9" y="9" width="10" height="10" rx="2" stroke-width="2"></rect>' +
+            '<path d="M5 15H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>' +
+          '</svg>';
+        }
+
+        return '<svg class="button-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">' +
+          '<path d="M9 10L5 14L9 18" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>' +
+          '<path d="M5 14H16a4 4 0 0 0 4-4V6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>' +
+          '<path d="M4 21H20" stroke-width="2" stroke-linecap="round"></path>' +
+        '</svg>';
+      }
+
+      function renderActions(value) {
+        const escapedValue = escapeHtml(value);
+        return '<div class="actions">' +
+          '<button class="icon-button" type="button" title="Copy" aria-label="Copy ' + escapedValue + '" data-copy="' + escapedValue + '">' + actionIcon('copy') + '</button>' +
+          '<button class="icon-button" type="button" title="Insert" aria-label="Insert ' + escapedValue + '" data-insert="' + escapedValue + '">' + actionIcon('insert') + '</button>' +
+        '</div>';
       }
 
       function manifest() {
@@ -702,10 +737,7 @@ export class CobaltTokenBrowserProvider implements vscode.WebviewViewProvider {
             (token.resolvedValue ? '<div class="meta">Resolved · ' + escapeHtml(token.resolvedValue) + '</div>' : '') +
             (token.description ? '<div class="desc">' + escapeHtml(token.description) + '</div>' : '') +
           '</div>' +
-          '<div class="actions">' +
-            '<button class="icon-button" type="button" title="Copy" data-copy="' + escapeHtml(token.name) + '">C</button>' +
-            '<button class="icon-button" type="button" title="Insert" data-insert="' + escapeHtml(token.name) + '">I</button>' +
-          '</div>' +
+          renderActions(token.name) +
         '</article>';
       }
 
@@ -717,10 +749,7 @@ export class CobaltTokenBrowserProvider implements vscode.WebviewViewProvider {
             '<pre class="css">' + escapeHtml(utility.css) + '</pre>' +
             (utility.tokenRefs?.length ? '<div class="meta">' + utility.tokenRefs.map(escapeHtml).join(', ') + '</div>' : '') +
           '</div>' +
-          '<div class="actions">' +
-            '<button class="icon-button" type="button" title="Copy" data-copy="' + escapeHtml(utility.className) + '">C</button>' +
-            '<button class="icon-button" type="button" title="Insert" data-insert="' + escapeHtml(utility.className) + '">I</button>' +
-          '</div>' +
+          renderActions(utility.className) +
         '</article>';
       }
 
