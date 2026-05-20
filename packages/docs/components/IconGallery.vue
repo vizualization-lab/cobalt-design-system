@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue';
+import { CoNavSeparator } from '@cobalt/vue/nav-separator';
 import { CoOption } from '@cobalt/vue/option';
 import { CoSelect } from '@cobalt/vue/select';
 import { CoTextarea } from '@cobalt/vue/textarea';
@@ -348,20 +349,21 @@ function getSnippet(name: string, tabIndex: number): string {
             size="md"
             @co-change="handleCategoryChange"
           >
-            <CoOption
-              v-for="category in categoryOptions"
-              :key="category.id"
-              :value="category.id"
-              :checked="activeCategoryId === category.id"
-            >
-              <span class="category-option-label">{{ category.label }}</span>
-              <span
-                slot="suffix"
-                class="category-option-count"
-                :data-count="iconCountFormatter.format(category.iconNames.length)"
+            <template v-for="category in categoryOptions" :key="category.id">
+              <CoOption :value="category.id" :checked="activeCategoryId === category.id">
+                <span class="category-option-label">{{ category.label }}</span>
+                <span
+                  slot="suffix"
+                  class="category-option-count"
+                  :data-count="iconCountFormatter.format(category.iconNames.length)"
+                  aria-hidden="true"
+                ></span>
+              </CoOption>
+              <CoNavSeparator
+                v-if="category.id === cobaltCustomIconCategoryId"
                 aria-hidden="true"
-              ></span>
-            </CoOption>
+              />
+            </template>
           </CoSelect>
 
           <p v-if="isSearching" class="browse-note">{{ searchModeHint }}</p>
