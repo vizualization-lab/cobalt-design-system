@@ -21,7 +21,7 @@ copyRequiredFile(vsixSource, resolve(artifactDir, vsixFileName));
 copyRequiredFile(screenshotSource, resolve(artifactDir, screenshotFileName));
 
 function run(command, args) {
-  const result = spawnSync(executable, args, {
+  const result = spawnSync(command, args, {
     cwd: repoRoot,
     stdio: 'inherit',
     shell: process.platform === 'win32',
