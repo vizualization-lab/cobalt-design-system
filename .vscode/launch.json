@@ -7,10 +7,10 @@
       "request": "launch",
       "preLaunchTask": "cobalt: build VS Code extension",
       "args": [
-        "--extensionDevelopmentPath=${workspaceFolder}/packages/vscode-cobalt",
-        "${workspaceFolder}/packages/vscode-cobalt/manual-test-workspace"
+        "--extensionDevelopmentPath=${workspaceFolder}/packages/vscode",
+        "${workspaceFolder}/packages/vscode/manual-test-workspace"
       ],
-      "outFiles": ["${workspaceFolder}/packages/vscode-cobalt/dist/**/*.js"]
+      "outFiles": ["${workspaceFolder}/packages/vscode/dist/**/*.js"]
     },
     {
       "name": "Launch Cobalt Extension (monorepo workspace)",
@@ -18,10 +18,10 @@
       "request": "launch",
       "preLaunchTask": "cobalt: build VS Code extension",
       "args": [
-        "--extensionDevelopmentPath=${workspaceFolder}/packages/vscode-cobalt",
+        "--extensionDevelopmentPath=${workspaceFolder}/packages/vscode",
         "${workspaceFolder}"
       ],
-      "outFiles": ["${workspaceFolder}/packages/vscode-cobalt/dist/**/*.js"]
+      "outFiles": ["${workspaceFolder}/packages/vscode/dist/**/*.js"]
     }
   ]
 }

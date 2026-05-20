@@ -11,7 +11,7 @@
     {
       "label": "cobalt: build VS Code extension",
       "type": "shell",
-      "command": "pnpm --filter cobalt-vscode build",
+      "command": "pnpm --filter cobalt-tokens-explorer build",
       "dependsOn": ["cobalt: build tokens"],
       "dependsOrder": "sequence",
       "group": {
@@ -23,14 +23,14 @@
     {
       "label": "cobalt: test VS Code extension",
       "type": "shell",
-      "command": "pnpm --filter cobalt-vscode test",
+      "command": "pnpm --filter cobalt-tokens-explorer test",
       "group": "test",
       "problemMatcher": []
     },
     {
       "label": "cobalt: package VSIX",
       "type": "shell",
-      "command": "pnpm --filter cobalt-vscode package",
+      "command": "pnpm --filter cobalt-tokens-explorer package",
       "dependsOn": ["cobalt: build VS Code extension"],
       "dependsOrder": "sequence",
       "problemMatcher": []
