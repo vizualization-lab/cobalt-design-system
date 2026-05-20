@@ -14,6 +14,7 @@ import ArchitectureFlow from '../../components/ArchitectureFlow.vue';
 import ComponentStatus from '../../components/ComponentStatus.vue';
 import StatusMatrix from '../../components/StatusMatrix.vue';
 import LayerStack from '../../components/LayerStack.vue';
+import ArtifactDownload from '../../components/ArtifactDownload.vue';
 
 // Cobalt design tokens
 import '@cobalt/tokens/css';
@@ -198,6 +199,7 @@ export default {
     app.component('ComponentStatus', ComponentStatus);
     app.component('LayerStack', LayerStack);
     app.component('StatusMatrix', StatusMatrix);
+    app.component('ArtifactDownload', ArtifactDownload);
 
     installNextSiblingRecovery();
     installDocsRouter(router);
