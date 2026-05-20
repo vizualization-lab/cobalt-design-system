@@ -21,10 +21,10 @@ copyRequiredFile(vsixSource, resolve(artifactDir, vsixFileName));
 copyRequiredFile(screenshotSource, resolve(artifactDir, screenshotFileName));
 
 function run(command, args) {
-  const executable = process.platform === 'win32' ? `${command}.cmd` : command;
   const result = spawnSync(executable, args, {
     cwd: repoRoot,
     stdio: 'inherit',
+    shell: process.platform === 'win32',
   });
 
   if (result.error) {
