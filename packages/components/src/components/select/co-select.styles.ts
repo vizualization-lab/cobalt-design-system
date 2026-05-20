@@ -187,6 +187,15 @@ export const cobaltSelectStyles = css`
     box-shadow: var(--co-elevation-shadow-lg);
   }
 
+  slot[name='input']::slotted([role='listbox']) {
+    display: grid;
+    box-sizing: border-box;
+    inline-size: 100%;
+    gap: var(--co-space-1);
+    padding: var(--co-space-1);
+    outline: 0;
+  }
+
   /* ── Feedback ── */
 
   .form-field__feedback {
