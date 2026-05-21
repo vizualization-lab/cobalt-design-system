@@ -19,7 +19,7 @@ export function activate(context: vscode.ExtensionContext): void {
   context.subscriptions.push(
     vscode.window.registerWebviewViewProvider(
       'cobalt.tokenBrowser',
-      new CobaltTokenBrowserProvider(context, metadataStore),
+      new CobaltTokenBrowserProvider(context, metadataStore, outputChannel),
     ),
     vscode.commands.registerCommand('cobalt.refreshMetadata', async () => {
       await refreshMetadata(metadataStore, true);

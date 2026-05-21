@@ -5,10 +5,12 @@ import { renderTokenBrowserHtml } from './token-browser-webview';
 
 export class CobaltTokenBrowserProvider implements vscode.WebviewViewProvider {
   private view: vscode.WebviewView | undefined;
+  private readyTimeout: NodeJS.Timeout | undefined;
 
   constructor(
     private readonly context: vscode.ExtensionContext,
     private readonly metadataStore: CobaltMetadataStore,
+    private readonly outputChannel: vscode.OutputChannel,
   ) {
     this.context.subscriptions.push(
       this.metadataStore.onDidChange((snapshot) => {
@@ -19,15 +21,30 @@ export class CobaltTokenBrowserProvider implements vscode.WebviewViewProvider {
 
   resolveWebviewView(webviewView: vscode.WebviewView): void {
     this.view = webviewView;
+    let readyReceived = false;
     webviewView.webview.options = {
       enableScripts: true,
     };
 
-    webviewView.webview.html = this.renderHtml(webviewView.webview);
+    // Register before assigning html because the inline renderer can post "ready"
+    // as soon as VS Code evaluates the webview content.
     webviewView.webview.onDidReceiveMessage(
       async (message: { type?: string; text?: string }) => {
         if (message.type === 'ready') {
+          readyReceived = true;
+          if (this.readyTimeout) {
+            clearTimeout(this.readyTimeout);
+            this.readyTimeout = undefined;
+          }
+          this.outputChannel.appendLine('Token browser webview ready signal received.');
           this.postCurrentMetadata();
+          return;
+        }
+
+        if (message.type === 'webview-error' || message.type === 'log') {
+          this.outputChannel.appendLine(
+            `Token browser webview ${message.type}: ${message.text ?? 'Unknown message'}`,
+          );
           return;
         }
 
@@ -53,6 +70,8 @@ export class CobaltTokenBrowserProvider implements vscode.WebviewViewProvider {
       this.context.subscriptions,
     );
 
+    webviewView.webview.html = this.renderHtml(webviewView.webview);
+
     this.context.subscriptions.push(
       webviewView.onDidChangeVisibility(() => {
         if (webviewView.visible) {
@@ -61,7 +80,24 @@ export class CobaltTokenBrowserProvider implements vscode.WebviewViewProvider {
       }),
     );
 
-    setTimeout(() => this.postCurrentMetadata(), 0);
+    if (this.readyTimeout) {
+      clearTimeout(this.readyTimeout);
+    }
+
+    this.readyTimeout = setTimeout(() => {
+      if (readyReceived) return;
+      this.outputChannel.appendLine(
+        'Token browser webview did not send ready signal. The webview script may be blocked from running.',
+      );
+    }, 2000);
+    this.context.subscriptions.push({
+      dispose: () => {
+        if (this.readyTimeout) {
+          clearTimeout(this.readyTimeout);
+          this.readyTimeout = undefined;
+        }
+      },
+    });
   }
 
   private postCurrentMetadata(): void {

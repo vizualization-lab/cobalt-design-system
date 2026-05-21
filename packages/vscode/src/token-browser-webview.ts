@@ -1,5 +1,8 @@
 import * as vscode from 'vscode';
 import tokenBrowserTemplate from './token-browser-webview.html';
+// Import the browser-side webview code as text so it can be injected into a nonce-approved
+// inline script. This avoids VS Code webview local-resource URI differences across platforms.
+import webviewScript from './webview-script.js?raw';
 import { MetadataSnapshot } from './manifest';
 
 export function renderTokenBrowserHtml(
@@ -11,7 +14,8 @@ export function renderTokenBrowserHtml(
   return tokenBrowserTemplate
     .replaceAll('{{cspSource}}', webview.cspSource)
     .replaceAll('{{nonce}}', nonce)
-    .replaceAll('{{snapshotJson}}', escapeScriptJson(snapshot));
+    .replaceAll('{{snapshotJson}}', escapeScriptJson(snapshot))
+    .replaceAll('{{webviewScript}}', webviewScript);
 }
 
 function createNonce(): string {
