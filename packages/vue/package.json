@@ -131,7 +131,6 @@
   },
   "scripts": {
     "build": "tsc",
-    "pretest": "pnpm --filter @cobalt/components build",
     "test": "vitest run",
     "clean": "rm -rf dist tsconfig.tsbuildinfo tsconfig.tsbundleinfo"
   },
