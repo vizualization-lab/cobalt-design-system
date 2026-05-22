@@ -111,25 +111,16 @@ export class CoLabel extends LitElement {
         ${this.required
           ? html`<span class="co-label__required" aria-hidden="true">*</span>`
           : nothing}
-        <span
-          data-co-label-internal="true"
-          class="co-label__content co-label__content--prefix"
-        >
+        <span data-co-label-internal="true" class="co-label__content co-label__content--prefix">
           <slot name="prefix"></slot>
         </span>
         <span data-co-label-internal="true" class="co-label__text-group">
-          <span
-            data-co-label-internal="true"
-            class="co-label__content co-label__content--default"
-          >
+          <span data-co-label-internal="true" class="co-label__content co-label__content--default">
             <slot></slot>
           </span>
           ${this._optionalTemplate()}
         </span>
-        <span
-          data-co-label-internal="true"
-          class="co-label__content co-label__content--suffix"
-        >
+        <span data-co-label-internal="true" class="co-label__content co-label__content--suffix">
           <slot name="suffix"></slot>
         </span>
       </label>

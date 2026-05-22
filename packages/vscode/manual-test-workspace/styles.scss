@@ -7,9 +7,7 @@
   border: var(--co-border-width-container) solid var(--co-color-border-default);
   border-radius: var(--co-shape-radius-md);
   padding: co.space('inset.md');
-  color: var(--co-color-text-on-secondary)
-
-  &__title {
+  color: var(--co-color-text-on-secondary) &__title {
     color: var(--co-color-text-heading);
     font-size: var(--co-font-size-h5);
     color: var(--co-color-text-secondary);

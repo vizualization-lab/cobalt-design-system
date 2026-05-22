@@ -68,7 +68,7 @@ type FormGroupInternals = {
 export class CoForm extends LionForm {
   static get styles() {
     return [...super.styles, cobaltFormStyles];
-  };
+  }
 
   /** Whether the form is disabled. Cascades to all child form elements. */
   @property({ type: Boolean, reflect: true })
@@ -248,7 +248,7 @@ export class CoForm extends LionForm {
     } else {
       this.submit();
     }
-  }
+  };
 
   private async _waitForFeedback() {
     await Promise.all(
