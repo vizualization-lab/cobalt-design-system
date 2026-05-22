@@ -33,6 +33,7 @@ const githubUrl = env.COBALT_GITHUB_URL || `https://github.com/${githubOrg}/${gi
 const registryUrl = env.COBALT_REGISTRY_URL || 'https://registry.your-org.com';
 const caBundlePath = env.COBALT_CA_BUNDLE || './path/to/ca/bundle';
 const contactEmail = env.COBALT_CONTACT_EMAIL || 'DESIGN_SYSTEM';
+const cobaltBannerText = env.COBALT_BANNER || 'ALPHA';
 
 function normalizeBase(base: string): string {
   const trimmed = base.trim();
@@ -161,6 +162,7 @@ export default withMermaid(
     themeConfig: {
       cobaltVersion: pkg.version,
       cobaltVersionState: 'alpha',
+      cobaltBannerText,
       github: {
         url: githubUrl,
         org: githubOrg,
