@@ -14,12 +14,12 @@ Cobalt declares six layers in a fixed order. Later layers always take priority o
 
 | Priority    | Layer          | Purpose                                       | Who edits         |
 | ----------- | -------------- | --------------------------------------------- | ----------------- |
-| 1 (lowest)  | `co.reset`     | Global reset defaults                         | System / Consumer |
-| 2           | `co.base`      | Opt-in base element styles (`[data-co-base]`) | System            |
-| 3           | `co.tokens`    | Light-mode token definitions (`:root`)        | System            |
-| 4           | `co.theme`     | Dark-mode + custom theme overrides            | System / Consumer |
-| 5           | `co.utilities` | Utility classes (`.co-*`)                     | System            |
 | 6 (highest) | `co.overrides` | Consumer brand customizations                 | Consumer          |
+| 5           | `co.utilities` | Utility classes (`.co-*`)                     | System            |
+| 4           | `co.theme`     | Dark-mode + custom theme overrides            | System / Consumer |
+| 3           | `co.tokens`    | Light-mode token definitions (`:root`)        | System            |
+| 2           | `co.base`      | Opt-in base element styles (`[data-co-base]`) | System            |
+| 1 (lowest)  | `co.reset`     | Global reset defaults                         | System / Consumer |
 
 The layer order is declared by `@cobalt/tokens/css`:
 
