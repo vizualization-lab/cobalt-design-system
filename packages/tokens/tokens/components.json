@@ -20,6 +20,89 @@
           }
         }
       },
+      "banner": {
+        "min-height": {
+          "$type": "dimension",
+          "$value": "30px",
+          "$description": "Minimum height for the persistent announcement banner."
+        },
+        "padding": {
+          "block": {
+            "$type": "dimension",
+            "$value": "{co.space.2}",
+            "$description": "Vertical padding for the persistent announcement banner."
+          },
+          "inline": {
+            "$type": "dimension",
+            "$value": "{co.space.2}",
+            "$description": "Horizontal padding for the persistent announcement banner."
+          }
+        },
+        "gap": {
+          "$type": "dimension",
+          "$value": "{co.space.1}",
+          "$description": "Vertical gap between banner title and supporting content."
+        },
+        "background": {
+          "$type": "color",
+          "$value": "{co.color.surface.static.default}",
+          "$description": "Background color for the persistent announcement banner."
+        },
+        "title": {
+          "color": {
+            "$type": "color",
+            "$value": "{co.color.text.default}",
+            "$description": "Text color for the banner title."
+          },
+          "font-size": {
+            "$type": "dimension",
+            "$value": "{co.font.size.xsmall}",
+            "$description": "Font size for the banner title."
+          },
+          "font-weight": {
+            "$type": "fontWeight",
+            "$value": "{co.font.weight.regular}",
+            "$description": "Font weight for the banner title."
+          },
+          "tracking": {
+            "$type": "dimension",
+            "$value": "{co.font.tracking.normal}",
+            "$description": "Letter spacing for the banner title."
+          },
+          "line-height": {
+            "$type": "dimension",
+            "$value": "14px",
+            "$description": "Line height for the banner title."
+          }
+        },
+        "content": {
+          "color": {
+            "$type": "color",
+            "$value": "{co.color.text.secondary}",
+            "$description": "Text color for supporting banner content."
+          },
+          "font-size": {
+            "$type": "dimension",
+            "$value": "{co.font.size.xsmall}",
+            "$description": "Font size for supporting banner content."
+          },
+          "font-weight": {
+            "$type": "fontWeight",
+            "$value": "{co.font.weight.regular}",
+            "$description": "Font weight for supporting banner content."
+          },
+          "tracking": {
+            "$type": "dimension",
+            "$value": "{co.font.tracking.normal}",
+            "$description": "Letter spacing for supporting banner content."
+          },
+          "line-height": {
+            "$type": "dimension",
+            "$value": "14px",
+            "$description": "Line height for supporting banner content."
+          }
+        }
+      },
       "card": {
         "padding": {
           "$type": "dimension",

@@ -46,13 +46,49 @@ describe('co-banner', () => {
     expect(content!.textContent).to.equal('Additional details here');
   });
 
-  it('has a minimum height of 44px', async () => {
+  it('uses the tokenized Figma minimum height', async () => {
     const el = await fixture<CoBanner>(html`
       <co-banner><span slot="title">Test</span></co-banner>
     `);
 
     const banner = el.shadowRoot!.querySelector('.banner') as HTMLElement;
-    expect(banner.offsetHeight).to.be.at.least(44);
+    const styles = getComputedStyle(banner);
+    expect(styles.minBlockSize).to.equal('34px');
+    expect(banner.offsetHeight).to.be.at.least(34);
+  });
+
+  it('uses tokenized 4px-grid banner spacing', async () => {
+    const el = await fixture<CoBanner>(html`
+      <co-banner><span slot="title">Test</span></co-banner>
+    `);
+
+    const banner = el.shadowRoot!.querySelector('.banner') as HTMLElement;
+    const styles = getComputedStyle(banner);
+    expect(styles.paddingBlockStart).to.equal('4px');
+    expect(styles.paddingBlockEnd).to.equal('4px');
+    expect(styles.paddingInlineStart).to.equal('8px');
+    expect(styles.paddingInlineEnd).to.equal('8px');
+  });
+
+  it('uses tokenized banner typography', async () => {
+    const el = await fixture<CoBanner>(html`
+      <co-banner>
+        <span slot="title">Alpha</span>
+        Supporting content
+      </co-banner>
+    `);
+
+    const title = el.shadowRoot!.querySelector('.banner__title') as HTMLElement;
+    const content = el.shadowRoot!.querySelector('.banner__content') as HTMLElement;
+    const titleStyles = getComputedStyle(title);
+    const contentStyles = getComputedStyle(content);
+
+    expect(titleStyles.fontSize).to.equal('12px');
+    expect(titleStyles.fontWeight).to.equal('400');
+    expect(titleStyles.lineHeight).to.equal('14px');
+    expect(contentStyles.fontSize).to.equal('12px');
+    expect(contentStyles.fontWeight).to.equal('400');
+    expect(contentStyles.lineHeight).to.equal('14px');
   });
 
   it('centers content', async () => {

@@ -167,16 +167,16 @@ export class AppComponent {}
 
 ### Properties
 
-| Property | Type     | Default    | Description                             |
-| -------- | -------- | ---------- | --------------------------------------- |
-| `title`  | `string` | `''`       | Title text displayed in the title style |
-| `label`  | `string` | `'Banner'` | Accessible label for the banner region  |
+| Property | Type     | Default    | Description                                    |
+| -------- | -------- | ---------- | ---------------------------------------------- |
+| `title`  | `string` | `''`       | Title text displayed in the banner title style |
+| `label`  | `string` | `'Banner'` | Accessible label for the banner region         |
 
 ### Slots
 
 | Name        | Description                                           |
 | ----------- | ----------------------------------------------------- |
-| `title`     | Title text styled with the title typography role      |
+| `title`     | Title text styled with the banner title style         |
 | _(default)_ | Additional content stacked vertically below the title |
 
 ### CSS Parts
@@ -186,6 +186,26 @@ export class AppComponent {}
 | `base`    | The banner container     |
 | `title`   | The title slot wrapper   |
 | `content` | The default slot wrapper |
+
+### CSS Custom Properties
+
+| Custom Property                             | Description                              |
+| ------------------------------------------- | ---------------------------------------- |
+| `--co-component-banner-min-height`          | Minimum banner height                    |
+| `--co-component-banner-padding-block`       | Vertical banner padding                  |
+| `--co-component-banner-padding-inline`      | Horizontal banner padding                |
+| `--co-component-banner-gap`                 | Gap between title and supporting content |
+| `--co-component-banner-background`          | Banner background color                  |
+| `--co-component-banner-title-color`         | Banner title text color                  |
+| `--co-component-banner-title-font-size`     | Banner title font size                   |
+| `--co-component-banner-title-font-weight`   | Banner title font weight                 |
+| `--co-component-banner-title-tracking`      | Banner title letter spacing              |
+| `--co-component-banner-title-line-height`   | Banner title line height                 |
+| `--co-component-banner-content-color`       | Supporting content text color            |
+| `--co-component-banner-content-font-size`   | Supporting content font size             |
+| `--co-component-banner-content-font-weight` | Supporting content font weight           |
+| `--co-component-banner-content-tracking`    | Supporting content letter spacing        |
+| `--co-component-banner-content-line-height` | Supporting content line height           |
 
 ## Accessibility
 
@@ -209,9 +229,9 @@ export class AppComponent {}
 
 - [ ] Banner spans the full viewport width
 - [ ] Content is centered horizontally and vertically
-- [ ] Title uses the title typography role
+- [ ] Title uses the banner title style
 - [ ] Stacked content aligns vertically in the center
-- [ ] Minimum height of 44px is maintained with minimal content
+- [ ] Minimum height follows `--co-component-banner-min-height`
 - [ ] Works in both light and dark modes
 - [ ] Screen reader announces the banner as a landmark
 
