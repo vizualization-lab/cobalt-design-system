@@ -1,12 +1,13 @@
 import { describe, it, expect } from 'vitest';
 import { mount } from '@vue/test-utils';
+import { h } from 'vue';
 import { CoListbox, CoOption } from './listbox.js';
 
 describe('Vue CoListbox wrapper', () => {
   it('renders co-listbox and co-option elements', () => {
     const wrapper = mount(CoListbox, {
       props: { label: 'Fruit' },
-      slots: { default: '<co-option value="apple">Apple</co-option>' },
+      slots: { default: () => h('co-option', { value: 'apple' }, 'Apple') },
     });
     expect(wrapper.find('co-listbox').exists()).toBe(true);
     expect(wrapper.find('co-option').exists()).toBe(true);

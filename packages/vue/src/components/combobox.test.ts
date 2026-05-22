@@ -1,12 +1,13 @@
 import { describe, it, expect } from 'vitest';
 import { mount } from '@vue/test-utils';
+import { h } from 'vue';
 import { CoCombobox } from './combobox.js';
 
 describe('Vue CoCombobox wrapper', () => {
   it('renders co-combobox and option children', () => {
     const wrapper = mount(CoCombobox, {
       props: { label: 'Fruit' },
-      slots: { default: '<co-option value="apple">Apple</co-option>' },
+      slots: { default: () => h('co-option', { value: 'apple' }, 'Apple') },
     });
 
     expect(wrapper.find('co-combobox').exists()).toBe(true);

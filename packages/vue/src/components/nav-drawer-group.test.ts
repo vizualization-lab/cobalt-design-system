@@ -1,12 +1,13 @@
 import { describe, it, expect } from 'vitest';
 import { mount } from '@vue/test-utils';
+import { h } from 'vue';
 import { CoNavDrawerGroup } from './nav-drawer-group.js';
 
 describe('Vue CoNavDrawerGroup wrapper', () => {
   it('renders co-nav-drawer-group element and passes props', () => {
     const wrapper = mount(CoNavDrawerGroup, {
       props: { label: 'Navigation', value: 'navigation', open: true },
-      slots: { default: '<co-nav-drawer-item value="drawer">Drawer</co-nav-drawer-item>' },
+      slots: { default: () => h('co-nav-drawer-item', { value: 'drawer' }, 'Drawer') },
     });
 
     const el = wrapper.find('co-nav-drawer-group').element as any;

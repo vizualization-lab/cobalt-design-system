@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { mount } from '@vue/test-utils';
+import { h } from 'vue';
 import { CoNavDrawerItem } from './nav-drawer-item.js';
 
 describe('Vue CoNavDrawerItem wrapper', () => {
@@ -27,7 +28,7 @@ describe('Vue CoNavDrawerItem wrapper', () => {
     const wrapper = mount(CoNavDrawerItem, {
       attrs: { class: 'docs-sidebar-item' },
       slots: {
-        default: '<co-icon slot="prefix" name="fiber-manual-record"></co-icon>Forms',
+        default: () => [h('co-icon', { slot: 'prefix', name: 'fiber-manual-record' }), 'Forms'],
       },
     });
 
