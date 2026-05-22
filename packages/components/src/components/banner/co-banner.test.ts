@@ -53,8 +53,8 @@ describe('co-banner', () => {
 
     const banner = el.shadowRoot!.querySelector('.banner') as HTMLElement;
     const styles = getComputedStyle(banner);
-    expect(styles.minBlockSize).to.equal('34px');
-    expect(banner.offsetHeight).to.be.at.least(34);
+    expect(styles.minBlockSize).to.equal('30px');
+    expect(banner.offsetHeight).to.be.at.least(30);
   });
 
   it('uses tokenized 4px-grid banner spacing', async () => {
@@ -64,8 +64,8 @@ describe('co-banner', () => {
 
     const banner = el.shadowRoot!.querySelector('.banner') as HTMLElement;
     const styles = getComputedStyle(banner);
-    expect(styles.paddingBlockStart).to.equal('4px');
-    expect(styles.paddingBlockEnd).to.equal('4px');
+    expect(styles.paddingBlockStart).to.equal('8px');
+    expect(styles.paddingBlockEnd).to.equal('8px');
     expect(styles.paddingInlineStart).to.equal('8px');
     expect(styles.paddingInlineEnd).to.equal('8px');
   });

@@ -14,10 +14,12 @@ export const cobaltBannerStyles = css`
     align-items: center;
     justify-content: center;
     inline-size: 100%;
+    max-inline-size: 100%;
     min-block-size: var(--co-component-banner-min-height);
     padding: var(--co-component-banner-padding-block) var(--co-component-banner-padding-inline);
     gap: var(--co-component-banner-gap);
     box-sizing: border-box;
+    overflow: hidden;
     background: var(--co-component-banner-background);
     color: var(--co-component-banner-content-color);
     font-family: var(--co-font-family-sans);
@@ -29,26 +31,38 @@ export const cobaltBannerStyles = css`
   }
 
   .banner__title {
+    max-inline-size: 100%;
+    overflow: hidden;
     color: var(--co-component-banner-title-color);
     font-size: var(--co-component-banner-title-font-size);
     font-weight: var(--co-component-banner-title-font-weight);
     letter-spacing: var(--co-component-banner-title-tracking);
     line-height: var(--co-component-banner-title-line-height);
+    text-overflow: ellipsis;
     text-transform: uppercase;
+    white-space: nowrap;
   }
 
   .banner__content {
     display: flex;
     flex-direction: column;
     align-items: center;
+    max-inline-size: 100%;
+    overflow: hidden;
     color: var(--co-component-banner-content-color);
     font-size: var(--co-component-banner-content-font-size);
     font-weight: var(--co-component-banner-content-font-weight);
     letter-spacing: var(--co-component-banner-content-tracking);
     line-height: var(--co-component-banner-content-line-height);
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   .banner__slot::slotted(*) {
+    max-inline-size: 100%;
     margin-block: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 `;
