@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useData, useRoute, useRouter, withBase } from 'vitepress';
-import { ref, computed, onMounted, watch } from 'vue';
+import { ref, computed, nextTick, onBeforeUnmount, onMounted, watch } from 'vue';
+import { CoBanner } from '@cobalt/vue/banner';
 import { CoIcon } from '@cobalt/vue/icon';
 import { CoModeToggle } from '@cobalt/vue/mode-toggle';
 import { CoOption } from '@cobalt/vue/option';
@@ -30,6 +31,10 @@ interface ThemeChangeDetail {
 
 const MODE_STORAGE_NAMESPACE = 'cobalt';
 const THEME_STORAGE_KEY = 'cobalt-theme';
+const bannerText = computed(() => String(theme.value.cobaltBannerText || 'ALPHA'));
+const shellElement = ref<HTMLElement | null>(null);
+const bannerElement = ref<HTMLElement | null>(null);
+let bannerResizeObserver: ResizeObserver | undefined;
 
 const editUrl = computed(() => {
   const filePath = page.value.relativePath;
@@ -95,6 +100,15 @@ function selectCategory(i: number) {
 }
 
 onMounted(() => {
+  nextTick(() => {
+    updateBannerHeight();
+
+    if (typeof ResizeObserver !== 'undefined' && bannerElement.value) {
+      bannerResizeObserver = new ResizeObserver(updateBannerHeight);
+      bannerResizeObserver.observe(bannerElement.value);
+    }
+  });
+
   const savedTheme = resolveStoredTheme(localStorage.getItem(THEME_STORAGE_KEY));
   applyThemePreferences(savedTheme);
   localStorage.setItem(THEME_STORAGE_KEY, savedTheme);
@@ -118,6 +132,19 @@ onMounted(() => {
     });
   }
 });
+
+onBeforeUnmount(() => {
+  bannerResizeObserver?.disconnect();
+  bannerResizeObserver = undefined;
+});
+
+function updateBannerHeight() {
+  const banner = bannerElement.value;
+  const shell = shellElement.value;
+  if (!banner || !shell) return;
+
+  shell.style.setProperty('--co-banner-height', `${Math.ceil(banner.offsetHeight)}px`);
+}
 
 // Close sidebar on route change (mobile) + clear user's rail override so rail re-syncs.
 watch(
@@ -143,16 +170,16 @@ function toggleSidebar() {
 </script>
 
 <template>
-  <div class="cobalt-shell">
+  <div ref="shellElement" class="cobalt-shell">
     <!-- Ambient background grain -->
     <div class="cobalt-grain" aria-hidden="true"></div>
 
     <!-- Alpha banner -->
-    <div class="cobalt-alpha-banner" role="banner" aria-label="Alpha notice">
-      <strong class="cobalt-alpha-banner__title">Alpha</strong>
-      <span class="cobalt-alpha-banner__text"
-        >This design system is in active development — APIs and tokens may change.</span
-      >
+    <div ref="bannerElement" class="cobalt-alpha-banner">
+      <CoBanner :label="`${bannerText} notice`">
+        <span slot="title">{{ bannerText }}</span>
+        This design system is in active development — APIs and tokens may change.
+      </CoBanner>
     </div>
 
     <!-- Top bar -->
@@ -441,28 +468,8 @@ body {
   left: 0;
   right: 0;
   z-index: 101;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: var(--co-banner-height);
-  padding: var(--co-space-1);
-  background: var(--co-color-surface-static-raised);
-  color: var(--co-color-text-default);
-  font-family: var(--co-font-family-sans);
-  font-size: var(--co-typography-caption-size);
-  line-height: var(--co-typography-caption-line-height);
+  overflow: hidden;
   border-bottom: 1px solid var(--co-color-border-subtle);
-}
-
-.cobalt-alpha-banner__title {
-  font-weight: var(--co-font-weight-medium);
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-}
-
-.cobalt-alpha-banner__text {
-  color: var(--co-color-text-secondary);
 }
 
 .cobalt-topbar {
