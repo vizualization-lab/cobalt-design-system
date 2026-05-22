@@ -1,0 +1,1 @@
+import{l as e,f as t,g as a}from"./chunks/framework.BeCEba4t.js";const _=JSON.parse('{"title":"","description":"","frontmatter":{"layout":"home"},"headers":[],"relativePath":"index.md","filePath":"index.md"}'),n={name:"index.md"};function o(r,s,c,d,i,p){return t(),a("div")}const f=e(n,[["render",o]]);export{_ as __pageData,f as default};
