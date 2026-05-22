@@ -20,11 +20,14 @@ const resolvedScreenshotSrc = computed(() => withBase(props.screenshotSrc));
   <article class="artifact-download">
     <div class="artifact-download__content">
       <p class="artifact-download__type">{{ type }}</p>
-      <h2 class="artifact-download__title">{{ title }}</h2>
+      <h3 class="artifact-download__title">{{ title }}</h3>
       <p class="artifact-download__description">{{ description }}</p>
       <div class="artifact-download__actions">
         <a class="artifact-download__button-link" :href="resolvedDownloadHref" :download="fileName">
-          <co-button variant="primary">Download VSIX</co-button>
+          <co-button variant="primary">
+            <co-icon name="download" size="sm" />
+            Download VSIX
+          </co-button>
         </a>
         <code class="artifact-download__file">{{ fileName }}</code>
       </div>
@@ -42,6 +45,7 @@ const resolvedScreenshotSrc = computed(() => withBase(props.screenshotSrc));
   gap: var(--co-space-6);
   align-items: center;
   padding: var(--co-space-6);
+  margin: var(--co-space-3) 0;
   border: var(--co-border-width-default) solid var(--co-color-border-default);
   border-radius: var(--co-control-radius-container);
   background: var(--co-color-surface-static-raised);
