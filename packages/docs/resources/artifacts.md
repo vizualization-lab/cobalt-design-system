@@ -2,7 +2,7 @@
 
 Downloadable artifacts collect Cobalt tools and supporting files that are useful outside of the package registry. This page will grow as more installable extensions, templates, and packaged resources become available.
 
-## VS Code Extension
+## VS Code Extension {#cobalt-tokens-explorer}
 
 <ArtifactDownload
   title="Cobalt Tokens Explorer"

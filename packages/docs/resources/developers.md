@@ -20,7 +20,7 @@ Helpful links, tools, and references for developers working with the Cobalt Desi
 
 - **Lit Plugin** — Syntax highlighting, type-checking, and completions for Lit templates
 - **Custom Elements Manifest Analyzer** — IntelliSense for custom element tags and attributes
-- **CSS Variable Autocomplete** — Autocomplete for `--co-*` token names in stylesheets
+- **Cobalt Tokens Explorer** — Browse, search, copy, and insert Cobalt design tokens and utility classes from inside VS Code. See the [Cobalt Tokens Explorer artifact](/resources/artifacts#cobalt-tokens-explorer).
 
 ## Related Technologies
 
