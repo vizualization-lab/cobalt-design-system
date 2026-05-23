@@ -15,3 +15,16 @@ Downloadable artifacts collect Cobalt tools and supporting files that are useful
 />
 
 After downloading, install the extension from VS Code by opening the Extensions view, selecting **Install from VSIX...**, and choosing `cobalt-tokens-explorer.vsix`.
+
+## Fonts Package {#cobalt-fonts-package}
+
+<ArtifactDownload
+  title="Cobalt Fonts Package"
+  type="Designer artifact"
+  description="Installable TTF variable fonts for designers creating Cobalt mockups and prototypes. Includes Inter, Noto Sans, and JetBrains Mono with normal and italic variable font files."
+  download-href="/assets/artifacts/fonts/cobalt-design-system-fonts.zip"
+  screenshot-src="/assets/artifacts/fonts/cobalt-fonts-package.png"
+  screenshot-alt="Cobalt Fonts Package preview showing Inter, Noto Sans, and JetBrains Mono type specimens."
+  file-name="cobalt-design-system-fonts.zip"
+  button-label="Download ZIP"
+/>

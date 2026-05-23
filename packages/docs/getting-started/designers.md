@@ -22,6 +22,10 @@ The Tokens Studio plugin helps you import and export design tokens, and synchron
 2. Search for "Tokens Studio" and select the plugin.
 3. Click **Install**.
 
+### 4. Install the Cobalt Fonts
+
+Cobalt uses Inter for product UI, Noto Sans for fallback coverage, and JetBrains Mono for technical text. The Cobalt Figma file ships with the fonts, however we made the fonts availbe if you are using a different prototyping software a do not have have ready access to the font faces. You can download the [Cobalt Fonts Package](/resources/artifacts#cobalt-fonts-package), and work with your IT support to install the included TTF files.
+
 ## Working with Tokens
 
 Design tokens are the single source of truth for visual style. Every color, spacing value, and font size in Cobalt maps to a named token.
@@ -103,4 +107,5 @@ Before marking a design as ready:
 - **Token Structure:** [How tokens are organized](../tokens/structure.md)
 - **Figma Handoff:** [What to hand off with tokens](../contributing/figma-handoff.md) (includes a [copy-paste template](../contributing/figma-handoff.md#quick-handoff-template))
 - **Token Reference:** [Tokens Documentation](../tokens/)
+- **Fonts Package:** [Download installable Cobalt fonts](/resources/artifacts#cobalt-fonts-package)
 - **Custom Icons:** Need to design a custom icon for Cobalt? See the [Designing Icons](/contributing/designing-icons) guide for grid specs, keyline templates, and an export checklist.

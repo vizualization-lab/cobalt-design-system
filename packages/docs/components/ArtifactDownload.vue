@@ -10,6 +10,7 @@ const props = defineProps<{
   screenshotSrc: string;
   screenshotAlt: string;
   fileName: string;
+  buttonLabel?: string;
 }>();
 
 const resolvedDownloadHref = computed(() => withBase(props.downloadHref));
@@ -26,7 +27,7 @@ const resolvedScreenshotSrc = computed(() => withBase(props.screenshotSrc));
         <a class="artifact-download__button-link" :href="resolvedDownloadHref" :download="fileName">
           <co-button variant="primary">
             <co-icon name="download" size="sm" />
-            Download VSIX
+            {{ buttonLabel ?? 'Download VSIX' }}
           </co-button>
         </a>
         <code class="artifact-download__file">{{ fileName }}</code>
