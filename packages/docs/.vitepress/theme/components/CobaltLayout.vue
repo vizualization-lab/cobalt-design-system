@@ -190,25 +190,7 @@ function toggleSidebar() {
         :aria-label="sidebarOpen ? 'Close menu' : 'Open menu'"
         :aria-expanded="sidebarOpen"
       >
-        <svg
-          width="20"
-          height="20"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-        >
-          <template v-if="!sidebarOpen">
-            <line x1="3" y1="6" x2="21" y2="6" />
-            <line x1="3" y1="12" x2="21" y2="12" />
-            <line x1="3" y1="18" x2="21" y2="18" />
-          </template>
-          <template v-else>
-            <line x1="6" y1="6" x2="18" y2="18" />
-            <line x1="6" y1="18" x2="18" y2="6" />
-          </template>
-        </svg>
+        <CoIcon :name="sidebarOpen ? 'close' : 'menu'" size="md" aria-hidden="true" />
       </button>
       <a :href="withBase('/')" class="topbar-brand">
         <div class="brand-icon">
@@ -1091,8 +1073,9 @@ div[class*='language-'] > button.copy.copied::before {
   display: none;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 36px;
+  inline-size: 40px;
+  block-size: 40px;
+  padding: 0;
   border: none;
   background: none;
   border-radius: 8px;
@@ -1135,7 +1118,8 @@ div[class*='language-'] > button.copy.copied::before {
   }
 
   .cobalt-topbar {
-    padding: 0 16px;
+    padding-inline: 12px 16px;
+    gap: 8px;
   }
 
   .brand-tag {

@@ -40,6 +40,7 @@ export const cobaltAppShellStyles = css`
     align-items: center;
     gap: var(--co-space-gap-md);
     min-block-size: calc(var(--co-control-height-lg) + var(--co-space-3));
+    padding-inline: var(--co-space-4);
   }
 
   .app-shell__topnav-slot {
@@ -48,9 +49,13 @@ export const cobaltAppShellStyles = css`
   }
 
   .app-shell__toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     flex: 0 0 auto;
-    min-block-size: var(--co-control-height-md);
-    padding: var(--co-space-2) var(--co-space-3);
+    inline-size: var(--co-control-height-md);
+    block-size: var(--co-control-height-md);
+    padding: 0;
     border: var(--co-border-width-action) solid var(--co-color-border-default);
     border-radius: var(--co-control-radius-interactive);
     background: var(--co-color-surface-static-default);

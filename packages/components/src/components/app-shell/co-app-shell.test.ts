@@ -198,8 +198,18 @@ describe('co-app-shell', () => {
       </co-app-shell>
     `);
     const toggle = withNav.shadowRoot?.querySelector<HTMLButtonElement>('#drawer-toggle');
+    const topnavInner = withNav.shadowRoot?.querySelector<HTMLElement>('.app-shell__topnav-inner');
     const panel = withNav.shadowRoot?.querySelector<HTMLElement>('.app-shell__overlay-panel');
+    const toggleIcon = toggle?.querySelector('co-icon');
     expect(toggle).to.exist;
+    expect(topnavInner).to.exist;
+    expect(toggle?.textContent?.trim()).to.equal('');
+    expect(toggleIcon?.getAttribute('name')).to.equal('menu');
+    expect(getComputedStyle(topnavInner!).paddingInlineStart).to.equal('16px');
+    expect(getComputedStyle(topnavInner!).paddingInlineEnd).to.equal('16px');
+    expect(getComputedStyle(toggle!).inlineSize).to.equal('40px');
+    expect(getComputedStyle(toggle!).blockSize).to.equal('40px');
+    expect(getComputedStyle(toggle!).padding).to.equal('0px');
     expect(toggle?.getAttribute('aria-controls')).to.equal(panel?.id);
     const overlay = withNav.shadowRoot?.querySelector<HTMLElement>('.app-shell__overlay');
     expect(getComputedStyle(overlay!).pointerEvents).to.equal('none');
@@ -223,12 +233,14 @@ describe('co-app-shell', () => {
     const openEvent = await oneEvent(el, 'co-drawer-open');
     expect((openEvent as CustomEvent).detail.open).to.equal(true);
     expect(el.drawerOpen).to.be.true;
+    expect(toggle?.querySelector('co-icon')?.getAttribute('name')).to.equal('close');
 
     const toggleEvent = oneEvent(el, 'co-drawer-toggle');
     el.closeDrawer();
     const closeToggle = await toggleEvent;
     expect((closeToggle as CustomEvent).detail.open).to.equal(false);
     expect(el.drawerOpen).to.be.false;
+    expect(toggle?.querySelector('co-icon')?.getAttribute('name')).to.equal('menu');
 
     const openViaMethod = oneEvent(el, 'co-drawer-toggle');
     el.openDrawer();

@@ -3,6 +3,7 @@ import { styleMap } from 'lit/directives/style-map.js';
 import { customElement, property, query, state } from 'lit/decorators.js';
 import { CoBreakpointMd } from '@cobalt/tokens';
 import { cobaltAppShellStyles } from './co-app-shell.styles.js';
+import '../icon/co-icon.js';
 
 export interface AppShellDrawerDetail {
   open: boolean;
@@ -169,7 +170,11 @@ export class CoAppShell extends LitElement {
                           aria-label=${this.drawerOpen ? 'Close navigation' : 'Open navigation'}
                           @click=${this.toggleDrawer}
                         >
-                          Menu
+                          <co-icon
+                            name=${this.drawerOpen ? 'close' : 'menu'}
+                            size="md"
+                            aria-hidden="true"
+                          ></co-icon>
                         </button>
                       `
                     : nothing}
