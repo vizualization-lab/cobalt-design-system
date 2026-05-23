@@ -28,7 +28,7 @@ export const cobaltAppShellStyles = css`
   }
 
   .app-shell__footer-inner {
-    padding: var(--co-space-3) var(--co-space-4);
+    padding: var(--co-space-3) var(--co-space-inset-sm);
   }
 
   .app-shell__topnav {
@@ -40,7 +40,7 @@ export const cobaltAppShellStyles = css`
     align-items: center;
     gap: var(--co-space-gap-md);
     min-block-size: calc(var(--co-control-height-lg) + var(--co-space-3));
-    padding-inline: var(--co-space-4);
+    padding-inline: var(--co-space-inset-sm);
   }
 
   .app-shell__topnav-slot {
@@ -74,9 +74,9 @@ export const cobaltAppShellStyles = css`
     grid-template-columns: minmax(0, 1fr);
     align-items: stretch;
     column-gap: var(--co-space-gap-sm);
-    row-gap: var(--co-space-4);
+    row-gap: var(--co-space-inset-sm);
     min-block-size: 0;
-    padding: var(--co-space-4);
+    padding: var(--co-space-inset-sm);
   }
 
   .app-shell__rail,
@@ -107,8 +107,8 @@ export const cobaltAppShellStyles = css`
     inset-block: 0;
     inset-inline-start: 0;
     block-size: 100dvh;
-    inline-size: min(var(--_co-app-shell-overlay-width), calc(100vw - var(--co-space-6)));
-    max-inline-size: calc(100vw - var(--co-space-6));
+    inline-size: min(var(--_co-app-shell-overlay-width), calc(100vw - var(--co-space-inset-lg)));
+    max-inline-size: calc(100vw - var(--co-inset-lg));
     visibility: hidden;
     pointer-events: none;
     z-index: 50;
@@ -125,8 +125,8 @@ export const cobaltAppShellStyles = css`
     grid-template-rows: 1fr;
     align-content: stretch;
     box-sizing: border-box;
-    inline-size: min(var(--_co-app-shell-overlay-width), calc(100vw - var(--co-space-6)));
-    max-inline-size: calc(100vw - var(--co-space-6));
+    inline-size: min(var(--_co-app-shell-overlay-width), calc(100vw - var(--co-space-inset-lg)));
+    max-inline-size: calc(100vw - var(--co-space-inset-lg));
     block-size: 100dvh;
     overflow: auto;
     background: var(--co-color-surface-static-default);
@@ -197,11 +197,11 @@ export const cobaltAppShellStyles = css`
 
   @media (min-width: 768px) {
     .app-shell__footer-inner {
-      padding-inline: var(--co-space-6);
+      padding-inline: var(--co-space-inset-lg);
     }
 
     .app-shell__content-row {
-      padding: var(--co-space-6);
+      padding: var(--co-space-inset-lg);
     }
   }
 `;
