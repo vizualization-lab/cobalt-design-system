@@ -55,12 +55,7 @@ Pick the keyline shape closest to your icon's silhouette and design within its b
 
 ### Keyline Template Downloads
 
-Use these templates as a starting layer in your vector editor:
-
-- **SVG Keyline Template** — [Download SVG template](/assets/icon-keyline-template.svg) — lightweight, opens in any vector editor
-- **Illustrator Keyline Template** — [Download .ai template](/assets/gm_icon_template.ai.zip) — original Google template
-
-> The Illustrator template is provided by Google under the [Apache 2.0 license](https://www.apache.org/licenses/LICENSE-2.0). Original source: [Material Design icon template](https://storage.googleapis.com/material-io-design/downloads/gm_icon_template.ai.zip).
+Use the [icon keyline templates](../resources/artifacts.md#icon-keyline-templates) from the artifacts page as a starting layer in your vector editor.
 
 ### Checklist Before Submission
 
