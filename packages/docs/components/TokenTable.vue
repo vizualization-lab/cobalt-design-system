@@ -6,6 +6,9 @@ import type {
   TokenEntry,
   TokenTreeNode as ExplorerNode,
 } from './token-explorer.types';
+import { CoButton } from '@cobalt/vue/button';
+import { CoButtonIcon } from '@cobalt/vue/button-icon';
+import { CoIcon } from '@cobalt/vue/icon';
 
 type BrowserTab = 'main' | 'advanced';
 
@@ -103,6 +106,7 @@ const activeTier = ref<'semantic' | 'primitive' | null>(null);
 const activeTab = ref<BrowserTab>('main');
 const copiedName = ref<string | null>(null);
 const selectedTokenName = ref<string | null>(null);
+const rawValueExpanded = ref(false);
 const expandedIds = ref<Set<string>>(new Set());
 const advancedExpandedIds = ref<Set<string>>(new Set());
 const isMobile = ref(false);
@@ -597,6 +601,9 @@ const detailPath = computed(() =>
 const highlightedRawValue = computed(() =>
   selectedToken.value ? highlightCssValue(selectedToken.value.value) : '',
 );
+const highlightedTokenReference = computed(() =>
+  selectedToken.value ? highlightCssValue(`var(${selectedToken.value.name})`) : '',
+);
 
 function checkMobile() {
   isMobile.value = window.innerWidth < 768;
@@ -678,15 +685,22 @@ function isAdvancedExpanded(id: string): boolean {
 
 function selectToken(name: string) {
   selectedTokenName.value = name;
+  rawValueExpanded.value = false;
 }
 
 function closeDetail() {
   selectedTokenName.value = null;
+  rawValueExpanded.value = false;
+}
+
+function toggleRawValue() {
+  rawValueExpanded.value = !rawValueExpanded.value;
 }
 
 async function copyToken(name: string) {
-  await navigator.clipboard.writeText(name);
-  copiedName.value = name;
+  const wrappedName = `var(${name})`;
+  await navigator.clipboard.writeText(wrappedName);
+  copiedName.value = wrappedName;
   setTimeout(() => {
     if (copiedName.value === name) copiedName.value = null;
   }, 1500);
@@ -827,14 +841,16 @@ async function copyToken(name: string) {
                     </div>
                   </button>
 
-                  <button
+                  <CoButton
                     type="button"
                     class="result-copy"
+                    size="sm"
+                    variant="secondary"
                     :title="copiedName === token.name ? 'Copied!' : 'Copy token name'"
                     @click.stop="copyToken(token.name)"
                   >
                     {{ copiedName === token.name ? 'Copied' : 'Copy' }}
-                  </button>
+                  </CoButton>
                 </div>
               </div>
             </div>
@@ -869,17 +885,29 @@ async function copyToken(name: string) {
           <aside v-if="selectedToken" class="browser-pane browser-pane-detail">
             <div class="detail-scroll">
               <div class="detail-header">
-                <button type="button" class="detail-close" aria-label="Close" @click="closeDetail">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                    <path
-                      d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
-                    />
-                  </svg>
-                </button>
+                <CoButtonIcon
+                  type="button"
+                  variant="secondary"
+                  size="sm"
+                  name="close"
+                  aria-label="Close"
+                  circle
+                  @click="closeDetail"
+                >
+                </CoButtonIcon>
               </div>
 
-              <code class="detail-name">{{ selectedToken.name }}</code>
               <p class="detail-path">{{ detailPath }}</p>
+              <code
+                class="detail-name detail-value--syntax"
+                v-html="highlightedTokenReference"
+              ></code>
+
+              <div class="detail-actions">
+                <CoButton variant="secondary" size="sm" @click="copyToken(selectedToken.name)">
+                  {{ copiedName === selectedToken.name ? 'Copied' : 'Copy token name' }}
+                </CoButton>
+              </div>
 
               <p v-if="selectedToken.description" class="detail-description">
                 {{ selectedToken.description }}
@@ -898,20 +926,31 @@ async function copyToken(name: string) {
                 </div>
               </div>
 
-              <div class="detail-actions">
-                <button type="button" class="detail-copy" @click="copyToken(selectedToken.name)">
-                  {{ copiedName === selectedToken.name ? 'Copied' : 'Copy token name' }}
-                </button>
-              </div>
-
-              <div class="detail-section">
-                <div class="detail-label">Raw value</div>
-                <code class="detail-value detail-value--syntax" v-html="highlightedRawValue"></code>
-              </div>
-
               <div v-if="selectedToken.resolvedValue" class="detail-section">
                 <div class="detail-label">Resolved value</div>
                 <code class="detail-value">{{ selectedToken.resolvedValue }}</code>
+              </div>
+
+              <div class="detail-section detail-section--collapsible">
+                <button
+                  type="button"
+                  class="detail-disclosure"
+                  :aria-expanded="rawValueExpanded"
+                  @click="toggleRawValue"
+                >
+                  <span class="detail-label">Raw value</span>
+                  <CoIcon
+                    name="chevron-right"
+                    size="md"
+                    class="detail-disclosure-icon"
+                    aria-hidden="true"
+                  ></CoIcon>
+                </button>
+                <code
+                  v-if="rawValueExpanded"
+                  class="detail-value detail-value--syntax"
+                  v-html="highlightedRawValue"
+                ></code>
               </div>
 
               <dl class="detail-meta-grid">
@@ -942,17 +981,22 @@ async function copyToken(name: string) {
         <section class="mobile-detail-sheet">
           <div class="detail-scroll">
             <div class="detail-header">
-              <button type="button" class="detail-close" aria-label="Close" @click="closeDetail">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                  <path
-                    d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
-                  />
-                </svg>
-              </button>
+              <CoButtonIcon
+                name="close"
+                variant="secondary"
+                size="sm"
+                circle
+                aria-label="Close"
+                @click="closeDetail"
+              >
+              </CoButtonIcon>
             </div>
 
-            <code class="detail-name">{{ selectedToken.name }}</code>
             <p class="detail-path">{{ detailPath }}</p>
+            <code
+              class="detail-name detail-value--syntax"
+              v-html="highlightedTokenReference"
+            ></code>
 
             <div v-if="tokenSwatchBackground(selectedToken)" class="detail-swatch-card">
               <span
@@ -968,19 +1012,41 @@ async function copyToken(name: string) {
             </div>
 
             <div class="detail-actions">
-              <button type="button" class="detail-copy" @click="copyToken(selectedToken.name)">
+              <CoButton
+                type="button"
+                variant="secondary"
+                size="sm"
+                @click="copyToken(selectedToken.name)"
+              >
                 {{ copiedName === selectedToken.name ? 'Copied' : 'Copy token name' }}
-              </button>
-            </div>
-
-            <div class="detail-section">
-              <div class="detail-label">Raw value</div>
-              <code class="detail-value detail-value--syntax" v-html="highlightedRawValue"></code>
+              </CoButton>
             </div>
 
             <div v-if="selectedToken.resolvedValue" class="detail-section">
               <div class="detail-label">Resolved value</div>
               <code class="detail-value">{{ selectedToken.resolvedValue }}</code>
+            </div>
+
+            <div class="detail-section detail-section--collapsible">
+              <button
+                type="button"
+                class="detail-disclosure"
+                :aria-expanded="rawValueExpanded"
+                @click="toggleRawValue"
+              >
+                <span class="detail-label">Raw value</span>
+                <CoIcon
+                  name="chevron-right"
+                  size="md"
+                  class="detail-disclosure-icon"
+                  aria-hidden="true"
+                ></CoIcon>
+              </button>
+              <code
+                v-if="rawValueExpanded"
+                class="detail-value detail-value--syntax"
+                v-html="highlightedRawValue"
+              ></code>
             </div>
 
             <dl class="detail-meta-grid">
@@ -1414,26 +1480,19 @@ async function copyToken(name: string) {
   gap: 12px;
 }
 
-.detail-close {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 34px;
-  height: 34px;
-  border: 1px solid var(--co-color-border-default);
-  border-radius: var(--co-shape-radius-full);
-  background: var(--co-color-surface-static-raised);
-  color: var(--co-color-text-secondary);
-  cursor: pointer;
-}
-
 .detail-name {
   display: block;
   margin-top: 14px;
+  padding: 12px 14px;
+  border: 1px solid var(--co-color-border-subtle);
+  border-radius: var(--co-shape-radius-xl);
+  background: var(--co-color-surface-static-sunken);
   font-family: var(--co-font-family-mono);
   font-size: var(--co-font-size-small);
   color: var(--co-color-text-default);
   overflow-wrap: anywhere;
+  box-shadow: inset 0 1px 0
+    color-mix(in srgb, var(--co-color-surface-static-overlay) 6%, transparent);
 }
 
 .detail-path {
@@ -1493,12 +1552,41 @@ async function copyToken(name: string) {
   margin-top: 18px;
 }
 
+.detail-section--collapsible .detail-value {
+  margin-top: 8px;
+}
+
+.detail-disclosure {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  inline-size: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+
+.detail-disclosure .detail-label {
+  margin-bottom: 0;
+}
+
+.detail-disclosure-icon {
+  color: var(--co-color-text-tertiary);
+  transition: transform var(--co-motion-duration-fast) var(--co-motion-easing-default);
+}
+
+.detail-disclosure[aria-expanded='true'] .detail-disclosure-icon {
+  transform: rotate(90deg);
+}
+
 .detail-value {
   display: block;
   padding: 12px 14px;
   border: 1px solid var(--co-color-border-subtle);
   border-radius: var(--co-shape-radius-xl);
-  background: var(--co-color-surface-static-contrast);
+  background: var(--co-color-surface-static-sunken);
   font-family: var(--co-font-family-mono);
   font-size: var(--co-font-size-small);
   color: var(--co-color-text-default);
