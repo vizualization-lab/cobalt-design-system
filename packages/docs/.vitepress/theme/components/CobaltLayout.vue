@@ -20,6 +20,7 @@ import {
   isDocsThemeId,
   type DocsThemeId,
 } from '../theme-options';
+import { trackEvent } from '../analytics';
 
 const { frontmatter, theme, page } = useData();
 const route = useRoute();
@@ -27,6 +28,10 @@ const router = useRouter();
 
 interface ThemeChangeDetail {
   value?: unknown;
+}
+
+interface ModeChangeDetail {
+  mode?: unknown;
 }
 
 const MODE_STORAGE_NAMESPACE = 'cobalt';
@@ -162,6 +167,14 @@ function onThemeChange(event: Event) {
 
   applyThemePreferences(nextTheme);
   localStorage.setItem(THEME_STORAGE_KEY, nextTheme);
+  trackEvent('Theme', 'Theme Change', nextTheme);
+}
+
+function onModeChange(event: Event) {
+  const detail = (event as CustomEvent<ModeChangeDetail>).detail;
+  if (detail?.mode !== 'light' && detail?.mode !== 'dark') return;
+
+  trackEvent('Theme', 'Mode Toggle', detail.mode);
 }
 
 function toggleSidebar() {
@@ -211,7 +224,12 @@ function toggleSidebar() {
       </a>
       <nav class="topbar-nav">
         <VPNavBarSearch />
-        <CoModeToggle persist :storage-namespace="MODE_STORAGE_NAMESPACE" size="sm" />
+        <CoModeToggle
+          persist
+          :storage-namespace="MODE_STORAGE_NAMESPACE"
+          size="sm"
+          @co-change="onModeChange"
+        />
         <!-- Lion-based controls rewrite light DOM during upgrade, so keep this picker client-only. -->
         <ClientOnly>
           <div class="topbar-theme-picker">

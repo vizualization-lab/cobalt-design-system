@@ -15,6 +15,7 @@ import ComponentStatus from '../../components/ComponentStatus.vue';
 import StatusMatrix from '../../components/StatusMatrix.vue';
 import LayerStack from '../../components/LayerStack.vue';
 import ArtifactDownload from '../../components/ArtifactDownload.vue';
+import { installMatomoAnalytics } from './analytics';
 
 // Cobalt design tokens
 import '@cobalt/tokens/css';
@@ -38,6 +39,8 @@ const nextSiblingRecoveryKey = 'cobalt:vitepress-next-sibling-recovery';
 
 type VitePressRouter = {
   go: (href?: string) => Promise<void> | void;
+  onAfterRouteChange?: (to: string) => Promise<void> | void;
+  onAfterRouteChanged?: (to: string) => Promise<void> | void;
 };
 
 let navigationInFlight = false;
@@ -184,7 +187,7 @@ function installNextSiblingRecovery() {
 
 export default {
   Layout: CobaltLayout,
-  enhanceApp({ app, router }) {
+  enhanceApp({ app, router, siteData }) {
     app.component('ComponentDemo', ComponentDemo);
     app.component('AppShellDemo', AppShellDemo);
     app.component('AppShellComposition', AppShellComposition);
@@ -202,6 +205,7 @@ export default {
     app.component('ArtifactDownload', ArtifactDownload);
 
     installNextSiblingRecovery();
+    installMatomoAnalytics(router, siteData.value.themeConfig.matomo);
     installDocsRouter(router);
 
     // Register Cobalt web components for markdown-authored web component examples.

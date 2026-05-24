@@ -9,6 +9,7 @@ import type {
 import { CoButton } from '@cobalt/vue/button';
 import { CoButtonIcon } from '@cobalt/vue/button-icon';
 import { CoIcon } from '@cobalt/vue/icon';
+import { createSearchTracker } from '../.vitepress/theme/analytics';
 
 type BrowserTab = 'main' | 'advanced';
 
@@ -111,6 +112,7 @@ const expandedIds = ref<Set<string>>(new Set());
 const advancedExpandedIds = ref<Set<string>>(new Set());
 const isMobile = ref(false);
 const navPaneRef = ref<HTMLElement | null>(null);
+const trackTokenSearch = createSearchTracker('tokens');
 
 const normalizedQuery = computed(() => query.value.toLowerCase().trim());
 const isSearching = computed(() => normalizedQuery.value.length > 0);
@@ -630,12 +632,25 @@ onUnmounted(() => {
   document.body.style.overflow = '';
   themeObserver?.disconnect();
   themeObserver = null;
+  trackTokenSearch.cancel();
 });
 
 watch([query, activeTab, activeCategory, activeTier], async () => {
   await nextTick();
   navPaneRef.value?.scrollTo({ top: 0, behavior: 'auto' });
 });
+
+watch(
+  () => [normalizedQuery.value, searchResults.value.length] as const,
+  ([searchQuery, resultCount]) => {
+    if (!searchQuery) {
+      trackTokenSearch.cancel();
+      return;
+    }
+
+    trackTokenSearch(resultCount);
+  },
+);
 
 watch([isMobile, selectedTokenName], ([mobile, name]) => {
   document.body.style.overflow = mobile && name ? 'hidden' : '';

@@ -4,6 +4,7 @@ import { CoNavSeparator } from '@cobalt/vue/nav-separator';
 import { CoOption } from '@cobalt/vue/option';
 import { CoSelect } from '@cobalt/vue/select';
 import { CoTextarea } from '@cobalt/vue/textarea';
+import { createSearchTracker } from '../.vitepress/theme/analytics';
 import {
   animatedIconNames,
   coreIconNames,
@@ -37,6 +38,7 @@ const pngSize = ref(32);
 const activeSnippetTab = ref(0);
 const isMobile = ref(false);
 const copyLabel = ref('Copy SVG');
+const trackIconSearch = createSearchTracker('icons');
 
 const trimmedSearchQuery = computed(() => searchQuery.value.toLowerCase().trim());
 const isSearching = computed(() => trimmedSearchQuery.value.length > 0);
@@ -179,6 +181,7 @@ onMounted(() => {
 onUnmounted(() => {
   window.removeEventListener('resize', checkMobile);
   document.body.style.overflow = '';
+  trackIconSearch.cancel();
 });
 
 watch(isMobile, (mobile) => {
@@ -189,6 +192,18 @@ watch([searchQuery, activeCategoryId], async () => {
   await nextTick();
   resultsPaneRef.value?.scrollTo({ top: 0, behavior: 'auto' });
 });
+
+watch(
+  () => [trimmedSearchQuery.value, totalCount.value] as const,
+  ([searchQuery, resultCount]) => {
+    if (!searchQuery) {
+      trackIconSearch.cancel();
+      return;
+    }
+
+    trackIconSearch(resultCount);
+  },
+);
 
 watch(isSearching, (searching) => {
   if (searching) {

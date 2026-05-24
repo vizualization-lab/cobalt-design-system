@@ -34,6 +34,22 @@ const registryUrl = env.COBALT_REGISTRY_URL || 'https://registry.your-org.com';
 const caBundlePath = env.COBALT_CA_BUNDLE || './path/to/ca/bundle';
 const contactEmail = env.COBALT_CONTACT_EMAIL || 'DESIGN_SYSTEM';
 const cobaltBannerText = env.COBALT_BANNER || 'ALPHA';
+const matomoSiteId = env.COBALT_MATOMO_SITE_ID?.trim() ?? '';
+const matomoBaseUrl = normalizeMatomoBaseUrl(env.COBALT_MATOMO_BASE_URL);
+const matomoScriptUrl = (
+  env.COBALT_MATOMO_SCRIPT_URL?.trim() || (matomoBaseUrl ? `${matomoBaseUrl}matomo.js` : '')
+).trim();
+const matomoTrackerUrl = (
+  env.COBALT_MATOMO_TRACKER_URL?.trim() || (matomoBaseUrl ? `${matomoBaseUrl}matomo.php` : '')
+).trim();
+const matomoConfig =
+  matomoSiteId && matomoScriptUrl && matomoTrackerUrl
+    ? {
+        siteId: matomoSiteId,
+        scriptUrl: matomoScriptUrl,
+        trackerUrl: matomoTrackerUrl,
+      }
+    : undefined;
 
 function normalizeBase(base: string): string {
   const trimmed = base.trim();
@@ -44,6 +60,12 @@ function normalizeBase(base: string): string {
 
   const withLeadingSlash = trimmed.startsWith('/') ? trimmed : `/${trimmed}`;
   return withLeadingSlash.endsWith('/') ? withLeadingSlash : `${withLeadingSlash}/`;
+}
+
+function normalizeMatomoBaseUrl(base: string | undefined): string {
+  const trimmed = base?.trim() ?? '';
+  if (!trimmed) return '';
+  return trimmed.endsWith('/') ? trimmed : `${trimmed}/`;
 }
 
 const docsBase = normalizeBase(env.COBALT_DOCS_BASE || '/cobalt-design-system/');
@@ -163,6 +185,7 @@ export default withMermaid(
       cobaltVersion: pkg.version,
       cobaltVersionState: 'alpha',
       cobaltBannerText,
+      matomo: matomoConfig,
       github: {
         url: githubUrl,
         org: githubOrg,
