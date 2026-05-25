@@ -9,6 +9,7 @@
     query: '',
     category: 'all',
     themeMode: 'default::light',
+    semanticOnly: false,
     expanded: new Set(),
   };
 
@@ -16,8 +17,12 @@
   const statusEl = document.getElementById('status');
   const listEl = document.getElementById('list');
   const queryEl = document.getElementById('query');
+  const filterRowEl = document.getElementById('filter-row');
   const categoryEl = document.getElementById('category');
   const themeEl = document.getElementById('theme');
+  const semanticFilterEl = document.getElementById('semantic-filter');
+  const semanticOnlyEl = document.getElementById('semantic-only');
+  let themeValueCache = { manifest: null, themeMode: '', values: null };
 
   function escapeHtml(value) {
     return String(value)
@@ -263,7 +268,9 @@
     const data = manifest();
     if (state.tab === 'utilities') return data.utilities;
     if (state.tab === 'palettes') return data.tokens.filter(isPaletteToken);
-    return data.tokens.filter((token) => !isPaletteToken(token));
+    return data.tokens.filter(
+      (token) => !isPaletteToken(token) && (!state.semanticOnly || token.tier === 'semantic'),
+    );
   }
 
   function selectedThemeParts() {
@@ -271,7 +278,7 @@
     return { theme, mode };
   }
 
-  function tokenValue(token) {
+  function tokenValueForTheme(token) {
     const { theme, mode } = selectedThemeParts();
     return (
       token.themeModes?.find((entry) => entry.theme === theme && entry.mode === mode)?.value ??
@@ -279,10 +286,54 @@
     );
   }
 
+  function selectedThemeValueMap() {
+    const data = manifest();
+    if (
+      themeValueCache.manifest === data &&
+      themeValueCache.themeMode === state.themeMode &&
+      themeValueCache.values
+    ) {
+      return themeValueCache.values;
+    }
+
+    const values = new Map();
+    for (const token of data.tokens) {
+      values.set(token.name, tokenValueForTheme(token));
+    }
+
+    themeValueCache = { manifest: data, themeMode: state.themeMode, values };
+    return values;
+  }
+
+  function resolveThemeValue(value, values, depth = 0) {
+    if (depth > 10) return null;
+
+    const varMatch = String(value).match(/^var\((--co-[\w-]+)\)$/);
+    if (!varMatch) return value;
+
+    const referencedValue = values.get(varMatch[1]);
+    if (!referencedValue) return null;
+
+    return resolveThemeValue(referencedValue, values, depth + 1);
+  }
+
+  function tokenValue(token) {
+    return selectedThemeValueMap().get(token.name) ?? token.value;
+  }
+
+  function tokenResolvedValue(token) {
+    const values = selectedThemeValueMap();
+    const value = values.get(token.name) ?? token.value;
+    const resolvedValue = resolveThemeValue(value, values);
+
+    if (!resolvedValue || resolvedValue === value) return '';
+    return resolvedValue;
+  }
+
   function tokenSwatch(token) {
-    const value = tokenValue(token);
+    const resolvedValue = tokenResolvedValue(token);
+    const value = resolvedValue || tokenValue(token);
     if (/^(#|rgb|hsl|oklch|color\()/.test(value)) return value;
-    if (/^(#|rgb|hsl|oklch|color\()/.test(token.resolvedValue ?? '')) return token.resolvedValue;
     return '';
   }
 
@@ -314,6 +365,13 @@
     }
   }
 
+  function renderFilters() {
+    const isMain = state.tab === 'main';
+    filterRowEl.hidden = !isMain;
+    semanticFilterEl.hidden = !isMain;
+    semanticOnlyEl.checked = state.semanticOnly;
+  }
+
   function renderCategories() {
     const categories = [
       ...new Set(
@@ -338,7 +396,7 @@
       categoryEl.value = 'all';
     }
 
-    categoryEl.disabled = state.tab === 'utilities';
+    categoryEl.disabled = state.tab !== 'main';
   }
 
   function renderThemes() {
@@ -366,7 +424,7 @@
       themeEl.value = state.themeMode;
     }
 
-    themeEl.disabled = state.tab === 'utilities';
+    themeEl.disabled = state.tab !== 'main';
   }
 
   function renderList() {
@@ -438,6 +496,7 @@
   function renderToken(token, leafLabel, depth) {
     const swatch = tokenSwatch(token);
     const value = tokenValue(token);
+    const resolvedValue = tokenResolvedValue(token);
     return (
       '<article class="item" style="--depth:' +
       depth +
@@ -457,8 +516,8 @@
       ' · ' +
       escapeHtml(value) +
       '</div>' +
-      (token.resolvedValue
-        ? '<div class="meta">Resolved · ' + escapeHtml(token.resolvedValue) + '</div>'
+      (resolvedValue
+        ? '<div class="meta">Resolved · ' + escapeHtml(resolvedValue) + '</div>'
         : '') +
       (token.description ? '<div class="desc">' + escapeHtml(token.description) + '</div>' : '') +
       '</div>' +
@@ -494,6 +553,7 @@
       ? 'v' + manifest().cobaltVersion + ' - ' + snapshot.source
       : 'No metadata loaded';
     renderTabs();
+    renderFilters();
     renderCategories();
     renderThemes();
     renderList();
@@ -521,6 +581,12 @@
   themeEl.addEventListener('change', () => {
     state.themeMode = themeEl.value;
     renderList();
+  });
+
+  semanticOnlyEl.addEventListener('change', () => {
+    state.semanticOnly = semanticOnlyEl.checked;
+    state.category = 'all';
+    render();
   });
 
   listEl.addEventListener('click', (event) => {
@@ -554,6 +620,7 @@
     if (!event.data.snapshot) return;
     snapshot = event.data.snapshot;
     state.expanded.clear();
+    themeValueCache = { manifest: null, themeMode: '', values: null };
     render();
   });
 

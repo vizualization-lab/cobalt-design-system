@@ -105,6 +105,23 @@
         gap: 8px;
       }
 
+      .filter-row[hidden],
+      .semantic-filter[hidden] {
+        display: none;
+      }
+
+      .semantic-filter {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        color: var(--vscode-descriptionForeground);
+        font-size: 12px;
+      }
+
+      .semantic-filter input {
+        margin: 0;
+      }
+
       .status {
         display: flex;
         align-items: center;
@@ -288,10 +305,14 @@
       </nav>
       <section class="filters">
         <input id="query" class="input" type="search" placeholder="Search" />
-        <div class="filter-row">
+        <div id="filter-row" class="filter-row">
           <select id="category" class="select"></select>
           <select id="theme" class="select"></select>
         </div>
+        <label id="semantic-filter" class="semantic-filter">
+          <input id="semantic-only" type="checkbox" />
+          Semantic tokens only
+        </label>
       </section>
       <div id="status" class="status"></div>
       <section id="list" class="list" aria-live="polite"></section>
