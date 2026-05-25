@@ -72,6 +72,10 @@
       "import": "./dist/components/input.js",
       "types": "./dist/components/input.d.ts"
     },
+    "./input-stepper": {
+      "import": "./dist/components/input-stepper.js",
+      "types": "./dist/components/input-stepper.d.ts"
+    },
     "./label": {
       "import": "./dist/components/label.js",
       "types": "./dist/components/label.d.ts"

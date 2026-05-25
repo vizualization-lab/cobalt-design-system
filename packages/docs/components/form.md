@@ -108,14 +108,14 @@ The managed form target uses `novalidate` so browser-native validation bubbles d
 
 Supported declarative rules:
 
-| Rule           | Components                                                                                                 | Message property                                       |
-| -------------- | ---------------------------------------------------------------------------------------------------------- | ------------------------------------------------------ |
-| `required`     | `co-input`, `co-textarea`, `co-select`, `co-combobox`, `co-listbox`, groups                                | `required-message`                                     |
-| `type="email"` | `co-input`                                                                                                 | `email-message`                                        |
-| `pattern`      | `co-input`, `co-textarea`, `co-combobox`                                                                   | `pattern-message`                                      |
-| `minlength`    | `co-input`, `co-textarea`                                                                                  | `minlength-message`                                    |
-| `maxlength`    | `co-input`, `co-textarea`                                                                                  | `maxlength-message`                                    |
-| `validators`   | `co-input`, `co-textarea`, `co-select`, `co-combobox`, `co-listbox`, `co-radio-group`, `co-checkbox-group` | Provided by the validator's `getMessage` configuration |
+| Rule           | Components                                                                                      | Message property                                       |
+| -------------- | ----------------------------------------------------------------------------------------------- | ------------------------------------------------------ |
+| `required`     | `co-input`, `co-input-stepper`, `co-textarea`, `co-select`, `co-combobox`, `co-listbox`, groups | `required-message`                                     |
+| `type="email"` | `co-input`                                                                                      | `email-message`                                        |
+| `pattern`      | `co-input`, `co-textarea`, `co-combobox`                                                        | `pattern-message`                                      |
+| `minlength`    | `co-input`, `co-textarea`                                                                       | `minlength-message`                                    |
+| `maxlength`    | `co-input`, `co-textarea`                                                                       | `maxlength-message`                                    |
+| `validators`   | `co-input`, `co-input-stepper`, `co-textarea`, `co-select`, `co-combobox`, `co-listbox`, groups | Provided by the validator's `getMessage` configuration |
 
 `pattern` is a complete-value check. A pattern like `[0-9]{3}` accepts `123` and rejects `1234`.
 

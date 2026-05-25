@@ -14,6 +14,11 @@ export { CoCombobox } from './components/combobox/co-combobox.js';
 export { CoForm } from './components/form/co-form.js';
 export { CoIcon } from './components/icon/co-icon.js';
 export { CoInput } from './components/input/co-input.js';
+export { CoInputStepper } from './components/input-stepper/co-input-stepper.js';
+export type {
+  InputStepperSize,
+  InputStepperValueChangeDetail,
+} from './components/input-stepper/co-input-stepper.js';
 export { CoLabel } from './components/label/co-label.js';
 export { CoListbox } from './components/listbox/co-listbox.js';
 export { CoModeToggle } from './components/mode-toggle/co-mode-toggle.js';

@@ -90,6 +90,7 @@ export const navigation: NavGroup[] = [
           { text: 'Combo Box', link: '/components/combobox' },
           { text: 'Form', link: '/components/form' },
           { text: 'Input', link: '/components/input' },
+          { text: 'Input Stepper', link: '/components/input-stepper' },
           { text: 'Label', link: '/components/label' },
           { text: 'List Box', link: '/components/listbox' },
           { text: 'Option', link: '/components/option' },

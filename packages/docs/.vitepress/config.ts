@@ -214,6 +214,7 @@ export default withMermaid(
           '@lion/ui/checkbox-group.js',
           '@lion/ui/combobox.js',
           '@lion/ui/input.js',
+          '@lion/ui/input-stepper.js',
           '@lion/ui/listbox.js',
           '@lion/ui/radio-group.js',
           '@lion/ui/select-rich.js',

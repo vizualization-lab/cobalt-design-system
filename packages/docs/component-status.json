@@ -143,6 +143,18 @@
     "angular": "pending",
     "browsers": "pending"
   },
+  "co-input-stepper": {
+    "figma": "pending",
+    "artDirector": "pending",
+    "tokens": "pending",
+    "unitTests": "pending",
+    "a11y": "pending",
+    "docs": "pending",
+    "react": "pending",
+    "vue": "pending",
+    "angular": "pending",
+    "browsers": "pending"
+  },
   "co-label": {
     "figma": "pending",
     "artDirector": "pending",

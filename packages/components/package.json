@@ -77,6 +77,10 @@
       "import": "./dist/components/input/co-input.js",
       "types": "./dist/components/input/co-input.d.ts"
     },
+    "./input-stepper": {
+      "import": "./dist/components/input-stepper/co-input-stepper.js",
+      "types": "./dist/components/input-stepper/co-input-stepper.d.ts"
+    },
     "./label": {
       "import": "./dist/components/label/co-label.js",
       "types": "./dist/components/label/co-label.d.ts"

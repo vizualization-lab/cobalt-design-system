@@ -5,7 +5,7 @@ const props = defineProps<{
   tag: string;
   label?: string;
   slotHtml?: string;
-  defaults?: Record<string, string | boolean>;
+  defaults?: Record<string, string | number | boolean>;
   options?: Record<string, string[]>;
   booleans?: string[];
   textInputs?: string[];
@@ -14,7 +14,7 @@ const props = defineProps<{
   previewMinHeight?: number | string;
 }>();
 
-const state = ref<Record<string, string | boolean>>({
+const state = ref<Record<string, string | number | boolean>>({
   ...props.defaults,
   ...(props.textInputs || []).reduce(
     (acc, t) => ({ ...acc, [t]: props.defaults?.[t] ?? '' }),
@@ -35,7 +35,7 @@ const attrString = computed(() => {
 
 const previewHtml = computed(() => {
   const attrs = attrString.value ? ' ' + attrString.value : '';
-  const text = props.slotHtml || props.label || 'Button';
+  const text = props.slotHtml ?? props.label ?? '';
   return `<${props.tag}${attrs}>${text}</${props.tag}>`;
 });
 

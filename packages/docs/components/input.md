@@ -246,6 +246,7 @@ Use the built-in `label` and `help-text` APIs for most forms. If your layout nee
 
 - **Long-form content** - use a text area for multi-line writing
 - **Known option sets** - use select, radio, checkbox, or combobox patterns instead
+- **Numeric steppers** - use [`co-input-stepper`](/components/input-stepper) when users need increment/decrement controls
 - **Dates and numbers with special formatting** - use dedicated field types when available
 - **Validation-only emphasis** - use Lion validation feedback instead of the visual-only `danger` prop
 

@@ -147,6 +147,10 @@ export default defineConfig({
         replacement: resolve(componentsDir, 'src/components/input-pill/co-input-pill.ts'),
       },
       {
+        find: '@cobalt/components/input-stepper',
+        replacement: resolve(componentsDir, 'src/components/input-stepper/co-input-stepper.ts'),
+      },
+      {
         find: '@cobalt/components/input',
         replacement: resolve(componentsDir, 'src/components/input/co-input.ts'),
       },
