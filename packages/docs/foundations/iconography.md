@@ -1,6 +1,6 @@
 # Iconography
 
-Cobalt uses [Material Symbols](https://fonts.google.com/icons) — 2,500+ icons in the rounded style with an optional fill toggle. Icons are rendered via the `<co-icon>` web component, which uses inline SVGs with `currentColor` for full control over color, size, and animation via CSS.
+Cobalt uses [Material Symbols](https://fonts.google.com/icons) — 3,800+ icons in the rounded style with an optional fill toggle. Icons are rendered via the `<co-icon>` web component, which uses inline SVGs with `currentColor` for full control over color, size, and animation via CSS.
 
 ## Icon Gallery
 
