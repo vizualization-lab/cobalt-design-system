@@ -1,0 +1,58 @@
+{
+  "co": {
+    "color": {
+      "primitive": {
+        "theme": {
+          "50": {
+            "$type": "color",
+            "$value": "{co.color.primitive.forest.50}"
+          },
+          "75": {
+            "$type": "color",
+            "$value": "{co.color.primitive.forest.75}"
+          },
+          "100": {
+            "$type": "color",
+            "$value": "{co.color.primitive.forest.100}"
+          },
+          "200": {
+            "$type": "color",
+            "$value": "{co.color.primitive.forest.200}"
+          },
+          "300": {
+            "$type": "color",
+            "$value": "{co.color.primitive.forest.300}"
+          },
+          "400": {
+            "$type": "color",
+            "$value": "{co.color.primitive.forest.400}"
+          },
+          "500": {
+            "$type": "color",
+            "$value": "{co.color.primitive.forest.500}"
+          },
+          "600": {
+            "$type": "color",
+            "$value": "{co.color.primitive.forest.600}"
+          },
+          "700": {
+            "$type": "color",
+            "$value": "{co.color.primitive.forest.700}"
+          },
+          "800": {
+            "$type": "color",
+            "$value": "{co.color.primitive.forest.800}"
+          },
+          "900": {
+            "$type": "color",
+            "$value": "{co.color.primitive.forest.900}"
+          },
+          "950": {
+            "$type": "color",
+            "$value": "{co.color.primitive.forest.950}"
+          }
+        }
+      }
+    }
+  }
+}

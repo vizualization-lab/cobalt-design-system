@@ -233,7 +233,7 @@ function toggleSidebar() {
         <!-- Lion-based controls rewrite light DOM during upgrade, so keep this picker client-only. -->
         <ClientOnly>
           <div class="topbar-theme-picker">
-            <CoIcon name="colors" size="md" style="color: var(--co-color-state-primary-base)" />
+            <CoIcon name="colors" size="md" style="color: var(--co-color-state-theme-base)" />
             <CoSelect
               :key="activeTheme"
               class="topbar-theme-select"
@@ -337,18 +337,18 @@ function toggleSidebar() {
   --co-slate: var(--co-color-surface-static-sunken);
   --co-steel: var(--co-color-border-strong);
 
-  /* Brand blues → interactive/primary semantics */
-  --co-blue-900: var(--co-color-state-primary-dark);
-  --co-blue-700: var(--co-color-state-primary-base);
-  --co-blue-600: var(--co-color-surface-interactive-primary-default);
-  --co-blue-500: var(--co-color-surface-interactive-primary-hover);
-  --co-blue-400: var(--co-color-surface-interactive-primary-active);
-  --co-blue-300: var(--co-color-state-primary-light);
-  --co-blue-200: var(--co-color-state-primary-light);
-  --co-blue-100: var(--co-color-state-primary-subtle);
-  --co-electric: var(--co-color-surface-interactive-primary-hover);
-  --co-glow: var(--co-color-surface-interactive-primary-active);
-  --co-shimmer: color-mix(in srgb, var(--co-color-state-primary-base) 6%, transparent);
+  /* Brand blues → interactive/theme semantics */
+  --co-blue-900: var(--co-color-state-theme-dark);
+  --co-blue-700: var(--co-color-state-theme-base);
+  --co-blue-600: var(--co-color-surface-interactive-theme-default);
+  --co-blue-500: var(--co-color-surface-interactive-theme-hover);
+  --co-blue-400: var(--co-color-surface-interactive-theme-active);
+  --co-blue-300: var(--co-color-state-theme-light);
+  --co-blue-200: var(--co-color-state-theme-light);
+  --co-blue-100: var(--co-color-state-theme-subtle);
+  --co-electric: var(--co-color-surface-interactive-theme-hover);
+  --co-glow: var(--co-color-surface-interactive-theme-active);
+  --co-shimmer: color-mix(in srgb, var(--co-color-state-theme-base) 6%, transparent);
 
   /* Text */
   --co-text-primary: var(--co-color-text-default);
@@ -371,40 +371,40 @@ function toggleSidebar() {
     color-mix(in srgb, var(--co-color-surface-static-page) 50%, transparent) 100%
   );
 
-  /* Alpha overlays derived from primary color */
-  --co-blue-alpha-8: color-mix(in srgb, var(--co-color-state-primary-base) 8%, transparent);
-  --co-blue-alpha-10: color-mix(in srgb, var(--co-color-state-primary-base) 10%, transparent);
-  --co-blue-alpha-12: color-mix(in srgb, var(--co-color-state-primary-base) 12%, transparent);
-  --co-blue-alpha-15: color-mix(in srgb, var(--co-color-state-primary-base) 15%, transparent);
-  --co-blue-alpha-18: color-mix(in srgb, var(--co-color-state-primary-base) 18%, transparent);
-  --co-blue-alpha-20: color-mix(in srgb, var(--co-color-state-primary-base) 20%, transparent);
-  --co-blue-alpha-25: color-mix(in srgb, var(--co-color-state-primary-base) 25%, transparent);
-  --co-blue-alpha-40: color-mix(in srgb, var(--co-color-state-primary-base) 40%, transparent);
-  --co-blue-alpha-50: color-mix(in srgb, var(--co-color-state-primary-base) 50%, transparent);
+  /* Alpha overlays derived from theme color */
+  --co-blue-alpha-8: color-mix(in srgb, var(--co-color-state-theme-base) 8%, transparent);
+  --co-blue-alpha-10: color-mix(in srgb, var(--co-color-state-theme-base) 10%, transparent);
+  --co-blue-alpha-12: color-mix(in srgb, var(--co-color-state-theme-base) 12%, transparent);
+  --co-blue-alpha-15: color-mix(in srgb, var(--co-color-state-theme-base) 15%, transparent);
+  --co-blue-alpha-18: color-mix(in srgb, var(--co-color-state-theme-base) 18%, transparent);
+  --co-blue-alpha-20: color-mix(in srgb, var(--co-color-state-theme-base) 20%, transparent);
+  --co-blue-alpha-25: color-mix(in srgb, var(--co-color-state-theme-base) 25%, transparent);
+  --co-blue-alpha-40: color-mix(in srgb, var(--co-color-state-theme-base) 40%, transparent);
+  --co-blue-alpha-50: color-mix(in srgb, var(--co-color-state-theme-base) 50%, transparent);
 
   /* Code & link treatments */
-  --co-code-bg: color-mix(in srgb, var(--co-color-state-primary-base) 8%, transparent);
-  --co-code-border: color-mix(in srgb, var(--co-color-state-primary-base) 10%, transparent);
+  --co-code-bg: color-mix(in srgb, var(--co-color-state-theme-base) 8%, transparent);
+  --co-code-border: color-mix(in srgb, var(--co-color-state-theme-base) 10%, transparent);
   --co-code-color: var(--co-color-text-link);
   --co-inline-link: var(--co-color-text-link);
   --co-h3-color: var(--co-color-text-link);
 
   /* Selection */
-  --co-selection-bg: color-mix(in srgb, var(--co-color-state-primary-base) 30%, transparent);
-  --co-selection-color: var(--co-color-state-primary-contrast);
+  --co-selection-bg: color-mix(in srgb, var(--co-color-state-theme-base) 30%, transparent);
+  --co-selection-color: var(--co-color-state-theme-contrast);
 
   /* Ambient effects */
   --co-grain-opacity: 0.03;
   --co-hero-glow: radial-gradient(
     ellipse at center,
-    color-mix(in srgb, var(--co-color-state-primary-base) 12%, transparent) 0%,
-    color-mix(in srgb, var(--co-color-state-primary-base) 4%, transparent) 40%,
+    color-mix(in srgb, var(--co-color-state-theme-base) 12%, transparent) 0%,
+    color-mix(in srgb, var(--co-color-state-theme-base) 4%, transparent) 40%,
     transparent 70%
   );
 
   /* Scrollbar */
   --co-scrollbar-thumb: var(--co-color-border-strong);
-  --co-scrollbar-hover: var(--co-color-surface-interactive-primary-default);
+  --co-scrollbar-hover: var(--co-color-surface-interactive-theme-default);
 
   /* Typography */
   --co-font-body: var(--co-font-family-sans);
@@ -422,7 +422,7 @@ function toggleSidebar() {
   --co-ease: var(--co-motion-easing-default);
   --co-duration: var(--co-motion-duration-fast);
 
-  --vp-c-brand-1: var(--co-color-state-primary-base);
+  --vp-c-brand-1: var(--co-color-state-theme-base);
   --vp-c-divider: var(--co-color-border-default);
 }
 
@@ -497,7 +497,7 @@ body {
 
 .brand-icon {
   display: flex;
-  color: var(--co-color-surface-interactive-primary-default);
+  color: var(--co-color-surface-interactive-theme-default);
 }
 
 .brand-icon .gem-outline {
@@ -644,8 +644,8 @@ body {
   inline-size: 20px;
   block-size: 20px;
   border-radius: 999px;
-  background: color-mix(in srgb, var(--co-color-state-primary-base) 18%, transparent);
-  border-color: color-mix(in srgb, var(--co-color-state-primary-base) 18%, transparent);
+  background: color-mix(in srgb, var(--co-color-state-theme-base) 18%, transparent);
+  border-color: color-mix(in srgb, var(--co-color-state-theme-base) 18%, transparent);
 }
 
 .topbar-theme-picker__select-placeholder {
@@ -787,7 +787,7 @@ body {
 }
 
 .cobalt-article :is(h1, h2, h3) .header-anchor:hover::after {
-  color: var(--co-color-surface-interactive-primary-default);
+  color: var(--co-color-surface-interactive-theme-default);
 }
 
 .cobalt-article .header-anchor[data-copied]::after {
@@ -962,7 +962,7 @@ body {
 }
 
 .edit-link a:hover {
-  color: var(--co-color-surface-interactive-primary-default);
+  color: var(--co-color-surface-interactive-theme-default);
 }
 
 /* Demo containers — inline component previews */

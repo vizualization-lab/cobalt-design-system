@@ -56,7 +56,7 @@ All CSS tokens use the `--co-` prefix. In JSON/JS they use `Co` prefix in camelC
 **Three-tier architecture:**
 
 - **Primitive:** `--co-color-primitive-blue-500` — raw palette values (avoid direct use)
-- **Semantic:** `--co-color-state-primary-base`, `--co-color-surface-static-default`, `--co-color-surface-interactive-nav-selected` — intent-based mappings
+- **Semantic:** `--co-color-state-theme-base`, `--co-color-surface-static-default`, `--co-color-surface-interactive-nav-selected` — intent-based mappings
 - **Component:** `--co-component-avatar-size-md`, `--co-component-nav-drawer-width` — public component contracts or true component-specific exceptions
 
 Create component-level tokens only when an existing semantic token cannot express the design intent. Component tokens are appropriate for public component sizing, density, layout, or indentation contracts such as avatar sizes, nav rail width, nav drawer width, and nav item spacing. Do not create component tokens that only alias semantic color, typography, radius, or focus decisions.
@@ -78,7 +78,7 @@ When writing CSS, always prefer contextual/semantic tokens over primitives:
 
 ```css
 /* Good — self-documenting, theme-safe */
-background: var(--co-color-surface-interactive-primary-default);
+background: var(--co-color-surface-interactive-theme-default);
 color: var(--co-color-text-on-primary);
 padding: var(--co-space-4);
 border-radius: var(--co-shape-radius-md);
@@ -188,7 +188,7 @@ All global CSS output uses `@layer` to provide a structured cascade hierarchy:
 ```css
 @layer co.overrides {
   :root {
-    --co-color-state-primary-base: #8b5cf6;
+    --co-color-state-theme-base: #8b5cf6;
   }
 }
 ```

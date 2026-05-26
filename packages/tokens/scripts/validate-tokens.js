@@ -1,7 +1,7 @@
 import { readFileSync } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
-import { discoverTokenSets } from './token-set-utils.js';
+import { discoverTokenSets, getMatchingPrimitiveThemeTokenSet } from './token-set-utils.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -159,6 +159,36 @@ function validateThemeModeCoverage(discovery, errors) {
   }
 }
 
+function validatePrimitiveThemeCoverage(discovery, errors) {
+  for (const themeTokenSet of discovery.themeTokenSets) {
+    const primitiveThemeTokenSet = getMatchingPrimitiveThemeTokenSet(
+      discovery,
+      themeTokenSet.themeId,
+      themeTokenSet.mode,
+    );
+
+    if (!primitiveThemeTokenSet) {
+      errors.push(
+        `${themeTokenSet.name} is missing required primitive bridge set primitives.theme.${themeTokenSet.themeId}.${themeTokenSet.mode}.`,
+      );
+    }
+  }
+
+  for (const primitiveThemeTokenSet of discovery.primitiveThemeTokenSets) {
+    const themeTokenSet = discovery.themeTokenSets.find(
+      (tokenSet) =>
+        tokenSet.themeId === primitiveThemeTokenSet.themeId &&
+        tokenSet.mode === primitiveThemeTokenSet.mode,
+    );
+
+    if (!themeTokenSet) {
+      errors.push(
+        `${primitiveThemeTokenSet.name} does not have a matching semantic.theme.${primitiveThemeTokenSet.themeId}.${primitiveThemeTokenSet.mode} set.`,
+      );
+    }
+  }
+}
+
 function validateComponentColorReferences(tokensDir, discovery, errors) {
   for (const tokenSet of discovery.componentTokenSets) {
     const tokens = readJson(join(tokensDir, tokenSet.fileName));
@@ -201,17 +231,17 @@ function validateContrast(tokensDir, discovery, errors) {
     },
     {
       foreground: 'co.color.text.on.primary',
-      background: 'co.color.state.primary.base',
+      background: 'co.color.state.theme.base',
       minimum: 4.5,
     },
     {
-      foreground: 'co.color.surface.interactive.primary.default',
+      foreground: 'co.color.surface.interactive.theme.default',
       background: 'co.color.surface.interactive.secondary.default',
       minimum: 4.5,
     },
     {
-      foreground: 'co.color.state.primary.contrast',
-      background: 'co.color.state.primary.base',
+      foreground: 'co.color.state.theme.contrast',
+      background: 'co.color.state.theme.base',
       minimum: 4.5,
     },
     {
@@ -242,8 +272,18 @@ function validateContrast(tokensDir, discovery, errors) {
   ];
 
   for (const themeTokenSet of discovery.themeTokenSets) {
+    const primitiveThemeTokenSet = getMatchingPrimitiveThemeTokenSet(
+      discovery,
+      themeTokenSet.themeId,
+      themeTokenSet.mode,
+    );
+    if (!primitiveThemeTokenSet) continue;
+
     const resolvedRoot = deepMerge(
-      structuredClone(sharedRoot),
+      deepMerge(
+        structuredClone(sharedRoot),
+        readJson(join(tokensDir, primitiveThemeTokenSet.fileName)),
+      ),
       readJson(join(tokensDir, themeTokenSet.fileName)),
     );
 
@@ -276,6 +316,7 @@ export function validateTokens(tokensDir) {
   }
 
   validateThemeModeCoverage(discovery, errors);
+  validatePrimitiveThemeCoverage(discovery, errors);
   validateThemeSchemas(tokensDir, discovery, errors);
   validateComponentColorReferences(tokensDir, discovery, errors);
   validateContrast(tokensDir, discovery, errors);

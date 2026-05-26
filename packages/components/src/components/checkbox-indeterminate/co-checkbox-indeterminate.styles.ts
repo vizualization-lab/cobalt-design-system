@@ -42,12 +42,12 @@ export const cobaltCheckboxIndeterminateStyles = css`
   }
 
   :host(:hover:not([disabled])) .checkbox__icon {
-    color: var(--co-color-surface-interactive-primary-default);
+    color: var(--co-color-surface-interactive-theme-default);
   }
 
   :host([checked]) .checkbox__icon,
   :host([indeterminate]) .checkbox__icon {
-    color: var(--co-color-surface-interactive-primary-default);
+    color: var(--co-color-surface-interactive-theme-default);
   }
 
   :host([_keyboard-focus]) .checkbox__icon {

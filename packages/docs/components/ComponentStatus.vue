@@ -108,7 +108,7 @@ const totalCount = computed(() => {
   gap: var(--co-space-2);
   margin: var(--co-space-2) 0 var(--co-space-5);
   padding: var(--co-space-3);
-  background: var(--co-color-state-primary-subtle);
+  background: var(--co-color-state-theme-subtle);
   border-radius: var(--co-shape-radius-md);
   box-shadow: var(--co-elevation-shadow-md);
 }

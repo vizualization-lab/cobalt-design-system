@@ -75,7 +75,7 @@ function onRailChange(event: Event) {
   line-height: var(--co-typography-eyebrow-line-height);
   text-transform: uppercase;
   color: var(--co-color-text-on-primary);
-  background: var(--co-color-surface-interactive-primary-default);
+  background: var(--co-color-surface-interactive-theme-default);
   padding: 2px 7px;
   border-radius: var(--co-shape-radius-sm);
 }

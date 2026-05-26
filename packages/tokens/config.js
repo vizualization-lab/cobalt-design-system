@@ -8,7 +8,11 @@ import { generateTailwindPreset } from './scripts/generate-tailwind-preset.js';
 import { generateToolingManifest } from './scripts/generate-tooling-manifest.js';
 import { generateUtilitiesCss } from './scripts/generate-utilities-css.js';
 import { mergeTokens } from './scripts/merge-tokens.js';
-import { discoverTokenSets, writeGeneratedTokenMetadata } from './scripts/token-set-utils.js';
+import {
+  discoverTokenSets,
+  getMatchingPrimitiveThemeTokenSet,
+  writeGeneratedTokenMetadata,
+} from './scripts/token-set-utils.js';
 import { validateTokens } from './scripts/validate-tokens.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -35,6 +39,22 @@ function getSharedSources(discovery) {
   ].map((tokenSet) => tokenSet.sourcePath);
 }
 
+function getThemeSources(discovery, sharedSources, themeTokenSet) {
+  const primitiveThemeTokenSet = getMatchingPrimitiveThemeTokenSet(
+    discovery,
+    themeTokenSet.themeId,
+    themeTokenSet.mode,
+  );
+
+  if (!primitiveThemeTokenSet) {
+    throw new Error(
+      `Missing required token set: primitives.theme.${themeTokenSet.themeId}.${themeTokenSet.mode}`,
+    );
+  }
+
+  return [...sharedSources, primitiveThemeTokenSet.sourcePath, themeTokenSet.sourcePath];
+}
+
 function getThemeCssDestination(themeTokenSet) {
   if (themeTokenSet.themeId === 'default' && themeTokenSet.mode === 'light') {
     return 'tokens.css';
@@ -59,9 +79,9 @@ function getThemeCssSelector(themeTokenSet) {
   return `[data-theme="${themeTokenSet.themeId}"][data-mode="${themeTokenSet.mode}"]`;
 }
 
-function createDefaultLightBuild(sharedSources, defaultLightTheme) {
+function createDefaultLightBuild(sources) {
   return new StyleDictionary({
-    source: [...sharedSources, defaultLightTheme.sourcePath],
+    source: sources,
     platforms: {
       css: {
         transformGroup: 'css',
@@ -102,9 +122,9 @@ function createDefaultLightBuild(sharedSources, defaultLightTheme) {
   });
 }
 
-function createThemeCssBuild(sharedSources, themeTokenSet) {
+function createThemeCssBuild(sources, themeTokenSet) {
   return new StyleDictionary({
-    source: [...sharedSources, themeTokenSet.sourcePath],
+    source: sources,
     platforms: {
       css: {
         transformGroup: 'css',
@@ -152,7 +172,9 @@ async function build() {
   }
 
   console.log('Building default light tokens...');
-  await createDefaultLightBuild(sharedSources, defaultLightTheme).buildAllPlatforms();
+  await createDefaultLightBuild(
+    getThemeSources(discovery, sharedSources, defaultLightTheme),
+  ).buildAllPlatforms();
 
   for (const themeTokenSet of discovery.themeTokenSets) {
     if (themeTokenSet.name === defaultLightTheme.name) {
@@ -160,7 +182,10 @@ async function build() {
     }
 
     console.log(`Building ${themeTokenSet.name} CSS...`);
-    await createThemeCssBuild(sharedSources, themeTokenSet).buildPlatform('css');
+    await createThemeCssBuild(
+      getThemeSources(discovery, sharedSources, themeTokenSet),
+      themeTokenSet,
+    ).buildPlatform('css');
   }
 
   console.log('Wrapping CSS in @layer...');

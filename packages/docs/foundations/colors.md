@@ -185,7 +185,7 @@ This sets `data-theme` and `data-mode` on `<html>`:
   <li><code>{{ themeAttributes.dark }}</code> for the selected dark theme</li>
 </ul>
 
-Component code should keep using semantic tokens such as `--co-color-state-primary-base` and `--co-color-surface-interactive-primary-default`.
+Component code should keep using semantic tokens such as `--co-color-state-theme-base` and `--co-color-surface-interactive-theme-default`.
 
 ## How the Scale Works
 
@@ -236,7 +236,7 @@ These semantic token names stay stable across themes even as their resolved colo
 
 ## Practical Rules
 
-- Prefer semantic tokens such as `--co-color-surface-static-default` or `--co-color-surface-interactive-primary-default` in components and app code.
+- Prefer semantic tokens such as `--co-color-surface-static-default` or `--co-color-surface-interactive-theme-default` in components and app code.
 - Reach for primitive tokens only when you are extending the system itself, building documentation, or deliberately creating a non-semantic illustration or data-vis palette.
 - Think in `50`–`950`: lower shades for backgrounds, middle shades for borders and subtle fills, `700`–`800` for solid accents, and `900`–`950` for readable same-hue text.
 
@@ -328,12 +328,12 @@ These semantic token names stay stable across themes even as their resolved colo
 .color-theme-pill:focus-visible {
   outline: none;
   border-color: var(--co-color-border-focus);
-  box-shadow: 0 0 0 2px color-mix(in srgb, var(--co-color-state-primary-base) 15%, transparent);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--co-color-state-theme-base) 15%, transparent);
 }
 
 .color-theme-pill.is-active {
-  background: var(--co-color-surface-interactive-primary-default);
-  border-color: var(--co-color-surface-interactive-primary-default);
+  background: var(--co-color-surface-interactive-theme-default);
+  border-color: var(--co-color-surface-interactive-theme-default);
   color: var(--co-color-text-on-primary);
 }
 
@@ -361,7 +361,7 @@ These semantic token names stay stable across themes even as their resolved colo
 .color-mode-toggle:focus-visible {
   outline: none;
   border-color: var(--co-color-border-focus);
-  box-shadow: 0 0 0 2px color-mix(in srgb, var(--co-color-state-primary-base) 15%, transparent);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--co-color-state-theme-base) 15%, transparent);
 }
 
 .color-mode-option {
@@ -388,7 +388,7 @@ These semantic token names stay stable across themes even as their resolved colo
 }
 
 .color-mode-toggle.is-dark .color-mode-switch {
-  background: var(--co-color-surface-interactive-primary-default);
+  background: var(--co-color-surface-interactive-theme-default);
 }
 
 .color-mode-thumb {

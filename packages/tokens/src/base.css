@@ -191,7 +191,7 @@
   }
 
   [data-co-base] blockquote {
-    border-left: 4px solid var(--co-color-state-primary-base);
+    border-left: 4px solid var(--co-color-state-theme-base);
     padding-left: var(--co-space-4);
     color: var(--co-color-text-secondary);
     font-style: italic;

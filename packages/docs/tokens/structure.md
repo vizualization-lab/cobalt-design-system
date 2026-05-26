@@ -1,11 +1,12 @@
 # Token Structure
 
-This page explains how Cobalt tokens are organized and how to decide where a token belongs. Cobalt adopts a three-tier structure for tokens: `primitives`, `semantic`, and component tokens. This makes the system easier to scale as more themes are added and easier to understand in Figma handoff.
+This page explains how Cobalt tokens are organized and how to decide where a token belongs. Cobalt adopts a three-tier structure for tokens: `primitives`, `semantic`, and component tokens. Color themes also include a primitive theme bridge layer so brand and mode palettes can change without rewriting semantic intent. This makes the system easier to scale as more themes are added and easier to understand in Figma handoff.
 
 For designers working in Figma, the main idea is simple:
 
 - **Primitives** are raw ingredients
-- **Semantic tokens** describe design intent, and light and dark color themes
+- **Primitive theme bridges** map a theme and mode to the active accent palette
+- **Semantic tokens** describe design intent, including light and dark color behavior
 - **Component tokens** are reserved for true component-specific needs
 
 ## Token Files
@@ -19,14 +20,29 @@ flowchart TD
 subgraph Primitives["Primitives"]
 p("primitives.json")
 pc("primitives.color.json")
+ptl("primitives.theme.[theme].light.json")
+ptd("primitives.theme.[theme].dark.json")
+
+
+subgraph PrimitiveThemeBridges["Theme Bridges"]
+ptb("color.primitive.theme.*")
+ptb-->ptl
+ptb-->ptd
+end
 end
 
 subgraph Semantic["Semantic"]
 ss(semantic.shared.json)
 stl("semantic.theme.[theme].light.json")
 std("semantic.theme.[theme].dark.json")
-ss-->stl
-ss-->std
+
+subgraph SemanticTheme["Semantic Theme"]
+sta("color.semantic.theme.*")
+sta-->stl
+sta-->std
+end
+
+
 end
 
 
@@ -38,13 +54,14 @@ Primitives-->Semantic
 Semantic-->Components
 ```
 
-| Token File                           | What it means                                            | Use it for                                                          | Examples                                                                                   |
-| ------------------------------------ | -------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------------------------------ |
-| `primitives.json`                    | Raw foundational values                                  | Spacing scale, radius scale, type scale, motion values, breakpoints | `space.4`, `shape.radius.sm`, `font.size.md`                                               |
-| `primitives.color.json`              | Raw color palette                                        | Numeric hue families organized as `50`–`950` scales                 | `gray.100`, `blue.700`, `blue.900`                                                         |
-| `semantic.shared.json`               | Shared design decisions that stay the same across themes | Control sizing, border intent, focus rules, shared layout values    | `control.height.md`, `border.width.default`, `focus.ring.width`                            |
-| `semantic.theme.<theme>.<mode>.json` | Semantic tokens that change by theme or mode             | Mostly color behavior today                                         | `color.text.default`, `color.surface.interactive.nav.selected`, `color.state.primary.base` |
-| `components.json`                    | Component-specific tokens                                | Public component contracts or intentional exceptions                | `component.avatar.size.md`, `component.nav.rail.bar.width`                                 |
+| Token File                             | What it means                                            | Use it for                                                                                                   |
+| -------------------------------------- | -------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------ |
+| `primitives.json`                      | Raw foundational values                                  | Spacing scale, radius scale, type scale, motion values, breakpoints. [Examples](#primitive-examples)         |
+| `primitives.color.json`                | Raw color palette                                        | Numeric hue families organized as `50`–`950` scales. [Examples](#primitive-examples)                         |
+| `primitives.theme.<theme>.<mode>.json` | Theme and mode bridge for the active accent palette      | Mapping `color.primitive.theme.*` to the correct brand palette. [Examples](#primitive-theme-bridge-examples) |
+| `semantic.shared.json`                 | Shared design decisions that stay the same across themes | Control sizing, border intent, focus rules, shared layout values. [Examples](#shared-semantic-examples)      |
+| `semantic.theme.<theme>.<mode>.json`   | Semantic tokens that change by theme or mode             | Mostly color behavior today. [Examples](#semantic-theme-examples)                                            |
+| `components.json`                      | Component-specific tokens                                | Public component contracts or intentional exceptions. [Examples](#component-token-examples)                  |
 
 ## Export Artifacts
 
@@ -88,7 +105,9 @@ Example SCSS usage:
 
 ## What This Means In Practice
 
-### 1. Primitives are not design decisions
+<a id="primitive-examples"></a>
+
+### Primitives are not design decisions
 
 Primitives are the building blocks.
 
@@ -102,7 +121,9 @@ Examples:
 
 These values exist so the system has a consistent base scale, but they do not explain how the value should be used.
 
-### 2. Shared semantics describe the system's rules
+<a id="shared-semantic-examples"></a>
+
+### Shared semantics describe the system's rules
 
 `semantic.shared.json` is where we store design intent that should stay consistent across the whole system.
 
@@ -124,7 +145,29 @@ These tokens answer questions like:
 - What radius should standard controls and containers use?
 - How wide should shared content containers be?
 
-### 3. Theme files only hold what changes by theme
+<a id="primitive-theme-bridge-examples"></a>
+
+### Primitive theme bridges map the active accent palette
+
+`primitives.theme.<theme>.<mode>.json` is a small bridge layer for brand and mode color palettes. It defines `color.primitive.theme.*` for a specific theme and mode by pointing at a raw palette family.
+
+Examples:
+
+- `primitives.theme.default.light` maps `color.primitive.theme.700` to `color.primitive.blue.700`
+- `primitives.theme.default.dark` maps `color.primitive.theme.700` to `color.primitive.blue-dark.700`
+- `primitives.theme.forest.dark` maps `color.primitive.theme.700` to `color.primitive.forest-dark.700`
+
+Semantic theme files then reference `color.primitive.theme.*` instead of hardcoding a specific brand palette. This creates a stable chain:
+
+```text
+color.state.theme.base
+  → color.primitive.theme.700
+  → color.primitive.<brand-or-brand-dark>.700
+```
+
+<a id="semantic-theme-examples"></a>
+
+### Semantic theme files only hold what changes by theme
 
 `semantic.theme.<theme>.<mode>.json` is for semantic values that need to change when the theme changes.
 
@@ -135,11 +178,14 @@ Examples:
 - `color.text.default`
 - `color.surface.static.raised`
 - `color.border.focus`
-- `color.surface.interactive.primary.default`
+- `color.state.theme.base`
+- `color.surface.interactive.theme.default`
 
 This keeps theme files focused and prevents shared rules like typography or spacing from being repeated in every theme.
 
-### 4. Component tokens stay selective
+<a id="component-token-examples"></a>
+
+### Component tokens stay selective
 
 `components.json` is not meant to mirror the entire token system.
 
@@ -182,13 +228,14 @@ Example:
 
 ### Does this value change by theme or mode?
 
-If yes, it belongs in `semantic.theme.<theme>.<mode>`.
+If yes, first ask whether it is a palette mapping or a semantic decision.
 
 Example:
 
-- text color in light vs dark
-- surface color in light vs dark
-- interactive color in different branded themes
+- raw accent palette mapping belongs in `primitives.theme.<theme>.<mode>`
+- text color in light vs dark belongs in `semantic.theme.<theme>.<mode>`
+- surface color in light vs dark belongs in `semantic.theme.<theme>.<mode>`
+- interactive color in different branded themes belongs in `semantic.theme.<theme>.<mode>` and should usually reference `color.primitive.theme.*`
 
 ### Is this specific to one component?
 
@@ -203,17 +250,19 @@ Example:
 
 ## Common Examples
 
-| Need                            | Best location                 | Why                                       |
-| ------------------------------- | ----------------------------- | ----------------------------------------- |
-| Default field outline width     | `semantic.shared`             | It is a shared border intent              |
-| Focus ring width                | `semantic.shared`             | It is a shared interaction rule           |
-| Primary text color in dark mode | `semantic.theme.default.dark` | It changes by theme                       |
-| Button and input height         | `semantic.shared`             | It is a shared control rule               |
-| Avatar sizes                    | `components`                  | It belongs to Avatar, not every control   |
-| Nav item hover surface          | `semantic.theme.*`            | It is shared navigation behavior          |
-| Nav drawer nested indent        | `components`                  | It is a public nav drawer layout contract |
-| New accent shade scale          | `primitives.color`            | It is a raw palette                       |
-| New radius scale step           | `primitives`                  | It is a foundational value                |
+| Need                                 | Best location                   | Why                                       |
+| ------------------------------------ | ------------------------------- | ----------------------------------------- |
+| Default field outline width          | `semantic.shared`               | It is a shared border intent              |
+| Focus ring width                     | `semantic.shared`               | It is a shared interaction rule           |
+| Brand accent mapping for forest dark | `primitives.theme.forest.dark`  | It selects the active palette for a mode  |
+| Default text color in dark mode      | `semantic.theme.default.dark`   | It is a semantic color decision           |
+| Theme action color                   | `semantic.theme.<theme>.<mode>` | It is interactive intent, not a raw hue   |
+| Button and input height              | `semantic.shared`               | It is a shared control rule               |
+| Avatar sizes                         | `components`                    | It belongs to Avatar, not every control   |
+| Nav item hover surface               | `semantic.theme.<theme>.<mode>` | It is shared navigation behavior          |
+| Nav drawer nested indent             | `components`                    | It is a public nav drawer layout contract |
+| New accent shade scale               | `primitives.color`              | It is a raw palette                       |
+| New radius scale step                | `primitives`                    | It is a foundational value                |
 
 ## About The `control` Section
 
@@ -265,7 +314,8 @@ When working in Figma:
 
 - use semantic tokens first
 - use primitives when you are building the underlying system
-- use theme tokens when reviewing light/dark or future brand theme behavior
+- use primitive theme bridge tokens when reviewing which palette powers a brand and mode
+- use semantic theme tokens when reviewing light/dark or brand theme behavior
 - use component tokens only for real component-specific contracts
 
 If a token feels like a system rule, it probably belongs in `semantic.shared`.

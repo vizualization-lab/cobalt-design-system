@@ -46,7 +46,7 @@
         font-family="var(--co-font-family-mono)"
         font-size="13"
         :font-weight="layer.isFront ? '600' : '500'"
-        :fill="layer.isFront ? 'var(--co-color-text-link)' : 'var(--co-color-state-primary-base)'"
+        :fill="layer.isFront ? 'var(--co-color-text-link)' : 'var(--co-color-state-theme-base)'"
       >
         @layer {{ layer.name }}
       </text>

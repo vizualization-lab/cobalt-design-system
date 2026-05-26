@@ -43,7 +43,7 @@ Then reference any token in your styles:
 }
 ```
 
-> **Tip:** Prefer semantic tokens (e.g. `--co-color-state-primary-base`, `--co-control-height-md`) over raw values where they exist. This ensures your UI adapts correctly to theme changes and shared system rules.
+> **Tip:** Prefer semantic tokens (e.g. `--co-color-state-theme-base`, `--co-control-height-md`) over raw values where they exist. This ensures your UI adapts correctly to theme changes and shared system rules.
 
 If your project uses Sass, import the SCSS helper module and keep runtime theming through CSS custom properties:
 

@@ -48,12 +48,12 @@ export const cobaltModeToggleStyles = css`
 
   .mode-toggle__button:hover {
     color: var(--co-color-text-default);
-    background: color-mix(in srgb, var(--co-color-state-primary-base) 8%, transparent);
+    background: color-mix(in srgb, var(--co-color-state-theme-base) 8%, transparent);
   }
 
   .mode-toggle__button:active {
     color: var(--co-color-text-default);
-    background: color-mix(in srgb, var(--co-color-state-primary-base) 12%, transparent);
+    background: color-mix(in srgb, var(--co-color-state-theme-base) 12%, transparent);
   }
 
   .mode-toggle__button:focus-visible {

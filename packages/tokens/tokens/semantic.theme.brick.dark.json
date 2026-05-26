@@ -2,22 +2,22 @@
   "co": {
     "color": {
       "state": {
-        "primary": {
+        "theme": {
           "base": {
             "$type": "color",
-            "$value": "{co.color.primitive.brick-dark.700}"
+            "$value": "{co.color.primitive.theme.700}"
           },
           "light": {
             "$type": "color",
-            "$value": "{co.color.primitive.brick-dark.200}"
+            "$value": "{co.color.primitive.theme.200}"
           },
           "dark": {
             "$type": "color",
-            "$value": "{co.color.primitive.brick-dark.900}"
+            "$value": "{co.color.primitive.theme.900}"
           },
           "subtle": {
             "$type": "color",
-            "$value": "{co.color.primitive.brick-dark.75}"
+            "$value": "{co.color.primitive.theme.75}"
           },
           "contrast": {
             "$type": "color",
@@ -27,23 +27,23 @@
         "secondary": {
           "base": {
             "$type": "color",
-            "$value": "{co.color.state.primary.contrast}"
+            "$value": "{co.color.state.theme.contrast}"
           },
           "light": {
             "$type": "color",
-            "$value": "{co.color.state.primary.light}"
+            "$value": "{co.color.state.theme.light}"
           },
           "dark": {
             "$type": "color",
-            "$value": "{co.color.state.primary.dark}"
+            "$value": "{co.color.state.theme.dark}"
           },
           "subtle": {
             "$type": "color",
-            "$value": "{co.color.state.primary.subtle}"
+            "$value": "{co.color.state.theme.subtle}"
           },
           "contrast": {
             "$type": "color",
-            "$value": "{co.color.state.primary.base}"
+            "$value": "{co.color.state.theme.base}"
           }
         },
         "neutral": {
@@ -163,18 +163,18 @@
           }
         },
         "interactive": {
-          "primary": {
+          "theme": {
             "default": {
               "$type": "color",
-              "$value": "{co.color.state.primary.base}"
+              "$value": "{co.color.state.theme.base}"
             },
             "hover": {
               "$type": "color",
-              "$value": "{co.color.primitive.brick-dark.600}"
+              "$value": "{co.color.primitive.theme.600}"
             },
             "active": {
               "$type": "color",
-              "$value": "{co.color.primitive.brick-dark.500}"
+              "$value": "{co.color.primitive.theme.500}"
             },
             "selected": {
               "$type": "color",
@@ -202,15 +202,15 @@
             },
             "hover": {
               "$type": "color",
-              "$value": "{co.color.primitive.brick-dark.200}"
+              "$value": "{co.color.primitive.theme.200}"
             },
             "active": {
               "$type": "color",
-              "$value": "{co.color.primitive.brick-dark.300}"
+              "$value": "{co.color.primitive.theme.300}"
             },
             "selected": {
               "$type": "color",
-              "$value": "{co.color.primitive.brick-dark.400}"
+              "$value": "{co.color.primitive.theme.400}"
             }
           },
           "contrast": {
@@ -281,17 +281,17 @@
             },
             "hover": {
               "$type": "color",
-              "$value": "color-mix(in srgb, {co.color.surface.interactive.primary.default} 8%, transparent)",
+              "$value": "color-mix(in srgb, {co.color.surface.interactive.theme.default} 8%, transparent)",
               "$description": "Hover surface for navigation items."
             },
             "active": {
               "$type": "color",
-              "$value": "color-mix(in srgb, {co.color.surface.interactive.primary.default} 20%, transparent)",
+              "$value": "color-mix(in srgb, {co.color.surface.interactive.theme.default} 20%, transparent)",
               "$description": "Pressed surface for navigation items."
             },
             "selected": {
               "$type": "color",
-              "$value": "color-mix(in srgb, {co.color.surface.interactive.primary.default} 12%, transparent)",
+              "$value": "color-mix(in srgb, {co.color.surface.interactive.theme.default} 12%, transparent)",
               "$description": "Selected surface for the current navigation destination."
             }
           }
@@ -316,12 +316,16 @@
         },
         "link": {
           "$type": "color",
-          "$value": "{co.color.primitive.brick-dark.900}"
+          "$value": "{co.color.primitive.theme.900}"
+        },
+        "theme": {
+          "$type": "color",
+          "$value": "{co.color.state.theme.base}"
         },
         "on": {
           "primary": {
             "$type": "color",
-            "$value": "{co.color.state.primary.contrast}"
+            "$value": "{co.color.state.theme.contrast}"
           },
           "secondary": {
             "$type": "color",
@@ -360,7 +364,11 @@
         },
         "active": {
           "$type": "color",
-          "$value": "{co.color.primitive.brick-dark.600}"
+          "$value": "{co.color.primitive.theme.600}"
+        },
+        "theme": {
+          "$type": "color",
+          "$value": "{co.color.primitive.theme.600}"
         },
         "danger": {
           "$type": "color",
@@ -372,11 +380,11 @@
         },
         "focus": {
           "$type": "color",
-          "$value": "{co.color.primitive.brick-dark.800}"
+          "$value": "{co.color.primitive.theme.800}"
         },
         "selected": {
           "$type": "color",
-          "$value": "{co.color.primitive.brick-dark.500}"
+          "$value": "{co.color.primitive.theme.500}"
         },
         "contrast": {
           "$type": "color",

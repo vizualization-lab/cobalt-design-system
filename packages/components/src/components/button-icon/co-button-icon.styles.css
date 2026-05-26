@@ -66,36 +66,36 @@
 /* ── Primary variant (default) ── */
 :host,
 :host([variant='primary']) {
-  background: var(--co-color-surface-interactive-primary-default);
+  background: var(--co-color-surface-interactive-theme-default);
   color: var(--co-color-text-on-primary);
 }
 :host([variant='primary']:hover),
 :host(:not([variant]):hover) {
-  background: var(--co-color-surface-interactive-primary-hover);
+  background: var(--co-color-surface-interactive-theme-hover);
 }
 :host([variant='primary']:active),
 :host(:not([variant]):active) {
-  background: var(--co-color-surface-interactive-primary-active);
+  background: var(--co-color-surface-interactive-theme-active);
 }
 
 /* ── Secondary variant ── */
 :host([variant='secondary']) {
   background: var(--co-color-surface-interactive-secondary-default);
-  color: var(--co-color-surface-interactive-primary-default);
+  color: var(--co-color-surface-interactive-theme-default);
   box-shadow: inset 0 0 0 var(--co-border-width-action)
-    var(--co-color-surface-interactive-primary-default);
+    var(--co-color-surface-interactive-theme-default);
 }
 :host([variant='secondary']:hover) {
   background: var(--co-color-surface-interactive-secondary-hover);
-  color: var(--co-color-surface-interactive-primary-hover);
+  color: var(--co-color-surface-interactive-theme-hover);
   box-shadow: inset 0 0 0 var(--co-border-width-action)
-    var(--co-color-surface-interactive-primary-hover);
+    var(--co-color-surface-interactive-theme-hover);
 }
 :host([variant='secondary']:active) {
   background: var(--co-color-surface-interactive-secondary-active);
-  color: var(--co-color-surface-interactive-primary-active);
+  color: var(--co-color-surface-interactive-theme-active);
   box-shadow: inset 0 0 0 var(--co-border-width-action)
-    var(--co-color-surface-interactive-primary-active);
+    var(--co-color-surface-interactive-theme-active);
 }
 
 /* ── Danger variant ── */

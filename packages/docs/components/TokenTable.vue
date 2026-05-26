@@ -1177,7 +1177,7 @@ async function copyToken(name: string) {
 }
 
 .browser-toggle-btn.active {
-  background: var(--co-color-surface-interactive-primary-default);
+  background: var(--co-color-surface-interactive-theme-default);
   color: var(--co-color-text-on-primary);
   font-weight: var(--co-font-weight-semibold);
   box-shadow: 0 1px 3px color-mix(in srgb, var(--co-color-surface-static-overlay) 16%, transparent);
@@ -1256,7 +1256,7 @@ async function copyToken(name: string) {
 .filter-pill.active {
   background: color-mix(
     in srgb,
-    var(--co-color-surface-interactive-primary-default) 12%,
+    var(--co-color-surface-interactive-theme-default) 12%,
     transparent
   );
   border-color: var(--co-color-border-selected);
@@ -1418,7 +1418,7 @@ async function copyToken(name: string) {
   border-radius: var(--co-shape-radius-full);
   background: color-mix(
     in srgb,
-    var(--co-color-surface-interactive-primary-default) 12%,
+    var(--co-color-surface-interactive-theme-default) 12%,
     transparent
   );
   color: var(--co-color-text-link);
@@ -1616,7 +1616,7 @@ async function copyToken(name: string) {
 }
 
 .detail-value--syntax :deep(.syntax-var) {
-  color: var(--co-color-state-primary-base);
+  color: var(--co-color-state-theme-base);
 }
 
 .detail-value--syntax :deep(.syntax-color) {

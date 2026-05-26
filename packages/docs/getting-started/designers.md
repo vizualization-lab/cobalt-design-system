@@ -38,7 +38,7 @@ Examples:
 
 | Token Name                         | Value      | Usage                             |
 | ---------------------------------- | ---------- | --------------------------------- |
-| `--co-color-state-primary-base`    | `#154bcc`  | Primary actions, key links        |
+| `--co-color-state-theme-base`      | `#154bcc`  | Primary actions, key links        |
 | `--co-color-surface-static-raised` | `#fcfcfc`  | Raised surfaces and subtle cards  |
 | `--co-space-inset-md`              | `16px`     | Default component padding         |
 | `--co-font-size-lg`                | `1.125rem` | Subheadings and emphasized labels |

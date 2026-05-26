@@ -38,11 +38,11 @@ slot[name='input']::slotted(*) {
 }
 
 :host(:hover:not([disabled])) .radio__icon {
-  color: var(--co-color-surface-interactive-primary-default);
+  color: var(--co-color-surface-interactive-theme-default);
 }
 
 :host([checked]) .radio__icon {
-  color: var(--co-color-surface-interactive-primary-default);
+  color: var(--co-color-surface-interactive-theme-default);
 }
 
 :host([_keyboard-focus]) .radio__icon {

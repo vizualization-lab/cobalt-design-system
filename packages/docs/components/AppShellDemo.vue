@@ -331,7 +331,7 @@ const viewportLabel = computed(() =>
 }
 
 .demo-segmented-btn.is-active {
-  background: var(--co-color-surface-interactive-primary-default);
+  background: var(--co-color-surface-interactive-theme-default);
   color: var(--co-color-text-on-primary);
   box-shadow: var(--co-elevation-shadow-sm);
 }
@@ -451,8 +451,8 @@ const viewportLabel = computed(() =>
   inline-size: 36px;
   block-size: 36px;
   border-radius: 999px;
-  background: var(--co-color-state-primary-subtle);
-  color: var(--co-color-state-primary-base);
+  background: var(--co-color-state-theme-subtle);
+  color: var(--co-color-state-theme-base);
   font-size: 13px;
   font-weight: 600;
   letter-spacing: 0.02em;

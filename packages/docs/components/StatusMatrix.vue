@@ -95,7 +95,7 @@ const summary = computed(() => {
 
 <style scoped>
 .status-matrix {
-  background: var(--co-color-state-primary-subtle);
+  background: var(--co-color-state-theme-subtle);
   border-radius: var(--co-shape-radius-md);
   box-shadow: var(--co-elevation-shadow-sm);
   padding: var(--co-space-3);
@@ -145,7 +145,7 @@ const summary = computed(() => {
   font-weight: var(--co-typography-label-weight);
   position: sticky;
   left: 0;
-  background: var(--co-color-state-primary-subtle);
+  background: var(--co-color-state-theme-subtle);
   z-index: 1;
   white-space: nowrap;
 }

@@ -39,8 +39,21 @@ export function isThemeTokenSet(name) {
   return /^semantic\.theme\.[^.]+\.[^.]+$/.test(name);
 }
 
+export function isPrimitiveThemeTokenSet(name) {
+  return /^primitives\.theme\.[^.]+\.[^.]+$/.test(name);
+}
+
 export function parseThemeTokenSet(name) {
   if (!isThemeTokenSet(name)) {
+    return null;
+  }
+
+  const [, , themeId, mode] = name.split('.');
+  return { themeId, mode };
+}
+
+export function parsePrimitiveThemeTokenSet(name) {
+  if (!isPrimitiveThemeTokenSet(name)) {
     return null;
   }
 
@@ -59,7 +72,7 @@ export function discoverTokenSets(tokensDir) {
 
   const tokenSets = jsonFiles.map((fileName) => {
     const name = toTokenSetName(fileName);
-    const theme = parseThemeTokenSet(name);
+    const theme = parseThemeTokenSet(name) ?? parsePrimitiveThemeTokenSet(name);
 
     return {
       fileName,
@@ -70,6 +83,7 @@ export function discoverTokenSets(tokensDir) {
   });
 
   const primitives = [];
+  const primitiveThemeTokenSets = [];
   const sharedSemantic = [];
   const themeTokenSets = [];
   const componentTokenSets = [];
@@ -78,6 +92,11 @@ export function discoverTokenSets(tokensDir) {
   for (const tokenSet of tokenSets) {
     if (PRIMITIVE_PRIORITY.includes(tokenSet.name)) {
       primitives.push(tokenSet);
+      continue;
+    }
+
+    if (isPrimitiveThemeTokenSet(tokenSet.name)) {
+      primitiveThemeTokenSets.push(tokenSet);
       continue;
     }
 
@@ -106,6 +125,7 @@ export function discoverTokenSets(tokensDir) {
   };
 
   primitives.sort(prioritySort(PRIMITIVE_PRIORITY));
+  primitiveThemeTokenSets.sort(sortThemeTokenSets);
   sharedSemantic.sort(prioritySort(SHARED_SEMANTIC_PRIORITY));
   themeTokenSets.sort(sortThemeTokenSets);
   componentTokenSets.sort((left, right) => left.name.localeCompare(right.name));
@@ -114,6 +134,7 @@ export function discoverTokenSets(tokensDir) {
   return {
     tokenSets,
     primitives,
+    primitiveThemeTokenSets,
     sharedSemantic,
     themeTokenSets,
     componentTokenSets,
@@ -124,6 +145,7 @@ export function discoverTokenSets(tokensDir) {
 export function getTokenSetOrder(discovery) {
   return [
     ...discovery.primitives,
+    ...discovery.primitiveThemeTokenSets,
     ...discovery.sharedSemantic,
     ...discovery.themeTokenSets,
     ...discovery.componentTokenSets,
@@ -131,13 +153,28 @@ export function getTokenSetOrder(discovery) {
   ].map((tokenSet) => tokenSet.name);
 }
 
+export function getMatchingPrimitiveThemeTokenSet(discovery, themeId, mode) {
+  return discovery.primitiveThemeTokenSets.find(
+    (tokenSet) => tokenSet.themeId === themeId && tokenSet.mode === mode,
+  );
+}
+
 export function buildThemes(discovery) {
   return discovery.themeTokenSets.map((themeTokenSet) => {
     const selectedTokenSets = {};
+    const primitiveThemeTokenSet = getMatchingPrimitiveThemeTokenSet(
+      discovery,
+      themeTokenSet.themeId,
+      themeTokenSet.mode,
+    );
 
     for (const primitive of discovery.primitives) {
       selectedTokenSets[primitive.name] =
         primitive.name === 'primitives.color' ? 'source' : 'enabled';
+    }
+
+    if (primitiveThemeTokenSet) {
+      selectedTokenSets[primitiveThemeTokenSet.name] = 'enabled';
     }
 
     for (const semantic of discovery.sharedSemantic) {

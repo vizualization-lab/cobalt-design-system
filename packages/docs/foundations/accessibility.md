@@ -52,7 +52,7 @@ Visible focus indicators are critical for keyboard users. Cobalt provides a stan
 
 ```css
 :focus-visible {
-  outline: 2px solid var(--co-color-state-primary-base);
+  outline: 2px solid var(--co-color-state-theme-base);
   outline-offset: 2px;
 }
 ```

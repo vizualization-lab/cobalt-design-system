@@ -6,9 +6,9 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { loadEnv } from 'vite';
 import {
-  CoColorStatePrimarySubtle,
+  CoColorStateThemeSubtle,
   CoColorTextDefault,
-  CoColorStatePrimaryBase,
+  CoColorStateThemeBase,
   CoColorTextSecondary,
   CoColorSurfaceStaticSunken,
   CoColorBorderStrong,
@@ -124,9 +124,9 @@ export default withMermaid(
       theme: 'base',
       themeVariables: {
         // Core palette — light-mode token values as defaults
-        primaryColor: CoColorStatePrimarySubtle,
+        primaryColor: CoColorStateThemeSubtle,
         primaryTextColor: CoColorTextDefault,
-        primaryBorderColor: CoColorStatePrimaryBase,
+        primaryBorderColor: CoColorStateThemeBase,
         lineColor: CoColorTextSecondary,
         secondaryColor: CoColorSurfaceStaticSunken,
         secondaryTextColor: CoColorTextDefault,
@@ -139,7 +139,7 @@ export default withMermaid(
         background: CoColorSurfaceStaticDefault,
 
         // Flowchart
-        nodeBorder: CoColorStatePrimaryBase,
+        nodeBorder: CoColorStateThemeBase,
         clusterBkg: CoColorSurfaceStaticPage,
         clusterBorder: CoColorBorderDefault,
         defaultLinkColor: CoColorTextSecondary,
@@ -147,12 +147,12 @@ export default withMermaid(
         nodeTextColor: CoColorTextDefault,
 
         // Sequence diagram
-        actorBkg: CoColorStatePrimarySubtle,
-        actorBorder: CoColorStatePrimaryBase,
+        actorBkg: CoColorStateThemeSubtle,
+        actorBorder: CoColorStateThemeBase,
         actorTextColor: CoColorTextDefault,
         signalColor: CoColorTextSecondary,
-        activationBkgColor: CoColorStatePrimarySubtle,
-        activationBorderColor: CoColorStatePrimaryBase,
+        activationBkgColor: CoColorStateThemeSubtle,
+        activationBorderColor: CoColorStateThemeBase,
 
         // Notes
         noteBkgColor: CoColorStateWarningSubtle,

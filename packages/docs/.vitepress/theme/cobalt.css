@@ -21,8 +21,8 @@
     --vp-c-text-2: var(--co-color-text-secondary);
     --vp-c-text-3: var(--co-color-text-tertiary);
     --vp-c-divider: var(--co-color-border-subtle);
-    --vp-c-brand-1: var(--co-color-state-primary-base);
-    --vp-c-brand-soft: color-mix(in srgb, var(--co-color-state-primary-base) 10%, transparent);
+    --vp-c-brand-1: var(--co-color-state-theme-base);
+    --vp-c-brand-soft: color-mix(in srgb, var(--co-color-state-theme-base) 10%, transparent);
     --vp-c-default-soft: var(--co-color-surface-static-raised);
     --vp-c-neutral-inverse: var(--co-color-text-on-primary);
     --vp-font-family-base: var(--co-font-family-sans);
@@ -38,9 +38,9 @@
     --vp-local-search-result-bg: var(--co-color-surface-static-raised);
     --vp-local-search-result-border: var(--co-color-border-subtle);
     --vp-local-search-result-selected-bg: var(--co-color-surface-static-sunken);
-    --vp-local-search-result-selected-border: var(--co-color-state-primary-base);
-    --vp-local-search-highlight-bg: var(--co-color-state-primary-base);
-    --vp-local-search-highlight-text: var(--co-color-state-primary-contrast);
+    --vp-local-search-result-selected-border: var(--co-color-state-theme-base);
+    --vp-local-search-highlight-bg: var(--co-color-state-theme-base);
+    --vp-local-search-highlight-text: var(--co-color-state-theme-contrast);
   }
 
   /* Kill the default VitePress container width for doc pages */
@@ -97,7 +97,7 @@
 
   .VPLocalSearchBox .search-bar:focus-within {
     border-color: var(--co-color-border-focus) !important;
-    box-shadow: 0 0 0 3px color-mix(in srgb, var(--co-color-state-primary-base) 18%, transparent) !important;
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--co-color-state-theme-base) 18%, transparent) !important;
   }
 
   .VPLocalSearchBox .search-actions {
@@ -117,8 +117,8 @@
 
   .VPLocalSearchBox .search-actions button:not([disabled]):hover,
   .VPLocalSearchBox .search-actions button.detailed-list {
-    background: color-mix(in srgb, var(--co-color-state-primary-base) 12%, transparent) !important;
-    color: var(--co-color-state-primary-base) !important;
+    background: color-mix(in srgb, var(--co-color-state-theme-base) 12%, transparent) !important;
+    color: var(--co-color-state-theme-base) !important;
     opacity: 1;
   }
 
@@ -157,7 +157,7 @@
     border-color: var(--vp-local-search-result-selected-border) !important;
     background: var(--vp-local-search-result-selected-bg) !important;
     box-shadow: inset 0 0 0 1px
-      color-mix(in srgb, var(--co-color-state-primary-base) 16%, transparent);
+      color-mix(in srgb, var(--co-color-state-theme-base) 16%, transparent);
   }
 
   .VPLocalSearchBox .search-keyboard-shortcuts {
@@ -182,7 +182,7 @@
   }
 
   .VPLocalSearchBox .title-icon {
-    color: var(--co-color-state-primary-base) !important;
+    color: var(--co-color-state-theme-base) !important;
     opacity: 1 !important;
   }
 
@@ -278,19 +278,19 @@
   /* Info / Note */
   .custom-block.info,
   .custom-block.note {
-    border-color: var(--co-color-state-primary-light);
-    background: var(--co-color-state-primary-subtle);
+    border-color: var(--co-color-state-theme-light);
+    background: var(--co-color-state-theme-subtle);
     color: var(--co-color-text-default);
   }
 
   .custom-block.info .custom-block-title,
   .custom-block.note .custom-block-title {
-    color: var(--co-color-state-primary-base);
+    color: var(--co-color-state-theme-base);
   }
 
   .custom-block.info code,
   .custom-block.note code {
-    background: color-mix(in srgb, var(--co-color-state-primary-base) 10%, transparent);
+    background: color-mix(in srgb, var(--co-color-state-theme-base) 10%, transparent);
   }
 
   /* Tip */

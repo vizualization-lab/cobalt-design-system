@@ -62,7 +62,7 @@ export const html = `
       <co-icon name="check-circle" size="lg" style="color: var(--co-color-surface-interactive-success-default)"></co-icon>
       <co-icon name="warning" size="lg" style="color: var(--co-color-state-warning-base)"></co-icon>
       <co-icon name="error" size="lg" style="color: var(--co-color-surface-interactive-danger-default)"></co-icon>
-      <co-icon name="info" size="lg" style="color: var(--co-color-surface-interactive-primary-default)"></co-icon>
+      <co-icon name="info" size="lg" style="color: var(--co-color-surface-interactive-theme-default)"></co-icon>
     </div>
   </section>
 `;

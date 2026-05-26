@@ -177,7 +177,7 @@ function toggleBranch() {
 .token-leaf.selected {
   background: color-mix(
     in srgb,
-    var(--co-color-surface-interactive-primary-default) 12%,
+    var(--co-color-surface-interactive-theme-default) 12%,
     transparent
   );
   color: var(--co-color-text-link);

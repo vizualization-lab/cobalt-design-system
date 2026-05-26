@@ -34,7 +34,7 @@ function buildMappings(tokens) {
 
   // Semantic state color roles: 5 functional variants per role
   colors.state = {};
-  for (const role of ['primary', 'secondary', 'neutral', 'danger', 'success', 'warning']) {
+  for (const role of ['theme', 'secondary', 'neutral', 'danger', 'success', 'warning']) {
     colors.state[role] = {};
     for (const variant of ['base', 'light', 'dark', 'subtle', 'contrast']) {
       const varName = `--co-color-state-${role}-${variant}`;
@@ -63,6 +63,7 @@ function buildMappings(tokens) {
     'tertiary',
     'placeholder',
     'link',
+    'theme',
     'on-primary',
     'on-secondary',
     'on-danger',
@@ -84,6 +85,7 @@ function buildMappings(tokens) {
     'strong',
     'subtle',
     'active',
+    'theme',
     'danger',
     'success',
     'focus',
@@ -99,7 +101,7 @@ function buildMappings(tokens) {
 
   // Interactive surface colors (role → state hierarchy)
   for (const [role, states] of [
-    ['primary', ['default', 'hover', 'active', 'selected']],
+    ['theme', ['default', 'hover', 'active', 'selected']],
     ['secondary', ['default', 'hover', 'active']],
     ['subtle', ['default', 'hover', 'active', 'selected']],
     ['contrast', ['default', 'hover', 'active', 'selected']],
@@ -112,7 +114,7 @@ function buildMappings(tokens) {
       const varName = `--co-color-surface-interactive-${role}-${state}`;
       if (varName in tokens) {
         colors.surface.interactive[role][state] = `var(${varName})`;
-        if (role === 'primary' && state === 'default') {
+        if (role === 'theme' && state === 'default') {
           colors.surface.interactive.DEFAULT = `var(${varName})`;
         }
       }

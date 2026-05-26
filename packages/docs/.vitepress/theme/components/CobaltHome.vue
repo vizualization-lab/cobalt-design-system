@@ -285,8 +285,8 @@ const features = [
 .title-accent {
   background: linear-gradient(
     135deg,
-    var(--co-color-state-primary-dark) 0%,
-    var(--co-color-state-primary-base) 100%
+    var(--co-color-state-theme-dark) 0%,
+    var(--co-color-state-theme-base) 100%
   );
   background-clip: text;
   -webkit-background-clip: text;
@@ -327,25 +327,21 @@ const features = [
 .hero-crystal {
   --co-hero-crystal-fill-start: color-mix(
     in srgb,
-    var(--co-color-state-primary-base) 12%,
+    var(--co-color-state-theme-base) 12%,
     transparent
   );
-  --co-hero-crystal-fill-end: color-mix(
-    in srgb,
-    var(--co-color-state-primary-base) 3%,
-    transparent
-  );
+  --co-hero-crystal-fill-end: color-mix(in srgb, var(--co-color-state-theme-base) 3%, transparent);
   --co-hero-crystal-stroke-start: color-mix(in srgb, var(--co-color-text-link) 30%, transparent);
   --co-hero-crystal-stroke-mid: color-mix(
     in srgb,
-    var(--co-color-state-primary-base) 15%,
+    var(--co-color-state-theme-base) 15%,
     transparent
   );
   --co-hero-crystal-stroke-end: color-mix(in srgb, var(--co-color-text-link) 5%, transparent);
   --co-hero-crystal-facet: color-mix(in srgb, var(--co-color-text-link) 8%, transparent);
   --co-hero-crystal-inner: color-mix(in srgb, var(--co-color-text-link) 10%, transparent);
-  --co-hero-crystal-dot: color-mix(in srgb, var(--co-color-state-primary-base) 40%, transparent);
-  --co-hero-crystal-pulse: color-mix(in srgb, var(--co-color-state-primary-base) 15%, transparent);
+  --co-hero-crystal-dot: color-mix(in srgb, var(--co-color-state-theme-base) 40%, transparent);
+  --co-hero-crystal-pulse: color-mix(in srgb, var(--co-color-state-theme-base) 15%, transparent);
   position: absolute;
   top: 10px;
   right: -40px;
@@ -404,17 +400,17 @@ const features = [
   align-items: center;
   justify-content: center;
   border-radius: 11px;
-  background: color-mix(in srgb, var(--co-color-state-primary-base) 14%, transparent);
-  border: 1px solid color-mix(in srgb, var(--co-color-state-primary-base) 18%, transparent);
-  color: var(--co-color-state-primary-base);
+  background: color-mix(in srgb, var(--co-color-state-theme-base) 14%, transparent);
+  border: 1px solid color-mix(in srgb, var(--co-color-state-theme-base) 18%, transparent);
+  color: var(--co-color-state-theme-base);
   margin-bottom: 18px;
   transition: all var(--co-duration) var(--co-ease);
 }
 
 .feature-card:hover .feature-icon {
-  background: color-mix(in srgb, var(--co-color-state-primary-base) 20%, transparent);
-  border-color: color-mix(in srgb, var(--co-color-state-primary-base) 28%, transparent);
-  color: var(--co-color-state-primary-dark);
+  background: color-mix(in srgb, var(--co-color-state-theme-base) 20%, transparent);
+  border-color: color-mix(in srgb, var(--co-color-state-theme-base) 28%, transparent);
+  color: var(--co-color-state-theme-dark);
 }
 
 .feature-title {

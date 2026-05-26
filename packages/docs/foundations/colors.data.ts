@@ -58,13 +58,13 @@ const PALETTE_LABELS: Record<string, { name: string; description: string }> = {
 
 const SEMANTIC_EXAMPLE_ROWS = [
   {
-    path: 'co.color.state.primary.base',
-    token: '--co-color-state-primary-base',
+    path: 'co.color.state.theme.base',
+    token: '--co-color-state-theme-base',
     usage: 'Core accent solid',
   },
   {
-    path: 'co.color.state.primary.subtle',
-    token: '--co-color-state-primary-subtle',
+    path: 'co.color.state.theme.subtle',
+    token: '--co-color-state-theme-subtle',
     usage: 'Accent wash',
   },
   {
@@ -74,8 +74,8 @@ const SEMANTIC_EXAMPLE_ROWS = [
   },
   { path: 'co.color.border.focus', token: '--co-color-border-focus', usage: 'Keyboard focus ring' },
   {
-    path: 'co.color.surface.interactive.primary.hover',
-    token: '--co-color-surface-interactive-primary-hover',
+    path: 'co.color.surface.interactive.theme.hover',
+    token: '--co-color-surface-interactive-theme-hover',
     usage: 'Hovered primary action',
   },
   {
@@ -206,6 +206,10 @@ function discoverThemeFiles() {
 const themeTokenWatchPaths = discoverThemeFiles().map(
   (fileName) => `../../tokens/tokens/${fileName}`,
 );
+const primitiveThemeTokenWatchPaths = discoverThemeFiles().map((fileName) => {
+  const [, , themeId, mode] = fileName.replace('.json', '').split('.');
+  return `../../tokens/tokens/primitives.theme.${themeId}.${mode}.json`;
+});
 
 function familyLabel(family: string) {
   return (
@@ -276,7 +280,11 @@ async function buildThemeCodeSnippets(themeId: string): Promise<ThemeCodeSnippet
 }
 
 export default {
-  watch: ['../../tokens/tokens/primitives.color.json', ...themeTokenWatchPaths],
+  watch: [
+    '../../tokens/tokens/primitives.color.json',
+    ...primitiveThemeTokenWatchPaths,
+    ...themeTokenWatchPaths,
+  ],
   async load(): Promise<ColorsData> {
     const primitives = readJson(primitivesPath);
     const themeFiles = discoverThemeFiles();
@@ -284,9 +292,11 @@ export default {
 
     for (const fileName of themeFiles) {
       const [, , themeId, mode] = fileName.replace('.json', '').split('.');
-      const themeRoot = readJson(path.join(tokensDir, fileName));
-      const primaryRef = rawTokenValue(themeRoot, 'co.color.state.primary.base');
-      const accentFamily = primaryRef.slice(1, -1).split('.')[3];
+      const primitiveThemeRoot = readJson(
+        path.join(tokensDir, `primitives.theme.${themeId}.${mode}.json`),
+      );
+      const themeRef = rawTokenValue(primitiveThemeRoot, 'co.color.primitive.theme.700');
+      const accentFamily = themeRef.slice(1, -1).split('.')[3];
       const accentLabel = familyLabel(accentFamily).name;
       const paletteFamilies =
         mode === 'light'
