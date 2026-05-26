@@ -35,24 +35,29 @@
 /* ── Flowchart nodes ───────────────────────────────────────── */
 
 .cobalt-mermaid .flowchart .node > .label-container {
-  fill: var(--co-color-surface-interactive-subtle-selected) !important;
-  stroke: var(--co-color-state-theme-base) !important;
+  fill: var(--co-code-bg) !important;
+  stroke: var(--co-code-border) !important;
   stroke-width: 1px !important;
-  filter: drop-shadow(0 4px 10px color-mix(in srgb, var(--co-color-text-default) 12%, transparent))
-    drop-shadow(0 1px 0 color-mix(in srgb, var(--co-color-surface-static-default) 50%, transparent));
+  filter: none !important;
+  rx: 5px !important;
+  ry: 5px !important;
 }
 
 .cobalt-mermaid .flowchart .node .label rect {
-  fill: var(--co-color-surface-interactive-subtle-selected) !important;
-  stroke: var(--co-color-state-theme-base) !important;
+  fill: var(--co-code-bg) !important;
+  stroke: var(--co-code-border) !important;
   stroke-width: 1px !important;
+  rx: 5px !important;
+  ry: 5px !important;
 }
 
 .cobalt-mermaid .flowchart .node .label,
 .cobalt-mermaid .flowchart .node .label text,
-.cobalt-mermaid .flowchart-label text {
-  color: var(--co-color-text-default) !important;
-  fill: var(--co-color-text-default) !important;
+.cobalt-mermaid .flowchart-label text,
+.cobalt-mermaid .flowchart .nodeLabel,
+.cobalt-mermaid .flowchart .nodeLabel p {
+  color: var(--co-code-color) !important;
+  fill: var(--co-code-color) !important;
 }
 
 /* ── Flowchart edges / links ───────────────────────────────── */
