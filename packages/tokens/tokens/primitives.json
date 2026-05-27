@@ -257,6 +257,36 @@
           "$value": 1000,
           "$description": "Raw stacking index step 1000."
         },
+        "1020": {
+          "$type": "number",
+          "$value": 1020,
+          "$description": "Raw stacking index step 1020."
+        },
+        "1030": {
+          "$type": "number",
+          "$value": 1030,
+          "$description": "Raw stacking index step 1030."
+        },
+        "1040": {
+          "$type": "number",
+          "$value": 1040,
+          "$description": "Raw stacking index step 1040."
+        },
+        "1050": {
+          "$type": "number",
+          "$value": 1050,
+          "$description": "Raw stacking index step 1050."
+        },
+        "1060": {
+          "$type": "number",
+          "$value": 1060,
+          "$description": "Raw stacking index step 1060."
+        },
+        "1070": {
+          "$type": "number",
+          "$value": 1070,
+          "$description": "Raw stacking index step 1070."
+        },
         "1100": {
           "$type": "number",
           "$value": 1100,
@@ -332,6 +362,11 @@
           "$value": "0",
           "$description": "No corner radius."
         },
+        "xs": {
+          "$type": "dimension",
+          "$value": "2px",
+          "$description": "Extra small corner radius for compact controls and surfaces."
+        },
         "sm": {
           "$type": "dimension",
           "$value": "4px",
@@ -379,6 +414,11 @@
             "$type": "dimension",
             "$value": "4px",
             "$description": "Thicker border width for focus rings and highly emphasized outlines."
+          },
+          "lg": {
+            "$type": "dimension",
+            "$value": "4px",
+            "$description": "Large border width for focus rings and highly emphasized outlines."
           }
         }
       }
@@ -388,6 +428,11 @@
         "$type": "opacity",
         "$value": 0.25,
         "$description": "Raw opacity step at 0.25 (25%)."
+      },
+      "30": {
+        "$type": "opacity",
+        "$value": 0.3,
+        "$description": "Raw opacity step at 0.3 (30%)."
       },
       "40": {
         "$type": "opacity",

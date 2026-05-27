@@ -463,32 +463,32 @@
         },
         "sticky": {
           "$type": "number",
-          "$value": "{co.elevation.z.1100}",
+          "$value": "{co.elevation.z.1020}",
           "$description": "Stacking index for sticky interface regions."
         },
         "fixed": {
           "$type": "number",
-          "$value": "{co.elevation.z.1200}",
+          "$value": "{co.elevation.z.1030}",
           "$description": "Stacking index for fixed interface regions."
         },
         "modal-backdrop": {
           "$type": "number",
-          "$value": "{co.elevation.z.1300}",
+          "$value": "{co.elevation.z.1040}",
           "$description": "Stacking index for modal backdrop layers."
         },
         "modal": {
           "$type": "number",
-          "$value": "{co.elevation.z.1400}",
+          "$value": "{co.elevation.z.1050}",
           "$description": "Stacking index for modal dialog layers."
         },
         "popover": {
           "$type": "number",
-          "$value": "{co.elevation.z.1500}",
+          "$value": "{co.elevation.z.1060}",
           "$description": "Stacking index for popover layers."
         },
         "tooltip": {
           "$type": "number",
-          "$value": "{co.elevation.z.1600}",
+          "$value": "{co.elevation.z.1070}",
           "$description": "Stacking index for tooltip layers."
         }
       }
@@ -496,7 +496,7 @@
     "opacity": {
       "disabled": {
         "$type": "opacity",
-        "$value": "{co.opacity.25}",
+        "$value": "{co.opacity.30}",
         "$description": "Opacity applied to disabled content and controls."
       },
       "overlay": {

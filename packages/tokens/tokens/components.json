@@ -21,20 +21,25 @@
         }
       },
       "banner": {
+        "height": {
+          "$type": "dimension",
+          "$value": "44px",
+          "$description": "Minimum height for the banner."
+        },
         "min-height": {
           "$type": "dimension",
-          "$value": "30px",
+          "$value": "{co.component.banner.height}",
           "$description": "Minimum height for the persistent announcement banner."
         },
         "padding": {
           "block": {
             "$type": "dimension",
-            "$value": "{co.space.2}",
+            "$value": "{co.space.1}",
             "$description": "Vertical padding for the persistent announcement banner."
           },
           "inline": {
             "$type": "dimension",
-            "$value": "{co.space.2}",
+            "$value": "{co.space.1}",
             "$description": "Horizontal padding for the persistent announcement banner."
           }
         },
@@ -45,13 +50,23 @@
         },
         "background": {
           "$type": "color",
-          "$value": "{co.color.surface.static.default}",
+          "$value": "{co.color.surface.static.raised}",
           "$description": "Background color for the persistent announcement banner."
         },
+        "foreground": {
+          "$type": "color",
+          "$value": "{co.color.text.default}",
+          "$description": "Banner text color."
+        },
         "title": {
+          "weight": {
+            "$type": "fontWeight",
+            "$value": "{co.font.weight.medium}",
+            "$description": "Font weight for the banner title."
+          },
           "color": {
             "$type": "color",
-            "$value": "{co.color.text.default}",
+            "$value": "{co.component.banner.foreground}",
             "$description": "Text color for the banner title."
           },
           "font-size": {
@@ -61,7 +76,7 @@
           },
           "font-weight": {
             "$type": "fontWeight",
-            "$value": "{co.font.weight.regular}",
+            "$value": "{co.component.banner.title.weight}",
             "$description": "Font weight for the banner title."
           },
           "tracking": {
@@ -78,7 +93,7 @@
         "content": {
           "color": {
             "$type": "color",
-            "$value": "{co.color.text.secondary}",
+            "$value": "{co.component.banner.foreground}",
             "$description": "Text color for supporting banner content."
           },
           "font-size": {
@@ -106,7 +121,7 @@
       "card": {
         "padding": {
           "$type": "dimension",
-          "$value": "{co.space.inset.lg}",
+          "$value": "{co.space.inset.xl}",
           "$description": "Internal padding for the card."
         },
         "gap": {
@@ -128,6 +143,15 @@
           "$type": "shadow",
           "$value": "{co.elevation.shadow.sm}",
           "$description": "Card elevation shadow."
+        }
+      },
+      "checkbox": {
+        "radius": {
+          "xs": {
+            "$type": "dimension",
+            "$value": "{co.shape.radius.xs}",
+            "$description": "Extra small corner radius for checkbox controls."
+          }
         }
       },
       "nav": {
@@ -178,9 +202,70 @@
               "$type": "dimension",
               "$value": "{co.space.2}",
               "$description": "Vertical gap between nav rail items."
+            },
+            "background": {
+              "$type": "color",
+              "$value": "{co.color.surface.static.contrast}",
+              "$description": "Container background for nav rail bars in both light and dark themes."
+            },
+            "radius": {
+              "$type": "dimension",
+              "$value": "{co.control.radius.container}",
+              "$description": "Outer corner radius for the nav rail container."
             }
           },
           "item": {
+            "surface": {
+              "default": {
+                "$type": "color",
+                "$value": "{co.color.surface.interactive.nav.default}",
+                "$description": "Resting surface for nav rail items."
+              },
+              "hover": {
+                "$type": "color",
+                "$value": "{co.color.surface.interactive.nav.hover}",
+                "$description": "Hover surface for nav rail items."
+              },
+              "active": {
+                "$type": "color",
+                "$value": "{co.color.surface.interactive.nav.active}",
+                "$description": "Pressed surface for nav rail items."
+              },
+              "selected": {
+                "$type": "color",
+                "$value": "{co.color.surface.interactive.nav.selected}",
+                "$description": "Selected surface for the current nav rail destination."
+              }
+            },
+            "foreground": {
+              "default": {
+                "$type": "color",
+                "$value": "{co.color.text.secondary}",
+                "$description": "Default text and icon color for nav rail items."
+              },
+              "hover": {
+                "$type": "color",
+                "$value": "{co.color.text.link}",
+                "$description": "Hover text and icon color for nav rail items."
+              },
+              "active": {
+                "$type": "color",
+                "$value": "{co.color.text.link}",
+                "$description": "Pressed text and icon color for nav rail items."
+              },
+              "selected": {
+                "$type": "color",
+                "$value": "{co.color.text.link}",
+                "$description": "Selected text and icon color for the current nav rail destination."
+              }
+            },
+            "focus": {
+              "ring": {
+                "$type": "color",
+                "$value": "{co.color.border.focus}",
+                "$description": "Focus ring color for nav rail item keyboard focus."
+              }
+            },
             "padding": {
               "x": {
                 "$type": "dimension",
@@ -198,6 +283,11 @@
               "$value": "{co.space.1}",
               "$description": "Space between the icon and label within a nav rail item."
             },
+            "radius": {
+              "$type": "dimension",
+              "$value": "{co.control.radius.interactive}",
+              "$description": "Corner radius for nav rail item surfaces."
+            },
             "icon": {
               "size": {
                 "$type": "dimension",
@@ -214,6 +304,47 @@
             "$description": "Default width for contextual navigation drawers."
           },
           "item": {
+            "surface": {
+              "hover": {
+                "$type": "color",
+                "$value": "{co.color.surface.interactive.nav.hover}",
+                "$description": "Hover surface for nav drawer items."
+              },
+              "active": {
+                "$type": "color",
+                "$value": "{co.color.surface.interactive.nav.active}",
+                "$description": "Pressed surface for nav drawer items."
+              },
+              "selected": {
+                "$type": "color",
+                "$value": "{co.color.surface.interactive.nav.selected}",
+                "$description": "Selected surface for the current nav drawer destination."
+              }
+            },
+            "foreground": {
+              "hover": {
+                "$type": "color",
+                "$value": "{co.color.text.link}",
+                "$description": "Hover text and icon color for nav drawer items."
+              },
+              "active": {
+                "$type": "color",
+                "$value": "{co.color.text.link}",
+                "$description": "Pressed text and icon color for nav drawer items."
+              },
+              "selected": {
+                "$type": "color",
+                "$value": "{co.color.text.link}",
+                "$description": "Selected text and icon color for the current nav drawer destination."
+              }
+            },
+            "focus": {
+              "ring": {
+                "$type": "color",
+                "$value": "{co.color.border.focus}",
+                "$description": "Focus ring color for nav drawer item keyboard focus."
+              }
+            },
             "padding": {
               "x": {
                 "$type": "dimension",
@@ -237,6 +368,42 @@
               "$type": "dimension",
               "$value": "{co.space.gap.sm}",
               "$description": "Space between prefix content and label text within a nav drawer item."
+            },
+            "radius": {
+              "$type": "dimension",
+              "$value": "{co.control.radius.container}",
+              "$description": "Corner radius for nav drawer item surfaces."
+            },
+            "font": {
+              "size": {
+                "$type": "dimension",
+                "$value": "{co.typography.body-sm.size}",
+                "$description": "Font size for nav drawer item labels."
+              },
+              "weight": {
+                "$type": "fontWeight",
+                "$value": "{co.typography.body-sm.weight}",
+                "$description": "Font weight for nav drawer item labels."
+              },
+              "tracking": {
+                "$type": "dimension",
+                "$value": "{co.typography.body-sm.tracking}",
+                "$description": "Letter spacing for nav drawer item labels."
+              },
+              "line-height": {
+                "$type": "lineHeights",
+                "$value": "{co.typography.body-sm.line.height}",
+                "$description": "Line height for nav drawer item labels."
+              }
+            },
+            "selected": {
+              "font": {
+                "weight": {
+                  "$type": "fontWeight",
+                  "$value": "{co.font.weight.medium}",
+                  "$description": "Font weight for the selected nav drawer item label."
+                }
+              }
             }
           },
           "group": {
@@ -269,6 +436,33 @@
                 "$type": "dimension",
                 "$value": "{co.space.1}",
                 "$description": "Space between the disclosure icon and label within a nav drawer group trigger."
+              },
+              "radius": {
+                "$type": "dimension",
+                "$value": "{co.control.radius.container}",
+                "$description": "Corner radius for nav drawer group trigger surfaces."
+              },
+              "font": {
+                "size": {
+                  "$type": "dimension",
+                  "$value": "{co.typography.body-sm.size}",
+                  "$description": "Font size for nav drawer group trigger labels."
+                },
+                "weight": {
+                  "$type": "fontWeight",
+                  "$value": "{co.typography.label.weight}",
+                  "$description": "Font weight for nav drawer group trigger labels."
+                },
+                "tracking": {
+                  "$type": "dimension",
+                  "$value": "{co.typography.body-sm.tracking}",
+                  "$description": "Letter spacing for nav drawer group trigger labels."
+                },
+                "line-height": {
+                  "$type": "lineHeights",
+                  "$value": "{co.typography.body-sm.line.height}",
+                  "$description": "Line height for nav drawer group trigger labels."
+                }
               }
             },
             "content": {
