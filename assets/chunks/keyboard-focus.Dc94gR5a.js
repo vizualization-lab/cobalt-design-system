@@ -1,0 +1,1 @@
+let t=!1;typeof document<"u"&&(document.addEventListener("keydown",()=>{t=!0}),document.addEventListener("mousedown",()=>{t=!1}));function d(e){e.addEventListener("focusin",()=>{t&&e.setAttribute("_keyboard-focus","")}),e.addEventListener("focusout",()=>{e.removeAttribute("_keyboard-focus")})}export{d as t};
