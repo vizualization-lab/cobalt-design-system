@@ -24,7 +24,7 @@ type AppShellInstance = ComponentPublicInstance & {
 };
 
 const railWidth = ref('115px');
-const drawerWidth = ref('260px');
+const drawerWidth = ref('180px');
 const drawerOpen = ref(false);
 const viewport = ref<ViewportMode>('desktop');
 const shellEl = ref<AppShellInstance | null>(null);
