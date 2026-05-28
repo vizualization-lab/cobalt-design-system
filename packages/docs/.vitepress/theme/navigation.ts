@@ -64,7 +64,7 @@ export const navigation: NavGroup[] = [
       { text: 'Mode Toggle', link: '/components/mode-toggle' },
       {
         text: 'Layout',
-        defaultOpen: true,
+        defaultOpen: false,
         children: [
           { text: 'App Shell', link: '/components/app-shell' },
           { text: 'Banner', link: '/components/banner' },
@@ -73,7 +73,7 @@ export const navigation: NavGroup[] = [
       },
       {
         text: 'Navigation',
-        defaultOpen: true,
+        defaultOpen: false,
         children: [
           { text: 'Navigation Header Bar', link: '/components/nav-header-bar' },
           { text: 'Navigation Rail Bar', link: '/components/nav-rail-bar' },
@@ -84,7 +84,7 @@ export const navigation: NavGroup[] = [
       },
       {
         text: 'Forms',
-        defaultOpen: true,
+        defaultOpen: false,
         children: [
           { text: 'Checkbox Group', link: '/components/checkbox-group' },
           { text: 'Combo Box', link: '/components/combobox' },
