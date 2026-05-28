@@ -46,6 +46,37 @@ type VitePressRouter = {
 let navigationInFlight = false;
 let queuedNavigation: string | undefined;
 
+const cobaltComponentLoaders: Array<[tag: string, loader: () => Promise<unknown>]> = [
+  ['co-app-shell', () => import('@cobalt/components/app-shell')],
+  ['co-banner', () => import('@cobalt/components/banner')],
+  ['co-button', () => import('@cobalt/components/button')],
+  ['co-button-icon', () => import('@cobalt/components/button-icon')],
+  ['co-card', () => import('@cobalt/components/card')],
+  ['co-checkbox', () => import('@cobalt/components/checkbox')],
+  ['co-checkbox-group', () => import('@cobalt/components/checkbox-group')],
+  ['co-checkbox-indeterminate', () => import('@cobalt/components/checkbox-indeterminate')],
+  ['co-combobox', () => import('@cobalt/components/combobox')],
+  ['co-form', () => import('@cobalt/components/form')],
+  ['co-icon', () => import('@cobalt/components/icon')],
+  ['co-input', () => import('@cobalt/components/input')],
+  ['co-input-pill', () => import('@cobalt/components/input-pill')],
+  ['co-label', () => import('@cobalt/components/label')],
+  ['co-listbox', () => import('@cobalt/components/listbox')],
+  ['co-mode-toggle', () => import('@cobalt/components/mode-toggle')],
+  ['co-nav-drawer', () => import('@cobalt/components/nav-drawer')],
+  ['co-nav-drawer-group', () => import('@cobalt/components/nav-drawer-group')],
+  ['co-nav-drawer-item', () => import('@cobalt/components/nav-drawer-item')],
+  ['co-nav-header-bar', () => import('@cobalt/components/nav-header-bar')],
+  ['co-nav-rail-bar', () => import('@cobalt/components/nav-rail-bar')],
+  ['co-nav-rail-item', () => import('@cobalt/components/nav-rail-item')],
+  ['co-nav-separator', () => import('@cobalt/components/nav-separator')],
+  ['co-option', () => import('@cobalt/components/option')],
+  ['co-radio', () => import('@cobalt/components/radio')],
+  ['co-radio-group', () => import('@cobalt/components/radio-group')],
+  ['co-select', () => import('@cobalt/components/select')],
+  ['co-textarea', () => import('@cobalt/components/textarea')],
+];
+
 function registerCobaltComponents(): Promise<void> | undefined {
   if (typeof window === 'undefined') return undefined;
   if (cobaltComponentsRegistration) return cobaltComponentsRegistration;
@@ -53,7 +84,9 @@ function registerCobaltComponents(): Promise<void> | undefined {
   cobaltComponentsRegistrationAttempts += 1;
   const attempt = cobaltComponentsRegistrationAttempts;
 
-  cobaltComponentsRegistration = import('@cobalt/components')
+  cobaltComponentsRegistration = Promise.all(
+    cobaltComponentLoaders.map(([tag, loader]) => (customElements.get(tag) ? undefined : loader())),
+  )
     .then(() => undefined)
     .catch((error) => {
       cobaltComponentsRegistration = undefined;

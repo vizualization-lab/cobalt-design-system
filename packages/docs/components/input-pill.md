@@ -8,7 +8,7 @@ The `co-input-pill` is a stylized standalone input with a pill shape, designed f
 
 <ComponentDemo
   tag="co-input-pill"
-  :defaults="{ variant: 'default', size: 'md' }"
+  :defaults="{ variant: 'default', size: 'md', placeholder: 'Search' }"
   :options="{ variant: ['default', 'search', 'chat'], size: ['sm', 'md', 'lg', 'xl'] }"
   :booleans="['disabled']"
   :textInputs="['placeholder', 'prefix-icon', 'action-icon']"

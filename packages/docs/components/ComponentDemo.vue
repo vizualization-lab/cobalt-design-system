@@ -35,7 +35,7 @@ const attrString = computed(() => {
 
 const previewHtml = computed(() => {
   const attrs = attrString.value ? ' ' + attrString.value : '';
-  const text = props.slotHtml || props.label || 'Button';
+  const text = props.slotHtml ?? props.label ?? '';
   return `<${props.tag}${attrs}>${text}</${props.tag}>`;
 });
 
