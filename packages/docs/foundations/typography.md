@@ -8,6 +8,8 @@ The system has three layers:
 2. **Semantic roles** — ten named typography presets in `semantic.shared.json` (`display`, `heading`, `title`, …) that bundle size + weight + tracking + line-height into a single intent.
 3. **Element mappings** — `base.css` maps HTML elements to semantic roles so that opting into `[data-co-base]` produces editorial typography out of the box.
 
+<TypographyPreview />
+
 ## Philosophy
 
 Hierarchy comes from size, letter-spacing, and line-height — not weight. Regular (400) is the default at every size; medium (500) is reserved for UI emphasis (labels, active nav, tabs). This produces an editorial feel: a 48 px display headline at regular weight reads as airy, not dense.

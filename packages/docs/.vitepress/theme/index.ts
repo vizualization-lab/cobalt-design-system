@@ -15,6 +15,7 @@ import ComponentStatus from '../../components/ComponentStatus.vue';
 import StatusMatrix from '../../components/StatusMatrix.vue';
 import LayerStack from '../../components/LayerStack.vue';
 import ArtifactDownload from '../../components/ArtifactDownload.vue';
+import TypographyPreview from '../../components/TypographyPreview.vue';
 import { installMatomoAnalytics } from './analytics';
 
 // Cobalt design tokens
@@ -236,6 +237,7 @@ export default {
     app.component('LayerStack', LayerStack);
     app.component('StatusMatrix', StatusMatrix);
     app.component('ArtifactDownload', ArtifactDownload);
+    app.component('TypographyPreview', TypographyPreview);
 
     installNextSiblingRecovery();
     installMatomoAnalytics(router, siteData.value.themeConfig.matomo);
