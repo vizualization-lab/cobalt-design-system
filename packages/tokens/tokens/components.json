@@ -23,7 +23,7 @@
       "banner": {
         "height": {
           "$type": "dimension",
-          "$value": "44px",
+          "$value": "30px",
           "$description": "Minimum height for the banner."
         },
         "min-height": {
@@ -34,12 +34,12 @@
         "padding": {
           "block": {
             "$type": "dimension",
-            "$value": "{co.space.1}",
+            "$value": "{co.space.2}",
             "$description": "Vertical padding for the persistent announcement banner."
           },
           "inline": {
             "$type": "dimension",
-            "$value": "{co.space.1}",
+            "$value": "{co.space.2}",
             "$description": "Horizontal padding for the persistent announcement banner."
           }
         },

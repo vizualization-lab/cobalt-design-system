@@ -40,7 +40,7 @@ export const cobaltAppShellStyles = css`
     align-items: center;
     gap: var(--co-space-gap-md);
     min-block-size: calc(var(--co-control-height-lg) + var(--co-space-3));
-    padding-inline: var(--co-space-inset-sm);
+    padding-inline: var(--co-space-inset-md);
   }
 
   .app-shell__topnav-slot {

@@ -84,7 +84,7 @@ describe('co-banner', () => {
     const contentStyles = getComputedStyle(content);
 
     expect(titleStyles.fontSize).to.equal('12px');
-    expect(titleStyles.fontWeight).to.equal('400');
+    expect(titleStyles.fontWeight).to.equal('500');
     expect(titleStyles.lineHeight).to.equal('14px');
     expect(contentStyles.fontSize).to.equal('12px');
     expect(contentStyles.fontWeight).to.equal('400');
