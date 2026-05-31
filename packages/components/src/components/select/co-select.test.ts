@@ -1,4 +1,6 @@
 import { fixture, html, expect } from '@open-wc/testing';
+import '@cobalt/icons/star';
+import '@cobalt/icons/favorite';
 import './co-select.js';
 import type { CoSelect } from './co-select.js';
 import type { CoOption } from '../option/co-option.js';

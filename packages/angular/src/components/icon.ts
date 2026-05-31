@@ -1,5 +1,5 @@
 import { Directive, ElementRef, effect, inject, input } from '@angular/core';
-import type { IconSize } from '@cobalt/components/icon';
+import type { IconSize, IconDescriptor } from '@cobalt/components/icon';
 import '@cobalt/components/icon';
 
 /**
@@ -21,6 +21,7 @@ export class CoIcon {
   readonly size = input<IconSize>('md');
   readonly fill = input(false);
   readonly label = input<string | undefined>();
+  readonly icon = input<IconDescriptor | undefined>();
 
   private el = inject(ElementRef).nativeElement;
 
@@ -30,6 +31,7 @@ export class CoIcon {
       el.name = this.name();
       el.size = this.size();
       el.fill = this.fill();
+      el.icon = this.icon();
       const label = this.label();
       if (label !== undefined) el.label = label;
     });

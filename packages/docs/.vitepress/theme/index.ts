@@ -25,6 +25,9 @@ import '@cobalt/tokens/themes/purple';
 import '@cobalt/tokens/themes/brick';
 import '@cobalt/tokens/themes/forest';
 
+// Register every Cobalt icon so any <co-icon name="…"> in markdown resolves.
+import '@cobalt/icons/all';
+
 // VitePress icons (needed for local search component)
 import 'vitepress/dist/client/theme-default/styles/icons.css';
 

@@ -4,6 +4,9 @@ import type { IconSize } from '../icon/co-icon.js';
 import { getStoredMode, getTheme, resolveMode, setTheme } from '@cobalt/tokens/theme';
 import { cobaltModeToggleStyles } from './co-mode-toggle.styles.js';
 import '../icon/co-icon.js';
+import '@cobalt/icons/light-mode';
+import '@cobalt/icons/brightness-auto';
+import '@cobalt/icons/dark-mode';
 
 export type ModeToggleMode = 'light' | 'dark' | 'auto';
 

@@ -1,4 +1,7 @@
 import { fixture, html, expect, aTimeout, oneEvent } from '@open-wc/testing';
+import '@cobalt/icons/star';
+import '@cobalt/icons/delete';
+import '@cobalt/icons/check';
 import { runA11yAudit } from '../../test-utils/a11y.js';
 import './co-button-icon.js';
 import type { CoButtonIcon } from './co-button-icon.js';

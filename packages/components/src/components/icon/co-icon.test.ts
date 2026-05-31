@@ -1,11 +1,8 @@
 import { fixture, html, expect } from '@open-wc/testing';
-import {
-  iconNames,
-  customIconNames,
-  animatedIconNames,
-  iconSearchTermsByIconName,
-  getIcon,
-} from '@cobalt/icons';
+import '@cobalt/icons/all';
+import { iconNames, customIconNames, animatedIconNames } from '@cobalt/icons/manifest';
+import { iconSearchTermsByIconName } from '@cobalt/icons/metadata';
+import { getIcon } from '@cobalt/icons/registry';
 import { runA11yAudit } from '../../test-utils/a11y.js';
 import './co-icon.js';
 import type { CoIcon } from './co-icon.js';
@@ -147,10 +144,10 @@ describe('co-icon', () => {
 
     it('resolves the Cobalt logo outline and filled variants', () => {
       expect(customIconNames.has('co-logo')).to.equal(true);
-      expect(getIcon('co-logo', 'rounded')).to.be.a('string').and.not.equal('');
-      expect(getIcon('co-logo', 'rounded', true))
-        .to.be.a('string')
-        .and.not.equal('');
+      const outline = getIcon('co-logo');
+      const filled = getIcon('co-logo', { fill: true });
+      expect(outline?.content).to.be.a('string').and.not.equal('');
+      expect(filled?.content).to.be.a('string').and.not.equal('');
     });
   });
 

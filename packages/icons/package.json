@@ -6,23 +6,46 @@
   },
   "description": "Material Symbols registry for the Cobalt Design System",
   "type": "module",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
   "files": [
     "dist"
   ],
   "exports": {
-    ".": {
-      "import": "./dist/index.js",
-      "types": "./dist/index.d.ts"
+    "./registry": {
+      "types": "./dist/registry.d.ts",
+      "import": "./dist/registry.js"
+    },
+    "./manifest": {
+      "types": "./dist/manifest.d.ts",
+      "import": "./dist/manifest.js"
+    },
+    "./metadata": {
+      "types": "./dist/metadata.d.ts",
+      "import": "./dist/metadata.js"
+    },
+    "./all": {
+      "types": "./dist/all.d.ts",
+      "import": "./dist/all.js"
+    },
+    "./animated/*": {
+      "types": "./dist/animated.d.ts",
+      "import": "./dist/animated/*.js"
+    },
+    "./*": {
+      "types": "./dist/icons.d.ts",
+      "import": "./dist/icons/*.js"
     }
   },
+  "sideEffects": [
+    "./dist/icons/*.js",
+    "./dist/animated/*.js",
+    "./dist/all.js"
+  ],
   "scripts": {
     "build": "node scripts/build-registry.js",
     "clean": "rm -rf dist",
     "refresh-categories": "node scripts/refresh-category-metadata.js"
   },
-  "dependencies": {
+  "devDependencies": {
     "@material-symbols/svg-300": "^0.43.0"
   },
   "license": "MIT"

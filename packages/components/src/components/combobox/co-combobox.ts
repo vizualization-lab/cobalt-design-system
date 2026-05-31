@@ -6,6 +6,7 @@ import type { OverlayConfig } from '@lion/ui/types/overlays.js';
 import { CoSpaceGapXs } from '@cobalt/tokens';
 import { cobaltComboboxStyles } from './co-combobox.styles.js';
 import '../icon/co-icon.js';
+import '@cobalt/icons/keyboard-arrow-down';
 import {
   CobaltValidationController,
   createPatternValidator,

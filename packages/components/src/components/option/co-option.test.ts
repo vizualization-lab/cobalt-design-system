@@ -1,4 +1,5 @@
 import { fixture, html, expect } from '@open-wc/testing';
+import '@cobalt/icons/star';
 import { runA11yAudit } from '../../test-utils/a11y.js';
 import '../listbox/co-listbox.js';
 import '../select/co-select.js';

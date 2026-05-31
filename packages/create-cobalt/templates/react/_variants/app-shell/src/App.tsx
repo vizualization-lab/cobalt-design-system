@@ -1,3 +1,4 @@
+import './icons';
 import { CoAppShell } from '@cobalt/react/app-shell';
 import { CoBanner } from '@cobalt/react/banner';
 import { CoButton } from '@cobalt/react/button';

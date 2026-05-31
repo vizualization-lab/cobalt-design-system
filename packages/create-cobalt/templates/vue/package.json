@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@cobalt/icons": "__COBALT_VERSION__",
     "@cobalt/tokens": "__COBALT_VERSION__",
     "@cobalt/vue": "__COBALT_VERSION__",
     "vue": "^3.5.0"

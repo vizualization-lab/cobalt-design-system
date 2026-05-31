@@ -4,6 +4,8 @@ import { CoInput } from '../input/co-input.js';
 import { cobaltInputPillStyles } from './co-input-pill.styles.js';
 import '../icon/co-icon.js';
 import '../button-icon/co-button-icon.js';
+import '@cobalt/icons/search';
+import '@cobalt/icons/arrow-forward';
 
 export type InputPillVariant = 'default' | 'search' | 'chat';
 

@@ -4,6 +4,7 @@ import { LionSelectRich } from '@lion/ui/select-rich.js';
 import { CoSpaceGapXs } from '@cobalt/tokens';
 import { cobaltSelectStyles } from './co-select.styles.js';
 import '../icon/co-icon.js';
+import '@cobalt/icons/keyboard-arrow-down';
 import {
   CobaltValidationController,
   createRequiredValidator,

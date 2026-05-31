@@ -1,14 +1,17 @@
 import { LitElement, html, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { unsafeSVG } from 'lit/directives/unsafe-svg.js';
-import { getIcon, getAnimatedIcon, customIconNames, overrideIconNames } from '@cobalt/icons';
+import { getIcon, getAnimatedIcon, type IconDescriptor } from '@cobalt/icons/registry';
 import { cobaltIconStyles } from './co-icon.styles.js';
 
 export type IconSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+export type { IconDescriptor };
+
+const DEFAULT_MATERIAL_VIEW_BOX = '0 -960 960 960';
 
 /**
  * @tag co-icon
- * @summary Renders a Material Symbols icon from the @cobalt/icons registry.
+ * @summary Renders a registered icon from the @cobalt/icons registry.
  *
  * @csspart svg - The inner SVG element
  */
@@ -16,9 +19,15 @@ export type IconSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 export class CoIcon extends LitElement {
   static override styles = [cobaltIconStyles];
 
-  /** The icon name in kebab-case (e.g. "arrow-forward"). */
+  /** The icon name in kebab-case (e.g. "arrow-forward"). Resolved against
+   *  the icon registry — register the icon by importing `@cobalt/icons/<name>`. */
   @property({ reflect: true })
   name = '';
+
+  /** An icon descriptor passed directly. Takes precedence over `name`. Useful
+   *  for value-form imports: `import home from '@cobalt/icons/home'`. */
+  @property({ attribute: false })
+  icon?: IconDescriptor;
 
   /** The icon size. */
   @property({ reflect: true })
@@ -46,27 +55,25 @@ export class CoIcon extends LitElement {
       await this.updateComplete;
       return;
     }
-    // Toggle animated off → render → reflow → on → render.
-    // This restarts CSS animations by removing and re-adding the attribute.
     this.animated = false;
     await this.updateComplete;
-    this.getBoundingClientRect(); // force reflow so browser registers removal
+    this.getBoundingClientRect();
     this.animated = true;
     await this.updateComplete;
   }
 
   override render() {
-    const svgContent =
-      (this.animated && getAnimatedIcon(this.name, 'rounded', this.fill)) ||
-      getIcon(this.name, 'rounded', this.fill);
+    const fromProp = this.icon;
+    const animatedDescriptor =
+      this.animated && this.name ? getAnimatedIcon(this.name, { fill: this.fill }) : undefined;
+    const staticDescriptor =
+      fromProp ?? (this.name ? getIcon(this.name, { fill: this.fill }) : undefined);
+    const descriptor = animatedDescriptor ?? staticDescriptor;
 
-    if (!svgContent) return nothing;
+    if (!descriptor) return nothing;
 
     const isDecorative = !this.label;
-    const viewBox =
-      customIconNames.has(this.name) || overrideIconNames.has(this.name)
-        ? '0 0 24 24'
-        : '0 -960 960 960';
+    const viewBox = descriptor.viewBox || DEFAULT_MATERIAL_VIEW_BOX;
 
     return html`
       <svg
@@ -78,7 +85,7 @@ export class CoIcon extends LitElement {
         aria-hidden=${isDecorative ? 'true' : 'false'}
         aria-label=${this.label ?? nothing}
       >
-        ${unsafeSVG(svgContent)}
+        ${unsafeSVG(descriptor.content)}
       </svg>
     `;
   }

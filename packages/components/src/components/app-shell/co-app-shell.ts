@@ -4,6 +4,8 @@ import { customElement, property, query, state } from 'lit/decorators.js';
 import { CoBreakpointMd } from '@cobalt/tokens';
 import { cobaltAppShellStyles } from './co-app-shell.styles.js';
 import '../icon/co-icon.js';
+import '@cobalt/icons/menu';
+import '@cobalt/icons/close';
 
 export interface AppShellDrawerDetail {
   open: boolean;

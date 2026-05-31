@@ -165,7 +165,7 @@ importers:
         version: 3.5.30(typescript@5.6.3)
 
   packages/icons:
-    dependencies:
+    devDependencies:
       '@material-symbols/svg-300':
         specifier: ^0.43.0
         version: 0.43.0

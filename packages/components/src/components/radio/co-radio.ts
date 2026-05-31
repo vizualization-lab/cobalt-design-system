@@ -4,6 +4,9 @@ import { LionRadio } from '@lion/ui/radio-group.js';
 import { cobaltRadioStyles } from './co-radio.styles.js';
 import { trackKeyboardFocus } from '../../utils/keyboard-focus.js';
 import '../icon/co-icon.js';
+import '@cobalt/icons/radio-button-checked';
+import '@cobalt/icons/radio-button-checked-fill';
+import '@cobalt/icons/radio-button-unchecked';
 
 /**
  * @tag co-radio

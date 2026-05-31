@@ -218,7 +218,7 @@ export default withMermaid(
           '@lion/ui/radio-group.js',
           '@lion/ui/select-rich.js',
           '@lion/ui/textarea.js',
-          '@cobalt/icons',
+          '@cobalt/icons/metadata',
         ],
       },
     },

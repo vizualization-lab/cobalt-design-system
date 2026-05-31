@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import './icons';
 import { CoAppShell } from '@cobalt/vue/app-shell';
 import { CoBanner } from '@cobalt/vue/banner';
 import { CoButton } from '@cobalt/vue/button';

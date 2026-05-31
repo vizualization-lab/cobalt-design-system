@@ -4,6 +4,9 @@ import { LionCheckbox } from '@lion/ui/checkbox-group.js';
 import { cobaltCheckboxStyles } from './co-checkbox.styles.js';
 import { trackKeyboardFocus } from '../../utils/keyboard-focus.js';
 import '../icon/co-icon.js';
+import '@cobalt/icons/check-box';
+import '@cobalt/icons/check-box-fill';
+import '@cobalt/icons/check-box-outline-blank';
 
 /**
  * @tag co-checkbox

@@ -4,6 +4,11 @@ import { LionCheckboxIndeterminate } from '@lion/ui/checkbox-group.js';
 import { cobaltCheckboxIndeterminateStyles } from './co-checkbox-indeterminate.styles.js';
 import { trackKeyboardFocus } from '../../utils/keyboard-focus.js';
 import '../icon/co-icon.js';
+import '@cobalt/icons/check-box';
+import '@cobalt/icons/check-box-fill';
+import '@cobalt/icons/check-box-outline-blank';
+import '@cobalt/icons/indeterminate-check-box';
+import '@cobalt/icons/indeterminate-check-box-fill';
 
 /**
  * @tag co-checkbox-indeterminate

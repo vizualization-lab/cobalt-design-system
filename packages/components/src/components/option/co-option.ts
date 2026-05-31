@@ -4,6 +4,12 @@ import { LionOption } from '@lion/ui/listbox.js';
 import type { IconSize } from '../icon/co-icon.js';
 import { cobaltOptionStyles } from './co-option.styles.js';
 import '../icon/co-icon.js';
+import '@cobalt/icons/check-box';
+import '@cobalt/icons/check-box-fill';
+import '@cobalt/icons/check-box-outline-blank';
+import '@cobalt/icons/radio-button-checked';
+import '@cobalt/icons/radio-button-checked-fill';
+import '@cobalt/icons/radio-button-unchecked';
 
 type OptionParentTag = 'co-select' | 'co-listbox' | 'co-combobox';
 

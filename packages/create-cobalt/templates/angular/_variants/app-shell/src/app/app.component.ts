@@ -1,3 +1,4 @@
+import './icons';
 import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CoAppShell } from '@cobalt/angular/app-shell';
 import { CoBanner } from '@cobalt/angular/banner';

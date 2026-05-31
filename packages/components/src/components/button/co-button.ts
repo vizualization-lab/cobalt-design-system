@@ -3,6 +3,7 @@ import { customElement, property } from 'lit/decorators.js';
 import { LionButton } from '@lion/ui/button.js';
 import { cobaltButtonStyles } from './co-button.styles.js';
 import '../icon/co-icon.js';
+import '@cobalt/icons/animated/progress-activity';
 
 export type ButtonVariant = 'primary' | 'secondary' | 'danger' | 'warning' | 'success' | 'ghost';
 export type ButtonSize = 'sm' | 'md' | 'lg';

@@ -5,17 +5,20 @@ import { CoOption } from '@cobalt/vue/option';
 import { CoSelect } from '@cobalt/vue/select';
 import { CoTextarea } from '@cobalt/vue/textarea';
 import { createSearchTracker } from '../.vitepress/theme/analytics';
+import '@cobalt/icons/all';
 import {
   animatedIconNames,
   coreIconNames,
   customIconNames,
-  getIcon,
+  iconNames,
+  overrideIconNames,
+} from '@cobalt/icons/manifest';
+import {
   iconCategories,
   iconDescriptionsByIconName,
-  iconNames,
   iconSearchTermsByIconName,
-  overrideIconNames,
-} from '@cobalt/icons';
+} from '@cobalt/icons/metadata';
+import { getIcon } from '@cobalt/icons/registry';
 
 const pngSizes = [16, 20, 24, 32, 48, 96, 192];
 const snippetTabs = ['Web Component', 'React', 'Vue', 'Angular'];
@@ -146,27 +149,18 @@ function getIconSearchRank(name: string, terms: string[]): number | null {
 }
 
 function getSvgForGrid(name: string): string {
-  const content = getIcon(name, 'rounded', fillToggle.value);
-  if (!content) return '';
-
-  const viewBox =
-    customIconNames.has(name) || overrideIconNames.has(name) ? '0 0 24 24' : '0 -960 960 960';
-
-  return `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="${viewBox}" fill="currentColor">${content}</svg>`;
+  const descriptor = getIcon(name, { fill: fillToggle.value });
+  if (!descriptor) return '';
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="${descriptor.viewBox}" fill="currentColor">${descriptor.content}</svg>`;
 }
 
 function getRenderedSvg(size: number, fill?: boolean): string {
   if (!selectedIcon.value) return '';
 
-  const content = getIcon(selectedIcon.value, 'rounded', fill ?? fillToggle.value);
-  if (!content) return '';
+  const descriptor = getIcon(selectedIcon.value, { fill: fill ?? fillToggle.value });
+  if (!descriptor) return '';
 
-  const viewBox =
-    customIconNames.has(selectedIcon.value) || overrideIconNames.has(selectedIcon.value)
-      ? '0 0 24 24'
-      : '0 -960 960 960';
-
-  return `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="${viewBox}" fill="currentColor">${content}</svg>`;
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="${descriptor.viewBox}" fill="currentColor">${descriptor.content}</svg>`;
 }
 
 function checkMobile() {

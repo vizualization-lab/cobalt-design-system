@@ -2,6 +2,7 @@ import { LitElement, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { cobaltNavDrawerGroupStyles } from './co-nav-drawer-group.styles.js';
 import '../icon/co-icon.js';
+import '@cobalt/icons/chevron-right';
 
 let nextGroupId = 0;
 

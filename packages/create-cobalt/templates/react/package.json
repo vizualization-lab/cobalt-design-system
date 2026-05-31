@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@cobalt/icons": "__COBALT_VERSION__",
     "@cobalt/react": "__COBALT_VERSION__",
     "@cobalt/tokens": "__COBALT_VERSION__",
     "react": "^18.3.0",
