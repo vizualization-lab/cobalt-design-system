@@ -1,0 +1,55 @@
+@use '@cobalt/tokens/scss' as co;
+
+body {
+  margin: 0;
+}
+
+.starter-page {
+  min-block-size: 100vh;
+  background: var(--co-color-surface-static-page);
+  color: var(--co-color-text-default);
+}
+
+.starter-content {
+  box-sizing: border-box;
+  inline-size: min(100%, 960px);
+  margin-inline: auto;
+  padding: var(--co-space-inset-xl);
+}
+
+.starter-card {
+  display: grid;
+  gap: co.space('gap.md');
+}
+
+.starter-eyebrow {
+  margin: 0;
+  color: var(--co-color-text-secondary);
+}
+
+.starter-title {
+  margin: 0;
+  font-size: var(--co-typography-heading-size);
+  font-weight: var(--co-typography-heading-weight);
+  letter-spacing: var(--co-typography-heading-tracking);
+  line-height: var(--co-typography-heading-line-height);
+}
+
+.starter-copy {
+  margin: 0;
+  color: var(--co-color-text-secondary);
+}
+
+.shell-body {
+  box-sizing: border-box;
+  min-block-size: 100%;
+  padding: co.space('inset.lg');
+  background: var(--co-color-surface-static-page);
+}
+
+.shell-header-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: co.space('gap.sm');
+  font-weight: var(--co-font-weight-semibold);
+}

@@ -41,6 +41,30 @@ Framework wrappers are optional but recommended for better developer experience:
 
 Cobalt packages are hosted in a private npm registry. Configure npm to use the Cobalt registry for packages under the `@cobalt` scope.
 
+### Start from a template
+
+Use the starter generator when you want Cobalt dependencies, global styles, and a working framework shell created for you:
+
+```bash
+npm create cobalt
+```
+
+The generator prompts for a framework template, whether to use SCSS, whether to include the Cobalt app shell pattern, where Cobalt packages should be installed from, and whether to configure the Cobalt npm registry. You can also pass flags to skip prompts:
+
+```bash
+npm create cobalt my-app -- --template react --scss --app-shell --configure-registry --registry-url %REGISTRY_URL% --ca-bundle %CA_BUNDLE_PATH%
+```
+
+If you configure the registry during scaffolding, the generator writes a project `.npmrc` and removes `.npmrc.example`. If you skip registry configuration, the generated project keeps `.npmrc.example` with the private registry settings you need to copy into your project or global npm configuration before installing dependencies.
+
+For local testing with unpublished tarballs, choose local package mode:
+
+```bash
+npm create cobalt my-app -- --cobalt-source local
+```
+
+Local package mode points Cobalt dependencies at `./cobalt-packages/*.tgz` and writes copy instructions in `cobalt-packages/README.md`.
+
 ### Project-level registry configuration
 
 Add the following lines to your project's `.npmrc` file:

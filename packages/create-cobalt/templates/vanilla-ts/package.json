@@ -1,0 +1,19 @@
+{
+  "name": "cobalt-app",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@cobalt/components": "__COBALT_VERSION__",
+    "@cobalt/tokens": "__COBALT_VERSION__"
+  },
+  "devDependencies": {
+    "typescript": "~5.6.0",
+    "vite": "^6.0.0"
+  }
+}

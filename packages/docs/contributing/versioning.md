@@ -4,7 +4,7 @@ The Cobalt Design System follows [Semantic Versioning](https://semver.org/) (sem
 
 ## Fixed / Lockstep Versioning
 
-All publishable Cobalt packages share a single version number. When any package receives a changeset, **all six packages** bump to the same version:
+All publishable Cobalt packages share a single version number. When any package receives a changeset, **all seven published packages** bump to the same version:
 
 - `@cobalt/tokens`
 - `@cobalt/icons`
@@ -12,8 +12,9 @@ All publishable Cobalt packages share a single version number. When any package 
 - `@cobalt/react`
 - `@cobalt/vue`
 - `@cobalt/angular`
+- `create-cobalt`
 
-This is enforced by the `"fixed"` configuration in `.changeset/config.json`. Consumers can always assume that all `@cobalt/*` packages at the same version are compatible.
+This is enforced by the `"fixed"` configuration in `.changeset/config.json`. Consumers can always assume that published Cobalt packages at the same version are compatible.
 
 > The docs package (`@cobalt/docs`) is excluded from versioning — it is private and not published to npm.
 

@@ -1,0 +1,38 @@
+<co-app-shell [railWidth]="'96px'" [drawerWidth]="'260px'">
+  <co-banner slot="banner" label="Cobalt starter banner">
+    <span slot="title">Cobalt starter</span>
+  </co-banner>
+  <co-nav-header-bar slot="topnav" label="Workspace header">
+    <div slot="logo" class="shell-header-brand">
+      <co-icon name="co-logo" size="lg" aria-hidden="true"></co-icon>
+      <span>Cobalt starter</span>
+    </div>
+    <co-mode-toggle slot="avatar" [storageNamespace]="'cobalt-starter'"></co-mode-toggle>
+  </co-nav-header-bar>
+  <co-nav-rail-bar slot="rail" label="Primary sections">
+    <co-nav-rail-item value="home" icon="home" [selected]="true">Home</co-nav-rail-item>
+    <co-nav-rail-item value="reports" icon="dashboard">Reports</co-nav-rail-item>
+    <co-nav-rail-item value="settings" icon="settings">Settings</co-nav-rail-item>
+  </co-nav-rail-bar>
+  <co-nav-drawer slot="drawer" label="Workspace navigation">
+    <co-nav-drawer-item value="overview" icon="dashboard" [selected]="true">
+      Overview
+    </co-nav-drawer-item>
+    <co-nav-drawer-item value="activity" icon="task-alt">Activity</co-nav-drawer-item>
+    <co-nav-drawer-item value="settings" icon="settings">Settings</co-nav-drawer-item>
+  </co-nav-drawer>
+  <main slot="body" class="shell-body">
+    <co-card label="Starter content">
+      <div class="starter-card">
+        <p class="starter-eyebrow">Angular</p>
+        <h1 class="starter-title">Build inside the app shell</h1>
+        <p class="starter-copy">
+          The banner, header, rail, drawer, and body regions are ready for routing.
+        </p>
+        <div>
+          <co-button variant="success" (coFocus)="handleSuccess()">Success</co-button>
+        </div>
+      </div>
+    </co-card>
+  </main>
+</co-app-shell>

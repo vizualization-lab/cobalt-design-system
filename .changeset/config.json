@@ -10,7 +10,8 @@
       "@cobalt/react",
       "@cobalt/vue",
       "@cobalt/docs",
-      "@cobalt/angular"
+      "@cobalt/angular",
+      "create-cobalt"
     ]
   ],
   "linked": [],

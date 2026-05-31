@@ -1,0 +1,2 @@
+@cobalt:registry=%REGISTRY_URL%
+cafile=%CA_BUNDLE_PATH%

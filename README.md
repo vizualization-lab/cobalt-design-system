@@ -66,7 +66,7 @@ After making changes in the monorepo, re-run `pnpm pack:local` and reinstall in 
 
 ## Versioning & Releases
 
-All publishable `@cobalt/*` packages use **fixed/lockstep versioning** — every release bumps all six packages to the same version number. This is managed by [Changesets](https://github.com/changesets/changesets).
+All publishable Cobalt packages use **fixed/lockstep versioning** — every release bumps all seven published packages to the same version number. This is managed by [Changesets](https://github.com/changesets/changesets).
 
 ### Adding a changeset
 
@@ -170,6 +170,10 @@ Vue 3 wrappers using `defineComponent` for type-safe props and event forwarding.
 Angular directives that sync properties and forward custom events from the underlying web components.
 
 **Peer dependencies:** Angular 17, 18, 19, 20, or 21
+
+### `create-cobalt`
+
+The starter project generator for `npm create cobalt`. It scaffolds vanilla TypeScript, React, Vue, and Angular applications with Cobalt packages, styles, optional SCSS helpers, optional app shell composition, optional registry configuration, and local tarball dependency mode for unpublished package testing.
 
 ### `@cobalt/docs`
 

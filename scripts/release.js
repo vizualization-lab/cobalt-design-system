@@ -56,14 +56,17 @@ function listPublishablePackages() {
       if (!fs.existsSync(packageJsonPath)) return null;
       return JSON.parse(fs.readFileSync(packageJsonPath, 'utf8'));
     })
-    .filter((pkg) => pkg?.name?.startsWith('@cobalt/') && pkg.private !== true);
+    .filter(
+      (pkg) =>
+        pkg?.private !== true && (pkg.name?.startsWith('@cobalt/') || pkg.name === 'create-cobalt'),
+    );
 }
 
 function getReleaseVersion() {
   const packages = listPublishablePackages();
 
   if (packages.length === 0) {
-    throw new Error('No publishable @cobalt packages were found.');
+    throw new Error('No publishable Cobalt packages were found.');
   }
 
   const versions = new Set(packages.map((pkg) => pkg.version));
