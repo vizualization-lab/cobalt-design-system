@@ -16,3 +16,4 @@ worktrees/
 .env.local
 .env.*.local
 packages/docs/public/assets/artifacts/vscode
+packages/docs/public/assets/artifacts/npm/*.zip

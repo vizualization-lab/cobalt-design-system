@@ -52,8 +52,8 @@ pnpm pack:local --skip-build
 Then install the tarballs in your app:
 
 ```bash
-# Install all packages at once
-npm install /path/to/cobalt/local-packs/*.tgz
+# Install all runtime packages at once
+npm install /path/to/cobalt/local-packs/cobalt-*.tgz
 
 # Or install specific packages
 npm install /path/to/cobalt/local-packs/cobalt-components-0.0.1.tgz \

@@ -15,6 +15,7 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "pack:local": "bash scripts/pack-local.sh",
+    "artifact:packages": "node scripts/build-package-artifact.js",
     "changeset": "changeset",
     "version:bump": "changeset version && node scripts/aggregate-changelog.js",
     "version:check": "changeset status --verbose",

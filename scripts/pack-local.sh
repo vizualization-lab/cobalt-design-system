@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
-# Pack all publishable @cobalt packages into tarballs for local testing.
+# Pack all publishable Cobalt packages into tarballs for local testing.
 #
 # Usage:
 #   pnpm pack:local                    # build + pack into ./local-packs/
 #   pnpm pack:local --skip-build       # pack only (if you already ran pnpm build)
 #
 # Then in your external app:
-#   npm install /path/to/cobalt/local-packs/*.tgz
+#   npm install /path/to/cobalt/local-packs/cobalt-*.tgz
 #
 # Re-run this script after making changes, then reinstall in your app.
 
@@ -34,13 +34,14 @@ fi
 rm -rf "$OUT_DIR"
 mkdir -p "$OUT_DIR"
 
-# Publishable packages (skip docs since it is internal)
-PACKAGES=(tokens icons components react vue angular)
+# Publishable packages (skip docs, workbench, and vscode since they are internal)
+PACKAGE_DIRS=(tokens icons components react vue angular create-cobalt)
+COBALT_DEPENDENCY_PACKAGES=(tokens icons components react vue angular)
 
-echo "Packing @cobalt packages into $OUT_DIR/"
+echo "Packing Cobalt packages into $OUT_DIR/"
 echo ""
 
-for pkg in "${PACKAGES[@]}"; do
+for pkg in "${PACKAGE_DIRS[@]}"; do
   pkg_dir="$ROOT_DIR/packages/$pkg"
   if [ -d "$pkg_dir" ]; then
     tarball=$(cd "$pkg_dir" && pnpm pack --pack-destination "$OUT_DIR" 2>/dev/null)
@@ -52,7 +53,7 @@ done
 # Rewrite inter-package dependencies from version numbers to file: references.
 # pnpm pack converts workspace:* to the package version (e.g., "0.0.1"), but
 # npm can't resolve those from the registry. We rewrite them to point at the
-# sibling tarballs so a single `npm install ./local-packs/*.tgz` just works.
+# sibling tarballs so a single `npm install ./local-packs/cobalt-*.tgz` just works.
 echo ""
 echo "Rewriting inter-package dependencies to file: references..."
 
@@ -70,7 +71,7 @@ for tgz in "$OUT_DIR"/*.tgz; do
 
   # Rewrite @cobalt/* dependencies to file: references
   needs_repack=false
-  for dep_pkg in "${PACKAGES[@]}"; do
+  for dep_pkg in "${COBALT_DEPENDENCY_PACKAGES[@]}"; do
     dep_scope="@cobalt/$dep_pkg"
     dep_tgz=$(ls "$OUT_DIR"/cobalt-"$dep_pkg"-*.tgz 2>/dev/null | head -1)
     if [ -n "$dep_tgz" ] && grep -q "\"$dep_scope\"" "$pkg_json" 2>/dev/null; then
@@ -92,5 +93,5 @@ rm -rf "$TEMP_DIR"
 echo ""
 echo "Done! Install in your app with:"
 echo ""
-echo "  npm install $OUT_DIR/*.tgz"
+echo "  npm install $OUT_DIR/cobalt-*.tgz"
 echo ""

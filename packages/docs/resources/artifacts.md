@@ -16,6 +16,19 @@ Downloadable artifacts collect Cobalt tools and supporting files that are useful
 
 After downloading, install the extension from VS Code by opening the Extensions view, selecting **Install from VSIX...**, and choosing `cobalt-tokens-explorer.vsix`.
 
+## Cobalt Package Bundle {#cobalt-packages}
+
+<ArtifactDownload
+  title="Cobalt Package Bundle"
+  type="Developer artifact"
+  description="Local npm tarballs for teams that cannot install Cobalt packages from the private npm registry. Extract the ZIP, copy the cobalt-packages folder into a starter project, and install in local package mode."
+  download-href="/assets/artifacts/npm/cobalt-packages.zip"
+  screenshot-src="/assets/artifacts/npm/cobalt-packages.png"
+  screenshot-alt="Cobalt Package Bundle preview showing Cobalt branding, npm branding, and local package tarballs."
+  file-name="cobalt-packages.zip"
+  button-label="Download ZIP"
+/>
+
 ## Fonts Package {#cobalt-fonts-package}
 
 <ArtifactDownload

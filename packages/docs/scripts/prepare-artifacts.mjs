@@ -20,6 +20,8 @@ mkdirSync(artifactDir, { recursive: true });
 copyRequiredFile(vsixSource, resolve(artifactDir, vsixFileName));
 copyRequiredFile(screenshotSource, resolve(artifactDir, screenshotFileName));
 
+run('node', ['scripts/build-package-artifact.js', '--build-packages']);
+
 function run(command, args) {
   const result = spawnSync(command, args, {
     cwd: repoRoot,

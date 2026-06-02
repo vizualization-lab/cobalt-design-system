@@ -157,7 +157,7 @@ pnpm pack:local
 Then install the generated tarballs in your app:
 
 ```bash
-npm install /path/to/cobalt/local-packs/*.tgz
+npm install /path/to/cobalt/local-packs/cobalt-*.tgz
 ```
 
 If you already ran `pnpm build`, you can skip the extra build step:

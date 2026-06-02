@@ -39,7 +39,7 @@ Framework wrappers are optional but recommended for better developer experience:
 
 ## Install Cobalt
 
-Cobalt packages are hosted in a private npm registry. Configure npm to use the Cobalt registry for packages under the `@cobalt` scope.
+Cobalt packages are hosted in a private npm registry. Configure npm to use the Cobalt registry for packages under the `@cobalt` scope, or download the [Cobalt Package Bundle](/resources/artifacts#cobalt-packages) when you need local tarballs without private registry access.
 
 ### Start from a template
 
@@ -57,13 +57,13 @@ npm create cobalt my-app -- --template react --scss --app-shell --configure-regi
 
 If you configure the registry during scaffolding, the generator writes a project `.npmrc` and removes `.npmrc.example`. If you skip registry configuration, the generated project keeps `.npmrc.example` with the private registry settings you need to copy into your project or global npm configuration before installing dependencies.
 
-For local testing with unpublished tarballs, choose local package mode:
+For local testing with unpublished tarballs or with the downloaded [Cobalt Package Bundle](/resources/artifacts#cobalt-packages), choose local package mode:
 
 ```bash
 npm create cobalt my-app -- --cobalt-source local
 ```
 
-Local package mode points Cobalt dependencies at `./cobalt-packages/*.tgz` and writes copy instructions in `cobalt-packages/README.md`.
+Local package mode points Cobalt dependencies at `./cobalt-packages/*.tgz` and writes copy instructions in `cobalt-packages/README.md`. If you are using the bundle artifact, extract it and copy the `cobalt-packages` folder into the generated project before installing dependencies.
 
 ### Project-level registry configuration
 
