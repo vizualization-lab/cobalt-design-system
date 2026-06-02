@@ -83,9 +83,30 @@ for tgz in "$OUT_DIR"/*.tgz; do
     dep_tgz=$(ls "$OUT_DIR"/cobalt-"$dep_pkg"-*.tgz 2>/dev/null | head -1)
     if [ -n "$dep_tgz" ] && grep -q "\"$dep_scope\"" "$pkg_json" 2>/dev/null; then
       dep_basename=$(basename "$dep_tgz")
-      # Replace the version with a file: reference to the sibling tarball
-      sed -i '' "s|\"$dep_scope\": \"[^\"]*\"|\"$dep_scope\": \"file:$dep_basename\"|g" "$pkg_json"
-      needs_repack=true
+      rewrite_result=$(
+        node -e '
+          const fs = require("node:fs");
+          const [pkgJsonPath, dependencyName, tarballName] = process.argv.slice(1);
+          const pkg = JSON.parse(fs.readFileSync(pkgJsonPath, "utf8"));
+          const sections = ["dependencies", "devDependencies", "peerDependencies", "optionalDependencies"];
+          let changed = false;
+
+          for (const section of sections) {
+            if (pkg[section]?.[dependencyName]) {
+              pkg[section][dependencyName] = `file:${tarballName}`;
+              changed = true;
+            }
+          }
+
+          if (changed) {
+            fs.writeFileSync(pkgJsonPath, `${JSON.stringify(pkg, null, 2)}\n`);
+            process.stdout.write("updated");
+          }
+        ' "$pkg_json" "$dep_scope" "$dep_basename"
+      )
+      if [ "$rewrite_result" = "updated" ]; then
+        needs_repack=true
+      fi
     fi
   done
 
