@@ -44,9 +44,16 @@ echo ""
 for pkg in "${PACKAGE_DIRS[@]}"; do
   pkg_dir="$ROOT_DIR/packages/$pkg"
   if [ -d "$pkg_dir" ]; then
-    tarball=$(cd "$pkg_dir" && pnpm pack --pack-destination "$OUT_DIR" 2>/dev/null)
-    basename=$(basename "$tarball")
-    echo "  $basename"
+    tarball_name=$(
+      node -e 'const pkg = require(process.argv[1]); console.log(`${pkg.name.replace(/^@/, "").replace("/", "-")}-${pkg.version}.tgz`);' \
+        "$pkg_dir/package.json"
+    )
+    (cd "$pkg_dir" && pnpm pack --pack-destination "$OUT_DIR" >/dev/null)
+    if [ ! -f "$OUT_DIR/$tarball_name" ]; then
+      echo "Expected tarball was not created: $OUT_DIR/$tarball_name" >&2
+      exit 1
+    fi
+    echo "  $tarball_name"
   fi
 done
 
