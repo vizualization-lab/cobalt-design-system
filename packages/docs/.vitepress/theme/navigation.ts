@@ -116,6 +116,7 @@ export const navigation: NavGroup[] = [
     defaultOpen: false,
     items: [
       { text: 'Overview', link: '/guidance/' },
+      { text: 'Starter Templates', link: '/guidance/starter-templates' },
       { text: 'Adoption Plan', link: '/guidance/adoption' },
       { text: 'Element Mapping', link: '/guidance/element-mapping' },
       { text: 'Migration Guide', link: '/guidance/migration' },

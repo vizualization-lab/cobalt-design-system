@@ -8,14 +8,15 @@ These resources are primarily for application teams working with Cobalt in real 
 
 ## Sections
 
-| Page                                                               | Description                                                                    |
-| ------------------------------------------------------------------ | ------------------------------------------------------------------------------ |
-| [Adoption Plan](./adoption.md)                                     | Staged adoption model for existing applications, including alpha guardrails.   |
-| [Element Mapping](./element-mapping.md)                            | How to progressively opt native HTML into Cobalt baseline styles.              |
-| [Migration Guide](./migration.md)                                  | A scoped migration flow for one application route, workflow, or product slice. |
-| [Design Principles](./principles.md)                               | The core values that drive every decision in Cobalt.                           |
-| [Content & Writing](./content.md)                                  | Voice, tone, capitalization, error messages, and formatting rules.             |
-| [Getting Started for Developers](../getting-started/developers.md) | Environment setup, project structure, and first steps with Cobalt.             |
+| Page                                                               | Description                                                                     |
+| ------------------------------------------------------------------ | ------------------------------------------------------------------------------- |
+| [Adoption Plan](./adoption.md)                                     | Staged adoption model for existing applications, including alpha guardrails.    |
+| [Starter Templates](./starter-templates.md)                        | Create new Cobalt applications with framework templates and local package mode. |
+| [Element Mapping](./element-mapping.md)                            | How to progressively opt native HTML into Cobalt baseline styles.               |
+| [Migration Guide](./migration.md)                                  | A scoped migration flow for one application route, workflow, or product slice.  |
+| [Design Principles](./principles.md)                               | The core values that drive every decision in Cobalt.                            |
+| [Content & Writing](./content.md)                                  | Voice, tone, capitalization, error messages, and formatting rules.              |
+| [Getting Started for Developers](../getting-started/developers.md) | Environment setup, project structure, and first steps with Cobalt.              |
 
 ## Who is this for?
 
@@ -27,7 +28,7 @@ These resources are primarily for application teams working with Cobalt in real 
 
 ## How to use these guides
 
-For existing applications, start with the [Adoption Plan](./adoption.md), then use [Element Mapping](./element-mapping.md) to scope baseline styles before following the [Migration Guide](./migration.md). For new projects, start with [Getting Started for Developers](../getting-started/developers.md) and the [Design Principles](./principles.md).
+For existing applications, start with the [Adoption Plan](./adoption.md), then use [Element Mapping](./element-mapping.md) to scope baseline styles before following the [Migration Guide](./migration.md). For new projects, start with [Getting Started for Developers](../getting-started/developers.md), then use [Starter Templates](./starter-templates.md) when you want a scaffolded application.
 
 > **Tip:** Treat migration as a product-slice decision, not a full-application rewrite.
 
