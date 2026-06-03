@@ -5,8 +5,9 @@ This page explains how Cobalt tokens are organized and how to decide where a tok
 For designers working in Figma, the main idea is simple:
 
 - **Primitives** are raw ingredients
-- **Primitive theme bridges** map a theme and mode to the active accent palette
+  - **Primitive theme bridges** map a theme and color mode to the active semantic palette
 - **Semantic tokens** describe design intent, including light and dark color behavior
+  - **Semantic themes** include tokens that change by theme or mode
 - **Component tokens** are reserved for true component-specific needs
 
 ## Token Files
