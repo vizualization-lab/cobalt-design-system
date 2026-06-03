@@ -4,7 +4,7 @@ The Cobalt Design System follows [Semantic Versioning](https://semver.org/) (sem
 
 ## Fixed / Lockstep Versioning
 
-All publishable Cobalt packages share a single version number. When any package receives a changeset, **all seven published packages** bump to the same version:
+All publishable Cobalt packages share a single version number. When any package receives a changeset, **all published packages** bump to the same version:
 
 - `@cobalt/tokens`
 - `@cobalt/icons`

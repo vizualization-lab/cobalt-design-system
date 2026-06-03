@@ -74,7 +74,7 @@ To add support for a script (Arabic and Japanese shown here):
    @import '@fontsource-variable/noto-sans-jp' layer(co.base);
    ```
 
-That's it. No token overrides needed. The `fonts-international` import pre-registers all seven script names in the font stack. Names that don't match an installed `@font-face` are silently skipped by the browser, so there is no download or performance penalty for scripts you haven't installed.
+That's it. No token overrides needed. The `fonts-international` import pre-registers all script names in the font stack. Names that don't match an installed `@font-face` are silently skipped by the browser, so there is no download or performance penalty for scripts you haven't installed.
 
 The same `unicode-range` optimization applies: each script's glyphs are only downloaded when characters from that script appear on the page.
 
