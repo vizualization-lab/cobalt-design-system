@@ -10,6 +10,7 @@ import { CoNavDrawerItem } from '@cobalt/vue/nav-drawer-item';
 import { CoNavHeaderBar } from '@cobalt/vue/nav-header-bar';
 import { CoNavRailBar } from '@cobalt/vue/nav-rail-bar';
 import { CoNavRailItem } from '@cobalt/vue/nav-rail-item';
+import { CoComponentNavRailBarWidth } from '@cobalt/tokens';
 
 type ViewportMode = 'desktop' | 'mobile';
 
@@ -23,7 +24,7 @@ type AppShellInstance = ComponentPublicInstance & {
   element?: AppShellElement | { value: AppShellElement | null } | null;
 };
 
-const railWidth = ref('115px');
+const railWidth = ref(CoComponentNavRailBarWidth);
 const drawerWidth = ref('180px');
 const drawerOpen = ref(false);
 const viewport = ref<ViewportMode>('desktop');
