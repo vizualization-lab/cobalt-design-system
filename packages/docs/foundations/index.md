@@ -43,6 +43,25 @@ Then reference any token in your styles:
 }
 ```
 
+Use JavaScript token exports when you need token values in runtime configuration, charting libraries, canvas drawing, media queries, or other APIs that do not consume CSS custom properties directly:
+
+```ts
+import { CoBreakpointMd, CoSpaceGapMd } from '@cobalt/tokens';
+
+const compactViewport = window.matchMedia(`(max-width: ${CoBreakpointMd})`);
+
+export const chartOptions = {
+  layout: {
+    padding: CoSpaceGapMd,
+  },
+  plugins: {
+    legend: {
+      display: !compactViewport.matches,
+    },
+  },
+};
+```
+
 > **Tip:** Prefer semantic tokens (e.g. `--co-color-state-theme-base`, `--co-control-height-md`) over raw values where they exist. This ensures your UI adapts correctly to theme changes and shared system rules.
 
 If your project uses Sass, import the SCSS helper module and keep runtime theming through CSS custom properties:
