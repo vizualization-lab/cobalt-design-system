@@ -41,7 +41,7 @@ body {
 .shell-body {
   box-sizing: border-box;
   min-block-size: 100%;
-  padding: var(--co-space-inset-lg);
+  padding: var(--co-space-0);
   background: var(--co-color-surface-static-page);
 }
 
