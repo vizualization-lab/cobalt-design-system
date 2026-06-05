@@ -27,11 +27,11 @@
       "import": "./dist/all.js"
     },
     "./animated/*": {
-      "types": "./dist/animated.d.ts",
+      "types": "./dist/animated/*.d.ts",
       "import": "./dist/animated/*.js"
     },
     "./*": {
-      "types": "./dist/icons.d.ts",
+      "types": "./dist/icons/*.d.ts",
       "import": "./dist/icons/*.js"
     }
   },
@@ -43,6 +43,7 @@
   "scripts": {
     "build": "node scripts/build-registry.js",
     "clean": "rm -rf dist",
+    "test": "node --test",
     "refresh-categories": "node scripts/refresh-category-metadata.js"
   },
   "devDependencies": {
