@@ -183,6 +183,34 @@ test('scaffolds an app shell React project with SCSS', async () => {
   }
 });
 
+test('scaffolds an Angular project with SCSS without Sass import deprecations', async () => {
+  const tempDir = await mkdtemp(path.join(os.tmpdir(), 'create-cobalt-'));
+  const cwd = process.cwd();
+
+  try {
+    process.chdir(tempDir);
+    const targetDir = await scaffoldProject(
+      { targetDir: 'angular-scss', template: 'angular', scss: true, appShell: true },
+      packageRoot,
+    );
+    const styles = await readFile(path.join(targetDir, 'src', 'styles.scss'), 'utf8');
+    const angularJson = await readFile(path.join(targetDir, 'angular.json'), 'utf8');
+    const packageJson = JSON.parse(await readFile(path.join(targetDir, 'package.json'), 'utf8'));
+
+    assert.match(styles, /@use '@cobalt\/tokens\/scss\/styles' as co;/);
+    assert.doesNotMatch(styles, /@use '@cobalt\/tokens\/scss\/css/);
+    assert.doesNotMatch(styles, /@use '@cobalt\/tokens\/scss\/themes/);
+    assert.doesNotMatch(styles, /@import ['"]@cobalt\/tokens/);
+    assert.doesNotMatch(styles, /@import url\('@cobalt\/tokens/);
+    assert.match(angularJson, /"styles": \["src\/styles\.scss"\]/);
+    assert.equal(packageJson.devDependencies.sass, '^1.99.0');
+    assert.equal(packageJson.dependencies['@cobalt/angular'], '^0.1.0');
+  } finally {
+    process.chdir(cwd);
+    await rm(tempDir, { recursive: true, force: true });
+  }
+});
+
 test('writes .npmrc and removes .npmrc.example when registry configuration is provided', async () => {
   const tempDir = await mkdtemp(path.join(os.tmpdir(), 'create-cobalt-'));
   const cwd = process.cwd();

@@ -32,13 +32,29 @@
       "sass": "./dist/scss/index.scss",
       "default": "./dist/scss/index.scss"
     },
+    "./scss/styles": {
+      "sass": "./dist/scss/styles.scss",
+      "default": "./dist/scss/styles.scss"
+    },
     "./scss/css": {
       "sass": "./dist/scss/css.scss",
       "default": "./dist/scss/css.scss"
     },
+    "./scss/css/base": {
+      "sass": "./dist/scss/css/base.scss",
+      "default": "./dist/scss/css/base.scss"
+    },
     "./scss/css/dark": {
       "sass": "./dist/scss/css/dark.scss",
       "default": "./dist/scss/css/dark.scss"
+    },
+    "./scss/css/fonts": {
+      "sass": "./dist/scss/css/fonts.scss",
+      "default": "./dist/scss/css/fonts.scss"
+    },
+    "./scss/css/fonts-international": {
+      "sass": "./dist/scss/css/fonts-international.scss",
+      "default": "./dist/scss/css/fonts-international.scss"
     },
     "./scss/themes/*": {
       "sass": "./dist/scss/themes/*.scss",

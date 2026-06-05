@@ -269,6 +269,15 @@ function generateIndexScss() {
 `;
 }
 
+function generateStylesScss() {
+  return `${HEADER}@forward 'index';
+@use 'css/fonts';
+@use 'css';
+@use 'css/base';
+@use 'themes/default';
+`;
+}
+
 function copyCssShim(cssPath, scssPath) {
   const css = readCss(cssPath);
   writeGenerated(scssPath, css);
@@ -316,6 +325,7 @@ export function generateScss(packageDir, discovery) {
   writeGenerated(join(outDir, 'maps.scss'), generateMapsScss(tokens));
   writeGenerated(join(outDir, 'functions.scss'), generateFunctionsScss());
   writeGenerated(join(outDir, 'mixins.scss'), generateMixinsScss());
+  writeGenerated(join(outDir, 'styles.scss'), generateStylesScss());
 
   const shimPairs = [];
   const addShim = (cssPath, scssPath) => {
@@ -324,7 +334,13 @@ export function generateScss(packageDir, discovery) {
   };
 
   addShim(cssTokensPath, join(outDir, 'css.scss'));
+  addShim(join(packageDir, 'src', 'base.css'), join(outDir, 'css', 'base.scss'));
   addShim(join(cssDir, 'tokens-dark.css'), join(outDir, 'css', 'dark.scss'));
+  addShim(join(packageDir, 'src', 'fonts.css'), join(outDir, 'css', 'fonts.scss'));
+  addShim(
+    join(packageDir, 'src', 'fonts-international.css'),
+    join(outDir, 'css', 'fonts-international.scss'),
+  );
 
   const themeIds = [...new Set(discovery.themeTokenSets.map((tokenSet) => tokenSet.themeId))];
   for (const themeId of themeIds) {

@@ -23,10 +23,22 @@ This helper entrypoint does not emit CSS. It provides token variables, functions
 
 ## Loading Tokens And Themes
 
-Use the SCSS CSS shims when your Sass entrypoint is responsible for loading Cobalt styles:
+Use the default SCSS entrypoint when your Sass entrypoint is responsible for loading the standard Cobalt app styles. It emits fonts, tokens, base styles, and the default theme, while also exposing the helper API:
+
+```scss
+@use '@cobalt/tokens/scss/styles' as co;
+
+.card {
+  padding: co.space('inset.md');
+}
+```
+
+Use the granular SCSS CSS shims when you need to load a custom set of Cobalt styles:
 
 ```scss
 @use '@cobalt/tokens/scss/css';
+@use '@cobalt/tokens/scss/css/fonts';
+@use '@cobalt/tokens/scss/css/base';
 @use '@cobalt/tokens/scss/themes/purple';
 ```
 
@@ -34,6 +46,8 @@ The SCSS style shims are generated from the CSS bundles, so these imports emit t
 
 ```css
 @import '@cobalt/tokens/css';
+@import '@cobalt/tokens/css/fonts';
+@import '@cobalt/tokens/css/base';
 @import '@cobalt/tokens/themes/purple';
 ```
 

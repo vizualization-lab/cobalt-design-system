@@ -118,12 +118,16 @@ function assertPackageExportsResolve() {
   const css = sass.compileString(
     `
       @use 'pkg:@cobalt/tokens/scss' as co;
+      @use 'pkg:@cobalt/tokens/scss/styles' as cobalt;
       @use 'pkg:@cobalt/tokens/scss/css';
+      @use 'pkg:@cobalt/tokens/scss/css/base';
+      @use 'pkg:@cobalt/tokens/scss/css/fonts';
       @use 'pkg:@cobalt/tokens/scss/themes/purple';
       @use 'pkg:@cobalt/tokens/scss/css/themes/purple-dark';
 
       .package-export {
         color: co.color('text.default');
+        gap: cobalt.space('gap.sm');
       }
     `,
     {
@@ -133,11 +137,13 @@ function assertPackageExportsResolve() {
   ).css;
 
   assert.match(css, /--co-color-text-default:/);
+  assert.match(css, /@import '@fontsource-variable\/inter' layer\(co\.base\);/);
   assert.match(
     css,
     /\[data-theme=(?:"purple"|'purple'|purple)\]\[data-mode=(?:"dark"|'dark'|dark)\]/,
   );
   assert.match(css, /color: var\(--co-color-text-default\);/);
+  assert.match(css, /gap: var\(--co-space-gap-sm\);/);
 }
 
 function assertTokenMapsMatchCss() {
@@ -159,7 +165,13 @@ function assertThemeShimsMatchCss() {
   const discovery = discoverTokenSets(join(packageDir, 'tokens'));
   const pairs = [
     [join(cssDir, 'tokens.css'), join(scssDir, 'css.scss')],
+    [join(packageDir, 'src', 'base.css'), join(scssDir, 'css', 'base.scss')],
     [join(cssDir, 'tokens-dark.css'), join(scssDir, 'css', 'dark.scss')],
+    [join(packageDir, 'src', 'fonts.css'), join(scssDir, 'css', 'fonts.scss')],
+    [
+      join(packageDir, 'src', 'fonts-international.css'),
+      join(scssDir, 'css', 'fonts-international.scss'),
+    ],
   ];
 
   const themeIds = [...new Set(discovery.themeTokenSets.map((tokenSet) => tokenSet.themeId))];
@@ -194,6 +206,7 @@ function escapeRegExp(value) {
 }
 
 assertExists(join(scssDir, 'index.scss'));
+assertExists(join(scssDir, 'styles.scss'));
 assertExists(join(scssDir, 'functions.scss'));
 assertExists(join(scssDir, 'mixins.scss'));
 assertHelperOutput();

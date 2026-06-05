@@ -1,9 +1,4 @@
-@use '@cobalt/tokens/scss' as co;
-
-@import '@cobalt/tokens/css';
-@import '@cobalt/tokens/css/fonts';
-@import '@cobalt/tokens/css/base';
-@import '@cobalt/tokens/themes/default';
+@use '@cobalt/tokens/scss/styles' as co;
 
 body {
   margin: 0;
