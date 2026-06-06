@@ -63,8 +63,17 @@ export function createProgram({
     .option('--ca-bundle <path>', 'Path to the CA bundle used for the Cobalt registry')
     .option('-y, --yes', 'Accept defaults for omitted options')
     .action(async (targetDir: string | undefined, commandOptions: NewCommandOptions) => {
-      const config = await readConfig(resolveConfigPath(env));
+      const configPath = resolveConfigPath(env);
+      const config = await readConfig(configPath);
       const options = await resolveOptions({ ...commandOptions, targetDir }, prompts, config);
+
+      if (
+        options.saveConfig &&
+        (await prompts.confirm('Save registry settings for future Cobalt cli runs?', true))
+      ) {
+        await writeConfig(options.saveConfig, configPath);
+      }
+
       const createdDir = await scaffoldProject(options, root);
 
       out(`\nCreated ${path.basename(createdDir)} with the ${options.template} template.`);

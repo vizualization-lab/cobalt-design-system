@@ -29,6 +29,7 @@ export interface ResolvedNewOptions {
   registryUrl?: string;
   caBundle?: string;
   yes: boolean;
+  saveConfig?: CobaltConfig;
 }
 
 export interface PromptAdapter {

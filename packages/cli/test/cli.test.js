@@ -24,6 +24,21 @@ const prompts = {
     return defaultValue;
   },
 };
+
+function scriptedPrompts({ text = {}, select = {}, confirm = {} } = {}) {
+  return {
+    async text(label, defaultValue) {
+      return text[label] ?? defaultValue;
+    },
+    async select(label, _choices, defaultValue) {
+      return select[label] ?? defaultValue;
+    },
+    async confirm(label, defaultValue) {
+      return confirm[label] ?? defaultValue;
+    },
+  };
+}
+
 const frameworkTemplateFiles = [
   'templates/react/_variants/base/src/App.tsx',
   'templates/react/_variants/app-shell/src/App.tsx',
@@ -193,6 +208,131 @@ test('co new writes project .npmrc from saved config', async () => {
     const npmrc = await readFile(path.join(tempDir, 'configured-app', '.npmrc'), 'utf8');
     assert.match(npmrc, /@cobalt:registry=https:\/\/registry\.example\.com\/npm\//);
     assert.match(npmrc, /cafile=\/etc\/cobalt\.pem/);
+  } finally {
+    process.chdir(cwd);
+    await rm(tempDir, { recursive: true, force: true });
+  }
+});
+
+test('co new saves prompted registry settings when confirmed', async () => {
+  const tempDir = await mkdtemp(path.join(os.tmpdir(), 'cobalt-cli-'));
+  const configPath = path.join(tempDir, '.cobalt.config.json');
+  const cwd = process.cwd();
+
+  try {
+    process.chdir(tempDir);
+    const program = createProgram({
+      root: packageRoot,
+      env: { COBALT_CONFIG: configPath },
+      prompts: scriptedPrompts({
+        text: {
+          'Cobalt npm registry URL': 'https://registry.example.com/npm/',
+          'Path to CA bundle (optional)': '/etc/cobalt.pem',
+        },
+        confirm: {
+          'Configure npm registry for @cobalt packages now?': true,
+          'Save registry settings for future co new runs?': true,
+        },
+      }),
+      out: () => {},
+    });
+
+    await program.parseAsync(['new', 'saved-registry'], { from: 'user' });
+
+    const config = await readConfig(configPath);
+    const npmrc = await readFile(path.join(tempDir, 'saved-registry', '.npmrc'), 'utf8');
+
+    assert.equal(config.registry.url, 'https://registry.example.com/npm/');
+    assert.equal(config.registry.caBundle, '/etc/cobalt.pem');
+    assert.match(npmrc, /@cobalt:registry=https:\/\/registry\.example\.com\/npm\//);
+    assert.match(npmrc, /cafile=\/etc\/cobalt\.pem/);
+  } finally {
+    process.chdir(cwd);
+    await rm(tempDir, { recursive: true, force: true });
+  }
+});
+
+test('co new leaves config unchanged when prompted registry save is declined', async () => {
+  const tempDir = await mkdtemp(path.join(os.tmpdir(), 'cobalt-cli-'));
+  const configPath = path.join(tempDir, '.cobalt.config.json');
+  const cwd = process.cwd();
+
+  try {
+    await writeFile(
+      configPath,
+      JSON.stringify({ registry: { url: 'https://old.example.com/npm/' } }, null, 2),
+    );
+
+    process.chdir(tempDir);
+    const program = createProgram({
+      root: packageRoot,
+      env: { COBALT_CONFIG: configPath },
+      prompts: scriptedPrompts({
+        text: {
+          'Cobalt npm registry URL': 'https://new.example.com/npm/',
+          'Path to CA bundle (optional)': '',
+        },
+        confirm: {
+          'Save registry settings for future co new runs?': false,
+        },
+      }),
+      out: () => {},
+    });
+
+    await program.parseAsync(['new', 'declined-registry'], { from: 'user' });
+
+    const config = await readConfig(configPath);
+    const npmrc = await readFile(path.join(tempDir, 'declined-registry', '.npmrc'), 'utf8');
+
+    assert.equal(config.registry.url, 'https://old.example.com/npm/');
+    assert.match(npmrc, /@cobalt:registry=https:\/\/new\.example\.com\/npm\//);
+  } finally {
+    process.chdir(cwd);
+    await rm(tempDir, { recursive: true, force: true });
+  }
+});
+
+test('co new does not ask to save unchanged registry settings', async () => {
+  const tempDir = await mkdtemp(path.join(os.tmpdir(), 'cobalt-cli-'));
+  const configPath = path.join(tempDir, '.cobalt.config.json');
+  const cwd = process.cwd();
+  const confirmLabels = [];
+
+  try {
+    await writeFile(
+      configPath,
+      JSON.stringify(
+        { registry: { url: 'https://registry.example.com/npm/', caBundle: '/etc/cobalt.pem' } },
+        null,
+        2,
+      ),
+    );
+
+    process.chdir(tempDir);
+    const program = createProgram({
+      root: packageRoot,
+      env: { COBALT_CONFIG: configPath },
+      prompts: {
+        ...scriptedPrompts({
+          text: {
+            'Cobalt npm registry URL': 'https://registry.example.com/npm/',
+            'Path to CA bundle (optional)': '/etc/cobalt.pem',
+          },
+        }),
+        async confirm(label, defaultValue) {
+          confirmLabels.push(label);
+          return defaultValue;
+        },
+      },
+      out: () => {},
+    });
+
+    await program.parseAsync(['new', 'unchanged-registry'], { from: 'user' });
+
+    assert.deepEqual(
+      confirmLabels.filter((label) => label === 'Save registry settings for future co new runs?'),
+      [],
+    );
   } finally {
     process.chdir(cwd);
     await rm(tempDir, { recursive: true, force: true });
