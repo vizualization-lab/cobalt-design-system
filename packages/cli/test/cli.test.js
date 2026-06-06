@@ -11,6 +11,7 @@ import { getConfigValue, readConfig, setConfigValue, unsetConfigValue } from '..
 import { resolveOptions } from '../dist/options.js';
 import { normalizePackageName } from '../dist/package-json.js';
 import { scaffoldProject } from '../dist/scaffold.js';
+import { renderStartupArt } from '../dist/startup-art.js';
 
 const packageRoot = path.resolve(fileURLToPath(import.meta.url), '../..');
 const prompts = {
@@ -61,6 +62,43 @@ test('co exposes new and config subcommands', () => {
   assert.match(newCommand.helpInformation(), /--app-shell/);
   assert.match(configCommand.helpInformation(), /set/);
   assert.match(configCommand.helpInformation(), /unset/);
+});
+
+test('startup art includes Cobalt and the CLI version', () => {
+  const plain = renderStartupArt({ version: '0.1.0' });
+  const color = renderStartupArt({ version: '0.1.0', color: true });
+
+  assert.match(plain, /COBALT/);
+  assert.match(plain, /@cobalt\/cli v0\.1\.0/);
+  assert.doesNotMatch(plain, /\u001B\[/);
+  assert.match(color, /\u001B\[/);
+});
+
+test('help output includes startup art unless disabled', () => {
+  const withArt = createProgram({ argv: ['--help'], isTty: false }).helpInformation();
+  const withoutArt = createProgram({
+    argv: ['--no-art', '--help'],
+    isTty: false,
+  }).helpInformation();
+
+  assert.match(withArt, /COBALT/);
+  assert.match(withArt, /@cobalt\/cli v0\.1\.0/);
+  assert.doesNotMatch(withoutArt, /COBALT/);
+  assert.doesNotMatch(withoutArt, /@cobalt\/cli v0\.1\.0/);
+});
+
+test('running co without arguments prints startup art and help', async () => {
+  const output = [];
+  const program = createProgram({
+    argv: [],
+    isTty: false,
+    out: (message = '') => output.push(message),
+  });
+
+  await program.parseAsync([], { from: 'user' });
+
+  assert.match(output.join('\n'), /COBALT/);
+  assert.match(output.join('\n'), /Usage: co/);
 });
 
 test('package binary points to the compiled CLI entrypoint', async () => {
@@ -335,6 +373,125 @@ test('co new does not ask to save unchanged registry settings', async () => {
     );
   } finally {
     process.chdir(cwd);
+    await rm(tempDir, { recursive: true, force: true });
+  }
+});
+
+test('interactive co new prints startup art before prompting', async () => {
+  const tempDir = await mkdtemp(path.join(os.tmpdir(), 'cobalt-cli-'));
+  const cwd = process.cwd();
+  const output = [];
+
+  try {
+    process.chdir(tempDir);
+    const program = createProgram({
+      argv: ['new', 'interactive-art'],
+      root: packageRoot,
+      prompts,
+      isTty: false,
+      out: (message = '') => output.push(message),
+    });
+
+    await program.parseAsync(['new', 'interactive-art'], { from: 'user' });
+
+    assert.match(output.join('\n'), /COBALT/);
+    assert.match(output.join('\n'), /@cobalt\/cli v0\.1\.0/);
+  } finally {
+    process.chdir(cwd);
+    await rm(tempDir, { recursive: true, force: true });
+  }
+});
+
+test('non-interactive co new omits startup art', async () => {
+  const tempDir = await mkdtemp(path.join(os.tmpdir(), 'cobalt-cli-'));
+  const cwd = process.cwd();
+  const output = [];
+
+  try {
+    process.chdir(tempDir);
+    const program = createProgram({
+      argv: ['new', 'quiet-art', '--yes'],
+      root: packageRoot,
+      isTty: false,
+      out: (message = '') => output.push(message),
+    });
+
+    await program.parseAsync(['new', 'quiet-art', '--yes'], { from: 'user' });
+
+    assert.doesNotMatch(output.join('\n'), /COBALT/);
+    assert.match(output.join('\n'), /Created quiet-art/);
+  } finally {
+    process.chdir(cwd);
+    await rm(tempDir, { recursive: true, force: true });
+  }
+});
+
+test('fully flag-driven co new omits startup art', async () => {
+  const tempDir = await mkdtemp(path.join(os.tmpdir(), 'cobalt-cli-'));
+  const cwd = process.cwd();
+  const output = [];
+
+  try {
+    process.chdir(tempDir);
+    const program = createProgram({
+      argv: [
+        'new',
+        'flag-art',
+        '--template',
+        'react',
+        '--no-scss',
+        '--no-app-shell',
+        '--cobalt-source',
+        'registry',
+        '--no-configure-registry',
+      ],
+      root: packageRoot,
+      isTty: false,
+      out: (message = '') => output.push(message),
+    });
+
+    await program.parseAsync(
+      [
+        'new',
+        'flag-art',
+        '--template',
+        'react',
+        '--no-scss',
+        '--no-app-shell',
+        '--cobalt-source',
+        'registry',
+        '--no-configure-registry',
+      ],
+      { from: 'user' },
+    );
+
+    assert.doesNotMatch(output.join('\n'), /COBALT/);
+    assert.match(output.join('\n'), /Created flag-art/);
+  } finally {
+    process.chdir(cwd);
+    await rm(tempDir, { recursive: true, force: true });
+  }
+});
+
+test('config command omits startup art during normal execution', async () => {
+  const tempDir = await mkdtemp(path.join(os.tmpdir(), 'cobalt-cli-'));
+  const configPath = path.join(tempDir, '.cobalt.config.json');
+  const output = [];
+
+  try {
+    await writeFile(configPath, JSON.stringify({ registry: { url: 'https://example.com' } }));
+    const program = createProgram({
+      argv: ['config', 'list'],
+      env: { COBALT_CONFIG: configPath },
+      isTty: false,
+      out: (message = '') => output.push(message),
+    });
+
+    await program.parseAsync(['config', 'list'], { from: 'user' });
+
+    assert.doesNotMatch(output.join('\n'), /COBALT/);
+    assert.match(output.join('\n'), /registry/);
+  } finally {
     await rm(tempDir, { recursive: true, force: true });
   }
 });

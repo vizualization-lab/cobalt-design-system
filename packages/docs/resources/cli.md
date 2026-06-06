@@ -1,6 +1,16 @@
+<script setup>
+import { withBase } from 'vitepress';
+</script>
+
 # Cobalt CLI
 
-The Cobalt CLI provides project scaffolding and reusable setup commands for teams building with Cobalt. Install it once, save your private registry settings, then use `co new` to create framework starter applications.
+The Cobalt CLI provides project scaffolding and reusable setup commands for teams building with Cobalt. Currently, the cli features are limited but as Cobalt evolves, so will the cli.
+
+<img
+  class="cli-screenshot"
+  :src="withBase('/assets/images/cobalt-cli-ss.png')"
+  alt="Cobalt CLI showing startup art and interactive project template prompts."
+/>
 
 ## Install
 
@@ -28,7 +38,35 @@ pnpm --config.@cobalt:registry=%REGISTRY_URL% --config.cafile=%CA_BUNDLE_PATH% a
 
 If your registry does not require a custom CA bundle, omit the `cafile` option.
 
-## Configure
+## Usage
+
+```bash
+co [options] [command]
+```
+
+Run `co` without a command to print help. Run `co <command> --help` to print command-specific help.
+
+## Global Options
+
+| Option       | Description                                                                |
+| ------------ | -------------------------------------------------------------------------- |
+| `--no-art`   | Disables the startup art shown in help output and interactive `new` flows. |
+| `-h, --help` | Prints help for the CLI or the current command.                            |
+
+`--no-art` is a global option, so pass it before the subcommand:
+
+```bash
+co --no-art new
+```
+
+## Commands
+
+| Command     | Description                               |
+| ----------- | ----------------------------------------- |
+| `co new`    | Creates a new Cobalt starter application. |
+| `co config` | Manages saved Cobalt CLI settings.        |
+
+## Config
 
 Save registry settings once so generated projects can install `@cobalt/*` packages without copying registry details manually:
 
@@ -42,7 +80,7 @@ The CLI stores settings in `~/.cobalt.config.json`:
 ```json
 {
   "registry": {
-    "url": "https://registry.example.com/npm/",
+    "url": "%REGISTRY_URL%",
     "caBundle": "/path/to/ca.pem"
   }
 }
@@ -50,13 +88,50 @@ The CLI stores settings in `~/.cobalt.config.json`:
 
 Use `COBALT_CONFIG=/path/to/config.json` when you need to point the CLI at a different config file.
 
-## Create a Project
+### Config Commands
+
+```bash
+co config list
+co config get registry.url
+co config set registry.url %REGISTRY_URL%
+co config unset registry.caBundle
+```
+
+| Command                       | Description                      |
+| ----------------------------- | -------------------------------- |
+| `co config list`              | Prints the saved config as JSON. |
+| `co config get <key>`         | Prints a saved config value.     |
+| `co config set <key> <value>` | Saves a config value.            |
+| `co config unset <key>`       | Removes a saved config value.    |
+
+Supported config keys:
+
+| Key                 | Description                                        |
+| ------------------- | -------------------------------------------------- |
+| `registry.url`      | Cobalt npm registry URL.                           |
+| `registry.caBundle` | Path to the CA bundle used by the Cobalt registry. |
+
+## New
 
 Run the interactive starter flow:
 
 ```bash
 co new
 ```
+
+Interactive `new` flows show a small Cobalt startup banner with the installed CLI version unless `--no-art` is passed globally.
+
+### New Usage
+
+```bash
+co new [options] [project-name]
+```
+
+### New Arguments
+
+| Argument         | Description                                                                                |
+| ---------------- | ------------------------------------------------------------------------------------------ |
+| `[project-name]` | Project directory. Defaults to `cobalt-app` when omitted or when `--yes` accepts defaults. |
 
 Pass flags to skip prompts:
 
@@ -65,6 +140,23 @@ co new my-app --template react --scss --app-shell
 ```
 
 Available templates are `vanilla-ts`, `react`, `vue`, and `angular`.
+
+### New Options
+
+| Option                     | Description                                                        |
+| -------------------------- | ------------------------------------------------------------------ |
+| `--template <name>`        | Template to use: `vanilla-ts`, `react`, `vue`, or `angular`.       |
+| `--scss`                   | Includes SCSS and Cobalt Sass helper setup.                        |
+| `--no-scss`                | Uses plain CSS.                                                    |
+| `--app-shell`              | Uses the Cobalt app shell pattern.                                 |
+| `--no-app-shell`           | Uses the base page layout.                                         |
+| `--cobalt-source <source>` | Cobalt package source: `registry` or `local`.                      |
+| `--configure-registry`     | Creates a project `.npmrc` from saved CLI config or command flags. |
+| `--no-configure-registry`  | Keeps `.npmrc.example` without creating `.npmrc`.                  |
+| `--registry-url <url>`     | Cobalt npm registry URL.                                           |
+| `--ca-bundle <path>`       | Path to the CA bundle used for the Cobalt registry.                |
+| `-y, --yes`                | Accepts defaults for omitted options and skips prompts.            |
+| `-h, --help`               | Prints help for `co new`.                                          |
 
 ## Registry Mode
 
@@ -92,13 +184,10 @@ co new my-app --cobalt-source local
 
 Local package mode points Cobalt dependencies at `./cobalt-packages/*.tgz` and writes copy instructions in `cobalt-packages/README.md`.
 
-## Config Commands
-
-```bash
-co config list
-co config get registry.url
-co config set registry.url %REGISTRY_URL%
-co config unset registry.caBundle
-```
-
-Supported config keys are `registry.url` and `registry.caBundle`.
+<style scoped>
+.cli-screenshot {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+</style>
