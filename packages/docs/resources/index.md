@@ -8,6 +8,7 @@ Cobalt is more than a component library — it's part of a broader ecosystem of 
 | -------------- | ------------------------------------------------------------------------- | -------------------------------------- |
 | Strategy       | Core principles, strategic direction, for the design sytem                | [Strategy](./strategy.md)              |
 | Artifacts      | Downloadable extensions, templates, and packaged resources                | [Artifacts](./artifacts.md)            |
+| Cobalt CLI     | Command line setup, config, and starter project scaffolding               | [Cobalt CLI](./cli.md)                 |
 | Contact        | Support channels, office hours, and how to reach the Cobalt team          | [Contact](./contact.md)                |
 | For Developers | Tools, extensions, and references for developing with Cobalt              | [Developer Resources](./developers.md) |
 | For Designers  | Figma resources, plugins, and workflows for designing with Cobalt         | [Designer Resources](./designers.md)   |

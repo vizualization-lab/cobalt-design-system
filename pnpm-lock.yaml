@@ -76,6 +76,22 @@ importers:
         specifier: ^0.15.0
         version: 0.15.1
 
+  packages/cli:
+    dependencies:
+      '@inquirer/prompts':
+        specifier: ^7.3.3
+        version: 7.10.1(@types/node@25.4.0)
+      commander:
+        specifier: ^12.1.0
+        version: 12.1.0
+    devDependencies:
+      '@types/node':
+        specifier: ^25.4.0
+        version: 25.4.0
+      typescript:
+        specifier: ~5.6.0
+        version: 5.6.3
+
   packages/components:
     dependencies:
       '@cobalt/icons':
@@ -118,12 +134,6 @@ importers:
       typescript:
         specifier: ~5.6.0
         version: 5.6.3
-
-  packages/create-cobalt:
-    dependencies:
-      '@inquirer/prompts':
-        specifier: ^7.3.3
-        version: 7.10.1(@types/node@25.4.0)
 
   packages/docs:
     devDependencies:

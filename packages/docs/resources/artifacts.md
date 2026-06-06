@@ -21,7 +21,7 @@ After downloading, install the extension from VS Code by opening the Extensions 
 <ArtifactDownload
   title="Cobalt Package Bundle"
   type="Developer artifact"
-  description="Local npm tarballs for teams that cannot install Cobalt packages from the private npm registry. Extract the ZIP, copy the cobalt-packages folder into a starter project, and install in local package mode."
+  description="Local npm tarballs for teams that cannot install Cobalt packages from the private npm registry. Use with co new --cobalt-source local, then copy the cobalt-packages folder into the generated project before installing dependencies."
   download-href="/assets/artifacts/npm/cobalt-packages.zip"
   screenshot-src="/assets/artifacts/npm/cobalt-packages.png"
   screenshot-alt="Cobalt Package Bundle preview showing Cobalt branding, npm branding, and local package tarballs."

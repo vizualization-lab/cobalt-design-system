@@ -1,0 +1,33 @@
+{
+  "name": "@cobalt/cli",
+  "version": "0.1.0",
+  "publishConfig": {
+    "access": "public"
+  },
+  "description": "Cobalt design system command line tool",
+  "type": "module",
+  "main": "dist/cli.js",
+  "types": "dist/cli.d.ts",
+  "bin": {
+    "co": "dist/cli.js"
+  },
+  "files": [
+    "dist",
+    "templates",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "test": "npm run build && node --test",
+    "clean": "rm -rf coverage dist tsconfig.tsbuildinfo"
+  },
+  "dependencies": {
+    "@inquirer/prompts": "^7.3.3",
+    "commander": "^12.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^25.4.0",
+    "typescript": "~5.6.0"
+  },
+  "license": "MIT"
+}

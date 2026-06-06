@@ -82,7 +82,7 @@ function buildPackablePackages() {
     '@cobalt/react',
     '@cobalt/vue',
     '@cobalt/angular',
-    'create-cobalt',
+    '@cobalt/cli',
   ];
 
   for (const filter of filters) {
@@ -92,18 +92,18 @@ function buildPackablePackages() {
 
 function buildBundleReadme(tarballs) {
   const list = tarballs.map((tarball) => `- ${tarball}`).join('\n');
-  const createCobaltTarball = tarballs.find((tarball) => tarball.startsWith('create-cobalt-'));
+  const cliTarball = tarballs.find((tarball) => tarball.startsWith('cobalt-cli-'));
 
   return `# Cobalt Packages
 
 This folder contains locally packed Cobalt npm packages for teams that cannot install from the private Cobalt npm registry.
 
-## Use with npm create cobalt
+## Use with co new
 
 Create a project in local package mode:
 
 \`\`\`bash
-npm create cobalt my-app -- --cobalt-source local
+co new my-app --cobalt-source local
 \`\`\`
 
 Copy this \`cobalt-packages\` folder into the generated project before installing dependencies:
@@ -118,13 +118,13 @@ pnpm dev
 ## Use the included starter generator without registry access
 
 ${
-  createCobaltTarball
-    ? `If you cannot install \`create-cobalt\` from a registry, run it from the included tarball:
+  cliTarball
+    ? `If you cannot install \`@cobalt/cli\` from a registry, run it from the included tarball:
 
 \`\`\`bash
-npm exec --package ./cobalt-packages/${createCobaltTarball} -- create-cobalt my-app --cobalt-source local
+npm exec --package ./cobalt-packages/${cliTarball} -- co new my-app --cobalt-source local
 \`\`\``
-    : 'This bundle does not include the starter generator tarball.'
+    : 'This bundle does not include the Cobalt CLI tarball.'
 }
 
 ## Included packages

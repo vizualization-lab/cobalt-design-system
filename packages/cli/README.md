@@ -1,15 +1,36 @@
-# create-cobalt
+# @cobalt/cli
+
+Cobalt design system command line tool.
+
+## Install
+
+```bash
+npm --@cobalt:registry=%REGISTRY_URL% --cafile=%CA_BUNDLE_PATH% install -g @cobalt/cli
+```
+
+## Configure
+
+Save private registry settings once:
+
+```bash
+co config set registry.url %REGISTRY_URL%
+co config set registry.caBundle %CA_BUNDLE_PATH%
+```
+
+Settings are stored in `~/.cobalt.config.json`.
+
+## Create a starter
 
 Create starter applications wired for Cobalt components, tokens, and framework wrappers.
 
 ```bash
-npm create cobalt
+co new
 ```
 
-You can also pass flags to skip prompts:
+Pass flags to skip prompts:
 
 ```bash
-npm create cobalt my-app -- --template react --scss --app-shell
+co new my-app --template react --scss --app-shell
 ```
 
 ## Options
@@ -31,7 +52,7 @@ The generated project includes a `.npmrc.example` file unless you choose to conf
 Use local tarball mode when testing unpublished Cobalt packages:
 
 ```bash
-npm create cobalt my-app -- --cobalt-source local
+co new my-app --cobalt-source local
 ```
 
 Local mode points Cobalt dependencies at `./cobalt-packages/*.tgz` and creates instructions in `cobalt-packages/README.md`.

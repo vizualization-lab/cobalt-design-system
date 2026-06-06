@@ -24,7 +24,7 @@ const PACKAGES = [
   'packages/react',
   'packages/vue',
   'packages/angular',
-  'packages/create-cobalt',
+  'packages/cli',
   'packages/workbench',
   'packages/docs',
 ];

@@ -35,7 +35,7 @@ rm -rf "$OUT_DIR"
 mkdir -p "$OUT_DIR"
 
 # Publishable packages (skip docs, workbench, and vscode since they are internal)
-PACKAGE_DIRS=(tokens icons components react vue angular create-cobalt)
+PACKAGE_DIRS=(tokens icons components react vue angular cli)
 COBALT_DEPENDENCY_PACKAGES=(tokens icons components react vue angular)
 
 echo "Packing Cobalt packages into $OUT_DIR/"

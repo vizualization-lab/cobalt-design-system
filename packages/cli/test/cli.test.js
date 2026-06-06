@@ -6,14 +6,24 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { fileURLToPath } from 'node:url';
 
-import {
-  normalizePackageName,
-  parseArgs,
-  resolveOptions,
-  scaffoldProject,
-} from '../bin/create-cobalt.js';
+import { createProgram } from '../dist/cli.js';
+import { getConfigValue, readConfig, setConfigValue, unsetConfigValue } from '../dist/config.js';
+import { resolveOptions } from '../dist/options.js';
+import { normalizePackageName } from '../dist/package-json.js';
+import { scaffoldProject } from '../dist/scaffold.js';
 
 const packageRoot = path.resolve(fileURLToPath(import.meta.url), '../..');
+const prompts = {
+  async text(_label, defaultValue) {
+    return defaultValue;
+  },
+  async select(_label, _choices, defaultValue) {
+    return defaultValue;
+  },
+  async confirm(_label, defaultValue) {
+    return defaultValue;
+  },
+};
 const frameworkTemplateFiles = [
   'templates/react/_variants/base/src/App.tsx',
   'templates/react/_variants/app-shell/src/App.tsx',
@@ -23,22 +33,45 @@ const frameworkTemplateFiles = [
   'templates/angular/_variants/app-shell/src/app/app.component.ts',
 ];
 
-test('parses template, scss, and app shell flags', () => {
+test('co exposes new and config subcommands', () => {
+  const program = createProgram();
+  const rootHelp = program.helpInformation();
+  const newCommand = program.commands.find((command) => command.name() === 'new');
+  const configCommand = program.commands.find((command) => command.name() === 'config');
+
+  assert.match(rootHelp, /Usage: co/);
+  assert.match(rootHelp, /new/);
+  assert.match(rootHelp, /config/);
+  assert.match(newCommand.helpInformation(), /--template <name>/);
+  assert.match(newCommand.helpInformation(), /--app-shell/);
+  assert.match(configCommand.helpInformation(), /set/);
+  assert.match(configCommand.helpInformation(), /unset/);
+});
+
+test('package binary points to the compiled CLI entrypoint', async () => {
+  const packageJson = JSON.parse(await readFile(path.join(packageRoot, 'package.json'), 'utf8'));
+
+  assert.equal(packageJson.bin.co, 'dist/cli.js');
+  assert.equal(packageJson.main, 'dist/cli.js');
+  assert.equal(packageJson.types, 'dist/cli.d.ts');
+});
+
+test('resolves template, scss, and app shell options', async () => {
   assert.deepEqual(
-    parseArgs([
-      'my-app',
-      '--template',
-      'react',
-      '--scss',
-      '--app-shell',
-      '--cobalt-source',
-      'registry',
-      '--configure-registry',
-      '--registry-url',
-      'https://registry.example.com',
-      '--ca-bundle',
-      '/path/to/ca.pem',
-    ]),
+    await resolveOptions(
+      {
+        targetDir: 'my-app',
+        template: 'react',
+        scss: true,
+        appShell: true,
+        cobaltSource: 'registry',
+        configureRegistry: true,
+        registryUrl: 'https://registry.example.com',
+        caBundle: '/path/to/ca.pem',
+        yes: true,
+      },
+      prompts,
+    ),
     {
       targetDir: 'my-app',
       template: 'react',
@@ -48,31 +81,122 @@ test('parses template, scss, and app shell flags', () => {
       configureRegistry: true,
       registryUrl: 'https://registry.example.com',
       caBundle: '/path/to/ca.pem',
-      yes: false,
-      help: false,
+      yes: true,
     },
   );
 });
 
 test('rejects unknown templates before scaffolding', async () => {
   await assert.rejects(
-    () => resolveOptions(parseArgs(['--template', 'svelte', '--yes'])),
+    () => resolveOptions({ template: 'svelte', yes: true }, prompts),
     /Unknown template "svelte"/,
   );
 });
 
 test('rejects unknown package sources before scaffolding', async () => {
   await assert.rejects(
-    () => resolveOptions(parseArgs(['--cobalt-source', 'cdn', '--yes'])),
+    () => resolveOptions({ cobaltSource: 'cdn', yes: true }, prompts),
     /Unknown Cobalt package source "cdn"/,
   );
 });
 
-test('requires registry details in non-interactive registry setup', async () => {
+test('requires registry URL in non-interactive registry setup', async () => {
   await assert.rejects(
-    () => resolveOptions(parseArgs(['--configure-registry', '--yes'])),
-    /requires both --registry-url and --ca-bundle/,
+    () => resolveOptions({ configureRegistry: true, yes: true }, prompts),
+    /requires --registry-url or registry.url config/,
   );
+});
+
+test('uses saved registry config for non-interactive scaffolding', async () => {
+  assert.deepEqual(
+    await resolveOptions({ targetDir: 'configured-app', yes: true }, prompts, {
+      registry: { url: 'https://registry.example.com/npm/', caBundle: '/etc/cobalt.pem' },
+    }),
+    {
+      targetDir: 'configured-app',
+      template: 'vanilla-ts',
+      scss: false,
+      appShell: false,
+      cobaltSource: 'registry',
+      configureRegistry: true,
+      registryUrl: 'https://registry.example.com/npm/',
+      caBundle: '/etc/cobalt.pem',
+      yes: true,
+    },
+  );
+});
+
+test('sets, gets, and unsets supported config values', () => {
+  const first = setConfigValue({}, 'registry.url', 'https://registry.example.com/npm/');
+  const second = setConfigValue(first, 'registry.caBundle', '/etc/cobalt.pem');
+
+  assert.equal(getConfigValue(second, 'registry.url'), 'https://registry.example.com/npm/');
+  assert.equal(getConfigValue(second, 'registry.caBundle'), '/etc/cobalt.pem');
+  assert.equal(
+    getConfigValue(unsetConfigValue(second, 'registry.caBundle'), 'registry.caBundle'),
+    undefined,
+  );
+});
+
+test('config command writes user config JSON', async () => {
+  const tempDir = await mkdtemp(path.join(os.tmpdir(), 'cobalt-cli-'));
+  const configPath = path.join(tempDir, '.cobalt.config.json');
+  const output = [];
+
+  try {
+    const program = createProgram({
+      env: { COBALT_CONFIG: configPath },
+      out: (message = '') => output.push(message),
+    });
+
+    await program.parseAsync(
+      ['config', 'set', 'registry.url', 'https://registry.example.com/npm/'],
+      { from: 'user' },
+    );
+    await program.parseAsync(['config', 'set', 'registry.caBundle', '/etc/cobalt.pem'], {
+      from: 'user',
+    });
+
+    const config = await readConfig(configPath);
+    assert.equal(config.registry.url, 'https://registry.example.com/npm/');
+    assert.equal(config.registry.caBundle, '/etc/cobalt.pem');
+    assert.match(output.join('\n'), /registry.url saved/);
+  } finally {
+    await rm(tempDir, { recursive: true, force: true });
+  }
+});
+
+test('co new writes project .npmrc from saved config', async () => {
+  const tempDir = await mkdtemp(path.join(os.tmpdir(), 'cobalt-cli-'));
+  const configPath = path.join(tempDir, '.cobalt.config.json');
+  const cwd = process.cwd();
+
+  try {
+    await writeFile(
+      configPath,
+      JSON.stringify(
+        { registry: { url: 'https://registry.example.com/npm/', caBundle: '/etc/cobalt.pem' } },
+        null,
+        2,
+      ),
+    );
+
+    process.chdir(tempDir);
+    const program = createProgram({
+      root: packageRoot,
+      env: { COBALT_CONFIG: configPath },
+      out: () => {},
+    });
+
+    await program.parseAsync(['new', 'configured-app', '--yes'], { from: 'user' });
+
+    const npmrc = await readFile(path.join(tempDir, 'configured-app', '.npmrc'), 'utf8');
+    assert.match(npmrc, /@cobalt:registry=https:\/\/registry\.example\.com\/npm\//);
+    assert.match(npmrc, /cafile=\/etc\/cobalt\.pem/);
+  } finally {
+    process.chdir(cwd);
+    await rm(tempDir, { recursive: true, force: true });
+  }
 });
 
 test('normalizes the generated package name from the target directory', () => {
@@ -88,7 +212,7 @@ test('framework templates use component subpath imports', async () => {
 });
 
 test('scaffolds a base vanilla TypeScript project', async () => {
-  const tempDir = await mkdtemp(path.join(os.tmpdir(), 'create-cobalt-'));
+  const tempDir = await mkdtemp(path.join(os.tmpdir(), 'cobalt-cli-'));
   const cwd = process.cwd();
 
   try {
@@ -130,7 +254,7 @@ test('scaffolds a base vanilla TypeScript project', async () => {
 });
 
 test('scaffolds a vanilla TypeScript app shell project with static HTML', async () => {
-  const tempDir = await mkdtemp(path.join(os.tmpdir(), 'create-cobalt-'));
+  const tempDir = await mkdtemp(path.join(os.tmpdir(), 'cobalt-cli-'));
   const cwd = process.cwd();
 
   try {
@@ -156,7 +280,7 @@ test('scaffolds a vanilla TypeScript app shell project with static HTML', async 
 });
 
 test('scaffolds an app shell React project with SCSS', async () => {
-  const tempDir = await mkdtemp(path.join(os.tmpdir(), 'create-cobalt-'));
+  const tempDir = await mkdtemp(path.join(os.tmpdir(), 'cobalt-cli-'));
   const cwd = process.cwd();
 
   try {
@@ -184,7 +308,7 @@ test('scaffolds an app shell React project with SCSS', async () => {
 });
 
 test('scaffolds an Angular project with SCSS without Sass import deprecations', async () => {
-  const tempDir = await mkdtemp(path.join(os.tmpdir(), 'create-cobalt-'));
+  const tempDir = await mkdtemp(path.join(os.tmpdir(), 'cobalt-cli-'));
   const cwd = process.cwd();
 
   try {
@@ -212,7 +336,7 @@ test('scaffolds an Angular project with SCSS without Sass import deprecations', 
 });
 
 test('writes .npmrc and removes .npmrc.example when registry configuration is provided', async () => {
-  const tempDir = await mkdtemp(path.join(os.tmpdir(), 'create-cobalt-'));
+  const tempDir = await mkdtemp(path.join(os.tmpdir(), 'cobalt-cli-'));
   const cwd = process.cwd();
 
   try {
@@ -244,8 +368,40 @@ test('writes .npmrc and removes .npmrc.example when registry configuration is pr
   }
 });
 
+test('writes registry .npmrc without cafile when CA bundle is omitted', async () => {
+  const tempDir = await mkdtemp(path.join(os.tmpdir(), 'cobalt-cli-'));
+  const cwd = process.cwd();
+
+  try {
+    process.chdir(tempDir);
+    const targetDir = await scaffoldProject(
+      {
+        targetDir: 'registry-no-ca',
+        template: 'vue',
+        scss: false,
+        appShell: false,
+        cobaltSource: 'registry',
+        configureRegistry: true,
+        registryUrl: 'https://registry.example.com/npm/',
+      },
+      packageRoot,
+    );
+
+    const npmrc = await readFile(path.join(targetDir, '.npmrc'), 'utf8');
+
+    assert.match(npmrc, /@cobalt:registry=https:\/\/registry\.example\.com\/npm\//);
+    assert.doesNotMatch(npmrc, /cafile=/);
+    await assert.rejects(() => readFile(path.join(targetDir, '.npmrc.example'), 'utf8'), {
+      code: 'ENOENT',
+    });
+  } finally {
+    process.chdir(cwd);
+    await rm(tempDir, { recursive: true, force: true });
+  }
+});
+
 test('scaffolds a local tarball project with package overrides and copy instructions', async () => {
-  const tempDir = await mkdtemp(path.join(os.tmpdir(), 'create-cobalt-'));
+  const tempDir = await mkdtemp(path.join(os.tmpdir(), 'cobalt-cli-'));
   const cwd = process.cwd();
 
   try {
@@ -291,7 +447,7 @@ test('scaffolds a local tarball project with package overrides and copy instruct
 });
 
 test('aborts when the target directory is not empty', async () => {
-  const tempDir = await mkdtemp(path.join(os.tmpdir(), 'create-cobalt-'));
+  const tempDir = await mkdtemp(path.join(os.tmpdir(), 'cobalt-cli-'));
   const cwd = process.cwd();
 
   try {

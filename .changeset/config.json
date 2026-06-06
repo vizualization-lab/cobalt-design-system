@@ -11,7 +11,7 @@
       "@cobalt/vue",
       "@cobalt/docs",
       "@cobalt/angular",
-      "create-cobalt"
+      "@cobalt/cli"
     ]
   ],
   "linked": [],

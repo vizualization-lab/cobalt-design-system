@@ -165,6 +165,7 @@ export const navigation: NavGroup[] = [
       { text: 'About Cobalt', link: '/resources/about-cobalt' },
       { text: 'Strategy', link: '/resources/strategy' },
       { text: 'Artifacts', link: '/resources/artifacts' },
+      { text: 'Cobalt CLI', link: '/resources/cli' },
       { text: 'Contact', link: '/resources/contact' },
       { text: 'For Developers', link: '/resources/developers' },
       { text: 'For Designers', link: '/resources/designers' },

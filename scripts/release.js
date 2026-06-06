@@ -56,10 +56,7 @@ function listPublishablePackages() {
       if (!fs.existsSync(packageJsonPath)) return null;
       return JSON.parse(fs.readFileSync(packageJsonPath, 'utf8'));
     })
-    .filter(
-      (pkg) =>
-        pkg?.private !== true && (pkg.name?.startsWith('@cobalt/') || pkg.name === 'create-cobalt'),
-    );
+    .filter((pkg) => pkg?.private !== true && pkg.name?.startsWith('@cobalt/'));
 }
 
 function getReleaseVersion() {

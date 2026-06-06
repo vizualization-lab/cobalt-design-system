@@ -12,7 +12,7 @@ All publishable Cobalt packages share a single version number. When any package 
 - `@cobalt/react`
 - `@cobalt/vue`
 - `@cobalt/angular`
-- `create-cobalt`
+- `@cobalt/cli`
 
 This is enforced by the `"fixed"` configuration in `.changeset/config.json`. Consumers can always assume that published Cobalt packages at the same version are compatible.
 

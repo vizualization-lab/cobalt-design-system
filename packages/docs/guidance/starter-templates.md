@@ -1,78 +1,32 @@
 # Starter Templates
 
-Use the starter generator when you are creating a new application and want Cobalt dependencies, global styles, and a working framework shell created for you.
+Use the Cobalt CLI when you are creating a new application and want Cobalt dependencies, global styles, and a working framework shell created for you.
 
-<CodeTabs :tabs="['npm', 'pnpm']">
-
-<template #npm>
+Install and configure the CLI first using the [Cobalt CLI documentation](/resources/cli), then run the starter flow:
 
 ```bash
-npm create cobalt
+co new
 ```
 
-</template>
-
-<template #pnpm>
-
-```bash
-pnpm create cobalt
-```
-
-</template>
-
-</CodeTabs>
-
-The generator prompts for a framework template, whether to use SCSS, whether to include the Cobalt app shell pattern, where Cobalt packages should be installed from, and whether to configure the Cobalt npm registry.
+The generator prompts for a framework template, whether to use SCSS, whether to include the Cobalt app shell pattern, and where Cobalt packages should be installed from.
 
 ## Skip Prompts
 
 Pass flags when you already know the project shape:
 
-<CodeTabs :tabs="['npm', 'pnpm']">
-
-<template #npm>
-
 ```bash
-npm create cobalt my-app -- --template react --scss --app-shell --configure-registry --registry-url %REGISTRY_URL% --ca-bundle %CA_BUNDLE_PATH%
+co new my-app --template react --scss --app-shell
 ```
 
-</template>
-
-<template #pnpm>
-
-```bash
-pnpm create cobalt my-app --template react --scss --app-shell --configure-registry --registry-url %REGISTRY_URL% --ca-bundle %CA_BUNDLE_PATH%
-```
-
-</template>
-
-</CodeTabs>
-
-If you configure the registry during scaffolding, the generator writes a project `.npmrc` and removes `.npmrc.example`. If you skip registry configuration, the generated project keeps `.npmrc.example` with the private registry settings you need to copy into your project or global npm configuration before installing dependencies.
+When saved CLI registry settings exist, the generator writes a project `.npmrc` and removes `.npmrc.example`. If you pass `--no-configure-registry`, the generated project keeps `.npmrc.example` with the private registry settings you need to copy into your project before installing dependencies.
 
 ## Use Local Package Mode
 
 For local testing with unpublished tarballs or with the downloaded [Cobalt Package Bundle](/resources/artifacts#cobalt-packages), choose local package mode:
 
-<CodeTabs :tabs="['npm', 'pnpm']">
-
-<template #npm>
-
 ```bash
-npm create cobalt my-app -- --cobalt-source local
+co new my-app --cobalt-source local
 ```
-
-</template>
-
-<template #pnpm>
-
-```bash
-pnpm create cobalt my-app --cobalt-source local
-```
-
-</template>
-
-</CodeTabs>
 
 Local package mode points Cobalt dependencies at `./cobalt-packages/*.tgz` and writes copy instructions in `cobalt-packages/README.md`. If you are using the bundle artifact, extract it and copy the `cobalt-packages` folder into the generated project before installing dependencies.
 
