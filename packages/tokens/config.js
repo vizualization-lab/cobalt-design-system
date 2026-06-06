@@ -3,6 +3,7 @@ import { copyFileSync, existsSync, mkdirSync, readFileSync, writeFileSync } from
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 import { exportDtcgTokens } from './scripts/export-dtcg.js';
+import { generateFontStyles } from './scripts/generate-fonts.js';
 import { generateScss } from './scripts/generate-scss.js';
 import { generateTailwindPreset } from './scripts/generate-tailwind-preset.js';
 import { generateToolingManifest } from './scripts/generate-tooling-manifest.js';
@@ -231,7 +232,7 @@ async function build() {
   copyFileSync(join(__dirname, 'src/base.css'), join(__dirname, 'dist/css/base.css'));
 
   console.log('Copying font-face stylesheet...');
-  copyFileSync(join(__dirname, 'src/fonts.css'), join(__dirname, 'dist/css/fonts.css'));
+  generateFontStyles(__dirname);
   copyFileSync(
     join(__dirname, 'src/fonts-international.css'),
     join(__dirname, 'dist/css/fonts-international.css'),

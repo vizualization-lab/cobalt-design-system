@@ -137,7 +137,8 @@ function assertPackageExportsResolve() {
   ).css;
 
   assert.match(css, /--co-color-text-default:/);
-  assert.match(css, /@import '@fontsource-variable\/inter' layer\(co\.base\);/);
+  assert.match(css, /font-family: (?:"Inter Variable"|'Inter Variable');/);
+  assert.doesNotMatch(css, /@fontsource-variable/);
   assert.match(
     css,
     /\[data-theme=(?:"purple"|'purple'|purple)\]\[data-mode=(?:"dark"|'dark'|dark)\]/,
@@ -167,7 +168,7 @@ function assertThemeShimsMatchCss() {
     [join(cssDir, 'tokens.css'), join(scssDir, 'css.scss')],
     [join(packageDir, 'src', 'base.css'), join(scssDir, 'css', 'base.scss')],
     [join(cssDir, 'tokens-dark.css'), join(scssDir, 'css', 'dark.scss')],
-    [join(packageDir, 'src', 'fonts.css'), join(scssDir, 'css', 'fonts.scss')],
+    [join(cssDir, 'fonts.css'), join(scssDir, 'css', 'fonts.scss')],
     [
       join(packageDir, 'src', 'fonts-international.css'),
       join(scssDir, 'css', 'fonts-international.scss'),
@@ -209,6 +210,8 @@ assertExists(join(scssDir, 'index.scss'));
 assertExists(join(scssDir, 'styles.scss'));
 assertExists(join(scssDir, 'functions.scss'));
 assertExists(join(scssDir, 'mixins.scss'));
+assertExists(join(cssDir, 'files', 'inter-latin-wght-normal.woff2'));
+assertExists(join(scssDir, 'css', 'files', 'inter-latin-wght-normal.woff2'));
 assertHelperOutput();
 assertInvalidInputsFail();
 assertPackageExportsResolve();

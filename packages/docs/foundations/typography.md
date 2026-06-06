@@ -33,13 +33,13 @@ Import the self-hosted variable fonts from `@cobalt/tokens`:
 @import '@cobalt/tokens/css/fonts';
 ```
 
-> **Variable fonts.** All three families ship as variable fonts via `@fontsource-variable/*`, so any weight from 100 to 900 is available natively — no synthesized weights, no additional downloads per weight.
+> **Variable fonts.** The default Cobalt fonts are bundled within `@cobalt/tokens` so apps do not need to install `@fontsource-variable/inter`, `@fontsource-variable/noto-sans`, or `@fontsource-variable/jetbrains-mono` directly to use the default font stack. We recommend using Fontsource to add any additional font dependencies to your project.
 
 ### International script support
 
 Inter covers **Latin**, **Cyrillic**, **Greek**, and **Vietnamese**. Noto Sans is included as a fallback and adds **Devanagari** (Hindi, Marathi, Nepali), the one major script family that Inter doesn't support. Both fonts use `unicode-range` descriptors in their `@font-face` rules, so the browser only downloads the subsets it actually needs. A Latin-only page never fetches Devanagari glyphs.
 
-For scripts beyond what Inter and Noto Sans provide, install additional `@fontsource-variable/noto-sans-*` packages:
+For scripts beyond the font files bundled with `@cobalt/tokens`, install additional `@fontsource-variable/noto-sans-*` packages in your app:
 
 | Package                                  | Script              | Languages             |
 | ---------------------------------------- | ------------------- | --------------------- |

@@ -336,7 +336,6 @@ export function generateScss(packageDir, discovery) {
   addShim(cssTokensPath, join(outDir, 'css.scss'));
   addShim(join(packageDir, 'src', 'base.css'), join(outDir, 'css', 'base.scss'));
   addShim(join(cssDir, 'tokens-dark.css'), join(outDir, 'css', 'dark.scss'));
-  addShim(join(packageDir, 'src', 'fonts.css'), join(outDir, 'css', 'fonts.scss'));
   addShim(
     join(packageDir, 'src', 'fonts-international.css'),
     join(outDir, 'css', 'fonts-international.scss'),
