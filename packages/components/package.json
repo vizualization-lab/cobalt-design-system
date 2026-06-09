@@ -143,7 +143,7 @@
     "analyze": "cem analyze --litelement --globs 'src/**/*.ts'",
     "test": "npm run build:test && wtr",
     "test:watch": "npm run build:test && wtr --watch",
-    "clean": "rimraf dist tsconfig.tsbuildinfo tsconfig.tsbundleinfo tsconfig.test.tsbuildinfo tsconfig.test.tsbundleinfo"
+    "clean": "rimraf dist"
   },
   "dependencies": {
     "@cobalt/icons": "workspace:*",

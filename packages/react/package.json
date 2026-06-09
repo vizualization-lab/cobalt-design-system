@@ -132,7 +132,7 @@
   "scripts": {
     "build": "tsc",
     "test": "vitest run",
-    "clean": "rimraf dist tsconfig.tsbuildinfo tsconfig.tsbundleinfo"
+    "clean": "rimraf dist"
   },
   "dependencies": {
     "@cobalt/components": "workspace:*",
