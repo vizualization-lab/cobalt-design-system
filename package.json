@@ -4,7 +4,7 @@
   "private": true,
   "description": "Cobalt Design System — a design token driven web component library built with Lit and TypeScript.",
   "scripts": {
-    "clean": "pnpm -r --stream clean && rm -rf packages/docs/.vitepress/cache",
+    "clean": "pnpm -r --stream clean && rimraf packages/docs/.vitepress/cache",
     "build": "pnpm -r --stream build",
     "rebuild": "pnpm clean && pnpm build",
     "dev": "pnpm --filter @cobalt/docs dev",
@@ -41,6 +41,7 @@
     "eslint-plugin-wc": "^3.1.0",
     "husky": "^9.1.7",
     "lint-staged": "^16.3.3",
-    "prettier": "^3.8.1"
+    "prettier": "^3.8.1",
+    "rimraf": "^6.1.2"
   }
 }

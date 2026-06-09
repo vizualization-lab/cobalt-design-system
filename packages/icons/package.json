@@ -42,7 +42,7 @@
   ],
   "scripts": {
     "build": "node scripts/build-registry.js",
-    "clean": "rm -rf dist",
+    "clean": "rimraf dist",
     "test": "node --test",
     "refresh-categories": "node scripts/refresh-category-metadata.js"
   },

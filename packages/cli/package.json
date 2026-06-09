@@ -19,7 +19,7 @@
   "scripts": {
     "build": "tsc",
     "test": "npm run build && node --test",
-    "clean": "rm -rf coverage dist tsconfig.tsbuildinfo"
+    "clean": "rimraf coverage dist tsconfig.tsbuildinfo"
   },
   "dependencies": {
     "@inquirer/prompts": "^7.3.3",

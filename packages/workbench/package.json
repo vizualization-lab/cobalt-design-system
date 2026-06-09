@@ -6,7 +6,7 @@
   "description": "Lightweight component development environment for Cobalt",
   "scripts": {
     "dev": "vite",
-    "clean": "rm -rf dist"
+    "clean": "rimraf dist"
   },
   "dependencies": {
     "@cobalt/components": "workspace:*",

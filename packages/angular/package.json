@@ -132,7 +132,7 @@
   "scripts": {
     "build": "ngc",
     "test": "vitest run",
-    "clean": "rm -rf dist tsconfig.tsbuildinfo tsconfig.tsbundleinfo"
+    "clean": "rimraf dist tsconfig.tsbuildinfo tsconfig.tsbundleinfo"
   },
   "dependencies": {
     "@cobalt/components": "workspace:*"

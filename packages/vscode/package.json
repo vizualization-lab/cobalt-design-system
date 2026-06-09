@@ -93,7 +93,7 @@
     "build": "pnpm run copy-manifest && pnpm run typecheck && pnpm run bundle",
     "bundle": "node scripts/esbuild.mjs",
     "copy-manifest": "node scripts/copy-manifest.mjs",
-    "clean": "rm -rf dist",
+    "clean": "rimraf dist",
     "package": "node scripts/package.mjs",
     "test": "vitest run",
     "typecheck": "tsc -p tsconfig.json --noEmit"
