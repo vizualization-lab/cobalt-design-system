@@ -35,13 +35,13 @@ rm -rf "$OUT_DIR"
 mkdir -p "$OUT_DIR"
 
 # Publishable packages (skip docs, workbench, and vscode since they are internal)
-PACKAGE_DIRS=(tokens icons components react vue angular cli)
+COBALT_PACKAGE_DIRS=(tokens icons components react vue angular cli)
 COBALT_DEPENDENCY_PACKAGES=(tokens icons components react vue angular)
 
 echo "Packing Cobalt packages into $OUT_DIR/"
 echo ""
 
-for pkg in "${PACKAGE_DIRS[@]}"; do
+for pkg in "${COBALT_PACKAGE_DIRS[@]}"; do
   pkg_dir="$ROOT_DIR/packages/$pkg"
   if [ -d "$pkg_dir" ]; then
     tarball_name=$(
