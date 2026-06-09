@@ -48,10 +48,13 @@ Run `co` without a command to print help. Run `co <command> --help` to print com
 
 ## Global Options
 
-| Option       | Description                                                                |
-| ------------ | -------------------------------------------------------------------------- |
-| `--no-art`   | Disables the startup art shown in help output and interactive `new` flows. |
-| `-h, --help` | Prints help for the CLI or the current command.                            |
+| Option         | Description                                                                |
+| -------------- | -------------------------------------------------------------------------- |
+| `--no-art`     | Disables the startup art shown in help output and interactive `new` flows. |
+| `--json`       | Prints supported command output as JSON for agents and CI.                 |
+| `--quiet`      | Suppresses human-readable output. JSON output is still printed.            |
+| `--cwd <path>` | Project directory for inspection and diagnostic commands.                  |
+| `-h, --help`   | Prints help for the CLI or the current command.                            |
 
 `--no-art` is a global option, so pass it before the subcommand:
 
@@ -61,10 +64,13 @@ co --no-art new
 
 ## Commands
 
-| Command     | Description                               |
-| ----------- | ----------------------------------------- |
-| `co new`    | Creates a new Cobalt starter application. |
-| `co config` | Manages saved Cobalt CLI settings.        |
+| Command         | Description                                   |
+| --------------- | --------------------------------------------- |
+| `co new`        | Creates a new Cobalt starter application.     |
+| `co inspect`    | Inspects Cobalt usage in an existing project. |
+| `co doctor`     | Checks for common Cobalt adoption issues.     |
+| `co components` | Looks up Cobalt component metadata.           |
+| `co config`     | Manages saved Cobalt CLI settings.            |
 
 ## Config
 
@@ -183,6 +189,100 @@ co new my-app --cobalt-source local
 ```
 
 Local package mode points Cobalt dependencies at `./cobalt-packages/*.tgz` and writes copy instructions in `cobalt-packages/README.md`.
+
+## Inspect
+
+Inspect a project without changing files:
+
+```bash
+co inspect --cwd ./my-app
+```
+
+For agentic workflows, request JSON output:
+
+```bash
+co --json --cwd ./my-app inspect
+```
+
+`co inspect` reports:
+
+- package manager
+- detected framework
+- installed `@cobalt/*` packages and versions
+- Cobalt token, font, and base style imports
+- `data-co-base` usage
+- project `.npmrc` presence
+- local tarball mode
+- `@cobalt/components` barrel imports
+
+## Doctor
+
+Run read-only adoption diagnostics:
+
+```bash
+co doctor --cwd ./my-app
+```
+
+Use `--strict` when warnings or failures should fail the command:
+
+```bash
+co --json --cwd ./my-app doctor --strict
+```
+
+`co doctor` checks for common setup issues such as missing token CSS, missing optional font/base styles, missing `data-co-base`, mismatched Cobalt package versions, missing local tarballs, and `@cobalt/components` barrel imports.
+
+## Components
+
+List available Cobalt components:
+
+```bash
+co components list
+```
+
+Print component status:
+
+```bash
+co components status button
+```
+
+Print component import paths:
+
+```bash
+co components usage button
+```
+
+Component commands support JSON output:
+
+```bash
+co --json components status co-button
+```
+
+## JSON Output
+
+Diagnostic commands return a stable structure for agents and CI:
+
+```json
+{
+  "command": "doctor",
+  "cwd": "/path/to/project",
+  "summary": {
+    "status": "warn",
+    "pass": 5,
+    "warn": 2,
+    "fail": 0
+  },
+  "diagnostics": [
+    {
+      "id": "cobalt.styles.base",
+      "status": "warn",
+      "severity": "warning",
+      "message": "Cobalt base CSS was not found.",
+      "suggestedAction": "Import '@cobalt/tokens/css/base' when native element defaults should use Cobalt styles."
+    }
+  ],
+  "data": {}
+}
+```
 
 <style scoped>
 .cli-screenshot {

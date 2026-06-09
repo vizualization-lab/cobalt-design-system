@@ -56,3 +56,27 @@ co new my-app --cobalt-source local
 ```
 
 Local mode points Cobalt dependencies at `./cobalt-packages/*.tgz` and creates instructions in `cobalt-packages/README.md`.
+
+## Inspect a project
+
+Review a project for Cobalt setup details:
+
+```bash
+co inspect
+```
+
+Run diagnostics for CI or agent workflows:
+
+```bash
+co doctor --strict --json
+```
+
+Look up component metadata:
+
+```bash
+co components list
+co components status button
+co components usage button
+```
+
+Use `--json` for machine-readable output, `--quiet` to suppress human output, and `--cwd <path>` to run against another project directory.

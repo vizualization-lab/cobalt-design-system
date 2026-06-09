@@ -4,6 +4,7 @@ import path from 'node:path';
 import process from 'node:process';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { Command } from 'commander';
+import { getComponent, listComponents } from './component-catalog.js';
 import { cobaltSources, configKeys, templates } from './constants.js';
 import {
   assertKnownConfigKey,
@@ -14,8 +15,11 @@ import {
   unsetConfigValue,
   writeConfig,
 } from './config.js';
+import { diagnosticLine, printResult, type CommandResult } from './diagnostics.js';
+import { runDoctor } from './doctor.js';
 import { nextCommands } from './output.js';
 import { resolveOptions } from './options.js';
+import { inspectProject, type ProjectInspection } from './project-inspect.js';
 import { createPrompts } from './prompts.js';
 import { scaffoldProject } from './scaffold.js';
 import { renderStartupArt, shouldUseColor } from './startup-art.js';
@@ -30,6 +34,12 @@ interface CreateProgramOptions {
   env?: NodeJS.ProcessEnv;
   isTty?: boolean;
   out?: (message?: string) => void;
+}
+
+interface GlobalCliOptions {
+  json?: boolean;
+  quiet?: boolean;
+  cwd?: string;
 }
 
 export async function main(argv = process.argv.slice(2)): Promise<void> {
@@ -55,6 +65,9 @@ export function createProgram({
     .name('co')
     .description('Cobalt design system command line tool')
     .option('--no-art', 'Disable the Cobalt startup art')
+    .option('--json', 'Print supported command output as JSON')
+    .option('--quiet', 'Suppress human-readable command output')
+    .option('--cwd <path>', 'Project directory for inspection commands')
     .showHelpAfterError()
     .showSuggestionAfterError()
     .action(() => {
@@ -104,6 +117,80 @@ export function createProgram({
     });
 
   includeStartupArtInHelp(newCommand, startupArt);
+
+  const inspect = program.command('inspect').description('Inspect Cobalt usage in a project');
+  inspect.action(async () => {
+    const globalOptions = getGlobalOptions(program);
+    const inspection = await inspectProject(resolveCommandCwd(globalOptions));
+    const result = {
+      command: 'inspect',
+      cwd: inspection.root,
+      summary: {
+        status: 'pass' as const,
+        pass: 0,
+        warn: 0,
+        fail: 0,
+      },
+      diagnostics: [],
+      data: inspection,
+    } satisfies CommandResult<ProjectInspection>;
+
+    printResult(result, globalOptions, out, formatInspectResult);
+  });
+  includeStartupArtInHelp(inspect, startupArt);
+
+  const doctor = program
+    .command('doctor')
+    .description('Check a project for common Cobalt adoption issues')
+    .option('--strict', 'Exit with an error when warnings or failures are found');
+  doctor.action(async (commandOptions: { strict?: boolean }) => {
+    const globalOptions = getGlobalOptions(program);
+    const result = await runDoctor(resolveCommandCwd(globalOptions));
+
+    printResult(result, { ...globalOptions, color }, out, (doctorResult) =>
+      formatDoctorResult(doctorResult, color),
+    );
+
+    if (commandOptions.strict && (result.summary.warn > 0 || result.summary.fail > 0)) {
+      process.exitCode = 1;
+    }
+  });
+  includeStartupArtInHelp(doctor, startupArt);
+
+  const components = program.command('components').description('Look up Cobalt component metadata');
+  includeStartupArtInHelp(components, startupArt);
+
+  const componentsList = components.command('list').description('List Cobalt components');
+  componentsList.action(() => {
+    const globalOptions = getGlobalOptions(program);
+    printResult(listComponents(), globalOptions, out, formatComponentListResult);
+  });
+  includeStartupArtInHelp(componentsList, startupArt);
+
+  const componentsStatus = components
+    .command('status')
+    .description('Print Cobalt component status')
+    .argument('<name>', 'Component name, with or without the co- prefix');
+  componentsStatus.action((name: string) => {
+    const globalOptions = getGlobalOptions(program);
+    printResult(getComponent(name), globalOptions, out, formatComponentStatusResult);
+  });
+  includeStartupArtInHelp(componentsStatus, startupArt);
+
+  const componentsUsage = components
+    .command('usage')
+    .description('Print Cobalt component import paths')
+    .argument('<name>', 'Component name, with or without the co- prefix');
+  componentsUsage.action((name: string) => {
+    const globalOptions = getGlobalOptions(program);
+    printResult(
+      getComponent(name, 'components usage'),
+      globalOptions,
+      out,
+      formatComponentUsageResult,
+    );
+  });
+  includeStartupArtInHelp(componentsUsage, startupArt);
 
   const config = program.command('config').description('Manage Cobalt CLI settings');
   includeStartupArtInHelp(config, startupArt);
@@ -157,6 +244,82 @@ export function createProgram({
   includeStartupArtInHelp(configUnset, startupArt);
 
   return program;
+}
+
+function getGlobalOptions(program: Command): GlobalCliOptions {
+  return program.opts<GlobalCliOptions>();
+}
+
+function resolveCommandCwd(options: GlobalCliOptions): string {
+  return path.resolve(options.cwd ?? process.cwd());
+}
+
+function formatInspectResult(result: CommandResult<ProjectInspection>): string {
+  const inspection = result.data;
+  const dependencies =
+    inspection.cobaltDependencies.length === 0
+      ? 'none'
+      : inspection.cobaltDependencies
+          .map((dependency) => `${dependency.name}@${dependency.version}`)
+          .join(', ');
+
+  return [
+    `Cobalt project inspection: ${inspection.root}`,
+    `Package manager: ${inspection.packageManager}`,
+    `Frameworks: ${inspection.frameworks.length > 0 ? inspection.frameworks.join(', ') : 'unknown'}`,
+    `Cobalt packages: ${dependencies}`,
+    `Styles: tokens=${yesNo(inspection.hasTokenCss)} fonts=${yesNo(inspection.hasFontCss)} base=${yesNo(inspection.hasBaseCss)}`,
+    `Base scope: data-co-base=${yesNo(inspection.hasDataCoBase)}`,
+    `Package source: ${inspection.localPackages.mode ? 'local tarballs' : 'registry or workspace'}`,
+  ].join('\n');
+}
+
+function formatDoctorResult(result: CommandResult<ProjectInspection>, color = false): string {
+  return [
+    `Cobalt doctor: ${result.cwd}`,
+    `Summary: ${result.summary.pass} passed, ${result.summary.warn} warnings, ${result.summary.fail} failures`,
+    ...result.diagnostics.map((diagnostic) => diagnosticLine(diagnostic, { color })),
+  ].join('\n');
+}
+
+function formatComponentListResult(result: ReturnType<typeof listComponents>): string {
+  return result.data.components
+    .map((component) => `${component.tagName}  ${component.docsPath}`)
+    .join('\n');
+}
+
+function formatComponentStatusResult(result: ReturnType<typeof getComponent>): string {
+  const component = result.data.component;
+  if (!component) {
+    return result.diagnostics.map((diagnostic) => diagnosticLine(diagnostic)).join('\n');
+  }
+
+  const statuses = Object.entries(component.status)
+    .map(([phase, status]) => `${phase}=${status}`)
+    .join(' ');
+
+  return [`${component.tagName} (${component.name})`, `Docs: ${component.docsPath}`, statuses].join(
+    '\n',
+  );
+}
+
+function formatComponentUsageResult(result: ReturnType<typeof getComponent>): string {
+  const component = result.data.component;
+  if (!component) {
+    return result.diagnostics.map((diagnostic) => diagnosticLine(diagnostic)).join('\n');
+  }
+
+  return [
+    `${component.tagName} import paths`,
+    `Web Component: import '${component.imports.webComponent}';`,
+    `React: import { ${component.name} } from '${component.imports.react}';`,
+    `Vue: import { ${component.name} } from '${component.imports.vue}';`,
+    `Angular: import { ${component.name} } from '${component.imports.angular}';`,
+  ].join('\n');
+}
+
+function yesNo(value: boolean): string {
+  return value ? 'yes' : 'no';
 }
 
 function includeStartupArtInHelp(command: Command, startupArt: string): void {

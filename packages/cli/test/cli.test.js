@@ -1,4 +1,4 @@
-import { mkdtemp, readFile, readdir, rm, writeFile } from 'node:fs/promises';
+import { mkdir, mkdtemp, readFile, readdir, rm, writeFile } from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 import process from 'node:process';
@@ -54,14 +54,23 @@ test('co exposes new and config subcommands', () => {
   const rootHelp = program.helpInformation();
   const newCommand = program.commands.find((command) => command.name() === 'new');
   const configCommand = program.commands.find((command) => command.name() === 'config');
+  const inspectCommand = program.commands.find((command) => command.name() === 'inspect');
+  const doctorCommand = program.commands.find((command) => command.name() === 'doctor');
+  const componentsCommand = program.commands.find((command) => command.name() === 'components');
 
   assert.match(rootHelp, /Usage: co/);
   assert.match(rootHelp, /new/);
   assert.match(rootHelp, /config/);
+  assert.match(rootHelp, /inspect/);
+  assert.match(rootHelp, /doctor/);
+  assert.match(rootHelp, /components/);
   assert.match(newCommand.helpInformation(), /--template <name>/);
   assert.match(newCommand.helpInformation(), /--app-shell/);
   assert.match(configCommand.helpInformation(), /set/);
   assert.match(configCommand.helpInformation(), /unset/);
+  assert.match(inspectCommand.helpInformation(), /Inspect Cobalt usage/);
+  assert.match(doctorCommand.helpInformation(), /--strict/);
+  assert.match(componentsCommand.helpInformation(), /list/);
 });
 
 test('startup art includes Cobalt and the CLI version', () => {
@@ -494,6 +503,228 @@ test('config command omits startup art during normal execution', async () => {
   } finally {
     await rm(tempDir, { recursive: true, force: true });
   }
+});
+
+test('inspect command reports project inventory as JSON', async () => {
+  const tempDir = await mkdtemp(path.join(os.tmpdir(), 'cobalt-cli-'));
+  const output = [];
+
+  try {
+    await writeFile(path.join(tempDir, 'pnpm-lock.yaml'), 'lockfileVersion: 9.0\n');
+    await writeFile(
+      path.join(tempDir, 'package.json'),
+      JSON.stringify(
+        {
+          dependencies: {
+            '@cobalt/react': '^0.1.0',
+            '@cobalt/tokens': '^0.1.0',
+            react: '^18.3.0',
+          },
+        },
+        null,
+        2,
+      ),
+    );
+    await writeFile(
+      path.join(tempDir, 'index.html'),
+      '<html data-co-base><body><div id="root"></div></body></html>',
+    );
+    await writeFile(
+      path.join(tempDir, 'src.tsx'),
+      [
+        "import '@cobalt/tokens/css';",
+        "import '@cobalt/tokens/css/fonts';",
+        "import '@cobalt/tokens/css/base';",
+      ].join('\n'),
+    );
+    await mkdir(path.join(tempDir, '.claude', 'worktrees', 'noise'), { recursive: true });
+    await writeFile(
+      path.join(tempDir, '.claude', 'worktrees', 'noise', 'src.ts'),
+      "import '@cobalt/tokens/css/dark';\n",
+    );
+
+    const program = createProgram({
+      argv: ['--json', '--cwd', tempDir, 'inspect'],
+      isTty: false,
+      out: (message = '') => output.push(message),
+    });
+
+    await program.parseAsync(['--json', '--cwd', tempDir, 'inspect'], { from: 'user' });
+
+    const result = JSON.parse(output.join('\n'));
+    assert.equal(result.command, 'inspect');
+    assert.equal(result.data.packageManager, 'pnpm');
+    assert.deepEqual(result.data.frameworks, ['react']);
+    assert.equal(result.data.hasTokenCss, true);
+    assert.equal(result.data.hasFontCss, true);
+    assert.equal(result.data.hasBaseCss, true);
+    assert.equal(result.data.hasDataCoBase, true);
+    assert.equal(
+      result.data.styleImports.some((entry) => entry.file.includes('.claude')),
+      false,
+    );
+    assert.deepEqual(
+      result.data.cobaltDependencies.map((dependency) => dependency.name),
+      ['@cobalt/react', '@cobalt/tokens'],
+    );
+  } finally {
+    await rm(tempDir, { recursive: true, force: true });
+  }
+});
+
+test('doctor command reports adoption blockers as JSON', async () => {
+  const tempDir = await mkdtemp(path.join(os.tmpdir(), 'cobalt-cli-'));
+  const output = [];
+
+  try {
+    await writeFile(
+      path.join(tempDir, 'package.json'),
+      JSON.stringify(
+        {
+          dependencies: {
+            '@cobalt/components': '^0.1.0',
+            '@cobalt/tokens': '^0.2.0',
+          },
+        },
+        null,
+        2,
+      ),
+    );
+    await writeFile(path.join(tempDir, 'main.ts'), "import '@cobalt/components';\n");
+
+    const program = createProgram({
+      argv: ['--json', '--cwd', tempDir, 'doctor'],
+      isTty: false,
+      out: (message = '') => output.push(message),
+    });
+
+    await program.parseAsync(['--json', '--cwd', tempDir, 'doctor'], { from: 'user' });
+
+    const result = JSON.parse(output.join('\n'));
+    const ids = result.diagnostics.map((diagnostic) => diagnostic.id);
+
+    assert.equal(result.command, 'doctor');
+    assert.equal(result.summary.status, 'fail');
+    assert.ok(ids.includes('cobalt.styles.tokens'));
+    assert.ok(ids.includes('cobalt.versions.mismatch'));
+    assert.ok(ids.includes('cobalt.imports.barrel'));
+  } finally {
+    await rm(tempDir, { recursive: true, force: true });
+  }
+});
+
+test('doctor command formats human diagnostics with status markers', async () => {
+  const tempDir = await mkdtemp(path.join(os.tmpdir(), 'cobalt-cli-'));
+  const output = [];
+
+  try {
+    await writeFile(
+      path.join(tempDir, 'package.json'),
+      JSON.stringify({ dependencies: { '@cobalt/tokens': '^0.1.0' } }, null, 2),
+    );
+
+    const program = createProgram({
+      argv: ['--cwd', tempDir, 'doctor'],
+      isTty: false,
+      out: (message = '') => output.push(message),
+    });
+
+    await program.parseAsync(['--cwd', tempDir, 'doctor'], { from: 'user' });
+
+    const humanOutput = output.join('\n');
+    assert.match(humanOutput, /✓ cobalt\.package-json:/);
+    assert.match(humanOutput, /! cobalt\.styles\.fonts:/);
+    assert.match(humanOutput, /× cobalt\.styles\.tokens:/);
+  } finally {
+    await rm(tempDir, { recursive: true, force: true });
+  }
+});
+
+test('doctor command colors human status markers in color terminals', async () => {
+  const tempDir = await mkdtemp(path.join(os.tmpdir(), 'cobalt-cli-'));
+  const output = [];
+
+  try {
+    await writeFile(
+      path.join(tempDir, 'package.json'),
+      JSON.stringify({ dependencies: { '@cobalt/tokens': '^0.1.0' } }, null, 2),
+    );
+
+    const program = createProgram({
+      argv: ['--cwd', tempDir, 'doctor'],
+      env: {},
+      isTty: true,
+      out: (message = '') => output.push(message),
+    });
+
+    await program.parseAsync(['--cwd', tempDir, 'doctor'], { from: 'user' });
+
+    const humanOutput = output.join('\n');
+    assert.match(humanOutput, /\u001B\[32m✓\u001B\[0m cobalt\.package-json:/);
+    assert.match(humanOutput, /\u001B\[33m!\u001B\[0m cobalt\.styles\.fonts:/);
+    assert.match(humanOutput, /\u001B\[31m×\u001B\[0m cobalt\.styles\.tokens:/);
+  } finally {
+    await rm(tempDir, { recursive: true, force: true });
+  }
+});
+
+test('doctor strict mode sets a failing exit code for warnings or failures', async () => {
+  const tempDir = await mkdtemp(path.join(os.tmpdir(), 'cobalt-cli-'));
+  const previousExitCode = process.exitCode;
+
+  try {
+    await writeFile(
+      path.join(tempDir, 'package.json'),
+      JSON.stringify({ dependencies: { '@cobalt/tokens': '^0.1.0' } }, null, 2),
+    );
+
+    const program = createProgram({
+      argv: ['--quiet', '--cwd', tempDir, 'doctor', '--strict'],
+      isTty: false,
+      out: () => {},
+    });
+
+    await program.parseAsync(['--quiet', '--cwd', tempDir, 'doctor', '--strict'], {
+      from: 'user',
+    });
+
+    assert.equal(process.exitCode, 1);
+  } finally {
+    process.exitCode = previousExitCode;
+    await rm(tempDir, { recursive: true, force: true });
+  }
+});
+
+test('components commands expose status and usage metadata', async () => {
+  const statusOutput = [];
+  const usageOutput = [];
+  const listOutput = [];
+
+  const statusProgram = createProgram({
+    argv: ['--json', 'components', 'status', 'button'],
+    isTty: false,
+    out: (message = '') => statusOutput.push(message),
+  });
+  await statusProgram.parseAsync(['--json', 'components', 'status', 'button'], { from: 'user' });
+
+  const usageProgram = createProgram({
+    argv: ['components', 'usage', 'button'],
+    isTty: false,
+    out: (message = '') => usageOutput.push(message),
+  });
+  await usageProgram.parseAsync(['components', 'usage', 'button'], { from: 'user' });
+
+  const listProgram = createProgram({
+    argv: ['components', 'list'],
+    isTty: false,
+    out: (message = '') => listOutput.push(message),
+  });
+  await listProgram.parseAsync(['components', 'list'], { from: 'user' });
+
+  const status = JSON.parse(statusOutput.join('\n'));
+  assert.equal(status.data.component.tagName, 'co-button');
+  assert.match(usageOutput.join('\n'), /@cobalt\/react\/button/);
+  assert.match(listOutput.join('\n'), /co-button/);
 });
 
 test('normalizes the generated package name from the target directory', () => {
