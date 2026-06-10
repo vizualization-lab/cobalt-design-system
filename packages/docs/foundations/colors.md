@@ -25,6 +25,24 @@ const selectedAccentPalette = computed(() => {
   );
 });
 
+const selectedAccentFamilies = computed(() => {
+  const palette = selectedAccentPalette.value;
+  if (!palette) return new Set();
+
+  return new Set(palette.rows.map((row) => row.family));
+});
+
+const referencePaletteModes = computed(() => {
+  const theme = selectedTheme.value;
+  if (!theme) return [];
+
+  const accentFamilies = selectedAccentFamilies.value;
+  return theme.modes.map((mode) => ({
+    ...mode,
+    palettes: mode.palettes.filter((palette) => !accentFamilies.has(palette.family)),
+  }));
+});
+
 const selectedAccentValues = computed(() => {
   const palette = selectedAccentPalette.value;
   if (!palette) return null;
@@ -157,9 +175,20 @@ Cobalt color families are organized as ordered shade scales from `50` to `950`. 
 
 <p class="color-theme-summary">{{ selectedThemeSummary }}</p>
 
+<ThemeColorPreview
+  v-if="selectedAccentPalette"
+  :palette="selectedAccentPalette"
+  :usage-groups="data.usageGroups"
+  :active-mode="paletteMode"
+/>
+
+## Reference Palettes
+
+Neutral and status palettes stay available as static references. The selected theme accent is shown above so it can change independently from the shared reference scales.
+
 <ColorSwatch
-  v-if="selectedTheme"
-  :modes="selectedTheme.modes"
+  v-if="referencePaletteModes.length"
+  :modes="referencePaletteModes"
   :usage-groups="data.usageGroups"
   :active-mode="paletteMode"
 />

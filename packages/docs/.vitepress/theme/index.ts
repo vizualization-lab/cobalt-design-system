@@ -5,6 +5,7 @@ import AppShellDemo from '../../components/AppShellDemo.vue';
 import AppShellComposition from '../../components/AppShellComposition.vue';
 import CodeTabs from '../../components/CodeTabs.vue';
 import ColorSwatch from '../../components/ColorSwatch.vue';
+import ThemeColorPreview from '../../components/ThemeColorPreview.vue';
 import IconGallery from '../../components/IconGallery.vue';
 import A11yReport from '../../components/A11yReport.vue';
 import ComponentChangelog from '../../components/ComponentChangelog.vue';
@@ -230,6 +231,7 @@ export default {
     app.component('AppShellComposition', AppShellComposition);
     app.component('CodeTabs', CodeTabs);
     app.component('ColorSwatch', ColorSwatch);
+    app.component('ThemeColorPreview', ThemeColorPreview);
     app.component('IconGallery', IconGallery);
     app.component('A11yReport', A11yReport);
     app.component('ComponentChangelog', ComponentChangelog);
