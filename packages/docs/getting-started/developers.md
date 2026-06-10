@@ -32,7 +32,7 @@ Framework wrappers are optional but recommended for better developer experience:
 | --------- | -------------------- | ------------------------------------ |
 | React     | `@cobalt/react`      | React 18.0+ (supports 18 & 19)       |
 | Vue       | `@cobalt/vue`        | Vue 3.4+                             |
-| Angular   | `@cobalt/angular`    | Angular 17.3+ (supports 17–21)       |
+| Angular   | `@cobalt/angular`    | Angular 17.3+ (supports 17–22)       |
 | None      | `@cobalt/components` | Any environment with custom elements |
 
 > **No framework?** Cobalt components are standard web components built with Lit. They work in any environment that supports custom elements.

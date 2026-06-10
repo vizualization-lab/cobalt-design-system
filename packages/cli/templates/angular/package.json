@@ -9,10 +9,10 @@
     "preview": "ng serve"
   },
   "dependencies": {
-    "@angular/common": "^21.2.0",
-    "@angular/compiler": "^21.2.0",
-    "@angular/core": "^21.2.0",
-    "@angular/platform-browser": "^21.2.0",
+    "@angular/common": "^20.3.24",
+    "@angular/compiler": "^20.3.24",
+    "@angular/core": "^20.3.24",
+    "@angular/platform-browser": "^20.3.24",
     "@cobalt/angular": "__COBALT_VERSION__",
     "@cobalt/icons": "__COBALT_VERSION__",
     "@cobalt/tokens": "__COBALT_VERSION__",
@@ -21,9 +21,9 @@
     "zone.js": "^0.15.0"
   },
   "devDependencies": {
-    "@angular/build": "^21.2.0",
-    "@angular/cli": "^21.2.0",
-    "@angular/compiler-cli": "^21.2.0",
+    "@angular/build": "^20.3.27",
+    "@angular/cli": "^20.3.27",
+    "@angular/compiler-cli": "^20.3.24",
     "typescript": "~5.9.0"
   }
 }

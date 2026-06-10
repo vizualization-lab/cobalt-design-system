@@ -857,7 +857,12 @@ test('scaffolds an Angular project with SCSS without Sass import deprecations', 
     assert.match(angularJson, /"styles": \["src\/styles\.scss"\]/);
     assert.match(angularJson, /"builder": "@angular\/build:application"/);
     assert.match(angularJson, /"builder": "@angular\/build:dev-server"/);
-    assert.equal(packageJson.devDependencies['@angular/build'], '^21.2.0');
+    assert.equal(packageJson.dependencies['@angular/common'], '^20.3.24');
+    assert.equal(packageJson.dependencies['@angular/compiler'], '^20.3.24');
+    assert.equal(packageJson.dependencies['@angular/core'], '^20.3.24');
+    assert.equal(packageJson.devDependencies['@angular/build'], '^20.3.27');
+    assert.equal(packageJson.devDependencies['@angular/cli'], '^20.3.27');
+    assert.equal(packageJson.devDependencies['@angular/compiler-cli'], '^20.3.24');
     assert.equal(packageJson.devDependencies['@angular-devkit/build-angular'], undefined);
     assert.equal(packageJson.devDependencies.typescript, '~5.9.0');
     assert.equal(packageJson.devDependencies.sass, '^1.99.0');
