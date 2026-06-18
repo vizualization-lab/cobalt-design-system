@@ -1,0 +1,4 @@
+interface:
+  display_name: 'Cobalt'
+  short_description: 'Inspect Cobalt projects with the CLI'
+  default_prompt: 'Use $cobalt to inspect this project with the Cobalt CLI before making changes.'

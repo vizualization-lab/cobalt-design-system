@@ -21,6 +21,7 @@ copyRequiredFile(vsixSource, resolve(artifactDir, vsixFileName));
 copyRequiredFile(screenshotSource, resolve(artifactDir, screenshotFileName));
 
 run('node', ['scripts/build-package-artifact.js', '--build-packages']);
+run('node', ['scripts/build-skill-artifact.js']);
 
 function run(command, args) {
   const result = spawnSync(command, args, {

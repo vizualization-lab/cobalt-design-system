@@ -13,11 +13,12 @@
   },
   "files": [
     "dist",
+    "skills",
     "templates",
     "README.md"
   ],
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && node scripts/copy-metadata.mjs",
     "test": "npm run build && node --test",
     "clean": "rimraf coverage dist"
   },

@@ -17,6 +17,7 @@
       "import": "./dist/index.js",
       "types": "./dist/index.d.ts"
     },
+    "./custom-elements.json": "./custom-elements.json",
     "./app-shell": {
       "import": "./dist/components/app-shell/co-app-shell.js",
       "types": "./dist/components/app-shell/co-app-shell.d.ts"

@@ -1,0 +1,106 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 1200 720"
+  role="img"
+  aria-labelledby="title desc"
+>
+  <title id="title">Cobalt Agent Skill preview</title>
+  <desc id="desc">A preview card for the downloadable Cobalt agent skill artifact.</desc>
+  <rect width="1200" height="720" fill="#f7f9fc" />
+  <rect
+    x="80"
+    y="72"
+    width="1040"
+    height="576"
+    rx="32"
+    fill="#ffffff"
+    stroke="#c4ccd7"
+    stroke-width="4"
+  />
+  <rect x="128" y="128" width="420" height="464" rx="20" fill="#10213f" />
+  <circle cx="176" cy="176" r="18" fill="#eb8e90" />
+  <circle cx="228" cy="176" r="18" fill="#eab308" />
+  <circle cx="280" cy="176" r="18" fill="#44b59a" />
+  <text
+    x="168"
+    y="260"
+    fill="#e6eef8"
+    font-family="ui-monospace, SFMono-Regular, Menlo, monospace"
+    font-size="34"
+  >
+    co agent context
+  </text>
+  <text
+    x="168"
+    y="320"
+    fill="#b8c9ff"
+    font-family="ui-monospace, SFMono-Regular, Menlo, monospace"
+    font-size="28"
+  >
+    components: 28
+  </text>
+  <text
+    x="168"
+    y="372"
+    fill="#b8c9ff"
+    font-family="ui-monospace, SFMono-Regular, Menlo, monospace"
+    font-size="28"
+  >
+    tokens: 572
+  </text>
+  <text
+    x="168"
+    y="424"
+    fill="#b8c9ff"
+    font-family="ui-monospace, SFMono-Regular, Menlo, monospace"
+    font-size="28"
+  >
+    utilities: 97
+  </text>
+  <text
+    x="168"
+    y="508"
+    fill="#ffffff"
+    font-family="ui-monospace, SFMono-Regular, Menlo, monospace"
+    font-size="28"
+  >
+    status: ready
+  </text>
+  <text
+    x="620"
+    y="210"
+    fill="#1f2933"
+    font-family="Inter, Arial, sans-serif"
+    font-size="70"
+    font-weight="700"
+  >
+    Cobalt
+  </text>
+  <text
+    x="620"
+    y="286"
+    fill="#334155"
+    font-family="Inter, Arial, sans-serif"
+    font-size="42"
+    font-weight="600"
+  >
+    Agent Skill
+  </text>
+  <text x="620" y="370" fill="#586779" font-family="Inter, Arial, sans-serif" font-size="28">
+    CLI-first guidance for components,
+  </text>
+  <text x="620" y="412" fill="#586779" font-family="Inter, Arial, sans-serif" font-size="28">
+    tokens, utilities, and diagnostics.
+  </text>
+  <rect x="620" y="492" width="310" height="64" rx="12" fill="#154bcc" />
+  <text
+    x="666"
+    y="534"
+    fill="#ffffff"
+    font-family="Inter, Arial, sans-serif"
+    font-size="26"
+    font-weight="700"
+  >
+    Download ZIP
+  </text>
+</svg>

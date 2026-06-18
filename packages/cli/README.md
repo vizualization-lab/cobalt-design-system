@@ -79,4 +79,15 @@ co components status button
 co components usage button
 ```
 
+Use agent-oriented metadata for AI workflows:
+
+```bash
+co --json --cwd ./my-app agent context
+co --json --cwd ./my-app agent component button
+co --json --cwd ./my-app agent tokens --query surface --tier semantic
+co --json --cwd ./my-app agent utilities --query gap
+```
+
+Projects generated with `co new` include the installable Cobalt skill folder at `.codex/skills/cobalt` for agent workflows.
+
 Use `--json` for machine-readable output, `--quiet` to suppress human output, and `--cwd <path>` to run against another project directory.

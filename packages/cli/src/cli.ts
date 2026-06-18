@@ -4,6 +4,23 @@ import path from 'node:path';
 import process from 'node:process';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { Command } from 'commander';
+import {
+  runAgentComponent,
+  runAgentComponents,
+  runAgentContext,
+  runAgentToken,
+  runAgentTokens,
+  runAgentUtilities,
+  type AgentComponentData,
+  type AgentComponentsData,
+  type AgentContextData,
+  type AgentListOptions,
+  type AgentOptions,
+  type AgentTokenListOptions,
+  type AgentTokensData,
+  type AgentUtilitiesData,
+  type AgentTokenData,
+} from './agent.js';
 import { getComponent, listComponents } from './component-catalog.js';
 import { cobaltSources, configKeys, templates } from './constants.js';
 import {
@@ -192,6 +209,113 @@ export function createProgram({
   });
   includeStartupArtInHelp(componentsUsage, startupArt);
 
+  const agent = program
+    .command('agent')
+    .description('Print AI-agent-oriented Cobalt context')
+    .option('--metadata-source <source>', 'Metadata source: auto, workspace, or bundled', 'auto');
+  includeStartupArtInHelp(agent, startupArt);
+
+  const agentContext = agent
+    .command('context')
+    .description('Print Cobalt project and metadata context');
+  agentContext.action(async () => {
+    const globalOptions = getGlobalOptions(program);
+    const result = await runAgentContext({
+      root: resolveCommandCwd(globalOptions),
+      packageRoot: root,
+      options: getAgentOptions(agent),
+    });
+    printResult(result, globalOptions, out, formatAgentContextResult);
+  });
+  includeStartupArtInHelp(agentContext, startupArt);
+
+  const agentComponents = agent
+    .command('components')
+    .description('Print normalized Cobalt component metadata');
+  agentComponents.action(async () => {
+    const globalOptions = getGlobalOptions(program);
+    const result = await runAgentComponents({
+      root: resolveCommandCwd(globalOptions),
+      packageRoot: root,
+      options: getAgentOptions(agent),
+    });
+    printResult(result, globalOptions, out, formatAgentComponentsResult);
+  });
+  includeStartupArtInHelp(agentComponents, startupArt);
+
+  const agentComponent = agent
+    .command('component')
+    .description('Print normalized metadata for one Cobalt component')
+    .argument('<name>', 'Component name, with or without the co- prefix');
+  agentComponent.action(async (name: string) => {
+    const globalOptions = getGlobalOptions(program);
+    const result = await runAgentComponent({
+      root: resolveCommandCwd(globalOptions),
+      packageRoot: root,
+      name,
+      options: getAgentOptions(agent),
+    });
+    printResult(result, globalOptions, out, formatAgentComponentResult);
+  });
+  includeStartupArtInHelp(agentComponent, startupArt);
+
+  const agentTokens = agent
+    .command('tokens')
+    .description('Search Cobalt design tokens')
+    .option('--tier <tier>', 'Token tier: primitive, semantic, or component')
+    .option('--category <category>', 'Token category, such as Color or Space')
+    .option('--query <text>', 'Search token names, categories, tiers, and descriptions')
+    .option('--theme <theme>', 'Filter token theme values by theme')
+    .option('--mode <mode>', 'Filter token theme values by mode')
+    .option('--limit <count>', 'Maximum tokens to return', '50')
+    .option('--all', 'Return all matching tokens');
+  agentTokens.action(async (commandOptions: AgentTokenListOptions) => {
+    const globalOptions = getGlobalOptions(program);
+    const result = await runAgentTokens({
+      root: resolveCommandCwd(globalOptions),
+      packageRoot: root,
+      options: getAgentOptions(agent),
+      listOptions: commandOptions,
+    });
+    printResult(result, globalOptions, out, formatAgentTokensResult);
+  });
+  includeStartupArtInHelp(agentTokens, startupArt);
+
+  const agentToken = agent
+    .command('token')
+    .description('Print metadata for one Cobalt design token')
+    .argument('<name>', 'Token name, such as --co-color-text-default')
+    .allowUnknownOption(true);
+  agentToken.action(async (name: string) => {
+    const globalOptions = getGlobalOptions(program);
+    const result = await runAgentToken({
+      root: resolveCommandCwd(globalOptions),
+      packageRoot: root,
+      name,
+      options: getAgentOptions(agent),
+    });
+    printResult(result, globalOptions, out, formatAgentTokenResult);
+  });
+  includeStartupArtInHelp(agentToken, startupArt);
+
+  const agentUtilities = agent
+    .command('utilities')
+    .description('Search Cobalt utility classes')
+    .option('--query <text>', 'Search utility class names, CSS, descriptions, and token refs')
+    .option('--limit <count>', 'Maximum utilities to return', '50')
+    .option('--all', 'Return all matching utilities');
+  agentUtilities.action(async (commandOptions: AgentListOptions) => {
+    const globalOptions = getGlobalOptions(program);
+    const result = await runAgentUtilities({
+      root: resolveCommandCwd(globalOptions),
+      packageRoot: root,
+      options: getAgentOptions(agent),
+      listOptions: commandOptions,
+    });
+    printResult(result, globalOptions, out, formatAgentUtilitiesResult);
+  });
+  includeStartupArtInHelp(agentUtilities, startupArt);
+
   const config = program.command('config').description('Manage Cobalt CLI settings');
   includeStartupArtInHelp(config, startupArt);
 
@@ -252,6 +376,10 @@ function getGlobalOptions(program: Command): GlobalCliOptions {
 
 function resolveCommandCwd(options: GlobalCliOptions): string {
   return path.resolve(options.cwd ?? process.cwd());
+}
+
+function getAgentOptions(command: Command): AgentOptions {
+  return command.opts<AgentOptions>();
 }
 
 function formatInspectResult(result: CommandResult<ProjectInspection>): string {
@@ -315,6 +443,75 @@ function formatComponentUsageResult(result: ReturnType<typeof getComponent>): st
     `React: import { ${component.name} } from '${component.imports.react}';`,
     `Vue: import { ${component.name} } from '${component.imports.vue}';`,
     `Angular: import { ${component.name} } from '${component.imports.angular}';`,
+  ].join('\n');
+}
+
+function formatAgentContextResult(result: CommandResult<AgentContextData>): string {
+  const data = result.data;
+  return [
+    `Cobalt agent context: ${result.cwd}`,
+    `Metadata: ${data.metadata.source}`,
+    `Components: ${data.metadata.components.count}`,
+    `Tokens: ${data.metadata.tokens.count}`,
+    `Utilities: ${data.metadata.utilities.count}`,
+    `Frameworks: ${data.project.frameworks.length > 0 ? data.project.frameworks.join(', ') : 'unknown'}`,
+    `Doctor: ${data.doctor.summary.status} (${data.doctor.summary.pass} passed, ${data.doctor.summary.warn} warnings, ${data.doctor.summary.fail} failures)`,
+  ].join('\n');
+}
+
+function formatAgentComponentsResult(result: CommandResult<AgentComponentsData>): string {
+  return result.data.components
+    .map((component) => `${component.tagName}  ${component.docsPath}`)
+    .join('\n');
+}
+
+function formatAgentComponentResult(result: CommandResult<AgentComponentData>): string {
+  const component = result.data.component;
+  if (!component) {
+    return result.diagnostics.map((diagnostic) => diagnosticLine(diagnostic)).join('\n');
+  }
+
+  return [
+    `${component.tagName} (${component.name})`,
+    `Docs: ${component.docsPath}`,
+    `Attributes: ${component.attributes.map((attribute) => attribute.name).join(', ') || 'none'}`,
+    `Events: ${component.events.map((event) => event.name).join(', ') || 'none'}`,
+    `Slots: ${component.slots.map((slot) => slot.name).join(', ') || 'none'}`,
+    `CSS parts: ${component.cssParts.map((part) => part.name).join(', ') || 'none'}`,
+  ].join('\n');
+}
+
+function formatAgentTokensResult(result: CommandResult<AgentTokensData>): string {
+  const header = `Cobalt tokens: ${result.data.returned}/${result.data.total}`;
+  return [
+    header,
+    ...result.data.tokens.map((token) => `${token.name}  ${token.tier}  ${token.category}`),
+  ].join('\n');
+}
+
+function formatAgentTokenResult(result: CommandResult<AgentTokenData>): string {
+  const token = result.data.token;
+  if (!token) {
+    return result.diagnostics.map((diagnostic) => diagnosticLine(diagnostic)).join('\n');
+  }
+
+  return [
+    token.name,
+    `Tier: ${token.tier}`,
+    `Category: ${token.category}`,
+    `Value: ${token.value}`,
+    token.resolvedValue ? `Resolved: ${token.resolvedValue}` : undefined,
+    token.description ? `Description: ${token.description}` : undefined,
+  ]
+    .filter(Boolean)
+    .join('\n');
+}
+
+function formatAgentUtilitiesResult(result: CommandResult<AgentUtilitiesData>): string {
+  const header = `Cobalt utilities: ${result.data.returned}/${result.data.total}`;
+  return [
+    header,
+    ...result.data.utilities.map((utility) => `${utility.className}  ${utility.css}`),
   ].join('\n');
 }
 

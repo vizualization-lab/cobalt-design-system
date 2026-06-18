@@ -17,3 +17,4 @@ worktrees/
 .env.*.local
 packages/docs/public/assets/artifacts/vscode
 packages/docs/public/assets/artifacts/npm/*.zip
+packages/docs/public/assets/artifacts/skills/*.zip

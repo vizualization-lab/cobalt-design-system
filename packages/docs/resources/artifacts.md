@@ -29,6 +29,21 @@ After downloading, install the extension from VS Code by opening the Extensions 
   button-label="Download ZIP"
 />
 
+## Cobalt Agent Skill {#cobalt-agent-skill}
+
+<ArtifactDownload
+  title="Cobalt Agent Skill"
+  type="AI workflow artifact"
+  description="Installable SKILL.md package for AI agents. The skill teaches agents to use the Cobalt CLI for project diagnostics, component API metadata, token lookup, utility lookup, and validation before making Cobalt changes."
+  download-href="/assets/artifacts/skills/cobalt-agent-skill.zip"
+  screenshot-src="/assets/artifacts/skills/cobalt-agent-skill.svg"
+  screenshot-alt="Cobalt Agent Skill preview showing the co agent context command with component, token, and utility counts."
+  file-name="cobalt-agent-skill.zip"
+  button-label="Download ZIP"
+/>
+
+After downloading, extract the ZIP and install the `cobalt` skill folder into your agent's skills directory. Starter projects generated with `co new` also include this folder at `.codex/skills/cobalt`.
+
 ## Fonts Package {#cobalt-fonts-package}
 
 <ArtifactDownload

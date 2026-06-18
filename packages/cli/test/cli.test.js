@@ -727,6 +727,160 @@ test('components commands expose status and usage metadata', async () => {
   assert.match(listOutput.join('\n'), /co-button/);
 });
 
+test('agent context reports project and bundled metadata as JSON', async () => {
+  const tempDir = await mkdtemp(path.join(os.tmpdir(), 'cobalt-cli-'));
+  const output = [];
+
+  try {
+    await writeFile(
+      path.join(tempDir, 'package.json'),
+      JSON.stringify(
+        {
+          dependencies: {
+            '@cobalt/react': '^0.1.0',
+            '@cobalt/tokens': '^0.1.0',
+            react: '^18.3.0',
+          },
+        },
+        null,
+        2,
+      ),
+    );
+
+    const program = createProgram({
+      argv: ['--json', '--cwd', tempDir, 'agent', 'context'],
+      isTty: false,
+      out: (message = '') => output.push(message),
+    });
+
+    await program.parseAsync(['--json', '--cwd', tempDir, 'agent', 'context'], { from: 'user' });
+
+    const result = JSON.parse(output.join('\n'));
+    assert.equal(result.command, 'agent context');
+    assert.equal(result.data.metadata.source, 'bundled');
+    assert.equal(result.data.metadata.components.count, 28);
+    assert.equal(result.data.metadata.tokens.count > 500, true);
+    assert.equal(result.data.metadata.utilities.count > 50, true);
+    assert.deepEqual(result.data.project.frameworks, ['react']);
+    assert.ok(
+      result.diagnostics.some((diagnostic) => diagnostic.id === 'cobalt.agent.metadata.fallback'),
+    );
+  } finally {
+    await rm(tempDir, { recursive: true, force: true });
+  }
+});
+
+test('agent component command normalizes custom elements manifest API metadata', async () => {
+  const output = [];
+  const program = createProgram({
+    argv: ['--json', 'agent', 'component', 'button'],
+    isTty: false,
+    out: (message = '') => output.push(message),
+  });
+
+  await program.parseAsync(['--json', 'agent', 'component', 'button'], { from: 'user' });
+
+  const result = JSON.parse(output.join('\n'));
+  const component = result.data.component;
+
+  assert.equal(component.tagName, 'co-button');
+  assert.equal(component.imports.webComponent, '@cobalt/components/button');
+  assert.ok(component.attributes.some((attribute) => attribute.name === 'variant'));
+  assert.ok(component.events.some((event) => event.name === 'co-focus'));
+  assert.ok(component.slots.some((slot) => slot.name === 'default'));
+  assert.ok(component.cssParts.some((part) => part.name === 'base'));
+  assert.equal(
+    component.methods.some((method) => method.name.startsWith('_')),
+    false,
+  );
+  assert.equal(
+    component.events.some((event) => event.name === 'type' || event.name === 'name'),
+    false,
+  );
+});
+
+test('agent token commands search and return token metadata', async () => {
+  const listOutput = [];
+  const tokenOutput = [];
+
+  const listProgram = createProgram({
+    argv: ['--json', 'agent', 'tokens', '--query', 'surface', '--tier', 'semantic', '--limit', '3'],
+    isTty: false,
+    out: (message = '') => listOutput.push(message),
+  });
+  await listProgram.parseAsync(
+    ['--json', 'agent', 'tokens', '--query', 'surface', '--tier', 'semantic', '--limit', '3'],
+    { from: 'user' },
+  );
+
+  const tokenProgram = createProgram({
+    argv: ['--json', 'agent', 'token', '--co-color-text-default'],
+    isTty: false,
+    out: (message = '') => tokenOutput.push(message),
+  });
+  await tokenProgram.parseAsync(['--json', 'agent', 'token', '--co-color-text-default'], {
+    from: 'user',
+  });
+
+  const listResult = JSON.parse(listOutput.join('\n'));
+  const tokenResult = JSON.parse(tokenOutput.join('\n'));
+
+  assert.equal(listResult.command, 'agent tokens');
+  assert.equal(listResult.data.returned, 3);
+  assert.ok(listResult.data.tokens.every((token) => token.tier === 'semantic'));
+  assert.equal(tokenResult.data.token.name, '--co-color-text-default');
+  assert.equal(tokenResult.data.token.category, 'Color');
+});
+
+test('agent workspace metadata source reports missing metadata without fallback', async () => {
+  const tempDir = await mkdtemp(path.join(os.tmpdir(), 'cobalt-cli-'));
+  const output = [];
+
+  try {
+    await writeFile(path.join(tempDir, 'package.json'), JSON.stringify({ dependencies: {} }));
+
+    const program = createProgram({
+      argv: ['--json', '--cwd', tempDir, 'agent', '--metadata-source', 'workspace', 'context'],
+      isTty: false,
+      out: (message = '') => output.push(message),
+    });
+
+    await program.parseAsync(
+      ['--json', '--cwd', tempDir, 'agent', '--metadata-source', 'workspace', 'context'],
+      { from: 'user' },
+    );
+
+    const result = JSON.parse(output.join('\n'));
+    assert.equal(result.summary.status, 'fail');
+    assert.equal(result.data.metadata.components.count, 0);
+    assert.ok(
+      result.diagnostics.some(
+        (diagnostic) => diagnostic.id === 'cobalt.agent.metadata.workspace-missing',
+      ),
+    );
+  } finally {
+    await rm(tempDir, { recursive: true, force: true });
+  }
+});
+
+test('agent utility command searches utility metadata', async () => {
+  const output = [];
+  const program = createProgram({
+    argv: ['--json', 'agent', 'utilities', '--query', 'gap', '--limit', '2'],
+    isTty: false,
+    out: (message = '') => output.push(message),
+  });
+
+  await program.parseAsync(['--json', 'agent', 'utilities', '--query', 'gap', '--limit', '2'], {
+    from: 'user',
+  });
+
+  const result = JSON.parse(output.join('\n'));
+  assert.equal(result.command, 'agent utilities');
+  assert.equal(result.data.returned, 2);
+  assert.ok(result.data.utilities.every((utility) => utility.className.includes('gap')));
+});
+
 test('normalizes the generated package name from the target directory', () => {
   assert.equal(normalizePackageName('Cobalt Starter_App'), 'cobalt-starter-app');
 });
@@ -768,13 +922,25 @@ test('scaffolds a base vanilla TypeScript project', async () => {
     const gitignore = await readFile(path.join(targetDir, '.gitignore'), 'utf8');
     const readme = await readFile(path.join(targetDir, 'README.md'), 'utf8');
     const npmrcExample = await readFile(path.join(targetDir, '.npmrc.example'), 'utf8');
+    const skill = await readFile(
+      path.join(targetDir, '.codex', 'skills', 'cobalt', 'SKILL.md'),
+      'utf8',
+    );
+    const skillMetadata = await readFile(
+      path.join(targetDir, '.codex', 'skills', 'cobalt', 'agents', 'openai.yaml'),
+      'utf8',
+    );
 
     assert.match(gitignore, /node_modules\//);
     assert.match(gitignore, /dist\//);
     assert.match(gitignore, /cobalt-packages\/\*\.tgz/);
     assert.match(readme, /npm run dev/);
     assert.match(readme, /npm run build/);
+    assert.match(readme, /\.codex\/skills\/cobalt/);
     assert.match(npmrcExample, /%REGISTRY_URL%/);
+    assert.match(skill, /name: cobalt/);
+    assert.match(skill, /co --json --cwd <project-root> agent context/);
+    assert.match(skillMetadata, /display_name: 'Cobalt'/);
   } finally {
     process.chdir(cwd);
     await rm(tempDir, { recursive: true, force: true });

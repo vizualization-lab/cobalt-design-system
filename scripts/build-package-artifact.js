@@ -115,6 +115,8 @@ pnpm install
 pnpm dev
 \`\`\`
 
+Generated projects include the Cobalt agent skill at \`.codex/skills/cobalt\`.
+
 ## Use the included starter generator without registry access
 
 ${

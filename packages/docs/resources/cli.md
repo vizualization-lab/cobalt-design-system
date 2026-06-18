@@ -70,6 +70,7 @@ co --no-art new
 | `co inspect`    | Inspects Cobalt usage in an existing project. |
 | `co doctor`     | Checks for common Cobalt adoption issues.     |
 | `co components` | Looks up Cobalt component metadata.           |
+| `co agent`      | Prints AI-agent-oriented Cobalt context.      |
 | `co config`     | Manages saved Cobalt CLI settings.            |
 
 ## Config
@@ -256,6 +257,41 @@ Component commands support JSON output:
 ```bash
 co --json components status co-button
 ```
+
+## Agent Workflows
+
+Use the `agent` namespace when an AI agent or automation needs compact, normalized Cobalt context:
+
+```bash
+co --json --cwd ./my-app agent context
+```
+
+The context command combines project inspection, doctor diagnostics, metadata source, component counts, token summaries, utility counts, themes, and modes.
+
+Query component APIs from the normalized custom elements manifest:
+
+```bash
+co --json --cwd ./my-app agent component button
+co --json --cwd ./my-app agent components
+```
+
+Search token and utility metadata:
+
+```bash
+co --json --cwd ./my-app agent tokens --query surface --tier semantic
+co --json --cwd ./my-app agent token --co-color-text-default
+co --json --cwd ./my-app agent utilities --query gap
+```
+
+By default, agent commands use workspace metadata from installed Cobalt packages and fall back to bundled CLI metadata. Override that behavior when needed:
+
+```bash
+co --json --cwd ./my-app agent --metadata-source workspace context
+co --json --cwd ./my-app agent --metadata-source bundled components
+```
+
+For reusable AI workflows, download the [Cobalt Agent Skill](/resources/artifacts#cobalt-agent-skill).
+Projects generated with `co new` include the same skill folder at `.codex/skills/cobalt` so agents have Cobalt-specific instructions available from the starter.
 
 ## JSON Output
 
