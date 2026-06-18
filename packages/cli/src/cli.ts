@@ -77,10 +77,14 @@ export function createProgram({
   const color = shouldUseColor({ env, isTty });
   const noArt = argv.includes('--no-art');
   const startupArt = noArt ? '' : `${renderStartupArt({ color, version })}\n\n`;
+  program.configureOutput({
+    writeOut: (message) => out(message.replace(/\n$/, '')),
+  });
 
   program
     .name('co')
     .description('Cobalt design system command line tool')
+    .version(version, '-v, --version', 'Print CLI version')
     .option('--no-art', 'Disable the Cobalt startup art')
     .option('--json', 'Print supported command output as JSON')
     .option('--quiet', 'Suppress human-readable command output')

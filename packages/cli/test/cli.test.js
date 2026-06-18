@@ -106,6 +106,21 @@ test('help output includes startup art unless disabled', () => {
   assert.doesNotMatch(withoutArt, /@cobalt\/cli v0\.1\.0/);
 });
 
+test('version output omits startup art', async () => {
+  for (const flag of ['--version', '-v']) {
+    const output = [];
+    const program = createProgram({
+      argv: [flag],
+      isTty: false,
+      out: (message = '') => output.push(message),
+    });
+
+    await program.parseAsync([flag], { from: 'user' });
+
+    assert.deepEqual(output, ['0.1.0']);
+  }
+});
+
 test('running co without arguments prints startup art and help', async () => {
   const output = [];
   const program = createProgram({
