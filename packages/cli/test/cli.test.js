@@ -1,4 +1,4 @@
-import { mkdir, mkdtemp, readFile, readdir, rm, writeFile } from 'node:fs/promises';
+import { access, mkdir, mkdtemp, readFile, readdir, rm, writeFile } from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 import process from 'node:process';
@@ -40,6 +40,15 @@ function scriptedPrompts({ text = {}, select = {}, confirm = {} } = {}) {
   };
 }
 
+async function pathExists(filePath) {
+  try {
+    await access(filePath);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
 const frameworkTemplateFiles = [
   'templates/react/_variants/base/src/App.tsx',
   'templates/react/_variants/app-shell/src/App.tsx',
@@ -66,6 +75,7 @@ test('co exposes new and config subcommands', () => {
   assert.match(rootHelp, /components/);
   assert.match(newCommand.helpInformation(), /--template <name>/);
   assert.match(newCommand.helpInformation(), /--app-shell/);
+  assert.match(newCommand.helpInformation(), /--agent-skill/);
   assert.match(configCommand.helpInformation(), /set/);
   assert.match(configCommand.helpInformation(), /unset/);
   assert.match(inspectCommand.helpInformation(), /Inspect Cobalt usage/);
@@ -130,6 +140,7 @@ test('resolves template, scss, and app shell options', async () => {
         configureRegistry: true,
         registryUrl: 'https://registry.example.com',
         caBundle: '/path/to/ca.pem',
+        agentSkill: 'claude',
         yes: true,
       },
       prompts,
@@ -143,6 +154,7 @@ test('resolves template, scss, and app shell options', async () => {
       configureRegistry: true,
       registryUrl: 'https://registry.example.com',
       caBundle: '/path/to/ca.pem',
+      agentSkill: 'claude',
       yes: true,
     },
   );
@@ -160,6 +172,40 @@ test('rejects unknown package sources before scaffolding', async () => {
     () => resolveOptions({ cobaltSource: 'cdn', yes: true }, prompts),
     /Unknown Cobalt package source "cdn"/,
   );
+});
+
+test('rejects unknown agent skill targets before scaffolding', async () => {
+  await assert.rejects(
+    () => resolveOptions({ agentSkill: 'cursor', yes: true }, prompts),
+    /Unknown agent skill target "cursor"/,
+  );
+});
+
+test('resolves agent skill targets with both as the default', async () => {
+  assert.equal(
+    (await resolveOptions({ targetDir: 'default-agent', yes: true }, prompts)).agentSkill,
+    'both',
+  );
+
+  for (const agentSkill of ['none', 'codex', 'claude', 'both']) {
+    assert.equal(
+      (
+        await resolveOptions(
+          {
+            targetDir: `agent-${agentSkill}`,
+            template: 'vanilla-ts',
+            scss: false,
+            appShell: false,
+            cobaltSource: 'registry',
+            configureRegistry: false,
+            agentSkill,
+          },
+          prompts,
+        )
+      ).agentSkill,
+      agentSkill,
+    );
+  }
 });
 
 test('requires registry URL in non-interactive registry setup', async () => {
@@ -183,6 +229,7 @@ test('uses saved registry config for non-interactive scaffolding', async () => {
       configureRegistry: true,
       registryUrl: 'https://registry.example.com/npm/',
       caBundle: '/etc/cobalt.pem',
+      agentSkill: 'both',
       yes: true,
     },
   );
@@ -453,6 +500,8 @@ test('fully flag-driven co new omits startup art', async () => {
         '--cobalt-source',
         'registry',
         '--no-configure-registry',
+        '--agent-skill',
+        'both',
       ],
       root: packageRoot,
       isTty: false,
@@ -470,6 +519,8 @@ test('fully flag-driven co new omits startup art', async () => {
         '--cobalt-source',
         'registry',
         '--no-configure-registry',
+        '--agent-skill',
+        'both',
       ],
       { from: 'user' },
     );
@@ -937,10 +988,73 @@ test('scaffolds a base vanilla TypeScript project', async () => {
     assert.match(readme, /npm run dev/);
     assert.match(readme, /npm run build/);
     assert.match(readme, /\.codex\/skills\/cobalt/);
+    assert.match(readme, /\.claude\/skills\/cobalt/);
     assert.match(npmrcExample, /%REGISTRY_URL%/);
     assert.match(skill, /name: cobalt/);
     assert.match(skill, /co --json --cwd <project-root> agent context/);
     assert.match(skillMetadata, /display_name: 'Cobalt'/);
+    assert.equal(
+      await pathExists(path.join(targetDir, '.claude', 'skills', 'cobalt', 'SKILL.md')),
+      true,
+    );
+    assert.equal(
+      await pathExists(
+        path.join(targetDir, '.claude', 'skills', 'cobalt', 'agents', 'openai.yaml'),
+      ),
+      false,
+    );
+  } finally {
+    process.chdir(cwd);
+    await rm(tempDir, { recursive: true, force: true });
+  }
+});
+
+test('scaffolds selected agent skill harness folders', async () => {
+  const tempDir = await mkdtemp(path.join(os.tmpdir(), 'cobalt-cli-'));
+  const cwd = process.cwd();
+
+  try {
+    process.chdir(tempDir);
+
+    for (const agentSkill of ['codex', 'claude', 'none']) {
+      const targetDir = await scaffoldProject(
+        {
+          targetDir: `skill-${agentSkill}`,
+          template: 'vanilla-ts',
+          scss: false,
+          appShell: false,
+          cobaltSource: 'registry',
+          configureRegistry: false,
+          agentSkill,
+        },
+        packageRoot,
+      );
+
+      const hasCodexSkill = await pathExists(
+        path.join(targetDir, '.codex', 'skills', 'cobalt', 'SKILL.md'),
+      );
+      const hasClaudeSkill = await pathExists(
+        path.join(targetDir, '.claude', 'skills', 'cobalt', 'SKILL.md'),
+      );
+      const hasClaudeOpenAiMetadata = await pathExists(
+        path.join(targetDir, '.claude', 'skills', 'cobalt', 'agents', 'openai.yaml'),
+      );
+      const readme = await readFile(path.join(targetDir, 'README.md'), 'utf8');
+
+      assert.equal(hasCodexSkill, agentSkill === 'codex');
+      assert.equal(hasClaudeSkill, agentSkill === 'claude');
+      assert.equal(hasClaudeOpenAiMetadata, false);
+
+      if (agentSkill === 'codex') {
+        assert.match(readme, /\.codex\/skills\/cobalt/);
+        assert.doesNotMatch(readme, /\.claude\/skills\/cobalt/);
+      } else if (agentSkill === 'claude') {
+        assert.match(readme, /\.claude\/skills\/cobalt/);
+        assert.doesNotMatch(readme, /\.codex\/skills\/cobalt/);
+      } else {
+        assert.doesNotMatch(readme, /AI Agent Skill/);
+      }
+    }
   } finally {
     process.chdir(cwd);
     await rm(tempDir, { recursive: true, force: true });

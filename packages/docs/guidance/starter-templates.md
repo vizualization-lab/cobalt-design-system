@@ -8,7 +8,7 @@ Install and configure the CLI first using the [Cobalt CLI documentation](/resour
 co new
 ```
 
-The generator prompts for a framework template, whether to use SCSS, whether to include the Cobalt app shell pattern, and where Cobalt packages should be installed from.
+The generator prompts for a framework template, whether to use SCSS, whether to include the Cobalt app shell pattern, where Cobalt packages should be installed from, and which AI agent skill folders to include.
 
 ## Skip Prompts
 

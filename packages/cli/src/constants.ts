@@ -1,8 +1,10 @@
 export const templates = ['vanilla-ts', 'react', 'vue', 'angular'] as const;
 export const cobaltSources = ['registry', 'local'] as const;
+export const agentSkillTargets = ['none', 'codex', 'claude', 'both'] as const;
 
 export type Template = (typeof templates)[number];
 export type CobaltSource = (typeof cobaltSources)[number];
+export type AgentSkillTarget = (typeof agentSkillTargets)[number];
 
 export const localPackagesDirectory = 'cobalt-packages';
 

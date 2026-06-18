@@ -1,4 +1,4 @@
-import type { CobaltSource, Template } from './constants.js';
+import type { AgentSkillTarget, CobaltSource, Template } from './constants.js';
 
 export interface CobaltConfig {
   registry?: {
@@ -16,6 +16,7 @@ export interface NewCommandOptions {
   configureRegistry?: boolean;
   registryUrl?: string;
   caBundle?: string;
+  agentSkill?: string;
   yes?: boolean;
 }
 
@@ -28,6 +29,7 @@ export interface ResolvedNewOptions {
   configureRegistry: boolean;
   registryUrl?: string;
   caBundle?: string;
+  agentSkill: AgentSkillTarget;
   yes: boolean;
   saveConfig?: CobaltConfig;
 }

@@ -42,7 +42,7 @@ After downloading, install the extension from VS Code by opening the Extensions 
   button-label="Download ZIP"
 />
 
-After downloading, extract the ZIP and install the `cobalt` skill folder into your agent's skills directory. Starter projects generated with `co new` also include this folder at `.codex/skills/cobalt`.
+After downloading, extract the ZIP and install the `cobalt` skill folder into your agent's skills directory. Starter projects generated with `co new --agent-skill both` include project-local copies at `.codex/skills/cobalt` and `.claude/skills/cobalt`.
 
 ## Fonts Package {#cobalt-fonts-package}
 

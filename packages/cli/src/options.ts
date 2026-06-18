@@ -1,4 +1,11 @@
-import { cobaltSources, templates, type CobaltSource, type Template } from './constants.js';
+import {
+  agentSkillTargets,
+  cobaltSources,
+  templates,
+  type AgentSkillTarget,
+  type CobaltSource,
+  type Template,
+} from './constants.js';
 import type {
   CobaltConfig,
   NewCommandOptions,
@@ -20,6 +27,14 @@ export async function resolveOptions(
   if (parsed.cobaltSource !== undefined && !isCobaltSource(parsed.cobaltSource)) {
     throw new Error(
       `Unknown Cobalt package source "${parsed.cobaltSource}". Choose one of: ${cobaltSources.join(
+        ', ',
+      )}.`,
+    );
+  }
+
+  if (parsed.agentSkill !== undefined && !isAgentSkillTarget(parsed.agentSkill)) {
+    throw new Error(
+      `Unknown agent skill target "${parsed.agentSkill}". Choose one of: ${agentSkillTargets.join(
         ', ',
       )}.`,
     );
@@ -52,6 +67,7 @@ export async function resolveOptions(
       configureRegistry,
       registryUrl: parsedRegistryUrl,
       caBundle: parsedCaBundle,
+      agentSkill: parsed.agentSkill ?? 'both',
       yes: true,
     };
   }
@@ -64,6 +80,9 @@ export async function resolveOptions(
   const cobaltSource =
     parsed.cobaltSource ??
     (await prompts.select('Cobalt package source', cobaltSources, 'registry'));
+  const agentSkill =
+    parsed.agentSkill ??
+    (await prompts.select('Install Cobalt AI agent skill?', agentSkillTargets, 'both'));
 
   const configureRegistry =
     cobaltSource === 'registry'
@@ -116,6 +135,7 @@ export async function resolveOptions(
     configureRegistry,
     registryUrl,
     caBundle: caBundle || undefined,
+    agentSkill,
     yes: false,
     saveConfig,
   };
@@ -127,6 +147,10 @@ function isTemplate(value: string): value is Template {
 
 function isCobaltSource(value: string): value is CobaltSource {
   return (cobaltSources as readonly string[]).includes(value);
+}
+
+function isAgentSkillTarget(value: string): value is AgentSkillTarget {
+  return (agentSkillTargets as readonly string[]).includes(value);
 }
 
 function getRegistrySaveConfig(

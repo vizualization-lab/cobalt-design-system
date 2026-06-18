@@ -150,20 +150,21 @@ Available templates are `vanilla-ts`, `react`, `vue`, and `angular`.
 
 ### New Options
 
-| Option                     | Description                                                        |
-| -------------------------- | ------------------------------------------------------------------ |
-| `--template <name>`        | Template to use: `vanilla-ts`, `react`, `vue`, or `angular`.       |
-| `--scss`                   | Includes SCSS and Cobalt Sass helper setup.                        |
-| `--no-scss`                | Uses plain CSS.                                                    |
-| `--app-shell`              | Uses the Cobalt app shell pattern.                                 |
-| `--no-app-shell`           | Uses the base page layout.                                         |
-| `--cobalt-source <source>` | Cobalt package source: `registry` or `local`.                      |
-| `--configure-registry`     | Creates a project `.npmrc` from saved CLI config or command flags. |
-| `--no-configure-registry`  | Keeps `.npmrc.example` without creating `.npmrc`.                  |
-| `--registry-url <url>`     | Cobalt npm registry URL.                                           |
-| `--ca-bundle <path>`       | Path to the CA bundle used for the Cobalt registry.                |
-| `-y, --yes`                | Accepts defaults for omitted options and skips prompts.            |
-| `-h, --help`               | Prints help for `co new`.                                          |
+| Option                     | Description                                                                  |
+| -------------------------- | ---------------------------------------------------------------------------- |
+| `--template <name>`        | Template to use: `vanilla-ts`, `react`, `vue`, or `angular`.                 |
+| `--scss`                   | Includes SCSS and Cobalt Sass helper setup.                                  |
+| `--no-scss`                | Uses plain CSS.                                                              |
+| `--app-shell`              | Uses the Cobalt app shell pattern.                                           |
+| `--no-app-shell`           | Uses the base page layout.                                                   |
+| `--cobalt-source <source>` | Cobalt package source: `registry` or `local`.                                |
+| `--configure-registry`     | Creates a project `.npmrc` from saved CLI config or command flags.           |
+| `--no-configure-registry`  | Keeps `.npmrc.example` without creating `.npmrc`.                            |
+| `--registry-url <url>`     | Cobalt npm registry URL.                                                     |
+| `--ca-bundle <path>`       | Path to the CA bundle used for the Cobalt registry.                          |
+| `--agent-skill <target>`   | Installs the Cobalt AI agent skill for `none`, `codex`, `claude`, or `both`. |
+| `-y, --yes`                | Accepts defaults for omitted options and skips prompts.                      |
+| `-h, --help`               | Prints help for `co new`.                                                    |
 
 ## Registry Mode
 
@@ -291,7 +292,7 @@ co --json --cwd ./my-app agent --metadata-source bundled components
 ```
 
 For reusable AI workflows, download the [Cobalt Agent Skill](/resources/artifacts#cobalt-agent-skill).
-Projects generated with `co new` include the same skill folder at `.codex/skills/cobalt` so agents have Cobalt-specific instructions available from the starter.
+Projects generated with `co new` include Cobalt-specific skill folders so agents can use the starter immediately. By default, `--agent-skill both` writes `.codex/skills/cobalt` for Codex and `.claude/skills/cobalt` for Claude Code.
 
 ## JSON Output
 

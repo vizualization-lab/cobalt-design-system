@@ -106,6 +106,7 @@ export function createProgram({
     .option('--no-configure-registry', 'Keep .npmrc.example without creating .npmrc')
     .option('--registry-url <url>', 'Cobalt npm registry URL')
     .option('--ca-bundle <path>', 'Path to the CA bundle used for the Cobalt registry')
+    .option('--agent-skill <target>', 'Install Cobalt AI agent skill: none, codex, claude, or both')
     .option('-y, --yes', 'Accept defaults for omitted options')
     .action(async (targetDir: string | undefined, commandOptions: NewCommandOptions) => {
       if (!noArt && shouldShowNewCommandArt({ targetDir, commandOptions })) {
@@ -553,6 +554,7 @@ function shouldShowNewCommandArt({
     commandOptions.scss === undefined ||
     commandOptions.appShell === undefined ||
     commandOptions.cobaltSource === undefined ||
+    commandOptions.agentSkill === undefined ||
     shouldPromptForRegistryConfiguration(commandOptions) ||
     shouldPromptForRegistryValues(commandOptions)
   );

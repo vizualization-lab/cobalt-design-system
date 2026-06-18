@@ -35,17 +35,18 @@ co new my-app --template react --scss --app-shell
 
 ## Options
 
-| Option                              | Description                                            |
-| ----------------------------------- | ------------------------------------------------------ |
-| `--template <name>`                 | Choose `vanilla-ts`, `react`, `vue`, or `angular`.     |
-| `--scss` / `--no-scss`              | Enable or disable SCSS and Cobalt Sass helper setup.   |
-| `--app-shell` / `--no-app-shell`    | Enable or disable the Cobalt app shell starter layout. |
-| `--cobalt-source <registry\|local>` | Use registry dependencies or local tarball paths.      |
-| `--configure-registry`              | Create a project `.npmrc` during scaffolding.          |
-| `--no-configure-registry`           | Keep `.npmrc.example` and skip `.npmrc` generation.    |
-| `--registry-url <url>`              | Registry URL for `@cobalt` packages.                   |
-| `--ca-bundle <path>`                | CA bundle path for the configured registry.            |
-| `--yes`                             | Accept defaults for any omitted options.               |
+| Option                              | Description                                                        |
+| ----------------------------------- | ------------------------------------------------------------------ |
+| `--template <name>`                 | Choose `vanilla-ts`, `react`, `vue`, or `angular`.                 |
+| `--scss` / `--no-scss`              | Enable or disable SCSS and Cobalt Sass helper setup.               |
+| `--app-shell` / `--no-app-shell`    | Enable or disable the Cobalt app shell starter layout.             |
+| `--cobalt-source <registry\|local>` | Use registry dependencies or local tarball paths.                  |
+| `--configure-registry`              | Create a project `.npmrc` during scaffolding.                      |
+| `--no-configure-registry`           | Keep `.npmrc.example` and skip `.npmrc` generation.                |
+| `--registry-url <url>`              | Registry URL for `@cobalt` packages.                               |
+| `--ca-bundle <path>`                | CA bundle path for the configured registry.                        |
+| `--agent-skill <target>`            | Install the Cobalt skill for `none`, `codex`, `claude`, or `both`. |
+| `--yes`                             | Accept defaults for any omitted options.                           |
 
 The generated project includes a `.npmrc.example` file unless you choose to configure the registry during scaffolding. When registry configuration is enabled, the generator writes `.npmrc` from that template and removes `.npmrc.example`.
 
@@ -88,6 +89,6 @@ co --json --cwd ./my-app agent tokens --query surface --tier semantic
 co --json --cwd ./my-app agent utilities --query gap
 ```
 
-Projects generated with `co new` include the installable Cobalt skill folder at `.codex/skills/cobalt` for agent workflows.
+Projects generated with `co new` include installable Cobalt skill folders for agent workflows. By default, `--agent-skill both` writes `.codex/skills/cobalt` and `.claude/skills/cobalt`.
 
 Use `--json` for machine-readable output, `--quiet` to suppress human output, and `--cwd <path>` to run against another project directory.
