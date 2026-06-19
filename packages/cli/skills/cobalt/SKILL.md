@@ -24,7 +24,7 @@ Use the Cobalt CLI as the source of truth before editing a Cobalt app or design-
    co --json --cwd <project-root> agent components
    ```
 
-   Use returned `attributes`, `events`, `slots`, `cssParts`, `methods`, and `imports`. Do not call private/protected members or infer unsupported attributes from examples.
+   Use returned `frameworkSelection`, `usage`, `attributes`, `events`, `slots`, `cssParts`, `methods`, and `imports`. Prefer `usage.requiredImports`, `usage.examples`, `usage.relatedComponents`, and `usage.recommendedAttributes` for authoring because they are selected for the detected project framework. If `frameworkSelection.ambiguous` is true, rerun with `--framework web-components`, `--framework react`, `--framework vue`, or `--framework angular`. Do not use `co components usage` or `co components status` for component APIs; those are human catalog commands. Do not call private/protected members or infer unsupported attributes from raw slots when docs-derived usage shows a preferred pattern.
 
 3. Query tokens and utilities before writing CSS:
 

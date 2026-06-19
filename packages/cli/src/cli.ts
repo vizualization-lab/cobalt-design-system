@@ -236,13 +236,18 @@ export function createProgram({
 
   const agentComponents = agent
     .command('components')
-    .description('Print normalized Cobalt component metadata');
-  agentComponents.action(async () => {
+    .description('Print normalized Cobalt component metadata')
+    .option(
+      '--framework <target>',
+      'Guidance framework: auto, web-components, react, vue, or angular',
+      'auto',
+    );
+  agentComponents.action(async (commandOptions: { framework?: string }) => {
     const globalOptions = getGlobalOptions(program);
     const result = await runAgentComponents({
       root: resolveCommandCwd(globalOptions),
       packageRoot: root,
-      options: getAgentOptions(agent),
+      options: { ...getAgentOptions(agent), framework: commandOptions.framework },
     });
     printResult(result, globalOptions, out, formatAgentComponentsResult);
   });
@@ -251,14 +256,19 @@ export function createProgram({
   const agentComponent = agent
     .command('component')
     .description('Print normalized metadata for one Cobalt component')
-    .argument('<name>', 'Component name, with or without the co- prefix');
-  agentComponent.action(async (name: string) => {
+    .argument('<name>', 'Component name, with or without the co- prefix')
+    .option(
+      '--framework <target>',
+      'Guidance framework: auto, web-components, react, vue, or angular',
+      'auto',
+    );
+  agentComponent.action(async (name: string, commandOptions: { framework?: string }) => {
     const globalOptions = getGlobalOptions(program);
     const result = await runAgentComponent({
       root: resolveCommandCwd(globalOptions),
       packageRoot: root,
       name,
-      options: getAgentOptions(agent),
+      options: { ...getAgentOptions(agent), framework: commandOptions.framework },
     });
     printResult(result, globalOptions, out, formatAgentComponentResult);
   });
@@ -456,6 +466,7 @@ function formatAgentContextResult(result: CommandResult<AgentContextData>): stri
   return [
     `Cobalt agent context: ${result.cwd}`,
     `Metadata: ${data.metadata.source}`,
+    `Guidance: ${data.metadata.guidanceManifestPath ? 'loaded' : 'missing'}`,
     `Components: ${data.metadata.components.count}`,
     `Tokens: ${data.metadata.tokens.count}`,
     `Utilities: ${data.metadata.utilities.count}`,
@@ -476,6 +487,21 @@ function formatAgentComponentResult(result: CommandResult<AgentComponentData>): 
     return result.diagnostics.map((diagnostic) => diagnosticLine(diagnostic)).join('\n');
   }
 
+  const usageLines =
+    component.usage.examples.length > 0
+      ? [
+          `Framework: ${component.usage.framework ?? 'ambiguous'}`,
+          `Imports: ${component.usage.requiredImports.join(' ') || 'none'}`,
+          'Usage:',
+          ...component.usage.examples.map((example) =>
+            [`- ${example.title}`, example.code].filter(Boolean).join('\n  '),
+          ),
+        ]
+      : [
+          `Framework: ${component.usage.framework ?? 'ambiguous'}`,
+          `Available frameworks: ${component.usage.availableFrameworks.join(', ') || 'none'}`,
+        ];
+
   return [
     `${component.tagName} (${component.name})`,
     `Docs: ${component.docsPath}`,
@@ -483,6 +509,9 @@ function formatAgentComponentResult(result: CommandResult<AgentComponentData>): 
     `Events: ${component.events.map((event) => event.name).join(', ') || 'none'}`,
     `Slots: ${component.slots.map((slot) => slot.name).join(', ') || 'none'}`,
     `CSS parts: ${component.cssParts.map((part) => part.name).join(', ') || 'none'}`,
+    ...usageLines,
+    'Notes:',
+    ...component.usage.notes.map((note) => `- ${note}`),
   ].join('\n');
 }
 

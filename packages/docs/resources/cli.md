@@ -269,12 +269,15 @@ co --json --cwd ./my-app agent context
 
 The context command combines project inspection, doctor diagnostics, metadata source, component counts, token summaries, utility counts, themes, and modes.
 
-Query component APIs from the normalized custom elements manifest:
+Query component APIs and authoring guidance from normalized metadata:
 
 ```bash
 co --json --cwd ./my-app agent component button
+co --json --cwd ./my-app agent component button --framework react
 co --json --cwd ./my-app agent components
 ```
+
+`co agent component` returns CEM-derived `attributes`, `events`, `slots`, `cssParts`, and `methods`, plus docs-derived `usage` guidance for the detected framework. The `usage` block includes selected imports, examples, related components, and recommended attributes. Use `--framework web-components`, `react`, `vue`, or `angular` when a project contains multiple frameworks.
 
 Search token and utility metadata:
 

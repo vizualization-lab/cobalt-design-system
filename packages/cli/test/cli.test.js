@@ -12,6 +12,7 @@ import { resolveOptions } from '../dist/options.js';
 import { normalizePackageName } from '../dist/package-json.js';
 import { scaffoldProject } from '../dist/scaffold.js';
 import { renderStartupArt } from '../dist/startup-art.js';
+import { buildComponentGuidance } from '../scripts/generate-component-guidance.mjs';
 
 const packageRoot = path.resolve(fileURLToPath(import.meta.url), '../..');
 const prompts = {
@@ -47,6 +48,10 @@ async function pathExists(filePath) {
   } catch {
     return false;
   }
+}
+
+function escapeRegExp(value) {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
 const frameworkTemplateFiles = [
@@ -825,6 +830,7 @@ test('agent context reports project and bundled metadata as JSON', async () => {
     assert.equal(result.command, 'agent context');
     assert.equal(result.data.metadata.source, 'bundled');
     assert.equal(result.data.metadata.components.count, 28);
+    assert.match(result.data.metadata.guidanceManifestPath, /component-guidance\.json$/);
     assert.equal(result.data.metadata.tokens.count > 500, true);
     assert.equal(result.data.metadata.utilities.count > 50, true);
     assert.deepEqual(result.data.project.frameworks, ['react']);
@@ -834,6 +840,61 @@ test('agent context reports project and bundled metadata as JSON', async () => {
   } finally {
     await rm(tempDir, { recursive: true, force: true });
   }
+});
+
+test('component guidance generator extracts framework usage from docs', () => {
+  const manifest = buildComponentGuidance({
+    docsDir: path.resolve(packageRoot, '../docs/components'),
+  });
+  const input = manifest.components.find((component) => component.tagName === 'co-input');
+  const button = manifest.components.find((component) => component.tagName === 'co-button');
+  const select = manifest.components.find((component) => component.tagName === 'co-select');
+  const icon = manifest.components.find((component) => component.tagName === 'co-icon');
+
+  assert.equal(manifest.components.length, 22);
+  assert.ok(
+    manifest.components.every(
+      (component) =>
+        JSON.stringify(Object.keys(component.frameworks).sort()) ===
+        JSON.stringify(['angular', 'react', 'vue', 'web-components']),
+    ),
+  );
+  assert.ok(input);
+  assert.ok(button);
+  assert.ok(select);
+  assert.ok(icon);
+  assert.deepEqual(Object.keys(input.frameworks).sort(), [
+    'angular',
+    'react',
+    'vue',
+    'web-components',
+  ]);
+  assert.ok(
+    input.frameworks['web-components'].examples.some((example) =>
+      example.code.includes('<co-input label="Email address"'),
+    ),
+  );
+  assert.ok(
+    input.frameworks.react.examples.some((example) =>
+      example.code.includes('<CoInput label="Email address"'),
+    ),
+  );
+  assert.ok(input.frameworks.react.recommendedAttributes.includes('label'));
+  assert.ok(input.frameworks.react.recommendedAttributes.includes('helpText'));
+  assert.ok(input.frameworks.react.relatedComponents.some((entry) => entry.tagName === 'co-icon'));
+  assert.ok(
+    button.frameworks.react.requiredImports.includes(
+      "import { CoButton, CoIcon } from '@cobalt/react';",
+    ),
+  );
+  assert.ok(
+    select.frameworks['web-components'].relatedComponents.some(
+      (entry) => entry.tagName === 'co-option',
+    ),
+  );
+  assert.ok(
+    icon.frameworks['web-components'].requiredImports.includes("import '@cobalt/components/icon';"),
+  );
 });
 
 test('agent component command normalizes custom elements manifest API metadata', async () => {
@@ -855,6 +916,9 @@ test('agent component command normalizes custom elements manifest API metadata',
   assert.ok(component.events.some((event) => event.name === 'co-focus'));
   assert.ok(component.slots.some((slot) => slot.name === 'default'));
   assert.ok(component.cssParts.some((part) => part.name === 'base'));
+  assert.equal(result.data.frameworkSelection.selected, 'web-components');
+  assert.ok(component.usage.examples.some((example) => example.code.includes('<co-button')));
+  assert.ok(component.usage.requiredImports.includes("import '@cobalt/components/button';"));
   assert.equal(
     component.methods.some((method) => method.name.startsWith('_')),
     false,
@@ -863,6 +927,187 @@ test('agent component command normalizes custom elements manifest API metadata',
     component.events.some((event) => event.name === 'type' || event.name === 'name'),
     false,
   );
+});
+
+test('agent component command selects React guidance for React projects', async () => {
+  const tempDir = await mkdtemp(path.join(os.tmpdir(), 'cobalt-cli-'));
+  const output = [];
+
+  try {
+    await writeFile(
+      path.join(tempDir, 'package.json'),
+      JSON.stringify({
+        dependencies: {
+          '@cobalt/react': '^0.1.0',
+          react: '^18.3.0',
+        },
+      }),
+    );
+
+    const program = createProgram({
+      argv: ['--json', '--cwd', tempDir, 'agent', 'component', 'input'],
+      isTty: false,
+      out: (message = '') => output.push(message),
+    });
+
+    await program.parseAsync(['--json', '--cwd', tempDir, 'agent', 'component', 'input'], {
+      from: 'user',
+    });
+
+    const result = JSON.parse(output.join('\n'));
+    const component = result.data.component;
+    const examples = component.usage.examples.map((example) => example.code).join('\n\n');
+    const attributes = component.attributes.map((attribute) => attribute.name);
+
+    assert.equal(result.data.frameworkSelection.selected, 'react');
+    assert.equal(component.usage.framework, 'react');
+    assert.ok(
+      component.usage.requiredImports.includes("import { CoInput, CoIcon } from '@cobalt/react';"),
+    );
+    assert.match(examples, /<CoInput label="Email address" name="email" type="email"/);
+    assert.ok(component.usage.recommendedAttributes.includes('helpText'));
+    assert.ok(component.usage.relatedComponents.some((entry) => entry.tagName === 'co-icon'));
+    assert.equal(attributes.includes('label'), false);
+  } finally {
+    await rm(tempDir, { recursive: true, force: true });
+  }
+});
+
+test('agent component command selects Vue, Angular, native, and explicit framework guidance', async () => {
+  const cases = [
+    {
+      dependencies: { '@cobalt/vue': '^0.1.0', vue: '^3.5.0' },
+      expected: 'vue',
+      expectedImport: "import { CoInput, CoIcon } from '@cobalt/vue';",
+      expectedSnippet: '<CoInput label="Email address"',
+    },
+    {
+      dependencies: { '@angular/core': '^20.0.0', '@cobalt/angular': '^0.1.0' },
+      expected: 'angular',
+      expectedImport: "import { CoInput, CoIcon } from '@cobalt/angular';",
+      expectedSnippet: '<co-input label="Email address"',
+    },
+    {
+      dependencies: { '@cobalt/components': '^0.1.0', '@cobalt/tokens': '^0.1.0' },
+      expected: 'web-components',
+      expectedImport: "import '@cobalt/components/input';",
+      expectedSnippet: '<co-input label="Email address"',
+    },
+  ];
+
+  for (const testCase of cases) {
+    const tempDir = await mkdtemp(path.join(os.tmpdir(), 'cobalt-cli-'));
+    const output = [];
+
+    try {
+      await writeFile(
+        path.join(tempDir, 'package.json'),
+        JSON.stringify({ dependencies: testCase.dependencies }),
+      );
+      const program = createProgram({
+        argv: ['--json', '--cwd', tempDir, 'agent', 'component', 'input'],
+        isTty: false,
+        out: (message = '') => output.push(message),
+      });
+
+      await program.parseAsync(['--json', '--cwd', tempDir, 'agent', 'component', 'input'], {
+        from: 'user',
+      });
+
+      const result = JSON.parse(output.join('\n'));
+      const examples = result.data.component.usage.examples
+        .map((example) => example.code)
+        .join('\n\n');
+
+      assert.equal(result.data.frameworkSelection.selected, testCase.expected);
+      assert.ok(result.data.component.usage.requiredImports.includes(testCase.expectedImport));
+      assert.match(examples, new RegExp(escapeRegExp(testCase.expectedSnippet)));
+    } finally {
+      await rm(tempDir, { recursive: true, force: true });
+    }
+  }
+
+  const tempDir = await mkdtemp(path.join(os.tmpdir(), 'cobalt-cli-'));
+  const output = [];
+
+  try {
+    await writeFile(
+      path.join(tempDir, 'package.json'),
+      JSON.stringify({
+        dependencies: {
+          '@cobalt/react': '^0.1.0',
+          '@cobalt/vue': '^0.1.0',
+          react: '^18.3.0',
+          vue: '^3.5.0',
+        },
+      }),
+    );
+
+    const program = createProgram({
+      argv: ['--json', '--cwd', tempDir, 'agent', 'component', 'button', '--framework', 'react'],
+      isTty: false,
+      out: (message = '') => output.push(message),
+    });
+
+    await program.parseAsync(
+      ['--json', '--cwd', tempDir, 'agent', 'component', 'button', '--framework', 'react'],
+      { from: 'user' },
+    );
+
+    const result = JSON.parse(output.join('\n'));
+    assert.equal(result.data.frameworkSelection.selected, 'react');
+    assert.equal(result.data.frameworkSelection.ambiguous, false);
+    assert.ok(
+      result.data.component.usage.examples.some((example) => example.code.includes('<CoButton')),
+    );
+  } finally {
+    await rm(tempDir, { recursive: true, force: true });
+  }
+});
+
+test('agent component command reports ambiguous framework guidance', async () => {
+  const tempDir = await mkdtemp(path.join(os.tmpdir(), 'cobalt-cli-'));
+  const output = [];
+
+  try {
+    await writeFile(
+      path.join(tempDir, 'package.json'),
+      JSON.stringify({
+        dependencies: {
+          '@cobalt/react': '^0.1.0',
+          '@cobalt/vue': '^0.1.0',
+          react: '^18.3.0',
+          vue: '^3.5.0',
+        },
+      }),
+    );
+
+    const program = createProgram({
+      argv: ['--json', '--cwd', tempDir, 'agent', 'component', 'button'],
+      isTty: false,
+      out: (message = '') => output.push(message),
+    });
+
+    await program.parseAsync(['--json', '--cwd', tempDir, 'agent', 'component', 'button'], {
+      from: 'user',
+    });
+
+    const result = JSON.parse(output.join('\n'));
+    assert.equal(result.data.frameworkSelection.ambiguous, true);
+    assert.equal(result.data.frameworkSelection.selected, null);
+    assert.equal(result.data.component.usage.examples.length, 0);
+    assert.deepEqual(Object.keys(result.data.component.usage.frameworkExamples).sort(), [
+      'angular',
+      'react',
+      'vue',
+      'web-components',
+    ]);
+    assert.ok(
+      result.diagnostics.some((diagnostic) => diagnostic.id === 'cobalt.agent.framework.ambiguous'),
+    );
+  } finally {
+    await rm(tempDir, { recursive: true, force: true });
+  }
 });
 
 test('agent token commands search and return token metadata', async () => {

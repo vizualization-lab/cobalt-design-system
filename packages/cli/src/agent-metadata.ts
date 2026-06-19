@@ -6,6 +6,7 @@ import type { DiagnosticRecord } from './diagnostics.js';
 export type MetadataSourceOption = 'auto' | 'workspace' | 'bundled';
 export type MetadataSource = 'workspace' | 'bundled';
 export type TokenTier = 'primitive' | 'semantic' | 'component';
+export type AgentFramework = 'web-components' | 'react' | 'vue' | 'angular';
 
 export interface AgentAttribute {
   name: string;
@@ -61,6 +62,51 @@ export interface AgentComponent {
   slots: AgentSlot[];
   cssParts: AgentCssPart[];
   methods: AgentMethod[];
+  usage: AgentComponentUsage;
+}
+
+export interface AgentComponentUsage {
+  framework: AgentFramework | null;
+  availableFrameworks: AgentFramework[];
+  requiredImports: string[];
+  examples: AgentComponentUsageExample[];
+  frameworkExamples?: Partial<Record<AgentFramework, AgentComponentFrameworkUsage>>;
+  relatedComponents: AgentRelatedComponent[];
+  recommendedAttributes: string[];
+  source?: {
+    docsPath: string;
+    section: string;
+    framework?: AgentFramework;
+  };
+  notes: string[];
+}
+
+export interface AgentComponentUsageExample {
+  title: string;
+  language: string;
+  code: string;
+}
+
+export interface AgentComponentFrameworkUsage {
+  source: {
+    docsPath: string;
+    section: string;
+    framework: AgentFramework;
+  };
+  requiredImports: string[];
+  examples: AgentComponentUsageExample[];
+  relatedComponents: AgentRelatedComponent[];
+  recommendedAttributes: string[];
+}
+
+export interface AgentRelatedComponent {
+  tagName: string;
+  imports: {
+    webComponent: string;
+    react: string;
+    vue: string;
+    angular: string;
+  };
 }
 
 export interface CobaltTokenThemeValue {
@@ -90,6 +136,7 @@ export interface CobaltUtility {
 export interface AgentMetadataSnapshot {
   source: MetadataSource;
   componentManifestPath?: string;
+  guidanceManifestPath?: string;
   tokenManifestPath?: string;
   components: AgentComponent[];
   tokens: CobaltToken[];
@@ -186,6 +233,17 @@ interface RawTokenManifest {
   utilities?: CobaltUtility[];
 }
 
+interface RawComponentGuidanceManifest {
+  schemaVersion?: number;
+  components?: RawComponentGuidance[];
+}
+
+interface RawComponentGuidance {
+  tagName?: string;
+  docsPath?: string;
+  frameworks?: Partial<Record<AgentFramework, AgentComponentFrameworkUsage>>;
+}
+
 export function resolveMetadataSourceOption(value: string | undefined): MetadataSourceOption {
   if (value === undefined || value === 'auto' || value === 'workspace' || value === 'bundled') {
     return value ?? 'auto';
@@ -200,7 +258,10 @@ export async function resolveAgentMetadata({
   metadataSource,
 }: ResolveMetadataOptions): Promise<AgentMetadataSnapshot> {
   if (metadataSource !== 'bundled') {
-    const workspaceSnapshot = await tryReadSnapshot(workspaceMetadataPaths(cwd), 'workspace');
+    const workspaceSnapshot = await tryReadSnapshot(
+      workspaceMetadataPaths(cwd, packageRoot),
+      'workspace',
+    );
     if (workspaceSnapshot) return workspaceSnapshot;
 
     if (metadataSource === 'workspace') {
@@ -284,12 +345,21 @@ async function tryReadSnapshot(
   if (!existsSync(paths.components) || !existsSync(paths.tokens)) return undefined;
 
   try {
-    const [componentManifest, tokenManifest] = await Promise.all([
+    const [componentManifest, tokenManifest, guidanceManifest] = await Promise.all([
       readJson<RawCem>(paths.components),
       readJson<RawTokenManifest>(paths.tokens),
+      existsSync(paths.guidance)
+        ? readJson<RawComponentGuidanceManifest>(paths.guidance)
+        : Promise.resolve(undefined),
     ]);
-    const { components, diagnostics: componentDiagnostics } =
-      normalizeComponents(componentManifest);
+    const { guidance, diagnostics: guidanceDiagnostics } = normalizeGuidanceManifest(
+      guidanceManifest,
+      paths.guidance,
+    );
+    const { components, diagnostics: componentDiagnostics } = normalizeComponents(
+      componentManifest,
+      guidance,
+    );
     const {
       tokens,
       utilities,
@@ -299,6 +369,7 @@ async function tryReadSnapshot(
     return {
       source,
       componentManifestPath: paths.components,
+      guidanceManifestPath: existsSync(paths.guidance) ? paths.guidance : undefined,
       tokenManifestPath: paths.tokens,
       components,
       tokens,
@@ -310,6 +381,7 @@ async function tryReadSnapshot(
           `${components.length} components, ${tokens.length} tokens, ${utilities.length} utilities`,
         ),
         ...componentDiagnostics,
+        ...guidanceDiagnostics,
         ...tokenDiagnostics,
       ],
     };
@@ -324,9 +396,10 @@ async function tryReadSnapshot(
   }
 }
 
-function workspaceMetadataPaths(cwd: string) {
+function workspaceMetadataPaths(cwd: string, packageRoot: string) {
   return {
     components: path.join(cwd, 'node_modules', '@cobalt', 'components', 'custom-elements.json'),
+    guidance: path.join(packageRoot, 'dist', 'metadata', 'component-guidance.json'),
     tokens: path.join(
       cwd,
       'node_modules',
@@ -342,11 +415,15 @@ function workspaceMetadataPaths(cwd: string) {
 function bundledMetadataPaths(packageRoot: string) {
   return {
     components: path.join(packageRoot, 'dist', 'metadata', 'custom-elements.json'),
+    guidance: path.join(packageRoot, 'dist', 'metadata', 'component-guidance.json'),
     tokens: path.join(packageRoot, 'dist', 'metadata', 'cobalt.manifest.json'),
   };
 }
 
-function normalizeComponents(cem: RawCem): {
+function normalizeComponents(
+  cem: RawCem,
+  guidance: Map<string, Partial<Record<AgentFramework, AgentComponentFrameworkUsage>>>,
+): {
   components: AgentComponent[];
   diagnostics: DiagnosticRecord[];
 } {
@@ -363,13 +440,14 @@ function normalizeComponents(cem: RawCem): {
         0;
       hiddenEvents += hiddenDeclarationEvents;
 
-      components.push({
+      const imports = componentImports(declaration.tagName);
+      const component: AgentComponent = {
         tagName: declaration.tagName,
         name: declaration.name ?? pascalCase(declaration.tagName.replace(/^co-/, '')),
         summary: declaration.summary,
         description: declaration.description?.trim() || undefined,
         docsPath: `/components/${declaration.tagName.replace(/^co-/, '')}`,
-        imports: componentImports(declaration.tagName),
+        imports,
         attributes: normalizeAttributes(declaration),
         events: (declaration.events ?? [])
           .filter((event) => Boolean(event.name?.startsWith('co-')))
@@ -408,7 +486,9 @@ function normalizeComponents(cem: RawCem): {
             returnType: method.return?.type?.text,
           }))
           .sort((left, right) => left.name.localeCompare(right.name)),
-      });
+        usage: buildComponentUsage(declaration.tagName, imports, guidance.get(declaration.tagName)),
+      };
+      components.push(component);
     }
   }
 
@@ -449,6 +529,72 @@ function normalizeAttributes(declaration: RawCemDeclaration): AgentAttribute[] {
       };
     })
     .sort((left, right) => left.name.localeCompare(right.name));
+}
+
+function normalizeGuidanceManifest(
+  manifest: RawComponentGuidanceManifest | undefined,
+  manifestPath: string,
+): {
+  guidance: Map<string, Partial<Record<AgentFramework, AgentComponentFrameworkUsage>>>;
+  diagnostics: DiagnosticRecord[];
+} {
+  if (!manifest) {
+    return {
+      guidance: new Map(),
+      diagnostics: [
+        warn(
+          'cobalt.agent.guidance.missing',
+          'Cobalt component guidance metadata was not found.',
+          manifestPath,
+        ),
+      ],
+    };
+  }
+
+  if (manifest.schemaVersion !== 1) {
+    return {
+      guidance: new Map(),
+      diagnostics: [
+        fail(
+          'cobalt.agent.guidance.invalid-schema',
+          'Cobalt component guidance metadata has an unsupported schema version.',
+          String(manifest.schemaVersion),
+        ),
+      ],
+    };
+  }
+
+  const guidance = new Map<string, Partial<Record<AgentFramework, AgentComponentFrameworkUsage>>>();
+  for (const component of manifest.components ?? []) {
+    if (!component.tagName || !component.frameworks) continue;
+    guidance.set(component.tagName, component.frameworks);
+  }
+
+  return { guidance, diagnostics: [] };
+}
+
+function buildComponentUsage(
+  tagName: string,
+  imports: AgentComponent['imports'],
+  frameworkExamples: Partial<Record<AgentFramework, AgentComponentFrameworkUsage>> | undefined,
+): AgentComponentUsage {
+  const availableFrameworks = frameworkExamples
+    ? (Object.keys(frameworkExamples).sort() as AgentFramework[])
+    : [];
+
+  return {
+    framework: null,
+    availableFrameworks,
+    requiredImports: [],
+    examples: [],
+    frameworkExamples,
+    relatedComponents: [],
+    recommendedAttributes: [],
+    notes: [
+      `Import '${imports.webComponent}' once before rendering ${tagName} in native Web Component projects.`,
+      'Use the selected framework guidance for authoring examples and imports. Use raw API metadata as reference.',
+    ],
+  };
 }
 
 function normalizeTokenManifest(manifest: RawTokenManifest): {

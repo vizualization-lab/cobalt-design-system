@@ -8,12 +8,15 @@ import {
   resolveMetadataSourceOption,
   summarizeTokenMetadata,
   type AgentComponent,
+  type AgentComponentUsage,
+  type AgentFramework,
   type CobaltToken,
   type CobaltUtility,
 } from './agent-metadata.js';
 
 export interface AgentOptions {
   metadataSource?: string;
+  framework?: string;
 }
 
 export interface AgentListOptions {
@@ -38,6 +41,7 @@ export interface AgentContextData {
   metadata: {
     source: string;
     componentManifestPath?: string;
+    guidanceManifestPath?: string;
     tokenManifestPath?: string;
     components: {
       count: number;
@@ -51,11 +55,13 @@ export interface AgentContextData {
 
 export interface AgentComponentsData {
   metadataSource: string;
+  frameworkSelection: AgentFrameworkSelection;
   components: AgentComponent[];
 }
 
 export interface AgentComponentData {
   metadataSource: string;
+  frameworkSelection: AgentFrameworkSelection;
   component?: AgentComponent;
 }
 
@@ -76,6 +82,13 @@ export interface AgentUtilitiesData {
   total: number;
   returned: number;
   utilities: CobaltUtility[];
+}
+
+export interface AgentFrameworkSelection {
+  requested: AgentFramework | 'auto';
+  detected: AgentFramework[];
+  selected: AgentFramework | null;
+  ambiguous: boolean;
 }
 
 export async function runAgentContext({
@@ -107,6 +120,7 @@ export async function runAgentContext({
       metadata: {
         source: metadata.source,
         componentManifestPath: metadata.componentManifestPath,
+        guidanceManifestPath: metadata.guidanceManifestPath,
         tokenManifestPath: metadata.tokenManifestPath,
         components: {
           count: metadata.components.length,
@@ -130,15 +144,22 @@ export async function runAgentComponents({
   options: AgentOptions;
 }): Promise<CommandResult<AgentComponentsData>> {
   const metadataSource = resolveMetadataSourceOption(options.metadataSource);
-  const metadata = await resolveAgentMetadata({ cwd: root, packageRoot, metadataSource });
+  const [inspection, metadata] = await Promise.all([
+    inspectProject(root),
+    resolveAgentMetadata({ cwd: root, packageRoot, metadataSource }),
+  ]);
+  const frameworkSelection = resolveFrameworkSelection(options.framework, inspection.frameworks);
 
   return createResult({
     command: 'agent components',
     cwd: root,
-    diagnostics: metadata.diagnostics,
+    diagnostics: [...metadata.diagnostics, ...frameworkSelectionDiagnostics(frameworkSelection)],
     data: {
       metadataSource: metadata.source,
-      components: metadata.components,
+      frameworkSelection,
+      components: metadata.components.map((component) =>
+        withFrameworkUsage(component, frameworkSelection, false),
+      ),
     },
   });
 }
@@ -155,7 +176,11 @@ export async function runAgentComponent({
   options: AgentOptions;
 }): Promise<CommandResult<AgentComponentData>> {
   const metadataSource = resolveMetadataSourceOption(options.metadataSource);
-  const metadata = await resolveAgentMetadata({ cwd: root, packageRoot, metadataSource });
+  const [inspection, metadata] = await Promise.all([
+    inspectProject(root),
+    resolveAgentMetadata({ cwd: root, packageRoot, metadataSource }),
+  ]);
+  const frameworkSelection = resolveFrameworkSelection(options.framework, inspection.frameworks);
   const component = findComponent(metadata.components, name);
 
   return createResult({
@@ -163,6 +188,7 @@ export async function runAgentComponent({
     cwd: root,
     diagnostics: [
       ...metadata.diagnostics,
+      ...frameworkSelectionDiagnostics(frameworkSelection),
       component
         ? pass('cobalt.agent.component.found', `Found ${component.tagName}.`, component.docsPath)
         : fail(
@@ -174,7 +200,8 @@ export async function runAgentComponent({
     ],
     data: {
       metadataSource: metadata.source,
-      component,
+      frameworkSelection,
+      component: component ? withFrameworkUsage(component, frameworkSelection, true) : undefined,
     },
   });
 }
@@ -274,6 +301,154 @@ export async function runAgentUtilities({
       utilities: limited,
     },
   });
+}
+
+const allowedFrameworks = ['web-components', 'react', 'vue', 'angular'] as const;
+
+function resolveFrameworkSelection(
+  requestedValue: string | undefined,
+  detectedValues: string[],
+): AgentFrameworkSelection {
+  const requested = normalizeRequestedFramework(requestedValue);
+  const detected = detectedValues.filter(isAgentFramework);
+
+  if (requested !== 'auto') {
+    return {
+      requested,
+      detected,
+      selected: requested,
+      ambiguous: false,
+    };
+  }
+
+  if (detected.length === 1) {
+    return {
+      requested,
+      detected,
+      selected: detected[0],
+      ambiguous: false,
+    };
+  }
+
+  if (detected.length > 1) {
+    return {
+      requested,
+      detected,
+      selected: null,
+      ambiguous: true,
+    };
+  }
+
+  return {
+    requested,
+    detected,
+    selected: 'web-components',
+    ambiguous: false,
+  };
+}
+
+function normalizeRequestedFramework(value: string | undefined): AgentFramework | 'auto' {
+  if (value === undefined || value === 'auto') return 'auto';
+  if (isAgentFramework(value)) return value;
+  throw new Error(
+    `Unsupported framework "${value}". Use auto, web-components, react, vue, or angular.`,
+  );
+}
+
+function isAgentFramework(value: string): value is AgentFramework {
+  return (allowedFrameworks as readonly string[]).includes(value);
+}
+
+function frameworkSelectionDiagnostics(selection: AgentFrameworkSelection): DiagnosticRecord[] {
+  if (selection.ambiguous) {
+    return [
+      {
+        id: 'cobalt.agent.framework.ambiguous',
+        status: 'warn',
+        severity: 'warning',
+        message: 'Multiple project frameworks were detected.',
+        evidence: selection.detected.join(', '),
+        suggestedAction:
+          'Rerun the command with --framework web-components, --framework react, --framework vue, or --framework angular.',
+      },
+    ];
+  }
+
+  if (selection.requested !== 'auto' && !selection.detected.includes(selection.requested)) {
+    return [
+      {
+        id: 'cobalt.agent.framework.override',
+        status: 'warn',
+        severity: 'warning',
+        message: `Using requested ${selection.requested} guidance even though it was not detected in the project.`,
+        evidence:
+          selection.detected.length > 0 ? selection.detected.join(', ') : 'No framework detected.',
+      },
+    ];
+  }
+
+  return [];
+}
+
+function withFrameworkUsage(
+  component: AgentComponent,
+  selection: AgentFrameworkSelection,
+  includeExamples: boolean,
+): AgentComponent {
+  return {
+    ...component,
+    usage: selectUsage(component.usage, selection, includeExamples),
+  };
+}
+
+function selectUsage(
+  usage: AgentComponent['usage'],
+  selection: AgentFrameworkSelection,
+  includeExamples: boolean,
+): AgentComponentUsage {
+  if (!selection.selected) {
+    return {
+      ...usage,
+      framework: null,
+      requiredImports: [],
+      examples: [],
+      frameworkExamples: usage.frameworkExamples,
+      relatedComponents: [],
+      recommendedAttributes: [],
+      notes: [
+        ...usage.notes,
+        'Framework selection is ambiguous. Choose a framework-specific example before editing.',
+      ],
+    };
+  }
+
+  const selected = usage.frameworkExamples?.[selection.selected];
+  if (!selected) {
+    return {
+      ...usage,
+      framework: selection.selected,
+      requiredImports: [],
+      examples: [],
+      relatedComponents: [],
+      recommendedAttributes: [],
+      notes: [
+        ...usage.notes,
+        `No ${selection.selected} guidance examples were found for this component.`,
+      ],
+    };
+  }
+
+  return {
+    ...usage,
+    framework: selection.selected,
+    requiredImports: selected.requiredImports,
+    examples: includeExamples ? selected.examples : [],
+    frameworkExamples: selection.ambiguous ? usage.frameworkExamples : undefined,
+    relatedComponents: selected.relatedComponents,
+    recommendedAttributes: selected.recommendedAttributes,
+    source: selected.source,
+    notes: usage.notes,
+  };
 }
 
 function filterTokens(tokens: CobaltToken[], options: AgentTokenListOptions): CobaltToken[] {

@@ -85,9 +85,12 @@ Use agent-oriented metadata for AI workflows:
 ```bash
 co --json --cwd ./my-app agent context
 co --json --cwd ./my-app agent component button
+co --json --cwd ./my-app agent component button --framework react
 co --json --cwd ./my-app agent tokens --query surface --tier semantic
 co --json --cwd ./my-app agent utilities --query gap
 ```
+
+`co agent component` returns CEM-derived API metadata plus docs-derived `usage` guidance for the detected project framework. Use `--framework web-components`, `react`, `vue`, or `angular` to override ambiguous projects.
 
 Projects generated with `co new` include installable Cobalt skill folders for agent workflows. By default, `--agent-skill both` writes `.codex/skills/cobalt` and `.claude/skills/cobalt`.
 

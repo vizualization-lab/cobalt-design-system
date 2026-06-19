@@ -90,7 +90,7 @@ If there are slots (other than default), create a "Slots" section with examples.
 
 #### Usage (CodeTabs)
 
-Generate framework usage examples following these exact patterns:
+Generate framework usage examples following this exact extractable structure. The Cobalt CLI builds agent guidance from these `## Usage` tabs, so do not rename the tabs, omit framework templates, or put unrelated code fences inside this section.
 
 ```markdown
 ## Usage
@@ -104,6 +104,7 @@ Generate framework usage examples following these exact patterns:
 <!-- Import once in your app -->
 <script type="module">
   import '@cobalt/components/{name}';
+  // Import related web components used in examples, one per line.
 </script>
 
 <!-- Basic usage -->
@@ -111,6 +112,18 @@ Generate framework usage examples following these exact patterns:
 <co-{name} {key-prop}="{value}">{slot content if applicable}</co-{name}>
 
 <!-- Additional examples showing key properties -->
+
+<co-{name} {another-prop}="{value}">{slot content if applicable}</co-{name}>
+
+<!-- Listen to events -->
+
+<co-{name} id="{name}-example">{slot content if applicable}</co-{name}>
+
+<script>
+  document.getElementById('{name}-example').addEventListener('co-event-name', (event) => {
+    console.log(event.detail);
+  });
+</script>
 
 \`\`\`
 
@@ -120,11 +133,12 @@ Generate framework usage examples following these exact patterns:
 
 \`\`\`tsx
 import { {PascalName} } from '@cobalt/react';
+// Import related React wrappers from '@cobalt/react' when examples use them.
 
 function App() {
 return (
 <>
-{/_ Basic _/}
+{/_ Basic usage _/}
 <{PascalName} {key-prop}="{value}">{slot content}</{PascalName}>
 
       {/* Events */}
@@ -143,15 +157,20 @@ return (
 
 <script setup>
 import { {PascalName} } from '@cobalt/vue';
+// Import related Vue wrappers from '@cobalt/vue' when examples use them.
+
+function onEvent(event) {
+  console.log(event.detail);
+}
 </script>
 
 <template>
-  <!-- Basic -->
+  <!-- Basic usage -->
   <{PascalName} {key-prop}="{value}">{slot content}</{PascalName}>
 
   <!-- Events -->
 
-<{PascalName} @co-event-name="handler">{slot content}</{PascalName}>
+<{PascalName} @co-event-name="onEvent">{slot content}</{PascalName}>
 </template>
 \`\`\`
 
@@ -171,20 +190,24 @@ imports: [{PascalName}],
 schemas: [CUSTOM_ELEMENTS_SCHEMA],
 templateUrl: './app.component.html',
 })
-export class AppComponent {}
+export class AppComponent {
+onEvent(event: CustomEvent) {
+console.log(event.detail);
+}
+}
 \`\`\`
 
 \`\`\`html
 
 <!-- app.component.html -->
 
-<!-- Basic -->
+<!-- Basic usage -->
 
 <co-{name} {key-prop}="{value}">{slot content}</co-{name}>
 
 <!-- Events -->
 
-<co-{name} (coEventName)="handler($event)">{slot content}</co-{name}>
+<co-{name} (coEventName)="onEvent($event)">{slot content}</co-{name}>
 \`\`\`
 
 </template>

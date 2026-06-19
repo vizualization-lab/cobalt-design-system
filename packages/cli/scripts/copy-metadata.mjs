@@ -1,6 +1,7 @@
 import { copyFileSync, existsSync, mkdirSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { writeComponentGuidance } from './generate-component-guidance.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const packageRoot = resolve(__dirname, '..');
@@ -26,3 +27,8 @@ for (const file of files) {
   }
   copyFileSync(file.source, file.target);
 }
+
+writeComponentGuidance({
+  docsDir: resolve(repoRoot, 'packages/docs/components'),
+  target: resolve(metadataDir, 'component-guidance.json'),
+});
