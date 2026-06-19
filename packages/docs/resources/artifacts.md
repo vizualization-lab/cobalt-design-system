@@ -31,6 +31,8 @@ After downloading, install the extension from VS Code by opening the Extensions 
 
 ## Cobalt Agent Skill {#cobalt-agent-skill}
 
+The recommended way to install the Cobalt agent skill is `co skill add` from the Cobalt CLI — it sets up `.codex/skills/cobalt` and/or `.claude/skills/cobalt` directly and can refresh outdated installs in place. See [Manage the Cobalt Skill](/resources/cli#manage-the-cobalt-skill). The ZIP below is provided for offline installs or environments where the CLI is unavailable.
+
 <ArtifactDownload
   title="Cobalt Agent Skill"
   type="AI workflow artifact"

@@ -1,9 +1,11 @@
 import {
   agentSkillTargets,
   cobaltSources,
+  skillCommandTargets,
   templates,
   type AgentSkillTarget,
   type CobaltSource,
+  type SkillCommandTarget,
   type Template,
 } from './constants.js';
 import type {
@@ -12,6 +14,36 @@ import type {
   PromptAdapter,
   ResolvedNewOptions,
 } from './types.js';
+
+export interface SkillCommandOptions {
+  target?: string;
+  yes?: boolean;
+}
+
+export async function resolveSkillTarget(
+  parsed: SkillCommandOptions,
+  prompts: PromptAdapter,
+  options: { interactive: boolean },
+): Promise<SkillCommandTarget> {
+  if (parsed.target !== undefined) {
+    if (!isSkillCommandTarget(parsed.target)) {
+      throw new Error(
+        `Unknown skill target "${parsed.target}". Choose one of: ${skillCommandTargets.join(', ')}.`,
+      );
+    }
+    return parsed.target;
+  }
+
+  if (parsed.yes || !options.interactive) {
+    return 'both';
+  }
+
+  return prompts.select('Install Cobalt skill for which harness?', skillCommandTargets, 'both');
+}
+
+function isSkillCommandTarget(value: string): value is SkillCommandTarget {
+  return (skillCommandTargets as readonly string[]).includes(value);
+}
 
 export async function resolveOptions(
   parsed: NewCommandOptions,

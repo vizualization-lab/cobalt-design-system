@@ -22,7 +22,13 @@ import {
   type AgentTokenData,
 } from './agent.js';
 import { getComponent, listComponents } from './component-catalog.js';
-import { cobaltSources, configKeys, templates } from './constants.js';
+import {
+  cobaltSources,
+  configKeys,
+  skillCommandTargets,
+  templates,
+  type SkillCommandTarget,
+} from './constants.js';
 import {
   assertKnownConfigKey,
   getConfigValue,
@@ -32,13 +38,29 @@ import {
   unsetConfigValue,
   writeConfig,
 } from './config.js';
-import { diagnosticLine, printResult, type CommandResult } from './diagnostics.js';
+import {
+  createResult,
+  diagnosticLine,
+  printResult,
+  type CommandResult,
+  type DiagnosticRecord,
+} from './diagnostics.js';
 import { runDoctor } from './doctor.js';
 import { nextCommands } from './output.js';
-import { resolveOptions } from './options.js';
+import { resolveOptions, resolveSkillTarget, type SkillCommandOptions } from './options.js';
 import { inspectProject, type ProjectInspection } from './project-inspect.js';
 import { createPrompts } from './prompts.js';
 import { scaffoldProject } from './scaffold.js';
+import {
+  computeSkillStatus,
+  harnessNames,
+  installSkill,
+  removeSkill,
+  updateSkill,
+  type HarnessName,
+  type HarnessOutcome,
+  type SkillStatus,
+} from './skill.js';
 import { renderStartupArt, shouldUseColor } from './startup-art.js';
 import type { NewCommandOptions, PromptAdapter } from './types.js';
 
@@ -340,6 +362,164 @@ export function createProgram({
   });
   includeStartupArtInHelp(agentUtilities, startupArt);
 
+  const skill = program.command('skill').description('Manage the Cobalt agent skill in a project');
+  includeStartupArtInHelp(skill, startupArt);
+
+  const skillList = skill
+    .command('list')
+    .description('List available Cobalt skills and per-harness install state');
+  skillList.action(async () => {
+    const globalOptions = getGlobalOptions(program);
+    const targetRoot = resolveCommandCwd(globalOptions);
+    const status = await computeSkillStatus({ targetRoot, packageRoot: root });
+    const result = createResult<SkillListData>({
+      command: 'skill list',
+      cwd: targetRoot,
+      diagnostics: buildSkillListDiagnostics([status]),
+      data: { skills: [status] },
+    });
+    printResult(result, globalOptions, out, formatSkillListResult);
+  });
+  includeStartupArtInHelp(skillList, startupArt);
+
+  const skillStatusCommand = skill
+    .command('status')
+    .description('Report the Cobalt skill install state for both harnesses');
+  skillStatusCommand.action(async () => {
+    const globalOptions = getGlobalOptions(program);
+    const targetRoot = resolveCommandCwd(globalOptions);
+    const status = await computeSkillStatus({ targetRoot, packageRoot: root });
+    const result = createResult<SkillStatusData>({
+      command: 'skill status',
+      cwd: targetRoot,
+      diagnostics: buildSkillStatusDiagnostics(status),
+      data: { skill: status },
+    });
+    printResult(result, globalOptions, out, formatSkillStatusResult);
+  });
+  includeStartupArtInHelp(skillStatusCommand, startupArt);
+
+  const skillAdd = skill
+    .command('add')
+    .description('Install the Cobalt agent skill; offer to update outdated installs')
+    .option('--target <target>', `Skill target: ${skillCommandTargets.join(', ')}`)
+    .option('-y, --yes', 'Accept defaults; auto-update when an existing install is outdated');
+  skillAdd.action(async (commandOptions: SkillCommandOptions) => {
+    const globalOptions = getGlobalOptions(program);
+    const targetRoot = resolveCommandCwd(globalOptions);
+    const target = await resolveSkillTarget(commandOptions, prompts, { interactive: isTty });
+    const status = await computeSkillStatus({ targetRoot, packageRoot: root });
+    const requested = harnessesForTarget(target);
+    const actions: HarnessOutcome[] = [];
+    const outdated: HarnessName[] = [];
+
+    for (const harness of requested) {
+      const harnessStatus = findHarnessStatus(status, harness);
+      if (harnessStatus.state === 'not-installed') {
+        actions.push(await installSkill({ targetRoot, packageRoot: root, harness }));
+      } else if (harnessStatus.state === 'current') {
+        actions.push({
+          harness,
+          path: harnessStatus.path,
+          outcome: 'current',
+          backups: [],
+        });
+      } else {
+        outdated.push(harness);
+      }
+    }
+
+    if (outdated.length > 0) {
+      const shouldUpdate = commandOptions.yes
+        ? true
+        : isTty
+          ? await prompts.confirm(
+              `Cobalt skill for ${outdated.join(' and ')} is outdated. Update now?`,
+              true,
+            )
+          : false;
+
+      for (const harness of outdated) {
+        if (shouldUpdate) {
+          actions.push(await updateSkill({ targetRoot, packageRoot: root, harness }));
+        } else {
+          const harnessStatus = findHarnessStatus(status, harness);
+          actions.push({
+            harness,
+            path: harnessStatus.path,
+            outcome: 'skipped',
+            backups: [],
+          });
+        }
+      }
+    }
+
+    const result = createResult<SkillActionData>({
+      command: 'skill add',
+      cwd: targetRoot,
+      diagnostics: buildSkillActionDiagnostics('add', actions),
+      data: { target, actions },
+    });
+    printResult(result, globalOptions, out, (cmdResult) =>
+      formatSkillActionResult('add', cmdResult),
+    );
+  });
+  includeStartupArtInHelp(skillAdd, startupArt);
+
+  const skillUpdate = skill
+    .command('update')
+    .description('Refresh the installed Cobalt skill; backs up modified files to <file>.bak')
+    .option('--target <target>', `Skill target: ${skillCommandTargets.join(', ')}`)
+    .option('-y, --yes', 'Accept defaults for omitted options');
+  skillUpdate.action(async (commandOptions: SkillCommandOptions) => {
+    const globalOptions = getGlobalOptions(program);
+    const targetRoot = resolveCommandCwd(globalOptions);
+    const target = await resolveSkillTarget(commandOptions, prompts, { interactive: isTty });
+    const actions: HarnessOutcome[] = [];
+
+    for (const harness of harnessesForTarget(target)) {
+      actions.push(await updateSkill({ targetRoot, packageRoot: root, harness }));
+    }
+
+    const result = createResult<SkillActionData>({
+      command: 'skill update',
+      cwd: targetRoot,
+      diagnostics: buildSkillActionDiagnostics('update', actions),
+      data: { target, actions },
+    });
+    printResult(result, globalOptions, out, (cmdResult) =>
+      formatSkillActionResult('update', cmdResult),
+    );
+  });
+  includeStartupArtInHelp(skillUpdate, startupArt);
+
+  const skillRemove = skill
+    .command('remove')
+    .description('Uninstall the Cobalt skill; locally modified files are backed up to <dir>.bak/')
+    .option('--target <target>', `Skill target: ${skillCommandTargets.join(', ')}`)
+    .option('-y, --yes', 'Accept defaults for omitted options');
+  skillRemove.action(async (commandOptions: SkillCommandOptions) => {
+    const globalOptions = getGlobalOptions(program);
+    const targetRoot = resolveCommandCwd(globalOptions);
+    const target = await resolveSkillTarget(commandOptions, prompts, { interactive: isTty });
+    const actions: HarnessOutcome[] = [];
+
+    for (const harness of harnessesForTarget(target)) {
+      actions.push(await removeSkill({ targetRoot, packageRoot: root, harness }));
+    }
+
+    const result = createResult<SkillActionData>({
+      command: 'skill remove',
+      cwd: targetRoot,
+      diagnostics: buildSkillActionDiagnostics('remove', actions),
+      data: { target, actions },
+    });
+    printResult(result, globalOptions, out, (cmdResult) =>
+      formatSkillActionResult('remove', cmdResult),
+    );
+  });
+  includeStartupArtInHelp(skillRemove, startupArt);
+
   const config = program.command('config').description('Manage Cobalt CLI settings');
   includeStartupArtInHelp(config, startupArt);
 
@@ -555,6 +735,199 @@ function formatAgentUtilitiesResult(result: CommandResult<AgentUtilitiesData>): 
   return [
     header,
     ...result.data.utilities.map((utility) => `${utility.className}  ${utility.css}`),
+  ].join('\n');
+}
+
+interface SkillListData {
+  skills: SkillStatus[];
+}
+
+interface SkillStatusData {
+  skill: SkillStatus;
+}
+
+interface SkillActionData {
+  target: SkillCommandTarget;
+  actions: HarnessOutcome[];
+}
+
+type SkillActionKind = 'add' | 'update' | 'remove';
+
+function harnessesForTarget(target: SkillCommandTarget): HarnessName[] {
+  if (target === 'both') return [...harnessNames];
+  return [target];
+}
+
+function findHarnessStatus(status: SkillStatus, harness: HarnessName) {
+  const match = status.harnesses.find((entry) => entry.harness === harness);
+  if (!match) {
+    throw new Error(`Missing harness status for "${harness}".`);
+  }
+  return match;
+}
+
+function harnessStateEvidence(state: SkillStatus['harnesses'][number]): string {
+  if (state.state === 'outdated') {
+    return state.modifiedFiles.length > 0
+      ? `outdated (${state.modifiedFiles.join(', ')})`
+      : 'outdated';
+  }
+  return state.state;
+}
+
+function buildSkillListDiagnostics(skills: SkillStatus[]): DiagnosticRecord[] {
+  return skills.map((skill) => ({
+    id: 'cobalt.skill.list',
+    status: 'pass',
+    severity: 'info',
+    message: `${skill.name}: ${skill.description}`,
+    evidence: skill.harnesses
+      .map((entry) => `${entry.harness}=${harnessStateEvidence(entry)}`)
+      .join(' '),
+  }));
+}
+
+function buildSkillStatusDiagnostics(skill: SkillStatus): DiagnosticRecord[] {
+  return skill.harnesses.map((entry) => ({
+    id: `cobalt.skill.status.${entry.state}`,
+    status: 'pass',
+    severity: 'info',
+    message: `${entry.harness}: ${harnessStateEvidence(entry)}`,
+    evidence: entry.path,
+  }));
+}
+
+function buildSkillActionDiagnostics(
+  kind: SkillActionKind,
+  actions: HarnessOutcome[],
+): DiagnosticRecord[] {
+  const allCurrentForAdd =
+    kind === 'add' && actions.length > 0 && actions.every((action) => action.outcome === 'current');
+
+  if (allCurrentForAdd) {
+    const harnessList = actions.map((action) => action.harness).join(' and ');
+    return [
+      {
+        id: 'cobalt.skill.add.all-current',
+        status: 'pass',
+        severity: 'info',
+        message: `Cobalt skill is already installed and up to date for ${harnessList}. No action taken.`,
+      },
+    ];
+  }
+
+  return actions.map((action) => buildSkillOutcomeDiagnostic(kind, action));
+}
+
+function buildSkillOutcomeDiagnostic(
+  kind: SkillActionKind,
+  action: HarnessOutcome,
+): DiagnosticRecord {
+  const backupNote = action.backups.length > 0 ? ` (backed up ${action.backups.join(', ')})` : '';
+
+  switch (action.outcome) {
+    case 'installed':
+      return {
+        id: 'cobalt.skill.add.installed',
+        status: 'pass',
+        severity: 'info',
+        message: `Installed Cobalt skill for ${action.harness}.`,
+        evidence: action.path,
+      };
+    case 'current':
+      return {
+        id: `cobalt.skill.${kind}.current`,
+        status: 'pass',
+        severity: 'info',
+        message: `Cobalt skill for ${action.harness} is already up to date.`,
+        evidence: action.path,
+      };
+    case 'updated':
+      return {
+        id: `cobalt.skill.${kind === 'add' ? 'add' : 'update'}.updated`,
+        status: 'pass',
+        severity: 'info',
+        message: `Updated Cobalt skill for ${action.harness}${backupNote}.`,
+        evidence: action.path,
+      };
+    case 'skipped':
+      return {
+        id: 'cobalt.skill.add.outdated',
+        status: 'warn',
+        severity: 'warning',
+        message: `Cobalt skill for ${action.harness} is outdated and was not updated.`,
+        evidence: action.path,
+        suggestedAction: `Run "co skill update --target ${action.harness}" to refresh.`,
+      };
+    case 'missing':
+      return {
+        id: 'cobalt.skill.update.missing',
+        status: 'fail',
+        severity: 'error',
+        message: `Cobalt skill is not installed for ${action.harness}.`,
+        evidence: action.path,
+        suggestedAction: `Run "co skill add --target ${action.harness}" first.`,
+      };
+    case 'removed':
+      return {
+        id: 'cobalt.skill.remove.removed',
+        status: 'pass',
+        severity: 'info',
+        message: `Removed Cobalt skill for ${action.harness}.`,
+        evidence: action.path,
+      };
+    case 'removed-with-backup':
+      return {
+        id: 'cobalt.skill.remove.removed-with-backup',
+        status: 'pass',
+        severity: 'info',
+        message: `Removed Cobalt skill for ${action.harness}${backupNote}.`,
+        evidence: action.path,
+      };
+    case 'absent':
+      return {
+        id: 'cobalt.skill.remove.absent',
+        status: 'pass',
+        severity: 'info',
+        message: `Cobalt skill is not installed for ${action.harness}; nothing to remove.`,
+        evidence: action.path,
+      };
+    case 'failed':
+      return {
+        id: 'cobalt.skill.failed',
+        status: 'fail',
+        severity: 'error',
+        message: `Cobalt skill ${kind} failed for ${action.harness}.`,
+        evidence: action.errorMessage ?? action.path,
+      };
+  }
+}
+
+function formatSkillListResult(result: CommandResult<SkillListData>): string {
+  return result.data.skills
+    .flatMap((skill) => [
+      `${skill.name} — ${skill.description}`,
+      ...skill.harnesses.map((entry) => `  ${entry.harness}: ${harnessStateEvidence(entry)}`),
+    ])
+    .join('\n');
+}
+
+function formatSkillStatusResult(result: CommandResult<SkillStatusData>): string {
+  return [
+    `Cobalt skill status: ${result.data.skill.name}`,
+    ...result.data.skill.harnesses.map(
+      (entry) => `${entry.harness}: ${harnessStateEvidence(entry)} (${entry.path})`,
+    ),
+  ].join('\n');
+}
+
+function formatSkillActionResult(
+  kind: SkillActionKind,
+  result: CommandResult<SkillActionData>,
+): string {
+  return [
+    `Cobalt skill ${kind} (${result.data.target}): ${result.cwd}`,
+    ...result.diagnostics.map((diagnostic) => diagnosticLine(diagnostic)),
   ].join('\n');
 }
 

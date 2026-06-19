@@ -264,17 +264,17 @@ co --json components status co-button
 Use the `agent` namespace when an AI agent or automation needs compact, normalized Cobalt context:
 
 ```bash
-co --json --cwd ./my-app agent context
+co agent context
 ```
 
-The context command combines project inspection, doctor diagnostics, metadata source, component counts, token summaries, utility counts, themes, and modes.
+The context command combines project inspection, doctor diagnostics, metadata source, component counts, token summaries, utility counts, themes, and modes. `co agent *` emits JSON automatically when stdout is not a terminal — the `--json` flag is only needed in a terminal. Pass `--no-json` to force human-readable output when piping.
 
 Query component APIs and authoring guidance from normalized metadata:
 
 ```bash
-co --json --cwd ./my-app agent component button
-co --json --cwd ./my-app agent component button --framework react
-co --json --cwd ./my-app agent components
+co agent component button
+co agent component button --framework react
+co agent components
 ```
 
 `co agent component` returns CEM-derived `attributes`, `events`, `slots`, `cssParts`, and `methods`, plus docs-derived `usage` guidance for the detected framework. The `usage` block includes selected imports, examples, related components, and recommended attributes. Use `--framework web-components`, `react`, `vue`, or `angular` when a project contains multiple frameworks.
@@ -282,20 +282,55 @@ co --json --cwd ./my-app agent components
 Search token and utility metadata:
 
 ```bash
-co --json --cwd ./my-app agent tokens --query surface --tier semantic
-co --json --cwd ./my-app agent token --co-color-text-default
-co --json --cwd ./my-app agent utilities --query gap
+co agent tokens --query surface --tier semantic
+co agent token color-text-default
+co agent utilities --query gap
 ```
+
+`co agent token` accepts the token name in three forms — bare (`color-text-default`), dotted (`color.text.default`), or CSS-variable (`--co-color-text-default`).
 
 By default, agent commands use workspace metadata from installed Cobalt packages and fall back to bundled CLI metadata. Override that behavior when needed:
 
 ```bash
-co --json --cwd ./my-app agent --metadata-source workspace context
-co --json --cwd ./my-app agent --metadata-source bundled components
+co agent --metadata-source workspace context
+co agent --metadata-source bundled components
 ```
 
-For reusable AI workflows, download the [Cobalt Agent Skill](/resources/artifacts#cobalt-agent-skill).
-Projects generated with `co new` include Cobalt-specific skill folders so agents can use the starter immediately. By default, `--agent-skill both` writes `.codex/skills/cobalt` for Codex and `.claude/skills/cobalt` for Claude Code.
+The recommended way to install the Cobalt skill into an existing project is `co skill add` — see [Manage the Cobalt Skill](#manage-the-cobalt-skill) below. Projects generated with `co new` include the skill by default (`--agent-skill both` writes `.codex/skills/cobalt` for Codex and `.claude/skills/cobalt` for Claude Code). The skill is also available as a [downloadable artifact](/resources/artifacts#cobalt-agent-skill) for offline installs.
+
+## Manage the Cobalt Skill
+
+The `co skill` command group installs and refreshes the Cobalt agent skill in any project — useful when you adopt Cobalt into an existing repo or when the bundled CLI ships an updated skill.
+
+```bash
+co skill list                            # available skills and per-harness state
+co skill status                          # current state for codex and claude
+co skill add                             # install missing harnesses; offer to update outdated
+co skill add --target codex --yes        # codex only, non-interactive
+co skill update --target both --yes      # refresh both harnesses from the bundled CLI version
+co skill remove --target claude          # uninstall claude (backs up local edits)
+```
+
+Each harness is in one of three states:
+
+- **`not-installed`** — `.codex/skills/cobalt` or `.claude/skills/cobalt` does not exist.
+- **`current`** — installed and byte-for-byte identical to what the CLI ships.
+- **`outdated`** — installed but differs from the bundled version (either the CLI was updated or files were edited locally).
+
+`co skill add` walks every requested harness:
+
+- `not-installed` → installs.
+- `current` → no action.
+- `outdated` → prompts to update in a terminal, auto-updates under `--yes`, and skips with a warning when run non-interactively.
+
+When all requested harnesses are already current, `add` reports `Cobalt skill is already installed and up to date … No action taken.` and exits successfully.
+
+`update` and `remove` back up locally modified files before overwriting or deleting:
+
+- `update` writes `<file>.bak` next to each modified file in the skill directory.
+- `remove` writes a sibling `<skill-dir>.bak/` directory tree, then deletes the skill directory.
+
+Pass `--target codex`, `--target claude`, or `--target both` to scope the action; the default is `both`. The `--cwd <path>` global flag scopes the command to another project directory.
 
 ## JSON Output
 

@@ -15,6 +15,10 @@ This is not a full Bootstrap or Angular transition guide. It is a practical path
 
 ## Setup
 
+::: tip Using agentic coding tools?
+Install the Cobalt agent skill so Claude Code and OpenAI Codex query the `co` CLI as the source of truth during migration: `co skill add`. See [Manage the Cobalt Skill](/resources/cli#manage-the-cobalt-skill).
+:::
+
 ```bash
 npm install @cobalt/tokens @cobalt/components
 ```
@@ -90,3 +94,4 @@ Before calling a slice migrated, verify:
 - [Token Reference](/tokens/)
 - [CSS Cascade Layers](/foundations/css-layers)
 - [Component Status](/components/status)
+- [Manage the Cobalt Skill](/resources/cli#manage-the-cobalt-skill)

@@ -276,3 +276,4 @@ Additional web components follow the `@cobalt/components/<name>` pattern as they
 - Use [SCSS Integration](/foundations/scss) if your app authors styles with Sass.
 - Review [Development Setup](/contributing/development-setup) for monorepo setup, local builds, and testing workflows.
 - Visit [Developer Resources](/resources/developers) for tools, extensions, and debugging references.
+- Using Claude Code or OpenAI Codex? Install the Cobalt skill so AI agents query the `co` CLI as the source of truth — run `co skill add`. See [Manage the Cobalt Skill](/resources/cli#manage-the-cobalt-skill).

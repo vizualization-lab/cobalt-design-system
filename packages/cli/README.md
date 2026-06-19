@@ -99,4 +99,19 @@ co agent utilities --query gap
 
 Projects generated with `co new` include installable Cobalt skill folders for agent workflows. By default, `--agent-skill both` writes `.codex/skills/cobalt` and `.claude/skills/cobalt`.
 
+## Manage the Cobalt skill
+
+Install or refresh the Cobalt agent skill in an existing project:
+
+```bash
+co skill list                            # show available skills and per-harness state
+co skill status                          # report current state for codex and claude
+co skill add                             # install (auto-update outdated installs)
+co skill add --target codex              # codex only
+co skill update --target both --yes      # refresh installed skill from bundled CLI version
+co skill remove --target claude          # uninstall (backs up local edits)
+```
+
+State per harness is one of `not-installed`, `current`, or `outdated`. `co skill add` installs missing harnesses and, when an install is outdated, prompts to update (or auto-updates under `--yes`). `update` and `remove` back up locally modified files before overwriting or deleting: `update` writes `<file>.bak` next to each modified file; `remove` writes a sibling `.bak/` directory tree next to the removed skill directory.
+
 Use `--json` for machine-readable output, `--quiet` to suppress human output, and `--cwd <path>` to run against another project directory.

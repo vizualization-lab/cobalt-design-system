@@ -8,6 +8,7 @@ import {
   normalizePackageName,
   updatePackageJson,
 } from './package-json.js';
+import { harnessNames, installSkill } from './skill.js';
 import type { ResolvedNewOptions } from './types.js';
 
 export async function scaffoldProject(options: ResolvedNewOptions, root: string): Promise<string> {
@@ -94,32 +95,10 @@ async function copyAgentSkills(
     return;
   }
 
-  const skillSource = path.join(root, 'skills', 'cobalt');
-
-  if (agentSkill === 'codex' || agentSkill === 'both') {
-    const skillTarget = path.join(targetDir, '.codex', 'skills', 'cobalt');
-    await mkdir(path.dirname(skillTarget), { recursive: true });
-    await cp(skillSource, skillTarget, { recursive: true });
-  }
-
-  if (agentSkill === 'claude' || agentSkill === 'both') {
-    const skillTarget = path.join(targetDir, '.claude', 'skills', 'cobalt');
-    await mkdir(skillTarget, { recursive: true });
-    await copyClaudeSkill(skillSource, skillTarget);
-  }
-}
-
-async function copyClaudeSkill(skillSource: string, skillTarget: string): Promise<void> {
-  const entries = await readdir(skillSource, { withFileTypes: true });
-
-  for (const entry of entries) {
-    if (entry.name === 'agents') {
-      continue;
+  for (const harness of harnessNames) {
+    if (agentSkill === 'both' || agentSkill === harness) {
+      await installSkill({ targetRoot: targetDir, packageRoot: root, harness });
     }
-
-    await cp(path.join(skillSource, entry.name), path.join(skillTarget, entry.name), {
-      recursive: entry.isDirectory(),
-    });
   }
 }
 

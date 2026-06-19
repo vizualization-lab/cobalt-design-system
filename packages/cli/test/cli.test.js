@@ -1403,6 +1403,278 @@ test('scaffolds selected agent skill harness folders', async () => {
   }
 });
 
+async function runCoSkill(tempDir, args, { isTty = false, prompts: promptsOverride } = {}) {
+  const output = [];
+  const program = createProgram({
+    argv: ['--json', '--cwd', tempDir, 'skill', ...args],
+    isTty,
+    prompts: promptsOverride,
+    out: (message = '') => output.push(message),
+  });
+
+  await program.parseAsync(['--json', '--cwd', tempDir, 'skill', ...args], { from: 'user' });
+
+  return JSON.parse(output.join('\n'));
+}
+
+test('co skill list reports cobalt with both harnesses not-installed in an empty project', async () => {
+  const tempDir = await mkdtemp(path.join(os.tmpdir(), 'cobalt-cli-'));
+
+  try {
+    const result = await runCoSkill(tempDir, ['list']);
+
+    assert.equal(result.command, 'skill list');
+    assert.equal(result.data.skills.length, 1);
+    const skill = result.data.skills[0];
+    assert.equal(skill.name, 'cobalt');
+    assert.equal(skill.harnesses.length, 2);
+    assert.ok(skill.harnesses.every((entry) => entry.state === 'not-installed'));
+    assert.deepEqual(skill.harnesses.map((entry) => entry.harness).sort(), ['claude', 'codex']);
+  } finally {
+    await rm(tempDir, { recursive: true, force: true });
+  }
+});
+
+test('co skill add --target both installs both harnesses with the claude agents filter', async () => {
+  const tempDir = await mkdtemp(path.join(os.tmpdir(), 'cobalt-cli-'));
+
+  try {
+    const result = await runCoSkill(tempDir, ['add', '--target', 'both', '--yes']);
+
+    assert.equal(result.command, 'skill add');
+    assert.equal(result.data.target, 'both');
+    assert.equal(result.data.actions.length, 2);
+    assert.ok(result.data.actions.every((action) => action.outcome === 'installed'));
+
+    const codexSkill = path.join(tempDir, '.codex', 'skills', 'cobalt', 'SKILL.md');
+    const claudeSkill = path.join(tempDir, '.claude', 'skills', 'cobalt', 'SKILL.md');
+    const codexAgents = path.join(tempDir, '.codex', 'skills', 'cobalt', 'agents');
+    const claudeAgents = path.join(tempDir, '.claude', 'skills', 'cobalt', 'agents');
+
+    assert.equal(await pathExists(codexSkill), true);
+    assert.equal(await pathExists(claudeSkill), true);
+    assert.equal(await pathExists(codexAgents), true);
+    assert.equal(await pathExists(claudeAgents), false);
+  } finally {
+    await rm(tempDir, { recursive: true, force: true });
+  }
+});
+
+test('co skill add --target codex installs only the codex harness', async () => {
+  const tempDir = await mkdtemp(path.join(os.tmpdir(), 'cobalt-cli-'));
+
+  try {
+    const result = await runCoSkill(tempDir, ['add', '--target', 'codex', '--yes']);
+
+    assert.equal(result.data.actions.length, 1);
+    assert.equal(result.data.actions[0].harness, 'codex');
+    assert.equal(result.data.actions[0].outcome, 'installed');
+    assert.equal(
+      await pathExists(path.join(tempDir, '.codex', 'skills', 'cobalt', 'SKILL.md')),
+      true,
+    );
+    assert.equal(
+      await pathExists(path.join(tempDir, '.claude', 'skills', 'cobalt', 'SKILL.md')),
+      false,
+    );
+  } finally {
+    await rm(tempDir, { recursive: true, force: true });
+  }
+});
+
+test('co skill add on already-current installs reports the all-current diagnostic', async () => {
+  const tempDir = await mkdtemp(path.join(os.tmpdir(), 'cobalt-cli-'));
+
+  try {
+    await runCoSkill(tempDir, ['add', '--target', 'both', '--yes']);
+    const result = await runCoSkill(tempDir, ['add', '--target', 'both', '--yes']);
+
+    assert.ok(result.data.actions.every((action) => action.outcome === 'current'));
+    assert.ok(
+      result.diagnostics.some((diagnostic) => diagnostic.id === 'cobalt.skill.add.all-current'),
+    );
+  } finally {
+    await rm(tempDir, { recursive: true, force: true });
+  }
+});
+
+test('co skill add fills in a missing harness when the other is already current', async () => {
+  const tempDir = await mkdtemp(path.join(os.tmpdir(), 'cobalt-cli-'));
+
+  try {
+    await runCoSkill(tempDir, ['add', '--target', 'codex', '--yes']);
+    const result = await runCoSkill(tempDir, ['add', '--target', 'both', '--yes']);
+
+    const byHarness = Object.fromEntries(
+      result.data.actions.map((action) => [action.harness, action.outcome]),
+    );
+
+    assert.equal(byHarness.codex, 'current');
+    assert.equal(byHarness.claude, 'installed');
+  } finally {
+    await rm(tempDir, { recursive: true, force: true });
+  }
+});
+
+test('co skill add --yes auto-updates outdated installs and writes a .bak', async () => {
+  const tempDir = await mkdtemp(path.join(os.tmpdir(), 'cobalt-cli-'));
+
+  try {
+    await runCoSkill(tempDir, ['add', '--target', 'claude', '--yes']);
+    const installedSkill = path.join(tempDir, '.claude', 'skills', 'cobalt', 'SKILL.md');
+    await writeFile(installedSkill, '# Locally modified\n');
+
+    const result = await runCoSkill(tempDir, ['add', '--target', 'claude', '--yes']);
+    const action = result.data.actions[0];
+
+    assert.equal(action.outcome, 'updated');
+    assert.deepEqual(action.backups, ['SKILL.md.bak']);
+
+    const bundled = await readFile(path.join(packageRoot, 'skills', 'cobalt', 'SKILL.md'), 'utf8');
+    assert.equal(await readFile(installedSkill, 'utf8'), bundled);
+    assert.equal(await readFile(`${installedSkill}.bak`, 'utf8'), '# Locally modified\n');
+  } finally {
+    await rm(tempDir, { recursive: true, force: true });
+  }
+});
+
+test('co skill add in a TTY without --yes skips outdated installs when the prompt is declined', async () => {
+  const tempDir = await mkdtemp(path.join(os.tmpdir(), 'cobalt-cli-'));
+
+  try {
+    await runCoSkill(tempDir, ['add', '--target', 'claude', '--yes']);
+    const installedSkill = path.join(tempDir, '.claude', 'skills', 'cobalt', 'SKILL.md');
+    await writeFile(installedSkill, '# Locally modified\n');
+
+    const result = await runCoSkill(tempDir, ['add', '--target', 'claude'], {
+      isTty: true,
+      prompts: scriptedPrompts({
+        confirm: { 'Cobalt skill for claude is outdated. Update now?': false },
+      }),
+    });
+
+    const action = result.data.actions[0];
+    assert.equal(action.outcome, 'skipped');
+    assert.ok(
+      result.diagnostics.some((diagnostic) => diagnostic.id === 'cobalt.skill.add.outdated'),
+    );
+    assert.equal(await readFile(installedSkill, 'utf8'), '# Locally modified\n');
+    assert.equal(await pathExists(`${installedSkill}.bak`), false);
+  } finally {
+    await rm(tempDir, { recursive: true, force: true });
+  }
+});
+
+test('co skill update fails when the harness is not installed', async () => {
+  const tempDir = await mkdtemp(path.join(os.tmpdir(), 'cobalt-cli-'));
+
+  try {
+    const result = await runCoSkill(tempDir, ['update', '--target', 'codex', '--yes']);
+
+    assert.equal(result.summary.status, 'fail');
+    assert.equal(result.data.actions[0].outcome, 'missing');
+    assert.ok(
+      result.diagnostics.some((diagnostic) => diagnostic.id === 'cobalt.skill.update.missing'),
+    );
+  } finally {
+    await rm(tempDir, { recursive: true, force: true });
+  }
+});
+
+test('co skill update on a current install is a no-op', async () => {
+  const tempDir = await mkdtemp(path.join(os.tmpdir(), 'cobalt-cli-'));
+
+  try {
+    await runCoSkill(tempDir, ['add', '--target', 'codex', '--yes']);
+    const result = await runCoSkill(tempDir, ['update', '--target', 'codex', '--yes']);
+
+    assert.equal(result.data.actions[0].outcome, 'current');
+    assert.equal(result.data.actions[0].backups.length, 0);
+  } finally {
+    await rm(tempDir, { recursive: true, force: true });
+  }
+});
+
+test('co skill update on an outdated install writes backups and restores bundled content', async () => {
+  const tempDir = await mkdtemp(path.join(os.tmpdir(), 'cobalt-cli-'));
+
+  try {
+    await runCoSkill(tempDir, ['add', '--target', 'codex', '--yes']);
+    const installedSkill = path.join(tempDir, '.codex', 'skills', 'cobalt', 'SKILL.md');
+    await writeFile(installedSkill, '# Locally modified\n');
+
+    const result = await runCoSkill(tempDir, ['update', '--target', 'codex', '--yes']);
+
+    assert.equal(result.data.actions[0].outcome, 'updated');
+    assert.deepEqual(result.data.actions[0].backups, ['SKILL.md.bak']);
+
+    const bundled = await readFile(path.join(packageRoot, 'skills', 'cobalt', 'SKILL.md'), 'utf8');
+    assert.equal(await readFile(installedSkill, 'utf8'), bundled);
+    assert.equal(await readFile(`${installedSkill}.bak`, 'utf8'), '# Locally modified\n');
+  } finally {
+    await rm(tempDir, { recursive: true, force: true });
+  }
+});
+
+test('co skill remove deletes the skill directory without backups when current', async () => {
+  const tempDir = await mkdtemp(path.join(os.tmpdir(), 'cobalt-cli-'));
+
+  try {
+    await runCoSkill(tempDir, ['add', '--target', 'codex', '--yes']);
+    const result = await runCoSkill(tempDir, ['remove', '--target', 'codex', '--yes']);
+
+    assert.equal(result.data.actions[0].outcome, 'removed');
+    assert.equal(result.data.actions[0].backups.length, 0);
+    assert.equal(await pathExists(path.join(tempDir, '.codex', 'skills', 'cobalt')), false);
+    assert.equal(await pathExists(path.join(tempDir, '.codex', 'skills', 'cobalt.bak')), false);
+  } finally {
+    await rm(tempDir, { recursive: true, force: true });
+  }
+});
+
+test('co skill remove backs up modified files to <dir>.bak/ before deleting', async () => {
+  const tempDir = await mkdtemp(path.join(os.tmpdir(), 'cobalt-cli-'));
+
+  try {
+    await runCoSkill(tempDir, ['add', '--target', 'claude', '--yes']);
+    const installedSkill = path.join(tempDir, '.claude', 'skills', 'cobalt', 'SKILL.md');
+    await writeFile(installedSkill, '# Locally modified\n');
+
+    const result = await runCoSkill(tempDir, ['remove', '--target', 'claude', '--yes']);
+
+    assert.equal(result.data.actions[0].outcome, 'removed-with-backup');
+    assert.deepEqual(result.data.actions[0].backups, ['cobalt.bak/SKILL.md']);
+    assert.equal(await pathExists(path.join(tempDir, '.claude', 'skills', 'cobalt')), false);
+    assert.equal(
+      await readFile(path.join(tempDir, '.claude', 'skills', 'cobalt.bak', 'SKILL.md'), 'utf8'),
+      '# Locally modified\n',
+    );
+  } finally {
+    await rm(tempDir, { recursive: true, force: true });
+  }
+});
+
+test('co skill status reports both harnesses regardless of installed state', async () => {
+  const tempDir = await mkdtemp(path.join(os.tmpdir(), 'cobalt-cli-'));
+
+  try {
+    await runCoSkill(tempDir, ['add', '--target', 'codex', '--yes']);
+    const installedSkill = path.join(tempDir, '.codex', 'skills', 'cobalt', 'SKILL.md');
+    await writeFile(installedSkill, '# Locally modified\n');
+
+    const result = await runCoSkill(tempDir, ['status']);
+    const byHarness = Object.fromEntries(
+      result.data.skill.harnesses.map((entry) => [entry.harness, entry]),
+    );
+
+    assert.equal(byHarness.codex.state, 'outdated');
+    assert.deepEqual(byHarness.codex.modifiedFiles, ['SKILL.md']);
+    assert.equal(byHarness.claude.state, 'not-installed');
+  } finally {
+    await rm(tempDir, { recursive: true, force: true });
+  }
+});
+
 test('scaffolds a vanilla TypeScript app shell project with static HTML', async () => {
   const tempDir = await mkdtemp(path.join(os.tmpdir(), 'cobalt-cli-'));
   const cwd = process.cwd();
