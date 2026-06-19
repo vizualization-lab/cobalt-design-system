@@ -27,6 +27,8 @@
     "commander": "^12.1.0"
   },
   "devDependencies": {
+    "@cobalt/components": "workspace:*",
+    "@cobalt/tokens": "workspace:*",
     "@types/node": "^25.4.0",
     "typescript": "~5.6.0"
   },

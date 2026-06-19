@@ -88,6 +88,12 @@ importers:
         specifier: ^12.1.0
         version: 12.1.0
     devDependencies:
+      '@cobalt/components':
+        specifier: workspace:*
+        version: link:../components
+      '@cobalt/tokens':
+        specifier: workspace:*
+        version: link:../tokens
       '@types/node':
         specifier: ^25.4.0
         version: 25.4.0
