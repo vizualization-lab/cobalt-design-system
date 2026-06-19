@@ -11,7 +11,8 @@
       "@cobalt/vue",
       "@cobalt/docs",
       "@cobalt/angular",
-      "@cobalt/cli"
+      "@cobalt/cli",
+      "cobalt-tokens-explorer"
     ]
   ],
   "linked": [],

@@ -25,6 +25,7 @@ const PACKAGES = [
   'packages/vue',
   'packages/angular',
   'packages/cli',
+  'packages/vscode',
   'packages/workbench',
   'packages/docs',
 ];

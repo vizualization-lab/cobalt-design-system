@@ -2,7 +2,7 @@
   "name": "cobalt-tokens-explorer",
   "displayName": "Cobalt Tokens Explorer",
   "description": "VS Code assistance for Cobalt design tokens and utility classes.",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "private": true,
   "publisher": "cobalt",
   "engines": {
