@@ -86,7 +86,11 @@ export function createProgram({
     .description('Cobalt design system command line tool')
     .version(version, '-v, --version', 'Print CLI version')
     .option('--no-art', 'Disable the Cobalt startup art')
-    .option('--json', 'Print supported command output as JSON')
+    .option(
+      '--json',
+      'Print supported command output as JSON (default for `co agent *` when stdout is not a terminal)',
+    )
+    .option('--no-json', 'Force human-readable output, overriding the `co agent *` non-TTY default')
     .option('--quiet', 'Suppress human-readable command output')
     .option('--cwd <path>', 'Project directory for inspection commands')
     .showHelpAfterError()
@@ -220,6 +224,11 @@ export function createProgram({
     .option('--metadata-source <source>', 'Metadata source: auto, workspace, or bundled', 'auto');
   includeStartupArtInHelp(agent, startupArt);
 
+  const resolveAgentOutput = (globalOptions: GlobalCliOptions): GlobalCliOptions => ({
+    ...globalOptions,
+    json: globalOptions.json ?? !isTty,
+  });
+
   const agentContext = agent
     .command('context')
     .description('Print Cobalt project and metadata context');
@@ -230,7 +239,7 @@ export function createProgram({
       packageRoot: root,
       options: getAgentOptions(agent),
     });
-    printResult(result, globalOptions, out, formatAgentContextResult);
+    printResult(result, resolveAgentOutput(globalOptions), out, formatAgentContextResult);
   });
   includeStartupArtInHelp(agentContext, startupArt);
 
@@ -249,7 +258,7 @@ export function createProgram({
       packageRoot: root,
       options: { ...getAgentOptions(agent), framework: commandOptions.framework },
     });
-    printResult(result, globalOptions, out, formatAgentComponentsResult);
+    printResult(result, resolveAgentOutput(globalOptions), out, formatAgentComponentsResult);
   });
   includeStartupArtInHelp(agentComponents, startupArt);
 
@@ -270,7 +279,7 @@ export function createProgram({
       name,
       options: { ...getAgentOptions(agent), framework: commandOptions.framework },
     });
-    printResult(result, globalOptions, out, formatAgentComponentResult);
+    printResult(result, resolveAgentOutput(globalOptions), out, formatAgentComponentResult);
   });
   includeStartupArtInHelp(agentComponent, startupArt);
 
@@ -292,7 +301,7 @@ export function createProgram({
       options: getAgentOptions(agent),
       listOptions: commandOptions,
     });
-    printResult(result, globalOptions, out, formatAgentTokensResult);
+    printResult(result, resolveAgentOutput(globalOptions), out, formatAgentTokensResult);
   });
   includeStartupArtInHelp(agentTokens, startupArt);
 
@@ -309,7 +318,7 @@ export function createProgram({
       name,
       options: getAgentOptions(agent),
     });
-    printResult(result, globalOptions, out, formatAgentTokenResult);
+    printResult(result, resolveAgentOutput(globalOptions), out, formatAgentTokenResult);
   });
   includeStartupArtInHelp(agentToken, startupArt);
 
@@ -327,7 +336,7 @@ export function createProgram({
       options: getAgentOptions(agent),
       listOptions: commandOptions,
     });
-    printResult(result, globalOptions, out, formatAgentUtilitiesResult);
+    printResult(result, resolveAgentOutput(globalOptions), out, formatAgentUtilitiesResult);
   });
   includeStartupArtInHelp(agentUtilities, startupArt);
 

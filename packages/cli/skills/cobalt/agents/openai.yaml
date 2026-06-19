@@ -1,4 +1,4 @@
 interface:
   display_name: 'Cobalt'
-  short_description: 'Inspect Cobalt projects with the CLI'
-  default_prompt: 'Use $cobalt to inspect this project with the Cobalt CLI before making changes.'
+  short_description: 'Use the Cobalt CLI as the source of truth for components, tokens, utilities, and diagnostics.'
+  default_prompt: 'Use $cobalt. Run `co agent context` first to learn this project, then query component, token, and utility metadata before editing.'

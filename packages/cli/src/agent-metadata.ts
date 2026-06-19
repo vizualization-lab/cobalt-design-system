@@ -313,10 +313,10 @@ export function findComponent(
 }
 
 export function normalizeTokenName(name: string): string {
-  const trimmed = name.trim();
+  const trimmed = name.trim().toLowerCase().replace(/\./g, '-');
   if (trimmed.startsWith('--')) return trimmed;
   if (trimmed.startsWith('co-')) return `--${trimmed}`;
-  return trimmed;
+  return `--co-${trimmed}`;
 }
 
 export function summarizeTokenMetadata(tokens: CobaltToken[]) {

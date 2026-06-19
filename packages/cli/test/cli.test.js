@@ -7,6 +7,7 @@ import assert from 'node:assert/strict';
 import { fileURLToPath } from 'node:url';
 
 import { createProgram } from '../dist/cli.js';
+import { normalizeTokenName } from '../dist/agent-metadata.js';
 import { getConfigValue, readConfig, setConfigValue, unsetConfigValue } from '../dist/config.js';
 import { resolveOptions } from '../dist/options.js';
 import { normalizePackageName } from '../dist/package-json.js';
@@ -1143,6 +1144,86 @@ test('agent token commands search and return token metadata', async () => {
   assert.equal(tokenResult.data.token.category, 'Color');
 });
 
+test('normalizeTokenName accepts bare, dotted, prefixed, and CSS-variable forms', () => {
+  assert.equal(normalizeTokenName('color-text-default'), '--co-color-text-default');
+  assert.equal(normalizeTokenName('color.text.default'), '--co-color-text-default');
+  assert.equal(normalizeTokenName('co-color-text-default'), '--co-color-text-default');
+  assert.equal(normalizeTokenName('--co-color-text-default'), '--co-color-text-default');
+  assert.equal(normalizeTokenName('  COLOR-TEXT-DEFAULT  '), '--co-color-text-default');
+});
+
+test('agent token resolves bare, dotted, prefixed, and CSS-variable name forms', async () => {
+  const argumentForms = [
+    'color-text-default',
+    'color.text.default',
+    'co-color-text-default',
+    '--co-color-text-default',
+  ];
+
+  for (const argument of argumentForms) {
+    const output = [];
+    const program = createProgram({
+      argv: ['--json', 'agent', 'token', argument],
+      isTty: false,
+      out: (message = '') => output.push(message),
+    });
+
+    await program.parseAsync(['--json', 'agent', 'token', argument], { from: 'user' });
+
+    const result = JSON.parse(output.join('\n'));
+    assert.equal(
+      result.data.token?.name,
+      '--co-color-text-default',
+      `agent token did not resolve "${argument}"`,
+    );
+  }
+});
+
+test('agent commands return JSON by default when stdout is not a TTY', async () => {
+  const output = [];
+  const program = createProgram({
+    argv: ['agent', 'context'],
+    isTty: false,
+    out: (message = '') => output.push(message),
+  });
+
+  await program.parseAsync(['agent', 'context'], { from: 'user' });
+
+  const result = JSON.parse(output.join('\n'));
+  assert.equal(result.command, 'agent context');
+});
+
+test('agent commands return human text on a TTY without an explicit --json flag', async () => {
+  const output = [];
+  const program = createProgram({
+    argv: ['agent', 'context'],
+    isTty: true,
+    env: { NO_COLOR: '1' },
+    out: (message = '') => output.push(message),
+  });
+
+  await program.parseAsync(['agent', 'context'], { from: 'user' });
+
+  const text = output.join('\n');
+  assert.match(text, /Cobalt agent context/);
+  assert.doesNotMatch(text, /^\{/m);
+});
+
+test('agent commands honor --no-json on non-TTY stdout', async () => {
+  const output = [];
+  const program = createProgram({
+    argv: ['--no-json', 'agent', 'context'],
+    isTty: false,
+    out: (message = '') => output.push(message),
+  });
+
+  await program.parseAsync(['--no-json', 'agent', 'context'], { from: 'user' });
+
+  const text = output.join('\n');
+  assert.match(text, /Cobalt agent context/);
+  assert.doesNotMatch(text, /^\{/m);
+});
+
 test('agent workspace metadata source reports missing metadata without fallback', async () => {
   const tempDir = await mkdtemp(path.join(os.tmpdir(), 'cobalt-cli-'));
   const output = [];
@@ -1251,7 +1332,8 @@ test('scaffolds a base vanilla TypeScript project', async () => {
     assert.match(readme, /\.claude\/skills\/cobalt/);
     assert.match(npmrcExample, /%REGISTRY_URL%/);
     assert.match(skill, /name: cobalt/);
-    assert.match(skill, /co --json --cwd <project-root> agent context/);
+    assert.match(skill, /^co agent context$/m);
+    assert.doesNotMatch(skill, /--cwd <project-root>/);
     assert.match(skillMetadata, /display_name: 'Cobalt'/);
     assert.equal(
       await pathExists(path.join(targetDir, '.claude', 'skills', 'cobalt', 'SKILL.md')),
