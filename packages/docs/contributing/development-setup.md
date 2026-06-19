@@ -73,17 +73,22 @@ If `COBALT_GITHUB_URL` is not set, it is derived automatically from `COBALT_GITH
 
 Run these from the repository root:
 
-| Command           | Description                                          |
-| ----------------- | ---------------------------------------------------- |
-| `pnpm build`      | Build every package in the workspace                 |
-| `pnpm dev`        | Start the docs site locally                          |
-| `pnpm workbench`  | Start the isolated component workbench               |
-| `pnpm test`       | Run the workspace test suites                        |
-| `pnpm test:watch` | Run the component test suite in watch mode           |
-| `pnpm lint`       | Run ESLint across TypeScript source files            |
-| `pnpm format`     | Format the repo with Prettier                        |
-| `pnpm clean`      | Remove build artifacts and docs cache                |
-| `pnpm pack:local` | Build local publish-style tarballs for external apps |
+| Command                     | Description                                                     |
+| --------------------------- | --------------------------------------------------------------- |
+| `pnpm build`                | Build packages and the docs site without downloadable artifacts |
+| `pnpm build:packages`       | Build package outputs without the docs site                     |
+| `pnpm build:docs`           | Build docs dependencies and the docs site                       |
+| `pnpm build:docs:artifacts` | Build packages, downloadable docs artifacts, and the docs site  |
+| `pnpm dev`                  | Start the docs site locally                                     |
+| `pnpm workbench`            | Start the isolated component workbench                          |
+| `pnpm test`                 | Run the workspace test suites                                   |
+| `pnpm test:watch`           | Run the component test suite in watch mode                      |
+| `pnpm lint`                 | Run ESLint across TypeScript source files                       |
+| `pnpm format`               | Format the repo with Prettier                                   |
+| `pnpm clean`                | Remove build artifacts and docs cache                           |
+| `pnpm pack:local`           | Build local publish-style tarballs for external apps            |
+
+Downloadable docs artifacts, such as the VS Code extension, package bundle, and agent skill ZIP, are generated only by `pnpm build:docs:artifacts`.
 
 When you only need one package, prefer package-scoped commands:
 

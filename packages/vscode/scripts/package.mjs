@@ -13,6 +13,7 @@ const tscPackagePath = require.resolve('typescript/package.json', { paths: [pack
 const tscCliPath = resolve(dirname(tscPackagePath), 'bin', 'tsc');
 const vscePackagePath = require.resolve('@vscode/vsce/package.json', { paths: [packageRoot] });
 const vsceCliPath = resolve(dirname(vscePackagePath), 'vsce');
+const skipBuild = process.argv.includes('--skip-build');
 
 try {
   main();
@@ -22,9 +23,12 @@ try {
 }
 
 function main() {
-  runNodeScript(resolve(packageRoot, 'scripts', 'copy-manifest.mjs'), []);
-  runNodeScript(tscCliPath, ['-p', 'tsconfig.json', '--noEmit']);
-  runNodeScript(resolve(packageRoot, 'scripts', 'esbuild.mjs'), []);
+  if (!skipBuild) {
+    runNodeScript(resolve(packageRoot, 'scripts', 'copy-manifest.mjs'), []);
+    runNodeScript(tscCliPath, ['-p', 'tsconfig.json', '--noEmit']);
+    runNodeScript(resolve(packageRoot, 'scripts', 'esbuild.mjs'), []);
+  }
+
   removeExistingVsixFiles();
   runNodeScript(vsceCliPath, [
     'package',

@@ -13,14 +13,23 @@ const vsixFileName = 'cobalt-tokens-explorer.vsix';
 const screenshotFileName = 'cobalt-tokens-explorer.png';
 const vsixSource = resolve(vscodeRoot, 'dist', vsixFileName);
 const screenshotSource = resolve(vscodeRoot, 'resources/vscode-cobalt-screenshot.png');
+const skipBuild = process.argv.includes('--skip-build');
 
-run('pnpm', ['--filter', './packages/vscode', 'package']);
+run('pnpm', [
+  '--filter',
+  './packages/vscode',
+  'package',
+  ...(skipBuild ? ['--', '--skip-build'] : []),
+]);
 
 mkdirSync(artifactDir, { recursive: true });
 copyRequiredFile(vsixSource, resolve(artifactDir, vsixFileName));
 copyRequiredFile(screenshotSource, resolve(artifactDir, screenshotFileName));
 
-run('node', ['scripts/build-package-artifact.js', '--build-packages']);
+run('node', [
+  'scripts/build-package-artifact.js',
+  ...(skipBuild ? ['--skip-build'] : ['--build-packages']),
+]);
 run('node', ['scripts/build-skill-artifact.js']);
 
 function run(command, args) {

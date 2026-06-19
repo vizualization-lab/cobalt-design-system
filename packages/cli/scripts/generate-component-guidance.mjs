@@ -146,9 +146,7 @@ function extractExamples({ framework, codeBlocks }) {
 
 function splitCommentedExamples({ framework, language, code }) {
   const commentPattern =
-    framework === 'react'
-      ? /\{\/\*\s*([^*]+?)\s*\*\/\}/g
-      : /<!--\s*([\s\S]*?)\s*-->/g;
+    framework === 'react' ? /\{\/\*\s*([^*]+?)\s*\*\/\}/g : /<!--\s*([\s\S]*?)\s*-->/g;
   const matches = [...code.matchAll(commentPattern)];
   const examples = [];
 

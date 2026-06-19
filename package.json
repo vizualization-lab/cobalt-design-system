@@ -5,7 +5,10 @@
   "description": "Cobalt Design System — a design token driven web component library built with Lit and TypeScript.",
   "scripts": {
     "clean": "pnpm -r --stream clean && rimraf packages/docs/.vitepress/cache",
-    "build": "pnpm -r --stream build",
+    "build": "pnpm run build:packages && pnpm --filter @cobalt/docs build",
+    "build:packages": "pnpm -r --stream --filter './packages/*' --filter '!@cobalt/docs' --if-present build",
+    "build:docs": "pnpm -r --stream --filter @cobalt/docs^... build && pnpm --filter @cobalt/docs build",
+    "build:docs:artifacts": "pnpm run build:packages && pnpm --filter @cobalt/docs prepare:artifacts -- --skip-build && pnpm --filter @cobalt/docs build",
     "rebuild": "pnpm clean && pnpm build",
     "dev": "pnpm --filter @cobalt/docs dev",
     "workbench": "pnpm --filter @cobalt/workbench dev",
