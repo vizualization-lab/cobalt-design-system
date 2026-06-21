@@ -1,0 +1,8 @@
+/* co-input-pill pre-upgrade rule — reserves layout and hides slotted content until :defined.
+ * co-input-pill extends CoInput and inherits its :host shape; mirror co-input's reservation. */
+
+co-input-pill:not(:defined) {
+  display: block;
+  inline-size: 100%;
+  visibility: hidden;
+}

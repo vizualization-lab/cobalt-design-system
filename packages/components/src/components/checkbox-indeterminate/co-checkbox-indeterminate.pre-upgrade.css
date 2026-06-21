@@ -1,0 +1,6 @@
+/* co-checkbox-indeterminate pre-upgrade rule — reserves layout and hides slotted content until :defined. */
+
+co-checkbox-indeterminate:not(:defined) {
+  display: block;
+  visibility: hidden;
+}

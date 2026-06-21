@@ -58,6 +58,8 @@ co new my-app --cobalt-source local
 
 Local mode points Cobalt dependencies at `./cobalt-packages/*.tgz` and creates instructions in `cobalt-packages/README.md`.
 
+Generated projects include `@cobalt/components/pre-upgrade.css` in the global entrypoint alongside `@cobalt/tokens/css`. The pre-upgrade stylesheet reserves correct layout and hides content for `co-*` elements until each one is `:defined`, so the app does not flash unstyled chrome while Lit upgrades the components. Existing projects can opt in by adding the same import next to their token imports.
+
 ## Inspect a project
 
 Review a project for Cobalt setup details:

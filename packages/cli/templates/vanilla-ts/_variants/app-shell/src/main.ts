@@ -2,6 +2,7 @@ import '@cobalt/tokens/css';
 import '@cobalt/tokens/css/fonts';
 import '@cobalt/tokens/css/base';
 import '@cobalt/tokens/themes/default';
+import '@cobalt/components/pre-upgrade.css';
 
 // Register each icon this app renders. Cobalt's icon registry is tree-shakeable —
 // only the icons you import are bundled.

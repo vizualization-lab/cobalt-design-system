@@ -1,0 +1,6 @@
+/* co-nav-drawer-item pre-upgrade rule — reserves layout and hides slotted content until :defined. */
+
+co-nav-drawer-item:not(:defined) {
+  display: block;
+  visibility: hidden;
+}

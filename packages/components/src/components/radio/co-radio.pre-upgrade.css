@@ -1,0 +1,6 @@
+/* co-radio pre-upgrade rule — reserves layout and hides slotted content until :defined. */
+
+co-radio:not(:defined) {
+  display: block;
+  visibility: hidden;
+}

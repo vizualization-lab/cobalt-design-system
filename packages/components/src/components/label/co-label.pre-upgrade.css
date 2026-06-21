@@ -1,0 +1,9 @@
+/* co-label pre-upgrade rule — reserves layout and hides slotted content until :defined.
+ * co-label inlines its styles via render() rather than co-label.styles.css; this file is
+ * the only document-scope styling for the un-upgraded host. */
+
+co-label:not(:defined) {
+  display: inline-flex;
+  vertical-align: middle;
+  visibility: hidden;
+}

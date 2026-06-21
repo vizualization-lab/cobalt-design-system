@@ -1,0 +1,8 @@
+/* co-nav-rail-bar pre-upgrade rule — reserves layout and hides slotted content until :defined. */
+
+co-nav-rail-bar:not(:defined) {
+  display: block;
+  inline-size: min(100%, var(--co-component-nav-rail-bar-width));
+  max-inline-size: var(--co-component-nav-rail-bar-width-max);
+  visibility: hidden;
+}

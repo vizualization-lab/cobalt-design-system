@@ -1,0 +1,7 @@
+/* co-nav-rail-item pre-upgrade rule — reserves layout and hides slotted content until :defined. */
+
+co-nav-rail-item:not(:defined) {
+  display: block;
+  inline-size: 100%;
+  visibility: hidden;
+}

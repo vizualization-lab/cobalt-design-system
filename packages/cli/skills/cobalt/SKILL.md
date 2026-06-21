@@ -111,6 +111,7 @@ The `agent` parent command takes `--metadata-source auto|workspace|bundled` (def
 - Do not write a CSS rule for spacing, padding, margin, gap, typography, or color without first running `co agent utilities --query <intent>`. A utility class usually exists; use it instead of a rule.
 - Do not hardcode color/space/radius/typography values when a semantic token exists. Do not reach for primitive tokens in app code.
 - Do not forget `data-co-base` on the app root (or the migrated slice) when using `@cobalt/tokens/css/base`.
+- Do not skip importing `@cobalt/components/pre-upgrade.css` in any project that uses Cobalt web components. Without it, `co-*` elements flash unstyled while Lit upgrades them. The import belongs in the same global entrypoint as `@cobalt/tokens/css` — it reserves correct layout and hides content until each element is `:defined`. Projects scaffolded by `co new` include the import by default.
 - Do not fabricate token names. When unsure, `co agent tokens --query <term>` first.
 - Do not declare a task done without running `co doctor --strict` and quoting the result.
 - Do not write a `.npmrc`, run `npm config set`, or guess a `@cobalt:registry` URL on the user's behalf. If a private registry is required and not configured, stop and ask.

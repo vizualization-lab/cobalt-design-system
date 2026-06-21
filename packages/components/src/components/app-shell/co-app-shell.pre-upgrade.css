@@ -1,0 +1,7 @@
+/* co-app-shell pre-upgrade rule — reserves layout and hides slotted content until :defined. */
+
+co-app-shell:not(:defined) {
+  display: block;
+  block-size: 100dvh;
+  visibility: hidden;
+}

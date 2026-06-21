@@ -1,0 +1,6 @@
+/* co-card pre-upgrade rule — reserves layout and hides slotted content until :defined. */
+
+co-card:not(:defined) {
+  display: block;
+  visibility: hidden;
+}

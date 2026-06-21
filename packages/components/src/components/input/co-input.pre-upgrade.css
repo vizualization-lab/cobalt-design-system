@@ -1,0 +1,7 @@
+/* co-input pre-upgrade rule — reserves layout and hides slotted content until :defined. */
+
+co-input:not(:defined) {
+  display: block;
+  inline-size: 100%;
+  visibility: hidden;
+}

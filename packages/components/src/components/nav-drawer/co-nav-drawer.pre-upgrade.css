@@ -1,0 +1,8 @@
+/* co-nav-drawer pre-upgrade rule — reserves layout and hides slotted content until :defined. */
+
+co-nav-drawer:not(:defined) {
+  display: block;
+  inline-size: var(--co-component-nav-drawer-width);
+  max-inline-size: var(--co-component-nav-drawer-width);
+  visibility: hidden;
+}

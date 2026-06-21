@@ -4,8 +4,8 @@ import { css } from 'lit';
 export const cobaltNavDrawerStyles = css`
   :host {
     display: block;
-    max-inline-size: 280px;
-    inline-size: 280px;
+    max-inline-size: var(--co-component-nav-drawer-width);
+    inline-size: var(--co-component-nav-drawer-width);
     block-size: auto;
     min-block-size: 0;
     box-sizing: border-box;

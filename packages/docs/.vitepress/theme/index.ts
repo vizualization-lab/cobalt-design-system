@@ -26,6 +26,10 @@ import '@cobalt/tokens/themes/purple';
 import '@cobalt/tokens/themes/brick';
 import '@cobalt/tokens/themes/forest';
 
+// Reserve layout and hide content for un-upgraded Cobalt custom elements so
+// the chrome does not flash before customElements.define runs.
+import '@cobalt/components/pre-upgrade.css';
+
 // Register every Cobalt icon so any <co-icon name="…"> in markdown resolves.
 import '@cobalt/icons/all';
 

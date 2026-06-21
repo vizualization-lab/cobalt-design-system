@@ -1,0 +1,6 @@
+/* co-select pre-upgrade rule — reserves layout and hides slotted content until :defined. */
+
+co-select:not(:defined) {
+  display: block;
+  visibility: hidden;
+}

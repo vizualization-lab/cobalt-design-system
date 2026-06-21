@@ -1,0 +1,7 @@
+/* co-icon pre-upgrade rule — reserves layout and hides slotted content until :defined. */
+
+co-icon:not(:defined) {
+  display: inline-flex;
+  vertical-align: middle;
+  visibility: hidden;
+}

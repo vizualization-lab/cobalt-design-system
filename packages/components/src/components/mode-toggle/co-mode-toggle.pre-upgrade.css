@@ -1,0 +1,7 @@
+/* co-mode-toggle pre-upgrade rule — reserves layout and hides slotted content until :defined. */
+
+co-mode-toggle:not(:defined) {
+  display: inline-flex;
+  vertical-align: middle;
+  visibility: hidden;
+}

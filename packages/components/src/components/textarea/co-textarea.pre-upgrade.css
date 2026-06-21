@@ -1,0 +1,7 @@
+/* co-textarea pre-upgrade rule — reserves layout and hides slotted content until :defined. */
+
+co-textarea:not(:defined) {
+  display: block;
+  inline-size: 100%;
+  visibility: hidden;
+}

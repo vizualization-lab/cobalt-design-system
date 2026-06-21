@@ -1,0 +1,7 @@
+/* co-banner pre-upgrade rule — reserves layout and hides slotted content until :defined. */
+
+co-banner:not(:defined) {
+  display: block;
+  inline-size: 100%;
+  visibility: hidden;
+}

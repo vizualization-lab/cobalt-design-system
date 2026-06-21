@@ -1,0 +1,7 @@
+/* co-combobox pre-upgrade rule — reserves layout and hides slotted content until :defined. */
+
+co-combobox:not(:defined) {
+  display: block;
+  inline-size: 100%;
+  visibility: hidden;
+}

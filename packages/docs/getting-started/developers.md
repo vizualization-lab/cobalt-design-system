@@ -92,6 +92,14 @@ You can also load Cobalt's self-hosted fonts and base styles:
 
 The token stylesheet defines the `--co-*` CSS custom properties that components need for color, spacing, typography, and other visual styles. Without it, components can render without the intended Cobalt appearance.
 
+Also import the pre-upgrade stylesheet alongside the tokens so Cobalt components do not flash unstyled while Lit upgrades them:
+
+```css
+@import '@cobalt/components/pre-upgrade.css';
+```
+
+Projects scaffolded with `co new` include this import by default. See [Suppressing flash-of-unstyled-content](/guidance/migration#suppressing-flash-of-unstyled-content) in the migration guide for the full rationale and integration notes across build systems.
+
 ## Render the Success Button
 
 Choose the example for your application stack. The milestone is the same in every framework: render a Cobalt button with the label `Success`, focus it, and confirm that the browser console logs `Success`.

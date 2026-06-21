@@ -1,0 +1,6 @@
+/* co-option pre-upgrade rule — reserves layout and hides slotted content until :defined. */
+
+co-option:not(:defined) {
+  display: block;
+  visibility: hidden;
+}

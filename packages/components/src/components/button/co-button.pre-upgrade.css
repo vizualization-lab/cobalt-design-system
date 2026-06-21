@@ -1,0 +1,8 @@
+/* co-button pre-upgrade rule — reserves layout and hides slotted content until :defined. */
+
+co-button:not(:defined) {
+  display: inline-flex;
+  min-block-size: var(--co-control-height-md);
+  vertical-align: middle;
+  visibility: hidden;
+}

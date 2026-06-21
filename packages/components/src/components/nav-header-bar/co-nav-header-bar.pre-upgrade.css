@@ -1,0 +1,7 @@
+/* co-nav-header-bar pre-upgrade rule — reserves layout and hides slotted content until :defined. */
+
+co-nav-header-bar:not(:defined) {
+  display: block;
+  inline-size: 100%;
+  visibility: hidden;
+}
