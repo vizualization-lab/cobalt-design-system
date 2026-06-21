@@ -16,11 +16,11 @@ See the Cobalt docs site for the full component catalog, props, slots, events, a
 
 Each Cobalt component directory under `src/components/<name>/` holds three sibling files:
 
-| File                        | Lives in            | Purpose                                                                                                                                       |
-| --------------------------- | ------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
-| `co-<name>.ts`              | shadow DOM behavior | Lit class, decorators, render, events                                                                                                         |
-| `co-<name>.styles.css`      | shadow DOM styles   | `:host` and shadow-tree selectors (compiled into a Lit `css\`\``template by`npm run generate-styles`)                                         |
-| `co-<name>.pre-upgrade.css` | document scope      | One `co-<name>:not(:defined) { … }` rule that reserves layout and hides slotted content until the element is `:defined` — the FOUC mitigation |
+| File                        | Lives in            | Purpose                                                                                                                                          |
+| --------------------------- | ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `co-<name>.ts`              | shadow DOM behavior | Lit class, decorators, render, events                                                                                                            |
+| `co-<name>.styles.css`      | shadow DOM styles   | `:host` and shadow-tree selectors, compiled into a Lit tagged-template literal by `npm run generate-styles`                                      |
+| `co-<name>.pre-upgrade.css` | document scope      | One `co-<name>:not(:defined) { ... }` rule that reserves layout and hides slotted content until the element is `:defined` — the FOUC mitigation. |
 
 The aggregator at `scripts/build-pre-upgrade.js` concatenates every per-component `co-<name>.pre-upgrade.css` into the published `dist/pre-upgrade.css` (the `@cobalt/components/pre-upgrade.css` export). Consumers import the assembled file once; they should never import the per-component fragments.
 
