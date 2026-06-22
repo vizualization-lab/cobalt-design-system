@@ -1,8 +1,10 @@
 import type { DiagnosticRecord } from './diagnostics.js';
 import { createResult } from './diagnostics.js';
 import {
+  cobaltComponentDependencies,
   expectedLocalPackages,
   inspectProject,
+  usesCobaltComponents,
   type ProjectInspection,
 } from './project-inspect.js';
 
@@ -79,6 +81,27 @@ export function buildDoctorDiagnostics(inspection: ProjectInspection): Diagnosti
           "Import '@cobalt/tokens/css/base' when native element defaults should use Cobalt styles.",
         ),
   );
+
+  if (usesCobaltComponents(inspection)) {
+    const triggeringPackages = cobaltComponentDependencies(inspection.cobaltDependencies)
+      .map((dependency) => dependency.name)
+      .join(', ');
+
+    diagnostics.push(
+      inspection.hasPreUpgradeCss
+        ? pass(
+            'cobalt.styles.pre-upgrade',
+            'Cobalt pre-upgrade stylesheet is imported.',
+            triggeringPackages,
+          )
+        : warn(
+            'cobalt.styles.pre-upgrade',
+            'Cobalt pre-upgrade stylesheet is not imported; co-* elements will flash unstyled while Lit upgrades them.',
+            triggeringPackages,
+            "Import '@cobalt/components/pre-upgrade.css' once in the app's global entrypoint (next to '@cobalt/tokens/css'). See the migration guide's 'Suppressing flash-of-unstyled-content' section for build-system recipes.",
+          ),
+    );
+  }
 
   diagnostics.push(
     inspection.hasDataCoBase

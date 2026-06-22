@@ -767,6 +767,134 @@ test('doctor strict mode sets a failing exit code for warnings or failures', asy
   }
 });
 
+async function runDoctorJson(tempDir) {
+  const output = [];
+  const program = createProgram({
+    argv: ['--json', '--cwd', tempDir, 'doctor'],
+    isTty: false,
+    out: (message = '') => output.push(message),
+  });
+
+  await program.parseAsync(['--json', '--cwd', tempDir, 'doctor'], { from: 'user' });
+  return JSON.parse(output.join('\n'));
+}
+
+test('doctor warns when a Cobalt component package is installed but pre-upgrade.css is not imported', async () => {
+  const tempDir = await mkdtemp(path.join(os.tmpdir(), 'cobalt-cli-'));
+
+  try {
+    await writeFile(
+      path.join(tempDir, 'package.json'),
+      JSON.stringify({ dependencies: { '@cobalt/components': '^0.1.0' } }),
+    );
+    await writeFile(path.join(tempDir, 'main.ts'), "import '@cobalt/components/button';\n");
+
+    const result = await runDoctorJson(tempDir);
+    const diagnostic = result.diagnostics.find((entry) => entry.id === 'cobalt.styles.pre-upgrade');
+
+    assert.ok(diagnostic, 'expected cobalt.styles.pre-upgrade diagnostic');
+    assert.equal(diagnostic.status, 'warn');
+    assert.match(diagnostic.suggestedAction ?? '', /@cobalt\/components\/pre-upgrade\.css/);
+    assert.match(diagnostic.evidence ?? '', /@cobalt\/components/);
+  } finally {
+    await rm(tempDir, { recursive: true, force: true });
+  }
+});
+
+test('doctor passes when pre-upgrade.css is imported via a JS entrypoint', async () => {
+  const tempDir = await mkdtemp(path.join(os.tmpdir(), 'cobalt-cli-'));
+
+  try {
+    await writeFile(
+      path.join(tempDir, 'package.json'),
+      JSON.stringify({ dependencies: { '@cobalt/components': '^0.1.0' } }),
+    );
+    await writeFile(
+      path.join(tempDir, 'main.ts'),
+      [
+        "import '@cobalt/tokens/css';",
+        "import '@cobalt/components/pre-upgrade.css';",
+        "import '@cobalt/components/button';",
+      ].join('\n'),
+    );
+
+    const result = await runDoctorJson(tempDir);
+    const diagnostic = result.diagnostics.find((entry) => entry.id === 'cobalt.styles.pre-upgrade');
+
+    assert.ok(diagnostic);
+    assert.equal(diagnostic.status, 'pass');
+  } finally {
+    await rm(tempDir, { recursive: true, force: true });
+  }
+});
+
+test('doctor passes when pre-upgrade.css is imported via a CSS @import', async () => {
+  const tempDir = await mkdtemp(path.join(os.tmpdir(), 'cobalt-cli-'));
+
+  try {
+    await writeFile(
+      path.join(tempDir, 'package.json'),
+      JSON.stringify({ dependencies: { '@cobalt/components': '^0.1.0' } }),
+    );
+    await writeFile(
+      path.join(tempDir, 'styles.css'),
+      ["@import '@cobalt/tokens/css';", "@import '@cobalt/components/pre-upgrade.css';"].join('\n'),
+    );
+
+    const result = await runDoctorJson(tempDir);
+    const diagnostic = result.diagnostics.find((entry) => entry.id === 'cobalt.styles.pre-upgrade');
+
+    assert.ok(diagnostic);
+    assert.equal(diagnostic.status, 'pass');
+  } finally {
+    await rm(tempDir, { recursive: true, force: true });
+  }
+});
+
+test('doctor omits the pre-upgrade check when no Cobalt component package is installed', async () => {
+  const tempDir = await mkdtemp(path.join(os.tmpdir(), 'cobalt-cli-'));
+
+  try {
+    await writeFile(
+      path.join(tempDir, 'package.json'),
+      JSON.stringify({ dependencies: { '@cobalt/tokens': '^0.1.0' } }),
+    );
+
+    const result = await runDoctorJson(tempDir);
+    const ids = result.diagnostics.map((entry) => entry.id);
+
+    assert.equal(ids.includes('cobalt.styles.pre-upgrade'), false);
+  } finally {
+    await rm(tempDir, { recursive: true, force: true });
+  }
+});
+
+test('doctor pre-upgrade check fires for framework wrapper packages like @cobalt/react', async () => {
+  const tempDir = await mkdtemp(path.join(os.tmpdir(), 'cobalt-cli-'));
+
+  try {
+    await writeFile(
+      path.join(tempDir, 'package.json'),
+      JSON.stringify({
+        dependencies: {
+          '@cobalt/react': '^0.1.0',
+          react: '^18.3.0',
+        },
+      }),
+    );
+    await writeFile(path.join(tempDir, 'App.tsx'), "import { CoButton } from '@cobalt/react';\n");
+
+    const result = await runDoctorJson(tempDir);
+    const diagnostic = result.diagnostics.find((entry) => entry.id === 'cobalt.styles.pre-upgrade');
+
+    assert.ok(diagnostic);
+    assert.equal(diagnostic.status, 'warn');
+    assert.match(diagnostic.evidence ?? '', /@cobalt\/react/);
+  } finally {
+    await rm(tempDir, { recursive: true, force: true });
+  }
+});
+
 test('components commands expose status and usage metadata', async () => {
   const statusOutput = [];
   const usageOutput = [];

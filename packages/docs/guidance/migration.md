@@ -117,6 +117,7 @@ Before calling a slice migrated, verify:
 
 - token and base CSS imports load once and in order
 - `@cobalt/components/pre-upgrade.css` is imported alongside the token CSS so `co-*` elements do not flash unstyled while Lit upgrades them
+- `co doctor` returns a clean `cobalt.styles.pre-upgrade` pass for the migrated slice (run from the project root after wiring the import)
 - `[data-co-base]` is scoped to the intended area
 - visual review passes against before and after screenshots
 - keyboard navigation and focus states work

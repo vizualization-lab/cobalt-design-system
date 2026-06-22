@@ -44,6 +44,7 @@ export interface ProjectInspection {
   hasTokenCss: boolean;
   hasFontCss: boolean;
   hasBaseCss: boolean;
+  hasPreUpgradeCss: boolean;
   hasDataCoBase: boolean;
   npmrc: {
     found: boolean;
@@ -115,6 +116,11 @@ export async function inspectProject(root: string): Promise<ProjectInspection> {
     ),
     hasBaseCss: styleImports.some((entry) =>
       ['@cobalt/tokens/css/base', '@cobalt/tokens/scss/styles'].includes(entry.importPath),
+    ),
+    hasPreUpgradeCss: styleImports.some((entry) =>
+      ['@cobalt/components/pre-upgrade.css', '@cobalt/components/pre-upgrade'].includes(
+        entry.importPath,
+      ),
     ),
     hasDataCoBase: contents.some((entry) => /\bdata-co-base\b/.test(entry.contents)),
     npmrc: await inspectNpmrc(projectRoot),
@@ -235,8 +241,8 @@ function shouldIgnoreDirectory(name: string): boolean {
 
 function collectStyleImports(files: Array<{ file: string; contents: string }>): StyleImport[] {
   const imports: StyleImport[] = [];
-  const stylesheetPattern = /@(?:import|use)\s+(?:url\()?['"](@cobalt\/tokens\/[^'")]+)['"]/g;
-  const modulePattern = /import\s+(?:[^'"]*from\s+)?['"](@cobalt\/tokens\/[^'"]+)['"]/g;
+  const stylesheetPattern = /@(?:import|use)\s+(?:url\()?['"](@cobalt\/[\w-]+\/[^'")]+)['"]/g;
+  const modulePattern = /import\s+(?:[^'"]*from\s+)?['"](@cobalt\/[\w-]+\/[^'"]+)['"]/g;
 
   for (const file of files) {
     for (const match of file.contents.matchAll(stylesheetPattern)) {
@@ -291,4 +297,22 @@ function missingLocalTarballs(dependencies: CobaltDependency[], tarballs: string
 
 export function expectedLocalPackages(): readonly string[] {
   return localCobaltPackages;
+}
+
+// Packages that, when present in a project, indicate the app will render
+// `co-*` custom elements at runtime (either directly or via a wrapper). Used
+// by the doctor to decide whether component-specific checks should apply.
+const componentRenderingPackages = new Set([
+  '@cobalt/components',
+  '@cobalt/react',
+  '@cobalt/vue',
+  '@cobalt/angular',
+]);
+
+export function cobaltComponentDependencies(dependencies: CobaltDependency[]): CobaltDependency[] {
+  return dependencies.filter((dependency) => componentRenderingPackages.has(dependency.name));
+}
+
+export function usesCobaltComponents(inspection: ProjectInspection): boolean {
+  return cobaltComponentDependencies(inspection.cobaltDependencies).length > 0;
 }

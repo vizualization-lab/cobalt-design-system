@@ -231,7 +231,7 @@ Use `--strict` when warnings or failures should fail the command:
 co --json --cwd ./my-app doctor --strict
 ```
 
-`co doctor` checks for common setup issues such as missing token CSS, missing optional font/base styles, missing `data-co-base`, mismatched Cobalt package versions, missing local tarballs, and `@cobalt/components` barrel imports.
+`co doctor` checks for common setup issues such as missing token CSS, missing optional font/base styles, missing `data-co-base`, mismatched Cobalt package versions, missing local tarballs, and `@cobalt/components` barrel imports. When the project depends on a Cobalt component-rendering package (`@cobalt/components`, `@cobalt/react`, `@cobalt/vue`, or `@cobalt/angular`), the `cobalt.styles.pre-upgrade` diagnostic also warns when `@cobalt/components/pre-upgrade.css` is not imported anywhere in the project source — without that import, `co-*` elements flash unstyled while Lit upgrades them. Pure token consumers do not see this diagnostic.
 
 ## Components
 
