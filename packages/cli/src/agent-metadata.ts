@@ -1,6 +1,7 @@
 import { existsSync } from 'node:fs';
-import { readFile } from 'node:fs/promises';
+import { readFile, readdir } from 'node:fs/promises';
 import path from 'node:path';
+import { pathToFileURL } from 'node:url';
 import type { DiagnosticRecord } from './diagnostics.js';
 
 export type MetadataSourceOption = 'auto' | 'workspace' | 'bundled';
@@ -141,6 +142,40 @@ export interface AgentMetadataSnapshot {
   components: AgentComponent[];
   tokens: CobaltToken[];
   utilities: CobaltUtility[];
+  diagnostics: DiagnosticRecord[];
+}
+
+export type AgentIconKind = 'material' | 'custom' | 'override';
+
+export interface AgentTheme {
+  name: string;
+  cssImportPath: string;
+  scssImportPath?: string;
+  modes: string[];
+}
+
+export interface AgentThemeMetadataSnapshot {
+  source: MetadataSource;
+  themeManifestPath?: string;
+  themes: AgentTheme[];
+  diagnostics: DiagnosticRecord[];
+}
+
+export interface AgentIcon {
+  name: string;
+  kind: AgentIconKind;
+  importPath: string;
+  hasAnimated?: boolean;
+  category?: string;
+  description?: string;
+  searchTerms?: string[];
+}
+
+export interface AgentIconMetadataSnapshot {
+  source: MetadataSource;
+  iconManifestPath?: string;
+  iconMetadataPath?: string;
+  icons: AgentIcon[];
   diagnostics: DiagnosticRecord[];
 }
 
@@ -713,4 +748,414 @@ function fail(
     evidence,
     suggestedAction,
   };
+}
+
+// =====================================================================
+// Icon metadata
+// =====================================================================
+
+interface RawIconManifest {
+  schemaVersion?: number;
+  iconNames?: string[];
+  coreIconNames?: string[];
+  customIconNames?: string[];
+  overrideIconNames?: string[];
+  animatedIconNames?: string[];
+}
+
+interface WorkspaceIconModule {
+  iconNames?: ReadonlyArray<string>;
+  coreIconNames?: ReadonlyArray<string>;
+  customIconNames?: ReadonlySet<string> | ReadonlyArray<string>;
+  overrideIconNames?: ReadonlySet<string> | ReadonlyArray<string>;
+  animatedIconNames?: ReadonlySet<string> | ReadonlyArray<string>;
+}
+
+interface WorkspaceIconMetadataModule {
+  iconCategories?: Record<string, ReadonlyArray<string>>;
+  iconDescriptionsByIconName?: Record<string, string>;
+  iconSearchTermsByIconName?: Record<string, ReadonlyArray<string>>;
+}
+
+export async function resolveAgentIconMetadata({
+  cwd,
+  packageRoot,
+  metadataSource,
+}: ResolveMetadataOptions): Promise<AgentIconMetadataSnapshot> {
+  if (metadataSource !== 'bundled') {
+    const workspaceSnapshot = await tryReadWorkspaceIcons(cwd);
+    if (workspaceSnapshot) return workspaceSnapshot;
+
+    if (metadataSource === 'workspace') {
+      return emptyIconSnapshot('workspace', [
+        fail(
+          'cobalt.agent.icons.workspace-missing',
+          'Workspace @cobalt/icons manifest was not found.',
+          cwd,
+          'Install @cobalt/icons in the target project or use --metadata-source auto.',
+        ),
+      ]);
+    }
+  }
+
+  const bundledSnapshot = await tryReadBundledIcons(packageRoot);
+  if (bundledSnapshot) {
+    const diagnostics =
+      metadataSource === 'auto'
+        ? [
+            warn(
+              'cobalt.agent.icons.fallback',
+              'Using bundled Cobalt icon manifest because workspace @cobalt/icons was not found.',
+            ),
+            ...bundledSnapshot.diagnostics,
+          ]
+        : bundledSnapshot.diagnostics;
+    return { ...bundledSnapshot, diagnostics };
+  }
+
+  return emptyIconSnapshot('bundled', [
+    fail(
+      'cobalt.agent.icons.bundled-missing',
+      'Bundled Cobalt icon manifest was not found.',
+      path.join(packageRoot, 'dist', 'metadata', 'cobalt-icons.manifest.json'),
+      'Rebuild @cobalt/cli (after building @cobalt/icons) to ship the bundled icon manifest.',
+    ),
+  ]);
+}
+
+export function normalizeIconName(name: string): string {
+  const trimmed = name.trim();
+  if (!trimmed) return trimmed;
+  // camelCase → kebab-case; preserve digits next to letters.
+  const camelDeflated = trimmed.replace(/([a-z\d])([A-Z])/g, '$1-$2');
+  // Snake / spaces → dashes; lowercase the whole thing.
+  return camelDeflated.replace(/[\s_]+/g, '-').toLowerCase();
+}
+
+export function findIcon(icons: AgentIcon[], name: string): AgentIcon | undefined {
+  const normalized = normalizeIconName(name);
+  return icons.find((icon) => icon.name === normalized);
+}
+
+async function tryReadWorkspaceIcons(cwd: string): Promise<AgentIconMetadataSnapshot | undefined> {
+  const manifestPath = path.join(cwd, 'node_modules', '@cobalt', 'icons', 'dist', 'manifest.js');
+  if (!existsSync(manifestPath)) return undefined;
+
+  const metadataPath = path.join(cwd, 'node_modules', '@cobalt', 'icons', 'dist', 'metadata.js');
+  const hasMetadata = existsSync(metadataPath);
+
+  try {
+    const manifest = (await import(pathToFileURL(manifestPath).href)) as WorkspaceIconModule;
+    const metadata = hasMetadata
+      ? ((await import(pathToFileURL(metadataPath).href)) as WorkspaceIconMetadataModule)
+      : undefined;
+    const icons = buildIcons(manifest, metadata);
+    return {
+      source: 'workspace',
+      iconManifestPath: manifestPath,
+      iconMetadataPath: hasMetadata ? metadataPath : undefined,
+      icons,
+      diagnostics: [
+        pass(
+          'cobalt.agent.icons.workspace',
+          `Loaded workspace @cobalt/icons manifest (${icons.length} icons${
+            hasMetadata ? ', with metadata' : ', names only'
+          }).`,
+          manifestPath,
+        ),
+      ],
+    };
+  } catch (error) {
+    return {
+      source: 'workspace',
+      icons: [],
+      diagnostics: [
+        fail(
+          'cobalt.agent.icons.workspace-invalid',
+          'Could not read workspace @cobalt/icons manifest.',
+          error instanceof Error ? error.message : String(error),
+        ),
+      ],
+    };
+  }
+}
+
+async function tryReadBundledIcons(
+  packageRoot: string,
+): Promise<AgentIconMetadataSnapshot | undefined> {
+  const manifestPath = path.join(packageRoot, 'dist', 'metadata', 'cobalt-icons.manifest.json');
+  if (!existsSync(manifestPath)) return undefined;
+
+  try {
+    const raw = await readJson<RawIconManifest>(manifestPath);
+    if (raw.schemaVersion !== 1) {
+      return {
+        source: 'bundled',
+        icons: [],
+        diagnostics: [
+          fail(
+            'cobalt.agent.icons.bundled-invalid',
+            'Bundled Cobalt icon manifest has an unsupported schema version.',
+            String(raw.schemaVersion),
+          ),
+        ],
+      };
+    }
+    const icons = buildIcons(
+      {
+        iconNames: raw.iconNames,
+        coreIconNames: raw.coreIconNames,
+        customIconNames: new Set(raw.customIconNames ?? []),
+        overrideIconNames: new Set(raw.overrideIconNames ?? []),
+        animatedIconNames: new Set(raw.animatedIconNames ?? []),
+      },
+      undefined,
+    );
+    return {
+      source: 'bundled',
+      iconManifestPath: manifestPath,
+      icons,
+      diagnostics: [
+        pass(
+          'cobalt.agent.icons.bundled',
+          `Loaded bundled Cobalt icon manifest (${icons.length} icons, names only).`,
+          manifestPath,
+        ),
+      ],
+    };
+  } catch (error) {
+    return {
+      source: 'bundled',
+      icons: [],
+      diagnostics: [
+        fail(
+          'cobalt.agent.icons.bundled-invalid',
+          'Could not read bundled Cobalt icon manifest.',
+          error instanceof Error ? error.message : String(error),
+        ),
+      ],
+    };
+  }
+}
+
+function buildIcons(
+  manifest: WorkspaceIconModule,
+  metadata: WorkspaceIconMetadataModule | undefined,
+): AgentIcon[] {
+  const names = [...(manifest.iconNames ?? [])];
+  const custom = toSet(manifest.customIconNames);
+  const override = toSet(manifest.overrideIconNames);
+  const animated = toSet(manifest.animatedIconNames);
+
+  const categoryByName = new Map<string, string>();
+  if (metadata?.iconCategories) {
+    for (const [category, icons] of Object.entries(metadata.iconCategories)) {
+      for (const icon of icons) categoryByName.set(icon, category);
+    }
+  }
+  const descriptions = metadata?.iconDescriptionsByIconName ?? {};
+  const searchTerms = metadata?.iconSearchTermsByIconName ?? {};
+
+  return names
+    .map((name) => {
+      const kind: AgentIconKind = custom.has(name)
+        ? 'custom'
+        : override.has(name)
+          ? 'override'
+          : 'material';
+      const icon: AgentIcon = {
+        name,
+        kind,
+        importPath: `@cobalt/icons/${name}`,
+      };
+      if (animated.has(name)) icon.hasAnimated = true;
+      const category = categoryByName.get(name);
+      if (category) icon.category = category;
+      const description = descriptions[name];
+      if (description) icon.description = description;
+      const terms = searchTerms[name];
+      if (terms && terms.length > 0) icon.searchTerms = [...terms];
+      return icon;
+    })
+    .sort((left, right) => left.name.localeCompare(right.name));
+}
+
+function toSet(value: ReadonlySet<string> | ReadonlyArray<string> | undefined): Set<string> {
+  if (!value) return new Set();
+  if (value instanceof Set) return new Set(value);
+  return new Set(value);
+}
+
+function emptyIconSnapshot(
+  source: MetadataSource,
+  diagnostics: DiagnosticRecord[],
+): AgentIconMetadataSnapshot {
+  return { source, icons: [], diagnostics };
+}
+
+// =====================================================================
+// Theme metadata
+// =====================================================================
+
+interface RawThemeManifest {
+  schemaVersion?: number;
+  themes?: AgentTheme[];
+}
+
+export async function resolveAgentThemeMetadata({
+  cwd,
+  packageRoot,
+  metadataSource,
+}: ResolveMetadataOptions): Promise<AgentThemeMetadataSnapshot> {
+  if (metadataSource !== 'bundled') {
+    const workspaceSnapshot = await tryReadWorkspaceThemes(cwd);
+    if (workspaceSnapshot) return workspaceSnapshot;
+
+    if (metadataSource === 'workspace') {
+      return emptyThemeSnapshot('workspace', [
+        fail(
+          'cobalt.agent.themes.workspace-missing',
+          'Workspace @cobalt/tokens themes directory was not found.',
+          cwd,
+          'Install @cobalt/tokens in the target project or use --metadata-source auto.',
+        ),
+      ]);
+    }
+  }
+
+  const bundledSnapshot = await tryReadBundledThemes(packageRoot);
+  if (bundledSnapshot) {
+    const diagnostics =
+      metadataSource === 'auto'
+        ? [
+            warn(
+              'cobalt.agent.themes.fallback',
+              'Using bundled Cobalt theme manifest because workspace @cobalt/tokens was not found.',
+            ),
+            ...bundledSnapshot.diagnostics,
+          ]
+        : bundledSnapshot.diagnostics;
+    return { ...bundledSnapshot, diagnostics };
+  }
+
+  return emptyThemeSnapshot('bundled', [
+    fail(
+      'cobalt.agent.themes.bundled-missing',
+      'Bundled Cobalt theme manifest was not found.',
+      path.join(packageRoot, 'dist', 'metadata', 'cobalt-themes.manifest.json'),
+      'Rebuild @cobalt/cli (after building @cobalt/tokens) to ship the bundled theme manifest.',
+    ),
+  ]);
+}
+
+async function tryReadWorkspaceThemes(
+  cwd: string,
+): Promise<AgentThemeMetadataSnapshot | undefined> {
+  const cssDir = path.join(cwd, 'node_modules', '@cobalt', 'tokens', 'dist', 'css', 'themes');
+  if (!existsSync(cssDir)) return undefined;
+
+  try {
+    const cssEntries = (await readdir(cssDir)).filter(
+      (file) => file.endsWith('.css') && !file.startsWith('tokens-'),
+    );
+    const scssDir = path.join(cwd, 'node_modules', '@cobalt', 'tokens', 'dist', 'scss', 'themes');
+    const scssNames = existsSync(scssDir)
+      ? new Set(
+          (await readdir(scssDir))
+            .filter((file) => file.endsWith('.scss') && !file.startsWith('tokens-'))
+            .map((file) => file.replace(/\.scss$/, '')),
+        )
+      : new Set<string>();
+
+    const themes: AgentTheme[] = cssEntries
+      .map((file) => file.replace(/\.css$/, ''))
+      .sort()
+      .map((name) => ({
+        name,
+        cssImportPath: `@cobalt/tokens/themes/${name}`,
+        scssImportPath: scssNames.has(name) ? `@cobalt/tokens/scss/themes/${name}` : undefined,
+        modes: ['light', 'dark'],
+      }));
+
+    return {
+      source: 'workspace',
+      themeManifestPath: cssDir,
+      themes,
+      diagnostics: [
+        pass(
+          'cobalt.agent.themes.workspace',
+          `Loaded ${themes.length} workspace @cobalt/tokens themes.`,
+          cssDir,
+        ),
+      ],
+    };
+  } catch (error) {
+    return {
+      source: 'workspace',
+      themes: [],
+      diagnostics: [
+        fail(
+          'cobalt.agent.themes.workspace-invalid',
+          'Could not read workspace @cobalt/tokens themes directory.',
+          error instanceof Error ? error.message : String(error),
+        ),
+      ],
+    };
+  }
+}
+
+async function tryReadBundledThemes(
+  packageRoot: string,
+): Promise<AgentThemeMetadataSnapshot | undefined> {
+  const manifestPath = path.join(packageRoot, 'dist', 'metadata', 'cobalt-themes.manifest.json');
+  if (!existsSync(manifestPath)) return undefined;
+
+  try {
+    const raw = await readJson<RawThemeManifest>(manifestPath);
+    if (raw.schemaVersion !== 1) {
+      return {
+        source: 'bundled',
+        themes: [],
+        diagnostics: [
+          fail(
+            'cobalt.agent.themes.bundled-invalid',
+            'Bundled Cobalt theme manifest has an unsupported schema version.',
+            String(raw.schemaVersion),
+          ),
+        ],
+      };
+    }
+    const themes = (raw.themes ?? []).slice().sort((a, b) => a.name.localeCompare(b.name));
+    return {
+      source: 'bundled',
+      themeManifestPath: manifestPath,
+      themes,
+      diagnostics: [
+        pass(
+          'cobalt.agent.themes.bundled',
+          `Loaded ${themes.length} bundled Cobalt themes.`,
+          manifestPath,
+        ),
+      ],
+    };
+  } catch (error) {
+    return {
+      source: 'bundled',
+      themes: [],
+      diagnostics: [
+        fail(
+          'cobalt.agent.themes.bundled-invalid',
+          'Could not read bundled Cobalt theme manifest.',
+          error instanceof Error ? error.message : String(error),
+        ),
+      ],
+    };
+  }
+}
+
+function emptyThemeSnapshot(
+  source: MetadataSource,
+  diagnostics: DiagnosticRecord[],
+): AgentThemeMetadataSnapshot {
+  return { source, themes: [], diagnostics };
 }

@@ -1401,6 +1401,110 @@ test('agent utility command searches utility metadata', async () => {
   assert.ok(result.data.utilities.every((utility) => utility.className.includes('gap')));
 });
 
+async function runAgentJson(args) {
+  const output = [];
+  const program = createProgram({
+    argv: ['--json', ...args],
+    isTty: false,
+    out: (message = '') => output.push(message),
+  });
+  await program.parseAsync(['--json', ...args], { from: 'user' });
+  return JSON.parse(output.join('\n'));
+}
+
+test('agent icons command filters by query', async () => {
+  const result = await runAgentJson(['agent', 'icons', '--query', 'arrow', '--limit', '5']);
+
+  assert.equal(result.command, 'agent icons');
+  assert.ok(result.data.total > 0);
+  assert.ok(result.data.icons.length > 0);
+  assert.ok(result.data.icons.every((icon) => icon.name.includes('arrow')));
+  assert.ok(result.data.icons.every((icon) => icon.importPath.startsWith('@cobalt/icons/')));
+});
+
+test('agent icons command filters by --kind custom', async () => {
+  const result = await runAgentJson(['agent', 'icons', '--kind', 'custom']);
+
+  assert.ok(result.data.icons.length > 0);
+  assert.ok(result.data.icons.every((icon) => icon.kind === 'custom'));
+  assert.ok(result.data.icons.some((icon) => icon.name === 'co-logo'));
+});
+
+test('agent icons command --kind animated returns icons with animated variants', async () => {
+  const result = await runAgentJson(['agent', 'icons', '--kind', 'animated']);
+
+  assert.ok(result.data.icons.length > 0);
+  assert.ok(result.data.icons.every((icon) => icon.hasAnimated === true));
+});
+
+test('agent icon command returns metadata for an exact kebab-case name', async () => {
+  const result = await runAgentJson(['agent', 'icon', 'arrow-forward']);
+
+  assert.equal(result.command, 'agent icon');
+  assert.equal(result.data.icon.name, 'arrow-forward');
+  assert.equal(result.data.icon.importPath, '@cobalt/icons/arrow-forward');
+  assert.ok(result.diagnostics.some((diagnostic) => diagnostic.id === 'cobalt.agent.icon.found'));
+});
+
+test('agent icon command normalizes camelCase and snake_case names', async () => {
+  const camelResult = await runAgentJson(['agent', 'icon', 'arrowForward']);
+  const snakeResult = await runAgentJson(['agent', 'icon', 'arrow_forward']);
+
+  assert.equal(camelResult.data.icon?.name, 'arrow-forward');
+  assert.equal(snakeResult.data.icon?.name, 'arrow-forward');
+});
+
+test('agent icon command fails with a diagnostic for unknown icons', async () => {
+  const result = await runAgentJson(['agent', 'icon', 'zzz-bogus']);
+
+  assert.equal(result.summary.status, 'fail');
+  assert.equal(result.data.icon, undefined);
+  const diagnostic = result.diagnostics.find((entry) => entry.id === 'cobalt.agent.icon.unknown');
+  assert.ok(diagnostic);
+  assert.match(diagnostic.suggestedAction ?? '', /co agent icons --query/);
+});
+
+test('agent themes command lists every theme exported from @cobalt/tokens', async () => {
+  const result = await runAgentJson(['agent', 'themes']);
+
+  assert.equal(result.command, 'agent themes');
+  assert.ok(result.data.total > 0);
+  assert.equal(result.data.themes.length, result.data.total);
+  for (const theme of result.data.themes) {
+    assert.equal(typeof theme.name, 'string');
+    assert.equal(theme.cssImportPath, `@cobalt/tokens/themes/${theme.name}`);
+    assert.deepEqual(theme.modes, ['light', 'dark']);
+  }
+  // Themes returned in deterministic alpha order.
+  const names = result.data.themes.map((theme) => theme.name);
+  assert.deepEqual(names, [...names].sort());
+});
+
+test('agent themes command surfaces a workspace metadata source when @cobalt/tokens is present', async () => {
+  const result = await runAgentJson(['agent', 'themes']);
+  // The CLI runs from the cli package root, which has @cobalt/tokens as a
+  // workspace dep, so the resolver should prefer workspace metadata over the
+  // bundled fallback.
+  assert.equal(result.data.metadataSource, 'workspace');
+});
+
+test('agent themes command falls back to bundled manifest when @cobalt/tokens is absent', async () => {
+  const tempDir = await mkdtemp(path.join(os.tmpdir(), 'cobalt-cli-'));
+
+  try {
+    await writeFile(path.join(tempDir, 'package.json'), JSON.stringify({}));
+    const result = await runAgentJson(['--cwd', tempDir, 'agent', 'themes']);
+
+    assert.equal(result.data.metadataSource, 'bundled');
+    assert.ok(result.data.total > 0);
+    assert.ok(
+      result.diagnostics.some((diagnostic) => diagnostic.id === 'cobalt.agent.themes.fallback'),
+    );
+  } finally {
+    await rm(tempDir, { recursive: true, force: true });
+  }
+});
+
 test('normalizes the generated package name from the target directory', () => {
   assert.equal(normalizePackageName('Cobalt Starter_App'), 'cobalt-starter-app');
 });

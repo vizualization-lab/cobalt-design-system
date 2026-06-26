@@ -91,6 +91,9 @@ co agent component button --framework react
 co agent tokens --query surface --tier semantic
 co agent token color-text-default
 co agent utilities --query gap
+co agent icons --query arrow --kind material
+co agent icon arrow-forward
+co agent themes
 ```
 
 `co agent *` commands emit JSON automatically when stdout is not a terminal (the typical AI-agent invocation), so the `--json` flag is not required. Pass `--no-json` to force human-readable output when piping, or `--json` to force JSON in a terminal.
@@ -98,6 +101,8 @@ co agent utilities --query gap
 `co agent component` returns CEM-derived API metadata plus docs-derived `usage` guidance for the detected project framework. Use `--framework web-components`, `react`, `vue`, or `angular` to override ambiguous projects.
 
 `co agent token` accepts the token name in three forms: bare (`color-text-default`), dotted (`color.text.default`), or CSS-variable (`--co-color-text-default`).
+
+`co agent icon` accepts the icon name in any of kebab-case (`arrow-forward`), snake_case (`arrow_forward`), or camelCase (`arrowForward`). `co agent icons --kind animated` is a UX shortcut that filters to icons with an animated variant.
 
 Projects generated with `co new` include installable Cobalt skill folders for agent workflows. By default, `--agent-skill both` writes `.codex/skills/cobalt` and `.claude/skills/cobalt`.
 

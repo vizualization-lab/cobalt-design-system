@@ -3,13 +3,18 @@ import { runDoctor } from './doctor.js';
 import { inspectProject, type ProjectInspection } from './project-inspect.js';
 import {
   findComponent,
+  findIcon,
   normalizeTokenName,
+  resolveAgentIconMetadata,
   resolveAgentMetadata,
+  resolveAgentThemeMetadata,
   resolveMetadataSourceOption,
   summarizeTokenMetadata,
   type AgentComponent,
   type AgentComponentUsage,
   type AgentFramework,
+  type AgentIcon,
+  type AgentTheme,
   type CobaltToken,
   type CobaltUtility,
 } from './agent-metadata.js';
@@ -30,6 +35,29 @@ export interface AgentTokenListOptions extends AgentListOptions {
   category?: string;
   theme?: string;
   mode?: string;
+}
+
+export interface AgentIconListOptions extends AgentListOptions {
+  kind?: string;
+  category?: string;
+}
+
+export interface AgentIconsData {
+  metadataSource: string;
+  total: number;
+  returned: number;
+  icons: AgentIcon[];
+}
+
+export interface AgentIconData {
+  metadataSource: string;
+  icon?: AgentIcon;
+}
+
+export interface AgentThemesData {
+  metadataSource: string;
+  total: number;
+  themes: AgentTheme[];
 }
 
 export interface AgentContextData {
@@ -303,6 +331,95 @@ export async function runAgentUtilities({
   });
 }
 
+export async function runAgentIcons({
+  root,
+  packageRoot,
+  options,
+  listOptions,
+}: {
+  root: string;
+  packageRoot: string;
+  options: AgentOptions;
+  listOptions: AgentIconListOptions;
+}): Promise<CommandResult<AgentIconsData>> {
+  const metadataSource = resolveMetadataSourceOption(options.metadataSource);
+  const metadata = await resolveAgentIconMetadata({ cwd: root, packageRoot, metadataSource });
+  const icons = filterIcons(metadata.icons, listOptions);
+  const limited = limitItems(icons, listOptions);
+
+  return createResult({
+    command: 'agent icons',
+    cwd: root,
+    diagnostics: metadata.diagnostics,
+    data: {
+      metadataSource: metadata.source,
+      total: icons.length,
+      returned: limited.length,
+      icons: limited,
+    },
+  });
+}
+
+export async function runAgentThemes({
+  root,
+  packageRoot,
+  options,
+}: {
+  root: string;
+  packageRoot: string;
+  options: AgentOptions;
+}): Promise<CommandResult<AgentThemesData>> {
+  const metadataSource = resolveMetadataSourceOption(options.metadataSource);
+  const metadata = await resolveAgentThemeMetadata({ cwd: root, packageRoot, metadataSource });
+
+  return createResult({
+    command: 'agent themes',
+    cwd: root,
+    diagnostics: metadata.diagnostics,
+    data: {
+      metadataSource: metadata.source,
+      total: metadata.themes.length,
+      themes: metadata.themes,
+    },
+  });
+}
+
+export async function runAgentIcon({
+  root,
+  packageRoot,
+  name,
+  options,
+}: {
+  root: string;
+  packageRoot: string;
+  name: string;
+  options: AgentOptions;
+}): Promise<CommandResult<AgentIconData>> {
+  const metadataSource = resolveMetadataSourceOption(options.metadataSource);
+  const metadata = await resolveAgentIconMetadata({ cwd: root, packageRoot, metadataSource });
+  const icon = findIcon(metadata.icons, name);
+
+  return createResult({
+    command: 'agent icon',
+    cwd: root,
+    diagnostics: [
+      ...metadata.diagnostics,
+      icon
+        ? pass('cobalt.agent.icon.found', `Found ${icon.name}.`, icon.category ?? icon.kind)
+        : fail(
+            'cobalt.agent.icon.unknown',
+            `Unknown Cobalt icon "${name}".`,
+            undefined,
+            'Run co agent icons --query <term> to search available icons.',
+          ),
+    ],
+    data: {
+      metadataSource: metadata.source,
+      icon,
+    },
+  });
+}
+
 const allowedFrameworks = ['web-components', 'react', 'vue', 'angular'] as const;
 
 function resolveFrameworkSelection(
@@ -489,6 +606,31 @@ function filterTokenThemeModes(token: CobaltToken, options: AgentTokenListOption
       return true;
     }),
   };
+}
+
+function filterIcons(icons: AgentIcon[], options: AgentIconListOptions): AgentIcon[] {
+  const query = options.query?.trim().toLowerCase();
+  const category = options.category?.trim().toLowerCase();
+  const kindFilter = options.kind?.trim().toLowerCase();
+
+  return icons.filter((icon) => {
+    if (kindFilter) {
+      // 'animated' is a UX shortcut: filter to icons that have an animated
+      // variant, regardless of their base kind.
+      if (kindFilter === 'animated') {
+        if (!icon.hasAnimated) return false;
+      } else if (icon.kind !== kindFilter) {
+        return false;
+      }
+    }
+    if (category && (icon.category ?? '').toLowerCase() !== category) return false;
+    if (!query) return true;
+
+    return [icon.name, icon.category ?? '', icon.description ?? '', ...(icon.searchTerms ?? [])]
+      .join(' ')
+      .toLowerCase()
+      .includes(query);
+  });
 }
 
 function filterUtilities(utilities: CobaltUtility[], options: AgentListOptions): CobaltUtility[] {

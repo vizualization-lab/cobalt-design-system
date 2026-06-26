@@ -1,6 +1,6 @@
 ---
 name: cobalt
-description: Use when working in projects that depend on @cobalt/* packages — Cobalt web components (co-button, co-input, etc.), React/Vue/Angular wrappers, design tokens, or `co` CLI diagnostics.
+description: Use when working in projects that depend on @cobalt/* packages — Cobalt web components (including co-icon and React/Vue/Angular wrappers), design tokens, themes (light/dark), Tailwind preset, or `co` CLI diagnostics.
 ---
 
 # Cobalt
@@ -83,18 +83,49 @@ This rule supersedes any habit of writing one-off `padding`, `margin`, `font-siz
 2. `co doctor --strict`. Work each diagnostic top-down. Prefer the `suggestedAction` field on each diagnostic over guessing the fix.
 3. Re-run `co doctor --strict` until clean (or until remaining warnings are intentional and documented).
 
+### Switch the theme or mode
+
+1. Discover available themes: `co agent themes` returns one entry per theme exported from `@cobalt/tokens` with its `name`, `cssImportPath`, optional `scssImportPath`, and supported `modes`. Never assume a theme name — query it.
+2. Set both attributes on `<html>`: `<html data-theme="<name>" data-mode="light|dark">`. Both attributes together; default fallback is `default` + `light`.
+3. Import the matching theme bundle once in the global entrypoint using the `cssImportPath` returned above (each bundle covers both light and dark for that theme).
+4. For runtime switching, call `setTheme(theme, mode)` from `@cobalt/tokens/theme`; pass `mode: 'auto'` to follow system preference.
+5. Components keep referencing semantic tokens (`var(--co-color-state-theme-base)`, etc.) — values resolve to the active theme/mode automatically.
+
+### Use a Cobalt icon
+
+1. Discover by intent: `co agent icons --query <intent>` (filter with `--kind material|custom|override|animated` if needed). Use `co agent icon <name>` to confirm the import path and any category/description.
+2. Add a side-effect import next to the component code that uses it: `import '@cobalt/icons/<kebab-name>';`. Names are kebab-case; `co agent icon` accepts kebab/snake/camelCase forms and normalizes.
+3. Render `<co-icon name="<kebab-name>" size="xs|sm|md|lg|xl" label="Accessible label" />`. Add `fill` for filled variants, `animated` for the three icons that support it (`check-circle`, `notifications`, `progress-activity`).
+4. Never import `@cobalt/icons/all` in production code (~8 MB). Per-icon imports only.
+
+### Apply Cobalt baselines to native HTML elements
+
+1. `@import '@cobalt/tokens/css/base';` once in the global stylesheet (alongside `@cobalt/tokens/css`).
+2. Scope the baseline by adding `data-co-base` to the target subtree (e.g. `<section data-co-base>`). Do NOT apply globally during incremental adoption — legacy CSS may depend on old margins/list padding.
+3. The baseline styles `h1`–`h6`, `p`, `small`, `strong`, `a`, `ul`/`ol`/`li`, `table`/`th`/`td`, `code`/`pre`, `blockquote`, `hr`. Display typography is intentionally not mapped — use `.co-type-display` or the typography tokens directly for hero moments.
+
+### Integrate Tailwind
+
+1. Tailwind v4 (CSS-first, preferred). In the global stylesheet, in this order: `@import 'tailwindcss'; @import '@cobalt/tokens/css'; @import '@cobalt/tokens/tailwind/css';` (then optionally `@cobalt/tokens/css/fonts`). No `tailwind.config.js` needed.
+2. Tailwind v3: use `presets: [cobaltPreset]` in `tailwind.config.js` (`import cobaltPreset from '@cobalt/tokens/tailwind';`), import `@cobalt/tokens/css` before `@tailwind` directives. See `packages/docs/foundations/tailwind.md` for the full v3 setup.
+3. The preset maps Tailwind color, spacing, radius, typography, shadow, motion, and z-index utilities to `var(--co-*)` references, so theme/mode switches and runtime token overrides propagate automatically — no `darkMode` config needed.
+4. When using the Tailwind preset you do not need `@cobalt/tokens/css/utilities` — Tailwind's own utility classes cover the same surface.
+
 ## Command reference
 
-| Command                                                                                | Returns                                                                                   | When to use                                                         |
-| -------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------------- |
-| `co agent context`                                                                     | project frameworks, package versions, metadata source, doctor summary                     | First move on any Cobalt task                                       |
-| `co agent components [--framework <target>]`                                           | All components with framework-filtered usage                                              | Discover what components exist                                      |
-| `co agent component <name> [--framework <target>]`                                     | Single component: attributes, events, slots, CSS parts, methods, framework-filtered usage | Before writing or editing markup for that component                 |
-| `co agent tokens [--query] [--tier] [--category] [--theme] [--mode] [--limit] [--all]` | Filtered token list                                                                       | Choose a token for a CSS rule                                       |
-| `co agent token <name>`                                                                | One token: tier, category, value, resolved value, description                             | Verify a specific token exists / read its resolved value            |
-| `co agent utilities [--query] [--limit] [--all]`                                       | Utility classes with CSS and tokenRefs                                                    | Find a utility class for a CSS need                                 |
-| `co doctor [--strict]`                                                                 | All adoption diagnostics                                                                  | Before declaring a task done                                        |
-| `co inspect`                                                                           | Project inventory (package manager, frameworks, Cobalt deps, style imports, base scope)   | Quick human-readable snapshot; for AI flows, prefer `agent context` |
+| Command                                                                                    | Returns                                                                                   | When to use                                                         |
+| ------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `co agent context`                                                                         | project frameworks, package versions, metadata source, doctor summary                     | First move on any Cobalt task                                       |
+| `co agent components [--framework <target>]`                                               | All components with framework-filtered usage                                              | Discover what components exist                                      |
+| `co agent component <name> [--framework <target>]`                                         | Single component: attributes, events, slots, CSS parts, methods, framework-filtered usage | Before writing or editing markup for that component                 |
+| `co agent tokens [--query] [--tier] [--category] [--theme] [--mode] [--limit] [--all]`     | Filtered token list                                                                       | Choose a token for a CSS rule                                       |
+| `co agent token <name>`                                                                    | One token: tier, category, value, resolved value, description                             | Verify a specific token exists / read its resolved value            |
+| `co agent utilities [--query] [--limit] [--all]`                                           | Utility classes with CSS and tokenRefs                                                    | Find a utility class for a CSS need                                 |
+| `co agent icons [--query] [--kind material\|custom\|override\|animated] [--limit] [--all]` | Filtered icon catalog (name + kind + import path + optional category/description)         | Discover an icon name by intent                                     |
+| `co agent icon <name>`                                                                     | One icon: name, kind, import path, optional category/description/search terms             | Verify an icon exists and get its import path                       |
+| `co agent themes`                                                                          | All themes exported from `@cobalt/tokens` (name, css/scss import paths, supported modes)  | Discover available themes before switching theme/mode               |
+| `co doctor [--strict]`                                                                     | All adoption diagnostics                                                                  | Before declaring a task done                                        |
+| `co inspect`                                                                               | Project inventory (package manager, frameworks, Cobalt deps, style imports, base scope)   | Quick human-readable snapshot; for AI flows, prefer `agent context` |
 
 Token names accept three forms — all resolve the same: bare (`color-text-default`), dotted (`color.text.default`), or CSS-variable form (`--co-color-text-default`).
 
@@ -115,6 +146,8 @@ The `agent` parent command takes `--metadata-source auto|workspace|bundled` (def
 - Do not fabricate token names. When unsure, `co agent tokens --query <term>` first.
 - Do not declare a task done without running `co doctor --strict` and quoting the result.
 - Do not write a `.npmrc`, run `npm config set`, or guess a `@cobalt:registry` URL on the user's behalf. If a private registry is required and not configured, stop and ask.
+- Do not import `@cobalt/icons/all` in production code — the barrel bundles ~8 MB of icons. Discover names with `co agent icons --query <intent>` and use per-icon side-effect imports (`import '@cobalt/icons/<name>';`).
+- Do not redefine Cobalt utilities in your Tailwind config. The `@cobalt/tokens/tailwind` preset already maps every color, spacing, radius, typography, shadow, motion, and z-index utility to `var(--co-*)`. Hand-rolling overrides defeats theme/mode propagation.
 
 ## Output contract
 

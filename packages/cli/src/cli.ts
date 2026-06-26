@@ -8,14 +8,21 @@ import {
   runAgentComponent,
   runAgentComponents,
   runAgentContext,
+  runAgentIcon,
+  runAgentIcons,
+  runAgentThemes,
   runAgentToken,
   runAgentTokens,
   runAgentUtilities,
   type AgentComponentData,
   type AgentComponentsData,
   type AgentContextData,
+  type AgentIconData,
+  type AgentIconListOptions,
+  type AgentIconsData,
   type AgentListOptions,
   type AgentOptions,
+  type AgentThemesData,
   type AgentTokenListOptions,
   type AgentTokensData,
   type AgentUtilitiesData,
@@ -361,6 +368,59 @@ export function createProgram({
     printResult(result, resolveAgentOutput(globalOptions), out, formatAgentUtilitiesResult);
   });
   includeStartupArtInHelp(agentUtilities, startupArt);
+
+  const agentIcons = agent
+    .command('icons')
+    .description('Search Cobalt icon names (Material Symbols + custom Cobalt icons)')
+    .option('--query <text>', 'Search icon names, categories, descriptions, and search terms')
+    .option('--kind <kind>', 'Filter by kind: material, custom, override, or animated')
+    .option(
+      '--category <category>',
+      'Filter by Material Symbols category (workspace metadata only)',
+    )
+    .option('--limit <count>', 'Maximum icons to return', '50')
+    .option('--all', 'Return all matching icons');
+  agentIcons.action(async (commandOptions: AgentIconListOptions) => {
+    const globalOptions = getGlobalOptions(program);
+    const result = await runAgentIcons({
+      root: resolveCommandCwd(globalOptions),
+      packageRoot: root,
+      options: getAgentOptions(agent),
+      listOptions: commandOptions,
+    });
+    printResult(result, resolveAgentOutput(globalOptions), out, formatAgentIconsResult);
+  });
+  includeStartupArtInHelp(agentIcons, startupArt);
+
+  const agentIcon = agent
+    .command('icon')
+    .description('Print metadata for one Cobalt icon')
+    .argument('<name>', 'Icon name, kebab-case (also accepts snake_case or camelCase)');
+  agentIcon.action(async (name: string) => {
+    const globalOptions = getGlobalOptions(program);
+    const result = await runAgentIcon({
+      root: resolveCommandCwd(globalOptions),
+      packageRoot: root,
+      name,
+      options: getAgentOptions(agent),
+    });
+    printResult(result, resolveAgentOutput(globalOptions), out, formatAgentIconResult);
+  });
+  includeStartupArtInHelp(agentIcon, startupArt);
+
+  const agentThemes = agent
+    .command('themes')
+    .description('List Cobalt themes exported from @cobalt/tokens (name, import paths, modes)');
+  agentThemes.action(async () => {
+    const globalOptions = getGlobalOptions(program);
+    const result = await runAgentThemes({
+      root: resolveCommandCwd(globalOptions),
+      packageRoot: root,
+      options: getAgentOptions(agent),
+    });
+    printResult(result, resolveAgentOutput(globalOptions), out, formatAgentThemesResult);
+  });
+  includeStartupArtInHelp(agentThemes, startupArt);
 
   const skill = program.command('skill').description('Manage the Cobalt agent skill in a project');
   includeStartupArtInHelp(skill, startupArt);
@@ -736,6 +796,49 @@ function formatAgentUtilitiesResult(result: CommandResult<AgentUtilitiesData>): 
     header,
     ...result.data.utilities.map((utility) => `${utility.className}  ${utility.css}`),
   ].join('\n');
+}
+
+function formatAgentIconsResult(result: CommandResult<AgentIconsData>): string {
+  const header = `Cobalt icons: ${result.data.returned}/${result.data.total}`;
+  return [
+    header,
+    ...result.data.icons.map((icon) => {
+      const animated = icon.hasAnimated ? ' (animated)' : '';
+      const category = icon.category ? `  ${icon.category}` : '';
+      return `${icon.name}  ${icon.kind}${animated}${category}`;
+    }),
+  ].join('\n');
+}
+
+function formatAgentThemesResult(result: CommandResult<AgentThemesData>): string {
+  const header = `Cobalt themes: ${result.data.total}`;
+  return [
+    header,
+    ...result.data.themes.map((theme) => {
+      const modes = theme.modes.join('/');
+      return `${theme.name}  ${theme.cssImportPath}  modes=${modes}`;
+    }),
+  ].join('\n');
+}
+
+function formatAgentIconResult(result: CommandResult<AgentIconData>): string {
+  const icon = result.data.icon;
+  if (!icon) {
+    return result.diagnostics.map((diagnostic) => diagnosticLine(diagnostic)).join('\n');
+  }
+
+  return [
+    icon.name,
+    `Kind: ${icon.kind}${icon.hasAnimated ? ' (has animated variant)' : ''}`,
+    `Import: ${icon.importPath}`,
+    icon.category ? `Category: ${icon.category}` : undefined,
+    icon.description ? `Description: ${icon.description}` : undefined,
+    icon.searchTerms && icon.searchTerms.length > 0
+      ? `Search terms: ${icon.searchTerms.join(', ')}`
+      : undefined,
+  ]
+    .filter(Boolean)
+    .join('\n');
 }
 
 interface SkillListData {

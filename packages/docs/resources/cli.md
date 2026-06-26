@@ -289,6 +289,24 @@ co agent utilities --query gap
 
 `co agent token` accepts the token name in three forms — bare (`color-text-default`), dotted (`color.text.default`), or CSS-variable (`--co-color-text-default`).
 
+Discover Cobalt icons (Material Symbols + custom Cobalt icons) by intent:
+
+```bash
+co agent icons --query arrow --kind material
+co agent icons --kind custom
+co agent icon arrow-forward
+```
+
+`co agent icon` accepts the icon name in kebab-case (`arrow-forward`), snake_case (`arrow_forward`), or camelCase (`arrowForward`). `--kind animated` is a UX shortcut that filters to icons with an animated variant. The CLI surfaces full category/description/search-terms only when the project has `@cobalt/icons` installed in `node_modules`; the bundled fallback returns names + kind only.
+
+List the themes that `@cobalt/tokens` exports:
+
+```bash
+co agent themes
+```
+
+Each entry includes the theme `name`, its `cssImportPath` (e.g. `@cobalt/tokens/themes/<name>`), an optional `scssImportPath`, and the supported `modes`. The catalog is derived from the installed `@cobalt/tokens` build (workspace) and falls back to a bundled snapshot when the package isn't installed in the project — agents should never hardcode theme names.
+
 By default, agent commands use workspace metadata from installed Cobalt packages and fall back to bundled CLI metadata. Override that behavior when needed:
 
 ```bash
