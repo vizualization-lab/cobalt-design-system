@@ -120,6 +120,14 @@ const features = [
             style="stroke: var(--co-hero-crystal-inner)"
             stroke-width="0.5"
           />
+          <!-- Cobalt logo — fades in softly inside the crystal, then recedes -->
+          <g class="hero-crystal-logo">
+            <path
+              fill-rule="evenodd"
+              style="fill: var(--co-hero-crystal-logo)"
+              d="M215.13 137.73L207.99 126.24C207.61 125.62 207.05 125.06 206.37 124.69L168.91 104.56C168.29 104.25 167.61 104.06 166.86 104.06L152.89 104.06C152.2 104.06 151.46 104.25 150.84 104.56L113.38 124.69C112.7 125.06 112.14 125.56 111.76 126.24L104.62 137.73C104.19 138.41 104 139.22 104 140.03L104 182.64C104 183.45 104.25 184.26 104.81 184.94L109.53 192.58C109.9 193.2 110.46 193.76 111.14 194.13L150.9 215.44C151.52 215.75 152.2 215.94 152.95 215.94L167.17 215.94C167.86 215.94 168.6 215.75 169.22 215.44L208.98 194.13C209.66 193.76 210.22 193.26 210.6 192.58L215.38 184.94C215.81 184.26 216 183.45 216 182.64L216 140.03C216 139.22 215.75 138.41 215.38 137.73ZM153.94 112.7L165.81 112.7L201.34 131.77L201.9 132.64L175.75 146.68L165.99 151.89L159.91 148.6L153.82 151.89L141.77 145.43L155.56 138.04C158.66 138.04 161.09 138.04 164.19 138.04L168.35 140.28L182.15 132.57L164.07 123.88C161.15 123.94 158.73 124 155.81 124.06L128.85 138.54L117.91 132.7L118.47 131.83L154.01 112.76ZM155.56 171.65L155.56 182.27L141.58 174.75C140.03 172.27 138.79 170.28 137.3 167.8L137.3 152.76L147.05 157.98L147.05 157.98C147.05 157.98 149.28 159.16 149.28 159.16L149.28 165.81L155.56 169.22L155.56 171.59ZM116.05 187.05L112.57 181.4L112.57 141.21L113.38 139.97L113.38 139.97C113.38 139.97 113.38 139.97 113.38 139.97L124.31 145.87L124.31 174.82C125.87 177.3 127.11 179.29 128.6 181.77L155.56 196.25L155.56 207.43L153.82 207.43L116.05 187.18ZM207.18 181.4L203.7 187.05L165.93 207.3L164.19 207.3L164.19 196.06L191.15 181.59C192.71 179.1 193.95 177.11 195.44 174.63L195.44 156.68L182.52 163.63L182.52 167.73C180.97 170.22 179.72 172.21 178.23 174.69L164.26 182.21L164.26 169.22L170.53 165.81L170.53 159.16L172.77 157.98L172.77 157.98C172.77 157.98 179.78 154.19 179.78 154.19L206.43 139.9L207.24 141.15L207.24 181.34Z"
+            />
+          </g>
           <!-- Shimmer dot -->
           <circle cx="160" cy="160" r="3" style="fill: var(--co-hero-crystal-dot)">
             <animate
@@ -342,6 +350,7 @@ const features = [
   --co-hero-crystal-inner: color-mix(in srgb, var(--co-color-text-link) 10%, transparent);
   --co-hero-crystal-dot: color-mix(in srgb, var(--co-color-state-theme-base) 40%, transparent);
   --co-hero-crystal-pulse: color-mix(in srgb, var(--co-color-state-theme-base) 15%, transparent);
+  --co-hero-crystal-logo: color-mix(in srgb, var(--co-color-state-theme-base) 55%, transparent);
   position: absolute;
   top: 10px;
   right: -40px;
@@ -356,6 +365,45 @@ const features = [
   }
   50% {
     transform: translateY(-8px) rotate(1deg);
+  }
+}
+
+/* Logo reveal — slow fade-in inside the crystal, then recede. The peak
+   opacity stays low on purpose (and .hero-crystal is itself at 0.5), so
+   the mark reads as a facet catching light rather than a badge. */
+.hero-crystal-logo {
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: heroLogoReveal 9s ease-in-out infinite;
+}
+
+@keyframes heroLogoReveal {
+  0%,
+  100% {
+    opacity: 0;
+    transform: scale(0.985);
+  }
+  30%,
+  45% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+  75% {
+    opacity: 0;
+    transform: scale(0.985);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-crystal {
+    animation: none;
+  }
+
+  .hero-crystal-logo {
+    animation: none;
+    opacity: 0.16;
+    transform: none;
   }
 }
 
