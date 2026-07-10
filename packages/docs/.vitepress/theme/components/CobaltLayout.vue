@@ -207,17 +207,7 @@ function toggleSidebar() {
       </button>
       <a :href="withBase('/')" class="topbar-brand">
         <div class="brand-icon">
-          <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-            <rect x="2" y="2" width="24" height="24" rx="6" fill="currentColor" />
-            <path
-              class="gem-outline"
-              d="M14 7L20 11V17L14 21L8 17V11L14 7Z"
-              fill="none"
-              stroke-width="1.5"
-              stroke-linejoin="round"
-            />
-            <path class="gem-inner" d="M14 7V21M8 11L20 17M20 11L8 17" stroke-width="1" />
-          </svg>
+          <CoIcon name="co-logo" size="sm" aria-hidden="true" />
         </div>
         <span class="brand-name">Cobalt</span>
         <span class="brand-tag">The design system for tools and apps</span>
@@ -495,19 +485,16 @@ body {
   color: inherit;
 }
 
+/* Rounded brand chip; the co-logo icon inherits currentColor for its mark. */
 .brand-icon {
-  display: flex;
-  color: var(--co-color-surface-interactive-theme-default);
-}
-
-.brand-icon .gem-outline {
-  stroke: var(--co-color-text-on-primary);
-  opacity: 0.9;
-}
-
-.brand-icon .gem-inner {
-  stroke: var(--co-color-text-on-primary);
-  opacity: 0.3;
+  display: grid;
+  place-items: center;
+  inline-size: 24px;
+  block-size: 24px;
+  margin-block: 2px;
+  border-radius: 6px;
+  background: var(--co-color-surface-interactive-theme-default);
+  color: var(--co-color-text-on-primary);
 }
 
 .brand-name {
