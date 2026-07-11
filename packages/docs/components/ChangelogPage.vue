@@ -1,5 +1,13 @@
 <script setup lang="ts">
-import { data } from '../changelog.data';
+import { computed } from 'vue';
+import { data, type Release } from '../changelog.data';
+
+const props = defineProps<{
+  /** Releases to render; defaults to every release in the changelog. */
+  releases?: Release[];
+}>();
+
+const visibleReleases = computed(() => props.releases ?? data.releases);
 
 const TYPE_BADGES: Record<string, { label: string; color: string }> = {
   Added: { label: 'Added', color: '#34d399' },
@@ -63,11 +71,11 @@ function extractSections(content: string): { type: string; items: ParsedItem[] }
 
 <template>
   <div class="changelog-page">
-    <div v-if="!data.releases.length" class="changelog-empty">
+    <div v-if="!visibleReleases.length" class="changelog-empty">
       No releases yet. Changes will appear here after the first version bump.
     </div>
 
-    <div v-for="release in data.releases" :key="release.version" class="release">
+    <div v-for="release in visibleReleases" :key="release.version" class="release">
       <div class="release-header">
         <span class="release-version">v{{ release.version }}</span>
         <span v-if="release.date" class="release-date">{{ release.date }}</span>

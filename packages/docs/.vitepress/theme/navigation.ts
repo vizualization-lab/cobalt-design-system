@@ -1,3 +1,5 @@
+import releaseLines from '../../.generated/release-lines.json';
+
 export interface NavItem {
   text: string;
   link?: string;
@@ -175,7 +177,15 @@ export const navigation: NavGroup[] = [
     label: 'Changelog',
     icon: 'description',
     defaultOpen: false,
-    items: [{ text: 'Release Notes', link: '/release-notes' }],
+    items: [
+      { text: 'Release Notes', link: '/release-notes' },
+      // One entry per release line (major.minor), generated at predev/prebuild
+      // from the root CHANGELOG.md into .generated/release-lines.json.
+      ...releaseLines.map((line) => ({
+        text: line.label,
+        link: `/release-notes/${line.id}`,
+      })),
+    ],
   },
 ];
 

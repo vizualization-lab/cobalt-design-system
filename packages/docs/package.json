@@ -7,8 +7,8 @@
   "scripts": {
     "prepare:local-deps": "pnpm -r --stream --filter @cobalt/docs^... build",
     "prepare:artifacts": "node scripts/prepare-artifacts.mjs",
-    "predev": "pnpm run prepare:local-deps && node scripts/generate-component-changelogs.js",
-    "prebuild": "node scripts/generate-component-changelogs.js",
+    "predev": "pnpm run prepare:local-deps && node scripts/generate-component-changelogs.js && node scripts/generate-release-notes-nav.js",
+    "prebuild": "node scripts/generate-component-changelogs.js && node scripts/generate-release-notes-nav.js",
     "dev": "vitepress dev",
     "build": "vitepress build",
     "preview": "vitepress preview",
