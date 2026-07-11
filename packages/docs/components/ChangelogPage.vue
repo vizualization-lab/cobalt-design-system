@@ -76,8 +76,13 @@ function extractSections(content: string): { type: string; items: ParsedItem[] }
     </div>
 
     <div v-for="release in visibleReleases" :key="release.version" class="release">
+      <!-- The version is a real h2 with an id so the page TOC lists
+           versions and deep links (e.g. #v1-0-2) work; the date sits
+           outside the heading so TOC labels stay clean. -->
       <div class="release-header">
-        <span class="release-version">v{{ release.version }}</span>
+        <h2 :id="`v${release.version.replaceAll('.', '-')}`" class="release-version">
+          v{{ release.version }}
+        </h2>
         <span v-if="release.date" class="release-date">{{ release.date }}</span>
       </div>
 
@@ -146,10 +151,17 @@ function extractSections(content: string): { type: string; items: ParsedItem[] }
   margin-bottom: 12px;
 }
 
+/* An h2 for TOC/anchor purposes, but visually the same compact version
+   label as before — reset the theme's default h2 margins/border. */
 .release-version {
+  margin: 0;
+  padding: 0;
+  border: 0;
   font-family: var(--co-font-mono);
   font-size: 1.2rem;
   font-weight: 700;
+  line-height: inherit;
+  letter-spacing: normal;
   color: var(--co-text-primary);
 }
 

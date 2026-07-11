@@ -6,6 +6,8 @@ export interface NavItem {
   icon?: string;
   children?: NavItem[];
   defaultOpen?: boolean;
+  /** Small chip rendered after the label (e.g. "Latest"). */
+  badge?: string;
 }
 
 export interface NavGroup {
@@ -174,20 +176,42 @@ export const navigation: NavGroup[] = [
     ],
   },
   {
-    label: 'Changelog',
+    label: 'Release Notes',
+    railLabel: 'Releases',
     icon: 'description',
     defaultOpen: false,
     items: [
-      { text: 'Release Notes', link: '/release-notes' },
-      // One entry per release line (major.minor), generated at predev/prebuild
-      // from the root CHANGELOG.md into .generated/release-lines.json.
-      ...releaseLines.map((line) => ({
-        text: line.label,
-        link: `/release-notes/${line.id}`,
-      })),
+      { text: 'Overview', link: '/release-notes' },
+      // Release lines (major.minor) grouped by major version, generated at
+      // predev/prebuild from the root CHANGELOG.md into
+      // .generated/release-lines.json. The newest major starts expanded;
+      // older majors start collapsed so the menu scales with history.
+      ...buildReleaseLineNav(),
     ],
   },
 ];
+
+/** Group release lines by major version for the Release Notes nav. */
+function buildReleaseLineNav(): NavItem[] {
+  const majors = new Map<string, NavItem[]>();
+
+  for (const [index, line] of releaseLines.entries()) {
+    const major = line.label.split('.')[0]; // "v1.0" -> "v1"
+    if (!majors.has(major)) majors.set(major, []);
+    majors.get(major)!.push({
+      text: `${line.label} releases (${line.releaseCount})`,
+      link: `/release-notes/${line.id}`,
+      // release-lines.json is sorted newest first, so index 0 is latest.
+      ...(index === 0 ? { badge: 'Latest' } : {}),
+    });
+  }
+
+  return [...majors.entries()].map(([major, children], majorIndex) => ({
+    text: `${major} releases`,
+    children,
+    defaultOpen: majorIndex === 0,
+  }));
+}
 
 export interface FlatNavItem {
   text: string;

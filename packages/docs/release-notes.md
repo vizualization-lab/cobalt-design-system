@@ -38,8 +38,11 @@ of its patches.
     </tr>
   </thead>
   <tbody>
-    <tr v-for="line in lines" :key="line.id">
-      <td><a :href="withBase(`/release-notes/${line.id}`)">{{ line.label }}</a></td>
+    <tr v-for="(line, index) in lines" :key="line.id">
+      <td>
+        <a :href="withBase(`/release-notes/${line.id}`)">{{ line.label }}</a>
+        <span v-if="index === 0" class="release-lines-badge">Latest</span>
+      </td>
       <td><code>{{ line.latestVersion }}</code></td>
       <td>{{ line.releaseCount }}</td>
       <td class="release-lines-dates">{{ dateSpan(line) }}</td>
@@ -74,5 +77,19 @@ of its patches.
 .release-lines-dates {
   color: var(--co-color-text-secondary);
   font-variant-numeric: tabular-nums;
+}
+
+.release-lines-badge {
+  display: inline-block;
+  margin-inline-start: 8px;
+  padding: 1px 6px;
+  border-radius: var(--co-shape-radius-sm);
+  background: var(--co-color-state-theme-subtle);
+  color: var(--co-color-text-theme);
+  font-size: 0.64rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  vertical-align: middle;
 }
 </style>

@@ -68,11 +68,27 @@ function onGroupToggle(event: Event, key: string) {
         aria-hidden="true"
       ></CoIcon>
       {{ item.text }}
+      <span v-if="item.badge" class="cobalt-sidebar-badge">{{ item.badge }}</span>
     </CoNavDrawerItem>
   </template>
 </template>
 
 <style scoped>
+.cobalt-sidebar-badge {
+  display: inline-block;
+  margin-inline-start: var(--co-space-1);
+  padding: 1px var(--co-space-1);
+  border-radius: var(--co-shape-radius-sm);
+  background: var(--co-color-state-theme-subtle);
+  color: var(--co-color-text-theme);
+  font-size: 0.64rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  line-height: 1.4;
+  text-transform: uppercase;
+  vertical-align: middle;
+}
+
 .cobalt-sidebar-marker {
   flex-shrink: 0;
   color: var(--co-color-text-tertiary);
