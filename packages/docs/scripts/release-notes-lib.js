@@ -89,8 +89,50 @@ export function groupIntoLines(releases) {
   });
 }
 
-/** Read + parse + group in one call. */
-export function loadReleaseLines(changelogPath = CHANGELOG_PATH) {
-  if (!fs.existsSync(changelogPath)) return [];
-  return groupIntoLines(parseChangelog(fs.readFileSync(changelogPath, 'utf-8')));
+export const HIGHLIGHTS_PATH = path.resolve(__dirname, '../changelog-highlights.json');
+
+/**
+ * Full changelog model: parsed releases merged with editorial highlights
+ * (including highlights-only versions absent from CHANGELOG.md), sorted
+ * newest first, plus the line grouping. Single source of truth for the
+ * data loader, the dynamic-route paths file, and the nav generator — so
+ * every consumer agrees on which release lines exist.
+ */
+export function loadChangelogData({
+  changelogPath = CHANGELOG_PATH,
+  highlightsPath = HIGHLIGHTS_PATH,
+} = {}) {
+  let releases = [];
+
+  if (fs.existsSync(changelogPath)) {
+    const raw = fs.readFileSync(changelogPath, 'utf-8');
+    releases = parseChangelog(raw).map((release) => ({ ...release, highlights: null }));
+  }
+
+  let highlights = {};
+  if (fs.existsSync(highlightsPath)) {
+    highlights = JSON.parse(fs.readFileSync(highlightsPath, 'utf-8'));
+  }
+
+  for (const release of releases) {
+    if (highlights[release.version]) {
+      release.highlights = highlights[release.version];
+    }
+  }
+
+  // Highlights-only entries for versions absent from CHANGELOG.md
+  for (const [version, hl] of Object.entries(highlights)) {
+    if (!releases.some((release) => release.version === version)) {
+      releases.push({ version, date: '', content: '', highlights: hl });
+    }
+  }
+
+  releases.sort((a, b) => compareVersionsDesc(a.version, b.version));
+
+  return { releases, lines: groupIntoLines(releases) };
+}
+
+/** Read + parse + group in one call (highlights included). */
+export function loadReleaseLines() {
+  return loadChangelogData().lines;
 }

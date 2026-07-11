@@ -4,5 +4,11 @@
     "label": "v0.1",
     "latestVersion": "0.1.0",
     "releaseCount": 1
+  },
+  {
+    "id": "v0-0",
+    "label": "v0.0",
+    "latestVersion": "0.0.1",
+    "releaseCount": 1
   }
 ]
