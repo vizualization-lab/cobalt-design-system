@@ -13,6 +13,7 @@
     "dev": "pnpm --filter @cobalt/docs dev",
     "workbench": "pnpm --filter @cobalt/workbench dev",
     "test": "pnpm -r --stream test",
+    "test:release-notes": "node --test scripts/aggregate-changelog.test.js",
     "test:watch": "pnpm --filter @cobalt/components test:watch",
     "lint": "eslint 'packages/*/src/**/*.ts'",
     "format": "prettier --write .",
