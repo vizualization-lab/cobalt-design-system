@@ -33,6 +33,13 @@ const path = require('node:path');
 
 const root = path.resolve(__dirname, '..');
 
+// Packages whose changelogs feed the product release notes. All of these
+// are in the changesets fixed group and share one version per release.
+// @cobalt/workbench is deliberately excluded: it is a private dev tool
+// outside the fixed group, so it versions independently and its releases
+// would show up as bogus extra version sections in the root changelog
+// (its shared changeset entries are always duplicated into the lockstep
+// packages, so nothing user-facing is lost).
 const PACKAGES = [
   'packages/components',
   'packages/tokens',
@@ -42,7 +49,6 @@ const PACKAGES = [
   'packages/angular',
   'packages/cli',
   'packages/vscode',
-  'packages/workbench',
   'packages/docs',
 ];
 
