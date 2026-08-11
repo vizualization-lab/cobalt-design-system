@@ -75,12 +75,14 @@
   },
   "scripts": {
     "build": "node config.js",
-    "test": "pnpm run build && pnpm run test:scss",
+    "test": "pnpm run build && pnpm run test:scss && pnpm run test:figma",
     "test:scss": "node scripts/validate-scss.js",
+    "test:figma": "node --test scripts/convert-figma-variables.test.js",
     "test:tooling": "node --test scripts/generate-tooling-manifest.test.js",
     "validate": "node scripts/validate-tokens.js",
     "merge-tokens": "node scripts/merge-tokens.js",
     "export-dtcg": "node scripts/export-dtcg.js",
+    "convert-figma": "node scripts/convert-figma-variables.js",
     "clean": "rimraf dist"
   },
   "dependencies": {
@@ -89,6 +91,7 @@
     "@fontsource-variable/noto-sans": "^5.2.10"
   },
   "devDependencies": {
+    "prettier": "^3.8.1",
     "sass": "^1.99.0",
     "style-dictionary": "^4.0.0"
   },
