@@ -9,7 +9,8 @@ const repositoryRoot = resolve(__dirname, '..', '..', '..');
 export const defaultSourceDir = join(repositoryRoot, 'exports');
 export const defaultOutputDir = join(defaultSourceDir, 'tokens');
 
-const TOKEN_FILE_PATTERN = /\.tokens\.json$/;
+const FIGMA_TOKEN_FILE_PATTERN = /\.tokens-figma\.json$/;
+const DTCG_TOKEN_FILE_PATTERN = /\.tokens-dtcg\.json$/;
 const REFERENCE_PATTERN = /^\{.+\}$/;
 const NUMBER_PRECISION = 1_000_000;
 
@@ -192,11 +193,13 @@ function transformNode(node, availablePaths, warnings, path = []) {
 
 function readTokenFiles(sourceDir) {
   const fileNames = readdirSync(sourceDir)
-    .filter((fileName) => TOKEN_FILE_PATTERN.test(fileName))
+    .filter((fileName) => FIGMA_TOKEN_FILE_PATTERN.test(fileName))
     .sort();
 
   if (fileNames.length === 0) {
-    throw new Error(`No Figma variable exports matching *.tokens.json found in ${sourceDir}.`);
+    throw new Error(
+      `No Figma variable exports matching *.tokens-figma.json found in ${sourceDir}.`,
+    );
   }
 
   return fileNames.map((fileName) => {
@@ -229,7 +232,7 @@ export async function convertFigmaExports({
     tokenFiles.map(async ({ fileName, tokens }) => {
       const transformed = transformNode(tokens, availablePaths, warnings);
       return {
-        fileName,
+        fileName: fileName.replace(FIGMA_TOKEN_FILE_PATTERN, '.tokens-dtcg.json'),
         content: await format(JSON.stringify(transformed), { parser: 'json' }),
       };
     }),
@@ -239,7 +242,7 @@ export async function convertFigmaExports({
 
   const expectedFiles = new Set(outputs.map(({ fileName }) => fileName));
   for (const fileName of readdirSync(outputDir)) {
-    if (TOKEN_FILE_PATTERN.test(fileName) && !expectedFiles.has(fileName)) {
+    if (DTCG_TOKEN_FILE_PATTERN.test(fileName) && !expectedFiles.has(fileName)) {
       rmSync(join(outputDir, fileName));
     }
   }
