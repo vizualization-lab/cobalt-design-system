@@ -7,6 +7,11 @@ const HEADER = [
   '',
 ].join('\n');
 
+const FONT_FAMILIES = {
+  sans: "'Inter Variable', 'Noto Sans Variable', system-ui, sans-serif",
+  mono: "'JetBrains Mono Variable', 'Fira Code', monospace",
+};
+
 function ensureDir(filePath) {
   mkdirSync(dirname(filePath), { recursive: true });
 }
@@ -74,17 +79,45 @@ function generateTokensScss(tokens) {
 
 function generateMapsScss(tokens) {
   const breakpointTokens = tokens.filter((token) => token.key.startsWith('breakpoint-'));
-  const typographyTokens = tokens.filter((token) => token.key.startsWith('typography-'));
-  const fontFamilyTokens = tokens.filter((token) => token.key.startsWith('font-family-'));
+  const tokensByKey = new Map(tokens.map((token) => [token.key, token]));
   const typographyRoles = new Map();
 
-  for (const token of typographyTokens) {
-    const match = token.key.match(/^typography-(.+)-(size|weight|tracking|line-height)$/);
-    if (!match) continue;
+  const tokenReference = (key) => {
+    const token = tokensByKey.get(key);
+    if (!token) throw new Error(`Missing required typography token: ${key}.`);
+    return `var(${token.cssName})`;
+  };
 
-    const [, role, property] = match;
-    if (!typographyRoles.has(role)) typographyRoles.set(role, new Map());
-    typographyRoles.get(role).set(property, `var(${token.cssName})`);
+  for (const token of tokens) {
+    const roleMatch = token.key.match(/^font-size-(heading|body)-(.+)$/);
+    const role =
+      token.key === 'font-size-code'
+        ? 'code'
+        : roleMatch
+          ? `${roleMatch[1]}.${roleMatch[2]}`
+          : null;
+
+    if (!role) continue;
+
+    const isHeading = role.startsWith('heading.');
+    const properties = new Map([
+      ['size', `var(${token.cssName})`],
+      ['weight', tokenReference('font-weight-regular')],
+      ['tracking', tokenReference(isHeading ? 'font-tracking-tight' : 'font-tracking-normal')],
+      [
+        'line-height',
+        tokenReference(
+          role === 'heading.2xl'
+            ? 'font-line-height-100'
+            : isHeading
+              ? 'font-line-height-200'
+              : 'font-line-height-300',
+        ),
+      ],
+    ]);
+
+    if (role === 'code') properties.set('family', sassString('mono'));
+    typographyRoles.set(role, properties);
   }
 
   const lines = [HEADER.trimEnd(), ''];
@@ -112,13 +145,9 @@ function generateMapsScss(tokens) {
   lines.push('');
 
   lines.push('$font-families: (');
-  lines.push(
-    mapEntries(
-      fontFamilyTokens,
-      (token) => token.key.replace(/^font-family-/, ''),
-      (token) => `var(${token.cssName})`,
-    ),
-  );
+  for (const [name, value] of Object.entries(FONT_FAMILIES)) {
+    lines.push(`  ${sassString(name)}: (${value}),`);
+  }
   lines.push(') !default;');
   lines.push('');
 
@@ -127,12 +156,12 @@ function generateMapsScss(tokens) {
     a[0].localeCompare(b[0]),
   )) {
     lines.push(`  ${sassString(role)}: (`);
-    for (const property of ['size', 'weight', 'tracking', 'line-height']) {
+    for (const property of ['size', 'weight', 'tracking', 'line-height', 'family']) {
       const value = properties.get(property);
-      if (!value) {
+      if (!value && property !== 'family') {
         throw new Error(`Missing typography ${property} token for role "${role}".`);
       }
-      lines.push(`    ${sassString(property)}: ${value},`);
+      if (value) lines.push(`    ${sassString(property)}: ${value},`);
     }
     lines.push('  ),');
   }
@@ -210,6 +239,10 @@ function generateFunctionsScss() {
   @return token('font-#{_replace($name, '.', '-')}');
 }
 
+@function radius($name) {
+  @return token('radius-#{_replace($name, '.', '-')}');
+}
+
 @function breakpoint($name) {
   $key: _replace($name, '.', '-');
 
@@ -234,13 +267,15 @@ function generateMixinsScss() {
     @error 'Unknown Cobalt typography role "#{$role}".';
   }
 
-  font-size: token('typography-#{$key}-size');
-  font-weight: token('typography-#{$key}-weight');
-  letter-spacing: token('typography-#{$key}-tracking');
-  line-height: token('typography-#{$key}-line-height');
+  $properties: map.get(co-maps.$typography-roles, $key);
 
-  @if $key == 'eyebrow' {
-    text-transform: uppercase;
+  font-size: map.get($properties, 'size');
+  font-weight: map.get($properties, 'weight');
+  letter-spacing: map.get($properties, 'tracking');
+  line-height: map.get($properties, 'line-height');
+
+  @if map.has-key($properties, 'family') {
+    font-family: map.get(co-maps.$font-families, map.get($properties, 'family'));
   }
 }
 
@@ -251,7 +286,7 @@ function generateMixinsScss() {
     @error 'Unknown Cobalt font family "#{$family}".';
   }
 
-  font-family: font('family-#{$key}');
+  font-family: map.get(co-maps.$font-families, $key);
 }
 
 @mixin media-up($breakpoint) {
@@ -341,13 +376,13 @@ export function generateScss(packageDir, discovery) {
     join(outDir, 'css', 'fonts-international.scss'),
   );
 
-  const themeIds = [...new Set(discovery.themeTokenSets.map((tokenSet) => tokenSet.themeId))];
+  const themeIds = [...new Set(discovery.themeBuilds.map((themeBuild) => themeBuild.themeId))];
   for (const themeId of themeIds) {
     addShim(join(cssDir, 'themes', `${themeId}.css`), join(outDir, 'themes', `${themeId}.scss`));
   }
 
-  for (const themeTokenSet of discovery.themeTokenSets) {
-    const { themeId, mode } = themeTokenSet;
+  for (const themeBuild of discovery.themeBuilds) {
+    const { themeId, mode } = themeBuild;
     const cssPath =
       themeId === 'default' && mode === 'light'
         ? cssTokensPath

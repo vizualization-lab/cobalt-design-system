@@ -1,9 +1,8 @@
 import assert from 'node:assert/strict';
-import { existsSync, readFileSync } from 'node:fs';
+import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import * as sass from 'sass';
-import { discoverTokenSets } from './token-set-utils.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const packageDir = join(__dirname, '..');
@@ -43,34 +42,49 @@ function assertHelperOutput() {
     @use 'index' as co;
 
     .example {
-      padding: co.space('inset.md');
-      color: co.color('text.default');
-      background: co.token('color.surface.static.default');
-      font-family: co.font('family.sans');
-      border-radius: co.$co-shape-radius-md;
+      padding: co.space('padding.md');
+      color: co.color('text.primary');
+      background: co.color('background.raised');
+      border-radius: co.radius('default');
 
-      @include co.type('body');
-      @include co.font-family('mono');
+      @include co.type('body.md');
+      @include co.font-family('sans');
+    }
+
+    .code {
+      @include co.type('code');
+    }
+
+    .heading {
+      @include co.type('heading.xl');
     }
 
     @include co.media-up('lg') {
       .example {
-        gap: co.space(4);
+        gap: co.space(400);
       }
     }
   `);
 
-  assert.match(css, /padding: var\(--co-space-inset-md\);/);
-  assert.match(css, /color: var\(--co-color-text-default\);/);
-  assert.match(css, /background: var\(--co-color-surface-static-default\);/);
-  assert.match(css, /font-family: var\(--co-font-family-mono\);/);
-  assert.match(css, /border-radius: var\(--co-shape-radius-md\);/);
-  assert.match(css, /font-size: var\(--co-typography-body-size\);/);
-  assert.match(css, /font-weight: var\(--co-typography-body-weight\);/);
-  assert.match(css, /letter-spacing: var\(--co-typography-body-tracking\);/);
-  assert.match(css, /line-height: var\(--co-typography-body-line-height\);/);
+  assert.match(css, /padding: var\(--co-space-padding-md\);/);
+  assert.match(css, /color: var\(--co-color-text-primary\);/);
+  assert.match(css, /background: var\(--co-color-background-raised\);/);
+  assert.match(css, /border-radius: var\(--co-radius-default\);/);
+  assert.match(css, /font-size: var\(--co-font-size-body-md\);/);
+  assert.match(css, /font-weight: var\(--co-font-weight-regular\);/);
+  assert.match(css, /letter-spacing: var\(--co-font-tracking-normal\);/);
+  assert.match(css, /line-height: var\(--co-font-line-height-300\);/);
+  assert.match(
+    css,
+    /font-family: ["']Inter Variable["'], ["']Noto Sans Variable["'], system-ui, sans-serif;/,
+  );
+  assert.match(css, /font-size: var\(--co-font-size-code\);/);
+  assert.match(css, /font-family: ["']JetBrains Mono Variable["'], ["']Fira Code["'], monospace;/);
+  assert.match(css, /font-size: var\(--co-font-size-heading-xl\);/);
+  assert.match(css, /letter-spacing: var\(--co-font-tracking-tight\);/);
+  assert.match(css, /line-height: var\(--co-font-line-height-200\);/);
   assert.match(css, /@media \(min-width: 1024px\)/);
-  assert.match(css, /gap: var\(--co-space-4\);/);
+  assert.match(css, /gap: var\(--co-space-400\);/);
 }
 
 function assertInvalidInputsFail() {
@@ -122,11 +136,11 @@ function assertPackageExportsResolve() {
       @use 'pkg:@cobalt/tokens/scss/css';
       @use 'pkg:@cobalt/tokens/scss/css/base';
       @use 'pkg:@cobalt/tokens/scss/css/fonts';
-      @use 'pkg:@cobalt/tokens/scss/themes/purple';
-      @use 'pkg:@cobalt/tokens/scss/css/themes/purple-dark';
+      @use 'pkg:@cobalt/tokens/scss/themes/iris';
+      @use 'pkg:@cobalt/tokens/scss/css/themes/iris-dark';
 
       .package-export {
-        color: co.color('text.default');
+        color: co.color('text.primary');
         gap: cobalt.space('gap.sm');
       }
     `,
@@ -136,14 +150,11 @@ function assertPackageExportsResolve() {
     },
   ).css;
 
-  assert.match(css, /--co-color-text-default:/);
+  assert.match(css, /--co-color-text-primary:/);
   assert.match(css, /font-family: (?:"Inter Variable"|'Inter Variable');/);
   assert.doesNotMatch(css, /@fontsource-variable/);
-  assert.match(
-    css,
-    /\[data-theme=(?:"purple"|'purple'|purple)\]\[data-mode=(?:"dark"|'dark'|dark)\]/,
-  );
-  assert.match(css, /color: var\(--co-color-text-default\);/);
+  assert.match(css, /\[data-theme=(?:"iris"|'iris'|iris)\]\[data-mode=(?:"dark"|'dark'|dark)\]/);
+  assert.match(css, /color: var\(--co-color-text-primary\);/);
   assert.match(css, /gap: var\(--co-space-gap-sm\);/);
 }
 
@@ -163,7 +174,7 @@ function assertTokenMapsMatchCss() {
 }
 
 function assertThemeShimsMatchCss() {
-  const discovery = discoverTokenSets(join(packageDir, 'tokens'));
+  const themesDir = join(cssDir, 'themes');
   const pairs = [
     [join(cssDir, 'tokens.css'), join(scssDir, 'css.scss')],
     [join(packageDir, 'src', 'base.css'), join(scssDir, 'css', 'base.scss')],
@@ -175,7 +186,10 @@ function assertThemeShimsMatchCss() {
     ],
   ];
 
-  const themeIds = [...new Set(discovery.themeTokenSets.map((tokenSet) => tokenSet.themeId))];
+  const themeIds = readdirSync(themesDir)
+    .filter((fileName) => /^[^.]+\.css$/.test(fileName) && !fileName.startsWith('tokens-'))
+    .map((fileName) => fileName.replace(/\.css$/, ''))
+    .sort();
   for (const themeId of themeIds) {
     pairs.push([
       join(cssDir, 'themes', `${themeId}.css`),
@@ -183,16 +197,17 @@ function assertThemeShimsMatchCss() {
     ]);
   }
 
-  for (const themeTokenSet of discovery.themeTokenSets) {
-    const { themeId, mode } = themeTokenSet;
-    const cssPath =
-      themeId === 'default' && mode === 'light'
-        ? join(cssDir, 'tokens.css')
-        : themeId === 'default' && mode === 'dark'
-          ? join(cssDir, 'tokens-dark.css')
-          : join(cssDir, 'themes', `tokens-${themeId}-${mode}.css`);
+  for (const themeId of themeIds) {
+    for (const mode of ['light', 'dark']) {
+      const cssPath =
+        themeId === 'default' && mode === 'light'
+          ? join(cssDir, 'tokens.css')
+          : themeId === 'default' && mode === 'dark'
+            ? join(cssDir, 'tokens-dark.css')
+            : join(cssDir, 'themes', `tokens-${themeId}-${mode}.css`);
 
-    pairs.push([cssPath, join(scssDir, 'css', 'themes', `${themeId}-${mode}.scss`)]);
+      pairs.push([cssPath, join(scssDir, 'css', 'themes', `${themeId}-${mode}.scss`)]);
+    }
   }
 
   for (const [cssPath, scssPath] of pairs) {
