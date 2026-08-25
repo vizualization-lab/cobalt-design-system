@@ -1,11 +1,16 @@
+/**
+ * Legacy tooling-manifest generator backed by tokens-tokstd sources.
+ * Retained until the tooling manifest is migrated to native Figma Variables inputs.
+ */
+
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'fs';
 import { dirname, join } from 'path';
 import { fileURLToPath } from 'url';
-import { discoverTokenSets } from './token-set-utils.js';
+import { discoverTokenSets } from './tokstd-token-set-utils.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const defaultPackageDir = join(__dirname, '..');
-const defaultTokensDir = join(defaultPackageDir, 'tokens');
+const defaultTokensDir = join(defaultPackageDir, 'tokens-tokstd');
 
 const CATEGORY_MAP = {
   border: 'Border',

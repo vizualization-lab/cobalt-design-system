@@ -1,7 +1,9 @@
+/** Validation for the retained Tokens Studio token-set structure. */
+
 import { readFileSync } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
-import { discoverTokenSets, getMatchingPrimitiveThemeTokenSet } from './token-set-utils.js';
+import { discoverTokenSets, getMatchingPrimitiveThemeTokenSet } from './tokstd-token-set-utils.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -328,7 +330,7 @@ const isCLI =
   process.argv[1] && fileURLToPath(import.meta.url).endsWith(process.argv[1].replace(/.*\//, ''));
 
 if (isCLI) {
-  const tokensDir = join(__dirname, '..', 'tokens');
+  const tokensDir = join(__dirname, '..', 'tokens-tokstd');
   const { errors } = validateTokens(tokensDir);
 
   if (errors.length > 0) {

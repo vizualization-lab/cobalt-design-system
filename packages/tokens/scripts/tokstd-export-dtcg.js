@@ -1,10 +1,15 @@
+/**
+ * Legacy Tokens Studio for Figma workflow.
+ * Exports a combined DTCG artifact from tokens-tokstd sources.
+ */
+
 import { readFileSync, writeFileSync, mkdirSync } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
-import { discoverTokenSets, getTokenSetOrder } from './token-set-utils.js';
+import { discoverTokenSets, getTokenSetOrder } from './tokstd-token-set-utils.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const tokensDir = join(__dirname, '..', 'tokens');
+const tokensDir = join(__dirname, '..', 'tokens-tokstd');
 const distDir = join(__dirname, '..', 'dist');
 
 function readJson(filePath) {
@@ -230,7 +235,7 @@ const isCLI =
 if (isCLI) {
   const result = exportDtcgTokens();
   mkdirSync(distDir, { recursive: true });
-  const outPath = join(distDir, 'tokens-dtcg.json');
+  const outPath = join(distDir, 'tokens-tokstd-dtcg.json');
   writeFileSync(outPath, JSON.stringify(result, null, 2) + '\n');
   console.log(`Exported DTCG token artifact → ${outPath}`);
 }
