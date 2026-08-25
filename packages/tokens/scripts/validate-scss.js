@@ -225,6 +225,12 @@ assertExists(join(scssDir, 'index.scss'));
 assertExists(join(scssDir, 'styles.scss'));
 assertExists(join(scssDir, 'functions.scss'));
 assertExists(join(scssDir, 'mixins.scss'));
+assertExists(join(cssDir, 'base.css'));
+assert.equal(
+  read(join(cssDir, 'base.css')),
+  read(join(packageDir, 'src', 'base.css')),
+  'Generated base CSS must match its source file.',
+);
 assertExists(join(cssDir, 'files', 'inter-latin-wght-normal.woff2'));
 assertExists(join(scssDir, 'css', 'files', 'inter-latin-wght-normal.woff2'));
 assertHelperOutput();

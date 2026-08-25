@@ -13,6 +13,7 @@ import { fileURLToPath } from 'node:url';
 import { generateFontStyles } from './scripts/generate-fonts.js';
 import { generateScss } from './scripts/generate-scss.js';
 import { generateTailwindPreset } from './scripts/generate-tailwind-preset.js';
+import { generateToolingManifest } from './scripts/generate-tooling-manifest.js';
 import { generateUtilitiesCss } from './scripts/generate-utilities-css.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -265,8 +266,14 @@ async function build() {
 
   writeThemeBundles(discovery);
 
+  console.log('Copying base element styles...');
+  copyFileSync(join(__dirname, 'src', 'base.css'), join(distDir, 'css', 'base.css'));
+
   console.log('Generating utility classes...');
   generateUtilitiesCss(__dirname, tokensDir);
+
+  console.log('Generating tooling manifest...');
+  generateToolingManifest(__dirname, tokensDir);
 
   console.log('Generating SCSS modules...');
   generateScss(__dirname, discovery);
