@@ -7,286 +7,128 @@
  *   - dist/tailwind/theme.css   (Tailwind v4 @theme block)
  */
 
-import { readFileSync, writeFileSync, mkdirSync } from 'fs';
+import { mkdirSync, readFileSync, writeFileSync } from 'fs';
 import { join } from 'path';
 
-/**
- * Read the built CSS tokens file and extract all CSS variable declarations.
- * Returns a map of variable name → raw value (e.g. "--co-space-4" → "1rem").
- */
+const FONT_FAMILIES = {
+  sans: ["'Inter Variable'", "'Noto Sans Variable'", 'system-ui', 'sans-serif'],
+  mono: ["'JetBrains Mono Variable'", "'Fira Code'", 'monospace'],
+};
+
 function loadTokens(rootDir) {
   const css = readFileSync(join(rootDir, 'dist/css/tokens.css'), 'utf-8');
   const tokens = {};
   const re = /--(co-[\w-]+)\s*:\s*([^;]+);/g;
   let match;
+
   while ((match = re.exec(css)) !== null) {
     tokens[`--${match[1]}`] = match[2].trim();
   }
+
+  if (Object.keys(tokens).length === 0) {
+    throw new Error('No --co-* CSS variables found while generating the Tailwind preset.');
+  }
+
   return tokens;
 }
 
-/**
- * Build the Tailwind v3 theme object and v4 CSS @theme entries from token CSS variables.
- */
+function tokenReference(tokens, varName) {
+  if (!(varName in tokens)) {
+    throw new Error(`Missing required Tailwind token: ${varName}`);
+  }
+
+  return `var(${varName})`;
+}
+
+function setNested(target, path, value) {
+  let current = target;
+
+  for (const segment of path.slice(0, -1)) {
+    current[segment] ??= {};
+    current = current[segment];
+  }
+
+  current[path.at(-1)] = value;
+}
+
+function discoverNestedTokens(tokens, prefix) {
+  const result = {};
+
+  for (const varName of Object.keys(tokens).sort()) {
+    if (!varName.startsWith(prefix)) continue;
+
+    const path = varName.slice(prefix.length).split('-');
+    const value = `var(${varName})`;
+    setNested(result, path, value);
+
+    // Tailwind uses DEFAULT to make a nested role available without a suffix,
+    // while the explicit "default" key preserves the DTCG token name.
+    if (path.at(-1) === 'default') {
+      setNested(result, [...path.slice(0, -1), 'DEFAULT'], value);
+    }
+  }
+
+  return result;
+}
+
+function discoverFlatTokens(tokens, prefix) {
+  const result = {};
+
+  for (const varName of Object.keys(tokens).sort()) {
+    if (!varName.startsWith(prefix)) continue;
+    result[varName.slice(prefix.length)] = `var(${varName})`;
+  }
+
+  return result;
+}
+
 function buildMappings(tokens) {
-  // ── Colors ──────────────────────────────────────────────────────────────────
-  const colors = {};
-
-  // Semantic state color roles: 5 functional variants per role
-  colors.state = {};
-  for (const role of ['theme', 'secondary', 'neutral', 'danger', 'success', 'warning']) {
-    colors.state[role] = {};
-    for (const variant of ['base', 'light', 'dark', 'subtle', 'contrast']) {
-      const varName = `--co-color-state-${role}-${variant}`;
-      if (varName in tokens) {
-        colors.state[role][variant] = `var(${varName})`;
-        if (variant === 'base') colors.state[role].DEFAULT = `var(${varName})`;
-      }
-    }
-  }
-
-  // Surface colors
-  colors.surface = { static: {}, interactive: {} };
-  for (const variant of ['page', 'default', 'raised', 'sunken', 'overlay', 'contrast']) {
-    const varName = `--co-color-surface-static-${variant}`;
-    if (varName in tokens) {
-      colors.surface.static[variant] = `var(${varName})`;
-      if (variant === 'default') colors.surface.static.DEFAULT = `var(${varName})`;
-    }
-  }
-
-  // Text colors
-  colors.text = {};
-  for (const variant of [
-    'default',
-    'secondary',
-    'tertiary',
-    'placeholder',
-    'link',
-    'theme',
-    'on-primary',
-    'on-secondary',
-    'on-danger',
-    'on-success',
-    'on-warning',
-    'on-contrast',
-  ]) {
-    const varName = `--co-color-text-${variant}`;
-    if (varName in tokens) {
-      colors.text[variant] = `var(${varName})`;
-      if (variant === 'default') colors.text.DEFAULT = `var(${varName})`;
-    }
-  }
-
-  // Border colors
-  colors.border = {};
-  for (const variant of [
-    'default',
-    'strong',
-    'subtle',
-    'active',
-    'theme',
-    'danger',
-    'success',
-    'focus',
-    'selected',
-    'contrast',
-  ]) {
-    const varName = `--co-color-border-${variant}`;
-    if (varName in tokens) {
-      colors.border[variant] = `var(${varName})`;
-      if (variant === 'default') colors.border.DEFAULT = `var(${varName})`;
-    }
-  }
-
-  // Interactive surface colors (role → state hierarchy)
-  for (const [role, states] of [
-    ['theme', ['default', 'hover', 'active', 'selected']],
-    ['secondary', ['default', 'hover', 'active']],
-    ['subtle', ['default', 'hover', 'active', 'selected']],
-    ['contrast', ['default', 'hover', 'active', 'selected']],
-    ['danger', ['default', 'hover', 'active']],
-    ['success', ['default', 'hover', 'active']],
-    ['warning', ['default', 'hover', 'active']],
-  ]) {
-    colors.surface.interactive[role] = {};
-    for (const state of states) {
-      const varName = `--co-color-surface-interactive-${role}-${state}`;
-      if (varName in tokens) {
-        colors.surface.interactive[role][state] = `var(${varName})`;
-        if (role === 'theme' && state === 'default') {
-          colors.surface.interactive.DEFAULT = `var(${varName})`;
-        }
-      }
-    }
-  }
-
-  // Feedback colors (status → property hierarchy)
-  colors.feedback = {};
-  for (const [status, properties] of [
-    ['danger', ['background', 'text']],
-    ['success', ['background', 'text']],
-    ['warning', ['background', 'text']],
-    ['neutral', ['background', 'text']],
-  ]) {
-    colors.feedback[status] = {};
-    for (const property of properties) {
-      const varName = `--co-color-feedback-${status}-${property}`;
-      if (varName in tokens) {
-        colors.feedback[status][property] = `var(${varName})`;
-      }
-    }
-  }
-
-  // Primitive colors (escape hatch) are discovered from built CSS so new
-  // families or extra aliases flow through without hand-maintaining a list.
-  const primitiveFamilies = new Map();
-  for (const varName of Object.keys(tokens)) {
-    const match = varName.match(/^--co-color-primitive-(.+)-(\d+)$/);
-    if (!match) continue;
-
-    const [, family, shade] = match;
-    if (!primitiveFamilies.has(family)) {
-      primitiveFamilies.set(family, new Set());
-    }
-
-    primitiveFamilies.get(family).add(shade);
-  }
-
-  for (const [family, shades] of [...primitiveFamilies.entries()].sort((a, b) =>
-    a[0].localeCompare(b[0]),
-  )) {
-    const key = `primitive-${family}`;
-    colors[key] = {};
-
-    for (const shade of [...shades].sort((a, b) => Number(a) - Number(b))) {
-      colors[key][shade] = `var(--co-color-primitive-${family}-${shade})`;
-    }
-  }
-
-  // Primitive white & black
-  colors.white = 'var(--co-color-primitive-white)';
-  colors.black = 'var(--co-color-primitive-black)';
+  // All co.color primitives and semantic roles retain their refreshed token
+  // hierarchy: neutral, iris, background, text, icon, border, and link.
+  const colors = discoverNestedTokens(tokens, '--co-color-');
+  colors.theme = discoverFlatTokens(tokens, '--co-theme-');
+  colors.elevation = {
+    shadow: discoverFlatTokens(tokens, '--co-elevation-shadow-'),
+  };
+  colors.white = tokenReference(tokens, '--co-color-neutral-0');
+  colors.black = tokenReference(tokens, '--co-color-neutral-1000');
   colors.transparent = 'transparent';
   colors.current = 'currentColor';
 
-  // ── Spacing ─────────────────────────────────────────────────────────────────
   const spacing = {};
-  for (const step of ['0', '1', '2', '3', '4', '5', '6', '8', '10', '12', '16', '20', '24']) {
-    const varName = `--co-space-${step}`;
-    if (varName in tokens) {
-      spacing[step] = `var(${varName})`;
-    }
+  for (const [key, value] of Object.entries(discoverFlatTokens(tokens, '--co-space-'))) {
+    if (/^\d+$/.test(key)) spacing[key] = value;
   }
   spacing.px = '1px';
 
-  // Semantic spacing aliases
-  for (const size of ['xs', 'sm', 'md', 'lg', 'xl']) {
-    const gapVar = `--co-space-gap-${size}`;
-    if (gapVar in tokens) spacing[`gap-${size}`] = `var(${gapVar})`;
-    const insetVar = `--co-space-inset-${size}`;
-    if (insetVar in tokens) spacing[`inset-${size}`] = `var(${insetVar})`;
-  }
-
-  // ── Border Radius ───────────────────────────────────────────────────────────
-  const borderRadius = {};
-  for (const key of ['none', 'sm', 'md', 'lg', 'xl', '2xl', 'full']) {
-    const varName = `--co-shape-radius-${key}`;
-    if (varName in tokens) {
-      borderRadius[key] = `var(${varName})`;
+  for (const role of ['gap', 'padding', 'margin']) {
+    const roleTokens = discoverFlatTokens(tokens, `--co-space-${role}-`);
+    for (const [key, value] of Object.entries(roleTokens)) {
+      spacing[`${role}-${key}`] = value;
     }
   }
-  borderRadius.DEFAULT = 'var(--co-shape-radius-md)';
 
-  // ── Font Family ─────────────────────────────────────────────────────────────
-  const fontFamily = {
-    sans: ['var(--co-font-family-sans)'],
-    mono: ['var(--co-font-family-mono)'],
-  };
+  const borderRadius = discoverFlatTokens(tokens, '--co-radius-');
+  borderRadius.none = tokenReference(tokens, '--co-border-radius-none');
+  borderRadius.DEFAULT = tokenReference(tokens, '--co-radius-default');
 
-  // ── Font Size ───────────────────────────────────────────────────────────────
-  const fontSize = {};
-  const fontSizeMap = {
-    xs: 'xs',
-    sm: 'sm',
-    base: 'md',
-    lg: 'lg',
-    xl: 'xl',
-    '2xl': '2xl',
-    '3xl': '3xl',
-    '4xl': '4xl',
-  };
-  for (const [twKey, tokenKey] of Object.entries(fontSizeMap)) {
-    fontSize[twKey] = `var(--co-font-size-${tokenKey})`;
-  }
+  const fontFamily = FONT_FAMILIES;
+  const fontSize = discoverFlatTokens(tokens, '--co-font-size-');
+  const fontWeight = discoverFlatTokens(tokens, '--co-font-weight-');
+  fontWeight.normal = fontWeight.regular;
+  const lineHeight = discoverFlatTokens(tokens, '--co-font-line-height-');
+  const letterSpacing = discoverFlatTokens(tokens, '--co-font-tracking-');
 
-  // ── Font Weight ─────────────────────────────────────────────────────────────
-  const fontWeight = {
-    normal: 'var(--co-font-weight-regular)',
-    medium: 'var(--co-font-weight-medium)',
-    semibold: 'var(--co-font-weight-semibold)',
-    bold: 'var(--co-font-weight-bold)',
-  };
+  const zIndex = discoverFlatTokens(tokens, '--co-elevation-surface-');
+  Object.assign(zIndex, discoverFlatTokens(tokens, '--co-elevation-z-'));
 
-  // ── Line Height ─────────────────────────────────────────────────────────────
-  const lineHeight = {
-    tight: 'var(--co-font-line-height-tight)',
-    normal: 'var(--co-font-line-height-normal)',
-    relaxed: 'var(--co-font-line-height-relaxed)',
-  };
-
-  // ── Box Shadow ──────────────────────────────────────────────────────────────
-  const boxShadow = {
-    sm: 'var(--co-elevation-shadow-sm)',
-    DEFAULT: 'var(--co-elevation-shadow-md)',
-    md: 'var(--co-elevation-shadow-md)',
-    lg: 'var(--co-elevation-shadow-lg)',
-    xl: 'var(--co-elevation-shadow-xl)',
-    none: 'none',
-  };
-
-  // ── Z-Index ─────────────────────────────────────────────────────────────────
-  const zIndex = {
-    dropdown: 'var(--co-elevation-z-dropdown)',
-    sticky: 'var(--co-elevation-z-sticky)',
-    fixed: 'var(--co-elevation-z-fixed)',
-    'modal-backdrop': 'var(--co-elevation-z-modal-backdrop)',
-    modal: 'var(--co-elevation-z-modal)',
-    popover: 'var(--co-elevation-z-popover)',
-    tooltip: 'var(--co-elevation-z-tooltip)',
-  };
-
-  // ── Transition Duration ─────────────────────────────────────────────────────
-  const transitionDuration = {
-    fast: 'var(--co-motion-duration-fast)',
-    DEFAULT: 'var(--co-motion-duration-normal)',
-    normal: 'var(--co-motion-duration-normal)',
-    slow: 'var(--co-motion-duration-slow)',
-  };
-
-  // ── Transition Timing Function ──────────────────────────────────────────────
-  const transitionTimingFunction = {
-    DEFAULT: 'var(--co-motion-easing-default)',
-    in: 'var(--co-motion-easing-in)',
-    out: 'var(--co-motion-easing-out)',
-    'in-out': 'var(--co-motion-easing-in-out)',
-  };
-
-  // ── Breakpoints (raw values — var() not supported in @media) ────────────────
+  // Breakpoints must be raw values because CSS custom properties are not
+  // supported in media query conditions.
   const screens = {};
   for (const bp of ['sm', 'md', 'lg', 'xl', '2xl']) {
     const varName = `--co-breakpoint-${bp}`;
-    if (varName in tokens) {
-      screens[bp] = tokens[varName];
-    }
+    if (varName in tokens) screens[bp] = tokens[varName];
   }
-
-  // ── Opacity ─────────────────────────────────────────────────────────────────
-  const opacity = {
-    disabled: 'var(--co-opacity-disabled)',
-    overlay: 'var(--co-opacity-overlay)',
-    placeholder: 'var(--co-opacity-placeholder)',
-  };
 
   return {
     colors,
@@ -296,16 +138,39 @@ function buildMappings(tokens) {
     fontSize,
     fontWeight,
     lineHeight,
-    boxShadow,
+    letterSpacing,
     zIndex,
-    transitionDuration,
-    transitionTimingFunction,
     screens,
-    opacity,
   };
 }
 
-// ── V3 Preset Generation ────────────────────────────────────────────────────
+function serializeJS(value, indent) {
+  const pad = ' '.repeat(indent);
+  const innerPad = ' '.repeat(indent + 2);
+
+  if (typeof value === 'string') {
+    return `'${value.replaceAll('\\', '\\\\').replaceAll("'", "\\'")}'`;
+  }
+
+  if (Array.isArray(value)) {
+    return `[${value.map((item) => serializeJS(item, indent + 2)).join(', ')}]`;
+  }
+
+  if (typeof value === 'object' && value !== null) {
+    const keys = Object.keys(value);
+    if (keys.length === 0) return '{}';
+
+    const lines = ['{'];
+    for (const key of keys) {
+      const safeKey = /^[a-zA-Z_$][a-zA-Z0-9_$]*$/.test(key) ? key : `'${key}'`;
+      lines.push(`${innerPad}${safeKey}: ${serializeJS(value[key], indent + 2)},`);
+    }
+    lines.push(`${pad}}`);
+    return lines.join('\n');
+  }
+
+  return String(value);
+}
 
 function generateV3Preset(mappings) {
   const lines = [
@@ -319,68 +184,13 @@ function generateV3Preset(mappings) {
     '  theme: {',
   ];
 
-  const entries = [
-    ['colors', mappings.colors],
-    ['spacing', mappings.spacing],
-    ['borderRadius', mappings.borderRadius],
-    ['fontFamily', mappings.fontFamily],
-    ['fontSize', mappings.fontSize],
-    ['fontWeight', mappings.fontWeight],
-    ['lineHeight', mappings.lineHeight],
-    ['boxShadow', mappings.boxShadow],
-    ['zIndex', mappings.zIndex],
-    ['transitionDuration', mappings.transitionDuration],
-    ['transitionTimingFunction', mappings.transitionTimingFunction],
-    ['screens', mappings.screens],
-    ['opacity', mappings.opacity],
-  ];
-
-  for (const [key, value] of entries) {
+  for (const [key, value] of Object.entries(mappings)) {
     lines.push(`    ${key}: ${serializeJS(value, 4)},`);
   }
 
-  lines.push('  },');
-  lines.push('};');
-  lines.push('');
-  lines.push('export default cobaltPreset;');
-  lines.push('');
-
+  lines.push('  },', '};', '', 'export default cobaltPreset;', '');
   return lines.join('\n');
 }
-
-/**
- * Serialize a value to readable JS source. Handles nested objects, arrays, and strings.
- */
-function serializeJS(value, indent) {
-  const pad = ' '.repeat(indent);
-  const innerPad = ' '.repeat(indent + 2);
-
-  if (typeof value === 'string') {
-    return `'${value}'`;
-  }
-
-  if (Array.isArray(value)) {
-    const items = value.map((v) => serializeJS(v, indent + 2));
-    return `[${items.join(', ')}]`;
-  }
-
-  if (typeof value === 'object' && value !== null) {
-    const keys = Object.keys(value);
-    if (keys.length === 0) return '{}';
-
-    const lines = ['{'];
-    for (const k of keys) {
-      const safeKey = /^[a-zA-Z_$][a-zA-Z0-9_$]*$/.test(k) ? k : `'${k}'`;
-      lines.push(`${innerPad}${safeKey}: ${serializeJS(value[k], indent + 2)},`);
-    }
-    lines.push(`${pad}}`);
-    return lines.join('\n');
-  }
-
-  return String(value);
-}
-
-// ── V3 TypeScript Declarations ──────────────────────────────────────────────
 
 function generateV3Dts() {
   return [
@@ -392,131 +202,6 @@ function generateV3Dts() {
   ].join('\n');
 }
 
-// ── V4 Theme CSS Generation ────────────────────────────────────────────────
-
-function generateV4ThemeCSS(mappings) {
-  const lines = [
-    '/**',
-    ' * Cobalt Design System — Tailwind CSS v4 Theme',
-    ' * Auto-generated from design tokens. Do not edit.',
-    ' */',
-    '',
-    '@theme {',
-  ];
-
-  // Colors
-  lines.push('  /* Colors */');
-  emitV4Colors(lines, mappings.colors);
-
-  // Spacing
-  lines.push('');
-  lines.push('  /* Spacing */');
-  for (const [key, value] of Object.entries(mappings.spacing)) {
-    lines.push(`  --spacing-${key}: ${value};`);
-  }
-
-  // Border radius
-  lines.push('');
-  lines.push('  /* Border Radius */');
-  for (const [key, value] of Object.entries(mappings.borderRadius)) {
-    if (key === 'DEFAULT') {
-      lines.push(`  --radius: ${value};`);
-    } else {
-      lines.push(`  --radius-${key}: ${value};`);
-    }
-  }
-
-  // Font family
-  lines.push('');
-  lines.push('  /* Font Family */');
-  for (const [key, [value]] of Object.entries(mappings.fontFamily)) {
-    lines.push(`  --font-${key}: ${value};`);
-  }
-
-  // Font size
-  lines.push('');
-  lines.push('  /* Font Size */');
-  for (const [key, value] of Object.entries(mappings.fontSize)) {
-    lines.push(`  --text-${key}: ${value};`);
-  }
-
-  // Font weight
-  lines.push('');
-  lines.push('  /* Font Weight */');
-  for (const [key, value] of Object.entries(mappings.fontWeight)) {
-    lines.push(`  --font-weight-${key}: ${value};`);
-  }
-
-  // Line height
-  lines.push('');
-  lines.push('  /* Line Height */');
-  for (const [key, value] of Object.entries(mappings.lineHeight)) {
-    lines.push(`  --leading-${key}: ${value};`);
-  }
-
-  // Box shadow
-  lines.push('');
-  lines.push('  /* Box Shadow */');
-  for (const [key, value] of Object.entries(mappings.boxShadow)) {
-    if (key === 'DEFAULT') {
-      lines.push(`  --shadow: ${value};`);
-    } else {
-      lines.push(`  --shadow-${key}: ${value};`);
-    }
-  }
-
-  // Z-index
-  lines.push('');
-  lines.push('  /* Z-Index */');
-  for (const [key, value] of Object.entries(mappings.zIndex)) {
-    lines.push(`  --z-${key}: ${value};`);
-  }
-
-  // Transition duration
-  lines.push('');
-  lines.push('  /* Transition Duration */');
-  for (const [key, value] of Object.entries(mappings.transitionDuration)) {
-    if (key === 'DEFAULT') {
-      lines.push(`  --duration: ${value};`);
-    } else {
-      lines.push(`  --duration-${key}: ${value};`);
-    }
-  }
-
-  // Transition timing function
-  lines.push('');
-  lines.push('  /* Transition Timing Function */');
-  for (const [key, value] of Object.entries(mappings.transitionTimingFunction)) {
-    if (key === 'DEFAULT') {
-      lines.push(`  --ease: ${value};`);
-    } else {
-      lines.push(`  --ease-${key}: ${value};`);
-    }
-  }
-
-  // Breakpoints
-  lines.push('');
-  lines.push('  /* Breakpoints */');
-  for (const [key, value] of Object.entries(mappings.screens)) {
-    lines.push(`  --breakpoint-${key}: ${value};`);
-  }
-
-  // Opacity
-  lines.push('');
-  lines.push('  /* Opacity */');
-  for (const [key, value] of Object.entries(mappings.opacity)) {
-    lines.push(`  --opacity-${key}: ${value};`);
-  }
-
-  lines.push('}');
-  lines.push('');
-
-  return lines.join('\n');
-}
-
-/**
- * Emit v4 color theme variables. Handles deeply nested color objects and DEFAULT keys.
- */
 function emitV4Colors(lines, colors, path = []) {
   for (const [group, value] of Object.entries(colors)) {
     if (typeof value === 'string') {
@@ -529,7 +214,57 @@ function emitV4Colors(lines, colors, path = []) {
   }
 }
 
-// ── Main ────────────────────────────────────────────────────────────────────
+function emitV4Entries(lines, label, prefix, entries, defaultKey = null) {
+  lines.push('', `  /* ${label} */`);
+  for (const [key, value] of Object.entries(entries)) {
+    const outputKey = key === defaultKey ? prefix : `${prefix}-${key}`;
+    lines.push(`  --${outputKey}: ${value};`);
+  }
+}
+
+function generateV4ThemeCSS(mappings) {
+  const lines = [
+    '/**',
+    ' * Cobalt Design System — Tailwind CSS v4 Theme',
+    ' * Auto-generated from design tokens. Do not edit.',
+    ' */',
+    '',
+    '@theme {',
+    '  /* Colors */',
+  ];
+
+  emitV4Colors(lines, mappings.colors);
+  emitV4Entries(lines, 'Spacing', 'spacing', mappings.spacing);
+  emitV4Entries(lines, 'Border Radius', 'radius', mappings.borderRadius, 'DEFAULT');
+
+  lines.push('', '  /* Font Family */');
+  for (const [key, value] of Object.entries(mappings.fontFamily)) {
+    lines.push(`  --font-${key}: ${value.join(', ')};`);
+  }
+
+  emitV4Entries(lines, 'Font Size', 'text', mappings.fontSize);
+  emitV4Entries(lines, 'Font Weight', 'font-weight', mappings.fontWeight);
+  emitV4Entries(lines, 'Line Height', 'leading', mappings.lineHeight);
+  emitV4Entries(lines, 'Letter Spacing', 'tracking', mappings.letterSpacing);
+  emitV4Entries(lines, 'Z-Index', 'z', mappings.zIndex);
+  emitV4Entries(lines, 'Breakpoints', 'breakpoint', mappings.screens);
+
+  lines.push('}', '');
+  return lines.join('\n');
+}
+
+function validateReferences(tokens, generatedFiles) {
+  for (const [fileName, content] of Object.entries(generatedFiles)) {
+    const references = [...content.matchAll(/var\((--co-[\w-]+)\)/g)].map((match) => match[1]);
+    const missing = [...new Set(references.filter((varName) => !(varName in tokens)))];
+
+    if (missing.length > 0) {
+      throw new Error(
+        `Tailwind ${fileName} references missing tokens:\n${missing.map((name) => `  - ${name}`).join('\n')}`,
+      );
+    }
+  }
+}
 
 export async function generateTailwindPreset(rootDir) {
   const outDir = join(rootDir, 'dist/tailwind');
@@ -537,12 +272,16 @@ export async function generateTailwindPreset(rootDir) {
 
   const tokens = loadTokens(rootDir);
   const mappings = buildMappings(tokens);
+  const generatedFiles = {
+    'preset.js': generateV3Preset(mappings),
+    'preset.d.ts': generateV3Dts(),
+    'theme.css': generateV4ThemeCSS(mappings),
+  };
 
-  writeFileSync(join(outDir, 'preset.js'), generateV3Preset(mappings));
-  writeFileSync(join(outDir, 'preset.d.ts'), generateV3Dts());
-  writeFileSync(join(outDir, 'theme.css'), generateV4ThemeCSS(mappings));
+  validateReferences(tokens, generatedFiles);
 
-  console.log(`  → dist/tailwind/preset.js`);
-  console.log(`  → dist/tailwind/preset.d.ts`);
-  console.log(`  → dist/tailwind/theme.css`);
+  for (const [fileName, content] of Object.entries(generatedFiles)) {
+    writeFileSync(join(outDir, fileName), content);
+    console.log(`  → dist/tailwind/${fileName}`);
+  }
 }
