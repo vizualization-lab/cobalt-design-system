@@ -5,32 +5,32 @@
   .co-gap-0 {
     gap: var(--co-space-0);
   }
-  .co-gap-1 {
-    gap: var(--co-space-1);
+  .co-gap-100 {
+    gap: var(--co-space-100);
   }
-  .co-gap-2 {
-    gap: var(--co-space-2);
+  .co-gap-200 {
+    gap: var(--co-space-200);
   }
-  .co-gap-3 {
-    gap: var(--co-space-3);
+  .co-gap-300 {
+    gap: var(--co-space-300);
   }
-  .co-gap-4 {
-    gap: var(--co-space-4);
+  .co-gap-400 {
+    gap: var(--co-space-400);
   }
-  .co-gap-5 {
-    gap: var(--co-space-5);
+  .co-gap-500 {
+    gap: var(--co-space-500);
   }
-  .co-gap-6 {
-    gap: var(--co-space-6);
+  .co-gap-600 {
+    gap: var(--co-space-600);
   }
-  .co-gap-8 {
-    gap: var(--co-space-8);
+  .co-gap-800 {
+    gap: var(--co-space-800);
   }
-  .co-gap-10 {
-    gap: var(--co-space-10);
+  .co-gap-1000 {
+    gap: var(--co-space-1000);
   }
-  .co-gap-12 {
-    gap: var(--co-space-12);
+  .co-gap-1100 {
+    gap: var(--co-space-1100);
   }
 
   /* ──────────────────────────────────────────────
@@ -39,55 +39,55 @@
   .co-p-0 {
     padding: var(--co-space-0);
   }
-  .co-p-1 {
-    padding: var(--co-space-1);
+  .co-p-100 {
+    padding: var(--co-space-100);
   }
-  .co-p-2 {
-    padding: var(--co-space-2);
+  .co-p-200 {
+    padding: var(--co-space-200);
   }
-  .co-p-3 {
-    padding: var(--co-space-3);
+  .co-p-300 {
+    padding: var(--co-space-300);
   }
-  .co-p-4 {
-    padding: var(--co-space-4);
+  .co-p-400 {
+    padding: var(--co-space-400);
   }
-  .co-p-6 {
-    padding: var(--co-space-6);
+  .co-p-600 {
+    padding: var(--co-space-600);
   }
-  .co-p-8 {
-    padding: var(--co-space-8);
+  .co-p-800 {
+    padding: var(--co-space-800);
   }
 
   .co-px-0 {
     padding-inline: var(--co-space-0);
   }
-  .co-px-2 {
-    padding-inline: var(--co-space-2);
+  .co-px-200 {
+    padding-inline: var(--co-space-200);
   }
-  .co-px-4 {
-    padding-inline: var(--co-space-4);
+  .co-px-400 {
+    padding-inline: var(--co-space-400);
   }
-  .co-px-6 {
-    padding-inline: var(--co-space-6);
+  .co-px-600 {
+    padding-inline: var(--co-space-600);
   }
-  .co-px-8 {
-    padding-inline: var(--co-space-8);
+  .co-px-800 {
+    padding-inline: var(--co-space-800);
   }
 
   .co-py-0 {
     padding-block: var(--co-space-0);
   }
-  .co-py-2 {
-    padding-block: var(--co-space-2);
+  .co-py-200 {
+    padding-block: var(--co-space-200);
   }
-  .co-py-4 {
-    padding-block: var(--co-space-4);
+  .co-py-400 {
+    padding-block: var(--co-space-400);
   }
-  .co-py-6 {
-    padding-block: var(--co-space-6);
+  .co-py-600 {
+    padding-block: var(--co-space-600);
   }
-  .co-py-8 {
-    padding-block: var(--co-space-8);
+  .co-py-800 {
+    padding-block: var(--co-space-800);
   }
 
   /* ──────────────────────────────────────────────
@@ -109,149 +109,162 @@
   .co-mt-0 {
     margin-top: var(--co-space-0);
   }
-  .co-mt-2 {
-    margin-top: var(--co-space-2);
+  .co-mt-200 {
+    margin-top: var(--co-space-200);
   }
-  .co-mt-4 {
-    margin-top: var(--co-space-4);
+  .co-mt-400 {
+    margin-top: var(--co-space-400);
   }
-  .co-mt-6 {
-    margin-top: var(--co-space-6);
+  .co-mt-600 {
+    margin-top: var(--co-space-600);
   }
-  .co-mt-8 {
-    margin-top: var(--co-space-8);
+  .co-mt-800 {
+    margin-top: var(--co-space-800);
   }
 
   .co-mb-0 {
     margin-bottom: var(--co-space-0);
   }
-  .co-mb-2 {
-    margin-bottom: var(--co-space-2);
+  .co-mb-200 {
+    margin-bottom: var(--co-space-200);
   }
-  .co-mb-4 {
-    margin-bottom: var(--co-space-4);
+  .co-mb-400 {
+    margin-bottom: var(--co-space-400);
   }
-  .co-mb-6 {
-    margin-bottom: var(--co-space-6);
+  .co-mb-600 {
+    margin-bottom: var(--co-space-600);
   }
-  .co-mb-8 {
-    margin-bottom: var(--co-space-8);
+  .co-mb-800 {
+    margin-bottom: var(--co-space-800);
   }
 
   /* ──────────────────────────────────────────────
-   * Content max-width  →  mapped to --co-layout-*
+   * Content max-width  →  mapped to breakpoint tokens
    * ────────────────────────────────────────────── */
   .co-max-w-screen-sm {
-    max-width: var(--co-layout-content-max-width-sm);
+    max-width: var(--co-breakpoint-sm);
   }
   .co-max-w-screen-md {
-    max-width: var(--co-layout-content-max-width-md);
+    max-width: var(--co-breakpoint-md);
   }
   .co-max-w-screen-lg {
-    max-width: var(--co-layout-content-max-width-lg);
+    max-width: var(--co-breakpoint-lg);
   }
   .co-max-w-screen-xl {
-    max-width: var(--co-layout-content-max-width-xl);
+    max-width: var(--co-breakpoint-xl);
   }
 
   /* ──────────────────────────────────────────────
-   * Typography roles  →  semantic presets
+   * Typography roles  →  refreshed heading/body presets
    *
    * Each .co-type-* applies the full set of role
    * properties (size, weight, tracking, line-height)
-   * from the --co-typography-* semantic tokens.
+   * from the refreshed semantic font-size roles and
+   * primitive weight, tracking, and line-height tokens.
    * ────────────────────────────────────────────── */
-  .co-type-display {
-    font-size: var(--co-typography-display-size);
-    font-weight: var(--co-typography-display-weight);
-    letter-spacing: var(--co-typography-display-tracking);
-    line-height: var(--co-typography-display-line-height);
+  .co-type-heading-2xl {
+    font-size: var(--co-font-size-heading-2xl);
+    font-weight: var(--co-font-weight-regular);
+    letter-spacing: var(--co-font-tracking-tight);
+    line-height: var(--co-font-line-height-100);
   }
-  .co-type-heading {
-    font-size: var(--co-typography-heading-size);
-    font-weight: var(--co-typography-heading-weight);
-    letter-spacing: var(--co-typography-heading-tracking);
-    line-height: var(--co-typography-heading-line-height);
+  .co-type-heading-xl {
+    font-size: var(--co-font-size-heading-xl);
+    font-weight: var(--co-font-weight-regular);
+    letter-spacing: var(--co-font-tracking-tight);
+    line-height: var(--co-font-line-height-200);
   }
-  .co-type-title {
-    font-size: var(--co-typography-title-size);
-    font-weight: var(--co-typography-title-weight);
-    letter-spacing: var(--co-typography-title-tracking);
-    line-height: var(--co-typography-title-line-height);
+  .co-type-heading-lg {
+    font-size: var(--co-font-size-heading-lg);
+    font-weight: var(--co-font-weight-regular);
+    letter-spacing: var(--co-font-tracking-tight);
+    line-height: var(--co-font-line-height-200);
   }
-  .co-type-subtitle {
-    font-size: var(--co-typography-subtitle-size);
-    font-weight: var(--co-typography-subtitle-weight);
-    letter-spacing: var(--co-typography-subtitle-tracking);
-    line-height: var(--co-typography-subtitle-line-height);
+  .co-type-heading-md {
+    font-size: var(--co-font-size-heading-md);
+    font-weight: var(--co-font-weight-regular);
+    letter-spacing: var(--co-font-tracking-tight);
+    line-height: var(--co-font-line-height-200);
   }
-  .co-type-eyebrow {
-    font-size: var(--co-typography-eyebrow-size);
-    font-weight: var(--co-typography-eyebrow-weight);
-    letter-spacing: var(--co-typography-eyebrow-tracking);
-    line-height: var(--co-typography-eyebrow-line-height);
-    text-transform: uppercase;
+  .co-type-heading-sm {
+    font-size: var(--co-font-size-heading-sm);
+    font-weight: var(--co-font-weight-regular);
+    letter-spacing: var(--co-font-tracking-tight);
+    line-height: var(--co-font-line-height-200);
+  }
+  .co-type-heading-xs {
+    font-size: var(--co-font-size-heading-xs);
+    font-weight: var(--co-font-weight-regular);
+    letter-spacing: var(--co-font-tracking-tight);
+    line-height: var(--co-font-line-height-200);
   }
   .co-type-body-lg {
-    font-size: var(--co-typography-body-lg-size);
-    font-weight: var(--co-typography-body-lg-weight);
-    letter-spacing: var(--co-typography-body-lg-tracking);
-    line-height: var(--co-typography-body-lg-line-height);
+    font-size: var(--co-font-size-body-lg);
+    font-weight: var(--co-font-weight-regular);
+    letter-spacing: var(--co-font-tracking-normal);
+    line-height: var(--co-font-line-height-300);
   }
-  .co-type-body {
-    font-size: var(--co-typography-body-size);
-    font-weight: var(--co-typography-body-weight);
-    letter-spacing: var(--co-typography-body-tracking);
-    line-height: var(--co-typography-body-line-height);
+  .co-type-body-md {
+    font-size: var(--co-font-size-body-md);
+    font-weight: var(--co-font-weight-regular);
+    letter-spacing: var(--co-font-tracking-normal);
+    line-height: var(--co-font-line-height-300);
   }
   .co-type-body-sm {
-    font-size: var(--co-typography-body-sm-size);
-    font-weight: var(--co-typography-body-sm-weight);
-    letter-spacing: var(--co-typography-body-sm-tracking);
-    line-height: var(--co-typography-body-sm-line-height);
+    font-size: var(--co-font-size-body-sm);
+    font-weight: var(--co-font-weight-regular);
+    letter-spacing: var(--co-font-tracking-normal);
+    line-height: var(--co-font-line-height-300);
   }
-  .co-type-label {
-    font-size: var(--co-typography-label-size);
-    font-weight: var(--co-typography-label-weight);
-    letter-spacing: var(--co-typography-label-tracking);
-    line-height: var(--co-typography-label-line-height);
+  .co-type-body-xs {
+    font-size: var(--co-font-size-body-xs);
+    font-weight: var(--co-font-weight-regular);
+    letter-spacing: var(--co-font-tracking-normal);
+    line-height: var(--co-font-line-height-300);
   }
-  .co-type-caption {
-    font-size: var(--co-typography-caption-size);
-    font-weight: var(--co-typography-caption-weight);
-    letter-spacing: var(--co-typography-caption-tracking);
-    line-height: var(--co-typography-caption-line-height);
+  .co-type-code {
+    font-family: 'JetBrains Mono Variable', 'Fira Code', monospace;
+    font-size: var(--co-font-size-code);
+    font-weight: var(--co-font-weight-regular);
+    letter-spacing: var(--co-font-tracking-normal);
+    line-height: var(--co-font-line-height-300);
   }
 
   /* ──────────────────────────────────────────────
    * Typography primitives
    * ────────────────────────────────────────────── */
-  .co-text-xsmall {
-    font-size: var(--co-font-size-xsmall);
+  .co-text-body-xs {
+    font-size: var(--co-font-size-body-xs);
   }
-  .co-text-small {
-    font-size: var(--co-font-size-small);
+  .co-text-body-sm {
+    font-size: var(--co-font-size-body-sm);
   }
-  .co-text-p {
-    font-size: var(--co-font-size-p);
+  .co-text-body-md {
+    font-size: var(--co-font-size-body-md);
   }
-  .co-text-h6 {
-    font-size: var(--co-font-size-h6);
+  .co-text-body-lg {
+    font-size: var(--co-font-size-body-lg);
   }
-  .co-text-h5 {
-    font-size: var(--co-font-size-h5);
+  .co-text-heading-xs {
+    font-size: var(--co-font-size-heading-xs);
   }
-  .co-text-h4 {
-    font-size: var(--co-font-size-h4);
+  .co-text-heading-sm {
+    font-size: var(--co-font-size-heading-sm);
   }
-  .co-text-h3 {
-    font-size: var(--co-font-size-h3);
+  .co-text-heading-md {
+    font-size: var(--co-font-size-heading-md);
   }
-  .co-text-h2 {
-    font-size: var(--co-font-size-h2);
+  .co-text-heading-lg {
+    font-size: var(--co-font-size-heading-lg);
   }
-  .co-text-5xl {
-    font-size: var(--co-font-size-h1);
+  .co-text-heading-xl {
+    font-size: var(--co-font-size-heading-xl);
+  }
+  .co-text-heading-2xl {
+    font-size: var(--co-font-size-heading-2xl);
+  }
+  .co-text-code {
+    font-size: var(--co-font-size-code);
   }
 
   .co-font-normal {
@@ -267,17 +280,17 @@
     font-weight: var(--co-font-weight-bold);
   }
 
-  .co-leading-display {
-    line-height: var(--co-font-line-height-display);
+  .co-leading-100 {
+    line-height: var(--co-font-line-height-100);
   }
-  .co-leading-tight {
-    line-height: var(--co-font-line-height-tight);
+  .co-leading-200 {
+    line-height: var(--co-font-line-height-200);
   }
-  .co-leading-normal {
-    line-height: var(--co-font-line-height-normal);
+  .co-leading-300 {
+    line-height: var(--co-font-line-height-300);
   }
-  .co-leading-relaxed {
-    line-height: var(--co-font-line-height-relaxed);
+  .co-leading-400 {
+    line-height: var(--co-font-line-height-400);
   }
 
   .co-tracking-tighter {
@@ -297,10 +310,10 @@
   }
 
   .co-font-sans {
-    font-family: var(--co-font-family-sans);
+    font-family: 'Inter Variable', 'Noto Sans Variable', system-ui, sans-serif;
   }
   .co-font-mono {
-    font-family: var(--co-font-family-mono);
+    font-family: 'JetBrains Mono Variable', 'Fira Code', monospace;
   }
 
   .co-truncate {
@@ -337,65 +350,81 @@
 
   /* ── sm (≥ __CO_BREAKPOINT_SM__) ────────────── */
   @media (min-width: __CO_BREAKPOINT_SM__) {
-    .sm\:co-gap-2 {
-      gap: var(--co-space-2);
+    .sm\:co-gap-200 {
+      gap: var(--co-space-200);
     }
-    .sm\:co-gap-4 {
-      gap: var(--co-space-4);
+    .sm\:co-gap-400 {
+      gap: var(--co-space-400);
     }
-    .sm\:co-gap-6 {
-      gap: var(--co-space-6);
+    .sm\:co-gap-600 {
+      gap: var(--co-space-600);
     }
-    .sm\:co-gap-8 {
-      gap: var(--co-space-8);
+    .sm\:co-gap-800 {
+      gap: var(--co-space-800);
     }
   }
 
   /* ── md (≥ __CO_BREAKPOINT_MD__) ────────────── */
   @media (min-width: __CO_BREAKPOINT_MD__) {
-    .md\:co-gap-2 {
-      gap: var(--co-space-2);
+    .md\:co-gap-200 {
+      gap: var(--co-space-200);
     }
-    .md\:co-gap-4 {
-      gap: var(--co-space-4);
+    .md\:co-gap-400 {
+      gap: var(--co-space-400);
     }
-    .md\:co-gap-6 {
-      gap: var(--co-space-6);
+    .md\:co-gap-600 {
+      gap: var(--co-space-600);
     }
-    .md\:co-gap-8 {
-      gap: var(--co-space-8);
+    .md\:co-gap-800 {
+      gap: var(--co-space-800);
     }
   }
 
   /* ── lg (≥ __CO_BREAKPOINT_LG__) ───────────── */
   @media (min-width: __CO_BREAKPOINT_LG__) {
-    .lg\:co-gap-2 {
-      gap: var(--co-space-2);
+    .lg\:co-gap-200 {
+      gap: var(--co-space-200);
     }
-    .lg\:co-gap-4 {
-      gap: var(--co-space-4);
+    .lg\:co-gap-400 {
+      gap: var(--co-space-400);
     }
-    .lg\:co-gap-6 {
-      gap: var(--co-space-6);
+    .lg\:co-gap-600 {
+      gap: var(--co-space-600);
     }
-    .lg\:co-gap-8 {
-      gap: var(--co-space-8);
+    .lg\:co-gap-800 {
+      gap: var(--co-space-800);
     }
   }
 
   /* ── xl (≥ __CO_BREAKPOINT_XL__) ───────────── */
   @media (min-width: __CO_BREAKPOINT_XL__) {
-    .xl\:co-gap-2 {
-      gap: var(--co-space-2);
+    .xl\:co-gap-200 {
+      gap: var(--co-space-200);
     }
-    .xl\:co-gap-4 {
-      gap: var(--co-space-4);
+    .xl\:co-gap-400 {
+      gap: var(--co-space-400);
     }
-    .xl\:co-gap-6 {
-      gap: var(--co-space-6);
+    .xl\:co-gap-600 {
+      gap: var(--co-space-600);
     }
-    .xl\:co-gap-8 {
-      gap: var(--co-space-8);
+    .xl\:co-gap-800 {
+      gap: var(--co-space-800);
+    }
+  }
+
+  /* ── 2xl (≥ __CO_BREAKPOINT_2XL__) ─────────── */
+  @media (min-width: __CO_BREAKPOINT_2XL__) {
+    .\32xl\:co-gap-200 {
+      gap: var(--co-space-200);
+    }
+    .\32xl\:co-gap-400 {
+      gap: var(--co-space-400);
+    }
+    .\32xl\:co-gap-600 {
+      gap: var(--co-space-600);
+    }
+    .\32xl\:co-gap-800 {
+      gap: var(--co-space-800);
     }
   }
 }

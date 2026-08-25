@@ -1,28 +1,8 @@
 import { mkdirSync, readFileSync, writeFileSync } from 'fs';
-import { join } from 'path';
-import { discoverTokenSets } from './token-set-utils.js';
+import { join, resolve } from 'path';
 
 function readJson(filePath) {
   return JSON.parse(readFileSync(filePath, 'utf-8'));
-}
-
-function deepMerge(target, source) {
-  for (const [key, value] of Object.entries(source)) {
-    if (
-      value &&
-      typeof value === 'object' &&
-      !Array.isArray(value) &&
-      !Object.prototype.hasOwnProperty.call(value, '$value')
-    ) {
-      target[key] ??= {};
-      deepMerge(target[key], value);
-      continue;
-    }
-
-    target[key] = value;
-  }
-
-  return target;
 }
 
 function getNode(root, path) {
@@ -49,21 +29,13 @@ function resolveTokenValue(root, path, trail = new Set()) {
   return value;
 }
 
-function getPrimitiveRoot(tokensDir) {
-  const discovery = discoverTokenSets(tokensDir);
-  const root = {};
-
-  for (const tokenSet of discovery.primitives) {
-    deepMerge(root, readJson(join(tokensDir, tokenSet.fileName)));
-  }
-
-  return root;
-}
-
-export function generateUtilitiesCss(packageDir, tokensDir = join(packageDir, 'tokens')) {
+export function generateUtilitiesCss(
+  packageDir,
+  tokensDir = resolve(packageDir, '..', '..', 'exports', 'tokens'),
+) {
   const templatePath = join(packageDir, 'src', 'utilities.template.css');
   const outputPath = join(packageDir, 'dist', 'css', 'utilities.css');
-  const primitiveRoot = getPrimitiveRoot(tokensDir);
+  const primitiveRoot = readJson(join(tokensDir, 'primitives.tokens-dtcg.json'));
   const breakpointKeys = ['sm', 'md', 'lg', 'xl', '2xl'];
 
   let css = readFileSync(templatePath, 'utf-8');
@@ -72,6 +44,10 @@ export function generateUtilitiesCss(packageDir, tokensDir = join(packageDir, 't
     const placeholder = `__CO_BREAKPOINT_${key.toUpperCase()}__`;
     const value = resolveTokenValue(primitiveRoot, `co.breakpoint.${key}`);
     css = css.replaceAll(placeholder, value);
+  }
+
+  if (/__CO_BREAKPOINT_[A-Z0-9]+__/.test(css)) {
+    throw new Error('Unresolved breakpoint placeholder in utilities template.');
   }
 
   mkdirSync(join(packageDir, 'dist', 'css'), { recursive: true });
