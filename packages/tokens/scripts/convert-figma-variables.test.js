@@ -50,7 +50,7 @@ describe('convertFigmaExports', () => {
     const outputDir = join(sourceDir, 'tokens');
     const warnings = [];
 
-    writeJson(join(sourceDir, 'primitives.tokens.json'), {
+    writeJson(join(sourceDir, 'primitives.tokens-figma.json'), {
       co: {
         color: {
           neutral: {
@@ -85,7 +85,7 @@ describe('convertFigmaExports', () => {
       },
     });
 
-    writeJson(join(sourceDir, 'semantic.light-mode.tokens.json'), {
+    writeJson(join(sourceDir, 'semantic.light-mode.tokens-figma.json'), {
       co: {
         space: {
           gap: {
@@ -125,7 +125,7 @@ describe('convertFigmaExports', () => {
     });
 
     mkdirSync(outputDir, { recursive: true });
-    writeJson(join(outputDir, 'stale.tokens.json'), { stale: true });
+    writeJson(join(outputDir, 'stale.tokens-dtcg.json'), { stale: true });
     writeFileSync(join(outputDir, 'README.md'), 'preserve me\n');
 
     const result = await convertFigmaExports({
@@ -134,13 +134,16 @@ describe('convertFigmaExports', () => {
       onWarning: (warning) => warnings.push(warning),
     });
 
-    assert.deepEqual(result.files, ['primitives.tokens.json', 'semantic.light-mode.tokens.json']);
+    assert.deepEqual(result.files, [
+      'primitives.tokens-dtcg.json',
+      'semantic.light-mode.tokens-dtcg.json',
+    ]);
     assert.equal(result.warnings.length, 2);
     assert.deepEqual(warnings, result.warnings);
     assert.equal(readFileSync(join(outputDir, 'README.md'), 'utf8'), 'preserve me\n');
-    assert.throws(() => readFileSync(join(outputDir, 'stale.tokens.json')));
+    assert.throws(() => readFileSync(join(outputDir, 'stale.tokens-dtcg.json')));
 
-    const primitives = readJson(join(outputDir, 'primitives.tokens.json'));
+    const primitives = readJson(join(outputDir, 'primitives.tokens-dtcg.json'));
     assert.deepEqual(primitives.co.color.neutral['200a'], {
       $type: 'color',
       $value: '#30303040',
@@ -174,7 +177,7 @@ describe('convertFigmaExports', () => {
       $value: 0.4,
     });
 
-    const semantic = readJson(join(outputDir, 'semantic.light-mode.tokens.json'));
+    const semantic = readJson(join(outputDir, 'semantic.light-mode.tokens-dtcg.json'));
     assert.deepEqual(semantic.co.space.gap.md, {
       $type: 'dimension',
       $value: '{co.space.100}',
@@ -187,18 +190,18 @@ describe('convertFigmaExports', () => {
     assert.equal(semantic.co.color.missing.$value, '#FFFFFF');
     assert.equal(semantic.co.color.visited.$root.$value, '{co.color.neutral.200a}');
 
-    const firstOutput = readFileSync(join(outputDir, 'primitives.tokens.json'), 'utf8');
+    const firstOutput = readFileSync(join(outputDir, 'primitives.tokens-dtcg.json'), 'utf8');
     await convertFigmaExports({ sourceDir, outputDir, onWarning: () => {} });
-    assert.equal(readFileSync(join(outputDir, 'primitives.tokens.json'), 'utf8'), firstOutput);
+    assert.equal(readFileSync(join(outputDir, 'primitives.tokens-dtcg.json'), 'utf8'), firstOutput);
   });
 
   it('validates every file before replacing generated output', async () => {
     const fixtureRoot = createTempDir();
     const sourceDir = join(fixtureRoot, 'exports');
     const outputDir = join(sourceDir, 'tokens');
-    const existingOutput = join(outputDir, 'primitives.tokens.json');
+    const existingOutput = join(outputDir, 'primitives.tokens-dtcg.json');
 
-    writeJson(join(sourceDir, 'primitives.tokens.json'), {
+    writeJson(join(sourceDir, 'primitives.tokens-figma.json'), {
       co: {
         color: {
           invalid: {
@@ -241,10 +244,10 @@ describe('Style Dictionary compatibility', () => {
 
     for (const theme of themes) {
       for (const mode of modes) {
-        const destination = `${basename(theme, '.tokens.json')}-${basename(mode, '.tokens.json')}.css`;
+        const destination = `${basename(theme, '.tokens-dtcg.json')}-${basename(mode, '.tokens-dtcg.json')}.css`;
         const styleDictionary = new StyleDictionary({
           source: [
-            join(outputDir, 'primitives.tokens.json'),
+            join(outputDir, 'primitives.tokens-dtcg.json'),
             join(outputDir, theme),
             join(outputDir, mode),
           ],
