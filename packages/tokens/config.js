@@ -1,92 +1,139 @@
 import StyleDictionary from 'style-dictionary';
-import { copyFileSync, existsSync, mkdirSync, readFileSync, writeFileSync } from 'fs';
-import { join, dirname } from 'path';
-import { fileURLToPath } from 'url';
-import { exportDtcgTokens } from './scripts/export-dtcg.js';
+import {
+  copyFileSync,
+  existsSync,
+  mkdirSync,
+  readFileSync,
+  readdirSync,
+  rmSync,
+  writeFileSync,
+} from 'node:fs';
+import { dirname, join, resolve, sep } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { generateFontStyles } from './scripts/generate-fonts.js';
 import { generateScss } from './scripts/generate-scss.js';
 import { generateTailwindPreset } from './scripts/generate-tailwind-preset.js';
-import { generateToolingManifest } from './scripts/generate-tooling-manifest.js';
 import { generateUtilitiesCss } from './scripts/generate-utilities-css.js';
-import { mergeTokens } from './scripts/merge-tokens.js';
-import {
-  discoverTokenSets,
-  getMatchingPrimitiveThemeTokenSet,
-  writeGeneratedTokenMetadata,
-} from './scripts/token-set-utils.js';
-import { validateTokens } from './scripts/validate-tokens.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const tokensDir = join(__dirname, 'tokens');
+const repositoryRoot = resolve(__dirname, '..', '..');
+const tokensDir = join(repositoryRoot, 'exports', 'tokens');
+const distDir = join(__dirname, 'dist');
 
-function assertSupportedTokenSets(discovery) {
-  if (discovery.uncategorized.length > 0) {
-    const names = discovery.uncategorized.map((tokenSet) => tokenSet.name).join(', ');
-    throw new Error(`Unsupported token sets detected: ${names}`);
-  }
-}
+const PRIMITIVES_FILE = 'primitives.tokens-dtcg.json';
+const SEMANTIC_FILE_PATTERN = /^semantic\.(light|dark)-mode\.tokens-dtcg\.json$/;
+const THEME_FILE_PATTERN = /^theme\.([^.]+)\.tokens-dtcg\.json$/;
 
-function getThemeTokenSet(discovery, themeId, mode) {
-  return discovery.themeTokenSets.find(
-    (tokenSet) => tokenSet.themeId === themeId && tokenSet.mode === mode,
-  );
-}
-
-function getSharedSources(discovery) {
-  return [
-    ...discovery.primitives,
-    ...discovery.sharedSemantic,
-    ...discovery.componentTokenSets,
-  ].map((tokenSet) => tokenSet.sourcePath);
-}
-
-function getThemeSources(discovery, sharedSources, themeTokenSet) {
-  const primitiveThemeTokenSet = getMatchingPrimitiveThemeTokenSet(
-    discovery,
-    themeTokenSet.themeId,
-    themeTokenSet.mode,
-  );
-
-  if (!primitiveThemeTokenSet) {
+function discoverDtcgTokenSets() {
+  if (!existsSync(tokensDir)) {
     throw new Error(
-      `Missing required token set: primitives.theme.${themeTokenSet.themeId}.${themeTokenSet.mode}`,
+      `Missing converted token directory: ${tokensDir}. Run "pnpm tokens:convert-figma" first.`,
     );
   }
 
-  return [...sharedSources, primitiveThemeTokenSet.sourcePath, themeTokenSet.sourcePath];
+  const jsonFiles = readdirSync(tokensDir)
+    .filter((fileName) => fileName.endsWith('.json'))
+    .sort();
+  const semanticModes = new Map();
+  const themes = new Map();
+  const unsupported = [];
+  let primitives = null;
+
+  for (const fileName of jsonFiles) {
+    const sourcePath = join(tokensDir, fileName);
+
+    if (fileName === PRIMITIVES_FILE) {
+      primitives = { fileName, sourcePath };
+      continue;
+    }
+
+    const semanticMatch = fileName.match(SEMANTIC_FILE_PATTERN);
+    if (semanticMatch) {
+      const mode = semanticMatch[1];
+      semanticModes.set(mode, { fileName, mode, sourcePath });
+      continue;
+    }
+
+    const themeMatch = fileName.match(THEME_FILE_PATTERN);
+    if (themeMatch) {
+      const themeId = themeMatch[1];
+      themes.set(themeId, { fileName, themeId, sourcePath });
+      continue;
+    }
+
+    unsupported.push(fileName);
+  }
+
+  if (unsupported.length > 0) {
+    throw new Error(`Unsupported converted token files detected: ${unsupported.join(', ')}`);
+  }
+
+  if (!primitives) {
+    throw new Error(`Missing required converted token file: ${PRIMITIVES_FILE}`);
+  }
+
+  for (const mode of ['light', 'dark']) {
+    if (!semanticModes.has(mode)) {
+      throw new Error(
+        `Missing required converted token file: semantic.${mode}-mode.tokens-dtcg.json`,
+      );
+    }
+  }
+
+  if (!themes.has('default')) {
+    throw new Error('Missing required converted token file: theme.default.tokens-dtcg.json');
+  }
+
+  const orderedModes = ['light', 'dark'].map((mode) => semanticModes.get(mode));
+  const orderedThemes = [...themes.values()].sort((left, right) => {
+    if (left.themeId === 'default') return -1;
+    if (right.themeId === 'default') return 1;
+    return left.themeId.localeCompare(right.themeId);
+  });
+  const themeBuilds = orderedThemes.flatMap((theme) =>
+    orderedModes.map((semantic) => ({
+      name: `theme.${theme.themeId}.${semantic.mode}`,
+      themeId: theme.themeId,
+      mode: semantic.mode,
+      sources: [primitives.sourcePath, theme.sourcePath, semantic.sourcePath],
+    })),
+  );
+
+  return { orderedThemes, themeBuilds };
 }
 
-function getThemeCssDestination(themeTokenSet) {
-  if (themeTokenSet.themeId === 'default' && themeTokenSet.mode === 'light') {
+function getThemeCssDestination(themeBuild) {
+  if (themeBuild.themeId === 'default' && themeBuild.mode === 'light') {
     return 'tokens.css';
   }
 
-  if (themeTokenSet.themeId === 'default' && themeTokenSet.mode === 'dark') {
+  if (themeBuild.themeId === 'default' && themeBuild.mode === 'dark') {
     return 'tokens-dark.css';
   }
 
-  return `themes/tokens-${themeTokenSet.themeId}-${themeTokenSet.mode}.css`;
+  return `themes/tokens-${themeBuild.themeId}-${themeBuild.mode}.css`;
 }
 
-function getThemeCssSelector(themeTokenSet) {
-  if (themeTokenSet.themeId === 'default' && themeTokenSet.mode === 'light') {
+function getThemeCssSelector(themeBuild) {
+  if (themeBuild.themeId === 'default' && themeBuild.mode === 'light') {
     return ':root';
   }
 
-  if (themeTokenSet.themeId === 'default' && themeTokenSet.mode === 'dark') {
+  if (themeBuild.themeId === 'default' && themeBuild.mode === 'dark') {
     return '[data-theme="dark"], [data-theme="default"][data-mode="dark"]';
   }
 
-  return `[data-theme="${themeTokenSet.themeId}"][data-mode="${themeTokenSet.mode}"]`;
+  return `[data-theme="${themeBuild.themeId}"][data-mode="${themeBuild.mode}"]`;
 }
 
 function createDefaultLightBuild(sources) {
   return new StyleDictionary({
     source: sources,
+    log: { verbosity: 'silent' },
     platforms: {
       css: {
         transformGroup: 'css',
-        buildPath: 'dist/css/',
+        buildPath: `${join(distDir, 'css')}${sep}`,
         prefix: '',
         files: [
           {
@@ -101,7 +148,7 @@ function createDefaultLightBuild(sources) {
       },
       js: {
         transformGroup: 'js',
-        buildPath: 'dist/js/',
+        buildPath: `${join(distDir, 'js')}${sep}`,
         files: [
           {
             destination: 'tokens.js',
@@ -111,7 +158,7 @@ function createDefaultLightBuild(sources) {
       },
       json: {
         transformGroup: 'js',
-        buildPath: 'dist/',
+        buildPath: `${distDir}${sep}`,
         files: [
           {
             destination: 'tokens.json',
@@ -123,20 +170,21 @@ function createDefaultLightBuild(sources) {
   });
 }
 
-function createThemeCssBuild(sources, themeTokenSet) {
+function createThemeCssBuild(themeBuild) {
   return new StyleDictionary({
-    source: sources,
+    source: themeBuild.sources,
+    log: { verbosity: 'silent' },
     platforms: {
       css: {
         transformGroup: 'css',
-        buildPath: 'dist/css/',
+        buildPath: `${join(distDir, 'css')}${sep}`,
         prefix: '',
         files: [
           {
-            destination: getThemeCssDestination(themeTokenSet),
+            destination: getThemeCssDestination(themeBuild),
             format: 'css/variables',
             options: {
-              selector: getThemeCssSelector(themeTokenSet),
+              selector: getThemeCssSelector(themeBuild),
               outputReferences: true,
             },
           },
@@ -155,126 +203,95 @@ function wrapCssInLayer(filePath, layerName, includeLayerPrelude = false) {
   writeFileSync(filePath, `${prelude}@layer ${layerName} {\n${css}}\n`);
 }
 
-async function build() {
-  const validation = validateTokens(tokensDir);
-  if (validation.errors.length > 0) {
-    throw new Error(`Token validation failed:\n- ${validation.errors.join('\n- ')}`);
-  }
+function writeThemeBundles(discovery) {
+  console.log('Generating theme bundles...');
+  const themesDir = join(distDir, 'css', 'themes');
+  mkdirSync(themesDir, { recursive: true });
 
-  const discovery = discoverTokenSets(tokensDir);
-  assertSupportedTokenSets(discovery);
-  writeGeneratedTokenMetadata(tokensDir, discovery);
+  for (const theme of discovery.orderedThemes) {
+    const parts = [];
 
-  const sharedSources = getSharedSources(discovery);
-  const defaultLightTheme = getThemeTokenSet(discovery, 'default', 'light');
-
-  if (!defaultLightTheme) {
-    throw new Error('Missing required token set: semantic.theme.default.light');
-  }
-
-  console.log('Building default light tokens...');
-  await createDefaultLightBuild(
-    getThemeSources(discovery, sharedSources, defaultLightTheme),
-  ).buildAllPlatforms();
-
-  for (const themeTokenSet of discovery.themeTokenSets) {
-    if (themeTokenSet.name === defaultLightTheme.name) {
-      continue;
+    if (theme.themeId === 'default') {
+      parts.push(readFileSync(join(distDir, 'css', 'tokens.css'), 'utf-8'));
+      parts.push(readFileSync(join(distDir, 'css', 'tokens-dark.css'), 'utf-8'));
+    } else {
+      for (const mode of ['light', 'dark']) {
+        parts.push(readFileSync(join(themesDir, `tokens-${theme.themeId}-${mode}.css`), 'utf-8'));
+      }
     }
 
-    console.log(`Building ${themeTokenSet.name} CSS...`);
-    await createThemeCssBuild(
-      getThemeSources(discovery, sharedSources, themeTokenSet),
-      themeTokenSet,
-    ).buildPlatform('css');
+    writeFileSync(join(themesDir, `${theme.themeId}.css`), parts.join('\n'));
+    console.log(`  -> themes/${theme.themeId}.css`);
+  }
+}
+
+function writeTypeDeclarations() {
+  const jsContent = readFileSync(join(distDir, 'js', 'tokens.js'), 'utf-8');
+  const declarations = jsContent
+    .split('\n')
+    .filter((line) => line.startsWith('export const'))
+    .map((line) => line.match(/export const (\w+)/)?.[1])
+    .filter(Boolean)
+    .map((name) => `export declare const ${name}: string;`);
+
+  writeFileSync(join(distDir, 'js', 'tokens.d.ts'), `${declarations.join('\n')}\n`);
+}
+
+async function build() {
+  const discovery = discoverDtcgTokenSets();
+  const defaultLightTheme = discovery.themeBuilds.find(
+    (themeBuild) => themeBuild.themeId === 'default' && themeBuild.mode === 'light',
+  );
+
+  rmSync(distDir, { recursive: true, force: true });
+
+  console.log('Building default light tokens...');
+  await createDefaultLightBuild(defaultLightTheme.sources).buildAllPlatforms();
+
+  for (const themeBuild of discovery.themeBuilds) {
+    if (themeBuild === defaultLightTheme) continue;
+
+    console.log(`Building ${themeBuild.name} CSS...`);
+    await createThemeCssBuild(themeBuild).buildPlatform('css');
   }
 
   console.log('Wrapping CSS in @layer...');
-  wrapCssInLayer(join(__dirname, 'dist/css/tokens.css'), 'co.tokens', true);
+  wrapCssInLayer(join(distDir, 'css', 'tokens.css'), 'co.tokens', true);
 
-  for (const themeTokenSet of discovery.themeTokenSets) {
-    if (themeTokenSet.name === defaultLightTheme.name) {
-      continue;
-    }
-
-    wrapCssInLayer(join(__dirname, 'dist/css', getThemeCssDestination(themeTokenSet)), 'co.theme');
+  for (const themeBuild of discovery.themeBuilds) {
+    if (themeBuild === defaultLightTheme) continue;
+    wrapCssInLayer(join(distDir, 'css', getThemeCssDestination(themeBuild)), 'co.theme');
   }
 
-  // Generate bundled theme files (light + dark combined per theme)
-  console.log('Generating theme bundles...');
-  const themesDir = join(__dirname, 'dist/css/themes');
-  if (!existsSync(themesDir)) mkdirSync(themesDir, { recursive: true });
-
-  const themeIds = [...new Set(discovery.themeTokenSets.map((ts) => ts.themeId))];
-  for (const themeId of themeIds) {
-    const parts = [];
-    if (themeId === 'default') {
-      parts.push(readFileSync(join(__dirname, 'dist/css/tokens.css'), 'utf-8'));
-      parts.push(readFileSync(join(__dirname, 'dist/css/tokens-dark.css'), 'utf-8'));
-    } else {
-      for (const mode of ['light', 'dark']) {
-        const filePath = join(themesDir, `tokens-${themeId}-${mode}.css`);
-        if (existsSync(filePath)) {
-          parts.push(readFileSync(filePath, 'utf-8'));
-        }
-      }
-    }
-    if (parts.length > 0) {
-      writeFileSync(join(themesDir, `${themeId}.css`), parts.join('\n'));
-      console.log(`  → themes/${themeId}.css`);
-    }
-  }
-
-  console.log('Generating SCSS modules...');
-  generateScss(__dirname, discovery);
-
-  console.log('Copying base element styles...');
-  copyFileSync(join(__dirname, 'src/base.css'), join(__dirname, 'dist/css/base.css'));
-
-  console.log('Copying font-face stylesheet...');
-  generateFontStyles(__dirname);
-  copyFileSync(
-    join(__dirname, 'src/fonts-international.css'),
-    join(__dirname, 'dist/css/fonts-international.css'),
-  );
+  writeThemeBundles(discovery);
 
   console.log('Generating utility classes...');
   generateUtilitiesCss(__dirname, tokensDir);
 
-  console.log('Generating TypeScript declarations...');
-  const jsContent = readFileSync(join(__dirname, 'dist/js/tokens.js'), 'utf-8');
-  const dtsLines = jsContent
-    .split('\n')
-    .filter((line) => line.startsWith('export const'))
-    .map((line) => {
-      const match = line.match(/export const (\w+)/);
-      return match ? `export declare const ${match[1]}: string;` : '';
-    })
-    .filter(Boolean);
-  writeFileSync(join(__dirname, 'dist/js/tokens.d.ts'), dtsLines.join('\n') + '\n');
-
-  console.log('Copying theme utility...');
-  copyFileSync(join(__dirname, 'src/theme.js'), join(__dirname, 'dist/js/theme.js'));
-  copyFileSync(join(__dirname, 'src/theme.d.ts'), join(__dirname, 'dist/js/theme.d.ts'));
+  console.log('Generating SCSS modules...');
+  generateScss(__dirname, discovery);
 
   console.log('Generating Tailwind preset...');
   await generateTailwindPreset(__dirname);
 
-  console.log('Generating merged tokens for Figma sync...');
-  const merged = mergeTokens();
-  writeFileSync(join(__dirname, 'dist/tokens-merged.json'), JSON.stringify(merged, null, 2) + '\n');
+  console.log('Generating font assets...');
+  generateFontStyles(__dirname);
+  copyFileSync(
+    join(__dirname, 'src', 'fonts-international.css'),
+    join(distDir, 'css', 'fonts-international.css'),
+  );
 
-  console.log('Generating DTCG export artifact...');
-  const dtcg = exportDtcgTokens(tokensDir);
-  writeFileSync(join(__dirname, 'dist/tokens-dtcg.json'), JSON.stringify(dtcg, null, 2) + '\n');
+  console.log('Generating TypeScript declarations...');
+  writeTypeDeclarations();
 
-  console.log('Generating tooling manifest...');
-  generateToolingManifest(__dirname, tokensDir);
+  console.log('Copying theme utility...');
+  copyFileSync(join(__dirname, 'src', 'theme.js'), join(distDir, 'js', 'theme.js'));
+  copyFileSync(join(__dirname, 'src', 'theme.d.ts'), join(distDir, 'js', 'theme.d.ts'));
 
   console.log('Token build complete!');
 }
 
-build().catch((err) => {
-  console.error(err);
-  process.exit(1);
+build().catch((error) => {
+  console.error(error);
+  process.exitCode = 1;
 });
