@@ -6,7 +6,7 @@ import { afterEach, describe, it } from 'node:test';
 import {
   buildToolingManifest,
   extractUtilityManifestEntries,
-} from './generate-tooling-manifest.js';
+} from './tokstd-generate-tooling-manifest.js';
 
 let tempDir;
 

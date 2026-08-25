@@ -65,7 +65,6 @@
       "default": "./dist/scss/css/themes/*.scss"
     },
     "./json": "./dist/tokens.json",
-    "./tokstd/dtcg": "./dist/tokens-tokstd-dtcg.json",
     "./tooling": "./dist/tooling/cobalt.manifest.json",
     "./tailwind": {
       "import": "./dist/tailwind/preset.js",
@@ -75,12 +74,13 @@
   },
   "scripts": {
     "build": "node config.js",
-    "test": "pnpm run build && pnpm run test:scss && pnpm run test:tailwind && pnpm run test:utilities && pnpm run test:figma",
+    "test": "pnpm run build && pnpm run test:scss && pnpm run test:tailwind && pnpm run test:utilities && pnpm run test:tooling && pnpm run test:figma",
     "test:scss": "node scripts/validate-scss.js",
     "test:tailwind": "node scripts/validate-tailwind.js",
     "test:utilities": "node scripts/validate-utilities.js",
+    "test:tooling": "node scripts/validate-tooling-manifest.js",
     "test:figma": "node --test scripts/convert-figma-variables.test.js",
-    "tokstd:test-tooling": "node --test scripts/generate-tooling-manifest.test.js",
+    "tokstd:test-tooling": "node --test scripts/tokstd-generate-tooling-manifest.test.js",
     "tokstd:validate": "node scripts/tokstd-validate-tokens.js",
     "tokstd:merge": "node scripts/tokstd-merge-tokens.js",
     "tokstd:export-dtcg": "node scripts/tokstd-export-dtcg.js",
