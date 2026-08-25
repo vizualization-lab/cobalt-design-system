@@ -18,6 +18,8 @@ worktrees/
 packages/docs/public/assets/artifacts/vscode
 packages/docs/public/assets/artifacts/npm/*.zip
 packages/docs/public/assets/artifacts/skills/*.zip
+exports/*.zip
+exports/extract.sh
 !packages/docs/.generated/
 packages/docs/.generated/*
 !packages/docs/.generated/release-lines.json
