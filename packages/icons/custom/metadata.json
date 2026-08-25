@@ -1,4 +1,5 @@
 {
   "co-logo": ["logo", "cobalt", "brand", "mark", "gem", "cube", "hexagon", "identity"],
-  "co-placeholder": ["placeholder", "empty state", "fallback", "custom icon"]
+  "co-placeholder": ["placeholder", "empty state", "fallback", "custom icon"],
+  "co-class": ["placeholder", "class", "custom icon"]
 }
