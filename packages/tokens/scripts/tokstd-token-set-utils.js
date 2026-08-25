@@ -1,3 +1,5 @@
+/** Utilities for the retained Tokens Studio token-set structure. */
+
 import { readdirSync, writeFileSync } from 'fs';
 import { join } from 'path';
 

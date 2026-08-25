@@ -1,4 +1,7 @@
 /**
+ * Legacy Tokens Studio for Figma workflow.
+ * Not consumed by the native Figma Variables export build.
+ *
  * Merges individual DTCG token JSON files into a single Token Studio-compatible
  * JSON file. Generated token metadata is derived from the token-set filenames,
  * so new semantic.theme.* files are picked up without script edits.
@@ -16,8 +19,8 @@
  * }
  *
  * Usage:
- *   node scripts/merge-tokens.js            # writes to dist/tokens-merged.json
- *   node scripts/merge-tokens.js --stdout   # prints to stdout (for piping)
+ *   node scripts/tokstd-merge-tokens.js            # writes to dist/tokens-tokstd-merged.json
+ *   node scripts/tokstd-merge-tokens.js --stdout   # prints to stdout (for piping)
  */
 
 import { readFileSync, writeFileSync, mkdirSync } from 'fs';
@@ -29,10 +32,10 @@ import {
   discoverTokenSets,
   getTokenSetOrder,
   writeGeneratedTokenMetadata,
-} from './token-set-utils.js';
+} from './tokstd-token-set-utils.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const tokensDir = join(__dirname, '..', 'tokens');
+const tokensDir = join(__dirname, '..', 'tokens-tokstd');
 const distDir = join(__dirname, '..', 'dist');
 
 function readJson(filePath) {
@@ -95,7 +98,7 @@ if (isCLI) {
     process.stdout.write(JSON.stringify(result, null, 2) + '\n');
   } else {
     mkdirSync(distDir, { recursive: true });
-    const outPath = join(distDir, 'tokens-merged.json');
+    const outPath = join(distDir, 'tokens-tokstd-merged.json');
     writeFileSync(outPath, JSON.stringify(result, null, 2) + '\n');
     console.log(`Merged ${Object.keys(result).length - 2} token sets → ${outPath}`);
   }
