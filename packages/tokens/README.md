@@ -2,7 +2,7 @@
 
 Design tokens for the Cobalt Design System.
 
-The single source of truth for colors, typography, spacing, elevation, motion, sizing, opacity, and breakpoints. Style Dictionary drives multi-format output (CSS custom properties, SCSS, JavaScript, JSON, plus theme bundles). Every other Cobalt package — `@cobalt/components` and the framework wrappers downstream of it — consumes these tokens.
+The single source of truth for colors, typography, spacing, elevation, motion, sizing, opacity, and breakpoints. Style Dictionary drives the core output (CSS custom properties, JavaScript, JSON, and theme bundles). Every other Cobalt package — `@cobalt/components` and the framework wrappers downstream of it — consumes these tokens.
 
 ## Evaluating Figma variable exports
 
@@ -12,9 +12,13 @@ Raw Figma variable exports can be converted into the DTCG authoring shape suppor
 pnpm tokens:convert-figma
 ```
 
-The command reads `exports/*.tokens.json` and writes generated files with matching names to `exports/tokens/`. It restores exported aliases, adds units and token types that Figma variables cannot express, and converts structured Figma colors into CSS-compatible color values.
+The command reads `exports/*.tokens-figma.json` and writes corresponding `*.tokens-dtcg.json` files to `exports/tokens/`. It restores exported aliases, adds units and token types that Figma variables cannot express, and converts structured Figma colors into CSS-compatible color values.
 
-These files are staging artifacts for evaluation. The source of truth for the published package remains `packages/tokens/tokens/` until the Figma pipeline is adopted explicitly.
+Both generations are tracked while the Figma pipeline is evaluated: the `-figma` files preserve the raw handoff and the `-dtcg` files are the Style Dictionary build inputs.
+
+## Legacy Tokens Studio workflow
+
+The earlier Tokens Studio for Figma workflow is retained for reference under `tokens-tokstd/`. Its scripts and commands use the `tokstd-` or `tokstd:` prefix. Those files are not consumed by the current native Figma Variables export build.
 
 ## Install
 
