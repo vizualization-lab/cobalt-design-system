@@ -1,0 +1,190 @@
+import{i as u,b as d,t as h}from"./custom-element.CPWKJEuj.js";import{n}from"./property.C8dt_fM1.js";import"./co-icon.EC8tzyeE.js";import{r as f}from"./theme.BVZLpu4o.js";import{L as p}from"./LionButton.v50-PCNC.js";import"./directive.CJw_OlP2.js";import"./framework.CyQWWwrP.js";import"./DisabledMixin.DvWrDoIe.js";const b=u`
+  /* ── Base ── */
+  :host {
+    display: inline-flex;
+    vertical-align: middle;
+    box-sizing: border-box;
+    min-block-size: var(--co-control-height-md);
+    padding: 0;
+    font-family: var(--co-font-family-sans);
+    font-size: var(--co-font-size-p);
+    font-weight: var(--co-font-weight-medium);
+    line-height: var(--co-font-line-height-tight);
+    border-radius: var(--co-control-radius-interactive);
+    border: none;
+    cursor: pointer;
+    transition:
+      background var(--co-motion-duration-fast) var(--co-motion-easing-default),
+      color var(--co-motion-duration-fast) var(--co-motion-easing-default),
+      box-shadow var(--co-motion-duration-fast) var(--co-motion-easing-default);
+  }
+
+  /* Padding is on the inner element so external resets (e.g. * { padding: 0 })
+     cannot override it — light DOM styles always beat :host rules. */
+  .button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    inline-size: 100%;
+    gap: var(--co-space-gap-sm);
+    padding: var(--co-space-2) var(--co-space-4);
+    /* Reset UA anchor defaults when rendered as a link (href variant) */
+    color: inherit;
+    text-decoration: none;
+  }
+
+  /* ── Sizes ── */
+  :host([size='sm']) {
+    font-size: var(--co-font-size-small);
+    min-block-size: var(--co-control-height-sm);
+  }
+  :host([size='sm']) .button {
+    padding: var(--co-space-1) var(--co-space-3);
+  }
+
+  :host([size='lg']) {
+    font-size: var(--co-font-size-h6);
+    min-block-size: var(--co-control-height-lg);
+  }
+  :host([size='lg']) .button {
+    padding: var(--co-space-3) var(--co-space-6);
+  }
+
+  /* ── Primary variant (default) ── */
+  :host,
+  :host([variant='primary']) {
+    background: var(--co-color-surface-interactive-theme-default);
+    color: var(--co-color-text-on-primary);
+  }
+  :host([variant='primary']:hover),
+  :host(:not([variant]):hover) {
+    background: var(--co-color-surface-interactive-theme-hover);
+  }
+  :host([variant='primary']:active),
+  :host(:not([variant]):active) {
+    background: var(--co-color-surface-interactive-theme-active);
+  }
+
+  /* ── Secondary variant ── */
+  :host([variant='secondary']) {
+    background: var(--co-color-surface-interactive-secondary-default);
+    color: var(--co-color-surface-interactive-theme-default);
+    box-shadow: inset 0 0 0 var(--co-border-width-action)
+      var(--co-color-surface-interactive-theme-default);
+  }
+  :host([variant='secondary']:hover) {
+    background: var(--co-color-surface-interactive-secondary-hover);
+    color: var(--co-color-surface-interactive-theme-hover);
+    box-shadow: inset 0 0 0 var(--co-border-width-action)
+      var(--co-color-surface-interactive-theme-hover);
+  }
+  :host([variant='secondary']:active) {
+    background: var(--co-color-surface-interactive-secondary-active);
+    color: var(--co-color-surface-interactive-theme-active);
+    box-shadow: inset 0 0 0 var(--co-border-width-action)
+      var(--co-color-surface-interactive-theme-active);
+  }
+
+  /* ── Danger variant ── */
+  :host([variant='danger']) {
+    background: var(--co-color-surface-interactive-danger-default);
+    color: var(--co-color-text-on-danger);
+  }
+  :host([variant='danger']:hover) {
+    background: var(--co-color-surface-interactive-danger-hover);
+  }
+  :host([variant='danger']:active) {
+    background: var(--co-color-surface-interactive-danger-active);
+  }
+
+  /* ── Warning variant ── */
+  :host([variant='warning']) {
+    background: var(--co-color-surface-interactive-warning-default);
+    color: var(--co-color-text-on-warning);
+  }
+  :host([variant='warning']:hover) {
+    background: var(--co-color-surface-interactive-warning-hover);
+  }
+  :host([variant='warning']:active) {
+    background: var(--co-color-surface-interactive-warning-active);
+  }
+
+  /* ── Success variant ── */
+  :host([variant='success']) {
+    background: var(--co-color-surface-interactive-success-default);
+    color: var(--co-color-text-on-success);
+  }
+  :host([variant='success']:hover) {
+    background: var(--co-color-surface-interactive-success-hover);
+  }
+  :host([variant='success']:active) {
+    background: var(--co-color-surface-interactive-success-active);
+  }
+
+  /* ── Ghost variant ── */
+  :host([variant='ghost']) {
+    background: transparent;
+    color: var(--co-color-text-default);
+  }
+  :host([variant='ghost']:hover) {
+    color: var(--co-color-text-secondary);
+  }
+  :host([variant='ghost']:active) {
+    color: var(--co-color-text-default);
+  }
+
+  /* ── Focus ── */
+  /* Override Lion's base focus styles — match its specificity */
+  :host(:focus),
+  :host(:focus:not([disabled])),
+  :host(:focus:not(:focus-visible)) {
+    outline: none;
+  }
+
+  :host(:focus-visible:not([disabled])) {
+    outline: var(--co-focus-ring-width) solid var(--co-color-border-focus);
+    outline-offset: var(--co-focus-ring-offset);
+  }
+
+  /* ── Disabled ── */
+  :host([disabled]) {
+    opacity: var(--co-opacity-disabled);
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  /* ── Loading ── */
+  :host([loading]) {
+    cursor: wait;
+    pointer-events: none;
+  }
+`,g=Object.freeze({name:"progress-activity",content:`<g class="co-anim-rotate">
+    <path fill="currentColor" d="M331.32-129.4q-69.29-29.4-120.9-81.02-51.62-51.61-81.02-120.9-29.4-69.3-29.4-148.73 0-79.43 29.46-148.73 29.46-69.3 80.96-120.8 51.5-51.5 120.93-80.96Q400.78-860 480-860q9.29 0 15.99 6.71 6.7 6.7 6.7 16 0 9.29-6.7 15.98-6.7 6.7-15.99 6.7-138.69 0-236.65 97.96-97.96 97.96-97.96 236.65t97.96 236.65q97.96 97.96 236.65 97.96t236.65-97.96q97.96-97.96 97.96-236.65 0-9.31 6.71-16 6.71-6.69 16-6.69t15.99 6.7Q860-489.29 860-480q0 79.22-29.46 148.65t-80.96 120.93q-51.5 51.5-120.8 80.96Q559.48-100 480.05-100q-79.43 0-148.73-29.4Z"/>
+  </g>`,viewBox:"0 -960 960 960",kind:"animated"});f(g);var i=function(s,e,t,r){var c=arguments.length,o=c<3?e:r===null?r=Object.getOwnPropertyDescriptor(e,t):r,l;if(typeof Reflect=="object"&&typeof Reflect.decorate=="function")o=Reflect.decorate(s,e,t,r);else for(var v=s.length-1;v>=0;v--)(l=s[v])&&(o=(c<3?l(o):c>3?l(e,t,o):l(e,t))||o);return c>3&&o&&Object.defineProperty(e,t,o),o};const m={sm:"xs",md:"sm",lg:"md"};let a=class extends p{constructor(){super(...arguments),this.variant="primary",this.size="md",this.loading=!1,this._handleFocus=()=>{this.dispatchEvent(new CustomEvent("co-focus",{bubbles:!0,composed:!0}))},this._handleBlur=()=>{this.dispatchEvent(new CustomEvent("co-blur",{bubbles:!0,composed:!0}))},this._handleClick=e=>{if(!e.defaultPrevented&&!this.disabled){if(!this.href){this._handleNativeFormClick(e);return}this.target&&this.target!=="_self"?window.open(this.href,this.target,this.target==="_blank"?"noopener,noreferrer":""):window.location.href=this.href}}}static get styles(){return[...super.styles,b]}connectedCallback(){super.connectedCallback(),this.hasAttribute("tabindex")||(this.tabIndex=0),this.addEventListener("focus",this._handleFocus),this.addEventListener("blur",this._handleBlur),this.addEventListener("click",this._handleClick)}disconnectedCallback(){super.disconnectedCallback(),this.removeEventListener("focus",this._handleFocus),this.removeEventListener("blur",this._handleBlur),this.removeEventListener("click",this._handleClick)}_handleNativeFormClick(e){if(this.type!=="submit"&&this.type!=="reset")return;const t=this.closest("form");if(!t)return;if(e.preventDefault(),this.type==="reset"){t.reset();return}const r=t.requestSubmit;if(typeof r=="function"){r.call(t);return}t.dispatchEvent(new Event("submit",{bubbles:!0,cancelable:!0}))}render(){return this.href?d`
+        <a
+          part="base"
+          class="button"
+          href=${this.href}
+          target=${this.target??"_self"}
+          rel=${this.target==="_blank"?"noopener noreferrer":""}
+          tabindex="-1"
+          aria-disabled=${this.disabled}
+        >
+          <slot name="prefix" part="prefix"></slot>
+          <slot part="label"></slot>
+          <slot name="suffix" part="suffix"></slot>
+        </a>
+      `:d`
+      <div part="base" class="button">
+        <slot name="prefix" part="prefix"></slot>
+        <slot part="label"></slot>
+        <slot name="suffix" part="suffix"></slot>
+        ${this.loading?d`<co-icon
+              part="spinner"
+              name="progress-activity"
+              size=${m[this.size]}
+              animated
+              aria-hidden="true"
+            ></co-icon>`:""}
+      </div>
+    `}};i([n({reflect:!0})],a.prototype,"variant",void 0);i([n({reflect:!0})],a.prototype,"size",void 0);i([n({type:Boolean,reflect:!0})],a.prototype,"loading",void 0);i([n({reflect:!0})],a.prototype,"href",void 0);i([n({reflect:!0})],a.prototype,"target",void 0);a=i([h("co-button")],a);export{a as CoButton};
