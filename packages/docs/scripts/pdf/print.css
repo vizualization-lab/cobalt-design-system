@@ -1,0 +1,275 @@
+@page {
+  size: Letter portrait;
+  margin: 0.68in 0.58in 0.72in;
+}
+
+html,
+body {
+  background: #fff !important;
+  color: #17243a !important;
+  print-color-adjust: exact !important;
+  -webkit-print-color-adjust: exact !important;
+}
+
+html {
+  font-size: 12px !important;
+}
+
+body {
+  margin: 0 !important;
+}
+
+.cobalt-grain,
+.cobalt-alpha-banner,
+.cobalt-topbar,
+.cobalt-rail,
+.cobalt-sidebar,
+.cobalt-toc,
+.sidebar-backdrop,
+.edit-link,
+.cobalt-prev-next,
+.prev-next,
+.VPNav,
+.VPSidebar,
+.VPFooter,
+.copy,
+.demo-controls,
+.color-preview-toolbar,
+.artifact-download__button-link,
+.app-shell-demo > .demo-controls,
+.component-status button,
+.detail-actions,
+.gallery-toolbar {
+  display: none !important;
+}
+
+.cobalt-shell,
+.cobalt-body,
+.cobalt-main,
+.cobalt-content,
+.cobalt-article {
+  display: block !important;
+  width: auto !important;
+  min-width: 0 !important;
+  max-width: none !important;
+  min-height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: visible !important;
+  background: #fff !important;
+  box-shadow: none !important;
+}
+
+.cobalt-article > h1:first-of-type {
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+  color: #123b8f !important;
+  font-size: 26px !important;
+  line-height: 1.15 !important;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  break-after: avoid-page;
+  page-break-after: avoid;
+}
+
+h2 {
+  margin-top: 28px !important;
+  color: #17366e !important;
+}
+
+h3,
+h4 {
+  color: #274a80 !important;
+}
+
+p,
+li,
+td,
+th,
+code,
+pre,
+a {
+  overflow-wrap: anywhere !important;
+}
+
+a {
+  color: #154bcc !important;
+  text-decoration: underline !important;
+  text-decoration-thickness: 0.5px !important;
+}
+
+img,
+svg,
+canvas,
+video {
+  max-width: 100% !important;
+  height: auto !important;
+}
+
+figure,
+.demo-preview,
+.artifact-download,
+.typography-preview__role,
+.cobalt-mermaid,
+blockquote {
+  break-inside: avoid-page;
+  page-break-inside: avoid;
+}
+
+table {
+  width: 100% !important;
+  max-width: 100% !important;
+  border-collapse: collapse !important;
+  font-size: 9px !important;
+}
+
+thead {
+  display: table-header-group;
+}
+
+tr,
+td,
+th {
+  break-inside: avoid-page;
+  page-break-inside: avoid;
+}
+
+td,
+th {
+  padding: 5px 6px !important;
+}
+
+.matrix-scroll,
+.browser-scroll,
+.icon-results,
+.code-tabs-panels {
+  max-height: none !important;
+  overflow: visible !important;
+}
+
+.matrix-table {
+  font-size: 6.5px !important;
+}
+
+.matrix-table th,
+.matrix-table td {
+  padding: 2px !important;
+}
+
+div[class*='language-'],
+pre,
+code {
+  white-space: pre-wrap !important;
+  word-break: break-word !important;
+}
+
+div[class*='language-'] {
+  break-inside: auto !important;
+  border-radius: 6px !important;
+}
+
+.code-tabs {
+  overflow: visible !important;
+  border: 0 !important;
+  background: transparent !important;
+}
+
+.code-tabs-bar {
+  display: none !important;
+}
+
+.code-tab-panel {
+  display: block !important;
+  margin: 14px 0 20px !important;
+  break-before: auto;
+}
+
+.code-tab-panel::before {
+  content: attr(data-pdf-label);
+  display: block;
+  margin-bottom: 5px;
+  color: #365d96;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+details {
+  break-inside: auto;
+}
+
+details > summary {
+  font-weight: 700;
+}
+
+.icon-gallery .gallery-shell {
+  padding: 0 !important;
+  border: 0 !important;
+}
+
+#icon-gallery {
+  break-before: page;
+  page-break-before: always;
+}
+
+.icon-gallery .gallery-content,
+.icon-gallery .icon-results {
+  height: auto !important;
+  min-height: 0 !important;
+}
+
+.icon-gallery .icon-grid {
+  display: grid !important;
+  grid-template-columns: repeat(6, minmax(0, 1fr)) !important;
+  gap: 5px !important;
+}
+
+.icon-gallery .icon-cell {
+  min-width: 0 !important;
+  min-height: 54px !important;
+  padding: 5px 2px !important;
+  break-inside: avoid-page;
+  page-break-inside: avoid;
+}
+
+.icon-gallery .icon-label {
+  font-size: 6.5px !important;
+  line-height: 1.15 !important;
+}
+
+.token-print-table {
+  table-layout: fixed;
+}
+
+.token-print-table th:nth-child(1) {
+  width: 28%;
+}
+
+.token-print-table th:nth-child(2) {
+  width: 15%;
+}
+
+.token-print-table th:nth-child(3) {
+  width: 26%;
+}
+
+.token-print-table th:nth-child(4) {
+  width: 31%;
+}
+
+.artifact-download {
+  grid-template-columns: 0.9fr 1.1fr !important;
+}
+
+* {
+  animation: none !important;
+  transition: none !important;
+  caret-color: transparent !important;
+}

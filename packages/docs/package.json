@@ -12,7 +12,10 @@
     "dev": "vitepress dev",
     "build": "vitepress build",
     "preview": "vitepress preview",
-    "audit:contrast": "pnpm run build && node scripts/audit-contrast.js"
+    "audit:contrast": "pnpm run build && node scripts/audit-contrast.js",
+    "generate:pdf": "pnpm -w run build:packages && pnpm run prepare:artifacts -- --skip-build && pnpm run build && tsx scripts/generate-pdf.ts",
+    "generate:pdf:from-build": "tsx scripts/generate-pdf.ts",
+    "test:pdf": "tsx --test scripts/pdf/*.test.ts"
   },
   "devDependencies": {
     "@cobalt/components": "workspace:*",
@@ -21,7 +24,11 @@
     "@cobalt/vue": "workspace:*",
     "markdown-it-task-lists": "^2.1.1",
     "mermaid": "^11.14.0",
+    "pdf-lib": "^1.17.1",
+    "pdfjs-dist": "^6.3.289",
+    "playwright": "^1.62.1",
     "shiki": "^2.5.0",
+    "tsx": "^4.23.13",
     "vite": "^5.4.21",
     "vitepress": "^1.5.0",
     "vitepress-plugin-mermaid": "^2.0.17",
