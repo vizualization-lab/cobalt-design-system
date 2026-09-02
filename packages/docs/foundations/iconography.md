@@ -2,14 +2,6 @@
 
 Cobalt uses [Material Symbols](https://fonts.google.com/icons) — 3,800+ icons in the rounded style with an optional fill toggle. Icons are rendered via the `<co-icon>` web component, which uses inline SVGs with `currentColor` for full control over color, size, and animation via CSS.
 
-## Icon Gallery
-
-Search the full library or browse by category, then preview, copy, and export any icon.
-
-<ClientOnly>
-  <IconGallery />
-</ClientOnly>
-
 ## Icon Sizes
 
 All icons are designed on a 24 px grid but scale cleanly to the four supported sizes:
@@ -199,3 +191,11 @@ Use descriptions that explain when to choose the icon, not what the icon looks l
 - [Accessibility](./accessibility.md) — ARIA patterns and screen reader support
 - [Colors](./colors.md) — icon color tokens
 - [M3 Icon Design Guidelines](https://m3.material.io/styles/icons/designing-icons) — Google's full specification
+
+## Icon Gallery
+
+Search the full library or browse by category, then preview, copy, and export any icon.
+
+<ClientOnly>
+  <IconGallery />
+</ClientOnly>
