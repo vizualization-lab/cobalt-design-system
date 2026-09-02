@@ -10,6 +10,7 @@ import { CoButton } from '@cobalt/vue/button';
 import { CoButtonIcon } from '@cobalt/vue/button-icon';
 import { CoIcon } from '@cobalt/vue/icon';
 import { createSearchTracker } from '../.vitepress/theme/analytics';
+import { usePrintMode } from './usePrintMode';
 
 type BrowserTab = 'main' | 'advanced';
 
@@ -113,6 +114,7 @@ const advancedExpandedIds = ref<Set<string>>(new Set());
 const isMobile = ref(false);
 const navPaneRef = ref<HTMLElement | null>(null);
 const trackTokenSearch = createSearchTracker('tokens');
+const printMode = usePrintMode();
 
 const normalizedQuery = computed(() => query.value.toLowerCase().trim());
 const isSearching = computed(() => normalizedQuery.value.length > 0);
@@ -427,6 +429,10 @@ function buildPrimitiveRoots(tokens: TokenEntry[]): ExplorerNode[] {
 
 const allMainTokens = computed(() => props.tokens.filter((token) => !isPrimitiveColorToken(token)));
 const allAdvancedTokens = computed(() => props.tokens.filter(isPrimitiveColorToken));
+const printTokenGroups = computed(() => [
+  { label: 'Main tokens', tokens: sortTokens(allMainTokens.value) },
+  { label: 'Color palette tokens', tokens: sortTokens(allAdvancedTokens.value) },
+]);
 
 const categoryEntries = computed(() => {
   const counts = new Map<string, number>();
@@ -723,7 +729,43 @@ async function copyToken(name: string) {
 </script>
 
 <template>
-  <div class="token-browser-wrapper">
+  <div v-if="printMode" class="token-print-reference" data-pdf-full-token-reference>
+    <section v-for="group in printTokenGroups" :key="group.label" class="token-print-group">
+      <h3>{{ group.label }} ({{ group.tokens.length }})</h3>
+      <table class="token-print-table">
+        <thead>
+          <tr>
+            <th>Token</th>
+            <th>Classification</th>
+            <th>Value</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="token in group.tokens" :key="token.name" data-pdf-token-row>
+            <td>
+              <span
+                v-if="tokenSwatchBackground(token)"
+                class="token-print-swatch"
+                :style="{ background: tokenSwatchBackground(token)! }"
+              ></span>
+              <code>{{ token.name }}</code>
+            </td>
+            <td>{{ tokenTierLabel(token) }} / {{ displayCategory(token.category) }}</td>
+            <td>
+              <code>{{ token.resolvedValue ?? token.value }}</code>
+              <small v-if="token.resolvedValue && token.resolvedValue !== token.value">
+                Raw: {{ token.value }}
+              </small>
+            </td>
+            <td>{{ token.description || '-' }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+  </div>
+
+  <div v-else class="token-browser-wrapper">
     <div class="token-browser-shell">
       <div class="browser-toolbar">
         <div class="toolbar-top-row">
@@ -1082,6 +1124,54 @@ async function copyToken(name: string) {
 </template>
 
 <style scoped>
+.token-print-group {
+  margin: 24px 0 36px;
+}
+
+.token-print-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.72rem;
+}
+
+.token-print-table th,
+.token-print-table td {
+  padding: 6px 8px;
+  border-bottom: 1px solid var(--co-color-border-subtle);
+  text-align: left;
+  vertical-align: top;
+  overflow-wrap: anywhere;
+}
+
+.token-print-table th {
+  background: var(--co-color-surface-static-raised);
+  color: var(--co-color-text-secondary);
+  font-size: 0.65rem;
+  text-transform: uppercase;
+}
+
+.token-print-table code,
+.token-print-table small {
+  display: block;
+  font-size: inherit;
+  white-space: normal;
+}
+
+.token-print-table small {
+  margin-top: 3px;
+  color: var(--co-color-text-tertiary);
+}
+
+.token-print-swatch {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  margin-right: 5px;
+  border: 1px solid var(--co-color-border-default);
+  border-radius: 2px;
+  vertical-align: middle;
+}
+
 .token-browser-wrapper {
   margin: 16px 0 24px;
   font-family: var(--co-font-family-sans);

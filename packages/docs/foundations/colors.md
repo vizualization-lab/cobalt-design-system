@@ -3,8 +3,10 @@
 <script setup>
 import { computed, ref } from 'vue';
 import { data } from './colors.data';
+import { usePrintMode } from '../components/usePrintMode';
 
 const paletteMode = ref('light');
+const printMode = usePrintMode();
 const selectedThemeId = ref('default');
 const isDarkPalette = computed(() => paletteMode.value === 'dark');
 const availableThemes = computed(() => data.themes);
@@ -14,8 +16,7 @@ const selectedTheme = computed(
     availableThemes.value[0],
 );
 
-const selectedAccentPalette = computed(() => {
-  const theme = selectedTheme.value;
+function accentPaletteForTheme(theme) {
   if (!theme) return null;
 
   const accentFamily = theme.accentFamily.replace(/-dark$/, '');
@@ -23,7 +24,16 @@ const selectedAccentPalette = computed(() => {
     theme.palettes.find((palette) => palette.rows.some((row) => row.family === accentFamily)) ??
     null
   );
-});
+}
+
+const selectedAccentPalette = computed(() => accentPaletteForTheme(selectedTheme.value));
+const printThemes = computed(() =>
+  availableThemes.value.map((theme) => ({
+    theme,
+    palette: accentPaletteForTheme(theme),
+    snippets: data.themeCodeSnippets[theme.id] ?? data.themeCodeSnippets.default,
+  })),
+);
 
 const selectedAccentFamilies = computed(() => {
   const palette = selectedAccentPalette.value;
@@ -171,6 +181,30 @@ Cobalt color families are organized as ordered shade scales from `50` to `950`. 
   </div>
 </div>
 
+<div v-if="printMode" class="color-print-themes" data-pdf-color-reference>
+  <section v-for="entry in printThemes" :key="entry.theme.id" class="color-print-theme">
+    <h3>{{ entry.theme.name }} theme</h3>
+    <template v-if="entry.palette">
+      <h4>Light mode accent palette</h4>
+      <ThemeColorPreview
+        :palette="entry.palette"
+        :usage-groups="data.usageGroups"
+        active-mode="light"
+      />
+      <h4>Dark mode accent palette</h4>
+      <ThemeColorPreview
+        :palette="entry.palette"
+        :usage-groups="data.usageGroups"
+        active-mode="dark"
+      />
+    </template>
+    <h4>CSS</h4>
+    <div class="theme-code-block" v-html="entry.snippets.css"></div>
+    <h4>JavaScript</h4>
+    <div class="theme-code-block" v-html="entry.snippets.javascript"></div>
+  </section>
+</div>
+
 ## Theme Preview
 
 <p class="color-theme-summary">{{ selectedThemeSummary }}</p>
@@ -192,6 +226,15 @@ Neutral and status palettes stay available as static references. The selected th
   :usage-groups="data.usageGroups"
   :active-mode="paletteMode"
 />
+
+<template v-if="printMode && referencePaletteModes.length">
+  <h3>Dark mode reference palettes</h3>
+  <ColorSwatch
+    :modes="referencePaletteModes"
+    :usage-groups="data.usageGroups"
+    active-mode="dark"
+  />
+</template>
 
 ## Using Themes
 
@@ -512,5 +555,20 @@ These semantic token names stay stable across themes even as their resolved colo
     width: 100%;
     justify-content: space-between;
   }
+}
+
+.color-print-themes {
+  margin: 24px 0 36px;
+}
+
+.color-print-theme {
+  margin-top: 28px;
+  padding-top: 20px;
+  border-top: 2px solid var(--co-color-border-default);
+}
+
+.color-print-theme h3,
+.color-print-theme h4 {
+  break-after: avoid;
 }
 </style>

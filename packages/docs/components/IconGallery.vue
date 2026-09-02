@@ -19,6 +19,7 @@ import {
   iconSearchTermsByIconName,
 } from '@cobalt/icons/metadata';
 import { getIcon } from '@cobalt/icons/registry';
+import { usePrintMode } from './usePrintMode';
 
 const pngSizes = [16, 20, 24, 32, 48, 96, 192];
 const snippetTabs = ['Web Component', 'React', 'Vue', 'Angular'];
@@ -42,6 +43,7 @@ const activeSnippetTab = ref(0);
 const isMobile = ref(false);
 const copyLabel = ref('Copy SVG');
 const trackIconSearch = createSearchTracker('icons');
+const printMode = usePrintMode();
 
 const trimmedSearchQuery = computed(() => searchQuery.value.toLowerCase().trim());
 const isSearching = computed(() => trimmedSearchQuery.value.length > 0);
@@ -81,6 +83,8 @@ const selectedIconDescription = computed(() =>
 );
 
 const filteredIcons = computed(() => {
+  if (printMode.value) return iconNames;
+
   if (isSearching.value) {
     const terms = trimmedSearchQuery.value.split(/\s+/);
     return iconNames
@@ -97,7 +101,9 @@ const filteredIcons = computed(() => {
   return [];
 });
 
-const showPromptState = computed(() => !isSearching.value && activeCategory.value === null);
+const showPromptState = computed(
+  () => !printMode.value && !isSearching.value && activeCategory.value === null,
+);
 const totalCount = computed(() => filteredIcons.value.length);
 
 const resultsSummary = computed(() => {
@@ -320,7 +326,7 @@ function getSnippet(name: string, tabIndex: number): string {
 <template>
   <div class="icon-gallery">
     <div class="gallery-shell">
-      <div class="gallery-toolbar">
+      <div v-if="!printMode" class="gallery-toolbar">
         <div class="toolbar-top-row">
           <div class="search-wrap">
             <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
