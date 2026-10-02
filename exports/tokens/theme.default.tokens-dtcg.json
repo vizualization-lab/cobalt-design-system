@@ -6,6 +6,7 @@
         "$value": "{co.color.cobleu.50}",
         "$extensions": {
           "com.figma.variableId": "VariableID:8150:530",
+          "com.figma.scopes": ["SHAPE_FILL"],
           "com.figma.aliasData": {
             "targetVariableId": "VariableID:e0aaae27696468d6abe5c9beb3871e7ca24a8c19/-1:-1",
             "targetVariableName": "co/color/cobleu/50",
@@ -19,6 +20,7 @@
         "$value": "{co.color.cobleu.100}",
         "$extensions": {
           "com.figma.variableId": "VariableID:8150:528",
+          "com.figma.scopes": ["SHAPE_FILL"],
           "com.figma.aliasData": {
             "targetVariableId": "VariableID:97bb61a6fd41b2ad1ee418d6c23a33e31207b4c3/-1:-1",
             "targetVariableName": "co/color/cobleu/100",
@@ -32,6 +34,7 @@
         "$value": "{co.color.cobleu.200}",
         "$extensions": {
           "com.figma.variableId": "VariableID:8150:527",
+          "com.figma.scopes": ["SHAPE_FILL"],
           "com.figma.aliasData": {
             "targetVariableId": "VariableID:c7edf8353f305cabfa2820fc285259ecf06dd03f/-1:-1",
             "targetVariableName": "co/color/cobleu/200",
@@ -45,6 +48,7 @@
         "$value": "{co.color.cobleu.300}",
         "$extensions": {
           "com.figma.variableId": "VariableID:8150:524",
+          "com.figma.scopes": ["SHAPE_FILL"],
           "com.figma.aliasData": {
             "targetVariableId": "VariableID:0b1825b20d8578de3350b0012373ed047ab296e5/-1:-1",
             "targetVariableName": "co/color/cobleu/300",
@@ -58,6 +62,7 @@
         "$value": "{co.color.cobleu.400}",
         "$extensions": {
           "com.figma.variableId": "VariableID:8150:523",
+          "com.figma.scopes": ["SHAPE_FILL"],
           "com.figma.aliasData": {
             "targetVariableId": "VariableID:e9717808296db1a085cf93743a50edbf3d952417/-1:-1",
             "targetVariableName": "co/color/cobleu/400",
@@ -71,6 +76,7 @@
         "$value": "{co.color.cobleu.500}",
         "$extensions": {
           "com.figma.variableId": "VariableID:8150:522",
+          "com.figma.scopes": ["SHAPE_FILL"],
           "com.figma.aliasData": {
             "targetVariableId": "VariableID:34960db5f41f973b97fde98b568731f4c2e717ea/-1:-1",
             "targetVariableName": "co/color/cobleu/500",
@@ -84,6 +90,7 @@
         "$value": "{co.color.cobleu.600}",
         "$extensions": {
           "com.figma.variableId": "VariableID:8150:529",
+          "com.figma.scopes": ["SHAPE_FILL"],
           "com.figma.aliasData": {
             "targetVariableId": "VariableID:eb451a6aa7a595b302a500871f40eb1f9e5e550e/-1:-1",
             "targetVariableName": "co/color/cobleu/600",
@@ -97,6 +104,7 @@
         "$value": "{co.color.cobleu.700}",
         "$extensions": {
           "com.figma.variableId": "VariableID:8150:521",
+          "com.figma.scopes": ["SHAPE_FILL"],
           "com.figma.aliasData": {
             "targetVariableId": "VariableID:9708d104c7e58e931ee6551840d3a1b10b9158da/-1:-1",
             "targetVariableName": "co/color/cobleu/700",
@@ -110,6 +118,7 @@
         "$value": "{co.color.cobleu.800}",
         "$extensions": {
           "com.figma.variableId": "VariableID:8150:520",
+          "com.figma.scopes": ["SHAPE_FILL"],
           "com.figma.aliasData": {
             "targetVariableId": "VariableID:b1938a34d7a7810fbfebfe1ce83da09613419fac/-1:-1",
             "targetVariableName": "co/color/cobleu/800",
@@ -123,6 +132,7 @@
         "$value": "{co.color.cobleu.900}",
         "$extensions": {
           "com.figma.variableId": "VariableID:8150:525",
+          "com.figma.scopes": ["SHAPE_FILL"],
           "com.figma.aliasData": {
             "targetVariableId": "VariableID:771bb11d68cdfa2a9fa5880f3aa2aa9f5f93edd7/-1:-1",
             "targetVariableName": "co/color/cobleu/900",
@@ -136,6 +146,7 @@
         "$value": "{co.color.cobleu.950}",
         "$extensions": {
           "com.figma.variableId": "VariableID:8150:526",
+          "com.figma.scopes": ["SHAPE_FILL"],
           "com.figma.aliasData": {
             "targetVariableId": "VariableID:554924a7c55540dd2da8c855864c0139a886926b/-1:-1",
             "targetVariableName": "co/color/cobleu/950",
@@ -149,6 +160,7 @@
         "$value": "{co.color.cobleu.300a}",
         "$extensions": {
           "com.figma.variableId": "VariableID:8534:12926",
+          "com.figma.scopes": ["SHAPE_FILL"],
           "com.figma.aliasData": {
             "targetVariableId": "VariableID:c9437b17ae98789452e50a24f52318fd115e7d00/-1:-1",
             "targetVariableName": "co/color/cobleu/300a",
