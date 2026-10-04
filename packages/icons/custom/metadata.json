@@ -1,5 +1,7 @@
 {
   "co-logo": ["logo", "cobalt", "brand", "mark", "gem", "cube", "hexagon", "identity"],
   "co-placeholder": ["placeholder", "empty state", "fallback", "custom icon"],
-  "co-class": ["placeholder", "class", "custom icon"]
+  "co-classification": ["classification", "banner", "custom icon"],
+  "co-ellipses": ["ellipses", "ellipsis", "custom icon"],
+  "co-sm-cirlce": ["circle", "small", "custom icon"]
 }
