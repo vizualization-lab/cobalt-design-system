@@ -1,7 +1,8 @@
 import { mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
-import { dirname, join, resolve } from 'node:path';
+import { dirname, join, posix, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { format } from 'prettier';
+import { format, resolveConfig } from 'prettier';
+import { TextWriter, Uint8ArrayReader, ZipReader } from '@zip.js/zip.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const repositoryRoot = resolve(__dirname, '..', '..', '..');
@@ -215,12 +216,96 @@ function readTokenFiles(sourceDir) {
   });
 }
 
+function archiveTokenFileName(entryName) {
+  const normalized = entryName.replaceAll('\\', '/');
+  if (/^(?:\/|[a-z]:)/i.test(normalized) || normalized.split('/').includes('..')) {
+    throw new Error('Unsafe archive entry path.');
+  }
+  const mode = posix
+    .basename(normalized)
+    .replace(/\.tokens\.json$/i, '')
+    .trim()
+    .toLowerCase();
+  if (mode === 'value') return 'primitives.tokens-figma.json';
+  if (mode === 'light-mode' || mode === 'dark-mode') {
+    return `semantic.${mode}.tokens-figma.json`;
+  }
+  const theme = mode.replace(/[\s_]+/g, '-');
+  if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(theme)) {
+    throw new Error(`Unsupported theme name "${mode}".`);
+  }
+  return `theme.${theme}.tokens-figma.json`;
+}
+
+async function readArchiveTokenFiles(sourceDir, archives) {
+  const files = new Map();
+  for (const archive of archives) {
+    const archivePath = join(sourceDir, archive);
+    const reader = new ZipReader(new Uint8ArrayReader(readFileSync(archivePath)), {
+      useWebWorkers: false,
+      checkSignature: true,
+    });
+    try {
+      let count = 0;
+      for (const entry of await reader.getEntries()) {
+        const entryName = entry.filename.replaceAll('\\', '/');
+        if (
+          entry.directory ||
+          entryName.split('/').includes('__MACOSX') ||
+          !/\.tokens\.json$/i.test(entryName)
+        )
+          continue;
+        const origin = `${archivePath}: ${entry.filename}`;
+        try {
+          const fileName = archiveTokenFileName(entry.filename);
+          if (files.has(fileName)) {
+            throw new Error(
+              `Duplicate destination ${fileName}; also exported by ${files.get(fileName).origin}.`,
+            );
+          }
+          const rawText = await entry.getData(new TextWriter());
+          const tokens = JSON.parse(rawText);
+          if (!isObject(tokens)) throw new Error('Expected a token JSON object.');
+          files.set(fileName, { fileName, tokens, origin, rawText });
+          count++;
+        } catch (error) {
+          throw new Error(`${origin}: ${error.message}`);
+        }
+      }
+      if (!count) throw new Error('No *.tokens.json entries found.');
+    } catch (error) {
+      throw new Error(`Unable to read ${archivePath}: ${error.message}`);
+    } finally {
+      await reader.close();
+    }
+  }
+  const required = [
+    'primitives.tokens-figma.json',
+    'semantic.light-mode.tokens-figma.json',
+    'semantic.dark-mode.tokens-figma.json',
+    'theme.default.tokens-figma.json',
+  ];
+  const missing = required.filter((fileName) => !files.has(fileName));
+  if (missing.length)
+    throw new Error(`Incomplete Figma ZIP exports; missing: ${missing.join(', ')}.`);
+  return [...files.values()].sort((a, b) => a.fileName.localeCompare(b.fileName, 'en'));
+}
+
 export async function convertFigmaExports({
   sourceDir = defaultSourceDir,
   outputDir = defaultOutputDir,
   onWarning = (warning) => console.warn(`Warning: ${warning}`),
 } = {}) {
-  const tokenFiles = readTokenFiles(sourceDir);
+  const archives = readdirSync(sourceDir, { withFileTypes: true })
+    .filter((entry) => entry.isFile() && /\.zip$/i.test(entry.name))
+    .map((entry) => entry.name)
+    .sort();
+  const tokenFiles = archives.length
+    ? await readArchiveTokenFiles(sourceDir, archives)
+    : readTokenFiles(sourceDir);
+  const rawFormatOptions = archives.length
+    ? await resolveConfig(join(sourceDir, 'primitives.tokens-figma.json'))
+    : null;
   const availablePaths = new Set();
 
   for (const { tokens } of tokenFiles) {
@@ -229,14 +314,35 @@ export async function convertFigmaExports({
 
   const warnings = [];
   const outputs = await Promise.all(
-    tokenFiles.map(async ({ fileName, tokens }) => {
-      const transformed = transformNode(tokens, availablePaths, warnings);
+    tokenFiles.map(async ({ fileName, tokens, origin, rawText }) => {
+      let transformed;
+      try {
+        transformed = transformNode(tokens, availablePaths, warnings);
+      } catch (error) {
+        throw new Error(`${origin ?? join(sourceDir, fileName)}: ${error.message}`);
+      }
       return {
         fileName: fileName.replace(FIGMA_TOKEN_FILE_PATTERN, '.tokens-dtcg.json'),
         content: await format(JSON.stringify(transformed), { parser: 'json' }),
+        rawFileName: fileName,
+        rawContent: archives.length
+          ? await format(rawText, { ...rawFormatOptions, parser: 'json' })
+          : null,
       };
     }),
   );
+
+  if (archives.length) {
+    const expectedRawFiles = new Set(tokenFiles.map(({ fileName }) => fileName));
+    for (const fileName of readdirSync(sourceDir)) {
+      if (FIGMA_TOKEN_FILE_PATTERN.test(fileName) && !expectedRawFiles.has(fileName)) {
+        rmSync(join(sourceDir, fileName));
+      }
+    }
+    for (const { rawFileName, rawContent } of outputs) {
+      writeFileSync(join(sourceDir, rawFileName), rawContent);
+    }
+  }
 
   mkdirSync(outputDir, { recursive: true });
 
