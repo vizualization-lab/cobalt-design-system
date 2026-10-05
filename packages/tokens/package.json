@@ -93,6 +93,7 @@
     "@fontsource-variable/noto-sans": "^5.2.10"
   },
   "devDependencies": {
+    "@zip.js/zip.js": "2.8.23",
     "prettier": "^3.8.1",
     "sass": "^1.99.0",
     "style-dictionary": "^4.0.0"

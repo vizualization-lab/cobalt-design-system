@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { existsSync, readFileSync } from 'node:fs';
+import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -38,13 +38,15 @@ for (const name of [
 const primaryText = manifest.tokens.find((token) => token.name === '--co-color-text-primary');
 assert.equal(primaryText.category, 'Color');
 assert.equal(primaryText.tier, 'semantic');
-assert.equal(primaryText.themeModes.length, 8, 'Expected every theme and mode for primary text.');
-assert.deepEqual([...new Set(primaryText.themeModes.map(({ theme }) => theme))].sort(), [
-  'brick',
-  'default',
-  'forest',
-  'iris',
-]);
+const exportedThemes = readdirSync(join(packageDir, '..', '..', 'exports', 'tokens'))
+  .map((name) => name.match(/^theme\.([^.]+)\.tokens-dtcg\.json$/)?.[1])
+  .filter(Boolean)
+  .sort();
+assert.deepEqual(
+  primaryText.themeModes.map(({ theme, mode }) => `${theme}.${mode}`).sort(),
+  exportedThemes.flatMap((theme) => [`${theme}.dark`, `${theme}.light`]).sort(),
+  'Expected every exported theme and mode for primary text.',
+);
 assert.deepEqual([...new Set(primaryText.themeModes.map(({ mode }) => mode))].sort(), [
   'dark',
   'light',

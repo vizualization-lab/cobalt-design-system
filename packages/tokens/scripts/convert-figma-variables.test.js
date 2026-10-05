@@ -1,9 +1,18 @@
 import assert from 'node:assert/strict';
-import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import {
+  copyFileSync,
+  mkdirSync,
+  mkdtempSync,
+  readFileSync,
+  readdirSync,
+  rmSync,
+  writeFileSync,
+} from 'node:fs';
 import { tmpdir } from 'node:os';
 import { basename, dirname, join, sep } from 'node:path';
 import { afterEach, describe, it } from 'node:test';
 import StyleDictionary from 'style-dictionary';
+import { TextReader, Uint8ArrayWriter, ZipWriter } from '@zip.js/zip.js';
 import { convertFigmaExports, defaultSourceDir } from './convert-figma-variables.js';
 
 let tempDirs = [];
@@ -29,6 +38,172 @@ function writeJson(filePath, value) {
 function readJson(filePath) {
   return JSON.parse(readFileSync(filePath, 'utf8'));
 }
+
+async function writeZip(filePath, entries, options = {}) {
+  const writer = new ZipWriter(new Uint8ArrayWriter(), { useWebWorkers: false, ...options });
+  for (const [name, value] of Object.entries(entries)) {
+    await writer.add(
+      name,
+      new TextReader(typeof value === 'string' ? value : JSON.stringify(value)),
+    );
+  }
+  writeFileSync(filePath, await writer.close());
+}
+
+function coreEntries() {
+  return {
+    'Value.tokens.json': { co: { space: { 100: { $type: 'number', $value: 4 } } } },
+    'light-mode.tokens.json': { co: { color: { page: color('#FFFFFF') } } },
+    'dark-mode.tokens.json': { co: { color: { page: color('#000000') } } },
+    'Default.tokens.json': { co: { color: { brand: color('#112233') } } },
+  };
+}
+
+describe('ZIP exports', () => {
+  it('refreshes raw and DTCG files from ZIPs, supports new nested themes, and is repeatable', async () => {
+    const sourceDir = createTempDir('figma exports with spaces-');
+    const outputDir = join(sourceDir, 'tokens');
+    const entries = coreEntries();
+    entries['Value.tokens.json'].$extensions = { 'com.figma.modeName': 'Value' };
+    await writeZip(join(sourceDir, 'arbitrary export.zip'), entries);
+    await writeZip(join(sourceDir, 'more themes.ZIP'), {
+      'Nested Folder/New_Theme.tokens.json': { co: { color: { brand: color('#ABCDEF') } } },
+      '__MACOSX/._Value.tokens.json': 'not JSON',
+      'README.txt': 'ignore me',
+    });
+    writeJson(join(sourceDir, 'primitives.tokens-figma.json'), { outdated: true });
+    writeJson(join(sourceDir, 'theme.removed.tokens-figma.json'), { stale: true });
+    writeJson(join(outputDir, 'theme.removed.tokens-dtcg.json'), { stale: true });
+    writeFileSync(join(sourceDir, 'README.md'), 'keep raw');
+    writeFileSync(join(outputDir, 'README.md'), 'keep output');
+    const zipBefore = readFileSync(join(sourceDir, 'arbitrary export.zip'));
+    const result = await convertFigmaExports({ sourceDir, outputDir });
+    assert.deepEqual(result.files, [
+      'primitives.tokens-dtcg.json',
+      'semantic.dark-mode.tokens-dtcg.json',
+      'semantic.light-mode.tokens-dtcg.json',
+      'theme.default.tokens-dtcg.json',
+      'theme.new-theme.tokens-dtcg.json',
+    ]);
+    assert.deepEqual(
+      readJson(join(sourceDir, 'primitives.tokens-figma.json')),
+      entries['Value.tokens.json'],
+    );
+    assert.equal(
+      readJson(join(outputDir, 'primitives.tokens-dtcg.json')).co.space[100].$value,
+      '4px',
+    );
+    assert.equal(
+      readJson(join(outputDir, 'theme.new-theme.tokens-dtcg.json')).co.color.brand.$value,
+      '#ABCDEF',
+    );
+    assert.throws(() => readFileSync(join(sourceDir, 'theme.removed.tokens-figma.json')));
+    assert.throws(() => readFileSync(join(outputDir, 'theme.removed.tokens-dtcg.json')));
+    assert.equal(readFileSync(join(sourceDir, 'README.md'), 'utf8'), 'keep raw');
+    assert.equal(readFileSync(join(outputDir, 'README.md'), 'utf8'), 'keep output');
+    assert.deepEqual(readFileSync(join(sourceDir, 'arbitrary export.zip')), zipBefore);
+    const before = result.files.map((name) => readFileSync(join(outputDir, name), 'utf8'));
+    await convertFigmaExports({ sourceDir, outputDir });
+    assert.deepEqual(
+      result.files.map((name) => readFileSync(join(outputDir, name), 'utf8')),
+      before,
+    );
+  });
+
+  const failures = [
+    [
+      'incomplete exports',
+      { 'Value.tokens.json': coreEntries()['Value.tokens.json'] },
+      /Incomplete.*semantic/,
+    ],
+    ['malformed JSON', { ...coreEntries(), 'New.tokens.json': '{invalid' }, /New.tokens.json/],
+    [
+      'invalid tokens',
+      { ...coreEntries(), 'New.tokens.json': { co: { color: { invalid: color('#BAD') } } } },
+      /New.tokens.json.*six-digit/,
+    ],
+    [
+      'duplicate destinations',
+      { ...coreEntries(), 'nested/DEFAULT.tokens.json': {} },
+      /Duplicate destination/,
+    ],
+    [
+      'normalized collisions',
+      { ...coreEntries(), 'New Theme.tokens.json': {}, 'New_Theme.tokens.json': {} },
+      /Duplicate destination/,
+    ],
+    ['unsafe paths', { ...coreEntries(), '../Escape.tokens.json': {} }, /Unsafe archive entry/],
+    [
+      'unsafe theme names',
+      { ...coreEntries(), 'Bad.Name.tokens.json': {} },
+      /Unsupported theme name/,
+    ],
+    ['non-object JSON', { ...coreEntries(), 'New.tokens.json': [] }, /token JSON object/],
+    ['empty token archives', { 'README.txt': 'no tokens' }, /No.*tokens.json/],
+  ];
+  for (const [label, entries, pattern] of failures) {
+    it(`preserves existing exports on ${label}`, async () => {
+      const sourceDir = createTempDir();
+      const outputDir = join(sourceDir, 'tokens');
+      await writeZip(join(sourceDir, 'input.zip'), entries);
+      writeJson(join(sourceDir, 'primitives.tokens-figma.json'), { existingRaw: true });
+      writeJson(join(sourceDir, 'theme.old.tokens-figma.json'), { existingRaw: true });
+      writeJson(join(outputDir, 'primitives.tokens-dtcg.json'), { existingOutput: true });
+      writeJson(join(outputDir, 'theme.old.tokens-dtcg.json'), { existingOutput: true });
+      const rawBefore = readdirSync(sourceDir);
+      const outputBefore = readdirSync(outputDir);
+      await assert.rejects(convertFigmaExports({ sourceDir, outputDir }), pattern);
+      assert.deepEqual(readdirSync(sourceDir), rawBefore);
+      assert.deepEqual(readdirSync(outputDir), outputBefore);
+      for (const name of rawBefore.filter((name) => name.endsWith('.json'))) {
+        assert.deepEqual(readJson(join(sourceDir, name)), { existingRaw: true });
+      }
+      for (const name of outputBefore) {
+        assert.deepEqual(readJson(join(outputDir, name)), { existingOutput: true });
+      }
+    });
+  }
+
+  it('rejects corrupt ZIPs without falling back to existing JSON', async () => {
+    const sourceDir = createTempDir();
+    const outputDir = join(sourceDir, 'tokens');
+    writeFileSync(join(sourceDir, 'corrupt.zip'), 'not a ZIP');
+    writeJson(join(sourceDir, 'primitives.tokens-figma.json'), { existing: true });
+    writeJson(join(outputDir, 'primitives.tokens-dtcg.json'), { existing: true });
+    await assert.rejects(convertFigmaExports({ sourceDir, outputDir }), /corrupt.zip/);
+    assert.deepEqual(readJson(join(sourceDir, 'primitives.tokens-figma.json')), { existing: true });
+    assert.deepEqual(readJson(join(outputDir, 'primitives.tokens-dtcg.json')), { existing: true });
+  });
+
+  it('rejects duplicate destinations across archives', async () => {
+    const sourceDir = createTempDir();
+    const outputDir = join(sourceDir, 'tokens');
+    await writeZip(join(sourceDir, 'first.zip'), coreEntries());
+    await writeZip(join(sourceDir, 'second.zip'), { 'Folder\\VALUE.tokens.json': {} });
+    await assert.rejects(
+      convertFigmaExports({ sourceDir, outputDir }),
+      /second.zip.*Duplicate destination.*first.zip/,
+    );
+    assert.deepEqual(readdirSync(sourceDir).sort(), ['first.zip', 'second.zip']);
+  });
+
+  it('checks entry integrity before replacing files', async () => {
+    const sourceDir = createTempDir();
+    const outputDir = join(sourceDir, 'tokens');
+    const archive = join(sourceDir, 'input.zip');
+    await writeZip(archive, coreEntries(), { level: 0 });
+    const bytes = readFileSync(archive);
+    // A stored entry follows its local header, filename, and extra fields.
+    const dataOffset = 30 + bytes.readUInt16LE(26) + bytes.readUInt16LE(28);
+    bytes[dataOffset] ^= 1;
+    writeFileSync(archive, bytes);
+    writeJson(join(sourceDir, 'primitives.tokens-figma.json'), { existing: true });
+    writeJson(join(outputDir, 'primitives.tokens-dtcg.json'), { existing: true });
+    await assert.rejects(convertFigmaExports({ sourceDir, outputDir }), /input.zip.*signature/i);
+    assert.deepEqual(readJson(join(sourceDir, 'primitives.tokens-figma.json')), { existing: true });
+    assert.deepEqual(readJson(join(outputDir, 'primitives.tokens-dtcg.json')), { existing: true });
+  });
+});
 
 function color(hex, alpha = 1, extensions = undefined) {
   return {
@@ -231,8 +406,15 @@ describe('Style Dictionary compatibility', () => {
     const tempDir = createTempDir('cobalt-figma-style-dictionary-');
     const outputDir = join(tempDir, 'tokens');
     const buildDir = join(tempDir, 'css');
+    const sourceDir = join(tempDir, 'exports');
+    mkdirSync(sourceDir);
+    for (const name of readdirSync(defaultSourceDir).filter((name) =>
+      name.endsWith('.tokens-figma.json'),
+    )) {
+      copyFileSync(join(defaultSourceDir, name), join(sourceDir, name));
+    }
     const result = await convertFigmaExports({
-      sourceDir: defaultSourceDir,
+      sourceDir,
       outputDir,
       onWarning: () => {},
     });
@@ -278,6 +460,11 @@ describe('Style Dictionary compatibility', () => {
       }
     }
 
-    assert.equal(themes.length * modes.length, 8);
+    assert.equal(
+      themes.length,
+      readdirSync(sourceDir).filter((name) => name.startsWith('theme.')).length,
+    );
+    assert.equal(modes.length, 2);
+    assert.equal(readdirSync(buildDir).length, themes.length * modes.length);
   });
 });
